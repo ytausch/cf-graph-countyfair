@@ -1,0 +1,48 @@
+{% set name = "sqlalchemy" %}
+{% set version = 1.3.19 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/SQLAlchemy-{{ version }}.tar.gz
+  sha256: 3bba2e9fbedb0511769780fe1d63007081008c5c2d7d715e91858c94dbaa260e
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - sqlalchemy
+    - sqlalchemy.connectors
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.sqlalchemy.org
+  summary: Database Abstraction Library
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - mcs07
+    - nehaljwani
+    - igortg

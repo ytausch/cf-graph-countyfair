@@ -1,0 +1,48 @@
+{% set name = "eelbrain" %}
+{% set version = 0.33 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/eelbrain-{{ version }}.tar.gz
+  sha256: e602e20c75f21b33d7ce834cbb0ec319a7754ff4768468c74c5712eef4670c63
+
+build:
+  number: 0
+  skip: true   # [py<37]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython >=0.21
+    - numpy >=1.11
+    - pip
+    - python
+  run:
+    - python
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - eelbrain
+    - eelbrain._experiment
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://eelbrain.readthedocs.io
+  summary: MEG/EEG analysis tools
+  doc_url: https://pythonhosted.org/eelbrain/
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - christianbrodbeck

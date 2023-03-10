@@ -1,0 +1,45 @@
+{% set name = "pytest-cram" %}
+{% set version = 0.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest-cram-{{ version }}.tar.gz
+  sha256: 00e358dff2836239cab47d846656d3029035a5ebb60c0cb188d16c9d6bf50510
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - ez_setup
+    - pip
+    - python
+  run:
+    - cram >=0.7
+    - pytest >=2.8
+    - python
+
+test:
+  imports:
+    - pytest_cram
+    - pytest_cram.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/tbekolay/pytest-cram
+  summary: Run cram tests with pytest.
+  license: MIT
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - kynan

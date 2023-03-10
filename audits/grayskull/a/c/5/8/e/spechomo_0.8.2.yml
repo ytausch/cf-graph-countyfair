@@ -1,0 +1,57 @@
+{% set name = "spechomo" %}
+{% set version = 0.8.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/spechomo-{{ version }}.tar.gz
+  sha256: 236060d927085125ff32d56b2bb010652d43ecb787ece3ad54bb5d1dc417ea28
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools-git
+  run:
+    - dill
+    - geoarray
+    - matplotlib-base
+    - natsort
+    - nested_dict
+    - numpy
+    - pandas
+    - pyrsr
+    - python
+    - pyyaml
+    - scikit-learn >=0.23.2
+    - scipy
+    - seaborn
+    - specclassify >=0.2.0
+    - tabulate
+    - tqdm
+
+test:
+  imports:
+    - spechomo
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gitext.gfz-potsdam.de/geomultisens/spechomo
+  summary: Spectral homogenization of multispectral satellite data.
+  license: Unlicense
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - danschef

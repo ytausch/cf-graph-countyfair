@@ -1,0 +1,47 @@
+{% set name = "metaflow" %}
+{% set version = 2.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: ad1e34471465e38e2a4740399f427eb49dc12135099fb614cdc073c0deae97b7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - boto3
+    - click >=7.0
+    - pylint <2.5.0
+    - python
+    - requests
+
+test:
+  imports:
+    - metaflow
+    - metaflow.client
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/metaflow/
+  summary: 'Metaflow: More Data Science, Less Engineering'
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - xhochy
+    - savingoyal

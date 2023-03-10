@@ -1,0 +1,55 @@
+{% set name = "trading-calendars" %}
+{% set version = 2.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/trading_calendars-{{ version }}.tar.gz
+  sha256: 93bf94d9466fd9f63bc7849d531e48ba307cc3f29eeb14aec126dc851771b0d7
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - tcal = trading_calendars.tcal:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy
+    - pandas
+    - python
+    - pytz
+    - toolz
+
+test:
+  imports:
+    - trading_calendars
+    - trading_calendars.utils
+  commands:
+    - pip check
+    - tcal --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/quantopian/trading_calendars
+  summary: trading_calendars is a Python library with securities exchange calendars used by Quantopian's Zipline.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - gerrymanoim
+    - jbredeche
+    - jdricklefs
+    - jmccorriston
+    - llllllllll
+    - richafrank
+    - rsheftel

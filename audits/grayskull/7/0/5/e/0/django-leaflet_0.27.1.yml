@@ -1,0 +1,43 @@
+{% set name = "django-leaflet" %}
+{% set version = 0.27.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: b530960242fe7718572b23976dd6037823dd478335c22c4434931335acf88bdd
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - django
+    - python
+
+test:
+  imports:
+    - leaflet
+    - leaflet.forms
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/makinacorpus/django-leaflet
+  summary: Use Leaflet in your django projects
+  license: LGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - xmnlab

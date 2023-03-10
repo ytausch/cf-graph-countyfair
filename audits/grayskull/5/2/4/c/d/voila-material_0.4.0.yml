@@ -1,0 +1,42 @@
+{% set name = "voila-material" %}
+{% set version = 0.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/voila-material-{{ version }}.tar.gz
+  sha256: 0827a27f0f23ca87bd8f565c4c227c754516d2a120ffce0f7ab1ee12fdec959f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - voila >=0.2.1
+
+test:
+  imports:
+    - voila_material
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/martinRenou/voila-material
+  summary: Material design template for voila
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - martinRenou
+    - maartenbreddels

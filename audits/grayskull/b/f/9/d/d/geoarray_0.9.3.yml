@@ -1,0 +1,57 @@
+{% set name = "geoarray" %}
+{% set version = 0.9.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/geoarray-{{ version }}.tar.gz
+  sha256: 4e1366eef99312ebb56ba2f0ec91736cc98ee7e4dbc85b7dd8acfa7a5d4654bd
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools-git
+  run:
+    - cartopy
+    - dill
+    - folium
+    - gdal >=2.1.0
+    - geojson
+    - matplotlib-base
+    - numpy
+    - pandas
+    - py-tools-ds >=0.14.35
+    - python
+    - scikit-image
+    - shapely
+    - six
+
+test:
+  imports:
+    - geoarray
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gitext.gfz-potsdam.de/danschef/geoarray
+  summary: Fast Python interface for geodata - either on disk or in memory.
+  license: Unlicense
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - danschef
+    - rluria14
+    - ndmaxar
+    - RyanHackney

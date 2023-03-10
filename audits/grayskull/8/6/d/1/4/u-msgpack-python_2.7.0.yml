@@ -1,0 +1,41 @@
+{% set name = "u-msgpack-python" %}
+{% set version = 2.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 996e4c4454771f0ff0fd2a7566b1a159d305d3611cd755addf444e3533e2bc54
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - umsgpack
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/vsergeev/u-msgpack-python
+  summary: A portable, lightweight MessagePack serializer and deserializer written in pure Python.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tschoonj

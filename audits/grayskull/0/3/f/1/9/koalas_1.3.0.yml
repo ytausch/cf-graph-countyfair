@@ -1,0 +1,52 @@
+{% set name = "koalas" %}
+{% set version = 1.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/koalas-{{ version }}.tar.gz
+  sha256: 658f7dbbd0ba88262ffa63c6b6eb716898849bf6e04c3f2a9f9f5f2146d52a25
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5,<3.9
+  run:
+    - matplotlib-base >=3.0.0,<3.3.0
+    - numpy >=1.14,<1.19.0
+    - pandas >=0.23.2
+    - pyarrow >=0.10
+    - python >=3.5,<3.9
+
+test:
+  imports:
+    - databricks
+    - databricks.koalas
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/databricks/koalas
+  summary: 'Koalas: pandas API on Apache Spark'
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - rxin
+    - thunterdb
+    - gatorsmile
+    - HyukjinKwon
+    - ueshin
+    - itholic
+    - xinrong-databricks

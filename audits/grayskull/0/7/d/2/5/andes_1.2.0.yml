@@ -1,0 +1,58 @@
+{% set name = "andes" %}
+{% set version = 1.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/andes-{{ version }}.tar.gz
+  sha256: fae8b017f1b0d9d8def605cac14efe8ad5509e0c52e9d48a9fe8b2e9afef44d4
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - andes = andes.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - coloredlogs
+    - cvxopt >=1.2.3
+    - dill
+    - matplotlib-base
+    - numpy
+    - pandas
+    - pathos
+    - python
+    - pyyaml
+    - scipy
+    - sympy ==1.5.1
+    - tqdm
+    - xlrd
+    - xlsxwriter
+
+test:
+  imports:
+    - andes
+    - andes.core
+  commands:
+    - pip check
+    - andes --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cuihantao/andes
+  summary: Python software for symbolic power system modeling and numerical analysis.
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - cuihantao

@@ -1,0 +1,53 @@
+{% set name = "verta" %}
+{% set version = 0.15.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/verta-{{ version }}.tar.gz
+  sha256: 626ddb9d71fed6c2b744f69424b7467aa6e6b0b191838754ddca4a498402f7ee
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - verta = verta._cli:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+  run:
+    - click
+    - cloudpickle
+    - googleapis-common-protos >=1.5
+    - pathlib2 >=2.2
+    - protobuf >=3.8
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+    - pyyaml >=5.1
+    - requests >=2.21,<3.0
+
+test:
+  imports:
+    - tests
+    - tests.models
+  commands:
+    - pip check
+    - verta --help
+  requires:
+    - pip
+
+about:
+  home: https://www.verta.ai/
+  summary: Python client for interfacing with ModelDB and the Verta platform
+  license: Apache-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - convoliution
+    - mvartakAtVerta

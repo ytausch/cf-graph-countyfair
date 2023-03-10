@@ -1,0 +1,51 @@
+{% set name = "parsim" %}
+{% set version = 2.1.0.post1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: dddae7a06e2c14b82936e269157b144ece1eccc93ceedb2c43786c8cab7e716a
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - psm=parsim.cli:psm_command
+    - psm_dakota_driver=parsim.dakota:psm_dakota_driver
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.0
+  run:
+    - numpy
+    - pandas
+    - pydoe2 >=1.2.1
+    - pyexpander >=1.6
+    - python >=3.0
+    - scipy
+
+test:
+  imports:
+    - parsim
+  commands:
+    - pip check
+    - psm --help
+    - psm_dakota_driver --help
+  requires:
+    - pip
+
+about:
+  home: https://gitlab.com/olwi/psm
+  summary: A tool for working with parameterized simulation models
+  license: GPL-3.0-or-later
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - olawid

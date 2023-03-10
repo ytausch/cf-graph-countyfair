@@ -1,0 +1,46 @@
+{% set name = "gsw" %}
+{% set version = 3.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/gsw-{{ version }}.tar.gz
+  sha256: d45c835af0e539235e9cf46ae58d9447e206d145b13ecfe7447ad7b8fbdcf86d
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - numpy
+    - python
+
+test:
+  imports:
+    - gsw
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/TEOS-10/GSW-python
+  summary: Gibbs Seawater Oceanographic Package of TEOS-10
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - efiring
+    - ocefpaf

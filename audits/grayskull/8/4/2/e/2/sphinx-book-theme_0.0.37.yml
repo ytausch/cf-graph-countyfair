@@ -1,0 +1,51 @@
+{% set name = "sphinx-book-theme" %}
+{% set version = 0.0.37 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sphinx-book-theme-{{ version }}.tar.gz
+  sha256: b3b344e7c296e7a9c6154bf37eef01320666708af8b78bbfc16185d8edf0dba0
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - beautifulsoup4
+    - click
+    - docutils >=0.15
+    - importlib_resources ~=3.0.0  # [py<37]
+    - pydata-sphinx-theme ~=0.4.0
+    - python
+    - pyyaml
+    - sphinx
+
+test:
+  imports:
+    - sphinx_book_theme
+    - sphinx_book_theme.static
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://jupyterbook.org/
+  summary: 'Jupyter Book: Create an online book with Jupyter Notebooks'
+  dev_url: https://github.com/jupyter/jupyter-book/
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - anirrudh
+    - chrisjsewell

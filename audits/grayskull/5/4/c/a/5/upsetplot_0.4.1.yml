@@ -1,0 +1,44 @@
+{% set name = "upsetplot" %}
+{% set version = 0.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/UpSetPlot-{{ version }}.tar.gz
+  sha256: c1e23af4d90ca88d024cdea45dc3a84591cd97a80a6a3dfc18b5e7ad2b93944f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - matplotlib-base >=2.0
+    - pandas
+    - python
+
+test:
+  imports:
+    - upsetplot
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://upsetplot.readthedocs.io
+  summary: Draw Lex et al.'s UpSet plots with Pandas and Matplotlib
+  license: MIT
+  license_file: .eggs/pytest_runner-5.2-py3.7.egg/EGG-INFO/LICENSE
+
+extra:
+  recipe-maintainers:
+    - wdecoster

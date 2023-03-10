@@ -1,0 +1,46 @@
+{% set name = "pyexcel-ods3" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyexcel-ods3-{{ version }}.tar.gz
+  sha256: eda986eedcb90386907dd65ea2e9f5ff7387a8848cd6c16d9d6762523c560346
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - gease
+    - pip
+    - python
+  run:
+    - lxml
+    - pyexcel-ezodf >=0.3.3
+    - pyexcel-io >=0.6.2
+    - python
+
+test:
+  imports:
+    - pyexcel_ods3
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyexcel/pyexcel-ods3
+  summary: A wrapper library to read, manipulate and write data in ods format
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - williamjamir
+    - nicoddemus

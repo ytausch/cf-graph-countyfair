@@ -1,0 +1,43 @@
+{% set name = "unyt" %}
+{% set version = 2.8.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/unyt-{{ version }}.tar.gz
+  sha256: 6a17f849af0ec376fccb111c26b767022189d157d416f0fe5078f31b6b01a22e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - numpy >="1.13.0"
+    - python >=3.5
+    - sympy >=1.2
+
+test:
+  imports:
+    - unyt
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/yt-project/unyt
+  summary: A package for handling numpy arrays with units
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ngoldbaum

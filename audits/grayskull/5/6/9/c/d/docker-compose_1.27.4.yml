@@ -1,0 +1,59 @@
+{% set name = "docker-compose" %}
+{% set version = 1.27.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/docker-compose-{{ version }}.tar.gz
+  sha256: 5a5690f24c27d4b43dcbe6b3fae91ba680713208e99ee863352b3bae37bcaa83
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - docker-compose=compose.cli.main:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - backports.ssl-match-hostname <4,>=3.5  # [py<35]
+    - cached-property >=1.2.0,<2
+    - colorama <1,>=0.4  # [win]
+    - distro >=1.5.0,<2
+    - docker-py >=4.3.1,<5
+    - dockerpty >=0.4.1,<1
+    - docopt >=0.6.1,<1
+    - jsonschema >=2.5.1,<4
+    - python
+    - python-dotenv >=0.13.0,<1
+    - pyyaml >=3.10,<6
+    - requests >=2.20.0,<3
+    - texttable >=0.9.0,<2
+    - websocket-client >=0.32.0,<1
+
+test:
+  imports:
+    - compose
+    - compose.cli
+  commands:
+    - pip check
+    - docker-compose --help
+  requires:
+    - pip
+
+about:
+  home: https://www.docker.com/
+  summary: Multi-container orchestration for Docker
+  dev_url: https://github.com/docker/compose
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - scopatz

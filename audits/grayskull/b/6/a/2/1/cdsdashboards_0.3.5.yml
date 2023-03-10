@@ -1,0 +1,49 @@
+{% set name = "cdsdashboards" %}
+{% set version = 0.3.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cdsdashboards-{{ version }}.tar.gz
+  sha256: 7877a6281ed686f69d8fb6e8533e3e4afbdadc17439125493a8e5fe1c38c951b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - alembic
+    - jupyterhub >=1.0.0
+    - pluggy
+    - python >=3.6
+    - tornado >=6.0.4
+    - traitlets
+
+test:
+  imports:
+    - cdsdashboards
+    - cdsdashboards.builder
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://containds.com/
+  summary: ContainDS Dashboards extension for JupyterHub
+  dev_url: https://github.com/ideonate/cdsdashboards
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - danlester
+    - fcollonval

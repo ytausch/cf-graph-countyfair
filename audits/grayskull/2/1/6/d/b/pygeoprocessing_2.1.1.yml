@@ -1,0 +1,53 @@
+{% set name = "pygeoprocessing" %}
+{% set version = 2.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pygeoprocessing-{{ version }}.tar.gz
+  sha256: c20121149fbe745cc7388b02ed661820b5a41f24d49d7516795d78d3cb0ddf43
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - cython
+    - gdal >=3.0.4
+    - numpy >=1.10.1
+    - python
+    - rtree >=0.8.3
+    - scipy >=0.14.1,!=0.19.1
+    - shapely >=1.6.4
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - pygeoprocessing
+    - pygeoprocessing.multiprocessing
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/natcap/pygeoprocessing
+  summary: 'PyGeoprocessing: Geoprocessing routines for GIS'
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - phargogh

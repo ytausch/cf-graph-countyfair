@@ -1,0 +1,41 @@
+{% set name = "procrunner" %}
+{% set version = 2.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/procrunner-{{ version }}.tar.gz
+  sha256: b37e2f4e83f6251621e2b446dc52a51fd43a8cbfc0367f82fea6c52fccdf0043
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - procrunner
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/DiamondLightSource/python-procrunner
+  summary: Versatile utility function to run external processes
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - anthchirp

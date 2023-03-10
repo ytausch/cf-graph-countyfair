@@ -1,0 +1,52 @@
+{% set name = "itkwidgets" %}
+{% set version = 0.32.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 11ee93007cf354405e01bf9a28fb1eb2fb0a5d139e1cdded1a07b47f7ee76972
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - colorcet >=2.0.0
+    - ipydatawidgets >=4.0.1
+    - ipympl >=0.4.1
+    - ipywidgets >=7.5.1
+    - itk-core >=5.1.0.post2
+    - itk-filtering >=5.1.0.post2
+    - itk-meshtopolydata >=0.6.2
+    - matplotlib-base
+    - numpy
+    - python
+    - six
+    - zstandard
+
+test:
+  imports:
+    - itkwidgets
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/InsightSoftwareConsortium/itkwidgets
+  summary: Interactive Jupyter widgets to visualize images, point sets, and meshes in 2D and 3D
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - thewtex
+    - SylvainCorlay

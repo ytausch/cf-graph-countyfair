@@ -1,0 +1,46 @@
+{% set name = "gmshmodel" %}
+{% set version = 1.0.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/gmshModel-{{ version }}.tar.gz
+  sha256: 0f09fd7cdca3dc66fec88bd854c4c9a2ccf496e7dabfb7ac83cf0eb0d9daad1d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - gmsh
+    - meshio >=4
+    - numpy
+    - python >=3.5
+    - pyvista >=0.24.1
+
+test:
+  imports:
+    - gmshModel
+    - gmshModel.Geometry
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/NEFM-TUDresden/GmshModel
+  summary: A mesh modeling interface to the Gmsh-Python-API
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - PhilippMetsch

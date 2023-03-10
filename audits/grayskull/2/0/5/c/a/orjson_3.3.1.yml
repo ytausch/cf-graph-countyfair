@@ -1,0 +1,43 @@
+{% set name = "orjson" %}
+{% set version = 3.3.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/orjson-{{ version }}.tar.gz
+  sha256: 149d6a2bc71514826979b9d053f3df0c2397a99e2b87213ba71605a1626d662c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - orjson
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ijl/orjson
+  summary: Fast, correct Python JSON library supporting dataclasses, datetimes, and numpy
+  license: Apache-2.0
+  license_file: LICENSE-APACHE
+
+extra:
+  recipe-maintainers:
+    - EntPyle
+    - nehaljwani
+    - synapticarbors

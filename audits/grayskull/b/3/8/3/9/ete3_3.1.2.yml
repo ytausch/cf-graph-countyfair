@@ -1,0 +1,45 @@
+{% set name = "ete3" %}
+{% set version = 3.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ete3-{{ version }}.tar.gz
+  sha256: 4fc987b8c529889d6608fab1101f1455cb5cbd42722788de6aea9c7d0a8e59e9
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - ete3 = ete3.tools.ete:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - ete3
+  commands:
+    - pip check
+    - ete3 --help
+  requires:
+    - pip
+
+about:
+  home: http://etetoolkit.org
+  summary: A Python Environment for (phylogenetic) Tree Exploration
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ltalirz
+    - chrisjsewell

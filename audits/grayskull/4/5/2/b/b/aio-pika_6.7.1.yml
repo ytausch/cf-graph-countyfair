@@ -1,0 +1,44 @@
+{% set name = "aio-pika" %}
+{% set version = 6.7.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aio-pika-{{ version }}.tar.gz
+  sha256: 9773440a89840941ac3099a7720bf9d51e8764a484066b82ede4d395660ff430
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5,<4.0
+  run:
+    - aiormq >=3.2.3,<4
+    - python >=3.5,<4.0
+    - yarl
+
+test:
+  imports:
+    - aio_pika
+    - aio_pika.patterns
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/aio-pika/
+  summary: Wrapper for the aiormq for asyncio and humans.
+  license: Apache-1.1
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - gregfreeman

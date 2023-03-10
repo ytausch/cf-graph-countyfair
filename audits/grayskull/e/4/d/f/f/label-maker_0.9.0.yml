@@ -1,0 +1,59 @@
+{% set name = "label-maker" %}
+{% set version = 0.9.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/label-maker-{{ version }}.tar.gz
+  sha256: 5dcd248c3fd1f801be6260c84143e9f05e131d07fcb8d98036837b4b5913f1a5
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - label-maker=label_maker.main:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - cerberus ==1.1
+    - click ==6.7
+    - geojson ==2.3.0
+    - mapbox-vector-tile ==1.2.0
+    - mercantile >=1.0.3
+    - numpy >=1.18.4
+    - pillow ==7.1.2
+    - python
+    - rasterio>=1.1
+    - requests >=2.20.0
+    - shapely >=1.6.3
+    - tilepie ==0.2.1
+    - tqdm >=4.46.0
+
+test:
+  imports:
+    - label_maker
+    - test
+  commands:
+    - pip check
+    - label-maker --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/developmentseed/label-maker/
+  summary: Data preparation for satellite machine learning
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - rluria14
+    - benhuff
+    - oblute

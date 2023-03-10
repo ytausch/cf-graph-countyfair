@@ -1,0 +1,47 @@
+{% set name = "sortednp" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 5c662155ece0969ca058482a35b297ad435c3108b5eb111b3caa1388fc638ffc
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy
+    - pip
+    - python
+  run:
+    - numpy >=1.14
+    - python
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - sortednp
+    - sortednp.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gitlab.sauerburger.com/frank/sortednp
+  summary: Merge and intersect sorted numpy arrays.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tschoonj

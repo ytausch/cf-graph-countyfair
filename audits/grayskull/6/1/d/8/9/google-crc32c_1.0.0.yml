@@ -1,0 +1,43 @@
+{% set name = "google-crc32c" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 9439b960b6ecd847557675d130fc3626d762bf535da595c20a6949a705fb3eae
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cffi >=1.0.0
+    - pip
+    - python >=3.5
+  run:
+    - cffi >=1.0.0
+    - python >=3.5
+
+test:
+  imports:
+    - google_crc32c
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/googleapis/python-crc32c
+  summary: A python wrapper of the C library 'Google CRC32C'
+  license: Apache-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - tswast

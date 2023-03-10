@@ -1,0 +1,46 @@
+{% set name = "modin" %}
+{% set version = 0.8.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/modin-{{ version }}.tar.gz
+  sha256: 4caddd8860f8b4d5dcf4bc7981ef7f995a88d3d64125a79929a7814dd0a5c8d7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - wheel
+  run:
+    - packaging
+    - pandas ==1.1.2
+    - python >=3.6
+
+test:
+  imports:
+    - modin
+    - modin.backends
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/modin-project/modin
+  summary: 'Modin: Make your pandas code run faster by changing one line of code.'
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - devin-petersohn
+    - h-vetinari

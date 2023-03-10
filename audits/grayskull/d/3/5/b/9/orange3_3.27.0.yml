@@ -1,0 +1,84 @@
+{% set name = "orange3" %}
+{% set version = 3.27.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Orange3-{{ version }}.tar.gz
+  sha256: f29a010cf57b2ea4fe28cf1045d9be306257c1c72f0bf0ef13577527d9b1f9bc
+
+build:
+  number: 0
+  entry_points:
+    - orange-canvas = Orange.canvas.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - numpy
+    - pip
+    - python
+    - recommonmark
+    - sphinx
+  run:
+    - anyqt >=0.0.8
+    - baycomp >=1.0.2
+    - bottleneck >=1.0.0
+    - chardet >=3.0.2
+    - docutils
+    - httpx ~=0.14.0
+    - joblib >=0.9.4
+    - keyring
+    - keyrings.alt
+    - matplotlib-base >=2.0.0
+    - networkx
+    - numpy >=1.16.0
+    - openpyxl
+    - opentsne >=0.4.3
+    - orange-canvas-core >=0.1.16,<0.2a
+    - orange-widget-base >=4.8.1
+    - pandas
+    - pip >=9.0
+    - pyqt >=5.12,!=5.15.1
+    - pyqtgraph >=0.11.0
+    - pyqtwebengine >=5.12
+    - python
+    - python-louvain >=0.13
+    - pyyaml
+    - requests
+    - scikit-learn >=0.22.0,!=0.23.0
+    - scipy >=0.16.1
+    - serverfiles
+    - setuptools >=36.3
+    - typing  # [py<=34]
+    - xlrd >=0.9.2
+    - xlsxwriter
+
+test:
+  imports:
+    - Orange
+    - Orange.canvas
+  commands:
+    - pip check
+    - orange-canvas --help
+  requires:
+    - pip
+
+about:
+  home: http://orange.biolab.si/
+  summary: Orange, a component-based data mining framework.
+  license: GPL-3.0-or-later
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - astaric
+    - lanzagar
+    - ales-erjavec
+    - nikicc
+    - markotoplak
+    - primozgodec
+    - carlodri

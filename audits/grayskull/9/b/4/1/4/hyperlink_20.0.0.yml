@@ -1,0 +1,45 @@
+{% set name = "hyperlink" %}
+{% set version = 20.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 1383c4c9f25ad812261bf156591e8a46a1a252a4fe5b0cb659fdd0cec66c67ff
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - idna >=2.5
+    - python
+    - typing  # [py<35]
+
+test:
+  imports:
+    - hyperlink
+    - hyperlink.test
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/python-hyper/hyperlink
+  summary: A featureful, immutable, and correct URL for Python.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - isuruf
+    - synapticarbors

@@ -1,0 +1,52 @@
+{% set name = "ablog" %}
+{% set version = 0.10.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ablog-{{ version }}.tar.gz
+  sha256: 53f84bb7f1942d6686f3faa19bf6f724a12df9b48061dbf512de0a641a4d982a
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - ablog = ablog.commands:ablog_main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - docutils
+    - feedgen
+    - invoke
+    - python >=3.6
+    - python-dateutil
+    - sphinx >=2.0
+    - watchdog
+
+test:
+  imports:
+    - ablog
+  commands:
+    - pip check
+    - ablog --help
+  requires:
+    - pip
+
+about:
+  home: https://ablog.readthedocs.org/
+  summary: A Sphinx extension that converts any documentation or personal website project into a full-fledged blog.
+  license: MIT
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - nabobalis
+    - cadair

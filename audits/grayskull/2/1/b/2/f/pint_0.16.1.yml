@@ -1,0 +1,46 @@
+{% set name = "pint" %}
+{% set version = 0.16.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Pint-{{ version }}.tar.gz
+  sha256: d43a2e9ae003164978b60fdf8cd920d8581e1a5991df8dded29b00f4850ec83a
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools
+    - setuptools_scm
+  run:
+    - importlib-metadata  # [py<38]
+    - importlib_resources  # [py<37]
+    - packaging
+    - python
+
+test:
+  imports:
+    - pint
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/hgrecco/pint
+  summary: Physical quantities module
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dopplershift

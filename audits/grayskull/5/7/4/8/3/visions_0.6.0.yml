@@ -1,0 +1,47 @@
+{% set name = "visions" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/visions-{{ version }}.tar.gz
+  sha256: 4a0f16ae033dda82e1cf539579d9fa94265028f1fb0c58bf375c332e8b147f11
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - attrs >=19.3.0
+    - networkx >=2.4
+    - numpy
+    - pandas >=0.25.3
+    - python >=3.6
+    - tangled-up-in-unicode >=0.0.4
+
+test:
+  imports:
+    - visions
+    - visions.application
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dylan-profiler/visions
+  summary: Visions
+  license: BSD-4-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - philip-khor

@@ -1,0 +1,46 @@
+{% set name = "torchani" %}
+{% set version = 2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c086fe6cabe49a0408d1f1b12aaf14e33b9e6ef0ffb15f3020792934e7c9fbbe
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - lark-parser
+    - python
+    - requests
+    - torch
+
+test:
+  imports:
+    - torchani
+    - torchani.data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/aiqm/torchani
+  summary: PyTorch implementation of ANI
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - hadim

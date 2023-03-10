@@ -1,0 +1,44 @@
+{% set name = "pycairo" %}
+{% set version = 1.20.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pycairo-{{ version }}.tar.gz
+  sha256: 5695a10cb7f9ae0d01f665b56602a845b0a8cb17e2123bfece10c2e58552468c
+
+build:
+  number: 0
+  skip: true   # [py>=40 or py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - cairo
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pycairo.readthedocs.io
+  summary: Python interface for cairo
+  license: MPL-2.0
+  license_file: COPYING-MPL-1.1
+
+extra:
+  recipe-maintainers:
+    - pkgw

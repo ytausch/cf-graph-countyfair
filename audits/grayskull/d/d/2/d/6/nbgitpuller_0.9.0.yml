@@ -1,0 +1,46 @@
+{% set name = "nbgitpuller" %}
+{% set version = 0.9.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: e026c00b577aa7eff7fd4ac759a802d922c3912a82275446ec85b3b044c154d9
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - gitpuller = nbgitpuller.pull:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - notebook >=5.5.0
+    - python
+    - tornado
+
+test:
+  imports:
+    - nbgitpuller
+  commands:
+    - pip check
+    - gitpuller --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jupyterhub/nbgitpuller
+  summary: Notebook Extension to do one-way synchronization of git repositories
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf

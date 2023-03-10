@@ -1,0 +1,232 @@
+{
+ "archived": false,
+ "branch": "main",
+ "conda-forge.yml": {},
+ "feedstock_name": "cutlass",
+ "hash_type": "sha256",
+ "linux_64_meta_yaml": {
+  "about": {
+   "dev_url": "https://github.com/NVIDIA/cutlass",
+   "home": "https://github.com/NVIDIA/cutlass",
+   "license": "BSD-3-Clause",
+   "license_file": "LICENSE.txt",
+   "summary": "CUDA Templates for Linear Algebra Subroutines"
+  },
+  "build": {
+   "number": "0",
+   "run_exports": [
+    "cutlass"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "h-vetinari"
+   ]
+  },
+  "package": {
+   "name": "cutlass",
+   "version": "2.9.1"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "make"
+   ],
+   "host": [
+    "cudnn"
+   ],
+   "run": [
+    "cudnn"
+   ]
+  },
+  "source": {
+   "sha256": "2d6474576c08ee21d7f4f3a10fd1a47234fd9fd638efc8a2e0e64bb367f09bc1",
+   "url": "https://github.com/NVIDIA/cutlass/archive/refs/tags/v2.9.1.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f $PREFIX/lib/libcutlass.so",
+    "test ! -f $PREFIX/lib/libcutlass.a",
+    "test -f $PREFIX/include/cutlass/library/handle.h || (echo \"library/handle.h not found\" && exit 1)",
+    "test -f $PREFIX/include/cutlass/library/library.h || (echo \"library/library.h not found\" && exit 1)",
+    "test -f $PREFIX/include/cutlass/library/operation_table.h || (echo \"library/operation_table.h not found\" && exit 1)",
+    "test -f $PREFIX/include/cutlass/library/singleton.h || (echo \"library/singleton.h not found\" && exit 1)"
+   ]
+  }
+ },
+ "linux_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "cudnn"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "cudnn"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "meta_yaml": {
+  "about": {
+   "dev_url": "https://github.com/NVIDIA/cutlass",
+   "home": "https://github.com/NVIDIA/cutlass",
+   "license": "BSD-3-Clause",
+   "license_file": "LICENSE.txt",
+   "summary": "CUDA Templates for Linear Algebra Subroutines"
+  },
+  "build": {
+   "number": "0",
+   "run_exports": [
+    "cutlass"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "h-vetinari"
+   ]
+  },
+  "package": {
+   "name": "cutlass",
+   "version": "2.9.1"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "make"
+   ],
+   "host": [
+    "cudnn"
+   ],
+   "run": [
+    "cudnn"
+   ]
+  },
+  "source": {
+   "sha256": "2d6474576c08ee21d7f4f3a10fd1a47234fd9fd638efc8a2e0e64bb367f09bc1",
+   "url": "https://github.com/NVIDIA/cutlass/archive/refs/tags/v2.9.1.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f $PREFIX/lib/libcutlass.so",
+    "test ! -f $PREFIX/lib/libcutlass.a",
+    "test -f $PREFIX/include/cutlass/library/handle.h || (echo \"library/handle.h not found\" && exit 1)",
+    "test -f $PREFIX/include/cutlass/library/library.h || (echo \"library/library.h not found\" && exit 1)",
+    "test -f $PREFIX/include/cutlass/library/operation_table.h || (echo \"library/operation_table.h not found\" && exit 1)",
+    "test -f $PREFIX/include/cutlass/library/singleton.h || (echo \"library/singleton.h not found\" && exit 1)"
+   ]
+  }
+ },
+ "name": "cutlass",
+ "outputs_names": {
+  "__set__": true,
+  "elements": [
+   "cutlass"
+  ]
+ },
+ "parsing_error": false,
+ "pr_info": {
+  "__lazy_json__": "pr_info/cutlass.json"
+ },
+ "raw_meta_yaml": "{% set version = \"2.9.1\" %}\n\npackage:\n  name: cutlass\n  version: {{ version }}\n\nsource:\n  url: https://github.com/NVIDIA/cutlass/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 2d6474576c08ee21d7f4f3a10fd1a47234fd9fd638efc8a2e0e64bb367f09bc1\n\nbuild:\n  number: 0\n  skip: true  # [not linux]\n  # not supported for CUDA 10 nor CPU\n  # CUDA 11.{0|1} times out consistently\n  skip: true  # [cuda_compiler_version != \"11.2\"]\n  run_exports:\n    - {{ pin_subpackage('cutlass', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - cmake\n    - make\n  host:\n    - cudnn\n  run:\n    - cudnn\ntest:\n  commands:\n    # shared:\n    - test -f $PREFIX/lib/libcutlass.so               # [linux]\n    - if not exist %LIBRARY_BIN%\\cutlass.dll exit 1   # [win]\n\n    # absence of static libraries (windows uses same extension for\n    # static libs and the \"import library\" needed to load a DLL):\n    - test ! -f $PREFIX/lib/libcutlass.a              # [not win]\n\n    # headers:\n    # This list should be substantially longer, but upstream just globs\n    # all *.h files. These are the headers required for triton, but\n    # relevant headers can be added as needed/desired.\n    {% for each_header in [\"library/handle.h\", \"library/library.h\",\n                           \"library/operation_table.h\", \"library/singleton.h\"] %}\n    - test -f $PREFIX/include/cutlass/{{ each_header }} || (echo \"{{ each_header }} not found\" && exit 1)  # [unix]\n    - if not exist %LIBRARY_INC%\\cutlass\\{{ \"\\\\\".join(each_header.split(\"/\")) }} exit 1                    # [win]\n    {% endfor %}\n\nabout:\n  home: https://github.com/NVIDIA/cutlass\n  license: BSD-3-Clause\n  license_file: LICENSE.txt\n  summary: CUDA Templates for Linear Algebra Subroutines\n  dev_url: https://github.com/NVIDIA/cutlass\n\nextra:\n  recipe-maintainers:\n    - h-vetinari\n",
+ "req": {
+  "__set__": true,
+  "elements": [
+   "c_compiler_stub",
+   "cmake",
+   "cuda_compiler_stub",
+   "cudnn",
+   "cxx_compiler_stub",
+   "make"
+  ]
+ },
+ "requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cuda_compiler_stub",
+    "cudnn",
+    "cxx_compiler_stub"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cuda_compiler_stub",
+    "cudnn",
+    "cxx_compiler_stub"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "strong_exports": false,
+ "total_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "cudnn"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "cudnn"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "url": "https://github.com/NVIDIA/cutlass/archive/refs/tags/v2.9.1.tar.gz",
+ "version": "2.9.1",
+ "version_pr_info": {
+  "__lazy_json__": "version_pr_info/cutlass.json"
+ }
+}

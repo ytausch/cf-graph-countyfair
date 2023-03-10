@@ -1,0 +1,57 @@
+{% set name = "gsutil" %}
+{% set version = 4.53 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/gsutil-{{ version }}.tar.gz
+  sha256: f46de2b85260d3d2eafaa9779a4328cdc090dae3371b2f73594229cf19ffa08d
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - gsutil = gslib.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python <4.0
+  run:
+    - argcomplete >=1.9.4
+    - crcmod >=1.7
+    - fasteners >=0.14.1
+    - gcs-oauth2-boto-plugin >=2.7
+    - google-apitools >=0.5.30
+    - google-reauth >=0.1.0
+    - httplib2 >=0.18
+    - mock ==2.0.0
+    - monotonic >=1.4
+    - pyopenssl >=0.13
+    - python <4.0
+    - retry_decorator >=1.0.0
+    - six >=1.12.0
+
+test:
+  imports:
+    - gslib
+    - gslib.addlhelp
+  commands:
+    - pip check
+    - gsutil --help
+  requires:
+    - pip
+
+about:
+  home: https://cloud.google.com/storage/docs/gsutil
+  summary: A command line tool for interacting with cloud storage services.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - xhochy

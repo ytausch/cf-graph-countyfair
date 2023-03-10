@@ -1,0 +1,48 @@
+{% set name = "poetry-core" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/poetry-core-{{ version }}.tar.gz
+  sha256: 6a664ff389b9f45382536f8fa1611a0cb4d2de7c5a5c885db1f0c600cd11fbd5
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - enum34 >=1.1.10,<2.0.0  # [py>=27 and py<28]
+    - functools32 >=3.2.3-2,<4.0.0  # [py>=27 and py<28]
+    - importlib-metadata >=1.7.0,<2.0.0  # [py>=27 and py<28 or py>=35 and py<38]
+    - pathlib2 >=2.3.5,<3.0.0  # [py>=27 and py<28]
+    - python
+    - typing >=3.7.4.1,<4.0.0.0  # [py>=27 and py<28]
+
+test:
+  imports:
+    - poetry
+    - poetry.core
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/python-poetry/poetry-core
+  summary: Poetry PEP 517 Build Backend
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - xylar

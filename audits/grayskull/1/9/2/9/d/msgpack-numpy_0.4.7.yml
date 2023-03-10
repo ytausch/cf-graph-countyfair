@@ -1,0 +1,44 @@
+{% set name = "msgpack-numpy" %}
+{% set version = 0.4.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/msgpack-numpy-{{ version }}.tar.gz
+  sha256: 8e975dd7dd9eb13cbf5e8cd90af1f12af98706bbeb7acfcbd8d558fd005a85d7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - msgpack >=0.5.2
+    - numpy >=1.9.0
+    - python
+
+test:
+  imports:
+    - msgpack_numpy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/lebedov/msgpack-numpy
+  summary: Numpy data serialization using msgpack
+  license: BSD-3-Clause
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - nehaljwani
+    - carlodri

@@ -1,0 +1,45 @@
+{% set name = "iscan" %}
+{% set version = 0.3.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 8b96ed0ab2e3d75017073904441dd312c95beeb1099950a193c921f48cd7a4c7
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - iscan=iscan.scan:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - iscan
+    - iscan.tests
+  commands:
+    - pip check
+    - iscan --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ZhengnanZhao/iscan
+  summary: iscan helps you identify your project's third-party dependencies
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ZhengnanZhao

@@ -1,0 +1,68 @@
+{% set name = "astropy" %}
+{% set version = 4.0.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/astropy-{{ version }}.tar.gz
+  sha256: 4014e472cc7d3ca225524bf56bf4087042cc564849cfc528c435414c2f2f4b7e
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - fits2bitmap = astropy.visualization.scripts.fits2bitmap:main
+    - fitscheck = astropy.io.fits.scripts.fitscheck:main
+    - fitsdiff = astropy.io.fits.scripts.fitsdiff:main
+    - fitsheader = astropy.io.fits.scripts.fitsheader:main
+    - fitsinfo = astropy.io.fits.scripts.fitsinfo:main
+    - samp_hub = astropy.samp.hub_script:hub_script
+    - showtable = astropy.table.scripts.showtable:main
+    - volint = astropy.io.votable.volint:main
+    - wcslint = astropy.wcs.wcslint:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy >=1.16
+    - pip
+    - python
+  run:
+    - numpy >=1.16
+    - python
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - astropy
+    - astropy._erfa
+  commands:
+    - pip check
+    - fits2bitmap --help
+    - fitscheck --help
+    - fitsdiff --help
+    - fitsheader --help
+    - fitsinfo --help
+    - samp_hub --help
+    - showtable --help
+    - volint --help
+    - wcslint --help
+  requires:
+    - pip
+
+about:
+  home: http://astropy.org
+  summary: Astronomy and astrophysics core library
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - astrofrog-conda-forge
+    - mwcraig
+    - bsipocz

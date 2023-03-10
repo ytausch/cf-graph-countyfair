@@ -1,0 +1,50 @@
+{% set name = "spec2nii" %}
+{% set version = 0.2.10 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/spec2nii-{{ version }}.tar.gz
+  sha256: 52ffc6303c6ae451047f28b5bd978aa8ce1ea51dc99ea2041eeeebfbaea8906f
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - spec2nii = spec2nii.spec2nii:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - nibabel
+    - numpy
+    - pydicom
+    - pymapvbvd >=0.4.0
+    - python >=3.7
+    - scipy
+
+test:
+  imports:
+    - spec2nii
+    - spec2nii.GSL
+  commands:
+    - pip check
+    - spec2nii --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/wexeee/spec2nii
+  summary: Multi-format in vivo MR spectroscopy conversion to NIFTI
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - wexeee

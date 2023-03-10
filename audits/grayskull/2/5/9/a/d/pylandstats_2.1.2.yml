@@ -1,0 +1,48 @@
+{% set name = "pylandstats" %}
+{% set version = 2.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: aeaf8be7964672cdf2102adb0b382bc3f9a57c3e9cb06956ec980fefc5676629
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - transonic
+  run:
+    - matplotlib-base >=2.2
+    - numpy >=1.15
+    - pandas >=0.23
+    - python
+    - rasterio >=1.0.0
+    - scipy >=1.0.0
+    - transonic >=0.4.0
+
+test:
+  imports:
+    - pylandstats
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/martibosch/pylandstats
+  summary: Open-source Python library to compute landscape metrics
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - martibosch

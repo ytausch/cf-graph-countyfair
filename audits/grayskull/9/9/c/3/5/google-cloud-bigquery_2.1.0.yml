@@ -1,0 +1,49 @@
+{% set name = "google-cloud-bigquery" %}
+{% set version = 2.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/google-cloud-bigquery-{{ version }}.tar.gz
+  sha256: 7369e2f81ccddfa62f2af4009dbddf7a1daaef0fc701a4097e8de5508235af74
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - google-api-core >=1.22.2,<2.0.0dev
+    - google-cloud-core >=1.4.1,<2.0dev
+    - google-resumable-media >=0.6.0,<2.0dev
+    - proto-plus >=1.10.0
+    - python >=3.6
+    - six >=1.13.0,<2.0.0dev
+
+test:
+  imports:
+    - google
+    - google.cloud
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/googleapis/python-bigquery
+  summary: Google BigQuery API client library
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - leahecole
+    - parthea
+    - tswast

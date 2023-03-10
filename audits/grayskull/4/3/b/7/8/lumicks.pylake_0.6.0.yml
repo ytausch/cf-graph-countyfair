@@ -1,0 +1,51 @@
+{% set name = "lumicks.pylake" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/lumicks.pylake-{{ version }}.tar.gz
+  sha256: 235ec7a85837ad259833675301c25dbe6c95787ddd2892d9cc52732e3ebb95ac
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - h5py >=2.9,<3.0
+    - matplotlib-base >=2.2
+    - numpy >=1.14,<2
+    - pytest >=3.5
+    - python >=3.6
+    - scipy >=1.1,<2
+    - tabulate ==0.8.6
+    - tifffile >=2018.11.6
+
+test:
+  imports:
+    - lumicks.pylake
+    - lumicks.pylake.detail
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/lumicks/pylake
+  summary: Bluelake data analysis tools
+  license: Apache-2.0
+  license_file: license.md
+
+extra:
+  recipe-maintainers:
+    - dean0x7d
+    - onnodb
+    - JoepVanlier

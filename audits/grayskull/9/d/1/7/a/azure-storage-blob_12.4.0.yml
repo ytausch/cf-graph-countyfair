@@ -1,0 +1,48 @@
+{% set name = "azure-storage-blob" %}
+{% set version = 12.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 96a09b2ff234d7623667e1002c916b5b562e5829ea62b4175309f65ab06a03e8
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - azure-core <2.0.0,>=1.6.0
+    - azure-storage-nspkg <4.0.0,>=3.0.0  # [py<30]
+    - cryptography >=2.1.4
+    - enum34 >=1.0.4  # [py<34]
+    - futures  # [py<30]
+    - msrest >=0.6.10
+    - python
+    - typing  # [py<35]
+
+test:
+  imports:
+    - azure.storage.blob
+    - azure.storage.blob._generated
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/storage/azure-storage-blob
+  summary: Microsoft Azure Blob Storage Client Library for Python
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - xhochy

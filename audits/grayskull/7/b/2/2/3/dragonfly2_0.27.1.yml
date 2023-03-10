@@ -1,0 +1,60 @@
+{% set name = "dragonfly2" %}
+{% set version = 0.27.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dragonfly2-{{ version }}.tar.gz
+  sha256: 4b0a9e1834036f0ed64a6fdb79b4cbc626161ccfc2326837d617057355683f4d
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - comtypes  # [win]
+    - decorator
+    - enum34  # [py<34]
+    - json-rpc
+    - lark-parser ==0.8.*
+    - packaging >=19.0
+    - psutil >=5.5.1  # [linux]
+    - py-applescript ==1.0.0  # [osx]
+    - pynput >=1.4.2  # [osx]
+    - pyobjc >=5.2  # [osx]
+    - pyperclip >=1.7.0
+    - python
+    - pywin32  # [win]
+    - regex
+    - requests
+    - setuptools >=40.0.0
+    - six
+    - werkzeug
+
+test:
+  imports:
+    - dragonfly
+    - dragonfly.accessibility
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dictation-toolbox/dragonfly
+  summary: Speech recognition extension library
+  license: LGPL-3.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - ndmaxar
+    - oblute
+    - rluria14

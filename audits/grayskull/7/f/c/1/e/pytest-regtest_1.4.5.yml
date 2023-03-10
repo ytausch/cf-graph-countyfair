@@ -1,0 +1,43 @@
+{% set name = "pytest-regtest" %}
+{% set version = 1.4.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest-regtest-{{ version }}.tar.gz
+  sha256: a1e4e87d483e493d9bf6d15a71a46dedaccb6caab79fa8066f47a8eb3e6f86e3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - pytest >=4.1.0
+    - python
+
+test:
+  imports:
+    - pytest_regtest
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gitlab.com/uweschmitt/pytest-regtest
+  summary: pytest plugin for regression tests
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - danieljahn
+    - dbast

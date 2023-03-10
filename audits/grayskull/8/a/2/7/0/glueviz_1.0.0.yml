@@ -1,0 +1,44 @@
+{% set name = "glueviz" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/glueviz-{{ version }}.tar.gz
+  sha256: 89db2b2331eb74f221251b129f6ce6b507f14101caea993ee0926ceeeaaf68ab
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - glue-core >=1.0.0
+    - glue-vispy-viewers >=1.0.0
+    - python
+
+test:
+  imports:
+    - glueviz
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://glueviz.org
+  summary: Multidimensional data visualization across files
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - astrofrog-conda-forge

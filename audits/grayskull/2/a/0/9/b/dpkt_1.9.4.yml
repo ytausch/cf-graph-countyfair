@@ -1,0 +1,41 @@
+{% set name = "dpkt" %}
+{% set version = 1.9.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dpkt-{{ version }}.tar.gz
+  sha256: f4e579cbaf6e2285ebf3a9e84019459b4367636bac079ba169527e582fca48b4
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - dpkt
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/kbandla/dpkt
+  summary: fast, simple packet creation / parsing, with definitions for the basic TCP/IP protocols
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kylekeppler

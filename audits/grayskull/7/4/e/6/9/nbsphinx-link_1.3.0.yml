@@ -1,0 +1,44 @@
+{% set name = "nbsphinx-link" %}
+{% set version = 1.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nbsphinx-link-{{ version }}.tar.gz
+  sha256: fa3079a74c0dff1b2079e79a34babe770706ba8aa9cc0609c6dbfd593461a077
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - nbsphinx
+    - python
+    - sphinx >=1.8
+
+test:
+  imports:
+    - nbsphinx_link
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/vidartf/nbsphinx-link
+  summary: A sphinx extension for including notebook files outside sphinx source root
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - marimeireles
+    - wolfv

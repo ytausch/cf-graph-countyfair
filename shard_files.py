@@ -76,7 +76,6 @@ for dr in [
     "audits/depfinder",
     "audits/grayskull",
 ]:
-    break
     fnames = os.listdir(dr)
     os.makedirs(
         os.path.join(NEW_LOC, dr),
@@ -87,4 +86,7 @@ for dr in [
         sharded_pth = get_sharded_path(pth)
         dst = os.path.join(NEW_LOC, sharded_pth)
         os.makedirs(os.path.dirname(dst), exist_ok=True)
-        shutil.copy2(pth, dst)
+        try:
+            shutil.copy2(pth, dst)
+        except Exception:
+            print(fname, pth, sharded_pth, dst)

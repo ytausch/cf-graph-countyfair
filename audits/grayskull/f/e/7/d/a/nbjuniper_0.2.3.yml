@@ -1,0 +1,46 @@
+{% set name = "nbjuniper" %}
+{% set version = 0.2.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nbjuniper-{{ version }}.tar.gz
+  sha256: 2f4b1fab2dce6d0c17b5ba0e16b54e67146ed2beb0d7f1072209ede5014893f4
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - nbjuniper = nbjuniper.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - markdown >=3.2.2,<4.0.0
+    - python >=3.6,<4.0
+    - pyyaml >=5.3.1,<6.0.0
+
+test:
+  imports:
+    - nbjuniper
+  commands:
+    - pip check
+    - nbjuniper --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ashtonmv/nbjuniper
+  summary: Convert Jupyter Notebooks into runnable HTML files with Juniper (https://github.com/ines/juniper).
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - ashtonmv

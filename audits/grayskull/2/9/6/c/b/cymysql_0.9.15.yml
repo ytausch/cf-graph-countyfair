@@ -1,0 +1,48 @@
+{% set name = "cymysql" %}
+{% set version = 0.9.15 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cymysql-{{ version }}.tar.gz
+  sha256: 7f5d1285f5434421aed25ff4159151a649d165645d07cbed4ca26927022a13b7
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - cymysql
+    - cymysql.constants
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/nakagami/CyMySQL/
+  summary: Python MySQL Driver using Cython
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - rluria14
+    - mwilson8
+    - benhuff
+    - oblute
+    - ndmaxar

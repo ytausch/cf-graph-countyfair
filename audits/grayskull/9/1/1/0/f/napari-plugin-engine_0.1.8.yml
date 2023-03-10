@@ -1,0 +1,45 @@
+{% set name = "napari-plugin-engine" %}
+{% set version = 0.1.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/napari-plugin-engine-{{ version }}.tar.gz
+  sha256: b285ec4cd428cdd95460fe5e3a16a96a22e7b703750279acca361a69593e7639
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - importlib-metadata >=1.5.0  # [py<38]
+    - python
+
+test:
+  imports:
+    - napari_plugin_engine
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/napari/napari-plugin-engine
+  summary: napari plugin engine, fork of pluggy
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tlambert03
+    - jni
+    - sofroniewn

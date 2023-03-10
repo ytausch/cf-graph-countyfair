@@ -1,0 +1,42 @@
+{% set name = "timezonefinder" %}
+{% set version = 4.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c84e0f4b501419349e67972d25c535d9b5fd6c100c319747049b67812a4c6b97
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - numpy >=1.16
+    - python >=3.6
+
+test:
+  imports:
+    - timezonefinder
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/MrMinimal64/timezonefinder
+  summary: fast python package for finding the timezone of any point on earth (coordinates) offline
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - snowman2

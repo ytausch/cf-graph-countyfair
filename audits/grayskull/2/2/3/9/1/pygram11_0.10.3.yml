@@ -1,0 +1,45 @@
+{% set name = "pygram11" %}
+{% set version = 0.10.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pygram11-{{ version }}.tar.gz
+  sha256: b90f62ce97158d6208889eed43c1b494cfedda0c339f82cbaf83ce9d4ecb350c
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - numpy >=1.16
+    - python
+
+test:
+  imports:
+    - pygram11
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/douglasdavis/pygram11
+  summary: Fast histogramming in Python built on pybind11 and OpenMP.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - douglasdavis

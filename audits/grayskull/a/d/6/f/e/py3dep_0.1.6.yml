@@ -1,0 +1,51 @@
+{% set name = "py3dep" %}
+{% set version = 0.1.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: bf4de614f86d01ad6d8e9dd51306a695477200031007469ed3d585f160eb3f71
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools >=41.2
+    - setuptools_scm
+  run:
+    - dataclasses
+    - pygeoogc
+    - pygeoutils
+    - python >=3.6
+    - rasterio
+    - scipy
+    - setuptools
+    - shapely
+    - xarray
+
+test:
+  imports:
+    - py3dep
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cheginit/py3dep
+  summary: Access USGS 3DEP database and get data such as elevation in the US
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - cheginit

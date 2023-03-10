@@ -1,0 +1,57 @@
+{% set name = "cvxpy" %}
+{% set version = 1.1.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cvxpy-{{ version }}.tar.gz
+  sha256: 36527573c937cedd270f46c77b50bb5e16b96ca7b05a7a480bdc8c9052595723
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy >=1.15
+    - pip
+    - python
+  run:
+    - ecos >=2
+    - numpy >=1.15
+    - osqp >=0.4.1
+    - python
+    - scipy >=1.1.0
+    - scs >=1.1.6
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - cvxpy
+    - cvxpy.atoms
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/cvxgrp/cvxpy/
+  summary: A domain-specific language for modeling convex optimization problems in Python.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - SteveDiamond
+    - akshayka
+    - rileyjmurray
+    - djsutherland
+    - mcg1969
+    - scopatz
+    - h-vetinari

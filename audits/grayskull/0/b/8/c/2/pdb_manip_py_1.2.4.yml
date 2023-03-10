@@ -1,0 +1,49 @@
+{% set name = "pdb_manip_py" %}
+{% set version = 1.2.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pdb_manip_py-{{ version }}.tar.gz
+  sha256: eb86106f4b2945c9ce3e6ced237f62308afa3556a9c3fd218b648817776f0944
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - nbsphinx
+    - numpy
+    - os_command_py
+    - pdb2pqr_htmd_propka30
+    - pytest >=4.6
+    - python
+    - scipy >=1.4.0
+    - sphinx-argparse
+    - sphinx_rtd_theme
+
+test:
+  imports:
+    - pdb_manip_py
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/samuelmurail/pdb_manip_py
+  summary: Pdb_Manip_py is a python library allowing simple operations on pdb coor files.
+  license: GPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - samuelmurail

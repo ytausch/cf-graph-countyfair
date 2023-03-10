@@ -1,0 +1,61 @@
+{% set name = "pymove" %}
+{% set version = 2.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pymove-{{ version }}.tar.gz
+  sha256: 097f2e8e0f92adde926820e03d11ff2c79749e562831b8b22b660448e6500bf3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - branca
+    - dask-core
+    - folium >=0.10.1
+    - geohash2
+    - geojson
+    - holidays
+    - ipython
+    - ipywidgets
+    - joblib
+    - matplotlib-base
+    - mplleaflet
+    - numpy
+    - pandas <=1.0.5
+    - psutil
+    - python >=3.6
+    - pytz
+    - scikit-learn
+    - scipy
+    - shapely
+    - tqdm
+
+test:
+  imports:
+    - pymove
+    - pymove.core
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/InsightLab/PyMove
+  summary: A lib python to processing and visualization of trajectories and other spatial-temporal data
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - flych3r

@@ -1,0 +1,45 @@
+{% set name = "pymemcache" %}
+{% set version = 3.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pymemcache-{{ version }}.tar.gz
+  sha256: 47882ab1c7e5e1dea67df8aa9faf410ce82e606fd5f29501273a60ff61d7cc99
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - six
+  run:
+    - python
+    - six
+
+test:
+  imports:
+    - pymemcache
+    - pymemcache.client
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pinterest/pymemcache
+  summary: A comprehensive, fast, pure Python memcached client
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - nicoddemus
+    - tadeu

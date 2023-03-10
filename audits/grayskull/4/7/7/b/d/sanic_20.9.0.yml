@@ -1,0 +1,53 @@
+{% set name = "sanic" %}
+{% set version = 20.9.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sanic-{{ version }}.tar.gz
+  sha256: d91bf266f672460ff0be1a421fec4bb2ec572490bbf4453de0c2057994140341
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - sanic = sanic.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - aiofiles >=0.3.0
+    - httptools >=0.0.10
+    - httpx ==0.15.4
+    - multidict >=4.0,<5.0
+    - python
+    - ujson >=1.35  # [not win]
+    - uvloop >=0.5.3  # [not win]
+    - websockets >=8.1,<9.0
+
+test:
+  imports:
+    - sanic
+  commands:
+    - pip check
+    - sanic --help
+  requires:
+    - pip
+
+about:
+  home: http://github.com/huge-success/sanic/
+  summary: A web server and web framework that's written to go fast. Build fast. Run fast.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kszucs
+    - nicoddemus

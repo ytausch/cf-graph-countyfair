@@ -1,0 +1,51 @@
+{% set name = "depfinder" %}
+{% set version = 2.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/depfinder-{{ version }}.tar.gz
+  sha256: 221df6c85999df08730b5a34d8f77033bad634aa24501ea906d1be2da5026bfc
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - depfinder = depfinder.cli:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - pyyaml
+    - stdlib-list
+
+test:
+  imports:
+    - depfinder
+  commands:
+    - pip check
+    - depfinder --help
+  requires:
+    - pip
+
+about:
+  home: http://github.com/ericdill/depfinder
+  summary: Find all the imports in your library
+  doc_url: https://pythonhosted.org/depfinder/
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ericdill
+    - mariusvniekerk
+    - tonyfast
+    - ocefpaf
+    - CJ-Wright

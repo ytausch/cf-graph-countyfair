@@ -1,0 +1,49 @@
+{% set name = "azure-datalake-store" %}
+{% set version = 0.0.50 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/azure-datalake-store-{{ version }}.tar.gz
+  sha256: 9b9b58dcf1d0d0e5aa499d5cb49dcf8f5432ca467a747b39167bb70ef901dbc2
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - adal >=0.4.2
+    - azure-nspkg  # [py<30]
+    - cffi
+    - futures  # [py<=27]
+    - pathlib2  # [py<34]
+    - python
+    - requests >=2.20.0
+
+test:
+  imports:
+    - azure.datalake
+    - azure.datalake.store
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Azure/azure-data-lake-store-python
+  summary: Azure Data Lake Store Filesystem Client Library for Python
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - dillonroach
+    - scopatz
+    - costrouc

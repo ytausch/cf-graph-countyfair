@@ -1,0 +1,42 @@
+{% set name = "xrootd" %}
+{% set version = 5.0.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xrootd-{{ version }}.tar.gz
+  sha256: eaa3f0788392c07864bc76304133a0252c9bdd3c1ad008d508d52f5c6acd8220
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pkgconfig
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - xrootd
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://xrootd.org
+  summary: XRootD with Python bindings
+  license: BSD-3-Clause
+  license_file: COPYING.BSD
+
+extra:
+  recipe-maintainers:
+    - chrisburr

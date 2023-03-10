@@ -1,0 +1,53 @@
+{% set name = "bravado" %}
+{% set version = 10.6.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/bravado-{{ version }}.tar.gz
+  sha256: b2b0ae6d190ab699646261eb569a24902683a25d3834473d1f88c78ab88ca854
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34 or py==35]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - bravado-core >=5.16.1
+    - monotonic
+    - msgpack-python
+    - python
+    - python-dateutil
+    - pyyaml
+    - requests >=2.17
+    - simplejson
+    - six
+    - typing  # [py<35]
+    - typing-extensions
+
+test:
+  imports:
+    - bravado
+    - bravado.testing
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Yelp/bravado
+  summary: Library for accessing Swagger-enabled API's
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - chapmanb
+    - marcelotrevisani

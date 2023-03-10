@@ -1,0 +1,46 @@
+{% set name = "cf_xarray" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cf_xarray-{{ version }}.tar.gz
+  sha256: 14f3d1fb6a2fdda0fbda681fd186d4e5ae5f3eb5a59d542da785bb367ca8007f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools >=41.2
+    - setuptools_scm
+  run:
+    - numpy >=1.15
+    - pandas >=0.25
+    - python >=3.6
+    - setuptools >=41.2
+
+test:
+  imports:
+    - cf_xarray
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://cf-xarray.readthedocs.io
+  summary: A lightweight convenience wrapper for using CF attributes on xarray objects.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dcherian

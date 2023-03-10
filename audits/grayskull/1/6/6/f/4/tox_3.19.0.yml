@@ -1,0 +1,61 @@
+{% set name = "tox" %}
+{% set version = 3.19.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 17e61a93afe5c49281fb969ab71f7a3f22d7586d1c56f9a74219910f356fe7d3
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34]
+  entry_points:
+    - tox=tox:cmdline
+    - tox-quickstart=tox._quickstart:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - colorama >=0.4.1  # [win]
+    - filelock >=3.0.0
+    - importlib-metadata >=0.12,<2  # [py<38]
+    - packaging >=14
+    - pluggy >=0.12.0
+    - py >=1.4.17
+    - python
+    - six >=1.14.0
+    - toml >=0.9.4
+    - virtualenv !=20.0.0,!=20.0.1,!=20.0.2,!=20.0.3,!=20.0.4,!=20.0.5,!=20.0.6,!=20.0.7,>=16.0.0
+
+test:
+  imports:
+    - tox
+    - tox.config
+  commands:
+    - pip check
+    - tox --help
+    - tox-quickstart --help
+  requires:
+    - pip
+
+about:
+  home: http://tox.readthedocs.org
+  summary: tox is a generic virtualenv management and test command line tool
+  dev_url: https://github.com/tox-dev/tox
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - cshaley
+    - kalefranz
+    - sannykr
+    - bollwyvl

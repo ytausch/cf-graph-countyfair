@@ -1,0 +1,52 @@
+{% set name = "regionmask" %}
+{% set version = 0.6.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/regionmask-{{ version }}.tar.gz
+  sha256: 044d3a62132961b17d4b0c3633294f943329114a3391b113e9a05014c196b4a3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - affine
+    - cartopy
+    - geopandas
+    - matplotlib-base
+    - numpy
+    - pooch
+    - python
+    - rasterio
+    - shapely
+    - six
+    - xarray
+
+test:
+  imports:
+    - regionmask
+    - regionmask.core
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mathause/regionmask
+  summary: plotting and creation of masks for spatial regions
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mathause

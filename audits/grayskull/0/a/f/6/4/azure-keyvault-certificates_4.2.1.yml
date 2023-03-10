@@ -1,0 +1,47 @@
+{% set name = "azure-keyvault-certificates" %}
+{% set version = 4.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/azure-keyvault-certificates-{{ version }}.zip
+  sha256: ea651883ad00d0a9a25b38e51feff7111f6c7099c6fb2597598da5bb21d3451c
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - azure-common ~=1.1
+    - azure-core <2.0.0,>=1.7.0
+    - azure-keyvault-nspkg  # [py<30]
+    - enum34 >=1.0.4  # [py<34]
+    - msrest >=0.6.0
+    - python
+    - typing  # [py<35]
+
+test:
+  imports:
+    - azure.keyvault.certificates
+    - azure.keyvault.certificates._generated
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/keyvault/azure-keyvault-certificates
+  summary: Microsoft Azure Key Vault Certificates Client Library for Python
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - dhirschfeld

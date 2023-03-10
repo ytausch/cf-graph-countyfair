@@ -1,0 +1,46 @@
+{% set name = "toolz" %}
+{% set version = 0.11.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/toolz-{{ version }}.tar.gz
+  sha256: c7a47921f07822fe534fb1c01c9931ab335a4390c782bd28c6bcc7c2f71f3fbf
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - tlz
+    - toolz
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pytoolz/toolz/
+  summary: List processing tools and functional utilities
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - mrocklin
+    - eriknw
+    - jcrist
+    - jakirkham
+    - ocefpaf

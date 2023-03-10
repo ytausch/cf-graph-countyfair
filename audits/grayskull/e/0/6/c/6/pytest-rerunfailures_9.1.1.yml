@@ -1,0 +1,45 @@
+{% set name = "pytest-rerunfailures" %}
+{% set version = 9.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest-rerunfailures-{{ version }}.tar.gz
+  sha256: 1cb11a17fc121b3918414eb5eaf314ee325f2e693ac7cb3f6abf7560790827f2
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - pytest >=5.0
+    - python >=3.5
+    - setuptools >=40.0
+
+test:
+  imports:
+    - pytest_rerunfailures
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pytest-dev/pytest-rerunfailures
+  summary: pytest plugin to re-run tests to eliminate flaky failures
+  license: MPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nicoddemus
+    - pg-hbk
+    - sy-hbk

@@ -1,0 +1,48 @@
+{% set name = "lbplatformutils" %}
+{% set version = 4.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/LbPlatformUtils-{{ version }}.tar.gz
+  sha256: 6e5e5d08112db6a2e0d4149c49aaa4e1909f9a8d859bdb45a2f853746be26016
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - lb-debug-platform = LbPlatformUtils.debug:main
+    - lb-describe-platform = LbPlatformUtils.describe:main
+    - lb-host-binary-tag = LbPlatformUtils.describe:host_binary_tag_script
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+  run:
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+
+test:
+  imports:
+    - LbPlatformUtils
+  commands:
+    - pip check
+    - lb-debug-platform --help
+    - lb-describe-platform --help
+    - lb-host-binary-tag --help
+  requires:
+    - pip
+
+about:
+  home: https://gitlab.cern.ch/lhcb-core/LbPlatformUtils
+  summary: utilities for platform detection
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - chrisburr

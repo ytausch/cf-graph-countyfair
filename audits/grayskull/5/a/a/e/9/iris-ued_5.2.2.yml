@@ -1,0 +1,55 @@
+{% set name = "iris-ued" %}
+{% set version = 5.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2980bf192f4f716da42f6a208569cc0c09aa3babe2b3c146d0728a1b60078261
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - iris = iris.gui:run
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - crystals >=1.1.2,<2
+    - h5py >=2.10.0
+    - npstreams >=1.6.2,<2
+    - numpy >=1.12
+    - pyqt
+    - pyqtgraph >=0.11
+    - python >=3.6
+    - qdarkstyle >=2.8,<3
+    - scikit-ued >=2.0.3,<3
+    - scipy >=1.0.0
+
+test:
+  imports:
+    - iris
+    - iris.gui
+  commands:
+    - pip check
+    - iris --help
+  requires:
+    - pip
+
+about:
+  home: http://iris-ued.readthedocs.io
+  summary: Ultrafast electron diffraction data exploration
+  dev_url: https://github.com/LaurentRDC/iris-ued
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - LaurentRDC

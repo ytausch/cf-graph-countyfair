@@ -1,0 +1,65 @@
+{% set name = "datalad" %}
+{% set version = 0.13.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/datalad-{{ version }}.tar.gz
+  sha256: b73cb2c34ecbdca38edb040f573686b28255d0898cd6363eaf75553623030bd1
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - annexremote
+    - appdirs
+    - boto
+    - chardet >=3.0.4
+    - colorama  # [win]
+    - distro  # [py>=38]
+    - fasteners
+    - humanize
+    - iso8601
+    - jsmin
+    - keyring >=8.0
+    - keyrings.alt
+    - msgpack
+    - patool >=1.7
+    - pygithub
+    - python
+    - requests >=1.2
+    - simplejson
+    - tqdm
+    - whoosh
+    - wrapt
+
+test:
+  imports:
+    - datalad
+    - datalad.cmdline
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/datalad/
+  summary: data distribution geared toward scientific datasets
+  license: MIT
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - yarikoptic
+    - notestaff
+    - kyleam
+    - mih

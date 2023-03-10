@@ -1,0 +1,49 @@
+{% set name = "graphtools" %}
+{% set version = 1.5.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 3bcdbb3930138192a4cbbcb521a230a5bb0b9cf1d22bf8734548b7ad9e441777
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - deprecated
+    - future
+    - numpy >=1.14.0
+    - pygsp >=0.5.1
+    - python
+    - scikit-learn >=0.20.0
+    - scipy >=1.1.0
+    - tasklogger >=1.0
+
+test:
+  imports:
+    - graphtools
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/KrishnaswamyLab/graphtools
+  summary: graphtools
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - bebatut
+    - scottgigante

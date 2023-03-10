@@ -1,0 +1,49 @@
+{% set name = "pyvista" %}
+{% set version = 0.26.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyvista-{{ version }}.tar.gz
+  sha256: 3b0cfe6be10a8932758a0d6671d5910d8bdd2cbf2830242e937cfe5fc1312ef5
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - appdirs
+    - imageio
+    - meshio >=4.0.3,<5.0
+    - numpy
+    - python >=3.5
+    - scooby >=0.5.1
+    - vtk
+
+test:
+  imports:
+    - pyvista
+    - pyvista.core
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyvista/pyvista
+  summary: Easier Pythonic interface to VTK
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - banesullivan
+    - akaszynski

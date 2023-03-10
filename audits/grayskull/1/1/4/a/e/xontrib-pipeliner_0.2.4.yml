@@ -1,0 +1,41 @@
+{% set name = "xontrib-pipeliner" %}
+{% set version = 0.2.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xontrib-pipeliner-{{ version }}.tar.gz
+  sha256: 19061114e4846bb1644587589abcefe03bf361f169862aca3e57a54c36f49279
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - xontrib
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/anki-code/xontrib-pipeliner
+  summary: Easily process the lines using pipes in xonsh.
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - scopatz

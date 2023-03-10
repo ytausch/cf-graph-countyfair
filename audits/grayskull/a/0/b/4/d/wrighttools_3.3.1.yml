@@ -1,0 +1,54 @@
+{% set name = "wrighttools" %}
+{% set version = 3.3.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/WrightTools-{{ version }}.tar.gz
+  sha256: 8e4e4fe19849cddf05cae03be45cfb749cfa06d8a0051319cec201d47294ff40
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - wt-tree=WrightTools.__main__:wt_tree
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - h5py
+    - imageio
+    - matplotlib-base >=3.3.0
+    - numexpr
+    - numpy >=1.15.0
+    - python >=3.6
+    - python-dateutil
+    - scipy
+    - tidy_headers >=1.0.0
+
+test:
+  imports:
+    - WrightTools
+    - WrightTools.artists
+  commands:
+    - pip check
+    - wt-tree --help
+  requires:
+    - pip
+
+about:
+  home: http://wright.tools
+  summary: Tools for loading, processing, and plotting multidimensional spectroscopy data.
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - untzag
+    - ksunden

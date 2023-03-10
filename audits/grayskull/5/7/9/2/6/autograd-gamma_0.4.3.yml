@@ -1,0 +1,44 @@
+{% set name = "autograd-gamma" %}
+{% set version = 0.4.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/autograd-gamma-{{ version }}.tar.gz
+  sha256: 2cb570cbb8da61ede937ccc004d87d3924108f754b351a86cdd2ad31ace6cdf6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - autograd >=1.2.0
+    - python
+    - scipy >=1.2.0
+
+test:
+  imports:
+    - autograd_gamma
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/CamDavidsonPilon/autograd-gamma
+  summary: Autograd compatible approximations to the gamma family of functions
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mariusvniekerk
+    - CamDavidsonPilon

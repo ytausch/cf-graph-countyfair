@@ -1,0 +1,45 @@
+{% set name = "awscli-local" %}
+{% set version = 0.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/awscli-local-{{ version }}.tar.gz
+  sha256: ce0cbd61bfa6d91f96fad7ab3bac78bb07b096c794f6f5ce934aa86a8855a6de
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - awscli
+    - localstack-client
+    - python
+
+test:
+  imports:
+    - awscli_local
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/localstack/awscli-local
+  summary: Thin wrapper around the "aws" command line interface for use with LocalStack
+  license: Apache-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - mwilson8
+    - oblute
+    - benhuff

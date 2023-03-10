@@ -1,0 +1,45 @@
+{% set name = "dask-xgboost" %}
+{% set version = 0.1.11 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 3fbe1bf4344dc74edfbe9f928c7e3e6acc26dc57cefd8da8ae56a15469c6941c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dask
+    - distributed >=1.15.2
+    - python
+    - xgboost <=0.90
+
+test:
+  imports:
+    - dask_xgboost
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dask/dask-xgboost
+  summary: Interactions between Dask and XGBoost
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - mrocklin
+    - TomAugspurger

@@ -1,0 +1,44 @@
+{% set name = "regex" %}
+{% set version = 2020.10.11 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/regex-{{ version }}.tar.gz
+  sha256: 463e770c48da76a8da82b8d4a48a541f314e0df91cbb6d873a341dbe578efafd
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - regex.__init__
+    - regex._regex_core
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://bitbucket.org/mrabarnett/mrab-regex
+  summary: Alternative regular expression module, to replace re.
+  license: Apache-1.1
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - kwilcox
+    - ocefpaf
+    - xhochy

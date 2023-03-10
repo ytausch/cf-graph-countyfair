@@ -1,0 +1,48 @@
+{% set name = "sentineleof" %}
+{% set version = 0.4.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sentineleof-{{ version }}.tar.gz
+  sha256: 7761556af99693e70abe56f2743be88d1c40e04fd7944efac4e41851ccf33c4a
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - eof=eof.cli:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - click
+    - python
+    - python-dateutil
+    - requests
+
+test:
+  imports:
+    - eof
+    - eof.tests
+  commands:
+    - pip check
+    - eof --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/scottstanie/sentineleof
+  summary: Download precise orbit files for Sentinel 1 products
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - avalentino
+    - scottstanie

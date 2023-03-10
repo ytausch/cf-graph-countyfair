@@ -1,0 +1,47 @@
+{% set name = "klib" %}
+{% set version = 0.0.91 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c574efc85c13dbdad8596d54ef2eada7da42af8262e734fea74c69f12a58cd52
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - matplotlib-base >=2.1.2
+    - numpy >=1.13.3
+    - pandas >=1.0.0
+    - python >=3.7
+    - scikit-learn >=0.23
+    - seaborn >=0.1.0
+
+test:
+  imports:
+    - klib
+    - klib.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/akanz1/klib
+  summary: Customized data preprocessing functions for frequent tasks.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - akanz1

@@ -1,0 +1,54 @@
+{% set name = "pyod" %}
+{% set version = 0.8.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyod-{{ version }}.tar.gz
+  sha256: 87e3c9b7a0600f2d1a0e6ebbaf65ab3cd6ae73aec763beecae19e385c5e1bbcf
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools >=38.6.0
+  run:
+    - combo
+    - joblib
+    - matplotlib-base
+    - numba >=0.35
+    - numpy >=1.13
+    - pandas >=0.25
+    - python
+    - scikit-learn >=0.19.1
+    - scipy >=0.19.1
+    - six
+    - statsmodels
+    - suod
+
+test:
+  imports:
+    - pyod
+    - pyod.models
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/yzhao062/pyod
+  summary: A Python Toolbox for Scalable Outlier Detection (Anomaly Detection)
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - yzhao062
+    - apcamargo

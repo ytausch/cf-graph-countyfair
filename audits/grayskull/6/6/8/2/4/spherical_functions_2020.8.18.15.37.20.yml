@@ -1,0 +1,44 @@
+{% set name = "spherical_functions" %}
+{% set version = 2020.8.18.15.37.20 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/spherical-functions-{{ version }}.tar.gz
+  sha256: 775408f6b535151c99f4eb49c2d568298f4503b9c212bb574740b4178ca82043
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - numpy >=1.13
+    - numpy-quaternion
+    - python >=3.6
+
+test:
+  imports:
+    - spherical_functions
+    - spherical_functions.SWSH
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/moble/spherical_functions
+  summary: Python/numba implementation of Wigner D Matrices, spin-weighted spherical harmonics, and associated functions
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - moble

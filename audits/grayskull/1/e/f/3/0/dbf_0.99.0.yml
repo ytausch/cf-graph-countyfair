@@ -1,0 +1,43 @@
+{% set name = "dbf" %}
+{% set version = 0.99.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dbf-{{ version }}.tar.gz
+  sha256: a4a7a8cdc113d840142d21a796c16c7d329ad35c48f17156446732c83ebc571a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - aenum
+    - python
+
+test:
+  imports:
+    - dbf
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ethanfurman/dbf
+  summary: Pure python package for reading/writing dBase, FoxPro, and Visual FoxPro .dbf files (including memos)
+  doc_url: https://pythonhosted.org/dbf/
+  license: BSD-3-Clause
+  license_file: dbf/LICENSE
+
+extra:
+  recipe-maintainers:
+    - synapticarbors

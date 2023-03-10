@@ -1,0 +1,45 @@
+{% set name = "astsearch" %}
+{% set version = 0.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 5db56de6ba7ecce1f5e5ba1fc6bf52a9bcf25ce330dc0decf001eb519e90de96
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - astsearch = astsearch:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.0
+  run:
+    - astcheck >=0.2.3
+    - python >=3.0
+
+test:
+  imports:
+    - astsearch
+  commands:
+    - pip check
+    - astsearch --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/takluyver/astsearch
+  summary: Intelligently search Python source code
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kmuehlbauer

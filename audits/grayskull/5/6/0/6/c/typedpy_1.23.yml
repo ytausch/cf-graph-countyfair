@@ -1,0 +1,44 @@
+{% set name = "typedpy" %}
+{% set version = 1.23 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/typedpy-{{ version }}.tar.gz
+  sha256: db4fc6e51c0b152c2227171617cd567024ace08d9ada59d5c6981c024d210e8f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+    - setuptools-lint
+  run:
+    - python
+
+test:
+  imports:
+    - typedpy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/loyada/typedpy
+  summary: Type-safe Python
+  license: GPL-2.0
+  license_file: .eggs/pylint-2.6.0-py3.7.egg/EGG-INFO/COPYING
+
+extra:
+  recipe-maintainers:
+    - CJ-Wright
+    - loyada

@@ -1,0 +1,42 @@
+{% set name = "sicor" %}
+{% set version = 0.14.6.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sicor-{{ version }}.tar.gz
+  sha256: b600efe3e92e1a5b958424a78249b5fe9418f2574b0c7ac1ae8e5cbcfe0e3df2
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - sicor
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gitext.gfz-potsdam.de/EnMAP/sicor
+  summary: Sensor Independent Atmospheric Correction
+  license: Unlicense
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - niklasbohn
+    - danschef

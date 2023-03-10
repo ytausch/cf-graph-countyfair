@@ -1,0 +1,46 @@
+{% set name = "cppyy-backend" %}
+{% set version = 1.13.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cppyy-backend-{{ version }}.tar.gz
+  sha256: b9d24c6b9a2bf922e098be39f2e2a8990d1887bc1cca786d9b9c3618f6c7a0ad
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cppyy-cling >=6.21.1
+    - pip
+    - python
+    - wheel
+  run:
+    - cppyy-cling >=6.21.1
+    - python
+
+test:
+  imports:
+    - cppyy_backend
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://pypy.org
+  summary: C/C++ wrapper for Cling
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - saraedum
+    - isuruf

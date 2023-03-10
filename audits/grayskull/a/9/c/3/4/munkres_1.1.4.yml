@@ -1,0 +1,42 @@
+{% set name = "munkres" %}
+{% set version = 1.1.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/munkres-{{ version }}.tar.gz
+  sha256: fc44bf3c3979dada4b6b633ddeeb8ffbe8388ee9409e4d4e8310c2da1792db03
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - munkres
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://software.clapper.org/munkres/
+  summary: Munkres (Hungarian) algorithm for the Assignment Problem
+  license: Apache-2.0
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - CJ-Wright

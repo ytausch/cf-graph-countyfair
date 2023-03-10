@@ -1,0 +1,49 @@
+{% set name = "networkit" %}
+{% set version = 7.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/networkit-{{ version }}.tar.gz
+  sha256: 8609dc7a574a8a82d8880b8b1e3dfdd9c59ad67cd02135628e675c482fe98a96
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - pip
+    - python
+  run:
+    - numpy
+    - python
+    - scipy
+
+test:
+  imports:
+    - networkit
+    - networkit.gephi
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://networkit.github.io/
+  summary: NetworKit is a toolbox for high-performance network analysis
+  license: MIT
+  license_file: extlibs/tlx/LICENSE
+
+extra:
+  recipe-maintainers:
+    - angriman
+    - avdgrinten
+    - fabratu
+    - lucventurini

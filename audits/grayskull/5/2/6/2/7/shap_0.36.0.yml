@@ -1,0 +1,52 @@
+{% set name = "shap" %}
+{% set version = 0.36.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/shap-{{ version }}.tar.gz
+  sha256: 30d5f5860e7d7787eeed09592e2b3bbd68816b0d3589f2eda6adc7663448217f
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy
+    - pip
+    - python
+  run:
+    - numba
+    - pandas
+    - python
+    - scikit-learn
+    - scipy
+    - slicer
+    - tqdm >4.25.0
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - shap
+    - shap.benchmark
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/slundberg/shap
+  summary: A unified approach to explain the output of any machine learning model.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mrandrewandrade
+    - slundberg

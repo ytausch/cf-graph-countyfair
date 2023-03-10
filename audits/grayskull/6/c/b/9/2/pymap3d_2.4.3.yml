@@ -1,0 +1,41 @@
+{% set name = "pymap3d" %}
+{% set version = 2.4.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pymap3d-{{ version }}.tar.gz
+  sha256: 902bfdb1fc68be03ca8d167324346e377589d39e3327a50f30bf8dac55c4b6e4
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - pymap3d
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/geospace-code/pymap3d
+  summary: pure Python (no prereqs) coordinate conversions, following convention of several popular Matlab routines.
+  license: BSD-2-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - avalentino

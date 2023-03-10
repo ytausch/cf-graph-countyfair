@@ -1,0 +1,45 @@
+{% set name = "pandas-datapackage-reader" %}
+{% set version = 0.16.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 6a164cb99210e9bef98b0d4c6fa1954e6c7b8b837f4ecf2db0d3c39440481bc1
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - pandas >=0.24.0
+    - python
+    - requests
+
+test:
+  imports:
+    - pandas_datapackage_reader
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rgieseke/pandas-datapackage-reader
+  summary: Pandas Data Package Reader
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - znicholls
+    - rgieseke

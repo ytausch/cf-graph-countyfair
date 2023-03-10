@@ -1,0 +1,51 @@
+{% set name = "shenfun" %}
+{% set version = 3.0.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/shenfun-{{ version }}.tar.gz
+  sha256: f2a4690d956d596628bd0c2588e3a3b4ac1cfed66bcb7ed3294d175759e7d4de
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython >=0.25
+    - numpy >=1.9
+    - pip
+    - python
+    - setuptools >=18.0
+  run:
+    - cython
+    - mpi4py
+    - mpi4py-fft
+    - python
+    - scipy
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - shenfun
+    - shenfun.chebyshev
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/spectralDNS/shenfun
+  summary: Shenfun -- Automated Spectral-Galerkin framework
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mikaem

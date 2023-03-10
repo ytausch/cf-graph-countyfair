@@ -1,0 +1,45 @@
+{% set name = "py-open-fonts" %}
+{% set version = 0.6.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/py-open-fonts-{{ version }}.tar.gz
+  sha256: e56552e46fb8e1c95cd7af4d7761aed7ee54e7c568605cb80e9996f746a79ffb
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - open-fonts-css=openfonts.cli:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - click
+    - python >=3.6
+
+test:
+  imports:
+    - openfonts
+  commands:
+    - pip check
+    - open-fonts-css --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/kiwi0fruit/py-open-fonts
+  summary: A collection of beautiful free and open source fonts.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kiwi0fruit

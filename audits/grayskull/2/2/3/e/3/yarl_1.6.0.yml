@@ -1,0 +1,46 @@
+{% set name = "yarl" %}
+{% set version = 1.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/yarl-{{ version }}.tar.gz
+  sha256: 61d3ea3c175fe45f1498af868879c6ffeb989d4143ac542163c45538ba5ec21b
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - idna >=2.0
+    - multidict >=4.0
+    - python
+    - typing-extensions >=3.7.4  # [py<38]
+
+test:
+  imports:
+    - yarl
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/aio-libs/yarl/
+  summary: Yet another URL library
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - sodre

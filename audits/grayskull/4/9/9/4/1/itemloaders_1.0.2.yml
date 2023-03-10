@@ -1,0 +1,49 @@
+{% set name = "itemloaders" %}
+{% set version = 1.0.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: f5b315d24322b6a0d9150c4d74f92f93b1bd5247bc0ce64c2b46de30710df211
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - itemadapter >=0.1.0
+    - jmespath >=0.9.5
+    - parsel >=1.5.0
+    - python >=3.5
+    - w3lib >=1.17.0
+
+test:
+  imports:
+    - itemloaders
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/scrapy/itemloaders
+  summary: Base library for scrapy's ItemLoader
+  dev_url: https://github.com/scrapy/itemloaders
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Gallaecio
+    - wRAR
+    - dangra
+    - rmax

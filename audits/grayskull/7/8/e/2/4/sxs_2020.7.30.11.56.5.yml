@@ -1,0 +1,54 @@
+{% set name = "sxs" %}
+{% set version = 2020.7.30.11.56.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 79a220bec18776066ea896b72c85a9f927dfa5df267ac3b905f7d120d0c02046
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ads
+    - caltechdata-api
+    - feedparser
+    - h5py
+    - lxml
+    - numpy
+    - pylatexenc
+    - python
+    - pytz
+    - requests
+    - requests-toolbelt
+    - scipy
+    - tqdm
+
+test:
+  imports:
+    - sxs
+    - sxs.data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sxs-collaboration/sxs
+  summary: A collection of python code used by the SXS collaboration
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - moble

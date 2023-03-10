@@ -1,0 +1,49 @@
+{% set name = "ensureconda" %}
+{% set version = 1.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ensureconda-{{ version }}.tar.gz
+  sha256: bf5be7c0b492ff001f67fe8f19f193e09673694d4dc9228be591d9ed9368fe06
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - ensureconda = ensureconda.cli:ensureconda_cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - appdirs
+    - click
+    - filelock
+    - python >=3.6
+    - requests
+
+test:
+  imports:
+    - ensureconda
+    - test
+  commands:
+    - pip check
+    - ensureconda --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/conda-incubator/ensureconda
+  summary: Install and run applications packaged with conda in isolated environments
+  license: MIT
+  license_file: LICENSE-MIT
+
+extra:
+  recipe-maintainers:
+    - mariusvniekerk

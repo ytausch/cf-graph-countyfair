@@ -1,0 +1,42 @@
+{% set name = "single-source" %}
+{% set version = 0.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/single-source-{{ version }}.tar.gz
+  sha256: 593c1a665017f3fd4e290fee0b8d9c70ae8d63f1ddccd7c6d74752cee2354475
+
+build:
+  number: 0
+  skip: true   # [py>=40 or py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - importlib_metadata >=2.0,<3.0  # [py<38]
+    - python
+
+test:
+  imports:
+    - single_source
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rabbit72/single-source
+  summary: Access to the project version in Python code for PEP 621-style projects
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - rabbit72

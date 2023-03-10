@@ -1,0 +1,41 @@
+{% set name = "pygls" %}
+{% set version = 0.9.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pygls-{{ version }}.tar.gz
+  sha256: c21c942415457315f316c0b6c19d4c743fd2974d457e02a85472154c8f1b6399
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - pygls
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/openlawlibrary/pygls/tree/master/
+  summary: a pythonic generic language server (pronounced like "pie glass").
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - bollwyvl

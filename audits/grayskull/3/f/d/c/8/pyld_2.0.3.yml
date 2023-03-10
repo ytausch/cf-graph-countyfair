@@ -1,0 +1,46 @@
+{% set name = "pyld" %}
+{% set version = 2.0.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PyLD-{{ version }}.tar.gz
+  sha256: 287445f888c3a332ccbd20a14844c66c2fcbaeab3c99acd506a0788e2ebb2f82
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - cachetools
+    - frozendict
+    - lxml
+    - python
+
+test:
+  imports:
+    - c14n
+    - pyld
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/digitalbazaar/pyld
+  summary: Python implementation of the JSON-LD API
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - notestaff
+    - bollwyvl

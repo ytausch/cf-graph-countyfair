@@ -1,0 +1,53 @@
+{% set name = "signac" %}
+{% set version = 1.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/signac-{{ version }}.tar.gz
+  sha256: f8cdfe40e7355fd4d79e1693bdde5cfbf12a5f65114c4a6e23cd26d43b16fb32
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - signac = signac.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - deprecation >=2
+    - filelock ~=3.0
+    - packaging >=15.0
+    - python >=3.6,<4.0
+    - tqdm >=4.10.0
+
+test:
+  imports:
+    - signac
+    - signac.common
+  commands:
+    - pip check
+    - signac --help
+  requires:
+    - pip
+
+about:
+  home: https://signac.io
+  summary: Manage large and heterogeneous data spaces on the file system.
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - bdice
+    - csadorf
+    - mikemhenry
+    - vyasr
+    - b-butler

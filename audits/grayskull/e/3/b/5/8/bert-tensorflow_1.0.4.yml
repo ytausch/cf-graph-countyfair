@@ -1,0 +1,42 @@
+{% set name = "bert-tensorflow" %}
+{% set version = 1.0.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: ae3e07c0d89439f42d0ce3f5900be6aa98025ceaf264c3a0e738e6d6f9cfe7e9
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - six
+
+test:
+  imports:
+    - bert
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/google-research/bert
+  summary: BERT
+  license: Apache-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - karimmohraz

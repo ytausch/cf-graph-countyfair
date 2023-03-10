@@ -1,0 +1,48 @@
+{% set name = "diffoscope" %}
+{% set version = 154 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d8ab3453c3ee25059cd0528a46bf6bced417fa49acac3ba3a0bfba7f48968b21
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - diffoscope=diffoscope.main:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python >=3.6
+  run:
+    - libarchive-c
+    - python >=3.6
+    - python-magic
+
+test:
+  imports:
+    - diffoscope
+    - diffoscope.comparators
+  commands:
+    - pip check
+    - diffoscope --help
+  requires:
+    - pip
+
+about:
+  home: https://diffoscope.org/
+  summary: in-depth comparison of files, archives, and directories
+  license: GPL-3.0
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - bollwyvl

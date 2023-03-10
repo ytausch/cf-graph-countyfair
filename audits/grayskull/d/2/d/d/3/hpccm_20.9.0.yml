@@ -1,0 +1,47 @@
+{% set name = "hpccm" %}
+{% set version = 20.9.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hpccm-{{ version }}.tar.gz
+  sha256: d37c5c43ed4d092211359f58fe760136005e9237d136d5764d6207bcff0ac84b
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - hpccm=hpccm.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - enum34
+    - python
+    - six
+
+test:
+  imports:
+    - hpccm
+    - hpccm.building_blocks
+  commands:
+    - pip check
+    - hpccm --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/NVIDIA/hpc-container-maker
+  summary: HPC Container Maker
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tschoonj

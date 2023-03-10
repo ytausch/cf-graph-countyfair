@@ -1,0 +1,50 @@
+{% set name = "newrelic" %}
+{% set version = 5.20.1.150 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/newrelic-{{ version }}.tar.gz
+  sha256: 99847f587383d81c700d67b6eefdbc66d85512306276c62111af5af19d47f90f
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34]
+  entry_points:
+    - newrelic-admin = newrelic.admin:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+    - setuptools_scm
+    - setuptools_scm >=3.2,<4
+  run:
+    - python
+
+test:
+  imports:
+    - newrelic
+    - newrelic.admin
+  commands:
+    - pip check
+    - newrelic-admin --help
+  requires:
+    - pip
+
+about:
+  home: https://newrelic.com/docs/python/new-relic-for-python
+  summary: New Relic Python Agent
+  dev_url: https://github.com/newrelic/newrelic-python-agent
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - bollwyvl

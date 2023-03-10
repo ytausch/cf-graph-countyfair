@@ -1,0 +1,46 @@
+{% set name = "elasticsearch" %}
+{% set version = 7.9.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/elasticsearch-{{ version }}.tar.gz
+  sha256: 5e08776fbb30c6e92408c7fa8c37d939210d291475ae2f364f0497975918b6fe
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python <4.0
+  run:
+    - certifi
+    - python <4.0
+    - urllib3 >=1.21.1
+
+test:
+  imports:
+    - elasticsearch
+    - elasticsearch._async
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/elastic/elasticsearch-py
+  summary: Python client for Elasticsearch
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pmlandwehr
+    - ahlaw
+    - sethmlarson

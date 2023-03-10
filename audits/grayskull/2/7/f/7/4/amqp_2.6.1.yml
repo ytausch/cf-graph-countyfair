@@ -1,0 +1,45 @@
+{% set name = "amqp" %}
+{% set version = 2.6.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 70cdb10628468ff14e57ec2f751c7aa9e48e7e3651cfd62d431213c0c4e58f21
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+  run:
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+    - vine >=1.1.3,<5.0.0a1
+
+test:
+  imports:
+    - amqp
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/celery/py-amqp
+  summary: Low-level AMQP client for Python (fork of amqplib).
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - anguslees
+    - kwilcox
+    - wseaton
+    - frol

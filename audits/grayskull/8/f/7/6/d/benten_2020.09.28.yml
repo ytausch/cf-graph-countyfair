@@ -1,0 +1,44 @@
+{% set name = "benten" %}
+{% set version = 2020.9.28 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/benten-{{ version }}.tar.gz
+  sha256: 67bf9b35dc91159fbc85628f9c29eb7786e3d57d01538ae1509da39e489fed0c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - cwlformat
+    - dukpy >=0.2.2
+    - python >=3.7
+    - ruamel.yaml >=0.15.77
+
+test:
+  imports:
+    - benten
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rabix/benten
+  summary: CWL language server developed by Seven Bridges
+  license: Parity-6.0.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - pvanheus

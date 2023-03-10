@@ -1,0 +1,47 @@
+{% set name = "pycryptodome" %}
+{% set version = 3.9.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pycryptodome-{{ version }}.tar.gz
+  sha256: 0e24171cf01021bc5dc17d6a9d4f33a048f09d62cc3f62541e95ef104588bda4
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - crypto
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - Crypto
+    - Crypto.Cipher
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.pycryptodome.org
+  summary: Cryptographic library for Python
+  license: Apache-2.0
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - mariusvniekerk
+    - benhuff
+    - nehaljwani

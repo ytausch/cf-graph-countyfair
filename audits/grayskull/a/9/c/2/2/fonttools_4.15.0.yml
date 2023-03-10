@@ -1,0 +1,53 @@
+{% set name = "fonttools" %}
+{% set version = 4.15.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/fonttools-{{ version }}.zip
+  sha256: 52327fe9ad3d00814bd88d7dddc5c986cd1047c7db09afd6c828c344720acf6c
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - fonttools = fontTools.__main__:main
+    - ttx = fontTools.ttx:main
+    - pyftsubset = fontTools.subset:main
+    - pyftmerge = fontTools.merge:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - fontTools
+    - fontTools.cffLib
+  commands:
+    - pip check
+    - fonttools --help
+    - ttx --help
+    - pyftsubset --help
+    - pyftmerge --help
+  requires:
+    - pip
+
+about:
+  home: http://github.com/fonttools/fonttools
+  summary: Tools to manipulate font files
+  license: Apache-2.0
+  license_file: LICENSE.external
+
+extra:
+  recipe-maintainers:
+    - CJ-Wright

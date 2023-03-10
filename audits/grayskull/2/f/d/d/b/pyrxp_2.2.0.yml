@@ -1,0 +1,41 @@
+{% set name = "pyrxp" %}
+{% set version = 2.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: e70cdc9d45237e1e7996bfe21cedec2eec8f910c2d34dc46d77dbacb9cb329b6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - pyrxp
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.reportlab.com
+  summary: Python RXP interface - fast validating XML parser
+  license: GPL-2.0
+  license_file: src/rxp/COPYING
+
+extra:
+  recipe-maintainers:
+    - duncanmmacleod

@@ -1,0 +1,47 @@
+{% set name = "qnorm" %}
+{% set version = 0.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/qnorm-{{ version }}.tar.gz
+  sha256: e4247a6b87b1a0d2eb5da368b45624c718abb36d7e8bc7c47b75a656f18d2636
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - qnorm=qnorm.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+    - toml
+  run:
+    - numba
+    - numpy
+    - python >=3.7
+
+test:
+  imports:
+    - qnorm
+  commands:
+    - pip check
+    - qnorm --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Maarten-vd-Sande/qnorm
+  summary: Quantile normalization
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Maarten-vd-Sande

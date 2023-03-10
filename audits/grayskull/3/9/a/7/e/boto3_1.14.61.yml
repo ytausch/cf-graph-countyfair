@@ -1,0 +1,47 @@
+{% set name = "boto3" %}
+{% set version = 1.14.61 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/boto3-{{ version }}.tar.gz
+  sha256: a1c738ff178fc6ed8951559053c1142c71d166d17642361bbe63584be2f50a00
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - botocore >=1.17.61,<1.18.0
+    - jmespath >=0.7.1,<1.0.0
+    - python
+    - s3transfer >=0.3.0,<0.4.0
+
+test:
+  imports:
+    - boto3
+    - boto3.docs
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/boto/boto3
+  summary: The AWS SDK for Python
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - proinsias
+    - tkelman
+    - ocefpaf

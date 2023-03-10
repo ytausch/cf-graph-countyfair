@@ -1,0 +1,52 @@
+{% set name = "piff" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2f49f2e89ad1106ece1ef874d91f8b73d4fca374feed0fc0089385841eb3751d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - fitsio
+    - galsim
+    - lsstdesc.coord
+    - matplotlib-base
+    - numpy
+    - python
+    - pyyaml
+    - scipy
+    - treecorr
+    - treegp >=0.2
+
+test:
+  imports:
+    - piff
+    - piff.des
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rmjarvis/Piff
+  summary: PSFs in the Full FOV
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - beckermr
+    - rmjarvis

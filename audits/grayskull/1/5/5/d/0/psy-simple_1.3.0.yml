@@ -1,0 +1,46 @@
+{% set name = "psy-simple" %}
+{% set version = 1.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/psy-simple-{{ version }}.tar.gz
+  sha256: 535ff889b8178c5a499b5b7242d3f0e6d94b47cf7444a655bd6a6ab2085d7f3f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python >=3.7
+  run:
+    - matplotlib-base >=2.0
+    - psyplot >=1.3.0
+    - python >=3.7
+
+test:
+  imports:
+    - psy_simple
+    - psy_simple.widgets
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/psyplot/psy-simple
+  summary: Psyplot plugin for simple visualization tasks
+  dev_url: https://github.com/psyplot/psy-simple
+  license: GPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Chilipp

@@ -1,0 +1,60 @@
+{% set name = "pyiron_base" %}
+{% set version = 0.1.18 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyiron_base-{{ version }}.tar.gz
+  sha256: f6d10b34dd353789a72271b3252ef90f8900253287ac2bf6cf2603f2d7dccdc8
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pyiron=pyiron_base.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - future >=0.18.2
+    - gitpython >=3.1.0
+    - h5io >=0.1.1
+    - h5py >=2.10.0
+    - numpy >=1.18.1
+    - pandas >=1.0.1
+    - pathlib2 >=2.3.5
+    - psutil >=5.7.0
+    - pyfileindex >=0.0.4
+    - pysqa >=0.0.11
+    - python
+    - six >=1.14.0
+    - sqlalchemy >=1.3.14
+    - pytables >=3.6.1
+
+test:
+  imports:
+    - pyiron_base
+    - pyiron_base.cli
+  commands:
+    - pip check
+    - pyiron --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyiron/pyiron_base
+  summary: pyiron_base - an integrated development environment (IDE) for computational science.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pyiron-runner
+    - jan-janssen
+    - sudarsan-surendralal

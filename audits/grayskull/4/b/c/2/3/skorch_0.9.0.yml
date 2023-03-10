@@ -1,0 +1,47 @@
+{% set name = "skorch" %}
+{% set version = 0.9.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/skorch-{{ version }}.tar.gz
+  sha256: bdce9370153fd80c5c4ec499a639f55eef0620e45d4b15fbf7d7ff2a225a3d40
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy >=1.13.3
+    - python
+    - scikit-learn >=0.19.1
+    - scipy >=1.1.0
+    - tabulate >=0.7.7
+    - tqdm >=4.14.0
+
+test:
+  imports:
+    - skorch
+    - skorch.callbacks
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/skorch-dev/skorch
+  summary: scikit-learn compatible neural network library for pytorch
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dhirschfeld

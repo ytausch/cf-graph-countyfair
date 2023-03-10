@@ -1,0 +1,73 @@
+{% set name = "aws-parallelcluster" %}
+{% set version = 2.9.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aws-parallelcluster-{{ version }}.tar.gz
+  sha256: 12dc22286cd447a16931f1f8619bdd47d4543fd0de7905d52b6c6f83ff9db8a3
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pcluster = pcluster.cli:main
+    - pcluster-config = pcluster_config.cli:main
+    - awsbqueues = awsbatch.awsbqueues:main
+    - awsbhosts = awsbatch.awsbhosts:main
+    - awsbstat = awsbatch.awsbstat:main
+    - awsbkill = awsbatch.awsbkill:main
+    - awsbsub = awsbatch.awsbsub:main
+    - awsbout = awsbatch.awsbout:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - boto3 >=1.14.3
+    - future >=0.16.0,<=0.18.2
+    - ipaddress >=1.0.22
+    - jinja2 >=2.11.0
+    - python
+    - pyyaml >=5.3.1
+    - setuptools
+    - tabulate >=0.8.2,<=0.8.7
+
+test:
+  imports:
+    - awsbatch
+    - pcluster
+  commands:
+    - pip check
+    - pcluster --help
+    - pcluster-config --help
+    - awsbqueues --help
+    - awsbhosts --help
+    - awsbstat --help
+    - awsbkill --help
+    - awsbsub --help
+    - awsbout --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/aws/aws-parallelcluster
+  summary: AWS ParallelCluster is an AWS supported Open Source cluster management tool to deploy and manage HPC clusters in the AWS cloud.
+  license: Apache-2.0
+  license_file: pcluster/resources/custom_resources/custom_resources_code/crhelper/LICENSE
+
+extra:
+  recipe-maintainers:
+    - notestaff
+    - sean-smith
+    - lukeseawalker
+    - demartinofra
+    - tilne
+    - rexcsn
+    - enrico-usai
+    - ddeidda

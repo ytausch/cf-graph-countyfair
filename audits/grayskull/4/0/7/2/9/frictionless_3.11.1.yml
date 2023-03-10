@@ -1,0 +1,64 @@
+{% set name = "frictionless" %}
+{% set version = 3.11.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/frictionless-{{ version }}.tar.gz
+  sha256: c68042e6ac13d6e10b6f5a29edb14f02c21b339c7b33d836b4d62b2738d3a33a
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - frictionless = frictionless.__main__:program
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - chardet >=3.0
+    - click >=6.6
+    - ijson >=3.0
+    - isodate >=0.6
+    - jsonlines >=1.2
+    - jsonschema >=2.5
+    - openpyxl >=3.0
+    - python
+    - python-dateutil >=2.8
+    - python-slugify >=1.2
+    - pyyaml >=5.3
+    - requests >=2.10
+    - rfc3986 >=1.4
+    - simpleeval >=0.9
+    - simplejson >=3.10
+    - stringcase >=1.2
+    - tabulate >=0.8
+    - unicodecsv >=0.14
+    - xlrd >=1.2
+    - xlwt >=1.2
+
+test:
+  imports:
+    - frictionless
+    - frictionless.checks
+  commands:
+    - pip check
+    - frictionless --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/frictionlessdata/frictionless-py
+  summary: Frictionless Framework is a framework to describe, extract, validate, and transform tabular data
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - roll

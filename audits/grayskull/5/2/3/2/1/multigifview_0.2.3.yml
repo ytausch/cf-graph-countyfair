@@ -1,0 +1,48 @@
+{% set name = "multigifview" %}
+{% set version = 0.2.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/multigifview-{{ version }}.tar.gz
+  sha256: d99eec92222f0191b0271a46e5138bbc0031edbae73787ff8f1bdc4e6ef6921d
+
+build:
+  number: 0
+  entry_points:
+    - multigifview = multigifview:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+    - setuptools_scm_git_archive
+  run:
+    - importlib-metadata  # [py<38]
+    - pyqt
+    - python
+    - qt.py
+
+test:
+  imports:
+    - multigifview
+  commands:
+    - pip check
+    - multigifview --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/johnomotani/multigifview
+  summary: View multiple gif files
+  license: GPL-3.0
+  license_file: LICENCE
+
+extra:
+  recipe-maintainers:
+    - johnomotani

@@ -1,0 +1,47 @@
+{% set name = "versioned-hdf5" %}
+{% set version = 1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/versioned-hdf5-{{ version }}.tar.gz
+  sha256: 80e6ffb73f020827e0f40af4652d1f3e974bfe6e2e18fb9c18109ffc921cfe9f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - h5py
+    - ndindex >=1.3
+    - numpy
+    - python >=3.6
+
+test:
+  imports:
+    - versioned_hdf5
+    - versioned_hdf5.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/deshaw/versioned-hdf5
+  summary: Versioned HDF5
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - melissawm
+    - asmeurer
+    - scopatz

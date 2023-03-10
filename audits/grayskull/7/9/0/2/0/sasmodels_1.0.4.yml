@@ -1,0 +1,45 @@
+{% set name = "sasmodels" %}
+{% set version = 1.0.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 1e66c431a8992302975006fef047d3935510ffc9c6b448a98d491a0c414e74f7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - numpy
+    - python
+    - scipy
+
+test:
+  imports:
+    - sasmodels
+    - sasmodels.custom
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.sasview.org
+  summary: sasmodels package
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - tschoonj

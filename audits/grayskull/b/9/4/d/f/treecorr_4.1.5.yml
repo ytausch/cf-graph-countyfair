@@ -1,0 +1,49 @@
+{% set name = "treecorr" %}
+{% set version = 4.1.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 0cd832909ed1c033834d452bd8736ae1f918b2acd2fb1e8e6928537791b5f4d5
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cffi
+    - pandas
+    - pip
+    - python
+  run:
+    - cffi
+    - lsstdesc.coord >=1.1
+    - numpy
+    - python
+    - pyyaml
+
+test:
+  imports:
+    - treecorr
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rmjarvis/TreeCorr
+  summary: Python module for computing 2-point correlation functions
+  license: BSD-1-Clause
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - beckermr
+    - rmjarvis

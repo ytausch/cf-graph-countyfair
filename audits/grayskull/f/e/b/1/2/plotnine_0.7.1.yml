@@ -1,0 +1,51 @@
+{% set name = "plotnine" %}
+{% set version = 0.7.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 02f2b0435dae2e917198c5367fd97b010445d64d9888c6b7e755d3cdfe7ad057
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - descartes >=1.1.0
+    - matplotlib-base >=3.1.1
+    - mizani >=0.7.1
+    - numpy >=1.16.0
+    - pandas >=1.1.0
+    - patsy >=0.5.1
+    - python >=3.6
+    - scipy >=1.2.0
+    - statsmodels >=0.11.1
+
+test:
+  imports:
+    - plotnine
+    - plotnine.coords
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/has2k1/plotnine
+  summary: A grammar of graphics for python
+  license: GPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pmlandwehr
+    - has2k1

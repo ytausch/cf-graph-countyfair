@@ -1,0 +1,50 @@
+{% set name = "biotite" %}
+{% set version = 0.24.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/biotite-{{ version }}.tar.gz
+  sha256: e07f3e0a3348ce7041641c18ff64fa2e100586bd3dd58475dd0a1d0ab47ebc47
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - msgpack >=0.5.6
+    - numpy >=1.13
+    - python
+    - requests >=2.12
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - biotite
+    - biotite.application
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.biotite-python.org
+  summary: A comprehensive library for computational molecular biology
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - padix-key

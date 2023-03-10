@@ -1,0 +1,52 @@
+{% set name = "cliff" %}
+{% set version = 3.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 49be854582ec4a74240cb72f287846f823cd8cbd2e25f924541d12f27104bda3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pbr >=2.0.0
+    - pip
+    - python >=3.6
+  run:
+    - cmd2 !=0.8.3,>=0.8.0
+    - pbr !=2.1.0,>=2.0.0
+    - prettytable <0.8,>=0.7.2
+    - pyparsing >=2.1.0
+    - python >=3.6
+    - pyyaml >=3.12
+    - six >=1.10.0
+    - stevedore >=2.0.1
+
+test:
+  imports:
+    - cliff
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://docs.openstack.org/cliff/latest/
+  summary: Command Line Interface Formulation Framework
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - anguslees
+    - pmlandwehr
+    - amatthies
+    - tschoonj

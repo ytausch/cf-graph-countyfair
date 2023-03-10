@@ -1,0 +1,54 @@
+{% set name = "goodtables" %}
+{% set version = 2.5.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/goodtables-{{ version }}.tar.gz
+  sha256: 89007d6fdc746b40c89e48fee4a630a3f9d05fd12a7e8a0000f9a8ac958eea43
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - goodtables = goodtables.__main__:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - click >=6.6
+    - click-default-group
+    - datapackage >=1.10
+    - python
+    - requests >=2.10
+    - simpleeval >=0.9
+    - six >=1.9
+    - statistics >=1.0
+    - tableschema >=1.16.4
+    - tabulator >=1.40
+
+test:
+  imports:
+    - goodtables
+    - goodtables.checks
+  commands:
+    - pip check
+    - goodtables --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/frictionlessdata/goodtables
+  summary: Goodtables is a framework to inspect tabular data.
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - roll

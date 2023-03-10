@@ -1,0 +1,48 @@
+{% set name = "jupyterlab-git" %}
+{% set version = 0.22.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupyterlab_git-{{ version }}.tar.gz
+  sha256: e78802de9f637da53bde3ab327651e8abc806d2a771d7844a3ae1aa835ed6242
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - nbdime ~=2.0
+    - notebook
+    - packaging
+    - pexpect
+    - python >=3.6,<4.0
+
+test:
+  imports:
+    - jupyterlab_git
+    - jupyterlab_git.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jupyterlab/jupyterlab-git
+  summary: A server extension for JupyterLab's git extension
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dbast
+    - blink1073
+    - fcollonval

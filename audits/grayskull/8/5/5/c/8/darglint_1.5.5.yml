@@ -1,0 +1,46 @@
+{% set name = "darglint" %}
+{% set version = 1.5.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/darglint-{{ version }}.tar.gz
+  sha256: 2f12ce2ef3d8189279a8f2eb4c53fd215dbacae50e37765542a91310400a9cd6
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - darglint = darglint.driver:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5,<4.0
+  run:
+    - python >=3.5,<4.0
+
+test:
+  imports:
+    - darglint
+    - darglint.analysis
+  commands:
+    - pip check
+    - darglint --help
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/darglint/
+  summary: A utility for ensuring Google-style docstrings stay up to date with the source code.
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - asford
+    - jcollado

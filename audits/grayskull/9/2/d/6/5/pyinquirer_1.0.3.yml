@@ -1,0 +1,46 @@
+{% set name = "pyinquirer" %}
+{% set version = 1.0.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c9a92d68d7727fbd886a7908c08fd9e9773e5dc211bf5cbf836ba90d366dee51
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - prompt_toolkit ==1.0.14
+    - pygments >=2.2.0
+    - python
+    - regex >=2016.11.21
+
+test:
+  imports:
+    - PyInquirer
+    - PyInquirer.prompts
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/CITGuru/PyInquirer/
+  summary: A Python module for collection of common interactive command line user interfaces, based on Inquirer.js
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - apeltzer
+    - ewels

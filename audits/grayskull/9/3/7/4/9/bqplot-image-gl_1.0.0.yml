@@ -1,0 +1,44 @@
+{% set name = "bqplot-image-gl" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/bqplot-image-gl-{{ version }}.tar.gz
+  sha256: 9adf3700b522f34244b7d40d1c99ebf0cef33504d993bb0b6f070bec43d0f0f7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - bqplot >=0.12
+    - ipywidgets >=7.0.0
+    - python
+
+test:
+  imports:
+    - bqplot_image_gl
+    - bqplot_image_gl.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/glue-viz/bqplot-image-gl
+  summary: An ipywidget image widget for astronomical purposes
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - astrofrog-conda-forge
+    - maartenbreddels

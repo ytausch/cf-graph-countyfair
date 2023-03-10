@@ -1,0 +1,52 @@
+{% set name = "pydm" %}
+{% set version = 1.10.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pydm-{{ version }}.tar.gz
+  sha256: 160176f5740fbe4b064cf643f309c20ed2810f914c16b1da2026b5e1b7375bbe
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pydm=pydm_launcher.main:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy >=1.11.0
+    - pyepics >=3.2.7
+    - pyqtgraph >=0.10.0
+    - python
+    - qtpy
+    - requests >=1.1.0
+    - scipy >=0.12.0
+    - six
+
+test:
+  imports:
+    - examples
+    - pydm
+  commands:
+    - pip check
+    - pydm --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/slaclab/pydm
+  summary: Python Display Manager
+  license: BSD-3-Clause
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - hhslepicka

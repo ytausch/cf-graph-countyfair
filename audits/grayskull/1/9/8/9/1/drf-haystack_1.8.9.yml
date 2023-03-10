@@ -1,0 +1,47 @@
+{% set name = "drf-haystack" %}
+{% set version = 1.8.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/drf-haystack-{{ version }}.tar.gz
+  sha256: cd75489ffa14946f72da94b7fa789487eb178239d2972bc216d5308fcda13aae
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - ez_setup
+    - pip
+    - python
+  run:
+    - django >=2.2,<3.2
+    - django-haystack >=2.8,<3.1
+    - djangorestframework >=3.7,<3.13
+    - python
+    - python-dateutil
+
+test:
+  imports:
+    - drf_haystack
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rhblind/drf-haystack
+  summary: Makes Haystack play nice with Django REST Framework
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - scopatz
+    - xmnlab

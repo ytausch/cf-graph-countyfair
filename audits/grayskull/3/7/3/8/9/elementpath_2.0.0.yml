@@ -1,0 +1,41 @@
+{% set name = "elementpath" %}
+{% set version = 2.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/elementpath-{{ version }}.tar.gz
+  sha256: 5bbce8de94551c84eb8371dae8f0c7a3850385b1f9d8e9adf9c801bb7c722ffe
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - elementpath
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sissaschool/elementpath
+  summary: XPath 1.0/2.0 parsers and selectors for ElementTree and lxml
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ccwang002

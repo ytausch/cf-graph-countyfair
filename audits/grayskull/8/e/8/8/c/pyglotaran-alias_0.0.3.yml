@@ -1,0 +1,46 @@
+{% set name = "pyglotaran-alias" %}
+{% set version = 0.0.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyglotaran-alias-{{ version }}.tar.gz
+  sha256: 36d296867c994fa583247264d8bdb6662a056018b8d7ae0f86a22cd49dc3a3aa
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pyglotaran = pyglotaran.cli.main:glotaran
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - pyglotaran
+  commands:
+    - pip check
+    - pyglotaran --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/glotaran/pyglotaran-alias
+  summary: Convenience module, which allows to use pyglotaran as alias in the CLI and imports
+  dev_url: https://github.com/glotaran/pyglotaran-alias
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - s-weigand
+    - jsnel

@@ -1,0 +1,59 @@
+{% set name = "qcodes" %}
+{% set version = 0.17.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/qcodes-{{ version }}.tar.gz
+  sha256: cf156ad5b5e22e68d3c67fc6a3056fdf51ca03f2b8351ade15174d100102bca5
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dataclasses  # [py<37]
+    - h5py >=2.6
+    - importlib-metadata  # [py<38]
+    - jsonschema
+    - matplotlib-base >=2.2.3
+    - numpy >=1.10
+    - opencensus-ext-azure
+    - packaging >=20.0
+    - pandas
+    - python
+    - pyvisa >=1.9.1
+    - pyzmq
+    - requirements-parser
+    - ruamel.yaml !=0.16.6
+    - tabulate
+    - tqdm
+    - typing-extensions
+    - websockets >=7.0
+    - wrapt
+
+test:
+  imports:
+    - qcodes
+    - qcodes.configuration
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/QCoDeS/Qcodes
+  summary: Python-based data acquisition framework developed by the Copenhagen / Delft / Sydney / Microsoft quantum computing consortium
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - basnijholt

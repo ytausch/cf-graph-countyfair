@@ -1,0 +1,46 @@
+{% set name = "pymartini" %}
+{% set version = 0.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pymartini-{{ version }}.tar.gz
+  sha256: e586fb492459d6ab80f442929b622d1567d2dc77bcffcdf49ac5146567b22944
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - python
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - pymartini
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/kylebarron/pymartini
+  summary: A Python port of Martini for fast terrain mesh generation
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - davidbrochart
+    - kylebarron

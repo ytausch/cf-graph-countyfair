@@ -1,0 +1,69 @@
+{% set name = "databroker" %}
+{% set version = 1.0.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 39f4e12625c42d54f3fc218ffd9640490f4a5d2455289d37ae7886f6b7974851
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - boltons
+    - cachetools
+    - dask
+    - doct
+    - event-model >=1.14.0
+    - humanize
+    - intake >=0.5.5
+    - jinja2
+    - jsonschema
+    - mongoquery
+    - msgpack
+    - msgpack-numpy
+    - numpy
+    - pandas
+    - pims
+    - pymongo
+    - python >=3.6
+    - pytz
+    - pyyaml
+    - requests
+    - six
+    - suitcase-mongo
+    - suitcase-msgpack
+    - tifffile !=2019.7.26.2
+    - toolz
+    - tzlocal
+    - xarray
+    - zarr
+
+test:
+  imports:
+    - databroker
+    - databroker._drivers
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/NSLS-II/databroker
+  summary: Unification of NSLS-II data sources
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - conda-forge/event-model

@@ -1,0 +1,44 @@
+{% set name = "robotframework-sshlibrary" %}
+{% set version = 3.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/robotframework-sshlibrary-{{ version }}.tar.gz
+  sha256: 843af44722d1d4e39f616e5441d6f49e82202cd1a8cc9d16637a6475a8ecb023
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - paramiko >=1.15.3
+    - python
+    - robotframework >=3.0
+    - scp >=0.13.0
+
+test:
+  imports:
+    - SSHLibrary
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/robotframework/SSHLibrary
+  summary: Robot Framework test library for SSH and SFTP
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - bollwyvl

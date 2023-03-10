@@ -1,0 +1,44 @@
+{% set name = "ctds" %}
+{% set version = 1.12.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ctds-{{ version }}.tar.gz
+  sha256: f6584a8d695aba5b0cf341494c71b743acfb951a55532f95e8e4f9401f558cbd
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - ctds
+    - ctds.pool
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/zillow/ctds
+  summary: DB API 2.0-compliant driver for SQL Server
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mariusvniekerk

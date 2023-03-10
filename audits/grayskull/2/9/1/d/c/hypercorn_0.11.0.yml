@@ -1,0 +1,53 @@
+{% set name = "hypercorn" %}
+{% set version = 0.11.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Hypercorn-{{ version }}.tar.gz
+  sha256: 6540faeba9dd44f7e74c7cc1beae3a438a7efb5f77323d1199457da46d32c2c2
+
+build:
+  number: 0
+  skip: true   # [py<37]
+  entry_points:
+    - hypercorn = hypercorn.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - h11
+    - h2 >=3.1.0
+    - priority
+    - python
+    - toml
+    - typing-extensions  # [py<38]
+    - wsproto >=0.14.0
+
+test:
+  imports:
+    - hypercorn
+    - hypercorn.asyncio
+  commands:
+    - pip check
+    - hypercorn --help
+  requires:
+    - pip
+
+about:
+  home: https://gitlab.com/pgjones/hypercorn/
+  summary: A ASGI Server based on Hyper libraries and inspired by Gunicorn.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - maxyme
+    - dhirschfeld
+    - synapticarbors

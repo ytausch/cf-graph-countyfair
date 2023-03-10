@@ -1,0 +1,67 @@
+{% set name = "nspyre" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nspyre-{{ version }}.tar.gz
+  sha256: 0ea2376ee2589687463b95e2e8d0f1e73e9d813521d204be9430ef0b02d26a6a
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - nspyre=nspyre.gui:main
+    - nspyre-config=nspyre.config:main
+    - nspyre-mongodb=nspyre.mongodb:main
+    - nspyre-inserv=nspyre.inserv:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - lantzdev >=0.5.2
+    - numpy >=1.19.2
+    - pandas >=1.1.2
+    - parse >=1.18.0
+    - pint >=0.15
+    - pymongo >=3.11.0
+    - pyqt >=5.15.0
+    - pyqtgraph >=0.11.0
+    - python >=3.6,<4.0
+    - pyvisa >=1.10.1
+    - qscintilla >=2.11.5
+    - rpyc >=4.1.5
+    - scipy >=1.5.2
+    - tqdm >=4.49.0
+    - waiting >=1.4.1
+
+test:
+  imports:
+    - nspyre
+    - nspyre.config
+  commands:
+    - pip check
+    - nspyre --help
+    - nspyre-config --help
+    - nspyre-mongodb --help
+    - nspyre-inserv --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/nspyre-org/nspyre
+  summary: Networked Scientific Python Research Environment
+  dev_url: https://github.com/nspyre-org/nspyre/
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mtsolmn
+    - jacobfeder

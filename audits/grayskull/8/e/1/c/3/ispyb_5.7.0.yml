@@ -1,0 +1,47 @@
+{% set name = "ispyb" %}
+{% set version = 5.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ispyb-{{ version }}.tar.gz
+  sha256: faca60aa16fa55f1ffad6434f70601c6908ced2983b069cd2a1f3cece9ea130b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - mysql-connector-python
+    - python
+    - tabulate
+
+test:
+  imports:
+    - ispyb
+    - ispyb.connector
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/DiamondLightSource/ispyb-api
+  summary: Python package to access ISPyB database
+  license: Apache-2.0
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - stuartcampbell
+    - KarlLevik
+    - anthchirp

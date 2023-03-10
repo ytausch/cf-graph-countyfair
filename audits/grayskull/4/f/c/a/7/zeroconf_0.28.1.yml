@@ -1,0 +1,43 @@
+{% set name = "zeroconf" %}
+{% set version = 0.28.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/zeroconf-{{ version }}.tar.gz
+  sha256: 902e6c3ca4cc752577d650d05a3e7102a897b647fe76da7c0d322cd493cbd1a3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ifaddr >=0.1.7
+    - python
+
+test:
+  imports:
+    - zeroconf
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jstasiak/python-zeroconf
+  summary: Pure Python Multicast DNS Service Discovery Library (Bonjour/Avahi compatible)
+  license: LGPL-2.1
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - abloemert
+    - niecore

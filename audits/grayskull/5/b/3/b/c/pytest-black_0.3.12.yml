@@ -1,0 +1,44 @@
+{% set name = "pytest-black" %}
+{% set version = 0.3.12 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest-black-{{ version }}.tar.gz
+  sha256: 1d339b004f764d6cd0f06e690f6dd748df3d62e6fe1a692d6a5500ac2c5b75a5
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - black  # [py>=36]
+    - pytest >=3.5.0
+    - python
+    - toml
+
+test:
+  imports:
+    - pytest_black
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/shopkeep/pytest-black
+  summary: A pytest plugin to enable format checking with black
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - philip-khor

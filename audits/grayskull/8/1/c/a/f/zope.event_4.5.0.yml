@@ -1,0 +1,43 @@
+{% set name = "zope.event" %}
+{% set version = 4.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/zope.event-{{ version }}.tar.gz
+  sha256: 5e76517f5b9b119acf37ca8819781db6c16ea433f7e2062c4afc2b6fbedb1330
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - setuptools
+
+test:
+  imports:
+    - zope
+    - zope.event
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/zopefoundation/zope.event
+  summary: Very basic event publishing system
+  license: ZPL-2.1
+  license_file: COPYRIGHT.txt
+
+extra:
+  recipe-maintainers:
+    - bollwyvl

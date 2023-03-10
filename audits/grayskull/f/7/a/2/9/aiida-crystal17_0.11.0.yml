@@ -1,0 +1,55 @@
+{% set name = "aiida-crystal17" %}
+{% set version = 0.11.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aiida-crystal17-{{ version }}.tar.gz
+  sha256: 8a21dcf6137092ebb3e1e35c3385debbb7f8e5d29986dd2754944bf84af1ee81
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - mock_crystal17 = aiida_crystal17.tests.mock_crystal17:main
+    - mock_properties17 = aiida_crystal17.tests.mock_properties17:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - aiida-core >=1.4.0,<2.0.0
+    - ase >=3.12.0,<4.0.0
+    - importlib_resources
+    - jsonextended >=0.7.10
+    - jsonschema
+    - pycifrw >=4.4.1,<5.0.0
+    - python >=3.6
+    - pyyaml
+    - spglib >=1.10.0,<2.0.0
+
+test:
+  imports:
+    - aiida_crystal17
+    - aiida_crystal17.calcfunctions
+  commands:
+    - pip check
+    - mock_crystal17 --help
+    - mock_properties17 --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/chrisjsewell/aiida-crystal17
+  summary: AiiDA plugin for running the CRYSTAL17 code
+  license: LGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - chrisjsewell

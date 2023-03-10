@@ -1,0 +1,52 @@
+{% set name = "eo-learn-geometry" %}
+{% set version = 0.7.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 02e4965e6dbd7e77cd0359dcc61830f100ac80fbc8b50e86c66a4009835ea659
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - descartes
+    - eo-learn-core
+    - geopandas >=0.5.0,!=0.8.0
+    - python >=3.6
+    - rasterio
+    - scikit-image >=0.15.0
+    - shapely
+
+test:
+  imports:
+    - eolearn
+    - eolearn.geometry
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sentinel-hub/eo-learn
+  summary: A collection of geometry utilities and EOTasks
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mwilson8
+    - dcunn
+    - oblute
+    - rluria14
+    - benhuff

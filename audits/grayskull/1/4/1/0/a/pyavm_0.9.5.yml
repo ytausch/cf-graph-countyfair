@@ -1,0 +1,43 @@
+{% set name = "pyavm" %}
+{% set version = 0.9.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 815efcca9bd8c2884799d8cfde537917decf7e6c6e57dd6dbf0e60b18799ee2f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - pyavm
+    - pyavm.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://astrofrog.github.io/pyavm/
+  summary: Simple pure-python AVM meta-data handling
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - astrofrog-conda-forge
+    - pkgw

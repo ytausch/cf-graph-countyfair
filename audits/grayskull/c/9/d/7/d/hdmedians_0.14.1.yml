@@ -1,0 +1,47 @@
+{% set name = "hdmedians" %}
+{% set version = 0.14.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hdmedians-{{ version }}.tar.gz
+  sha256: ccefaae26302afd843c941b3b662f1119d5a36dec118077310f811a7a1ed8871
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython >=0.23
+    - nose >=1.0
+    - pip
+    - python
+  run:
+    - cython >=0.23
+    - numpy
+    - python
+
+test:
+  imports:
+    - hdmedians
+    - hdmedians.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/daleroberts/hdmedians
+  summary: High-dimensional medians
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ElDeveloper

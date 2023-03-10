@@ -1,0 +1,58 @@
+{% set name = "scikit-learn" %}
+{% set version = 0.23.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 20766f515e6cd6f954554387dfae705d93c7b544ec0e6c6a5d8e006f6f7ef480
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - numpy
+    - pip
+    - python >=3.6
+    - sklearn
+    - wheelhouse_uploader
+  run:
+    - joblib >=0.11
+    - numpy >=1.13.3
+    - python >=3.6
+    - scipy >=0.19.1
+    - threadpoolctl >=2.0.0
+
+test:
+  imports:
+    - scikit_learn
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://scikit-learn.org
+  summary: A set of python modules for machine learning and data mining
+  license: BSD-3-Clause
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - amueller
+    - astaric
+    - jakirkham
+    - ogrisel
+    - ocefpaf
+    - lesteve
+    - jnothman
+    - rth
+    - adrinjalali
+    - glemaitre
+    - jeremiedbb

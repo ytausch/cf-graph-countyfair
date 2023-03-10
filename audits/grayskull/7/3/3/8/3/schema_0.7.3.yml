@@ -1,0 +1,44 @@
+{% set name = "schema" %}
+{% set version = 0.7.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 4cf529318cfd1e844ecbe02f41f7e5aa027463e7403666a52746f31f04f47a5e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - contextlib2 >=0.5.5
+    - python
+
+test:
+  imports:
+    - schema
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/keleshev/schema
+  summary: Simple data validation library
+  license: MIT
+  license_file: LICENSE-MIT
+
+extra:
+  recipe-maintainers:
+    - shcheklein
+    - efiop
+    - maxhora

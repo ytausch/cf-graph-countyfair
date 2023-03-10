@@ -1,0 +1,49 @@
+{% set name = "xgcm" %}
+{% set version = 0.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xgcm-{{ version }}.tar.gz
+  sha256: e169dc2f416d70e43c5a70c0a2f319c8240262e4c3e866bbb818d404248d61b6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - dask-core
+    - docrep <=0.2.7
+    - future
+    - numpy
+    - python >=3.6
+    - xarray >=0.14.1
+
+test:
+  imports:
+    - xgcm
+    - xgcm.test
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/xgcm/xgcm
+  summary: General Circulation Model Postprocessing with xarray
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - jbusecke
+    - rabernat

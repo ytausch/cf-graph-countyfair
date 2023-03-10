@@ -1,0 +1,43 @@
+{% set name = "prometheus_flask_exporter" %}
+{% set version = 0.18.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/prometheus_flask_exporter-{{ version }}.tar.gz
+  sha256: 26fe7de6a627705a374f34170dd8f2d963e809eeeedf7afd658350acbbb530f6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - flask
+    - prometheus_client
+    - python
+
+test:
+  imports:
+    - prometheus_flask_exporter
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rycus86/prometheus_flask_exporter
+  summary: Prometheus metrics exporter for Flask
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - xhochy

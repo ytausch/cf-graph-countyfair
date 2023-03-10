@@ -1,0 +1,46 @@
+{% set name = "spglib" %}
+{% set version = 1.16.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 94d056e48e7e6fe2e6fe4161471e774ac03221a6225fd83d551d3184220c1edf
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy
+    - pip
+    - python
+    - setuptools >=18.0
+  run:
+    - python
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - spglib
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://spglib.github.io/spglib/
+  summary: This is the spglib module.
+  license: GPL-3.0
+  license_file: .eggs/numpy-1.19.1-py3.7-linux-x86_64.egg/EGG-INFO/LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - jochym
+    - atztogo

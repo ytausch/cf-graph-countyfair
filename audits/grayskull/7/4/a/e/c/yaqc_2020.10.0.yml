@@ -1,0 +1,44 @@
+{% set name = "yaqc" %}
+{% set version = 2020.10.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/yaqc-{{ version }}.tar.gz
+  sha256: bd934e3f8a435c127f648d88fadc4cf19f34e87a3ec8b789057281193056f86c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - fastavro >=0.4
+    - python >=3.6
+
+test:
+  imports:
+    - yaqc
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://yaq.fyi
+  summary: Generic yaq client.
+  dev_url: https://gitlab.com/yaq/yaq-python
+  license: LGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - untzag
+    - ksunden

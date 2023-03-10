@@ -1,0 +1,52 @@
+{% set name = "smt" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/smt-{{ version }}.tar.gz
+  sha256: 7d1ab39acd19ba3bb3a40e0355e536a46f56d51d1398fd7e6d0fdfb6c42db7ef
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+  run:
+    - matplotlib-base
+    - numpydoc
+    - packaging
+    - pydoe2
+    - python
+    - scikit-learn
+    - scipy
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - smt
+    - smt.applications
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/SMTorg/smt
+  summary: The Surrogate Modeling Toolbox (SMT)
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - relf

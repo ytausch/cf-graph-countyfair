@@ -1,0 +1,42 @@
+{% set name = "pywaffle" %}
+{% set version = 0.6.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pywaffle-{{ version }}.tar.gz
+  sha256: 8d040e43d049a987cdf1fd813c8030e16a076bd08c74adb7b9646f695691997b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - matplotlib-base
+    - python
+
+test:
+  imports:
+    - pywaffle
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/gyli/PyWaffle
+  summary: PyWaffle is an open source, MIT-licensed Python package for plotting waffle charts.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - philip-khor

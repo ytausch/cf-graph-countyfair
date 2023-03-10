@@ -1,0 +1,53 @@
+{% set name = "radical.utils" %}
+{% set version = 1.5.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/radical.utils-{{ version }}.tar.gz
+  sha256: a3c77fac21f13ef5b8e852610ca8b7068e06265f626916e41d77d869116c1af1
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - colorama
+    - future
+    - msgpack
+    - netifaces
+    - pymongo
+    - python >=3.6
+    - pyzmq
+    - radical.gtod
+    - regex
+    - setproctitle
+    - wheel
+
+test:
+  imports:
+    - radical.utils
+    - radical.utils.atfork
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.github.com/radical-cybertools/radical.utils/
+  summary: Utilities for RADICAL-Cybertools projects
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - andre-merzky
+    - iparask

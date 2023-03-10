@@ -1,0 +1,49 @@
+{% set name = "pylatexenc" %}
+{% set version = 2.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 8a3de4c035b9413a7721cab11e4cc7469d9370b441fbd498fc8d2ff37cbff678
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - latexwalker=pylatexenc.latexwalker.__main__:main
+    - latex2text=pylatexenc.latex2text.__main__:main
+    - latexencode=pylatexenc.latexencode.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - pylatexenc
+    - pylatexenc.latex2text
+  commands:
+    - pip check
+    - latexwalker --help
+    - latex2text --help
+    - latexencode --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/phfaist/pylatexenc
+  summary: Simple LaTeX parser providing latex-to-unicode and unicode-to-latex conversion
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - milljm

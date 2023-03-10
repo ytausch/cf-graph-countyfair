@@ -1,0 +1,47 @@
+{% set name = "dials-data" %}
+{% set version = 2.1.30 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dials_data-{{ version }}.tar.gz
+  sha256: 8e92d9eccdc5d49562cc64f68d0fe64b90cf8c6267623ce1e89561f69b01fc64
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - dials.data = dials_data.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - importlib_resources >=1.1
+    - pytest
+    - python >=3.6
+    - pyyaml
+
+test:
+  imports:
+    - dials_data
+  commands:
+    - pip check
+    - dials.data --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dials/data
+  summary: DIALS Regression Data Manager
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - anthchirp

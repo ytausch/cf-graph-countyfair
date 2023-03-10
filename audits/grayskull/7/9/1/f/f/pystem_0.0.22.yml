@@ -1,0 +1,48 @@
+{% set name = "pystem" %}
+{% set version = 0.0.22 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pystem-{{ version }}.tar.gz
+  sha256: 85715775010894888ee972d58bb92bbd2e1f58fd340efe94d604d2933758cb1e
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy
+    - pip
+    - python
+  run:
+    - numpy >=1.17.0
+    - python
+    - scikit-learn >=0.21.0
+    - scipy >=1.2.0
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - pystem
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/NingWang1990/pySTEM
+  summary: A python module for segmentation of STEM images
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
+    - NingWang1990

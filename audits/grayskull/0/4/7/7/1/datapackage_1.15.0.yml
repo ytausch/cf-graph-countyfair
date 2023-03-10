@@ -1,0 +1,54 @@
+{% set name = "datapackage" %}
+{% set version = 1.15.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/datapackage-{{ version }}.tar.gz
+  sha256: 08042a9d3f8a003ee61161022d90e00e6536d6e7b3c45e8b3e64301c0e92e0e6
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - datapackage = datapackage.__main__:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - chardet >=3.0
+    - click >=6.7
+    - jsonpointer >=1.10
+    - jsonschema >=2.5
+    - python
+    - requests >=2.8
+    - six >=1.10
+    - tableschema >=1.12.1
+    - tabulator >=1.29
+    - unicodecsv >=0.14
+
+test:
+  imports:
+    - datapackage
+  commands:
+    - pip check
+    - datapackage --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/frictionlessdata/datapackage-py
+  summary: Utilities to work with Data Packages as defined on specs.frictionlessdata.io
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - roll

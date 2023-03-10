@@ -1,0 +1,46 @@
+{% set name = "jax" %}
+{% set version = 0.1.77 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jax-{{ version }}.tar.gz
+  sha256: 63188ea819f3579b054952fbaa2b71e76823f1b60bccea64c95b5609edbdff83
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - absl-py
+    - numpy >=1.12
+    - opt_einsum
+    - python >=3.6
+
+test:
+  imports:
+    - jax
+    - jax.experimental
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/google/jax
+  summary: Differentiate, compile, and transform Numpy code.
+  license: Apache-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - ericmjl

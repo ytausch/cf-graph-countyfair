@@ -1,0 +1,48 @@
+{% set name = "flasgger" %}
+{% set version = 0.9.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 6ebea406b5beecd77e8da42550f380d4d05a6107bc90b69ce9e77aee7612e2d0
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - flask >=0.10
+    - jsonschema >=3.0.1
+    - mistune
+    - python
+    - pyyaml >=3.0
+    - six >=1.10.0
+
+test:
+  imports:
+    - flasgger
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/flasgger/flasgger/
+  summary: Extract swagger specs from your flask project
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - lvoliveira
+    - nicoddemus
+    - igortg

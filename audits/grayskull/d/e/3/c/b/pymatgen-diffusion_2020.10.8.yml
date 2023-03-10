@@ -1,0 +1,47 @@
+{% set name = "pymatgen-diffusion" %}
+{% set version = 2020.10.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pymatgen-diffusion-{{ version }}.tar.gz
+  sha256: bef2ba2de9a172ea3c44c0f32baafe4491937a6ad2588cec028114a5b002cdf3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - monty >=3.0.2
+    - pymatgen >=2019.10.3
+    - python
+
+test:
+  imports:
+    - pymatgen_diffusion
+    - pymatgen_diffusion.aimd
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/materialsvirtuallab/pymatgen-diffusion/
+  summary: Add-on to pymatgen for diffusion analysis.
+  doc_url: https://pythonhosted.org/pymatgen-diffusion/
+  license: BSD-4-Clause
+  license_file: COPYRIGHT
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
+    - shyuep
+    - mkhorton

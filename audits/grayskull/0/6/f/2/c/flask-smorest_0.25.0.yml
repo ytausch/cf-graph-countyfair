@@ -1,0 +1,47 @@
+{% set name = "flask-smorest" %}
+{% set version = 0.25.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/flask-smorest-{{ version }}.tar.gz
+  sha256: cfb37ce965d66b0421869c2a228dd456be1b291d452fb29628b2714782b0aa51
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - apispec >=4.0.0
+    - flask >=1.1.0
+    - marshmallow >=3.0.0
+    - python >=3.6
+    - webargs >=6.0.0
+    - werkzeug >=0.15
+
+test:
+  imports:
+    - flask_smorest
+    - flask_smorest.spec
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/marshmallow-code/flask-smorest
+  summary: Flask/Marshmallow-based REST API framework
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mcs07

@@ -1,0 +1,61 @@
+{% set name = "nipype" %}
+{% set version = 1.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nipype-{{ version }}.tar.gz
+  sha256: 3d6aa37186e1d2f90917dfdf1faf5aeff469912554990e5d182ffe8435f250d5
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - click >=6.6.0
+    - etelemetry >=0.2.0
+    - filelock >=3.0.0
+    - networkx >=1.9
+    - nibabel >=2.1.0
+    - numpy >=1.13  # [py<37]
+    - packaging
+    - prov >=1.5.2
+    - pydot >=1.2.3
+    - pydotplus
+    - python
+    - python-dateutil >=2.2
+    - rdflib >=5.0.0
+    - scipy >=0.14
+    - simplejson >=3.8.0
+    - traits >=4.6,!=5.0
+
+test:
+  imports:
+    - nipype
+    - nipype.algorithms
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://nipy.org/nipype
+  summary: 'Neuroimaging in Python: Pipelines and Interfaces'
+  doc_url: https://pythonhosted.org/nipype/
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - chrisgorgo
+    - satra
+    - mgxd
+    - effigies

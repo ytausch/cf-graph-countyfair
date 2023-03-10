@@ -1,0 +1,56 @@
+{% set name = "cfn-lint" %}
+{% set version = 0.37.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cfn-lint-{{ version }}.tar.gz
+  sha256: 5178595b7ccbbafb8b2b6fe9d3bc6215007387145ddf29812ecee70bb8500801
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  entry_points:
+    - cfn-lint = cfnlint.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - aws-sam-translator >=1.25.0
+    - importlib_resources ~=1.4  # [py<37 and py!=34]
+    - jsonpatch <=1.24  # [py==34]
+    - jsonschema ~=3.0
+    - junit-xml ~=1.9
+    - networkx <=2.2  # [py<35]
+    - pathlib2 >=2.3.0  # [py<=34]
+    - pyrsistent <=0.16.0  # [py<35]
+    - python
+    - pyyaml  # [py!=34]
+    - six ~=1.11
+
+test:
+  imports:
+    - cfnlint
+    - cfnlint.data
+  commands:
+    - pip check
+    - cfn-lint --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/aws-cloudformation/cfn-python-lint
+  summary: Checks CloudFormation templates for practices and behaviour that could potentially be improved
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mariusvniekerk
+    - hajapy

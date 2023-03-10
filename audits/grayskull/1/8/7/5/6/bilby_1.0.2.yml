@@ -1,0 +1,58 @@
+{% set name = "bilby" %}
+{% set version = 1.0.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/bilby-{{ version }}.tar.gz
+  sha256: 206d604f5c720294794933745b938d52b01d5a269e0d53b37f9de3c203b84c3b
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - bilby_plot=cli_bilby.plot_multiple_posteriors:main
+    - bilby_result=cli_bilby.bilby_result:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - corner
+    - dill
+    - dynesty >=1.0.0
+    - emcee
+    - future
+    - matplotlib-base >=2.0
+    - numpy >=1.9
+    - pandas
+    - python >=3.5
+    - scipy
+    - tqdm
+
+test:
+  imports:
+    - bilby
+    - bilby.core
+  commands:
+    - pip check
+    - bilby_plot --help
+    - bilby_result --help
+  requires:
+    - pip
+
+about:
+  home: https://git.ligo.org/lscsoft/bilby
+  summary: A user-friendly Bayesian inference library
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - duncanmmacleod
+    - GregoryAshton

@@ -1,0 +1,48 @@
+{% set name = "isort" %}
+{% set version = 5.6.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/isort-{{ version }}.tar.gz
+  sha256: 2f510f34ae18a8d0958c53eec51ef84fd099f07c4c639676525acbcd7b5bd3ff
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - isort = isort.main:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - python >=3.6,<4.0
+
+test:
+  imports:
+    - isort
+    - isort._future
+  commands:
+    - pip check
+    - isort --help
+  requires:
+    - pip
+
+about:
+  home: https://pycqa.github.io/isort/
+  summary: A Python utility / library to sort Python imports.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - goanpeca
+    - nicoddemus
+    - nehaljwani
+    - ocefpaf

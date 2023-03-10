@@ -1,0 +1,58 @@
+{% set name = "qtconsole" %}
+{% set version = 4.7.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/qtconsole-{{ version }}.tar.gz
+  sha256: 6c24397c19a49a5cf69582c931db4b0f6b00a78530a2bfd122936f2ebfae2fef
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - jupyter-qtconsole = qtconsole.qtconsoleapp:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ipykernel >=4.1
+    - ipython_genutils
+    - jupyter_client >=4.1
+    - jupyter_core
+    - pygments
+    - python
+    - pyzmq >=17.1
+    - qtpy
+    - traitlets
+
+test:
+  imports:
+    - qtconsole
+    - qtconsole.tests
+  commands:
+    - pip check
+    - jupyter-qtconsole --help
+  requires:
+    - pip
+
+about:
+  home: http://jupyter.org
+  summary: Jupyter Qt console
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Carreau
+    - ccordoba12
+    - jakirkham
+    - minrk
+    - takluyver
+    - ocefpaf

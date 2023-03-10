@@ -1,0 +1,49 @@
+{% set name = "autouri" %}
+{% set version = 0.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/autouri-{{ version }}.tar.gz
+  sha256: 99832230b4bd7e9618aee999122f37703b3af62da58c8ddcf20dae35499f0c45
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - awscli
+    - boto3
+    - dateparser
+    - filelock
+    - google-cloud-storage
+    - pyopenssl
+    - python >=3.6
+    - requests
+
+test:
+  imports:
+    - autouri
+    - tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ENCODE-DCC/autouri
+  summary: Automatic localization for various URIs (s3://, gs://, http://, https:// and local path)
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - leepc12

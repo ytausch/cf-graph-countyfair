@@ -1,0 +1,44 @@
+{% set name = "pythonqwt" %}
+{% set version = 0.6.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d105ad42d54dfa6e8ef74f46ee5835c2cfbe32dd8e4ce4e3595d04e44cbfba69
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - sphinx
+  run:
+    - numpy >=1.5
+    - python
+
+test:
+  imports:
+    - pythonqwt
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/PierreRaybaut/PythonQwt
+  summary: Qt plotting widgets for Python
+  doc_url: https://pythonhosted.org/PythonQwt/
+  license: LGPL-2.1
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - marcelotrevisani

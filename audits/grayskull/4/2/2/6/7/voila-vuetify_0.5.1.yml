@@ -1,0 +1,42 @@
+{% set name = "voila-vuetify" %}
+{% set version = 0.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/voila-vuetify-{{ version }}.tar.gz
+  sha256: 522f4ec91eb3912a21215b6b04ad58070d1675809d7d4289ca8e42b577fde100
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - voila >=0.2.0b1,<0.3
+
+test:
+  imports:
+    - voila_vuetify
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/voila-dashboards/voila-vuetify
+  summary: A vuetify template for Voila
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mariobuikhuizen

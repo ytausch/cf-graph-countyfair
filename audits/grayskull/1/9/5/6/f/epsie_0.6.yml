@@ -1,0 +1,45 @@
+{% set name = "epsie" %}
+{% set version = 0.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/epsie-{{ version }}.tar.gz
+  sha256: 8f6733652a14be78e1118612eed5a2ce4756f238b3a99d410211499e25245ff0
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy
+    - python
+    - randomgen >=1.18  # [py>=30]
+    - scipy >=0.16.0
+    - six >1.10.0
+
+test:
+  imports:
+    - epsie
+    - epsie.chain
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cdcapano/epsie
+  summary: An Embarrassingly Parallel Sampler for Inference Estimation.
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - duncanmmacleod

@@ -1,0 +1,46 @@
+{% set name = "composeml" %}
+{% set version = 0.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/composeml-{{ version }}.tar.gz
+  sha256: 4656dcdca06f6877e9f50d6a08a62fc628d7f643b37e85d67068643be5610be0
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - matplotlib-base >=3.0.2
+    - numpy >=1.13.3
+    - pandas >=0.23.0
+    - python >=3.6
+    - seaborn >=0.11.0
+    - tqdm >=4.19.2
+
+test:
+  imports:
+    - composeml
+    - composeml.data_slice
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://compose.alteryx.com
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jeff-hernandez

@@ -1,0 +1,57 @@
+{% set name = "omas" %}
+{% set version = 0.63.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/omas-{{ version }}.tar.gz
+  sha256: bd359327e5b20210238dd970e3f54236e5bf0c3fb39b43adca8501361f789ea6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - boto3
+    - dnspython
+    - h5py
+    - matplotlib-base
+    - netcdf4
+    - numpy >=1.16.1
+    - pint
+    - pymongo
+    - pyro5
+    - python
+    - scipy
+    - setuptools >=41.2
+    - uncertainties
+    - xarray
+    - xmltodict
+
+test:
+  imports:
+    - omas
+    - omas.examples
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gafusion.github.io/omas
+  summary: Ordered Multidimensional Array Structures
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - smithsp
+    - orso82

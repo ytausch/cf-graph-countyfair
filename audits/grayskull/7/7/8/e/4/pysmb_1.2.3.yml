@@ -1,0 +1,45 @@
+{% set name = "pysmb" %}
+{% set version = 1.2.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pysmb-{{ version }}.zip
+  sha256: b1971266952e18d0358c3b8316eadeef93443667dd39d91db16eeb7767e38a08
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - pyasn1
+    - pycrypto
+    - python
+
+test:
+  imports:
+    - nmb
+    - smb
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://miketeo.net/projects/pysmb
+  summary: pysmb is an experimental SMB/CIFS library written in Python to support file sharing between Windows and Linux machines
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dhirschfeld
+    - rzillman

@@ -1,0 +1,43 @@
+{% set name = "python-configuration" %}
+{% set version = 0.8.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/python-configuration-{{ version }}.tar.gz
+  sha256: 750411cb92ca1e7a8973e7d9151a18b17fd4f7d234afddb21ad58bf10418cc40
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - python >=3.6,<4.0
+
+test:
+  imports:
+    - config
+    - config.contrib
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/tr11/python-configuration
+  summary: A library to load configuration parameters from multiple sources and formats
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - DanNixon
+    - wiphoo

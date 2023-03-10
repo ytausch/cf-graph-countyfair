@@ -1,0 +1,41 @@
+{% set name = "iniconfig" %}
+{% set version = 1.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: e5f92f89355a67de0595932a6c6c02ab4afddc6fcdc0bfc5becd0d60884d3f69
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - iniconfig
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/RonnyPfannschmidt/iniconfig
+  summary: 'iniconfig: brain-dead simple config-ini parsing'
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nicoddemus

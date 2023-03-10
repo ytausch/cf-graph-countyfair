@@ -1,0 +1,62 @@
+{% set name = "dandi" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dandi-{{ version }}.tar.gz
+  sha256: fdc943c8ff5dbb5eff37d2bde6d91101dd62badc3f08cc579af721dccdfb87b3
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - dandi=dandi.cli.command:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - appdirs
+    - click
+    - click-didyoumean
+    - etelemetry >=0.2.0
+    - girder-client
+    - humanize
+    - joblib
+    - keyring
+    - keyrings.alt
+    - pynwb >=1.0.3,!=1.1.0
+    - pyout !=0.6.0
+    - python
+    - python-dateutil  # [py<37]
+    - requests ~=2.20
+    - ruamel.yaml >=0.15,<1
+    - semantic_version
+    - tqdm
+
+test:
+  imports:
+    - dandi
+    - dandi.cli
+  commands:
+    - pip check
+    - dandi --help
+  requires:
+    - pip
+
+about:
+  home: http://dandiarchive.org
+  summary: Command line client for interaction with DANDI archive elements
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - yarikoptic
+    - jwodder

@@ -1,0 +1,49 @@
+{% set name = "copulae" %}
+{% set version = 0.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c3f0f18a2a1d85a0a55656e69439d5234eaf2f92aaca7cc93f789ea926974c9a
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - numpy >=1.15
+    - pandas >=0.23
+    - python
+    - scikit-learn >=0.23
+    - scipy >=1.1
+    - statsmodels >=0.9
+    - typing-extensions >=3.7.4.2  # [py<38]
+
+test:
+  imports:
+    - copulae
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/copulae/
+  summary: Python copulae library for dependency modelling
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - DanielBok

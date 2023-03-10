@@ -1,0 +1,47 @@
+{% set name = "pygobject" %}
+{% set version = 3.38.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PyGObject-{{ version }}.tar.gz
+  sha256: 051b950f509f2e9f125add96c1493bde987c527f7a0c15a1f7b69d6d1c3cd8e6
+
+build:
+  number: 0
+  skip: true   # [py>=40 or py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - pycairo >=1.11.1
+    - python
+
+test:
+  imports:
+    - gi
+    - gi.overrides
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pygobject.readthedocs.io
+  summary: Python bindings for GObject Introspection
+  license: LGPL-2.1
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - pkgw
+    - sebastian-luna-valero
+    - tschoonj

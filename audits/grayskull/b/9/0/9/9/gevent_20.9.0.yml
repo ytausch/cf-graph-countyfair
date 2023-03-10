@@ -1,0 +1,50 @@
+{% set name = "gevent" %}
+{% set version = 20.9.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/gevent-{{ version }}.tar.gz
+  sha256: 5f6d48051d336561ec08995431ee4d265ac723a64bba99cc58c3eb1a4d4f5c8d
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cffi >=1.12.2 ; platform_python_implementation =='cpython' and sys_platform =='win32'
+    - pip
+    - python
+  run:
+    - cffi >=1.12.2  # [win]
+    - greenlet >=0.4.17
+    - python
+    - setuptools
+    - zope.event
+    - zope.interface
+
+test:
+  imports:
+    - gevent
+    - gevent._ffi
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.gevent.org/
+  summary: Coroutine-based network library
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nehaljwani

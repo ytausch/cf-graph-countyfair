@@ -1,0 +1,44 @@
+{% set name = "smart_open" %}
+{% set version = 2.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/smart_open-{{ version }}.tar.gz
+  sha256: 3e95f4d3edc566aed46d0711c69b1a7b3d14ddf3af61cfa941e76cdb1dfe9918
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+    - requests
+
+test:
+  imports:
+    - smart_open
+    - smart_open.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/piskvorky/smart_open
+  summary: Utils for streaming large files (S3, HDFS, GCS, Azure Blob Storage, gzip, bz2...)
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - souravsingh
+    - mpenkov

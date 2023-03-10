@@ -1,0 +1,47 @@
+{% set name = "pysindy" %}
+{% set version = 1.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 54972fe6d7a0d204c364e9c3de143e4e2d42d96f255e13adf19810a2b4319bc5
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+    - setuptools_scm_git_archive
+  run:
+    - numpy
+    - python >=3.6
+    - scikit-learn>=0.23
+    - scipy
+
+test:
+  imports:
+    - pysindy
+    - pysindy.differentiation
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dynamicslab/pysindy
+  summary: Sparse Identification of Nonlinear Dynamics
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - moorepants

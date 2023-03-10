@@ -1,0 +1,42 @@
+{% set name = "vapory" %}
+{% set version = 0.1.01 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 71ae54b507e8fd2b150c2ed96ede9a1caef74d1d7073a9467dabf49736f5dad0
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - ez_setup
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - vapory
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: UNKNOWN
+  summary: 3D rendering with Python and POV-Ray
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - jan-janssen

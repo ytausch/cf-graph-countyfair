@@ -1,0 +1,58 @@
+{% set name = "tabulator" %}
+{% set version = 1.52.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/tabulator-{{ version }}.tar.gz
+  sha256: ccbc8925870c0ce9f8cc112ae1dc91b0fb873feb89ca89909a1dce5e5da02dc6
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - tabulator = tabulator.__main__:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - boto3 >=1.9
+    - chardet >=3.0
+    - click >=6.0
+    - ijson >=3.0.3
+    - jsonlines >=1.1
+    - linear-tsv >=1.0
+    - openpyxl >=2.6
+    - python
+    - requests >=2.8
+    - six >=1.9
+    - sqlalchemy >=0.9.6
+    - unicodecsv >=0.14
+    - xlrd >=1.0
+
+test:
+  imports:
+    - tabulator
+    - tabulator.loaders
+  commands:
+    - pip check
+    - tabulator --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/frictionlessdata/tabulator-py
+  summary: Consistent interface for stream reading and writing tabular data (csv/xls/json/etc)
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - roll

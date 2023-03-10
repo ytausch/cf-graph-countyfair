@@ -1,0 +1,42 @@
+{% set name = "python-box" %}
+{% set version = 5.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/python-box-{{ version }}.tar.gz
+  sha256: e51d03275f0d6fef3c155f79c19e542c2fb6d92e89eb385cd71ea22c5d4681b3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - box
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cdgriffith/Box
+  summary: Advanced Python dictionaries with dot notation access
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
+    - cdgriffith

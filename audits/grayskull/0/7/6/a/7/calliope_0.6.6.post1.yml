@@ -1,0 +1,59 @@
+{% set name = "calliope" %}
+{% set version = 0.6.6.post1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/calliope-{{ version }}.tar.gz
+  sha256: 1dbd451e9b16fc50ad74bbc3815a935aae7f65c91e5e3b6329fd433829c528fa
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - calliope = calliope.cli:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - click >=7,<8
+    - ipdb >=0.11
+    - ipython >=7
+    - jinja2 >=2.10
+    - natsort >=5
+    - netcdf4 >=1.2.2
+    - numpy >=1.15
+    - pandas >=1.1,<1.2
+    - plotly >=3.10,<3.11
+    - pyomo >=5.7,<5.8
+    - python
+    - ruamel.yaml >=0.16
+    - scikit-learn >=0.22
+    - xarray >=0.16,<0.17
+
+test:
+  imports:
+    - calliope
+    - calliope.backend
+  commands:
+    - pip check
+    - calliope --help
+  requires:
+    - pip
+
+about:
+  home: https://www.callio.pe/
+  summary: A multi-scale energy systems modelling framework
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - sjpfenninger
+    - brynpickering

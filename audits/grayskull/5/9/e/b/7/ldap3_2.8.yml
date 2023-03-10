@@ -1,0 +1,43 @@
+{% set name = "ldap3" %}
+{% set version = 2.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 59d1adcd5ead263387039e2a37d7cd772a2006b1cdb3ecfcbaab5192a601c515
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - pyasn1 >=0.4.6
+    - python
+
+test:
+  imports:
+    - ldap3
+    - ldap3.abstract
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cannatag/ldap3
+  summary: A strictly RFC 4510 conforming LDAP V3 pure Python client library
+  license: LGPL-3.0
+  license_file: COPYING.LESSER.txt
+
+extra:
+  recipe-maintainers:
+    - mcs07

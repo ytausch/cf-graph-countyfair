@@ -1,0 +1,46 @@
+{% set name = "loky" %}
+{% set version = 2.9.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/loky-{{ version }}.tar.gz
+  sha256: 4a9bf0644b6c2bc2db0faf7e12211a4919f8f4feb17b2ccc36cc6b2b3649c5bf
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - cloudpickle
+    - python
+
+test:
+  imports:
+    - loky
+    - loky.backend
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/joblib/loky/
+  summary: A robust implementation of concurrent.futures.ProcessPoolExecutor
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - tomMoral
+    - ogrisel
+    - pierreglaser

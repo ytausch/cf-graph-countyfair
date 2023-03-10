@@ -1,0 +1,43 @@
+{% set name = "pystac" %}
+{% set version = 0.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pystac-{{ version }}.tar.gz
+  sha256: 7bebf6b1015339d8fefe88887e705770341e9fd5393e8e808f91f2031e0eb97a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - python-dateutil >=2.7.0
+
+test:
+  imports:
+    - pystac
+    - pystac.extensions
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/azavea/pystac.git
+  summary: Python library for working with Spatiotemporal Asset Catalog (STAC).
+  license: AFL-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf

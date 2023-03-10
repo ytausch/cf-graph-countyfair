@@ -1,0 +1,53 @@
+{% set name = "ibis-vega-transform" %}
+{% set version = 5.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ibis-vega-transform-{{ version }}.tar.gz
+  sha256: 549c68bb8fbee63b5e234993da4d4d46452fc55ed72119de1a5e16d00aeae6be
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - altair >=4.0.0
+    - altair-transform
+    - ibis-framework >=1.3.0
+    - jaeger-client
+    - jupyter-jaeger >=1.0.3
+    - jupyterlab >=2.0.0
+    - mypy_extensions
+    - pymapd
+    - python >=3.6
+    - tornado
+    - typing-extensions
+    - vega_datasets
+
+test:
+  imports:
+    - ibis_vega_transform
+    - ibis_vega_transform.transforms
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Quansight/ibis-vega-transform
+  summary: Evaluate Vega transforms using Ibis expressions
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - scopatz

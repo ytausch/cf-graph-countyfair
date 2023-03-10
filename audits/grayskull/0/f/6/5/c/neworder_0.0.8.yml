@@ -1,0 +1,46 @@
+{% set name = "neworder" %}
+{% set version = 0.0.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/neworder-{{ version }}.tar.gz
+  sha256: fb94ebb7be44c1abc519bab25525e7178147bc1067928f6bfc2d1415b0948261
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - pybind11 >=2.5.0
+    - pytest-runner
+    - python
+  run:
+    - numpy >=1.19.1
+    - pandas >=1.0.5
+    - python
+
+test:
+  imports:
+    - neworder
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://neworder.readthedocs.io
+  summary: A dynamic microsimulation framework
+  license: BSD-3-Clause
+  license_file: .eggs/pybind11-2.5.0-py3.7.egg/EGG-INFO/LICENSE
+
+extra:
+  recipe-maintainers:
+    - virgesmith

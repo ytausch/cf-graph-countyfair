@@ -1,0 +1,42 @@
+{% set name = "beartype" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/beartype-{{ version }}.tar.gz
+  sha256: 99b15566b2e17f30f20586c14201eeca934acfa98df20705628d8f6c017cacf2
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - beartype
+    - beartype._cave
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/beartype/beartype
+  summary: Unbearably fast runtime type checking in pure Python.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - leycec

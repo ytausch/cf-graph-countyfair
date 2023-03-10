@@ -1,0 +1,44 @@
+{% set name = "ib-insync" %}
+{% set version = 0.9.62 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ib_insync-{{ version }}.tar.gz
+  sha256: ab334ab4c2048b5781124adc4693874b60bf263fb72dfd840ca706962160af78
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - flake8
+    - pip
+    - python >=3.6
+  run:
+    - eventkit
+    - nest-asyncio
+    - python >=3.6
+
+test:
+  imports:
+    - ib_insync
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/erdewit/ib_insync
+  summary: Python sync/async framework for Interactive Brokers API
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - yehoshuadimarsky

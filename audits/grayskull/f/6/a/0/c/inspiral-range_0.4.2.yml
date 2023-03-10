@@ -1,0 +1,50 @@
+{% set name = "inspiral-range" %}
+{% set version = 0.4.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/inspiral_range-{{ version }}.tar.gz
+  sha256: e8269c1a41bc7539615564d3ad18d1ba052d4a65e23ef4b402cf827bf6adb05f
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - inspiral-range = inspiral_range.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - astropy
+    - numpy
+    - python
+    - pyyaml
+    - scipy
+
+test:
+  imports:
+    - inspiral_range
+    - inspiral_range.test
+  commands:
+    - pip check
+    - inspiral-range --help
+  requires:
+    - pip
+
+about:
+  home: https://git.ligo.org/gwinc/inspiral_range
+  summary: GW detector inspiral range calculation tools
+  license: GPL-3.0
+  license_file: COPYING-GPL-3
+
+extra:
+  recipe-maintainers:
+    - duncanmmacleod
+    - jrollins

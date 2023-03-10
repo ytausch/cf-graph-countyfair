@@ -1,0 +1,52 @@
+{% set name = "synphot" %}
+{% set version = 1.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: b33d25d43ae875fdaa7760729d7aeeb16293325a71ba06e8fdd27892be83daa2
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - extension_helpers
+    - numpy
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - astropy >=3
+    - numpy >=1.16
+    - python
+    - scipy >=0.14
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - synphot
+    - synphot.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.github.com/spacetelescope/synphot_refactor
+  summary: Synthetic photometry
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - mwcraig
+    - pllim

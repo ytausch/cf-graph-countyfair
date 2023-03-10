@@ -1,0 +1,66 @@
+{% set name = "pyomicron" %}
+{% set version = 1.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: f13c7d758ce2ec75acf9940d9fba4590807e0cbe96fc997f5b21b1b30eacac17
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - omicron-hdf5-merge = omicron.cli.hdf5_merge:main
+    - omicron-show = omicron.cli.show:main
+    - omicron-process = omicron.cli.process:main
+    - omicron-root-merge = omicron.cli.root_merge:main
+    - omicron-status = omicron.cli.status:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools
+  run:
+    - dqsegdb2
+    - gwdatafind
+    - gwpy >=1.0.0
+    - h5py
+    - htcondor
+    - ligo-segments
+    - lscsoft-glue >=1.60.0
+    - markuppy
+    - numpy
+    - pycondor
+    - python
+    - python-ligo-lw >=1.4.0
+
+test:
+  imports:
+    - omicron
+    - omicron.cli
+  commands:
+    - pip check
+    - omicron-hdf5-merge --help
+    - omicron-show --help
+    - omicron-process --help
+    - omicron-root-merge --help
+    - omicron-status --help
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/pyomicron/
+  summary: Python utilities and wrappers for GW Omicron
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - alurban
+    - duncanmmacleod

@@ -1,0 +1,45 @@
+{% set name = "echo" %}
+{% set version = 0.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/echo-{{ version }}.tar.gz
+  sha256: fccacf010ac6d70a59d6f5553f3e50a380c14e1eb56c27eff2dbc5e7ccccc509
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - numpy
+    - python >=3.6
+    - qtpy
+
+test:
+  imports:
+    - echo
+    - echo.qt
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/glue-viz/echo
+  summary: Callback Properties in Python
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - astrofrog-conda-forge

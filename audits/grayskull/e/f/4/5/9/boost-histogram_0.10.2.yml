@@ -1,0 +1,49 @@
+{% set name = "boost-histogram" %}
+{% set version = 0.10.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/boost-histogram-{{ version }}.tar.gz
+  sha256: a3cc23c282eb6745d91840cb0e12f947ce963f427fcb0664a024653e0316a7c7
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy
+    - pip
+    - python
+  run:
+    - python
+    - typing >=3.5
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - boost_histogram
+    - boost_histogram._internal
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/scikit-hep/boost-histogram
+  summary: The Boost::Histogram Python wrapper.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - chrisburr
+    - henryiii
+    - HDembinski

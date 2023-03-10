@@ -1,0 +1,43 @@
+{% set name = "bugsnag" %}
+{% set version = 4.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/bugsnag-{{ version }}.tar.gz
+  sha256: 3cbea55eaab8c61c5ebbb75ec31431da37db3c8eb01f982f0a6301c4afa65074
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5,<4.0
+  run:
+    - python >=3.5,<4.0
+    - webob
+
+test:
+  imports:
+    - bugsnag
+    - bugsnag.celery
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://bugsnag.com/
+  summary: Automatic error monitoring for django, flask, etc.
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - tschoonj

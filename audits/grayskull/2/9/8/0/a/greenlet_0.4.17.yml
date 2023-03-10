@@ -1,0 +1,43 @@
+{% set name = "greenlet" %}
+{% set version = 0.4.17 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/greenlet-{{ version }}.tar.gz
+  sha256: 41d8835c69a78de718e466dd0e6bfd4b46125f21a67c3ff6d76d8d8059868d6b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - greenlet
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/python-greenlet/greenlet
+  summary: Lightweight in-process concurrent programming
+  doc_url: https://pythonhosted.org/greenlet/
+  license: BSD-4-Clause
+  license_file: LICENSE.PSF
+
+extra:
+  recipe-maintainers:
+    - curtisalexander
+    - nicoddemus

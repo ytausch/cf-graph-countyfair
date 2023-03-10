@@ -1,0 +1,49 @@
+{% set name = "bgcargo" %}
+{% set version = 0.2.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/bgcArgo-{{ version }}.tar.gz
+  sha256: 1108ea495a23ec94f10adcb215a67d810f1616003f64cb76f4351d2c7d4aeb80
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.4
+  run:
+    - cmocean
+    - gsw
+    - matplotlib-base
+    - netcdf4
+    - numpy
+    - pandas
+    - python >=3.4
+    - scipy
+    - seaborn
+
+test:
+  imports:
+    - bgcArgo
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ArgoCanada/BGC-QC
+  summary: A python library for quality control of BGC-Argo data
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - cgrdn

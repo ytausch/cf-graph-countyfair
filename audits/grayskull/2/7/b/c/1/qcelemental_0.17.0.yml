@@ -1,0 +1,48 @@
+{% set name = "qcelemental" %}
+{% set version = 0.17.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/qcelemental-{{ version }}.tar.gz
+  sha256: 4110c285ec40bfbf67041c3f0651b7af617adc14fe0565807ae2504383ac5d77
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - numpy >=1.12.0
+    - pint >=0.10.0
+    - pydantic >=1.0.0
+    - python >=3.6
+
+test:
+  imports:
+    - qcelemental
+    - qcelemental.data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/MolSSI/QCElemental
+  summary: Essentials for Quantum Chemistry.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - loriab
+    - dgasmith
+    - lnaden
+    - bennybp

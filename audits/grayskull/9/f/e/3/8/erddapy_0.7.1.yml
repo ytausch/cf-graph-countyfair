@@ -1,0 +1,44 @@
+{% set name = "erddapy" %}
+{% set version = 0.7.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/erddapy-{{ version }}.tar.gz
+  sha256: 6bb7f6253c927ae1cb76e9f19e47fbcf57f7e5ebec18abc6eef86995bb1ea190
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - pandas >=0.20.3
+    - python >=3.6
+    - requests
+
+test:
+  imports:
+    - erddapy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ioos/erddapy
+  summary: Python interface for ERDDAP
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - ocefpaf

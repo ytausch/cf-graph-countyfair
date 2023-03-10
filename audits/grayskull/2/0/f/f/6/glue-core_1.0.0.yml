@@ -1,0 +1,67 @@
+{% set name = "glue-core" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/glue-core-{{ version }}.tar.gz
+  sha256: cfe89fb7742782e859fefd6b925fb0e5cba8aec0321b0e5fd8d0517d99ee9ae1
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - glue-config = glue.config_gen:main
+    - glue-deps = glue._deps:main
+    - glue = glue.main:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - astropy >=4.0
+    - bottleneck >=1.2
+    - dill >=0.2
+    - echo >=0.5
+    - h5py >=2.10
+    - ipykernel >=4.0,!=5.0.0,!=5.1.0
+    - ipython >=4.0
+    - jupyter_client <6
+    - matplotlib-base >=3.2
+    - mpl-scatter-density >=0.7
+    - numpy >=1.16
+    - pandas >=1.0
+    - python >=3.6
+    - qtconsole >=4.3
+    - qtpy >=1.9
+    - scipy >=1.0
+    - setuptools >=30.3.0
+    - xlrd >=1.2
+
+test:
+  imports:
+    - glue
+    - glue.app
+  commands:
+    - pip check
+    - glue-config --help
+    - glue-deps --help
+    - glue --help
+  requires:
+    - pip
+
+about:
+  home: http://glueviz.org
+  summary: Multidimensional data visualization across files
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - astrofrog-conda-forge

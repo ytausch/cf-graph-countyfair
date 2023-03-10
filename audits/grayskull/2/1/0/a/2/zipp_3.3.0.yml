@@ -1,0 +1,42 @@
+{% set name = "zipp" %}
+{% set version = 3.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/zipp-{{ version }}.tar.gz
+  sha256: 64ad89efee774d1897a58607895d80789c59778ea02185dd846ac38394a8642b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm >=3.4.1
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - zipp
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jaraco/zipp
+  summary: Backport of pathlib-compatible object wrapper for zip files
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nehaljwani

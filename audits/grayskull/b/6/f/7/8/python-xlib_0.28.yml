@@ -1,0 +1,43 @@
+{% set name = "python-xlib" %}
+{% set version = 0.28 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/python-xlib-{{ version }}.tar.gz
+  sha256: 425f766173cdb30d0d61b416342ebecf312a1bf16c4d72ecd26b04667496067f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - six >=1.10.0
+
+test:
+  imports:
+    - Xlib
+    - Xlib.ext
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/python-xlib/python-xlib
+  summary: Python X Library
+  license: LGPL-2.1
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jschueller

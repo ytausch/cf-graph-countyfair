@@ -1,0 +1,65 @@
+{% set name = "pycbc" %}
+{% set version = 1.16.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 494449fcfc2923027b731ef597390fcad523ee349eacaba63eb36d5dfa320a5f
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy >=1.16.0
+    - pip
+    - python
+  run:
+    - astropy >=2.0.3,<3.0.0  # [py<=27]
+    - beautifulsoup4 >=4.6.0
+    - cython >=0.29
+    - decorator >=3.4.2
+    - emcee ==2.2.1
+    - gwdatafind
+    - h5py >=2.5
+    - jinja2
+    - ligo-segments
+    - lscsoft-glue >=1.59.3
+    - mako >=1.0.1
+    - matplotlib-base >=1.5.1
+    - mpld3 >=0.3
+    - numpy >=1.16.0
+    - pillow
+    - python
+    - requests >=1.2.1
+    - scipy >=0.16.0  # [py>=35]
+    - six >=1.10.0
+    - tqdm
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - pycbc
+    - pycbc.catalog
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.pycbc.org/
+  summary: Core library to analyze gravitational-wave data, find signals, and study their parameters.
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - duncanmmacleod
+    - ahnitz

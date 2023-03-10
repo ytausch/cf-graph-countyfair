@@ -1,0 +1,51 @@
+{% set name = "scikit-lego" %}
+{% set version = 0.5.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2ed493fb934a2f04c9da5009d63456c185f0660b307baff1382b207565ac6a67
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - autograd >=1.2
+    - cvxpy >=1.0.24
+    - deprecated >=1.2.6
+    - numpy >=1.16.0
+    - pandas >=0.23.4
+    - patsy >=0.5.1
+    - python
+    - scikit-learn >=0.20.2
+    - scipy >=1.2.0
+    - umap-learn >=0.4.3
+
+test:
+  imports:
+    - scikit_lego
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://scikit-lego.readthedocs.io/en/latest/
+  summary: a collection of lego bricks for scikit-learn pipelines
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - maxibor
+    - MBrouns
+    - koaning

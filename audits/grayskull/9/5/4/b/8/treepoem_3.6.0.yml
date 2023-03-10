@@ -1,0 +1,45 @@
+{% set name = "treepoem" %}
+{% set version = 3.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/treepoem-{{ version }}.tar.gz
+  sha256: 9c8d399ae2652fb726cc3fa15c81a156c39c6a945f4f1b7bd7757823ea2fd96f
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - treepoem=treepoem.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - pillow
+    - python >=3.5
+
+test:
+  imports:
+    - treepoem
+  commands:
+    - pip check
+    - treepoem --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/adamchainz/treepoem
+  summary: Barcode rendering for Python supporting QRcode, Aztec, PDF417, I25, Code128, Code39 and many more types.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Ryan-Dmello

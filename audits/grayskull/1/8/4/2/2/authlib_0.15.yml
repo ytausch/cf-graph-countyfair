@@ -1,0 +1,44 @@
+{% set name = "authlib" %}
+{% set version = 0.15 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Authlib-{{ version }}.tar.gz
+  sha256: f107574d718764b9a88528e1ce29de439dedea7307400adc4fefe960ec78d1f2
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - cryptography
+    - python
+
+test:
+  imports:
+    - authlib
+    - authlib.common
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://authlib.org/
+  summary: The ultimate Python library in building OAuth and OpenID Connect servers.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - chrisburr
+    - markfennema

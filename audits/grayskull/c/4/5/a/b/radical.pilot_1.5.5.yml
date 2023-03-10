@@ -1,0 +1,50 @@
+{% set name = "radical.pilot" %}
+{% set version = 1.5.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/radical.pilot-{{ version }}.tar.gz
+  sha256: d36e0b73b0b2d26e1c40f31d11624674a65f9ebee4366bb295ac04e416f06704
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - netifaces
+    - ntplib
+    - pymongo
+    - python >=3.6
+    - python-hostlist
+    - radical.saga >=1.5.2
+    - radical.utils >=1.5.2
+    - setproctitle
+
+test:
+  imports:
+    - radical.pilot
+    - radical.pilot.agent
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.github.com/radical-cybertools/radical.pilot/
+  summary: The RADICAL pilot job framework
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - andre-merzky
+    - iparask

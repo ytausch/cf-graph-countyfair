@@ -1,0 +1,47 @@
+{% set name = "pandas_market_calendars" %}
+{% set version = 1.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pandas_market_calendars-{{ version }}.tar.gz
+  sha256: 3bd83d3e7dfa0f9b981d2dba62d26eabe9c59a98c6a8ee537adb490c058cf598
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - pandas >=0.18
+    - python >=3.5
+    - python-dateutil
+    - pytz
+    - trading-calendars
+
+test:
+  imports:
+    - pandas_market_calendars
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rsheftel/pandas_market_calendars
+  summary: Market and exchange trading calendars for pandas
+  dev_url: https://github.com/rsheftel/pandas_market_calendars
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - mathiaseitz
+    - trendelkampschroer

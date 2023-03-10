@@ -1,0 +1,42 @@
+{% set name = "requirements-detector" %}
+{% set version = 0.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/requirements-detector-{{ version }}.tar.gz
+  sha256: 0d1e13e61ed243f9c3c86e6cbb19980bcb3a0e0619cde2ec1f3af70fdbee6f7b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - astroid >=1.4
+    - python
+
+test:
+  imports:
+    - requirements_detector
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/landscapeio/requirements-detector
+  summary: Python tool to find and list requirements of a Python project
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jakirkham

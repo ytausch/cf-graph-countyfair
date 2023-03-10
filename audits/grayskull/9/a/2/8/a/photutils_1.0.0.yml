@@ -1,0 +1,50 @@
+{% set name = "photutils" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/photutils-{{ version }}.tar.gz
+  sha256: 789c68102f342439ebb90e4ffd3fbc80efda63492662f440aa486b908b889d3f
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - extension_helpers
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - astropy >=4.0
+    - numpy >=1.17
+    - python
+
+test:
+  imports:
+    - photutils
+    - photutils.aperture
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/astropy/photutils
+  summary: An Astropy package for source detection and photometry
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - larrybradley
+    - bsipocz
+    - mwcraig

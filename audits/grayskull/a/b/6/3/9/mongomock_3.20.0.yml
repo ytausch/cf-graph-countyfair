@@ -1,0 +1,46 @@
+{% set name = "mongomock" %}
+{% set version = 3.20.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 02f660a839a4623669fefc7168056a0a6e0c0f9d93b2b5eeaa52d17f3a642486
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pbr
+    - pip
+    - python
+  run:
+    - python
+    - sentinels
+    - six
+
+test:
+  imports:
+    - mongomock
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/mongomock/
+  summary: Fake pymongo stub for testing simple MongoDB-dependent code
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - birnbaum
+    - mathiaseitz
+    - trendelkampschroer

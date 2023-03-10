@@ -1,0 +1,45 @@
+{% set name = "academic" %}
+{% set version = 0.6.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/academic-{{ version }}.tar.gz
+  sha256: f6b1c32432b32d096c866f420ea3e5ca141f9425b649e45c0589aac003433d96
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - bibtexparser ==1.1.0
+    - python >=3.6
+    - requests
+    - ruamel.yaml ==0.16.10
+    - toml
+
+test:
+  imports:
+    - academic
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://sourcethemes.com/academic/
+  summary: The website designer for Hugo
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - hoechenberger

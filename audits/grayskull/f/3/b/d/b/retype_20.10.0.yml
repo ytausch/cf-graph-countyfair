@@ -1,0 +1,49 @@
+{% set name = "retype" %}
+{% set version = 20.10.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/retype-{{ version }}.tar.gz
+  sha256: 80dd348414993486bc131ba7dcbb2a272dffb1473b96d51a6cf0185eff9e7c83
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - retype=retype.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - click
+    - pathspec >=0.5.9,<1
+    - python >=3.6
+    - typed-ast
+
+test:
+  imports:
+    - retype
+  commands:
+    - pip check
+    - retype --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ambv/retype
+  summary: re-apply types from .pyi stub files to your codebase
+  dev_url: https://github.com/ambv/retype
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - bollwyvl
+    - nehaljwani

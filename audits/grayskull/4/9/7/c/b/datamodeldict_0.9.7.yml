@@ -1,0 +1,42 @@
+{% set name = "datamodeldict" %}
+{% set version = 0.9.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/DataModelDict-{{ version }}.tar.gz
+  sha256: b1be7573cb4401aa250fd00f2e6392543f6f2498f8e02f6313595aa220e5c99e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - xmltodict
+
+test:
+  imports:
+    - DataModelDict
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/usnistgov/DataModelDict/
+  summary: Class allowing for data models equivalently represented as Python dictionaries, JSON, and XML
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
+    - lmhale99

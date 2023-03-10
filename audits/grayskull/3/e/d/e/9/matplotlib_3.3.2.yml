@@ -1,0 +1,58 @@
+{% set name = "matplotlib" %}
+{% set version = 3.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/matplotlib-{{ version }}.tar.gz
+  sha256: 3d2edbf59367f03cd9daf42939ca06383a7d7803e3993eb5ff1bee8e8a3fbb6b
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - certifi >=2020.06.20
+    - numpy >=1.15
+    - pip
+    - python
+  run:
+    - certifi >=2020.06.20
+    - cycler >=0.10
+    - kiwisolver >=1.0.1
+    - numpy >=1.15
+    - pillow >=6.2.0
+    - pyparsing >=2.0.3,!=2.0.4,!=2.1.2,!=2.1.6
+    - python
+    - python-dateutil >=2.1
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - matplotlib
+    - matplotlib.axes
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://matplotlib.org
+  summary: Python plotting package
+  license: CC0-1.0
+  license_file: LICENSE/LICENSE
+
+extra:
+  recipe-maintainers:
+    - mdboom
+    - ocefpaf
+    - pelson
+    - tacaswell
+    - dopplershift

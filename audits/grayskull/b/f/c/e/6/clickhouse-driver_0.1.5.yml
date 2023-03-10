@@ -1,0 +1,53 @@
+{% set name = "clickhouse-driver" %}
+{% set version = 0.1.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/clickhouse-driver-{{ version }}.tar.gz
+  sha256: ed058d4332df1e8b99daa4283014f9701bfed7220553956cafa67df14b6547a0
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - pip
+    - python
+  run:
+    - enum34  # [py<34]
+    - ipaddress  # [py<34]
+    - python
+    - pytz
+    - tzlocal
+
+test:
+  imports:
+    - clickhouse_driver
+    - clickhouse_driver.columns
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mymarilyn/clickhouse-driver
+  summary: Python driver with native interface for ClickHouse
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kszucs
+    - xzkostyan
+    - cpcloud
+    - xmnlab
+    - xhochy

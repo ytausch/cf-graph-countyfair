@@ -1,0 +1,59 @@
+{% set name = "transformers" %}
+{% set version = 3.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/transformers-{{ version }}.tar.gz
+  sha256: d17b175a85e18dce399e81cde1a1198d6fc52a507168a06a2548cdea7e0cbbb4
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - transformers-cli=transformers.commands.transformers_cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dataclasses  # [py<37]
+    - filelock
+    - numpy
+    - packaging
+    - python
+    - regex !=2019.12.17
+    - requests
+    - sacremoses
+    - sentencepiece !=0.1.92
+    - tokenizers ==0.8.1.rc2
+    - tqdm >=4.27
+
+test:
+  imports:
+    - transformers
+    - transformers.benchmark
+  commands:
+    - pip check
+    - transformers-cli --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/huggingface/transformers
+  summary: State-of-the-art Natural Language Processing for TensorFlow 2.0 and PyTorch
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - roccqqck
+    - oblute
+    - rluria14
+    - ndmaxar
+    - setu4993

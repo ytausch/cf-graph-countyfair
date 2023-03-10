@@ -1,0 +1,43 @@
+{% set name = "pyusb" %}
+{% set version = 1.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyusb-{{ version }}.tar.gz
+  sha256: d69ed64bff0e2102da11b3f49567256867853b861178689671a163d30865c298
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - python
+
+test:
+  imports:
+    - usb
+    - usb.backend
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pyusb.github.io/pyusb
+  summary: Python USB access module
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - hmaarrfk

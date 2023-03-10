@@ -1,0 +1,51 @@
+{% set name = "e3fp" %}
+{% set version = 1.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/e3fp-{{ version }}.tar.gz
+  sha256: f079b78c6575d812424972d16ba9b824eef0733d839a14585257e38496bc133f
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - cython >=0.25.2
+    - mmh3 >=2.3.1
+    - numpy >=1.11.3
+    - python
+    - scipy >=0.18.0
+    - sdaxen-python-utilities >=0.1.4
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - e3fp
+    - e3fp.config
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/keiserlab/e3fp
+  summary: Molecular 3D fingerprinting
+  license: LGPL-3.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - hadim

@@ -1,0 +1,53 @@
+{% set name = "spatialpandas" %}
+{% set version = 0.3.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/spatialpandas-{{ version }}.tar.gz
+  sha256: 8d7a1ab2356875f53ae23e3f87d41cceba88e7636bafab26757a85aea2b23749
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - param
+    - pip
+    - python >=3.6
+  run:
+    - dask-core >=2.0
+    - fsspec
+    - numba
+    - numpy
+    - pandas >=0.25
+    - param
+    - pyarrow >=0.15
+    - python >=3.6
+    - retrying
+
+test:
+  imports:
+    - spatialpandas
+    - spatialpandas.geometry
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/holoviz/spatialpandas
+  summary: Pandas extension arrays for spatial/geometric operations
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jonmmease
+    - andrewannex
+    - philippjfr

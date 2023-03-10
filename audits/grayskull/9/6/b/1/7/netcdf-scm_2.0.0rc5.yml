@@ -1,0 +1,53 @@
+{% set name = "netcdf-scm" %}
+{% set version = 2.0.0rc5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d9d04be9264eae4e8ffc09d22d820ff410519ca76dff5f8d5f9bdfd877f0e168
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - netcdf-scm = netcdf_scm.cli:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - click
+    - numpy
+    - pymagicc >=2.0.0rc5
+    - python
+    - python-dateutil
+    - scipy
+    - tqdm
+
+test:
+  imports:
+    - netcdf_scm
+    - netcdf_scm.citing
+  commands:
+    - pip check
+    - netcdf-scm --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/znicholls/netcdf-scm
+  summary: Processing netCDF files for use with simple climate models
+  dev_url: https://github.com/znicholls/netcdf-scm
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - znicholls

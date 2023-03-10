@@ -1,0 +1,44 @@
+{% set name = "marbles-mixins" %}
+{% set version = 0.12.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 5113d4b3e9968ce2feb7cdf0c45eccee3b5bd2dd3d3f0ccf0d84905aaa965e39
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - pandas <2,>=0.19.1
+    - python
+
+test:
+  imports:
+    - marbles.mixins
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/twosigma/marbles
+  summary: Semantically-rich assertions for use in marbles and unittest test cases
+  dev_url: https://github.com/twosigma/marbles
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - thejunglejane
+    - leifwalsh

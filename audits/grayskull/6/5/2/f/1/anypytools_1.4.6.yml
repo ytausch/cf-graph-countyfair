@@ -1,0 +1,44 @@
+{% set name = "anypytools" %}
+{% set version = 1.4.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/AnyPyTools-{{ version }}.tar.gz
+  sha256: 1b2f509f1fc70d21163e79b4862b2f8509f95c2e20eacbceebd354edf857acf7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - numpy
+    - python >=3.6
+    - scipy
+    - tqdm
+
+test:
+  imports:
+    - anypytools
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/AnyBody-Research-Group/AnyPyTools
+  summary: Python tools and utilities for working with the AnyBody Modeling System
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - melund

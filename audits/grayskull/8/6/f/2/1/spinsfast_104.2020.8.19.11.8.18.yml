@@ -1,0 +1,44 @@
+{% set name = "spinsfast" %}
+{% set version = 104.2020.8.19.11.8.18 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/spinsfast-{{ version }}.tar.gz
+  sha256: a7b29fbfd0f2339a7315b00c88965efd35e6305dfd632707d6d949e54fa0704c
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy
+    - pip
+    - python
+  run:
+    - python
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - spinsfast
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/moble/spinsfast
+  summary: Fast and exact spin-s spherical-harmonic transforms
+  license: GPL-3.0
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - moble

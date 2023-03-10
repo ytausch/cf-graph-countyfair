@@ -1,0 +1,47 @@
+{% set name = "mkdocs-material" %}
+{% set version = 6.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/mkdocs-material-{{ version }}.tar.gz
+  sha256: 8facb50db21fc0152ea5459ef67298512370503816dd2a6a2887f67330f61ed2
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - markdown >=3.2
+    - mkdocs >=1.1
+    - mkdocs-material-extensions >=1.0
+    - pygments >=2.4
+    - pymdown-extensions >=7.0
+    - python
+
+test:
+  imports:
+    - material
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://squidfunk.github.io/mkdocs-material/
+  summary: A Material Design theme for MkDocs
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - monaldoj
+    - marcelotrevisani

@@ -1,0 +1,58 @@
+{% set name = "act-atmos" %}
+{% set version = 0.4.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/act-atmos-{{ version }}.tar.gz
+  sha256: f108a4c77ca10e9235701fc0a85fe13f83ebb376028569e81d8b74ead7f096d7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - astral
+    - boto3
+    - cartopy
+    - dask-core
+    - distributed
+    - matplotlib-base
+    - numpy
+    - pandas
+    - pint
+    - pyproj
+    - python
+    - requests
+    - scipy
+    - six
+    - xarray
+
+test:
+  imports:
+    - act
+    - act.corrections
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ARM-DOE/ACT
+  summary: Package for working with atmospheric time series datasets
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - AdamTheisen
+    - rcjackson
+    - zssherman

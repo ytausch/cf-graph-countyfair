@@ -1,0 +1,44 @@
+{% set name = "feedparser" %}
+{% set version = 6.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/feedparser-{{ version }}.tar.gz
+  sha256: 6ca88edcaa43f428345968df903a87f020843eda5e28d7ea24a612158d61e74c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+    - sgmllib3k
+
+test:
+  imports:
+    - feedparser
+    - feedparser.datetimes
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/kurtmckee/feedparser
+  summary: Universal feed parser, handles RSS 0.9x, RSS 1.0, RSS 2.0, CDF, Atom 0.3, and Atom 1.0 feeds
+  doc_url: https://pythonhosted.org/feedparser/
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - step21

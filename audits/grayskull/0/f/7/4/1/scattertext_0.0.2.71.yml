@@ -1,0 +1,54 @@
+{% set name = "scattertext" %}
+{% set version = 0.0.2.71 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/scattertext-{{ version }}.tar.gz
+  sha256: db9d77cf53c33d696fdfc2447d610cd8ae45c34395dce85a6e43e7c7e3b89dc3
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - scattertext = scattertext.CLI:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - flashtext
+    - mock
+    - numpy
+    - pandas
+    - python
+    - scikit-learn
+    - scipy
+    - six
+    - statsmodels
+
+test:
+  imports:
+    - scattertext
+    - scattertext.categoryprojector
+  commands:
+    - pip check
+    - scattertext --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/JasonKessler/scattertext
+  summary: An NLP package to visualize interesting terms in text.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - synapticarbors
+    - JasonKessler

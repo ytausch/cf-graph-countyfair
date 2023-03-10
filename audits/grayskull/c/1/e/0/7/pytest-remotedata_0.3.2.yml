@@ -1,0 +1,45 @@
+{% set name = "pytest-remotedata" %}
+{% set version = 0.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest-remotedata-{{ version }}.tar.gz
+  sha256: e20c58d4b7c359c4975dc3c3d3d67be0905180d2368be0be3ae09b15a136cfc0
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - pytest >=3.1
+    - python
+    - six
+
+test:
+  imports:
+    - pytest_remotedata
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://astropy.org
+  summary: Pytest plugin for controlling remote data access.
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - astrofrog-conda-forge
+    - drdavella
+    - mwcraig

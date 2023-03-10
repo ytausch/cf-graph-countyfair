@@ -1,0 +1,44 @@
+{% set name = "heliopy" %}
+{% set version = 0.14.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/HelioPy-{{ version }}.tar.gz
+  sha256: 6e23f1d2196346538af485a931b583270a0a4e51adbb5e691ffb9c10fd88e70e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - astropy >=3.1
+    - numpy
+    - python >=3.6
+
+test:
+  imports:
+    - heliopy
+    - heliopy.data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/HelioPy/
+  summary: '"Python for heliophysics"'
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dstansby

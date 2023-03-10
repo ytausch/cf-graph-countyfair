@@ -1,0 +1,42 @@
+{% set name = "xontrib-xlsd" %}
+{% set version = 0.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xontrib-xlsd-{{ version }}.tar.gz
+  sha256: 46e7cbb558a9fe20f57029fb23f01d1407838b366b95a9539c2cf8f93deb4dbb
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - xlsd
+    - xontrib
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cafehaine/xontrib-xlsd
+  summary: An improved ls for xonsh, inspired by lsd
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - scopatz

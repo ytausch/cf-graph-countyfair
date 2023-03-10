@@ -1,0 +1,44 @@
+{% set name = "funcargparse" %}
+{% set version = 0.2.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/funcargparse-{{ version }}.tar.gz
+  sha256: 5d249c3428f629e71c0ef4e1ae78f44ab9473e0201e5d79e16c28461059b6d34
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - docrep >=0.3.0
+    - python
+    - six
+
+test:
+  imports:
+    - funcargparse
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Chilipp/funcargparse
+  summary: Create an argparse.ArgumentParser from function docstrings
+  dev_url: https://github.com/Chilipp/psyplot
+  license: GPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Chilipp

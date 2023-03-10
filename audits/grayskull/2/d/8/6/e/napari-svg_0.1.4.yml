@@ -1,0 +1,48 @@
+{% set name = "napari-svg" %}
+{% set version = 0.1.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/napari-svg-{{ version }}.tar.gz
+  sha256: 7e0cb5af0e98948cdc9719becec6c0641159444adf33b8b9ba538d0faee75b55
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - imageio >=2.5.0
+    - napari-plugin-engine >=0.1.4
+    - numpy >=1.16.0
+    - python >=3.6
+    - vispy >=0.6.4
+
+test:
+  imports:
+    - napari_svg
+    - napari_svg._tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/napari/napari-svg
+  summary: A plugin for reading and writing svg files with napari
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - sofroniewn
+    - tlambert03
+    - jni

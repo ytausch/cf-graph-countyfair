@@ -1,0 +1,45 @@
+{% set name = "identify" %}
+{% set version = 1.5.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/identify-{{ version }}.tar.gz
+  sha256: c770074ae1f19e08aadbda1c886bc6d0cb55ffdc503a8c0fe8699af2fc9664ae
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - identify-cli=identify.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+  run:
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+
+test:
+  imports:
+    - identify
+    - identify.vendor
+  commands:
+    - pip check
+    - identify-cli --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/chriskuehl/identify
+  summary: File identification library for Python
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nicoddemus

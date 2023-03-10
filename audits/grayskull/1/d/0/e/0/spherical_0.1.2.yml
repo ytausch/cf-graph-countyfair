@@ -1,0 +1,48 @@
+{% set name = "spherical" %}
+{% set version = 0.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/spherical-{{ version }}.tar.gz
+  sha256: ed24fea57f0922d24506febc1702c5eae5d7dfabf8d5cd55353c63d4bebf4275
+
+build:
+  number: 0
+  skip: true   # [py>=40 or py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - black >=20.8b1
+    - importlib-metadata >=1.0,<2.0  # [py<38]
+    - numba >=0.50
+    - numpy >=1.13,<2.0
+    - python
+    - quaternionic >=0.2.0,<0.3.0
+    - scipy >=1.0,<2.0
+
+test:
+  imports:
+    - spherical
+    - spherical.SWSH
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/moble/spherical
+  summary: Evaluate and transform D matrices, 3-j symbols, and (scalar or spin-weighted) spherical harmonics
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - moble

@@ -1,0 +1,47 @@
+{% set name = "standardiser" %}
+{% set version = 0.1.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/standardiser-{{ version }}.tar.gz
+  sha256: 611f520b999058026380b506da593e072f566d351e68e4cd1d8f7e8cd7728c82
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - standardiser=standardiser.bin.standardiser:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - ez_setup
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - standardiser
+    - standardiser.bin
+  commands:
+    - pip check
+    - standardiser --help
+  requires:
+    - pip
+
+about:
+  home: https://www.ebi.ac.uk/chembldb/index.php/ws
+  summary: Provides a simple way of standardising molecules as a prelude to e.g. molecular modelling exercises.
+  license: AFL-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - tsenapathi
+    - simonbray

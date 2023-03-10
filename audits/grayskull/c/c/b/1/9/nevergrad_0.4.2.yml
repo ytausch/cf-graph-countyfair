@@ -1,0 +1,48 @@
+{% set name = "nevergrad" %}
+{% set version = 0.4.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: a33128dba1e4ac87a1f62d15232f9c28f85ae33b0c12317e483f078c82fa66c3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - bayesian-optimization >=1.1.0
+    - cma >=2.6.0
+    - numpy >=1.15.0
+    - python >=3.6
+    - typing-extensions >=3.6.6
+
+test:
+  imports:
+    - nevergrad
+    - nevergrad.benchmark
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/facebookresearch/nevergrad
+  summary: A Python toolbox for performing gradient-free optimization
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - oblute
+    - rluria14
+    - ndmaxar

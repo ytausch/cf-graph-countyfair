@@ -1,0 +1,45 @@
+{% set name = "scikit-fem" %}
+{% set version = 2.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/scikit-fem-{{ version }}.tar.gz
+  sha256: 706d3c2a3ffcd210cc3941357abc5a01df6ab4613a28ff18eec2e912d0d3d21f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - meshio >=4.0.4
+    - numpy
+    - python
+    - scipy
+
+test:
+  imports:
+    - skfem
+    - skfem.assembly
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/kinnala/scikit-fem
+  summary: Simple finite element assemblers
+  license: NOASSERTION
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - tlestang

@@ -1,0 +1,48 @@
+{% set name = "rosdistro" %}
+{% set version = 0.8.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rosdistro-{{ version }}.tar.gz
+  sha256: e14893e0408a2e1fb3ecaef0a9fc978a3675519b828c1fff29ba6a78299b37bd
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - catkin_pkg
+    - python
+    - pyyaml
+    - rospkg
+    - setuptools
+
+test:
+  imports:
+    - rosdistro
+    - rosdistro.external
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://wiki.ros.org/rosdistro
+  summary: A tool to work with rosdistro files
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - wolfv
+    - lesteve
+    - seanyen

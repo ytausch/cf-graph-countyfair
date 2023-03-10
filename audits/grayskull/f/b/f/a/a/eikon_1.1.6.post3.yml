@@ -1,0 +1,43 @@
+{% set name = "eikon" %}
+{% set version = 1.1.6.post3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/eikon-{{ version }}.tar.gz
+  sha256: 78cd324f562f59cf8effe982375e521a9c99ae9c8cc61ea3faac9be3a6a7993a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - nose
+    - pip
+    - pypandoc
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - eikon
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://developers.refinitiv.com/eikon-apis/eikon-data-api
+  summary: Python package for retrieving Eikon data.
+  license: Apache-2.0
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - wiphoo

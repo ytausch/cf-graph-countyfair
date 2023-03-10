@@ -1,0 +1,53 @@
+{% set name = "sos-notebook" %}
+{% set version = 0.21.21 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sos-notebook-{{ version }}.tar.gz
+  sha256: 58a0ee2d2112e84b04604c2dc110cc04062781945b4f3ef4a22f314043fdbd4d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - ipykernel
+    - ipython
+    - nbconvert >=6.0.1
+    - nbformat
+    - notebook >=5.0.0
+    - numpy
+    - pandas
+    - psutil
+    - python >=3.6
+    - sos >=0.21.3
+    - tabulate
+
+test:
+  imports:
+    - sos_notebook
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/vatlab/SOS
+  summary: 'Script of Scripts (SoS): an interactive, cross-platform, and cross-language workflow system for reproducible data analysis'
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - BoPeng
+    - gaow
+    - jdblischak

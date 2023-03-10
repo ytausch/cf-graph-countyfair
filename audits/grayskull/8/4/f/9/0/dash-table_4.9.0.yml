@@ -1,0 +1,42 @@
+{% set name = "dash-table" %}
+{% set version = 4.9.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2f19000051730291100cd3a79b13fa62c478aea7908f2e4323c13b90f09e3320
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - dash_table
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/dash-table/
+  summary: Dash table
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dkucharc
+    - moorepants

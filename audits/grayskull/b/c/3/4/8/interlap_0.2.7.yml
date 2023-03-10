@@ -1,0 +1,41 @@
+{% set name = "interlap" %}
+{% set version = 0.2.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/interlap-{{ version }}.tar.gz
+  sha256: 31e4f30c54b067c4939049f5d8131ae5e2fa682ec71aa56f89c0e5b900806ec9
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - interlap
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://brentp.github.io/interlap
+  summary: 'interlap: fast, simple interval overlap testing'
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jenzopr

@@ -1,0 +1,46 @@
+{% set name = "feature_engine" %}
+{% set version = 0.6.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/feature_engine-{{ version }}.tar.gz
+  sha256: 165a002e3a6e9141b6b406946ee1b4f46a37e42176870731419b41e07249e1bb
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - numpy >=1.18.2
+    - pandas >=1.0.3
+    - python >=3.6
+    - scikit-learn >=0.22.2
+    - scipy >=1.4.1
+    - statsmodels >=0.11.1
+
+test:
+  imports:
+    - feature_engine
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/solegalli/feature_engine
+  summary: Feature engineering package with Scikit-learn's fit transform functionality
+  license: BSD-3-Clause
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - solegalli

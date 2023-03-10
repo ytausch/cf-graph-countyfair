@@ -1,0 +1,49 @@
+{% set name = "pyboat" %}
+{% set version = 0.8.17 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyboat-{{ version }}.tar.gz
+  sha256: f1f6fbbf101d9de24247906b8e86fd3fd0e7eb2a22f2f0e97ab43e2dc098713c
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pyboat = pyboat:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - matplotlib-base >=3.1
+    - numpy >=1.18
+    - pandas >=0.25
+    - pyqt >=5.9.5
+    - python >=3.6
+    - scipy >=1.4
+
+test:
+  imports:
+    - pyboat
+  commands:
+    - pip check
+    - pyboat --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/tensionhead/pyBOAT
+  summary: pyBOAT - A Biological Oscillations Analysis Toolkit
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tensionhead

@@ -1,0 +1,46 @@
+{% set name = "sqlparse" %}
+{% set version = 0.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sqlparse-{{ version }}.tar.gz
+  sha256: d59e473424ae7470778fa4dd0dd7bb666ff324f0a6106c29deb5946ea5367f04
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - sqlformat = sqlparse.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - sqlparse
+    - sqlparse.engine
+  commands:
+    - pip check
+    - sqlformat --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/andialbrecht/sqlparse
+  summary: A non-validating SQL parser.
+  dev_url: https://github.com/andialbrecht/sqlparse
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf

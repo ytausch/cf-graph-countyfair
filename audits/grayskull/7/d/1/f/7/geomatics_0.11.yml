@@ -1,0 +1,57 @@
+{% set name = "geomatics" %}
+{% set version = 0.11 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: f75e5fa62ea748cd632783c5b0fae2d66e90e353dfd686b7b9c2bc857b16642b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.0
+  run:
+    - affine
+    - cfgrib
+    - eccodes
+    - geopandas
+    - h5py
+    - netcdf4
+    - numpy
+    - pandas >=1
+    - pygrib
+    - pyshp
+    - python >=3.0
+    - python-dateutil
+    - rasterio
+    - rasterstats
+    - requests
+    - xarray
+
+test:
+  imports:
+    - geomatics
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/geomatics/
+  summary: Tools for creating timeseries from n-dimensional scientific data files and file format conversions
+  dev_url: https://github.com/rileyhales/geomatics
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - rileyhales

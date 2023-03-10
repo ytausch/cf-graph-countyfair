@@ -1,0 +1,48 @@
+{% set name = "pandera" %}
+{% set version = 0.4.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pandera-{{ version }}.tar.gz
+  sha256: eb0efb6e8d7d1a5edfbf15d8e8c8c0958c27484a98cffcd371ef688707b0b19c
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - autopep8  # [py==35]
+    - black  # [py>35]
+    - numpy >=1.9.0
+    - pandas >=0.23.0
+    - python
+    - pyyaml >=5.1
+    - scipy  # [py>=35]
+    - wrapt
+
+test:
+  imports:
+    - pandera
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pandera-dev/pandera
+  summary: A light-weight and flexible validation package for pandas data structures.
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - cosmicBboy

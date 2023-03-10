@@ -1,0 +1,42 @@
+{% set name = "xontrib-prompt-bar" %}
+{% set version = 0.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xontrib-prompt-bar-{{ version }}.tar.gz
+  sha256: 3ed37f20a71173a8144cbc18ab84ff88dd32d4b3b7d65ce39d945db66e7f8074
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+    - xonsh >=0.9.23
+
+test:
+  imports:
+    - xontrib
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/anki-code/xontrib-prompt-bar
+  summary: The bar theme for xonsh shell.
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - scopatz

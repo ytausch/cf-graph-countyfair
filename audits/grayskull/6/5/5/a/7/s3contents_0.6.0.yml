@@ -1,0 +1,51 @@
+{% set name = "s3contents" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/s3contents-{{ version }}.tar.gz
+  sha256: 2019a8d2b829dc999ae1a07292bc8de499db03626af750bde51cb31ae2fcd0c3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+    - setuptools_scm
+  run:
+    - boto3
+    - gcsfs >=0.2.1
+    - nose
+    - notebook >=5.6
+    - python >=3.7
+    - requests
+    - s3fs >=0.3.4,<0.5.1
+
+test:
+  imports:
+    - s3contents
+    - s3contents.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/danielfrg/s3contents
+  summary: S3 Contents Manager for Jupyter
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - mariusvniekerk
+    - danielfrg
+    - ericdill

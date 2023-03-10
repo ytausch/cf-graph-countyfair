@@ -1,0 +1,46 @@
+{% set name = "cget" %}
+{% set version = 0.1.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cget-{{ version }}.tar.gz
+  sha256: 2a7913b601bec615208585eda7e69998a43cc17080d36c2ff2ce8742c9794bf6
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - cget = cget.cli:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - click >=6.6
+    - python
+    - six >=1.10
+
+test:
+  imports:
+    - cget
+  commands:
+    - pip check
+    - cget --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pfultz2/cget
+  summary: Cmake package retrieval
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - matuskosut

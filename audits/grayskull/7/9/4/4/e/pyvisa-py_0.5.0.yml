@@ -1,0 +1,48 @@
+{% set name = "pyvisa-py" %}
+{% set version = 0.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PyVISA-py-{{ version }}.tar.gz
+  sha256: 98b55fc57d4c15ba211fd547da4b9c8c9684d654e5569fc002de29f313b2da5c
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools >=42
+    - setuptools_scm>=3.4.3
+    - wheel
+  run:
+    - importlib-metadata  # [py<38]
+    - python
+    - pyvisa >1.10.1
+    - typing-extensions
+
+test:
+  imports:
+    - pyvisa_py
+    - pyvisa_py.protocols
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyvisa/pyvisa-py
+  summary: Python VISA bindings for GPIB, RS232, and USB instruments
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mtsolmn
+    - greyltc

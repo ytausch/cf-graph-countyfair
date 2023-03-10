@@ -1,0 +1,44 @@
+{% set name = "pymssql" %}
+{% set version = 2.1.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pymssql-{{ version }}.tar.gz
+  sha256: d60f5f90337399668e10ab6a23a1657f190c9585401eb96a5456261f7c414864
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+    - setuptools_git
+  run:
+    - python
+
+test:
+  imports:
+    - pymssql
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://pymssql.org
+  summary: DB-API interface to Microsoft SQL Server for Python. (new Cython-based version)
+  doc_url: https://pythonhosted.org/pymssql/
+  license: LGPL-2.1
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mariusvniekerk

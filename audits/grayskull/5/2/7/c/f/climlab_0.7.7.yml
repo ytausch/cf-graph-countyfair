@@ -1,0 +1,46 @@
+{% set name = "climlab" %}
+{% set version = 0.7.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/climlab-{{ version }}.tar.gz
+  sha256: 36c842fb2caa327392990a06a58414099af14bb76359378338d55326897cf650
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - numpy
+    - pip
+    - python
+  run:
+    - attrdict
+    - numpy
+    - python
+    - scipy
+    - xarray
+
+test:
+  imports:
+    - climlab
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/brian-rose/climlab
+  summary: Package for process-oriented climate modeling
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - brian-rose

@@ -1,0 +1,53 @@
+{% set name = "phono3py" %}
+{% set version = 1.21.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/phono3py-{{ version }}.tar.gz
+  sha256: 8041e5cf2f6c98ee3fd9727061f8df04e754eb097ba0478c8fb934a7159cfd2c
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - h5py
+    - matplotlib-base
+    - phonopy >=2.8.1,<2.9
+    - python
+    - pyyaml
+    - scipy
+    - spglib
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - phono3py
+    - phono3py.cui
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://phonopy.github.io/phono3py/
+  summary: This is the phono3py module.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
+    - jochym

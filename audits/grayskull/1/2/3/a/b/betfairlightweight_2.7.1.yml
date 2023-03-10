@@ -1,0 +1,45 @@
+{% set name = "betfairlightweight" %}
+{% set version = 2.7.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: fa8f422f4317300e119ef3b0bdfbed07d0ea91006c2695a080dc46786e61e0b6
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ciso8601 ==2.1.3  # [darwin or linux]
+    - python
+    - requests <2.25.0
+    - ujson ==3.1.0  # [darwin or linux]
+
+test:
+  imports:
+    - betfairlightweight
+    - betfairlightweight.endpoints
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/liampauling/betfair
+  summary: Lightweight python wrapper for Betfair API-NG
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - synapticarbors
+    - liampauling

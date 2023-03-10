@@ -1,0 +1,56 @@
+{% set name = "featuretools" %}
+{% set version = 0.18.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: ba7fc201aa643fed5661981b9fbb8e4e5b256d221647afe9edb8a4444761b37a
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - featuretools = featuretools.__main__:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - click >=7.0.0
+    - cloudpickle >=0.4.0
+    - dask>=2.12.0
+    - distributed >=2.12.0
+    - numpy >=1.13.3
+    - pandas >=0.24.1,<2.0.0
+    - psutil >=5.4.8
+    - python >=3.6,<4.0
+    - pyyaml >=3.12
+    - scipy >=0.13.3
+    - tqdm >=4.32.0
+
+test:
+  imports:
+    - featuretools
+    - featuretools.computational_backends
+  commands:
+    - pip check
+    - featuretools --help
+  requires:
+    - pip
+
+about:
+  home: http://featuretools.com
+  summary: a framework for automated feature engineering
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kmax12
+    - rwedge

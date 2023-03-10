@@ -1,0 +1,47 @@
+{% set name = "fury" %}
+{% set version = 0.6.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/fury-{{ version }}.tar.gz
+  sha256: 06f2102a690d716f900a0c7bf8d0c5075ec4cfe8c071c25e1f671af8ea0e2ead
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy >=1.7.1
+    - pillow >=5.4.1
+    - python
+    - scipy >=0.9
+    - vtk >=8.1.2,!=9.0.0
+
+test:
+  imports:
+    - fury
+    - fury.data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/fury-gl/fury
+  summary: Free Unified Rendering in Python
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - skoudoro
+    - garyfallidis

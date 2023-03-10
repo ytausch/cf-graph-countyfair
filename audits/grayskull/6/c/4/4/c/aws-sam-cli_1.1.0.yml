@@ -1,0 +1,62 @@
+{% set name = "aws-sam-cli" %}
+{% set version = 1.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 8f06f7fd12b2cec4b10010ea06a4941db59815afa132b9f529ae224c7b2dbb86
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - sam=samcli.cli.main:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - aws-sam-translator ==1.26.0
+    - aws_lambda_builders ==1.0.0
+    - boto3 ~=1.14.0,>=1.14.23
+    - chevron ~=0.12
+    - click ~=7.0
+    - cookiecutter ~=1.6.0
+    - dateparser ~=0.7
+    - docker ~=4.2.0
+    - flask ~=1.0.2
+    - jmespath ~=0.9.5
+    - python >=3.6,<4.0
+    - python-dateutil ~=2.6,<2.8.1
+    - pyyaml ~=5.1
+    - requests ==2.23.0
+    - serverlessrepo ==0.1.9
+    - tomlkit ==0.5.8
+
+test:
+  imports:
+    - samcli
+    - samcli.cli
+  commands:
+    - pip check
+    - sam --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/awslabs/aws-sam-cli
+  summary: AWS SAM CLI is a CLI tool for local development and testing of Serverless applications
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - rluria14
+    - oblute
+    - ndmaxar

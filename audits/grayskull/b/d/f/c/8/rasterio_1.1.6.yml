@@ -1,0 +1,53 @@
+{% set name = "rasterio" %}
+{% set version = 1.1.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rasterio-{{ version }}.tar.gz
+  sha256: c098881dfe301c5e3aa43a3171985fb365d64dc4d1c0a1d8288c7870fb240efe
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - affine
+    - attrs
+    - click <8,>=4.0
+    - click-plugins
+    - cligj >=0.5
+    - enum34  # [py<34]
+    - numpy
+    - python
+    - snuggs >=1.4.1
+
+test:
+  imports:
+    - rasterio
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mapbox/rasterio
+  summary: Fast and direct raster I/O for use with Numpy and SciPy
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - ceholden
+    - snowman2
+    - xylar

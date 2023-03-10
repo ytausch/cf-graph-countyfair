@@ -1,0 +1,45 @@
+{% set name = "chaospy" %}
+{% set version = 3.3.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 9c34b6015693b3afdb8b3d30499040052d0ecc93db520157d034ae83597b5a23
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - functools32  # [py>=27 and py<30]
+    - numpoly ==1.0.6
+    - numpy
+    - python
+    - scipy
+
+test:
+  imports:
+    - chaospy
+    - chaospy.chol
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jonathf/chaospy
+  summary: Numerical tool for perfroming uncertainty quantification
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - jschueller

@@ -1,0 +1,44 @@
+{% set name = "nptdms" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/npTDMS-{{ version }}.tar.gz
+  sha256: 8aedef1c6dd359e9bf01681b726b29a6774677dddfa1a9cfcf59f6455ea28f69
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy
+    - python
+
+test:
+  imports:
+    - nptdms
+    - nptdms.export
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/adamreeve/npTDMS
+  summary: Cross-platform, NumPy based module for reading TDMS files produced by LabView.
+  license: GPL-3.0
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - carlodri
+    - lstebel

@@ -1,0 +1,54 @@
+{% set name = "holoviews" %}
+{% set version = 1.13.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/holoviews-{{ version }}.tar.gz
+  sha256: 34dc09dfb557f79515a011a72b343daf31b5e5d67403a008dded59bab658267c
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - holoviews = holoviews.util.command:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - param
+    - pip
+    - pyct-core
+    - python
+  run:
+    - numpy >=1.0
+    - pandas
+    - panel >=0.8.0
+    - param >=1.9.3,<2.0
+    - python
+    - pyviz_comms >=0.7.3
+
+test:
+  imports:
+    - holoviews
+    - holoviews.core
+  commands:
+    - pip check
+    - holoviews --help
+  requires:
+    - pip
+
+about:
+  home: https://www.holoviews.org
+  summary: Stop plotting your data - annotate your data and let it visualize itself.
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - jlstevens
+    - philippjfr
+    - basnijholt

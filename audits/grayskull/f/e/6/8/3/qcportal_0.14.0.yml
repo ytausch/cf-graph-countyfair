@@ -1,0 +1,57 @@
+{% set name = "qcportal" %}
+{% set version = 0.14.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/qcportal-{{ version }}.tar.gz
+  sha256: e809853e856d9cd66455c4f3492f897c43bca3175ccd30d0131e9dbee3ad2cbe
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - h5py
+    - msgpack >=0.6.1
+    - nglview
+    - numpy >=1.7
+    - pandas
+    - plotly
+    - pyarrow >=0.13.0
+    - pydantic >=1.0.0
+    - python
+    - pyyaml >=5.1
+    - qcelemental >=0.11.0
+    - requests
+    - tqdm
+
+test:
+  imports:
+    - qcportal
+    - qcportal.collections
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/qcportal/
+  summary: A client interface to the QC Archive Project.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dgasmith
+    - lnaden
+    - bennybp
+    - loriab

@@ -1,0 +1,48 @@
+{% set name = "openpathsampling-cli" %}
+{% set version = 0.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/openpathsampling-cli-{{ version }}.tar.gz
+  sha256: 5f710189561521cacc8c2036a574bd25213da2a532d00c8bc4aeee951b0ec157
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - openpathsampling = paths_cli.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - click
+    - openpathsampling >=1.2
+    - python >=3.6
+    - tqdm
+
+test:
+  imports:
+    - paths_cli
+    - paths_cli.commands
+  commands:
+    - pip check
+    - openpathsampling --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/openpathsampling/openpathsampling-cli
+  summary: Command line tool for OpenPathSampling
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dwhswenson

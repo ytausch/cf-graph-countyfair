@@ -1,0 +1,46 @@
+{% set name = "python-barcode" %}
+{% set version = 0.13.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/python-barcode-{{ version }}.tar.gz
+  sha256: c1f0dfe76bfdb0ee4dc9470b82e6aa67128f59df381d22c504092a887917e74a
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - python-barcode = barcode.pybarcode:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - python
+
+test:
+  imports:
+    - barcode
+    - barcode.charsets
+  commands:
+    - pip check
+    - python-barcode --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/WhyNotHugo/python-barcode
+  summary: Create standard barcodes with Python. No external modules needed. (optional Pillow support included).
+  license: MIT
+  license_file: docs/source/license.rst
+
+extra:
+  recipe-maintainers:
+    - sodre

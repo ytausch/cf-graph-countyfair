@@ -1,0 +1,41 @@
+{% set name = "emoji" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: e42da4f8d648f8ef10691bc246f682a1ec6b18373abfd9be10ec0b398823bd11
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - emoji
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/carpedm20/emoji/
+  summary: Emoji for Python
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - synapticarbors

@@ -1,0 +1,42 @@
+{% set name = "xlsxwriter" %}
+{% set version = 1.3.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: f29b84ffdbfd508863e3fdc2ddbdf2ffbae14373d578021d557616a867d7e855
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - xlsxwriter
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jmcnamara/XlsxWriter
+  summary: A Python module for creating Excel XLSX files.
+  license: BSD-2-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - mcs07
+    - nehaljwani

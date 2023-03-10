@@ -1,0 +1,42 @@
+{% set name = "xontrib-argcomplete" %}
+{% set version = 0.2.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xontrib-argcomplete-{{ version }}.tar.gz
+  sha256: 934a6e02c05c6539bcd6d35e66777b5586f49daee1dcef46b2b1e8a26b646bee
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - argcomplete
+    - python >=3.6
+
+test:
+  imports:
+    - xontrib
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/anki-code/xontrib-argcomplete
+  summary: Adding support of kislyuk/argcomplete to xonsh.
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - scopatz

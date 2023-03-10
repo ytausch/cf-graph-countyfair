@@ -1,0 +1,45 @@
+{% set name = "pytest-nunit" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c4a2b82ddc52f17c9b3966a76c764bf8d30c7d4502f343f1723da6434d21414e
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - attrs
+    - enum34 >=1.1.6  # [py==27]
+    - pytest >=3.5.0
+    - python
+
+test:
+  imports:
+    - pytest_nunit
+    - pytest_nunit.models
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pytest-dev/pytest-nunit
+  summary: A pytest plugin for generating NUnit3 test result XML output
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - bollwyvl

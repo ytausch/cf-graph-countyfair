@@ -1,0 +1,51 @@
+{% set name = "xmlschema" %}
+{% set version = 1.2.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xmlschema-{{ version }}.tar.gz
+  sha256: 1c4515dd16b5b556dac27cae70bdb3c863e1448e9d58896326ff468ff55e4246
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - xmlschema-validate=xmlschema.cli:validate
+    - xmlschema-xml2json=xmlschema.cli:xml2json
+    - xmlschema-json2xml=xmlschema.cli:json2xml
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - elementpath >=2.0.2,<3.0.0
+    - pip
+    - python >=3.5
+  run:
+    - elementpath >=2.0.2,<3.0.0
+    - python >=3.5
+
+test:
+  imports:
+    - xmlschema
+    - xmlschema.testing
+  commands:
+    - pip check
+    - xmlschema-validate --help
+    - xmlschema-xml2json --help
+    - xmlschema-json2xml --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/brunato/xmlschema
+  summary: An XML Schema validator and decoder
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ccwang002

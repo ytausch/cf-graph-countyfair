@@ -1,0 +1,50 @@
+{% set name = "pikepdf" %}
+{% set version = 1.17.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 8413c31b0adf95efcad1222fd4d0a50b11d961ad26dbeb84e2abbc860ef8bc8d
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - pybind11 >=2.4.3,<3
+    - python
+    - setuptools_scm
+    - setuptools_scm_git_archive
+  run:
+    - lxml >=4.0
+    - pillow >=6
+    - python
+
+test:
+  imports:
+    - pikepdf
+    - pikepdf.models
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pikepdf/pikepdf
+  summary: Read and write PDFs with Python, powered by qpdf
+  dev_url: https://github.com/pikepdf/pikepdf
+  license: MPL-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - carlodri

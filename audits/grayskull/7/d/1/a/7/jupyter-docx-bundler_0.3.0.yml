@@ -1,0 +1,50 @@
+{% set name = "jupyter-docx-bundler" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: f2b27e2427a3ac78b9501388cae0f772b23fa55cc553caecf62e12f6dc1b9928
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools >=38.6.0
+    - setuptools_scm
+  run:
+    - nbconvert >=5.5
+    - notebook >=5.0
+    - pandocfilters
+    - pypandoc >=1.4
+    - python >=3.6
+    - requests
+    - tornado
+
+test:
+  imports:
+    - jupyter_docx_bundler
+    - jupyter_docx_bundler.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/m-rossi/jupyter-docx-bundler
+  summary: Jupyter bundler extension to export notebook as a docx file
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - m-rossi

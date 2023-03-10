@@ -1,0 +1,52 @@
+{% set name = "demquery" %}
+{% set version = 0.3.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/demquery-{{ version }}.tar.gz
+  sha256: aaf59a283933dc43b2ac1f2097d85e4220bbdb46fa4b52e2879e111fcd687575
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - demquery=demquery.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+    - setuptools >=38.6.0
+    - twine >=1.11.0
+  run:
+    - click >=7.0
+    - cligj >=0.5.0
+    - gdal >=2.4.0
+    - numpy >=1.16
+    - python >=3.5
+    - rasterio >=1.0
+    - scipy >=1.0.0
+
+test:
+  imports:
+    - demquery
+  commands:
+    - pip check
+    - demquery --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/kylebarron/demquery
+  summary: Wrapper around rasterio to query points on a Digital Elevation Model
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kylebarron

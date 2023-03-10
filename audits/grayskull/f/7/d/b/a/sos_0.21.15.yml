@@ -1,0 +1,59 @@
+{% set name = "sos" %}
+{% set version = 0.21.15 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sos-{{ version }}.tar.gz
+  sha256: a1d90b242613ecaaa12b80d9cdfeb7d3bb366106d2013a6388af41e4c3530210
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - colorama  # [win]
+    - fasteners
+    - jinja2
+    - nbformat
+    - networkx
+    - pexpect
+    - psutil
+    - ptyprocess
+    - pydot
+    - pydotplus
+    - pygments
+    - python
+    - pyyaml
+    - pyzmq
+    - tqdm
+    - python-xxhash  # [not win]
+
+test:
+  imports:
+    - sos
+    - sos.docker
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/vatlab/SoS
+  summary: 'Script of Scripts (SoS): an interactive, cross-platform, and cross-language workflow system for reproducible data analysis'
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - BoPeng
+    - gaow
+    - jdblischak

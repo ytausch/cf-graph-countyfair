@@ -1,0 +1,43 @@
+{% set name = "factory_boy" %}
+{% set version = 3.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/factory_boy-{{ version }}.tar.gz
+  sha256: 2ce2f665045d9f15145a6310565fcb8255d52fc6fd867f3b783b3ac3de6cf10e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - faker >=0.7.0
+    - python >=3.5
+
+test:
+  imports:
+    - factory
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/FactoryBoy/factory_boy
+  summary: A versatile test fixtures replacement based on thoughtbot's factory_bot for Ruby.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pmlandwehr
+    - dhirschfeld

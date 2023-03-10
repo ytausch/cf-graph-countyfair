@@ -1,0 +1,53 @@
+{% set name = "jupyter_kernel_gateway" %}
+{% set version = 2.4.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 17c19510a64d4390894f779281bd5ec276d214a722ed412d9e8f2b16d09c24b7
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - jupyter-kernelgateway = kernel_gateway:launch_instance
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - jupyter_client >=5.2.0
+    - jupyter_core >=4.4.0
+    - notebook >=5.7.6,<7.0
+    - python
+    - requests >=2.7,<3.0
+    - tornado >=4.2.0
+    - traitlets >=4.2.0
+
+test:
+  imports:
+    - kernel_gateway
+    - kernel_gateway.base
+  commands:
+    - pip check
+    - jupyter-kernelgateway --help
+  requires:
+    - pip
+
+about:
+  home: http://github.com/jupyter-incubator/kernel_gateway
+  summary: A web server for spawning and communicating with Jupyter kernels
+  license: BSD-3-Clause
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - parente
+    - lresende
+    - kevin-bates

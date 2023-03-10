@@ -1,0 +1,56 @@
+{% set name = "adaptive-scheduler" %}
+{% set version = 0.9.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/adaptive_scheduler-{{ version }}.tar.gz
+  sha256: 9189c8a41cfbf3dc4648241f82ba40684fe6e39a7c712c1faa7a1470f16e7052
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - adaptive >=0.11
+    - cloudpickle
+    - dill
+    - ipyparallel
+    - jinja2
+    - loky
+    - mpi4py
+    - numpy
+    - pandas
+    - psutil
+    - python >=3.7
+    - pyzmq
+    - structlog
+    - tinydb
+    - toolz
+    - tqdm
+
+test:
+  imports:
+    - adaptive_scheduler
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/basnijholt/adaptive-scheduler
+  summary: Run many `adaptive.Learner`s on many cores (>10k) using `mpi4py.futures`, `ipyparallel`, `dask-mpi`, or `process-pool`.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - basnijholt

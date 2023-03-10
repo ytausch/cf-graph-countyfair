@@ -1,0 +1,45 @@
+{% set name = "pynvim" %}
+{% set version = 0.4.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pynvim-{{ version }}.tar.gz
+  sha256: 6bc6204d465de5888a0c5e3e783fe01988b032e22ae87875912280bef0e40f8f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - greenlet
+    - msgpack >=0.5.0
+    - python
+
+test:
+  imports:
+    - neovim
+    - neovim.api
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/neovim/pynvim
+  summary: Python client to neovim
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - curtisalexander
+    - xhochy

@@ -1,0 +1,46 @@
+{% set name = "pydeck-earthengine-layers" %}
+{% set version = 1.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 8dca91867fdd843d590eea412a93b6715fd67f7573a414cce4da7aa08d57bdc3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+    - setuptools >=38.6.0
+    - twine >=1.11.0
+  run:
+    - earthengine-api >=0.1.215
+    - pydeck >=0.3.0
+    - python >=3.5
+    - requests
+
+test:
+  imports:
+    - pydeck_earthengine_layers
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/UnfoldedInc/earthengine-layers/blob/master/py
+  summary: Pydeck wrapper for use with Google Earth Engine
+  license: Apache-2.0
+  license_file: .eggs/importlib_metadata-1.7.0-py3.7.egg/EGG-INFO/LICENSE
+
+extra:
+  recipe-maintainers:
+    - kylebarron

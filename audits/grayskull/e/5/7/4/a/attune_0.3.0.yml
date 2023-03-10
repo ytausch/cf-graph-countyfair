@@ -1,0 +1,48 @@
+{% set name = "attune" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d18d1f2d46ebdaeb073625464fa88bc4cfc786647c2185417dc5fd79009cd17c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - matplotlib-base
+    - numpy
+    - python >=3.5
+    - scipy
+    - tidy_headers
+    - wrighttools >=3.2.5
+
+test:
+  imports:
+    - attune
+    - attune.curve
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/wright-group/attune
+  summary: Tools for tuning optical parametric amplifiers and multidimensional spectrometers.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - untzag
+    - ksunden

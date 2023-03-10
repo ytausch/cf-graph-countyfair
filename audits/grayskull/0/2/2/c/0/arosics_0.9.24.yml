@@ -1,0 +1,62 @@
+{% set name = "arosics" %}
+{% set version = 0.9.24 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/arosics-{{ version }}.tar.gz
+  sha256: 3de3b7dfa79414a86eb9d9de0ddc2361808f6c4e22ad99f843f6983b592f22e3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools
+  run:
+    - basemap
+    - cmocean
+    - folium >=0.6.0
+    - gdal
+    - geoarray >=0.8.30
+    - geojson
+    - geopandas
+    - matplotlib-base
+    - numpy
+    - pandas
+    - plotly
+    - py-tools-ds >=0.14.28
+    - pyfftw
+    - pykrige
+    - python
+    - scikit-image
+    - shapely
+    - six
+
+test:
+  imports:
+    - arosics
+    - tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gitext.gfz-potsdam.de/danschef/arosics
+  summary: An Automated and Robust Open-Source Image Co-Registration Software for Multi-Sensor Satellite Data
+  license: Unlicense
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - rluria14
+    - ndmaxar
+    - RyanHackney

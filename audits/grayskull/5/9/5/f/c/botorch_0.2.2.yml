@@ -1,0 +1,46 @@
+{% set name = "botorch" %}
+{% set version = 0.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 448005bf1840b348d61444a03e1ff7b114075cc86053954d84072f8acaaf9fc5
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - gpytorch >=1.0.0
+    - python >=3.7
+    - scipy
+    - torch >=1.4
+
+test:
+  imports:
+    - botorch
+    - botorch.acquisition
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://botorch.org
+  summary: Bayesian Optimization in PyTorch
+  dev_url: https://github.com/pytorch/botorch
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - maclandrol

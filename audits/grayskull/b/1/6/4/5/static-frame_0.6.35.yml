@@ -1,0 +1,45 @@
+{% set name = "static-frame" %}
+{% set version = 0.6.35 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/static-frame-{{ version }}.tar.gz
+  sha256: 0350de160c88e6f24bfe137c73e3d50da6502c912ed2103f1d57196988d65eaa
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - automap >=0.4.8
+    - numpy >=1.16.5
+    - python >=3.7
+
+test:
+  imports:
+    - static_frame
+    - static_frame.core
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/InvestmentSystems/static-frame
+  summary: Immutable structures for one- and two-dimensional calculations with labelled axes
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - flexatone
+    - brandtbucher

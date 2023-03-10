@@ -1,0 +1,43 @@
+{% set name = "flake8-typing-imports" %}
+{% set version = 1.10.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/flake8_typing_imports-{{ version }}.tar.gz
+  sha256: 46558157f9bfa3a9ff371429c6de65e77d282cc3ab5c37af4828104ec586bf2a
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - flake8 >=3.7
+    - importlib-metadata >=0.9  # [py<38]
+    - python
+
+test:
+  imports:
+    - flake8_typing_imports
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/asottile/flake8-typing-imports
+  summary: flake8 plugin which checks that typing imports are properly guarded
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - marcelotrevisani

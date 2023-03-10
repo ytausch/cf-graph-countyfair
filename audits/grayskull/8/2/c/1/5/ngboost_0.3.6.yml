@@ -1,0 +1,49 @@
+{% set name = "ngboost" %}
+{% set version = 0.3.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ngboost-{{ version }}.tar.gz
+  sha256: 4bea289324c29b71aafe460e811cd4761bef698fa578b31a340a91e34cdc0350
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - lifelines >=0.22.8
+    - numpy >=1.17.2
+    - python >=3.6
+    - scikit-learn >=0.21.3
+    - scipy >=1.3.1
+    - tqdm >=4.36.1
+
+test:
+  imports:
+    - examples
+    - examples.experiments
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/stanfordmlgroup/ngboost
+  summary: Library for probabilistic predictions via gradient boosting.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ericmjl
+    - avati
+    - synapticarbors

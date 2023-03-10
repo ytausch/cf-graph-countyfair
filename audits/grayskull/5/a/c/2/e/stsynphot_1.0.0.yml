@@ -1,0 +1,49 @@
+{% set name = "stsynphot" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 9d8ccf36ee5479f25c36c32232d262a254e1c20886315a66987d29eadc6a672c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - astropy >=3
+    - beautifulsoup4
+    - numpy >=1.16
+    - python >=3.6
+    - synphot
+
+test:
+  imports:
+    - stsynphot
+    - stsynphot.commissioning
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.github.com/spacetelescope/stsynphot_refactor
+  summary: Synthetic photometry for HST/JWST
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pllim
+    - jhunkeler
+    - rendinam

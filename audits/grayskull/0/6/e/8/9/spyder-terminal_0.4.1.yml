@@ -1,0 +1,48 @@
+{% set name = "spyder-terminal" %}
+{% set version = 0.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 94fb44fc3b4f95962e2a4480b8f377a6869827f3a97fb381fb3d4da5558ab5e1
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - coloredlogs
+    - python
+    - requests
+    - spyder >=4.1.0,<5.0.0
+    - terminado
+    - tornado
+
+test:
+  imports:
+    - spyder_terminal
+    - spyder_terminal.server
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/spyder-ide/spyder-terminal
+  summary: Spyder Plugin for displaying a virtual terminal (OS independent) inside the main Spyder window
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - andfoy
+    - ccordoba12

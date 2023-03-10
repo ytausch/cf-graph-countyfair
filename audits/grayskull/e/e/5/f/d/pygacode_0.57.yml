@@ -1,0 +1,48 @@
+{% set name = "pygacode" %}
+{% set version = 0.57 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pygacode-{{ version }}.tar.gz
+  sha256: 566a6f4ff3c07eddefd60bf119b4c0beb6b37317f6b2f0d7c3582940281211e2
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('fortran') }}
+  host:
+    - numpy
+    - pip
+    - python
+  run:
+    - python
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - pygacode
+    - pygacode.cgyro
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gacode.io
+  summary: Python interface to GACODE profile, geometry, and code tools
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - kalling
+    - smithsp
+    - orso82

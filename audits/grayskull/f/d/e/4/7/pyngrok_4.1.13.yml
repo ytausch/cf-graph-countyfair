@@ -1,0 +1,43 @@
+{% set name = "pyngrok" %}
+{% set version = 4.1.13 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyngrok-{{ version }}.tar.gz
+  sha256: 4f964858ad702904699d2072d176b3d09ff735aeadb692397be7f739e97bf974
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+  run:
+    - future
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+    - pyyaml
+
+test:
+  imports:
+    - pyngrok
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/alexdlaird/pyngrok
+  summary: A Python wrapper for Ngrok.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - alexdlaird

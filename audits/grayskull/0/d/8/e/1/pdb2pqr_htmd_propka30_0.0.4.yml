@@ -1,0 +1,45 @@
+{% set name = "pdb2pqr_htmd_propka30" %}
+{% set version = 0.0.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pdb2pqr_htmd_propka30-{{ version }}.tar.gz
+  sha256: 967a65881c28ae3e5c16f0bfc3e9c469472e81de4e67c86471f425eeedb57ad4
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pdb2pqr_cli = pdb2pqr.main:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - pdb2pqr
+    - pdb2pqr.extensions
+  commands:
+    - pip check
+    - pdb2pqr_cli --help
+  requires:
+    - pip
+
+about:
+  home: http://www.poissonboltzmann.org/
+  summary: 'PDB2PQR: an automated pipeline for the setup of Poisson-Boltzmann electrostatics calculations'
+  license: BSD-3-Clause
+  license_file: pdb2pqr/COPYING
+
+extra:
+  recipe-maintainers:
+    - samuelmurail

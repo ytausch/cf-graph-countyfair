@@ -1,0 +1,54 @@
+{% set name = "lbaplocal" %}
+{% set version = 0.0.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/LbAPLocal-{{ version }}.tar.gz
+  sha256: 0bfd7f1a7bcc9b14509e9e8ac71f218e5853979d94f3eed77ef2f7f79ab0eba2
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - lb-ap=LbAPLocal.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.8
+    - setuptools_scm
+  run:
+    - click
+    - consolemd
+    - lbapcommon
+    - lbdiracwrappers
+    - lbenv
+    - python >=3.8
+    - requests
+    - requests-kerberos
+    - setuptools
+
+test:
+  imports:
+    - LbAPLocal
+  commands:
+    - pip check
+    - lb-ap --help
+  requires:
+    - pip
+
+about:
+  home: https://gitlab.cern.ch/lhcb-dpa/analysis-productions/lbaplocal
+  summary: Tool to locally run tests for AnalysisProductions
+  dev_url: https://gitlab.cern.ch/lhcb-dpa/analysis-productions/lbaplocal
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - chrisburr

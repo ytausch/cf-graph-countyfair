@@ -1,0 +1,52 @@
+{% set name = "astro-gala" %}
+{% set version = 1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/astro-gala-{{ version }}.tar.gz
+  sha256: 24bc8333046ae05bd4dbb00512525033df128f07f33876d43e5ecbcc4b7d06e1
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - extension_helpers
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - astropy >=4.0
+    - cython
+    - numpy
+    - python
+    - pyyaml
+    - scipy
+
+test:
+  imports:
+    - astro_gala
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://gala.adrian.pw/
+  summary: Galactic dynamics in Python
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mwcraig
+    - bsipocz
+    - adrn

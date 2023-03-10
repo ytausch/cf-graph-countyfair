@@ -1,0 +1,49 @@
+{% set name = "adlfs" %}
+{% set version = 0.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 8a8518f771c5c9684f39206a764d50fd15991ad46e6703ebe2a36ca3c115fb54
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - azure-core >=1.5.0
+    - azure-datalake-store >=0.0.46,<0.1
+    - azure-identity
+    - azure-storage-blob >=12.0.0
+    - fsspec >=0.6.0,<0.8.
+    - msrestazure
+    - python
+
+test:
+  imports:
+    - adlfs
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/hayesgb/adlfs/
+  summary: Access Azure Datalake Gen1 with fsspec and dask
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - hayesgb
+    - martindurant
+    - raybellwaves

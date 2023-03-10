@@ -1,0 +1,45 @@
+{% set name = "python-igraph" %}
+{% set version = 0.8.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/python-igraph-{{ version }}.tar.gz
+  sha256: e1f27622eddeb2bd5fdcbadb41ef048e884790bb050f9627c086dc609d0f1236
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - texttable >=1.6.2
+
+test:
+  imports:
+    - igraph
+    - igraph.app
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://igraph.org/python
+  summary: High performance graph data structures and algorithms
+  license: GPL-2.0
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - sodre
+    - vtraag

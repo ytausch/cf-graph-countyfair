@@ -1,0 +1,52 @@
+{% set name = "phonopy" %}
+{% set version = 2.8.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/phonopy-{{ version }}.tar.gz
+  sha256: 52ac84dc18b2b24b1ed8dfb72cc12dd9952deeb314eec16fe3ebc852f6ba5446
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - h5py
+    - matplotlib-base
+    - python
+    - pyyaml
+    - spglib
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - phonopy
+    - phonopy.cui
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://phonopy.github.io/phonopy/
+  summary: This is the phonopy module.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jochym
+    - atztogo
+    - bocklund

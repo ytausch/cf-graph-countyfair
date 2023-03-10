@@ -1,0 +1,43 @@
+{% set name = "sorl-thumbnail" %}
+{% set version = 12.6.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 66771521f3c0ed771e1ce8e1aaf1639ebff18f7f5a40cfd3083da8f0fe6c7c99
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.4
+    - setuptools_scm
+  run:
+    - python >=3.4
+
+test:
+  imports:
+    - sorl
+    - sorl.thumbnail
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jazzband/sorl-thumbnail
+  summary: Thumbnails for Django
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kcemenike

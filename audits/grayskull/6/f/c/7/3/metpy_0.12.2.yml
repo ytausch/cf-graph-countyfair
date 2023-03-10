@@ -1,0 +1,52 @@
+{% set name = "metpy" %}
+{% set version = 0.12.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 54993d3a9b7f9986d64cc9783ad6947b1d95e3877bc99fa368c3bb1d6f381282
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - matplotlib-base >=2.1.0
+    - numpy >=1.16.0
+    - pandas >=0.22.0
+    - pint >=0.10.1
+    - pooch >=0.1
+    - python >=3.6
+    - scipy >=1.0
+    - traitlets >=4.3.0
+    - xarray >=0.13.0
+
+test:
+  imports:
+    - metpy
+    - metpy._vendor
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Unidata/MetPy
+  summary: Collection of tools for reading, visualizing and performing calculations with weather data.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dopplershift
+    - dcamron

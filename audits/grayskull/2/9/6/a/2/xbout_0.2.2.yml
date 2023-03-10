@@ -1,0 +1,54 @@
+{% set name = "xbout" %}
+{% set version = 0.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xbout-{{ version }}.tar.gz
+  sha256: cbbcbe9a49e8e94101fcc082700ab39ba5918e9fe9422c3da02bccdf62c0aa94
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools >=42
+    - setuptools_scm>=3.4
+    - setuptools_scm_git_archive
+  run:
+    - animatplot >=0.4.1
+    - boutdata >=0.1.2
+    - dask>=2.10.0
+    - importlib-metadata  # [py<38]
+    - matplotlib-base >=3.1.1
+    - natsort >=5.5.0
+    - netcdf4 >=1.4.0
+    - pillow >=6.1.0
+    - python
+    - xarray >=0.16.0
+
+test:
+  imports:
+    - xbout
+    - xbout.calc
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/boutproject/xBOUT
+  summary: Collect data from BOUT++ runs in python using xarray
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - johnomotani
+    - ZedThree

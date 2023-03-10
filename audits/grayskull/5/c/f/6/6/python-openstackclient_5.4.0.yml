@@ -1,0 +1,53 @@
+{% set name = "python-openstackclient" %}
+{% set version = 5.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/python-openstackclient-{{ version }}.tar.gz
+  sha256: 21d228d600421ad5145f31178cdc8578df7d2e569f43381c654caae5a1993b67
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pbr >=2.0.0
+    - pip
+    - python >=3.6
+  run:
+    - cliff !=2.9.0,>=2.8.0
+    - openstacksdk >=0.48.0
+    - osc-lib >=2.0.0
+    - oslo.i18n >=3.15.3
+    - oslo.utils >=3.33.0
+    - pbr !=2.1.0,>=2.0.0
+    - python >=3.6
+    - python-cinderclient >=3.3.0
+    - python-keystoneclient >=3.22.0
+    - python-novaclient >=15.1.0
+    - six >=1.10.0
+    - stevedore >=2.0.1
+
+test:
+  imports:
+    - python_openstackclient
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://docs.openstack.org/python-openstackclient/latest/
+  summary: OpenStack Command-line Client
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tschoonj

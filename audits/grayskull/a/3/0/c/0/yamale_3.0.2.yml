@@ -1,0 +1,46 @@
+{% set name = "yamale" %}
+{% set version = 3.0.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: af12b4c8acbb196515e0b8384debc4736159b75ea1b255daeebf8109ce5a3e14
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - yamale=yamale.command_line:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+    - pyyaml
+
+test:
+  imports:
+    - yamale
+    - yamale.readers
+  commands:
+    - pip check
+    - yamale --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/23andMe/Yamale
+  summary: A schema and validator for YAML.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - adament

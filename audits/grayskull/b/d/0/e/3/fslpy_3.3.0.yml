@@ -1,0 +1,83 @@
+{% set name = "fslpy" %}
+{% set version = 3.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/fslpy-{{ version }}.tar.gz
+  sha256: cac7170ddcf6135dc248a1334f7be3f1afc76239ec8f31d1e0494720eece38f6
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - imcp           = fsl.scripts.imcp:main
+    - imln           = fsl.scripts.imln:main
+    - immv           = fsl.scripts.immv:main
+    - imrm           = fsl.scripts.imrm:main
+    - imglob         = fsl.scripts.imglob:main
+    - imtest         = fsl.scripts.imtest:main
+    - remove_ext     = fsl.scripts.remove_ext:main
+    - fsl_abspath    = fsl.scripts.fsl_abspath:main
+    - Text2Vest      = fsl.scripts.Text2Vest:main
+    - Vest2Text      = fsl.scripts.Vest2Text:main
+    - atlasq         = fsl.scripts.atlasq:main
+    - atlasquery     = fsl.scripts.atlasq:atlasquery_emulation
+    - fsl_ents       = fsl.scripts.fsl_ents:main
+    - resample_image = fsl.scripts.resample_image:main
+    - fsl_convert_x5 = fsl.scripts.fsl_convert_x5:main
+    - fsl_apply_x5   = fsl.scripts.fsl_apply_x5:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - mock
+    - pip
+    - python
+    - sphinx
+  run:
+    - dataclasses
+    - h5py >=2.9
+    - nibabel >=2.4
+    - numpy >=1
+    - python
+    - scipy >=0.18
+    - six >=1
+
+test:
+  imports:
+    - fsl
+    - fsl.data
+  commands:
+    - pip check
+    - imcp --help
+    - imln --help
+    - immv --help
+    - imrm --help
+    - imglob --help
+    - imtest --help
+    - remove_ext --help
+    - fsl_abspath --help
+    - Text2Vest --help
+    - Vest2Text --help
+    - atlasq --help
+    - atlasquery --help
+    - fsl_ents --help
+    - resample_image --help
+    - fsl_convert_x5 --help
+    - fsl_apply_x5 --help
+  requires:
+    - pip
+
+about:
+  home: https://git.fmrib.ox.ac.uk/fsl/fslpy
+  summary: FSL Python library
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pauldmccarthy

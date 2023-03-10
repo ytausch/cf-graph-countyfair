@@ -1,0 +1,43 @@
+{% set name = "gdspy" %}
+{% set version = 1.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/gdspy-{{ version }}.zip
+  sha256: 583abc031537fa81340510823623ec8aa6ec023423542c4aad4686b3e7b9d163
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - numpy
+    - python
+
+test:
+  imports:
+    - gdspy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/heitzmann/gdspy
+  summary: Python module for creating/importing/merging GDSII files.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - willsALMANj

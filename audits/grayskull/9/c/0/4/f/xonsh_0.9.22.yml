@@ -1,0 +1,53 @@
+{% set name = "xonsh" %}
+{% set version = 0.9.22 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xonsh-{{ version }}.tar.gz
+  sha256: cd2359fc05517b448e196fabafa177d78e6512e99e770c3d6a4304118701d2ca
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - xonsh = xonsh.main:main
+    - xonsh-cat = xonsh.xoreutils.cat:cat_main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - amalgamate
+    - jupyter_client
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - xonsh
+    - xonsh.completers
+  commands:
+    - pip check
+    - xonsh --help
+    - xonsh-cat --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/xonsh/xonsh
+  summary: Python-powered, cross-platform, Unix-gazing shell
+  license: BSD-2-Clause
+  license_file: license
+
+extra:
+  recipe-maintainers:
+    - scopatz
+    - ocefpaf
+    - melund
+    - gforsyth
+    - mitnk

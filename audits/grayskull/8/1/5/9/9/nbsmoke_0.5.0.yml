@@ -1,0 +1,49 @@
+{% set name = "nbsmoke" %}
+{% set version = 0.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nbsmoke-{{ version }}.tar.gz
+  sha256: 2400d7878e97714e822ab200a71fc71ede487e671f42b4b411745dba95f9cb32
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.4
+  run:
+    - ipykernel
+    - jupyter_client
+    - nbconvert
+    - nbformat
+    - pyflakes
+    - pytest >=3.1.1
+    - python >=3.4
+
+test:
+  imports:
+    - nbsmoke
+    - nbsmoke.lint
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyviz-dev/nbsmoke
+  summary: Basic notebook checks. Do they run? Do they contain lint?
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jsignell
+    - jbednar

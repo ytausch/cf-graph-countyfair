@@ -1,0 +1,46 @@
+{% set name = "smbprotocol" %}
+{% set version = 1.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/smbprotocol-{{ version }}.tar.gz
+  sha256: 8102adfea6750a29c7e1a99edc58931a5ff948a659f17abc1f43cfc16ea17b6a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+  run:
+    - cryptography >=2.0
+    - pyspnego
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+    - six
+
+test:
+  imports:
+    - smbclient
+    - smbprotocol
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jborean93/smbprotocol
+  summary: Interact with a server using the SMB 2/3 Protocol
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - krisevans
+    - dhirschfeld

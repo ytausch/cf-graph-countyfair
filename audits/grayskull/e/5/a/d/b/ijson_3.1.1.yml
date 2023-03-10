@@ -1,0 +1,43 @@
+{% set name = "ijson" %}
+{% set version = 3.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 815e9ce9d2de7ddd58ba01834d8f55790b7daddbac6c844cba0fc459b7d5005a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - ijson
+    - ijson.backends
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ICRAR/ijson
+  summary: Iterative JSON parser with a standard Python iterator interface
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - rmax
+    - thermokarst

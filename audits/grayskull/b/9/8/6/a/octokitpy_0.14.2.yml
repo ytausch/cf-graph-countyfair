@@ -1,0 +1,46 @@
+{% set name = "octokitpy" %}
+{% set version = 0.14.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/octokitpy-{{ version }}.tar.gz
+  sha256: 46f3690d08482937104cad9979b0a6d9094612cc22c01a3cf67f0b09c80f24f6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - octokitpy-routes ==2.2.0
+    - python
+    - python-jose ==3.1.0
+    - requests ==2.23.0
+
+test:
+  imports:
+    - octokit
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/khornberg/octokit.py
+  summary: Python client for GitHub API
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - oblute
+    - rluria14
+    - ndmaxar

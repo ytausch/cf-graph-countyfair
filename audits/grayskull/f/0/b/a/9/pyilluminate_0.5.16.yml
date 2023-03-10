@@ -1,0 +1,43 @@
+{% set name = "pyilluminate" %}
+{% set version = 0.5.16 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 01e655226e769fcde132cb04c5434103c24f44cab86eeb5265fb2fb2247eb89a
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dataclasses  # [py<37]
+    - pyserial
+    - python
+    - xarray
+
+test:
+  imports:
+    - pyilluminate
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ramonaoptics/pyilluminate
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - hmaarrfk

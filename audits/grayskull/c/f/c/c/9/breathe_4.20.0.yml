@@ -1,0 +1,50 @@
+{% set name = "breathe" %}
+{% set version = 4.20.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/breathe-{{ version }}.tar.gz
+  sha256: d7e1e1ee9b0615423b7e9abc64f0afe12e7bcf32c817a8fd1d9c8c3c4b3d71c9
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - breathe-apidoc = breathe.apidoc:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - docutils >=0.12
+    - python
+    - six >=1.9
+    - sphinx >=3.0,<3.3
+
+test:
+  imports:
+    - breathe
+    - breathe.directive
+  commands:
+    - pip check
+    - breathe-apidoc --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/michaeljones/breathe
+  summary: Sphinx Doxygen renderer
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - SylvainCorlay
+    - JohanMabille
+    - hmaarrfk

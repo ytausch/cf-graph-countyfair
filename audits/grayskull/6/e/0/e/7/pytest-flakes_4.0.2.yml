@@ -1,0 +1,44 @@
+{% set name = "pytest-flakes" %}
+{% set version = 4.0.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest-flakes-{{ version }}.tar.gz
+  sha256: 6733db47937d9689032876359e5ee0ee6926e3638546c09220e2f86b3581d4c1
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - pyflakes
+    - pytest >=5
+    - python >=3.5
+
+test:
+  imports:
+    - pytest_flakes
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/asmeurer/pytest-flakes
+  summary: pytest plugin to check source code with pyflakes
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - bjodah
+    - asmeurer

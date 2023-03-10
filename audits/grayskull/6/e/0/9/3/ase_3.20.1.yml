@@ -1,0 +1,59 @@
+{% set name = "ase" %}
+{% set version = 3.20.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 72c81f21b6adb907595fce8d883c0231301cbd8e9f6e5ce8e98bab927054daca
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - ase=ase.cli.main:main
+    - ase-db=ase.cli.main:old
+    - ase-gui=ase.cli.main:old
+    - ase-run=ase.cli.main:old
+    - ase-info=ase.cli.main:old
+    - ase-build=ase.cli.main:old
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - matplotlib-base >=2.0.0
+    - numpy >=1.11.3
+    - python >=3.6
+    - scipy >=0.18.1
+
+test:
+  imports:
+    - ase
+    - ase.build
+  commands:
+    - pip check
+    - ase --help
+    - ase-db --help
+    - ase-gui --help
+    - ase-run --help
+    - ase-info --help
+    - ase-build --help
+  requires:
+    - pip
+
+about:
+  home: https://wiki.fysik.dtu.dk/ase
+  summary: Atomic Simulation Environment
+  license: GPL-2.0
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - jochym
+    - CJ-Wright

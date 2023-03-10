@@ -1,0 +1,48 @@
+{% set name = "cytoolz" %}
+{% set version = 0.11.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cytoolz-{{ version }}.tar.gz
+  sha256: c64f3590c3eb40e1548f0d3c6b2ccde70493d0b8dc6cc7f9f3fec0bb3dcd4222
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - pip
+    - python
+  run:
+    - python
+    - toolz >=0.8.0
+
+test:
+  imports:
+    - cytoolz
+    - cytoolz.curried
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pytoolz/cytoolz
+  summary: 'Cython implementation of Toolz: High performance functional utilities'
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - eriknw
+    - mrocklin
+    - jcrist
+    - jakirkham

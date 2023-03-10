@@ -1,0 +1,45 @@
+{% set name = "pyftdi" %}
+{% set version = 0.52.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyftdi-{{ version }}.tar.gz
+  sha256: 5f591cefc87c89177798b53c70914fadff54717433afc9ccb50213d053e87ee6
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - aenum >=2.1.0  # [py==35]
+    - pyserial >=3.0
+    - python
+    - pyusb >=1.0.0
+
+test:
+  imports:
+    - pyftdi
+    - pyftdi.serialext
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/eblot/pyftdi
+  summary: FTDI device driver (pure Python)
+  license: BSD-3-Clause
+  license_file: pyftdi/doc/license.rst
+
+extra:
+  recipe-maintainers:
+    - abloemert

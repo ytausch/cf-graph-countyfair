@@ -1,0 +1,41 @@
+{% set name = "hstspreload" %}
+{% set version = 2020.9.23 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hstspreload-{{ version }}.tar.gz
+  sha256: 35822733ba67cfb4efc6cd7d1230b509f0bd42c90eeb329faf2fe679f801e40f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - hstspreload
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sethmlarson/hstspreload
+  summary: Chromium HSTS Preload list as a Python package and updated daily
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - primozgodec

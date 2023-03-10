@@ -1,0 +1,44 @@
+{% set name = "inotify_simple" %}
+{% set version = 1.3.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 8440ffe49c4ae81a8df57c1ae1eb4b6bfa7acb830099bfb3e305b383005cc128
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - enum34  # [py<34]
+    - python
+
+test:
+  imports:
+    - inotify_simple
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/chrisjbillington/inotify_simple
+  summary: A simple wrapper around inotify. No fancy bells and whistles, just a literal wrapper with ctypes. Under 100 lines of code!
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mwilson8
+    - rluria14
+    - benhuff

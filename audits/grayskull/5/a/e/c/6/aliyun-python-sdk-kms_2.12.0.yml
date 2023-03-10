@@ -1,0 +1,44 @@
+{% set name = "aliyun-python-sdk-kms" %}
+{% set version = 2.12.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aliyun-python-sdk-kms-{{ version }}.tar.gz
+  sha256: 543ce0ef35178a991f65830b1748a422628231e802c88eb334bd266d53c2a509
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - aliyun-python-sdk-core >=2.11.5
+    - python
+
+test:
+  imports:
+    - aliyunsdkkms
+    - aliyunsdkkms.request
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://develop.aliyun.com/sdk/python
+  summary: The kms module of Aliyun Python sdk.
+  license: Apache-1.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - shcheklein
+    - efiop

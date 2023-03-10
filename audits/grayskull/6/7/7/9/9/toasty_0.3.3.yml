@@ -1,0 +1,54 @@
+{% set name = "toasty" %}
+{% set version = 0.3.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/toasty-{{ version }}.tar.gz
+  sha256: c14b2a53fbb83d4e60d124f0d062993c66d00df304ae99357dbcc41613b17661
+
+build:
+  number: 0
+  entry_points:
+    - toasty=toasty.cli:entrypoint
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - numpy >=1.7
+    - pillow >=7.0
+    - python
+    - pyyaml >=5.0
+    - tqdm >=4.0
+    - wwt_data_formats >=0.2.0
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - toasty
+    - toasty.tests
+  commands:
+    - pip check
+    - toasty --help
+  requires:
+    - pip
+
+about:
+  home: https://toasty.readthedocs.io/
+  summary: Generate TOAST image tile pyramids from existing image data
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pkgw

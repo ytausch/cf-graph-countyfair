@@ -1,0 +1,44 @@
+{% set name = "opentelemetry-api" %}
+{% set version = 0.13b0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/opentelemetry-api-{{ version }}.tar.gz
+  sha256: ee78db4aa65830ebd9a7a966f9fd342e0898dd7fed087c940f37136093b662b0
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - aiocontextvars  # [py<37 and py>=35]
+    - python
+    - typing  # [py<35]
+
+test:
+  imports:
+    - opentelemetry
+    - opentelemetry.baggage
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/open-telemetry/opentelemetry-python/tree/master/opentelemetry-api
+  summary: OpenTelemetry Python API
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mariusvniekerk

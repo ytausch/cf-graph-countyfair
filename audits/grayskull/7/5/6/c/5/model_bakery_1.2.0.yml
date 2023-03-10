@@ -1,0 +1,43 @@
+{% set name = "model_bakery" %}
+{% set version = 1.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/model_bakery-{{ version }}.tar.gz
+  sha256: 088698cdf62e5ccedeb97e55ceb966c974cc79e2514928aec9beab27a8c1faf4
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - django >=1.11.0<3.2
+    - python
+
+test:
+  imports:
+    - model_bakery
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/model-bakers/model_bakery
+  summary: Smart object creation facility for Django.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - oblute
+    - benhuff

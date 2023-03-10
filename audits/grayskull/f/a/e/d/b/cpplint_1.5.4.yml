@@ -1,0 +1,45 @@
+{% set name = "cpplint" %}
+{% set version = 1.5.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cpplint-{{ version }}.tar.gz
+  sha256: c5d70711f06a7a8bfdc09bd7a19c13e114e009a70c8dc16caad1e5f0d2f3cc71
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - cpplint = cpplint:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - cpplint
+  commands:
+    - pip check
+    - cpplint --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cpplint/cpplint
+  summary: Automated checker to ensure C++ files follow Google's style guide
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tovrstra

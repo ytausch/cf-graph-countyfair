@@ -1,0 +1,49 @@
+{% set name = "pygeoutils" %}
+{% set version = 0.1.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 4d6715871d0e180890312b96973c19dbdc74fa62174179dbfd15cfb35d2618c1
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools >=41.2
+    - setuptools_scm
+  run:
+    - geopandas
+    - python >=3.6
+    - rasterio
+    - setuptools
+    - shapely
+    - simplejson
+    - xarray
+
+test:
+  imports:
+    - pygeoutils
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cheginit/pygeoutils
+  summary: A set of utilities for manipulating (Geo)JSON and GeoTIFF data.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - cheginit

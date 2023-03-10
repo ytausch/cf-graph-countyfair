@@ -1,0 +1,45 @@
+{% set name = "pytest-doctestplus" %}
+{% set version = 0.8.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: fb083925a17ce636f33997c275f61123e63372c1db11fefac1e991ed25a4ca37
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - pip
+    - pytest >=4.0
+    - python >=3.6
+
+test:
+  imports:
+    - pytest_doctestplus
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://astropy.org
+  summary: Pytest plugin with advanced doctest features.
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - astrofrog-conda-forge
+    - pllim
+    - mwcraig

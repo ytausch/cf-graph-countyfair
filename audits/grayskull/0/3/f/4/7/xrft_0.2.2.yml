@@ -1,0 +1,50 @@
+{% set name = "xrft" %}
+{% set version = 0.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xrft-{{ version }}.tar.gz
+  sha256: 2fa2a91fd04aa3e23b40b42925d9dacb2cd2ebd6608139c45ebd4d068b940362
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - dask-core
+    - numpy
+    - pandas
+    - python
+    - scipy
+    - xarray
+
+test:
+  imports:
+    - xrft
+    - xrft.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/xgcm/xrft
+  summary: Discrete Fourier Transform with xarray
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kynan
+    - rabernat
+    - roxyboy

@@ -1,0 +1,46 @@
+{% set name = "future_fstrings" %}
+{% set version = 1.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 6cf41cbe97c398ab5a81168ce0dbb8ad95862d3caf23c21e4430627b90844089
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  entry_points:
+    - future-fstrings-show=future_fstrings:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - tokenize-rt >=3  # [py<36]
+
+test:
+  imports:
+    - future_fstrings
+  commands:
+    - pip check
+    - future-fstrings-show --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/asottile/future-fstrings
+  summary: A backport of fstrings to python<3.6
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - sterlingbaldwin
+    - deadsnakes-issues-bot

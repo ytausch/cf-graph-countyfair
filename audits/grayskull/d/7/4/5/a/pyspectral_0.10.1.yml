@@ -1,0 +1,56 @@
+{% set name = "pyspectral" %}
+{% set version = 0.10.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyspectral-{{ version }}.tar.gz
+  sha256: 4911ef722d141cf832322f952eb667608c950718874d4c5c2e0a8db88c4f7410
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+    - setuptools_scm
+    - setuptools_scm_git_archive
+  run:
+    - appdirs
+    - docutils >=0.3
+    - h5py >=2.5
+    - numpy >=1.5.1
+    - python >=3.7
+    - python-geotiepoints >=1.1.1
+    - pyyaml
+    - requests
+    - scipy >=0.14
+    - six
+
+test:
+  imports:
+    - pyspectral
+    - pyspectral.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pytroll/pyspectral
+  summary: Reading and manipulaing satellite sensor spectral responses and the solar spectrum, to perfom various corrections to VIS and NIR band data
+  license: GPL-3.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - djhoese
+    - mraspaud
+    - adybbroe
+    - pnuu

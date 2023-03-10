@@ -1,0 +1,43 @@
+{% set name = "covseisnet" %}
+{% set version = 0.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 8dc171822ae10b1acd99651b535a666726dfb750ae083cf9c1442f0b89f20b14
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.0,<4.0
+  run:
+    - numpy
+    - obspy
+    - python >=3.0,<4.0
+    - scipy
+
+test:
+  imports:
+    - covseisnet
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/covseisnet/
+  summary: Covariance matrix analysis of network seismic data
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - FrancisTong

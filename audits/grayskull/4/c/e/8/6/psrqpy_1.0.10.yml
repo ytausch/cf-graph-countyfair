@@ -1,0 +1,48 @@
+{% set name = "psrqpy" %}
+{% set version = 1.0.10 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/psrqpy-{{ version }}.tar.gz
+  sha256: de325dfef49c1fd031287f5e8d7808872c011cf70b9c2efaa7070d208b9f8238
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - astropy <3.0,>=2.0  # [py<=27]
+    - beautifulsoup4
+    - numpy >=1.16
+    - packaging
+    - pandas >0.21
+    - python
+    - requests
+    - scipy
+    - six requests beautifulsoup4 numpy>=1.16 scipy pandas>0.21 astropy>=2.0,<3.0  # [py<=27]
+
+test:
+  imports:
+    - psrqpy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.github.com/mattpitkin/psrqpy/
+  summary: A Python module for querying the ATNF pulsar catalogue
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mattpitkin

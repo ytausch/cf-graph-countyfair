@@ -1,0 +1,44 @@
+{% set name = "leidenalg" %}
+{% set version = 0.8.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/leidenalg-{{ version }}.tar.gz
+  sha256: 02cc8e87d2000ea1da60e9efc9287764fe81e445ab9850ec728b006c37620289
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - python
+    - python-igraph >=0.8.0
+
+test:
+  imports:
+    - leidenalg
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/vtraag/leidenalg
+  summary: Leiden is a general algorithm for methods of community detection in large networks.
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - vtraag

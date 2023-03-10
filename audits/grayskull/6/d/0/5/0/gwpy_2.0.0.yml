@@ -1,0 +1,58 @@
+{% set name = "gwpy" %}
+{% set version = 2.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c84df0ade9a6c14457c40c28394f17a16d1cdc56c08c2c7dec58763813d8e57b
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - gwpy-plot=gwpy.cli.gwpy_plot:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - astropy >=3.0.0
+    - dqsegdb2
+    - gwdatafind
+    - gwosc >=0.5.3
+    - h5py >=1.3
+    - ligo-segments >=1.0.0
+    - ligotimegps >=1.2.1
+    - matplotlib-base >=3.1.0
+    - numpy >=1.12.0
+    - python >=3.6
+    - python-dateutil
+    - scipy >=1.2.0
+    - tqdm >=4.10.0
+
+test:
+  imports:
+    - gwpy
+    - gwpy.astro
+  commands:
+    - pip check
+    - gwpy-plot --help
+  requires:
+    - pip
+
+about:
+  home: https://gwpy.github.io
+  summary: A python package for gravitational-wave astrophysics
+  doc_url: https://pythonhosted.org/gwpy/
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - duncanmmacleod

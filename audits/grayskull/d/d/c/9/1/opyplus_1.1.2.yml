@@ -1,0 +1,46 @@
+{% set name = "opyplus" %}
+{% set version = 1.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 3ff22291bfecd5ed3d02a6fa005fd173ffde754e5bec7c1261b43bc7b1df3aec
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - cchardet <3.0,>=2.1.4
+    - pandas <2.0.0,>=0.20.0
+    - python
+    - python-slugify <4.0,>=3.0.2
+    - unidecode <2.0,>=1.0.22
+
+test:
+  imports:
+    - opyplus
+    - opyplus.compatibility
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/openergy/opyplus
+  summary: Python package to work with Energyplus input and output
+  license: MPL-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - zach-b

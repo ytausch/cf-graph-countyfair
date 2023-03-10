@@ -1,0 +1,43 @@
+{% set name = "jupyter-packaging" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupyter-packaging-{{ version }}.tar.gz
+  sha256: ac436c202b60117629cbda7c1f105565657fe64b65838b7836e8af36e755ce05
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - jupyter_packaging
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://jupyter.org
+  summary: Jupyter Packaging Utilities
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - blink1073
+    - vidartf
+    - timkpaine

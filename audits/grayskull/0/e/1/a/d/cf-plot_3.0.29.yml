@@ -1,0 +1,45 @@
+{% set name = "cf-plot" %}
+{% set version = 3.0.29 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cf-plot-{{ version }}.tar.gz
+  sha256: 40398d05207472416e4cd63860a0df575d1e6e8042a5da7754703633d37d7d6c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - cartopy >=0.17.0
+    - cf-python >=3
+    - matplotlib-base >=3.1.0
+    - python
+    - scipy >=1.4.0
+
+test:
+  imports:
+    - cfplot
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://ajheaps.github.io/cf-plot
+  summary: Climate contour, vector and line plots in Python
+  license: 0BSD
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf

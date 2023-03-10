@@ -1,0 +1,45 @@
+{% set name = "configparser" %}
+{% set version = 5.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/configparser-{{ version }}.tar.gz
+  sha256: 005c3b102c96f4be9b8f40dafbd4997db003d07d1caa19f37808be8031475f2a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm >=3.4.1
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - backports
+    - backports.configparser
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jaraco/configparser/
+  summary: Updated configparser from Python 3.8 for Python 2.6+.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - ocefpaf
+    - bgruening

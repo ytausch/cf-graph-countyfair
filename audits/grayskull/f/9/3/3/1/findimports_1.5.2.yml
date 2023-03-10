@@ -1,0 +1,41 @@
+{% set name = "findimports" %}
+{% set version = 1.5.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/findimports-{{ version }}.tar.gz
+  sha256: fab9ddfe120374aa68196266dc657ea9dd7531766889718943a07897f03f2fda
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - findimports
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mgedmin/findimports
+  summary: Python module import analysis tool
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - moorepants

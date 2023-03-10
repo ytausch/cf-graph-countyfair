@@ -1,0 +1,49 @@
+{% set name = "nctoolkit" %}
+{% set version = 0.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nctoolkit-{{ version }}.tar.gz
+  sha256: bcd9e21f8c885c90d5937980a4714255d2fc550fd2fa02158ead9ee75ba4518a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools
+    - setuptools-git
+    - wheel
+  run:
+    - hvplot
+    - netcdf4
+    - pandas
+    - panel
+    - python >=3.6
+    - xarray
+
+test:
+  imports:
+    - nctoolkit
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/r4ecology/nctoolkit
+  summary: Fast and easy analysis of netCDF data in Python
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - r4ecology

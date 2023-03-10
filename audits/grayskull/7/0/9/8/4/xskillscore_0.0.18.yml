@@ -1,0 +1,58 @@
+{% set name = "xskillscore" %}
+{% set version = 0.0.18 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xskillscore-{{ version }}.tar.gz
+  sha256: 40e9757a3f03b9366db7983cd398721a19dd03f3c5e937b8a0f71d30f4088c70
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools >=30.3.0
+    - setuptools_scm
+    - setuptools_scm_git_archive
+  run:
+    - bottleneck
+    - cftime
+    - dask-core
+    - numba
+    - numpy
+    - properscoring
+    - python >=3.6
+    - scikit-learn
+    - scipy
+    - xarray >=0.16.1
+    - xhistogram
+
+test:
+  imports:
+    - xskillscore
+    - xskillscore.core
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/raybellwaves/xskillscore
+  summary: xskillscore
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - raybellwaves
+    - bradyrx
+    - aaronspring

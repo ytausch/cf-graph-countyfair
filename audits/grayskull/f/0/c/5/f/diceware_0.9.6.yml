@@ -1,0 +1,49 @@
+{% set name = "diceware" %}
+{% set version = 0.9.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/diceware-{{ version }}.tar.gz
+  sha256: 7ef924ca05ece8eaa5e2746246ab94600b831f1428c70d231790fee5b5078b4e
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - diceware = diceware:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest_runner
+    - python
+  run:
+    - python
+    - setuptools
+
+test:
+  imports:
+    - diceware
+  commands:
+    - pip check
+    - diceware --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ulif/diceware/
+  summary: Passphrases you will remember.
+  license: GPL-3.0
+  license_file: COPYRIGHT
+
+extra:
+  recipe-maintainers:
+    - ndmaxar
+    - rluria14
+    - oblute
+    - RyanHackney

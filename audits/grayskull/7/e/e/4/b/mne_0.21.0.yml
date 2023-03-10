@@ -1,0 +1,49 @@
+{% set name = "mne" %}
+{% set version = 0.21.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/mne-{{ version }}.tar.gz
+  sha256: 3427af8b2cf52f7b85a4ed5703a998a4e86ca3e37b78cf82881551264d855076
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - mne = mne.commands.utils:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - numpy >=1.11.3
+    - python >=3.6
+    - scipy >=0.17.1
+
+test:
+  imports:
+    - mne
+    - mne.beamformer
+  commands:
+    - pip check
+    - mne --help
+  requires:
+    - pip
+
+about:
+  home: https://mne.tools/dev/
+  summary: MNE python project for MEG and EEG data analysis.
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - larsoner
+    - christianbrodbeck
+    - hoechenberger

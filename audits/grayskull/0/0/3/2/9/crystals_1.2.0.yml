@@ -1,0 +1,50 @@
+{% set name = "crystals" %}
+{% set version = 1.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/crystals-{{ version }}.tar.gz
+  sha256: dceca402b230362f5de36b97d2e1ae026f38c6b28e6f62412610e0288a7dbd79
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - crystals = crystals.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - numpy >=1.13,<2
+    - pycifrw >=4.4.1,<5
+    - python >=3.6
+    - requests >=2,<3
+    - spglib >=1.15,<2
+
+test:
+  imports:
+    - crystals
+    - tests
+  commands:
+    - pip check
+    - crystals --help
+  requires:
+    - pip
+
+about:
+  home: http://crystals.readthedocs.io
+  summary: Data structures for crystallography
+  dev_url: https://github.com/LaurentRDC/crystals
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - LaurentRDC

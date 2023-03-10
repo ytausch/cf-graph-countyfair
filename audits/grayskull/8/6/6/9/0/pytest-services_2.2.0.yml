@@ -1,0 +1,47 @@
+{% set name = "pytest-services" %}
+{% set version = 2.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest-services-{{ version }}.tar.gz
+  sha256: ecdbee4b0cd7d4e9d84ce43d47e45c07fd5aec84d594c961c8c1c98d04c95349
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm >=3.4.1
+  run:
+    - psutil
+    - pytest
+    - python
+    - requests
+    - setuptools
+    - zc.lockfile >=2.0
+
+test:
+  imports:
+    - pytest_services
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pytest-dev/pytest-services
+  summary: Services plugin for pytest testing framework
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - bollwyvl

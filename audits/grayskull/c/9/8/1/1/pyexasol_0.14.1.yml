@@ -1,0 +1,45 @@
+{% set name = "pyexasol" %}
+{% set version = 0.14.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: fda8cc1e2d8f4df175490d55db37a5050108642d3c671c6350d5ea9e69748984
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+    - rsa
+    - websocket-client >=0.47.0
+
+test:
+  imports:
+    - pyexasol
+    - pyexasol.db2
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/badoo/pyexasol
+  summary: Exasol python driver with extra features
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - dbast
+    - morazow

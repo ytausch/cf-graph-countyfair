@@ -1,0 +1,47 @@
+{% set name = "pvl" %}
+{% set version = 1.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pvl-{{ version }}.tar.gz
+  sha256: bd937fb41fe1acc8f1829569b985e86207ba073d807727421a543ba6d76c6aa4
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pvl_translate = pvl.pvl_translate:main
+    - pvl_validate= pvl.pvl_validate:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - pvl
+  commands:
+    - pip check
+    - pvl_translate --help
+    - pvl_validate --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/planetarypy/pvl
+  summary: Python implementation of PVL (Parameter Value Language)
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pbvarga1
+    - rbeyer

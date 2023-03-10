@@ -1,0 +1,49 @@
+{% set name = "yamllint" %}
+{% set version = 1.25.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/yamllint-{{ version }}.tar.gz
+  sha256: b1549cbe5b47b6ba67bdeea31720f5c51431a4d0c076c1557952d841f7223519
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - yamllint = yamllint.cli:run
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+  run:
+    - pathspec >=0.5.3
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+    - pyyaml
+    - setuptools
+
+test:
+  imports:
+    - yamllint
+    - yamllint.rules
+  commands:
+    - pip check
+    - yamllint --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/adrienverge/yamllint
+  summary: A linter for YAML files.
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - proinsias
+    - bollwyvl

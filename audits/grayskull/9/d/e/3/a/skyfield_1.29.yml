@@ -1,0 +1,47 @@
+{% set name = "skyfield" %}
+{% set version = 1.29 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/skyfield-{{ version }}.tar.gz
+  sha256: 80b67acb8b655305890d80005cd5e53986c459fb01521637e433df751d3bce86
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - certifi >=2017.4.17
+    - jplephem >=2.13
+    - numpy
+    - python
+    - sgp4 >=2.2
+
+test:
+  imports:
+    - skyfield
+    - skyfield.data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/brandon-rhodes/python-skyfield/
+  summary: Elegant astronomy for Python
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jochym
+    - brandon-rhodes

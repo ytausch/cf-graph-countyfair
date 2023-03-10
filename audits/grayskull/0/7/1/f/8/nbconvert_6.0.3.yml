@@ -1,0 +1,66 @@
+{% set name = "nbconvert" %}
+{% set version = 6.0.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nbconvert-{{ version }}.tar.gz
+  sha256: d8490f40368a1324521f8e740a0e341dc40bcd6e6926da64fa64b3a8801f16a3
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - jupyter-nbconvert = nbconvert.nbconvertapp:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - bleach
+    - defusedxml
+    - entrypoints >=0.2.2
+    - jinja2 >=2.4
+    - jupyter_core
+    - jupyterlab_pygments
+    - mistune >=0.8.1,<2
+    - nbclient >=0.5.0,<0.6.0
+    - nbformat >=4.4
+    - pandocfilters >=1.4.1
+    - pygments >=2.4.1
+    - python >=3.6
+    - testpath
+    - traitlets >=4.2
+
+test:
+  imports:
+    - nbconvert
+    - nbconvert.exporters
+  commands:
+    - pip check
+    - jupyter-nbconvert --help
+  requires:
+    - pip
+
+about:
+  home: https://jupyter.org
+  summary: Converting Jupyter Notebooks
+  dev_url: https://github.com/jupyter/nbconvert
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - mpacer
+    - minrk
+    - pelson
+    - takluyver
+    - mseal
+    - blink1073
+    - ocefpaf

@@ -1,0 +1,52 @@
+{% set name = "tifffile" %}
+{% set version = 2020.9.29 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/tifffile-{{ version }}.tar.gz
+  sha256: 1596f7fea8b0939cc286613abd845733000d7c1df523320930e545962a48044d
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - tifffile = tifffile:main
+    - lsm2bin = tifffile.lsm2bin:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - numpy >=1.15.1
+    - python >=3.7
+
+test:
+  imports:
+    - tifffile
+  commands:
+    - pip check
+    - tifffile --help
+    - lsm2bin --help
+  requires:
+    - pip
+
+about:
+  home: https://www.lfd.uci.edu/~gohlke/
+  summary: Read and write TIFF(r) files
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - blink1073
+    - ericpre
+    - jakirkham
+    - mrakitin
+    - ocefpaf
+    - stuarteberg

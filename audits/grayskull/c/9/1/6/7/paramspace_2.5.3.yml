@@ -1,0 +1,44 @@
+{% set name = "paramspace" %}
+{% set version = 2.5.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/paramspace-{{ version }}.tar.gz
+  sha256: 33259faa99337f812e282c8a042179aea686dda5e05447004589a38da8fcf8d1
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy >=1.17.3
+    - python
+    - ruamel.yaml >=0.16.5
+    - xarray >=0.10.9
+
+test:
+  imports:
+    - paramspace
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://ts-gitlab.iup.uni-heidelberg.de/yunus/paramspace
+  summary: Dictionary-based, multi-dimensional parameter space iteration
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - blsqr

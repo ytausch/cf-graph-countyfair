@@ -1,0 +1,53 @@
+{% set name = "movingpandas" %}
+{% set version = 0.5rc1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/movingpandas-{{ version }}.tar.gz
+  sha256: 34c38d9b70cc700232900bbe78c89717d2c346b16cfc723eab069c79cc57b1bb
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - bokeh
+    - cartopy
+    - geopandas
+    - geoviews
+    - hvplot
+    - matplotlib-base
+    - numpy
+    - pandas
+    - pyproj
+    - python >=3.7
+    - shapely
+
+test:
+  imports:
+    - movingpandas
+    - movingpandas.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/anitagraser/movingpandas
+  summary: Implementation of Trajectory classes and functions built on top of GeoPandas
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - anitagraser
+    - jorisvandenbossche

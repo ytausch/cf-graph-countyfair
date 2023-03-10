@@ -1,0 +1,51 @@
+{% set name = "pymapvbvd" %}
+{% set version = 0.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyMapVBVD-{{ version }}.tar.gz
+  sha256: f96888db37ce4d9b1e632a0d33f2799300ff1f8eb6782cfe232a871917fdc30d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - attrdict
+    - dataclasses
+    - h5py
+    - matplotlib-base
+    - numpy
+    - pytest
+    - python >=3.7
+    - scipy
+    - setuptools
+    - tqdm
+
+test:
+  imports:
+    - mapvbvd
+    - tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/wexeee/pymapvbvd
+  summary: Python twix file reader
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - wexeee

@@ -1,0 +1,50 @@
+{% set name = "pymorphy2" %}
+{% set version = 0.9.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pymorphy2-{{ version }}.tar.gz
+  sha256: 86c447157dee2eb2341efbe4538e1281a754756ba1aa32da77a89614c58b560c
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pymorphy = pymorphy2.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dawg-python >=0.7.1
+    - docopt >=0.6
+    - pymorphy2-dicts-ru >=2.4,<3.0
+    - python
+
+test:
+  imports:
+    - pymorphy2
+    - pymorphy2.lang
+  commands:
+    - pip check
+    - pymorphy --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/kmike/pymorphy2/
+  summary: Morphological analyzer (POS tagger + inflection engine) for Russian language.
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - benhuff
+    - oblute
+    - mwilson8

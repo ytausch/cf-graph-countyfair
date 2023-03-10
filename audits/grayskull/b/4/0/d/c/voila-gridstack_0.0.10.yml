@@ -1,0 +1,45 @@
+{% set name = "voila-gridstack" %}
+{% set version = 0.0.10 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/voila-gridstack-{{ version }}.tar.gz
+  sha256: b28b3060fbf027e9842b5fc77697c08c78f1a2aefdca5b27de7af4bed0a99a12
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - jupyter_core
+    - pip
+    - python
+  run:
+    - python
+    - voila >=0.2.0,<0.3.0
+
+test:
+  imports:
+    - voila-gridstack
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/voila-dashboards/voila-gridstack/
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - scopatz
+    - SylvainCorlay
+    - maartenbreddels
+    - jtpio

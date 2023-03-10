@@ -1,0 +1,45 @@
+{% set name = "derivative" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/derivative-{{ version }}.tar.gz
+  sha256: 50d0ce9999d385d1aa22b4cd0553d788ff89dcfab1531c5895c9b78bbc00e507
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - numpy >=1.18.3,<2.0.0
+    - pytest >=5.4.3,<6.0.0
+    - python >=3.6,<4.0
+    - scipy >=1.4.1,<2.0.0
+    - sklearn >=0.0,<0.1
+
+test:
+  imports:
+    - derivative
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/andgoldschmidt/derivative
+  summary: Numerical differentiation in python.
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - moorepants

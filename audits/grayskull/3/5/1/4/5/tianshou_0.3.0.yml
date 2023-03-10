@@ -1,0 +1,48 @@
+{% set name = "tianshou" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/tianshou-{{ version }}.tar.gz
+  sha256: 23480c71469895367acf5242c8bcbb96c93f7884d2dc926cd52b322c558e3526
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - gym >=0.15.4
+    - numba >=0.51.0
+    - numpy
+    - python >=3.6
+    - tensorboard
+    - torch >=1.4.0
+    - tqdm
+
+test:
+  imports:
+    - tianshou
+    - tianshou.data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/thu-ml/tianshou
+  summary: A Library for Deep Reinforcement Learning
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Trinkle23897

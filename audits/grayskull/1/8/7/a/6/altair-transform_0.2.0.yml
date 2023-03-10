@@ -1,0 +1,47 @@
+{% set name = "altair-transform" %}
+{% set version = 0.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: b348c94a3a71254baac626635f38300121dc61a98eb46b25568a6aecc4202d66
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - altair >=3.0
+    - dataclasses  # [py<37]
+    - numpy
+    - pandas
+    - ply
+    - python
+
+test:
+  imports:
+    - altair_transform
+    - altair_transform.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/altair-viz/altair-transform/
+  summary: A python engine for evaluating Altair transforms.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - scopatz

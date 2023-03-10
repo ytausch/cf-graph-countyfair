@@ -1,0 +1,44 @@
+{% set name = "voila-reveal" %}
+{% set version = 0.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/voila-reveal-{{ version }}.tar.gz
+  sha256: 155d3e717ec87b7cba5eabd504e6486c1d94719fc7183a78ab6f5d432612c75f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - jupyter_core
+    - pip
+    - python
+  run:
+    - python
+    - voila >=0.2.0,<0.3.0
+
+test:
+  imports:
+    - voila_reveal
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/voila-dashboards/voila-reveal/
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - SylvainCorlay
+    - maartenbreddels
+    - mkcor

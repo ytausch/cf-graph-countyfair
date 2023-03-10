@@ -1,0 +1,45 @@
+{% set name = "coolprop" %}
+{% set version = 6.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/CoolProp-{{ version }}.tar.gz
+  sha256: 79cb300858d561fb87ab4963bd78339ed1f6f7825c295bf6892e2c4f3faafb0b
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - CoolProp
+    - CoolProp.GUI
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.coolprop.org
+  summary: Open-source thermodynamic and transport properties database
+  license: MIT
+  license_file: externals/FindMathematica/LICENSE
+
+extra:
+  recipe-maintainers:
+    - danilomendesdias
+    - fcollonval

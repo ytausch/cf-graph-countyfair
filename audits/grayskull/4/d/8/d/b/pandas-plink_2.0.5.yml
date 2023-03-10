@@ -1,0 +1,54 @@
+{% set name = "pandas-plink" %}
+{% set version = 2.0.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 586a4a404656b35e3ab6a897bcb94e1050b78ce7ce00c415937a5b3436cd8f23
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cffi >=1.13.1
+    - pip
+    - pytest-runner >=5.2
+    - python
+  run:
+    - cffi >=1.13.1
+    - dask>=2.6.0
+    - deprecated >=1.2.6
+    - numpy >=1.17.2
+    - pandas >=0.25.3
+    - pytest >=5.2.2
+    - python
+    - tqdm >=4.36.1
+    - xarray >=0.13.0
+    - zstandard >=0.12.0
+
+test:
+  imports:
+    - pandas_plink
+    - pandas_plink.test
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/limix/pandas-plink
+  summary: Read PLINK files into Pandas data frames
+  doc_url: https://pythonhosted.org/pandas-plink/
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - Horta

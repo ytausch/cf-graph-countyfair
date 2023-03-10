@@ -1,0 +1,56 @@
+{% set name = "ulmo" %}
+{% set version = 0.8.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ulmo-{{ version }}.tar.gz
+  sha256: 716ca8361563fef7f31e28b4df4c0874b50bed6b441e92803a252ea14bfde16e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - appdirs
+    - beautifulsoup4
+    - future
+    - geojson
+    - html5lib <=0.9999999
+    - isodate
+    - lxml
+    - numpy
+    - pandas
+    - python
+    - requests
+    - suds-jurko
+    - pytables
+
+test:
+  imports:
+    - ulmo
+    - ulmo.cdec
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ulmo-dev/ulmo/
+  summary: clean, simple and fast access to public hydrology and climatology data
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - emiliom
+    - ocefpaf

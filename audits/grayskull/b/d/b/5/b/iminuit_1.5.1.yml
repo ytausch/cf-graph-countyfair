@@ -1,0 +1,53 @@
+{% set name = "iminuit" %}
+{% set version = 1.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/iminuit-{{ version }}.tar.gz
+  sha256: 50cffe6f4eb5935149bc138f6e150e8d70afd5908ac33bce889349844b6fc9ce
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - numpy >=1.11.3
+    - python
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - iminuit
+    - iminuit.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/scikit-hep/iminuit
+  summary: Jupyter-friendly Python frontend for MINUIT2 in C++
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mwcraig
+    - bsipocz
+    - piti118
+    - HDembinski
+    - beckermr
+    - chrisburr
+    - henryiii

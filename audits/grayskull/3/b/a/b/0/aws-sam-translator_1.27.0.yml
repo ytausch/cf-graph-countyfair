@@ -1,0 +1,49 @@
+{% set name = "aws-sam-translator" %}
+{% set version = 1.27.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aws-sam-translator-{{ version }}.tar.gz
+  sha256: 3258122f4cd671ba3dc141382dd0412c123db9f1317bed8b26e7229f63634454
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - boto3 ~=1.5
+    - enum34 ~=1.1  # [py<34]
+    - jsonschema ~=3.0
+    - pyrsistent ~=0.16.0  # [py<3]
+    - python
+    - six ~=1.11
+
+test:
+  imports:
+    - samtranslator
+    - samtranslator.intrinsics
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/awslabs/serverless-application-model
+  summary: AWS SAM Translator is a library that transform SAM templates into AWS CloudFormation templates
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - hajapy
+    - rluria14
+    - oblute
+    - ndmaxar

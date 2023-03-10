@@ -1,0 +1,51 @@
+{% set name = "pandas" %}
+{% set version = 1.1.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pandas-{{ version }}.tar.gz
+  sha256: babbeda2f83b0686c9ad38d93b10516e68cdcd5771007eb80a763e98aaf44613
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cython
+    - numpy
+    - pip
+    - python >=3.6
+  run:
+    - numpy >=1.15.4
+    - python >=3.6
+    - python-dateutil >=2.7.3
+    - pytz >=2017.2
+
+test:
+  imports:
+    - pandas
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pandas.pydata.org
+  summary: Powerful data structures for data analysis, time series, and statistics
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jreback
+    - jorisvandenbossche
+    - msarahan
+    - ocefpaf
+    - TomAugspurger
+    - WillAyd

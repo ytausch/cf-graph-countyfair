@@ -1,0 +1,58 @@
+{% set name = "lightkurve" %}
+{% set version = 1.11.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/lightkurve-{{ version }}.tar.gz
+  sha256: 3fe685bae01fed6ba78a08d83991a2296890def44849d6ae12facc40a16aed04
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - astropy >=1.3
+    - astroquery >=0.3.9
+    - bs4
+    - fbpca >=1.0
+    - matplotlib-base >=1.5.3
+    - numpy >=1.11
+    - oktopus
+    - pandas
+    - patsy >=0.5.1
+    - python
+    - requests
+    - scipy >=0.19.0,!=1.4.0,!=1.4.1
+    - tqdm >=4.25.0
+    - uncertainties
+
+test:
+  imports:
+    - lightkurve
+    - lightkurve.correctors
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://docs.lightkurve.org
+  summary: A friendly package for Kepler & TESS time series analysis in Python.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - gully
+    - pkgw
+    - barentsen

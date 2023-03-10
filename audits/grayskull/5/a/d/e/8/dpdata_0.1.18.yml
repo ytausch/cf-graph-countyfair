@@ -1,0 +1,46 @@
+{% set name = "dpdata" %}
+{% set version = 0.1.18 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d13e259b1b0539c04287cfc7c00c36414efc506081611cf31a0a50586e5b7214
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - monty
+    - numpy >=1.14.3
+    - python
+    - scipy
+
+test:
+  imports:
+    - dpdata
+    - dpdata/amber
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/deepmodeling/dpdata
+  summary: Manipulating data formats of DeePMD-kit, VASP, QE, PWmat, and LAMMPS, etc.
+  license: LGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - njzjz

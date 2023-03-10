@@ -1,0 +1,47 @@
+{% set name = "fipy" %}
+{% set version = 3.4.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 33bfe0390e67d08d29d79efd72f6c37da6f5d42375136e4e185e4f48569abe6c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - future
+    - pip
+    - python
+  run:
+    - future
+    - matplotlib-base
+    - numpy
+    - python
+    - scipy
+
+test:
+  imports:
+    - _setup
+    - fipy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.ctcms.nist.gov/fipy/
+  summary: A finite volume PDE solver in Python
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - guyer

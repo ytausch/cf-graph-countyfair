@@ -1,0 +1,44 @@
+{% set name = "cheetah3" %}
+{% set version = 3.2.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Cheetah3-{{ version }}.tar.gz
+  sha256: f1c2b693cdcac2ded2823d363f8459ae785261e61c128d68464c8781dba0466b
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - Cheetah
+    - Cheetah.Macros
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://cheetahtemplate.org/
+  summary: Cheetah is a template engine and code generation tool
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nehaljwani

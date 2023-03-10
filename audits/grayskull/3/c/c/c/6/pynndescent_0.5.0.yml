@@ -1,0 +1,46 @@
+{% set name = "pynndescent" %}
+{% set version = 0.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pynndescent-{{ version }}.tar.gz
+  sha256: 6a145477b42335122b797f55fe7bdf893e8f881174c2393e8bb81bc5527ea46e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - joblib >=0.11
+    - llvmlite >=0.30
+    - numba >=0.51.2
+    - python
+    - scikit-learn >=0.18
+    - scipy >=1.0
+
+test:
+  imports:
+    - pynndescent
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/lmcinnes/pynndescent
+  summary: Nearest Neighbor Descent
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - lmcinnes

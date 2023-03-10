@@ -1,0 +1,45 @@
+{% set name = "apache-libcloud" %}
+{% set version = 3.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/apache-libcloud-{{ version }}.tar.gz
+  sha256: 1b14b1f5f91ceeff5cf228613e76577d7b41e790dccd53a0f647ef816fb5495c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5,<4.0
+  run:
+    - python >=3.5,<4.0
+    - requests >=2.5.0
+
+test:
+  imports:
+    - libcloud
+    - libcloud.backup
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://libcloud.apache.org/
+  summary: A standard Python library that abstracts away differences among multiple cloud provider APIs. For more information and documentation, please see https://libcloud.apache.org
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - danielfrg
+    - nmadhok
+    - tonybaloney

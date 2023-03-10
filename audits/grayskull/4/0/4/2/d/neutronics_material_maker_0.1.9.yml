@@ -1,0 +1,43 @@
+{% set name = "neutronics_material_maker" %}
+{% set version = 0.1.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/neutronics_material_maker-{{ version }}.tar.gz
+  sha256: 7d5a9b3f7caef80940d327c6bb71cda2274be6aa82ce5de85fba1292445c5774
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - coolprop
+    - python
+
+test:
+  imports:
+    - neutronics_material_maker
+    - neutronics_material_maker.data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ukaea/neutronics_material_maker
+  summary: A tool for making neutronics material cards for use in OpenMC, MCNP, Serpent and Fispact
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - shimwell

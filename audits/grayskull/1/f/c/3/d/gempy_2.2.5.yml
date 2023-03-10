@@ -1,0 +1,54 @@
+{% set name = "gempy" %}
+{% set version = 2.2.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/gempy-{{ version }}.tar.gz
+  sha256: e3d97f1acc1b9efa569e83c28088197024aebbf9bad6b6799b2a3041da60ba5f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ipython
+    - matplotlib-base
+    - networkx
+    - numpy
+    - pandas ==1.0.5
+    - pytest
+    - python
+    - pyvista >=0.25
+    - pyvistaqt
+    - scikit-image >=0.17
+    - seaborn >=0.9
+    - theano >=1.0.4
+
+test:
+  imports:
+    - examples.examples
+    - examples.examples.geometries
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cgre-aachen/gempy
+  summary: An Open-source, Python-based 3-D structural geological modeling software.
+  license: LGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Leguark
+    - AndrewAnnex

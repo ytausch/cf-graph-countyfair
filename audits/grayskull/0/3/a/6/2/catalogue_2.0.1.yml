@@ -1,0 +1,44 @@
+{% set name = "catalogue" %}
+{% set version = 2.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/catalogue-{{ version }}.tar.gz
+  sha256: 0d01077dbfca7aa53f3ef4adecccce636bce4f82e5b52237703ab2f56478e56e
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - importlib-metadata >=0.20  # [py<38]
+    - python
+
+test:
+  imports:
+    - catalogue
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/explosion/catalogue
+  summary: Super lightweight function registries for your library
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - honnibal
+    - ines
+    - adrianeboyd

@@ -1,0 +1,41 @@
+{% set name = "aioftp" %}
+{% set version = 0.17.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aioftp-{{ version }}.tar.gz
+  sha256: 87869958fa98c4691acad0815840a94c1b50c6925d037d4dbb51331ddf4911f3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - python >=3.7
+
+test:
+  imports:
+    - aioftp
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/aio-libs/aioftp
+  summary: ftp client/server for asyncio
+  license: Apache-2.0
+  license_file: license.txt
+
+extra:
+  recipe-maintainers:
+    - epruesse

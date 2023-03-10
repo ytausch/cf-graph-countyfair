@@ -1,0 +1,44 @@
+{% set name = "colcon-package-selection" %}
+{% set version = 0.2.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/colcon-package-selection-{{ version }}.tar.gz
+  sha256: 0b9e6e5fc95d6d438e53fef5a6c89160485bff91947424a3da678ec7b8430f76
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - colcon-core >=0.3.19
+    - python
+
+test:
+  imports:
+    - colcon_package_selection
+    - colcon_package_selection.package_discovery
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://colcon.readthedocs.io
+  summary: Extension for colcon to select the packages to process.
+  license: AFL-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - seanyen
+    - wolfv

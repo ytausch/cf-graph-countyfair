@@ -1,0 +1,44 @@
+{% set name = "ndindex" %}
+{% set version = 1.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ndindex-{{ version }}.tar.gz
+  sha256: 02e39f55529140cf89bbeb1b644cc65364ae4bce168f480b1b87ccf5cca790ca
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - numpy
+    - python >=3.6
+    - sympy
+
+test:
+  imports:
+    - ndindex
+    - ndindex.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://quansight.github.io/ndindex/
+  summary: A Python library for manipulating indices of ndarrays.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - asmeurer

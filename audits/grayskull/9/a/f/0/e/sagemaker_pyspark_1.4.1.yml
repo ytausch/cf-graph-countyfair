@@ -1,0 +1,46 @@
+{% set name = "sagemaker_pyspark" %}
+{% set version = 1.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sagemaker_pyspark-{{ version }}.tar.gz
+  sha256: aee9588dadd66a840099ee05ecf4af50d693163bb18747761d0da37e33228fd8
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy
+    - pyspark ==2.3.4
+    - python
+
+test:
+  imports:
+    - sagemaker_pyspark
+    - sagemaker_pyspark.algorithms
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/aws/sagemaker-spark
+  summary: Amazon SageMaker PySpark Bindings
+  license: Apache-2.0
+  license_file: licenses/LICENSE-hadoop.txt
+
+extra:
+  recipe-maintainers:
+    - oblute
+    - benhuff
+    - rluria14

@@ -1,0 +1,44 @@
+{% set name = "apispec" %}
+{% set version = 4.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/apispec-{{ version }}.tar.gz
+  sha256: 360e28e5e84a4d7023b16de2b897327fe3da63ddc8e01f9165b9113b7fe1c48a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - apispec
+    - apispec.ext
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/marshmallow-code/apispec
+  summary: A pluggable API specification generator. Currently supports the OpenAPI Specification (f.k.a. the Swagger specification).
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - frol
+    - rth
+    - carlodri

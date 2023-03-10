@@ -1,0 +1,52 @@
+{% set name = "diffsims" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/diffsims-{{ version }}.tar.gz
+  sha256: c96a29c6b8a70de3e293e297731a7ba7dd4cd58407818c0cab49b06eebe9ca10
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - diffpy.structure >=3.0.0
+    - matplotlib-base >=3.1.1
+    - numba
+    - numpy >=1.10
+    - orix >=0.5.0
+    - psutil
+    - python >=3.6
+    - scipy >=0.15
+    - tqdm >=0.4.9
+    - transforms3d
+
+test:
+  imports:
+    - diffsims
+    - diffsims.crystallography
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyxem/diffsims
+  summary: Diffraction Simulations in Python.
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dnjohnstone
+    - pc494

@@ -1,0 +1,64 @@
+{% set name = "pyjanitor" %}
+{% set version = 0.20.10 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyjanitor-{{ version }}.tar.gz
+  sha256: cde75bd4b67baedfdcf2c354a151bceecefb5f3b6501990c8777a5575c3a3f35
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - black >=19.3b0 hypothesis>=4.4.0 interrogate ipykernel isort>=4.3.18 jupyter_client lxml natsort nbsphinx>=0.4.2 pandas-flavor pandas-vet pandas-vet pre-commit pyspark pytest-azurepipelines pytest-cov pytest>=3.4.2 scikit-learn seaborn setuptools>=38.5.2 sphinxcontrib-fulltoc==1.2.0 unyt xarray
+    - hypothesis >=4.4.0
+    - interrogate
+    - ipykernel
+    - isort >=4.3.18
+    - jupyter_client
+    - lxml
+    - natsort
+    - nbsphinx >=0.4.2
+    - pandas-flavor
+    - pandas-vet
+    - pre-commit
+    - pyspark
+    - pytest >=3.4.2
+    - pytest-azurepipelines
+    - pytest-cov
+    - python >=3.6
+    - scikit-learn
+    - seaborn
+    - setuptools >=38.5.2
+    - sphinxcontrib-fulltoc ==1.2.0
+    - unyt
+    - xarray
+
+test:
+  imports:
+    - janitor
+    - janitor.spark
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ericmjl/pyjanitor
+  summary: Tools for cleaning pandas DataFrames
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ericmjl

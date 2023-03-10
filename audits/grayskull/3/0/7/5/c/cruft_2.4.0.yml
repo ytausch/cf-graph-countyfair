@@ -1,0 +1,50 @@
+{% set name = "cruft" %}
+{% set version = 2.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cruft-{{ version }}.tar.gz
+  sha256: bd1684f51ce1d547906fcb5341249564c320fbe958e175c14b66e92966dba72b
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - cruft = cruft._cli:app
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - click >=7.1.2,<8.0.0
+    - cookiecutter >=1.6,<2.0
+    - gitpython >=3.0,<4.0
+    - python >=3.6,<4.0
+    - typer >=0.3.1,<0.4.0
+
+test:
+  imports:
+    - cruft
+    - cruft._commands
+  commands:
+    - pip check
+    - cruft --help
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/cruft/
+  summary: Allows you to maintain all the necessary cruft for packaging and building projects separate from the code you intentionally write. Built on-top of CookieCutter.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Zeitsperre
+    - samj1912

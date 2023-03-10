@@ -1,0 +1,53 @@
+{% set name = "karateclub" %}
+{% set version = 1.0.15 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/karateclub-{{ version }}.tar.gz
+  sha256: 83885564bd7ff0e27143bf5a2d35617f15befedac92f194077d54fc492f82483
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - gensim
+    - networkx
+    - numpy
+    - pandas
+    - pygsp
+    - python
+    - python-louvain
+    - scikit-learn
+    - scipy
+    - six
+    - tqdm
+
+test:
+  imports:
+    - karateclub
+    - karateclub.community_detection
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/benedekrozemberczki/karateclub
+  summary: A general purpose library for community detection, network embedding, and graph mining research.
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - cyprienc

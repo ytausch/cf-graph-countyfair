@@ -1,0 +1,82 @@
+{% set name = "nbdime" %}
+{% set version = 2.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nbdime-{{ version }}.tar.gz
+  sha256: 4e3efdcfda31c3074cb565cd8e76e2e5421b1c4560c3a00c56f8679dd15590e5
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - nbdime = nbdime.__main__:main_dispatch
+    - nbshow = nbdime.nbshowapp:main
+    - nbdiff = nbdime.nbdiffapp:main
+    - nbdiff-web = nbdime.webapp.nbdiffweb:main
+    - nbmerge = nbdime.nbmergeapp:main
+    - nbmerge-web = nbdime.webapp.nbmergeweb:main
+    - git-nbdiffdriver = nbdime.vcs.git.diffdriver:main
+    - git-nbdifftool = nbdime.vcs.git.difftool:main
+    - git-nbmergedriver = nbdime.vcs.git.mergedriver:main
+    - git-nbmergetool = nbdime.vcs.git.mergetool:main
+    - hg-nbdiff = nbdime.vcs.hg.diff:main
+    - hg-nbdiffweb = nbdime.vcs.hg.diffweb:main
+    - hg-nbmerge = nbdime.vcs.hg.merge:main
+    - hg-nbmergeweb = nbdime.vcs.hg.mergeweb:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - colorama
+    - gitpython !=2.1.4,!=2.1.5,!=2.1.6
+    - jinja2 >=2.9
+    - nbformat
+    - notebook
+    - pygments
+    - python >=3.6
+    - requests
+    - six
+    - tornado
+
+test:
+  imports:
+    - nbdime
+    - nbdime.diffing
+  commands:
+    - pip check
+    - nbdime --help
+    - nbshow --help
+    - nbdiff --help
+    - nbdiff-web --help
+    - nbmerge --help
+    - nbmerge-web --help
+    - git-nbdiffdriver --help
+    - git-nbdifftool --help
+    - git-nbmergedriver --help
+    - git-nbmergetool --help
+    - hg-nbdiff --help
+    - hg-nbdiffweb --help
+    - hg-nbmerge --help
+    - hg-nbmergeweb --help
+  requires:
+    - pip
+
+about:
+  home: https://nbdime.readthedocs.io
+  summary: Diff and merge of Jupyter Notebooks
+  license: BSD-3-Clause
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - kain88-de
+    - minrk
+    - ocefpaf

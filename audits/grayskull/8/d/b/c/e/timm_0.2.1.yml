@@ -1,0 +1,46 @@
+{% set name = "timm" %}
+{% set version = 0.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/timm-{{ version }}.tar.gz
+  sha256: 18970f5dc1ade18a3c9b8faf49405080e7f31c4dcbc37af7ca4c12ef1e1c200f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+    - torch >=1.4
+    - torchvision
+
+test:
+  imports:
+    - timm
+    - timm.data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rwightman/pytorch-image-models
+  summary: (Unofficial) PyTorch Image Models
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ndmaxar
+    - oblute
+    - rluria14

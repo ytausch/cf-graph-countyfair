@@ -1,0 +1,44 @@
+{% set name = "requests-aws4auth" %}
+{% set version = 1.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/requests-aws4auth-{{ version }}.tar.gz
+  sha256: 9a4a5f4a61c49f098f5f669410308ac5b0ea2682fd511ee3a4f9ff73b5bb275a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - requests
+
+test:
+  imports:
+    - requests_aws4auth
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/tedder/requests-aws4auth
+  summary: AWS4 authentication for Requests
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - oblute
+    - benhuff
+    - mwilson8

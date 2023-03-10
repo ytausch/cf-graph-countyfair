@@ -1,0 +1,43 @@
+{% set name = "auditwheel" %}
+{% set version = 3.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 374a42f5ed95aea02ce9e775bbc4abdf57e84054400bab063616f0ab9bb20ebe
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pbr
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - auditwheel
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pypa/auditwheel
+  summary: Cross-distribution Linux wheels
+  license: CC0-1.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - msarahan

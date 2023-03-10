@@ -1,0 +1,48 @@
+{% set name = "check-manifest" %}
+{% set version = 0.43 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/check-manifest-{{ version }}.tar.gz
+  sha256: 1f787b81e5a2a3c69a9e4a2a44788ab672efbac43d7d5bd0b9e8fe49a0929e55
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - check-manifest = check_manifest:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - pep517
+    - python >=3.5
+    - setuptools
+    - toml
+
+test:
+  imports:
+    - check_manifest
+  commands:
+    - pip check
+    - check-manifest --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mgedmin/check-manifest
+  summary: Check MANIFEST.in in a Python source package for completeness
+  license: MIT
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - hodgsonw
+    - ocefpaf

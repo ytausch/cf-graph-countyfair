@@ -1,0 +1,55 @@
+{% set name = "brian2" %}
+{% set version = 2.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Brian2-{{ version }}.tar.gz
+  sha256: 5cabb31a3be7e020d1265207e0ddd3fc1f2a8d71d4c88c321505a5f9b1d44c12
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy >=1.10
+    - pip
+    - python
+    - setuptools >=24.2
+  run:
+    - cython >=0.29
+    - jinja2 >=2.7
+    - numpy >=1.15
+    - py-cpuinfo  # [win]
+    - pyparsing
+    - python
+    - setuptools >=24.2
+    - sympy >=1.2
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - brian2
+    - brian2.codegen
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.briansimulator.org/
+  summary: A clock-driven simulator for spiking neural networks
+  license: AGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mstimberg
+    - thesamovar

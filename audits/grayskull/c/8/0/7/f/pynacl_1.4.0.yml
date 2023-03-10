@@ -1,0 +1,48 @@
+{% set name = "pynacl" %}
+{% set version = 1.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PyNaCl-{{ version }}.tar.gz
+  sha256: 54e9a2c849c742006516ad56a88f5c74bf2ce92c9f67435187c3c5953b346505
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cffi >=1.4.1
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+    - setuptools
+    - wheel
+  run:
+    - cffi >=1.4.1
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+    - six
+
+test:
+  imports:
+    - nacl
+    - nacl.bindings
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyca/pynacl/
+  summary: Python binding to the Networking and Cryptography (NaCl) library
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - CJ-Wright
+    - mariusvniekerk

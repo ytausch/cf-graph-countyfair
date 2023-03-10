@@ -1,0 +1,45 @@
+{% set name = "vedo" %}
+{% set version = 2020.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/vedo-{{ version }}.tar.gz
+  sha256: 99d12f3e9c5952d69922cd8ac2991dbb8455177fd392f9100c46ff72f1d26c4c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy
+    - python
+    - vtk
+
+test:
+  imports:
+    - vedo
+    - vedo.examples
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/marcomusy/vedo
+  summary: A python module for scientific analysis and visualization of 3D objects and point clouds based on VTK.
+  license: NOASSERTION
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - RubendeBruin
+    - marcomusy

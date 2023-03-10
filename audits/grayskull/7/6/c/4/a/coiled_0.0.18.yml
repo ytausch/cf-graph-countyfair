@@ -1,0 +1,49 @@
+{% set name = "coiled" %}
+{% set version = 0.0.18 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: bfb8b0ff98deceab28bf9370cd3b3b2fc0dcb37fc13c45e9c14b3f064c572a20
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - coiled=coiled.cli.core:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - aiobotocore >=1.0.7
+    - aiohttp
+    - click
+    - distributed >=2.20.0
+    - python >=3.6
+
+test:
+  imports:
+    - coiled
+    - coiled.cli
+  commands:
+    - pip check
+    - coiled --help
+  requires:
+    - pip
+
+about:
+  home: https://coiled.io
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jrbourbeau
+    - mrocklin

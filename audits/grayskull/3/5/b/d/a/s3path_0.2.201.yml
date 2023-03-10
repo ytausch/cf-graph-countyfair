@@ -1,0 +1,41 @@
+{% set name = "s3path" %}
+{% set version = 0.2.201 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/s3path-{{ version }}.tar.gz
+  sha256: b539f61df7411f90aa74e1ab23ae984e5eccca3766e1bab84d4a9f696f36d3c2
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.4
+  run:
+    - boto3
+    - python >=3.4
+
+test:
+  imports:
+    - s3path
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/liormizr/s3path
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - liormizr

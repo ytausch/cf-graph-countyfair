@@ -1,0 +1,46 @@
+{% set name = "azure-core" %}
+{% set version = 1.8.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/azure-core-{{ version }}.zip
+  sha256: 621b53271f7988b766f8a7d7f7a2c44241e3d2c1d8db13e68089d6da6241748e
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - azure-nspkg  # [py<30]
+    - enum34 >=1.0.4  # [py<34]
+    - python
+    - requests >=2.18.4
+    - six >=1.6
+    - typing  # [py<35]
+
+test:
+  imports:
+    - azure.core
+    - azure.core.pipeline
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/core/azure-core
+  summary: Microsoft Azure Core Library for Python
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - marcelotrevisani

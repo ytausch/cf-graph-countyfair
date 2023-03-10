@@ -1,0 +1,44 @@
+{% set name = "colcon-output" %}
+{% set version = 0.2.12 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/colcon-output-{{ version }}.tar.gz
+  sha256: a211e9f1f70edb1567c0747532ad222e47799cef25cb863e4a43af4660798b30
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - colcon-core >=0.3.8
+    - python
+
+test:
+  imports:
+    - colcon_output
+    - colcon_output.event_handler
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://colcon.readthedocs.io
+  summary: Extension for colcon to customize the output in various ways.
+  license: AFL-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - seanyen
+    - wolfv

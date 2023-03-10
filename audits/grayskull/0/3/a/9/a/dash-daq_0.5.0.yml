@@ -1,0 +1,42 @@
+{% set name = "dash-daq" %}
+{% set version = 0.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: a1d85b6799f7b885652fbc44aebdb58c41254616a8d350b943beeb42ade4256a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dash >=1.6.1
+    - python
+
+test:
+  imports:
+    - dash_daq
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/plotly/dash-daq
+  summary: DAQ components for Dash
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - moorepants

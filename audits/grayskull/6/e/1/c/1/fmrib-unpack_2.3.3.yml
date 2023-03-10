@@ -1,0 +1,55 @@
+{% set name = "fmrib-unpack" %}
+{% set version = 2.3.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/fmrib-unpack-{{ version }}.tar.gz
+  sha256: 01f1a1302d49e0868e9edc15f714a5dec4bcac766e5bcbb13964ad142bcdbf99
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - funpack      = funpack.main:main
+    - funpack_demo = funpack.scripts.demo:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - sphinx
+  run:
+    - h5py
+    - numpy
+    - pandas >=0.24
+    - pyparsing
+    - python
+    - six
+    - pytables
+    - threadpoolctl
+
+test:
+  imports:
+    - funpack
+    - funpack.importing
+  commands:
+    - pip check
+    - funpack --help
+    - funpack_demo --help
+  requires:
+    - pip
+
+about:
+  home: https://git.fmrib.ox.ac.uk/fsl/funpack
+  summary: The FMRIB UKBiobank Normalisation, Parsing And Cleaning Kit
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pauldmccarthy

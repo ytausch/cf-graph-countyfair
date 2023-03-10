@@ -1,0 +1,47 @@
+{% set name = "ckan" %}
+{% set version = 2.9.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ckan-{{ version }}.tar.gz
+  sha256: a5635d42af782eb5e58cee9c493f243e6f5dcdbe794ace047b960651814a0570
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - ez_setup
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - ckan
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://ckan.org/
+  summary: CKAN Software
+  doc_url: https://pythonhosted.org/ckan/
+  license: Apache-2.0
+  license_file: ckan/public/base/vendor/select2/LICENSE
+
+extra:
+  recipe-maintainers:
+    - rluria14
+    - mwilson8
+    - benhuff
+    - oblute
+    - ndmaxar

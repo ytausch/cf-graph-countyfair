@@ -1,0 +1,52 @@
+{% set name = "ripser" %}
+{% set version = 0.5.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: cb63a03205511cd3d2aae586cec9515dddfbec3ce269dd0560911b0a55d75632
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - cython
+    - persim
+    - python
+    - scikit-learn
+    - scipy
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - ripser
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://ripser.scikit-tda.org
+  summary: A Lean Persistent Homology Library for Python
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - sauln
+    - ctralie
+    - bdice

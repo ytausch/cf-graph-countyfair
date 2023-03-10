@@ -1,0 +1,48 @@
+{% set name = "minio" %}
+{% set version = 6.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/minio-{{ version }}.tar.gz
+  sha256: 97d275ff01ddae45101eced0d9d5258f2869308c949b17d86a77b77a2a50b7b3
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - certifi
+    - configparser
+    - future  # [py<30]
+    - python
+    - python-dateutil
+    - pytz
+    - urllib3
+
+test:
+  imports:
+    - minio
+    - minio.credentials
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/minio/minio-py
+  summary: MinIO Python Library for Amazon S3 Compatible Cloud Storage for Python
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tjd2002
+    - guzman-raphael

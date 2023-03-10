@@ -1,0 +1,49 @@
+{% set name = "ipygany" %}
+{% set version = 0.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ipygany-{{ version }}.tar.gz
+  sha256: cd83ba863238164b9a0edf66fab48702c230975400301b3f37624fafa3bf0b92
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ipywidgets >=7.0.0
+    - numpy
+    - python
+    - traittypes
+
+test:
+  imports:
+    - ipygany
+    - ipygany.nbextension
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/martinRenou/ipygany
+  summary: Scientific Visualization in Jupyter
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - martinRenou
+    - JohanMabille
+    - SylvainCorlay
+    - wolfv
+    - davidbrochart

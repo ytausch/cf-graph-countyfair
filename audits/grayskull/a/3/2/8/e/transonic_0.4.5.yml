@@ -1,0 +1,53 @@
+{% set name = "transonic" %}
+{% set version = 0.4.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/transonic-{{ version }}.tar.gz
+  sha256: 134ce1f0c94ad492709d372fa5d7b8f8468368b5eaa8eee9ae8697dec04cf940
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - transonic = transonic.run:run
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools
+  run:
+    - astunparse >=1.6.3
+    - autopep8
+    - beniget
+    - gast
+    - numpy
+    - python >=3.6
+
+test:
+  imports:
+    - transonic
+    - transonic.analyses
+  commands:
+    - pip check
+    - transonic --help
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/transonic/
+  summary: Make your Python code fly at transonic speeds!
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - CyrilleBonamy
+    - paugier
+    - ashwinvis

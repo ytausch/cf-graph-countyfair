@@ -1,0 +1,42 @@
+{% set name = "radosgw-admin" %}
+{% set version = 1.7.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/radosgw-admin-{{ version }}.tar.gz
+  sha256: ac05f78ec41caaef4209f90932b857704aa031017bf31faa7f30ec0d7fc80471
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - boto
+    - python
+
+test:
+  imports:
+    - radosgw
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/valerytschopp/python-radosgw-admin
+  summary: Ceph RADOS Gateway (rgw) admin operations REST API
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tschoonj

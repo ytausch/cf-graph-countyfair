@@ -1,0 +1,51 @@
+{% set name = "xyzspaces" %}
+{% set version = 0.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xyzspaces-{{ version }}.tar.gz
+  sha256: 87b0a7ad5a6ff9d6681bdafeb887d0e76bf18b8ba81d87e1c68dd9d6406236f8
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - geobuf
+    - geojson
+    - geopandas
+    - ijson ==3.1.1
+    - python
+    - requests
+    - turfpy >=0.0.3
+
+test:
+  imports:
+    - xyzspaces
+    - xyzspaces.datasets
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/heremaps/xyz-spaces-python
+  summary: Manage your XYZ Hub server or HERE Data Hub from Python
+  dev_url: https://github.com/heremaps/xyz-spaces-python
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - deeplook
+    - omanges
+    - sackh

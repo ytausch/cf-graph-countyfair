@@ -1,0 +1,53 @@
+{% set name = "exoplanet" %}
+{% set version = 0.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/exoplanet-{{ version }}.tar.gz
+  sha256: 2b31aa077a4f54e676e63d14ddc598698abe00456f2fbbbefec27140f20220fb
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - pip
+    - python
+    - setuptools >=40.6.0
+    - setuptools_scm
+  run:
+    - astropy >=3.1
+    - numpy >=1.13.0
+    - pybind11 >=2.4
+    - pymc3 >=3.5
+    - pymc3-ext >=0.0.1
+    - python
+    - theano >=1.0.4
+
+test:
+  imports:
+    - exoplanet
+    - exoplanet.distributions
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://docs.exoplanet.codes
+  summary: Fast and scalable MCMC for all your exoplanet needs
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dfm
+    - rodluger

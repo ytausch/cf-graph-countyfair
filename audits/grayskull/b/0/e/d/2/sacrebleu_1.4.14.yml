@@ -1,0 +1,47 @@
+{% set name = "sacrebleu" %}
+{% set version = 1.4.14 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sacrebleu-{{ version }}.tar.gz
+  sha256: 17eec489ead033e87e1ce6d32ad4811f5191df0fabafc1d74c4b907341d30e6b
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - sacrebleu = sacrebleu.sacrebleu:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - portalocker
+    - python
+    - typing  # [py<35]
+
+test:
+  imports:
+    - sacrebleu
+    - sacrebleu.metrics
+  commands:
+    - pip check
+    - sacrebleu --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mjpost/sacrebleu
+  summary: Hassle-free computation of shareable, comparable, and reproducible BLEU, chrF, and TER scores
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - hmaarrfk

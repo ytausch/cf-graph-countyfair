@@ -1,0 +1,47 @@
+{% set name = "cryptography" %}
+{% set version = 3.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cryptography-{{ version }}.tar.gz
+  sha256: 9d9fc6a16357965d282dd4ab6531013935425d0dc4950df2e0cf2a1b1ac1017d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cffi >=1.8,!=1.11.3
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+  run:
+    - cffi >=1.8,!=1.11.3
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+    - six >=1.4.1
+
+test:
+  imports:
+    - cryptography
+    - cryptography.hazmat
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyca/cryptography
+  summary: cryptography is a package which provides cryptographic recipes and primitives to Python developers.
+  license: BSD-3-Clause
+  license_file: LICENSE.BSD
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - jjhelmus
+    - ocefpaf

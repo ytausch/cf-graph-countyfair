@@ -1,0 +1,47 @@
+{% set name = "vcrpy" %}
+{% set version = 4.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/vcrpy-{{ version }}.tar.gz
+  sha256: 57095bf22fc0a2d99ee9674cdafebed0f3ba763018582450706f7d3a74fff599
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - python
+    - pyyaml
+    - six >=1.5
+    - wrapt
+    - yarl  # [py>=36]
+
+test:
+  imports:
+    - vcr
+    - vcr.persisters
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/kevin1024/vcrpy
+  summary: Automatically mock your HTTP interactions to simplify and speed up testing
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - dopplershift

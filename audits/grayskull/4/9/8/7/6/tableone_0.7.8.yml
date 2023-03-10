@@ -1,0 +1,47 @@
+{% set name = "tableone" %}
+{% set version = 0.7.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/tableone-{{ version }}.tar.gz
+  sha256: ad81257e57b074de3807b5d03632fac14bf386283a0ec5a739a8c21761125339
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy >=1.12.1
+    - pandas >=0.22.0
+    - python
+    - scipy >=0.18.1
+    - statsmodels >=0.8.0
+    - tabulate >=0.8.2
+
+test:
+  imports:
+    - tableone
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/tompollard/tableone
+  summary: TableOne
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tompollard
+    - alistairewj

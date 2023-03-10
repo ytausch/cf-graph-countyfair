@@ -1,0 +1,54 @@
+{% set name = "numba" %}
+{% set version = 0.51.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/numba-{{ version }}.tar.gz
+  sha256: da57ef00bc814bf54446fb3f8c0374557a7476e40279ceabefd9f12b05cc3c0c
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy >=1.11
+    - pip
+    - python
+  run:
+    - llvmlite >=0.34.0.dev0,<0.35
+    - numpy >=1.15
+    - python
+    - setuptools
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - numba
+    - numba.cext
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://numba.github.com
+  summary: compiling Python code using LLVM
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - souravsingh
+    - marcelotrevisani
+    - henryiii
+    - mbargull
+    - jakirkham
+    - step21

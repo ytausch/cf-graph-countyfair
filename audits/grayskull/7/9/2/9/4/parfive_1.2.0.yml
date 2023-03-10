@@ -1,0 +1,49 @@
+{% set name = "parfive" %}
+{% set version = 1.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/parfive-{{ version }}.tar.gz
+  sha256: 118a0994bbb9536fd4574995a8485b6c4b97db247c55bc86ae4f4ae8fd9b0add
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - parfive = parfive.main:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+    - setuptools_scm
+  run:
+    - aiohttp
+    - python >=3.7
+    - tqdm
+
+test:
+  imports:
+    - parfive
+    - parfive.tests
+  commands:
+    - pip check
+    - parfive --help
+  requires:
+    - pip
+
+about:
+  home: https://parfive.readthedocs.io/
+  summary: A HTTP and FTP parallel file downloader.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Cadair
+    - nabobalis

@@ -1,0 +1,43 @@
+{% set name = "rope" %}
+{% set version = 0.18.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rope-{{ version }}.tar.gz
+  sha256: 786b5c38c530d4846aa68a42604f61b4e69a493390e3ca11b88df0fbfdc3ed04
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - rope
+    - rope.base
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/python-rope/rope
+  summary: a python refactoring library...
+  license: LGPL-3.0
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - pmlandwehr
+    - jjhelmus

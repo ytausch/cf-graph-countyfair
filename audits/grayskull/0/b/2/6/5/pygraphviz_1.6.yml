@@ -1,0 +1,44 @@
+{% set name = "pygraphviz" %}
+{% set version = 1.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pygraphviz-{{ version }}.zip
+  sha256: 411ae84a5bc313e3e1523a1cace59159f512336318a510573b47f824edef8860
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - pygraphviz
+    - pygraphviz.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://pygraphviz.github.io
+  summary: Python interface to Graphviz
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nehaljwani

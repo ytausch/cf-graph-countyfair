@@ -1,0 +1,55 @@
+{% set name = "eo-learn-core" %}
+{% set version = 0.7.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: e2d3438160abd693af816575d701bcba06587300d0d9d8d2b2cb97aec3c17aa9
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - attrs >=18.2.0
+    - boto3
+    - fs
+    - fs-s3fs
+    - geopandas >=0.5.0,!=0.8.0
+    - numpy >=1.16
+    - python >=3.6
+    - python-dateutil
+    - sentinelhub >=3.0.2
+    - tqdm >=4.27
+
+test:
+  imports:
+    - eolearn
+    - eolearn.core
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sentinel-hub/eo-learn
+  summary: Core Machine Learning Framework at Sinergise
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mwilson8
+    - dcunn
+    - oblute
+    - rluria14
+    - benhuff

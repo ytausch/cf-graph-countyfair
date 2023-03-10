@@ -1,0 +1,52 @@
+{% set name = "nlp" %}
+{% set version = 0.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 0aa6bc966ffc2d2be7248bd71f258360281cd717c10811e1b55bb2fa50bf79d4
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dataclasses  # [py<37]
+    - dill
+    - filelock
+    - numpy
+    - pandas
+    - pyarrow >=0.16.0
+    - python
+    - requests >=2.19.0
+    - tqdm >=4.27
+    - xxhash
+
+test:
+  imports:
+    - nlp
+    - nlp.commands
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/huggingface/nlp
+  summary: HuggingFace/NLP is an open library of NLP datasets.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ndmaxar
+    - oblute
+    - rluria14

@@ -1,0 +1,45 @@
+{% set name = "django-extensions" %}
+{% set version = 3.0.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d1e94df479daf681c33f2f5647403ee904e9268b00b5506705f4c1ee0067ed1b
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - python
+    - typing  # [py<35]
+
+test:
+  imports:
+    - django_extensions
+    - django_extensions.admin
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/django-extensions/django-extensions
+  summary: Extensions for Django
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - kwilcox

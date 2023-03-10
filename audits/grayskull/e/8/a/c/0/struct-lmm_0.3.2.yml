@@ -1,0 +1,49 @@
+{% set name = "struct-lmm" %}
+{% set version = 0.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/struct-lmm-{{ version }}.tar.gz
+  sha256: 4abec1e0fc80335bfbe4a95dd6136a22107efb80572376964b65761aaacc4233
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner >=5
+    - python
+  run:
+    - chiscore >=0.2.2
+    - glimix-core >=3.1.11
+    - numpy >=1.17
+    - numpy-sugar >=1.5.1
+    - pytest >=5
+    - pytest-doctestplus >=0.8.0
+    - python
+
+test:
+  imports:
+    - struct_lmm
+    - struct_lmm.test
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/limix/struct-lmm
+  summary: Linear mixed model to study multivariate genotype-environment interactions
+  license: Apache-2.0
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - Horta

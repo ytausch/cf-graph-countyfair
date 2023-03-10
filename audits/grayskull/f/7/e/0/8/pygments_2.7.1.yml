@@ -1,0 +1,48 @@
+{% set name = "pygments" %}
+{% set version = 2.7.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Pygments-{{ version }}.tar.gz
+  sha256: 926c3f319eda178d1bd90851e4317e6d8cdb5e292a3386aac9bd75eca29cf9c7
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pygmentize = pygments.cmdline:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - pygments
+    - pygments.filters
+  commands:
+    - pip check
+    - pygmentize --help
+  requires:
+    - pip
+
+about:
+  home: https://pygments.org/
+  summary: Pygments is a syntax highlighting package written in Python.
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - pelson
+    - ocefpaf
+    - scopatz

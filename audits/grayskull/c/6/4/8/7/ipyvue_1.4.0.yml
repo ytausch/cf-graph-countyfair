@@ -1,0 +1,42 @@
+{% set name = "ipyvue" %}
+{% set version = 1.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 3253727e8e12e3c157550e3e8d6986edf61ad0d68299992fbf3fa6acec41a12e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ipywidgets >=7.0.0
+    - python
+
+test:
+  imports:
+    - ipyvue
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mariobuikhuizen/ipyvue
+  summary: Jupyter widgets base for Vue libraries
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mariobuikhuizen

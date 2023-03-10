@@ -1,0 +1,53 @@
+{% set name = "eo-learn" %}
+{% set version = 0.7.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 8e806fb2307006e5249ee9c5f6e2cc52cabd77581d14a19d319994d4afb4694e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - eo-learn-core >=0.7.7
+    - eo-learn-coregistration >=0.7.3
+    - eo-learn-features >=0.7.7
+    - eo-learn-geometry >=0.7.7
+    - eo-learn-io >=0.7.7
+    - eo-learn-mask >=0.7.5
+    - eo-learn-ml-tools >=0.7.3
+    - eo-learn-visualization >=0.7.6
+    - python >=3.6
+
+test:
+  imports:
+    - eo_learn
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sentinel-hub/eo-learn
+  summary: Earth observation processing framework for machine learning in Python
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mwilson8
+    - dcunn
+    - oblute
+    - rluria14
+    - benhuff

@@ -1,0 +1,45 @@
+{% set name = "ghp-import" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ghp-import-{{ version }}.tar.gz
+  sha256: 65e4d854dd0980096fd950a323d699daad4ff8007b8daa7e7ca60d57dfa00e1b
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - ghp-import = ghp_import:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - python-dateutil >=2.8.1
+
+test:
+  imports:
+    - ghp_import
+  commands:
+    - pip check
+    - ghp-import --help
+  requires:
+    - pip
+
+about:
+  home: http://github.com/davisp/ghp-import
+  summary: Copy your docs directly to the gh-pages branch.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf

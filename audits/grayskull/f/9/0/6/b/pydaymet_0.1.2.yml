@@ -1,0 +1,46 @@
+{% set name = "pydaymet" %}
+{% set version = 0.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 7f7fa5a9843cff353f612b770262eae81b7fd2a15e832cc5548fdf5ae6dc65d3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools >=41.2
+    - setuptools_scm
+  run:
+    - lxml
+    - py3dep
+    - python >=3.6
+    - setuptools
+
+test:
+  imports:
+    - pydaymet
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cheginit/pydaymet
+  summary: Access the climate data from the Daymet database through ORNL's RESTful service.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - cheginit

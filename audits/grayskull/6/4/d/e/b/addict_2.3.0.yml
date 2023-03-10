@@ -1,0 +1,41 @@
+{% set name = "addict" %}
+{% set version = 2.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/addict-{{ version }}.tar.gz
+  sha256: e8085624d18a9eecd7ec8a427f378f1e5036dfafba34c33fa29f0be8cd3a80b2
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - addict
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mewwts/addict
+  summary: Addict is a dictionary whose items can be set using both attribute and item syntax.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Ohjeah

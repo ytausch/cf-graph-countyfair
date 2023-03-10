@@ -1,0 +1,48 @@
+{% set name = "geeadd" %}
+{% set version = 0.5.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/geeadd-{{ version }}.tar.gz
+  sha256: 3b0dd8607a07eb0993a88c0c907e3ffcdfffec32a811d275e6b6d9d4ed8064eb
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - geeadd=geeadd.geeadd:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - beautifulsoup4 >=4.9.0
+    - earthengine-api >=0.1.222
+    - logzero >=1.5.0
+    - python
+    - requests >=2.22.0
+
+test:
+  imports:
+    - geeadd
+  commands:
+    - pip check
+    - geeadd --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/samapriya/gee_asset_manager_addon
+  summary: Google Earth Engine Batch Assets Manager with Addons
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - samapriya

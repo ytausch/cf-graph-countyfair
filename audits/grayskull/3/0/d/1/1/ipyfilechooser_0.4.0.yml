@@ -1,0 +1,42 @@
+{% set name = "ipyfilechooser" %}
+{% set version = 0.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ipyfilechooser-{{ version }}.tar.gz
+  sha256: ceae3b40faa9ad3b5b4cbad739884128c8b1b770154f50a88296aacc3c372299
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ipywidgets
+    - python
+
+test:
+  imports:
+    - ipyfilechooser
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/crahan/ipyfilechooser
+  summary: Python file chooser widget for use in Jupyter/IPython in conjunction with ipywidgets
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - crahan

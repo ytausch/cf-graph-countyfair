@@ -1,0 +1,42 @@
+{% set name = "splink" %}
+{% set version = 0.2.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/splink-{{ version }}.tar.gz
+  sha256: 2d597bee5ff921658867ce87581629c6cc861711cb7ff85ed07778c2e927b2f7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - jsonschema >=3.2,<4.0
+    - python >=3.6,<4.0
+
+test:
+  imports:
+    - splink
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/moj-analytical-services/splink
+  summary: Implementation in Apache Spark of the EM algorithm to estimate parameters of Fellegi-Sunter's canonical model of record linkage.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - cdesouza21

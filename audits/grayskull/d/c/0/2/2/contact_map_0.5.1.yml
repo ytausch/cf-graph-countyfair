@@ -1,0 +1,48 @@
+{% set name = "contact_map" %}
+{% set version = 0.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: fa7bb768a8d7348d449e30709c8e07da54b247fc8db913b9c753112f5cc4bca6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - future
+    - mdtraj
+    - numpy
+    - pandas
+    - python
+    - scipy
+
+test:
+  imports:
+    - contact_map
+    - contact_map.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dwhswenson/contact_map
+  summary: Contact maps based on MDTraj
+  license: LGPL-2.1
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dwhswenson
+    - sroet

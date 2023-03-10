@@ -1,0 +1,49 @@
+{% set name = "lbapcommon" %}
+{% set version = 0.0.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/LbAPCommon-{{ version }}.tar.gz
+  sha256: afbec0f2b7cf8405b994da164c8d86a84bcf96b185a4b464ef40a5eff534d704
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4,!=3.5
+    - setuptools_scm
+  run:
+    - jinja2
+    - lxml
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4,!=3.5
+    - pyyaml
+    - setuptools
+    - strictyaml
+
+test:
+  imports:
+    - LbAPCommon
+    - LbAPCommon.linting
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gitlab.cern.ch/lhcb-dpa/analysis-productions/LbAPCommon
+  summary: Common utilities used by LHCb DPA WP2 related software
+  dev_url: https://gitlab.cern.ch/lhcb-dpa/analysis-productions/LbAPCommon
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - chrisburr

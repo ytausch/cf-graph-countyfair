@@ -1,0 +1,42 @@
+{% set name = "hg-evolve" %}
+{% set version = 10.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 9468b3e2721744b077413c3d4a6b321b61370d4c87b90afa40dc2b48ad877d4b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python <4.0
+  run:
+    - python <4.0
+
+test:
+  imports:
+    - hgext3rd
+    - hgext3rd.evolve
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.mercurial-scm.org/doc/evolution/
+  summary: Flexible evolution of Mercurial history.
+  license: GPL-2.0
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - paugier

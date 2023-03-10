@@ -1,0 +1,44 @@
+{% set name = "coverage-fixpaths" %}
+{% set version = 1.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/coverage-fixpaths-{{ version }}.tar.gz
+  sha256: 0790d81fe2e77c494c8bf86e5fc9f9229b00c27ceaa3e0073e6404d49e4a79a4
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - coverage-fixpaths=coveragefixpaths.coverage.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - coveragefixpaths
+  commands:
+    - pip check
+    - coverage-fixpaths --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/omegacen/coverage-fixpaths
+  summary: A small CLI tool that automatically fixes paths in Cobertura coverage reports
+  license: LGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - teake

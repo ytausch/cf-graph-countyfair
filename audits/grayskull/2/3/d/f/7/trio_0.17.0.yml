@@ -1,0 +1,51 @@
+{% set name = "trio" %}
+{% set version = 0.17.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/trio-{{ version }}.tar.gz
+  sha256: e85cf9858e445465dfbb0e3fdf36efe92082d2df87bfe9d62585eedd6e8e9d7d
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - async_generator >=1.9
+    - attrs >=19.2.0
+    - cffi >=1.14
+    - contextvars >=2.1  # [py<37]
+    - idna
+    - outcome
+    - python
+    - sniffio
+    - sortedcontainers
+
+test:
+  imports:
+    - trio
+    - trio._core
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/python-trio/trio
+  summary: A friendly Python library for async concurrency and I/O
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nicoddemus
+    - synapticarbors

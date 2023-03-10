@@ -1,0 +1,49 @@
+{% set name = "cppyy" %}
+{% set version = 1.8.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cppyy-{{ version }}.tar.gz
+  sha256: 5d0d0533bc0ff3645cbd58a97d13ec3d284fb87d2183b6ba7d8852c5409b6546
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cppyy-backend ==1.14.0
+    - cppyy-cling ==6.21.3
+    - cpycppyy ==1.11.4
+    - pip
+    - python
+    - wheel
+  run:
+    - cppyy-backend ==1.14.0
+    - cppyy-cling ==6.21.3
+    - cpycppyy ==1.11.4
+    - python
+
+test:
+  imports:
+    - cppyy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://cppyy.readthedocs.org
+  summary: Cling-based Python-C++ bindings
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - saraedum
+    - isuruf

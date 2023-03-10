@@ -1,0 +1,54 @@
+{% set name = "bluesky" %}
+{% set version = 1.6.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: e3fc16c6f34b481ddb15ad039e33a5b9ef800cddd1891ff92674bb71eb005bde
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - bluesky-0MQ-proxy = bluesky.commandline.zmq_proxy:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - cycler
+    - event-model >=1.14.0
+    - historydict
+    - msgpack
+    - msgpack-numpy
+    - numpy
+    - python >=3.6
+    - super_state_machine
+    - toolz
+    - tqdm >=4.44
+    - zict
+
+test:
+  imports:
+    - bluesky
+    - bluesky.callbacks
+  commands:
+    - pip check
+    - bluesky-0MQ-proxy --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/bluesky/bluesky
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - conda-forge/event-model

@@ -1,0 +1,42 @@
+{% set name = "pypeit" %}
+{% set version = 1.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pypeit-{{ version }}.tar.gz
+  sha256: 20877aa615e1247d2f86f98be511f9af18a0c4732b39da077fd16bca93274937
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - extension_helpers
+    - pip
+    - python >=3.7
+  run:
+    - python >=3.7
+
+test:
+  imports:
+    - pypeit
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pypeit/PypeIt
+  summary: PypeIt Spectroscopic Reduction
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - finagle29

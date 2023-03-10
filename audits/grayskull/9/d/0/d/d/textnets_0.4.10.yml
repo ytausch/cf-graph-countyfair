@@ -1,0 +1,54 @@
+{% set name = "textnets" %}
+{% set version = 0.4.10 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/textnets-{{ version }}.tar.gz
+  sha256: c9c917a76ee02fe34ee4dbf41428a1df26a07430234f578f45dc9e8a8cb13c79
+
+build:
+  number: 0
+  skip: true   # [py<37]
+  entry_points:
+    - textnets=textnets.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - cached-property  # [py<38]
+    - cairocffi ==1.1.0
+    - click >=7.0
+    - leidenalg ==0.8.1
+    - pandas ==1.0.4
+    - python
+    - python-igraph ==0.8.2
+    - scipy ==1.4.1
+    - spacy ==2.3.0
+    - toolz ==0.10.0
+    - typing-extensions  # [py<38]
+
+test:
+  imports:
+    - textnets
+  commands:
+    - pip check
+    - textnets --help
+  requires:
+    - pip
+
+about:
+  home: https://textnets.readthedocs.io
+  summary: Automated text analysis with networks
+  license: Unlicense
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jboynyc

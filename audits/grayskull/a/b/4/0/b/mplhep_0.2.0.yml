@@ -1,0 +1,47 @@
+{% set name = "mplhep" %}
+{% set version = 0.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/mplhep-{{ version }}.tar.gz
+  sha256: ba4a6a1ea664ccc762a622ffb09d02b1da3743490c71e67e679dc29f5ccbe3fa
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - matplotlib-base >=3.1
+    - numpy >=1.16.0
+    - packaging
+    - python >=3.5
+    - requests ~=2.21
+    - scipy >=1.1.0
+
+test:
+  imports:
+    - mplhep
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/andrzejnovak/mplhep/
+  summary: Matplotlib styles for HEP
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - andrzejnovak
+    - chrisburr

@@ -1,0 +1,45 @@
+{% set name = "bcrypt" %}
+{% set version = 3.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/bcrypt-{{ version }}.tar.gz
+  sha256: 5b93c1726e50a93a033c36e5ca7fdcd29a5c7395af50a6892f5d9e7c6cfbfb29
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cffi >=1.1
+    - pip
+    - python >=3.6
+  run:
+    - cffi >=1.1
+    - python >=3.6
+    - six >=1.4.1
+
+test:
+  imports:
+    - bcrypt
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyca/bcrypt/
+  summary: Modern password hashing for your software and your servers
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - djsutherland
+    - jan-janssen

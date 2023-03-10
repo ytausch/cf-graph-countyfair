@@ -1,0 +1,41 @@
+{% set name = "funcy" %}
+{% set version = 1.15 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/funcy-{{ version }}.tar.gz
+  sha256: 65b746fed572b392d886810a98d56939c6e0d545abb750527a717c21ced21008
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - funcy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/Suor/funcy
+  summary: A fancy and practical functional tools
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - synapticarbors

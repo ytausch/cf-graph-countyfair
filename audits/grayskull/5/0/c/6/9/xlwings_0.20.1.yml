@@ -1,0 +1,41 @@
+{% set name = "xlwings" %}
+{% set version = 0.20.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: dd7978efd8bd303bc8f4e91f29d050a2df68bd3e792be60aaaae90d24468a475
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - xlwings
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.xlwings.org
+  summary: 'Make Excel fly: Interact with Excel from Python and vice versa.'
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - fzumstein

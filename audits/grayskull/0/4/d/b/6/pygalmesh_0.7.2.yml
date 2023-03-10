@@ -1,0 +1,58 @@
+{% set name = "pygalmesh" %}
+{% set version = 0.7.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pygalmesh-{{ version }}.tar.gz
+  sha256: 097058cdcd81c2252ad115c8a3d1d72af439081e1726d1e44a8d63b2d7d13099
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - pygalmesh-volume-from-surface = pygalmesh._cli:volume_from_surface
+    - pygalmesh-remesh-surface = pygalmesh._cli:remesh_surface
+    - pygalmesh-from-inr = pygalmesh._cli:inr
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('cxx') }}
+  host:
+    - pip
+    - pybind11
+    - pybind11 >=2.2
+    - python
+  run:
+    - importlib_metadata  # [py<38]
+    - meshio >=4.0.0,<5.0.0
+    - numpy
+    - pybind11 >=2.2
+    - python
+
+test:
+  imports:
+    - pygalmesh
+    - pygalmesh._cli
+  commands:
+    - pip check
+    - pygalmesh-volume-from-surface --help
+    - pygalmesh-remesh-surface --help
+    - pygalmesh-from-inr --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/nschloe/pygalmesh
+  summary: Python frontend to CGAL's mesh generation capabilities
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nschloe
+    - flothesof

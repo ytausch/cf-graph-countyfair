@@ -1,0 +1,50 @@
+{% set name = "pyflyby" %}
+{% set version = 1.6.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyflyby-{{ version }}.tar.gz
+  sha256: 1bc5059e947aec28241d9f7fd6396df8865d99883edb740832f6d281fbe4e2eb
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - py=pyflyby._py:py_main
+    - py3=pyflyby._py:py_main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - pyflakes
+    - python
+    - six
+
+test:
+  imports:
+    - pyflyby
+  commands:
+    - pip check
+    - py --help
+    - py3 --help
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/pyflyby/
+  summary: pyflyby - Python development productivity tools, in particular automatic import management
+  license: MIT
+  license_file: doc/LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - asmeurer
+    - scopatz

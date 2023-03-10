@@ -1,0 +1,42 @@
+{% set name = "sdtfile" %}
+{% set version = 2020.8.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 80e953a58492631c90821ccd617e2bc7710fca54fe0cb02dbfc13fb9037abd76
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - numpy >=1.15.1
+    - python >=3.6
+
+test:
+  imports:
+    - sdtfile
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.lfd.uci.edu/~gohlke/
+  summary: Read Becker & Hickl SDT files
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - s-weigand

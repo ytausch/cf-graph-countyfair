@@ -1,0 +1,55 @@
+{% set name = "colcon-core" %}
+{% set version = 0.6.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/colcon-core-{{ version }}.tar.gz
+  sha256: fc14534b2ce745fcc332afc0bb0ddf3e45d5d69c15da15b9471cfb7b0b9edbe9
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - colcon = colcon_core.command:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - stdeb
+  run:
+    - coloredlogs  # [win]
+    - distlib
+    - empy
+    - pytest
+    - pytest-cov
+    - pytest-repeat
+    - pytest-rerunfailures
+    - python
+    - setuptools >=30.3.0
+
+test:
+  imports:
+    - colcon
+    - colcon_core
+  commands:
+    - pip check
+    - colcon --help
+  requires:
+    - pip
+
+about:
+  home: https://colcon.readthedocs.io
+  summary: Command line tool to build sets of software packages.
+  license: AFL-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - seanyen
+    - wolfv

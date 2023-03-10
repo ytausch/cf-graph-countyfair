@@ -1,0 +1,46 @@
+{% set name = "mbuild" %}
+{% set version = 0.10.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/mbuild-{{ version }}.tar.gz
+  sha256: 07b3e0c2cc9412890010411ac08d1bac067f27bf0841552c63dca6588f57588a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - mbuild
+    - mbuild.formats
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mosdef-hub/mbuild
+  summary: 'mBuild: A hierarchical, component based molecule builder'
+  license: MIT
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - bdice
+    - justinGilmer
+    - rmatsum836
+    - daico007
+    - umesh-timalsina

@@ -1,0 +1,44 @@
+{% set name = "django_polymorphic" %}
+{% set version = 3.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/django-polymorphic-{{ version }}.tar.gz
+  sha256: 9d886f19f031d26bb1391c055ed9be06fb226a04a4cec1842b372c58873b3caa
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - django >=2.1
+    - python
+
+test:
+  imports:
+    - polymorphic
+    - polymorphic.admin
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/django-polymorphic/django-polymorphic
+  summary: Seamless polymorphic inheritance for Django models
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kwilcox
+    - ocefpaf

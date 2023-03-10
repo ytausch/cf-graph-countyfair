@@ -1,0 +1,52 @@
+{% set name = "kfp-notebook" %}
+{% set version = 0.12.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/kfp-notebook-{{ version }}.tar.gz
+  sha256: a616cb98738dfb790f0a175a8fef70b04784d932a599c2d7849d911f2be8b566
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - bumpversion >=0.5.3
+    - click >=6.0
+    - coverage >=4.5.1
+    - flake8 >=3.5.0
+    - kfp
+    - python
+    - tox >=2.9.1
+    - twine >=1.10.0
+    - watchdog >=0.8.3
+    - wheel >=0.30.0
+
+test:
+  imports:
+    - kfp_notebook
+    - kfp_notebook.pipeline
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/elyra-ai/kfp-notebook
+  summary: Jupyter Notebook operator for Kubeflow Pipelines
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - akchinSTC
+    - lresende

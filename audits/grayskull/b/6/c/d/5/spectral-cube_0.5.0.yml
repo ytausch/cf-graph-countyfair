@@ -1,0 +1,52 @@
+{% set name = "spectral-cube" %}
+{% set version = 0.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/spectral-cube-{{ version }}.tar.gz
+  sha256: 71c62c336a8f9b216cfee5fae2ab86a032df323d41f684ec44cb796d44d6f19f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - astropy
+    - dask-core
+    - joblib
+    - numpy >=1.8.0
+    - python
+    - radio-beam
+    - six
+
+test:
+  imports:
+    - spectral_cube
+    - spectral_cube.io
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://spectral-cube.readthedocs.org
+  summary: A package for interaction with spectral cubes
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - mwcraig
+    - bsipocz
+    - keflavich
+    - astrofrog-conda-forge

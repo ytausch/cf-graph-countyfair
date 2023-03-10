@@ -1,0 +1,44 @@
+{% set name = "pyreadstat" %}
+{% set version = 1.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyreadstat-{{ version }}.tar.gz
+  sha256: 6f401d8618655060373850f47b0b0a278f3527b2a0c933104051fd3a8ce4d59e
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - pip
+    - python
+  run:
+    - pandas >0.24.0
+    - python
+
+test:
+  imports:
+    - pyreadstat
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Roche/pyreadstat
+  summary: Reads and Writes SAS, SPSS and Stata files into/from pandas data frames.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ofajardo

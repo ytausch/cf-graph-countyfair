@@ -1,0 +1,48 @@
+{% set name = "botocore" %}
+{% set version = 1.18.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/botocore-{{ version }}.tar.gz
+  sha256: 22a0ab7ee20e4b0040ed618f6745472ff9d89d9c25ce23270bce0c0bdc676b51
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - jmespath >=0.7.1,<1.0.0
+    - python
+    - python-dateutil >=2.1,<3.0.0
+    - urllib3 >=1.20,<1.26
+
+test:
+  imports:
+    - botocore
+    - botocore.docs
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/boto/botocore
+  summary: Low-level, data-driven core of boto 3.
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - pmlandwehr
+    - hajapy
+    - tkelman
+    - ocefpaf

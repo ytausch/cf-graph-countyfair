@@ -1,0 +1,47 @@
+{% set name = "cosapp" %}
+{% set version = 0.11.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cosapp-{{ version }}.tar.gz
+  sha256: f9a77c2b8838535c5d206b4b0a54cff8a6eb8f566ee978aadf4ab3d0a8c91f08
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - jsonschema
+    - numpy >=1.12
+    - pandas
+    - python
+    - scipy
+    - typing  # [py<37]
+
+test:
+  imports:
+    - cosapp
+    - cosapp.core
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://cosapp.readthedocs.io
+  summary: CoSApp, the Collaborative System Approach.
+  license: Apache-2.0
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - trungle-safran

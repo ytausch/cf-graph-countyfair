@@ -1,0 +1,57 @@
+{% set name = "telluric" %}
+{% set version = 0.12.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 6962fca4d7834e77822933c88fbd0c8562bc403da553748bc350277293d28f34
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - affine
+    - boltons
+    - dsnparse
+    - fiona >=1.8.4,<2.*
+    - folium >=0.6.0
+    - imageio
+    - ipyleaflet !=0.8.2
+    - lxml
+    - matplotlib-base
+    - mercantile >=0.10.0
+    - pillow
+    - pyproj  # [py>=35]
+    - python
+    - rasterio >=1.0.21,<2.*
+    - shapely >=1.6.3,<2.*
+
+test:
+  imports:
+    - telluric
+    - telluric.util
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/satellogic/telluric/
+  summary: Interactive geospatial data manipulation in Python
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - astrojuanlu
+    - drnextgis

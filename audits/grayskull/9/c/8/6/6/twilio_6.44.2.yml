@@ -1,0 +1,45 @@
+{% set name = "twilio" %}
+{% set version = 6.44.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: db0c1ed249ad672007cbe7109e8a2cbe30c4ed660beba740976baa32f0a8574a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - pyjwt >=1.4.2
+    - python
+    - pytz
+    - six
+
+test:
+  imports:
+    - twilio
+    - twilio.base
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/twilio/twilio-python/
+  summary: Twilio API client and TwiML generator
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - setu4993

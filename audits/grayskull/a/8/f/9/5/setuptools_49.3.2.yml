@@ -1,0 +1,52 @@
+{% set name = "setuptools" %}
+{% set version = 49.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: a02a9dc226e11a1756f3b2409aa23ada12dc7f0b930b61ebd765a34fd89a1d79
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - easy_install = setuptools.command.easy_install:main
+    - easy_install-3.7 = setuptools.command.easy_install:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - _distutils_hack
+    - pkg_resources
+  commands:
+    - pip check
+    - easy_install --help
+    - easy_install-3.7 --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pypa/setuptools
+  summary: Easily download, build, install, upgrade, and uninstall Python packages
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - jjhelmus
+    - msarahan
+    - ocefpaf
+    - nicoddemus
+    - mingwandroid

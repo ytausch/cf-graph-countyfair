@@ -1,0 +1,56 @@
+{% set name = "mdbenchmark" %}
+{% set version = 3.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/mdbenchmark-{{ version }}.tar.gz
+  sha256: 3b2ebb693737a93155a67a7f25f3f5d20140ba8d87e5bda461e44840d0f1f87d
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - mdbenchmark = mdbenchmark:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - click >=6.7
+    - datreant >=1.0,<2.0
+    - jinja2 >=2.10,<3.0
+    - matplotlib-base >=2
+    - numpy >=1.15
+    - pandas >=0.24
+    - psutil >=5.7.0,<6.0.0
+    - python >=3.6,<4.0
+    - python-levenshtein >=0.12.0,<0.13.0
+    - tabulate >=0.8.5,<0.9.0
+    - xdg >=1,<2
+
+test:
+  imports:
+    - mdbenchmark
+    - mdbenchmark.cli
+  commands:
+    - pip check
+    - mdbenchmark --help
+  requires:
+    - pip
+
+about:
+  home: https://mdbenchmark.org
+  summary: Quickly generate, start and analyze benchmarks for your molecular dynamics simulations.
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kain88-de
+    - mimischi

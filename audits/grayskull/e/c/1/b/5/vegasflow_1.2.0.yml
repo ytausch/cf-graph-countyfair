@@ -1,0 +1,46 @@
+{% set name = "vegasflow" %}
+{% set version = 1.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/vegasflow-{{ version }}.tar.gz
+  sha256: e5bb1d7342197a546a3f76d06d9248ec302a396858860dae1c0bef2d82125dad
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - joblib
+    - numpy
+    - python >=3.6
+    - tensorflow
+
+test:
+  imports:
+    - vegasflow
+    - vegasflow.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/N3PDF/VegasFlow
+  summary: Monte Carlo integration with Tensorflow
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - scarlehoff
+    - scarrazza

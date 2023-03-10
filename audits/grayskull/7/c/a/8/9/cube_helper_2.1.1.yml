@@ -1,0 +1,42 @@
+{% set name = "cube_helper" %}
+{% set version = 2.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cube_helper-{{ version }}.tar.gz
+  sha256: 9ad53aad29d1482805f1e7e5a8e93b75fe22b4e9abe24664ea9b39b2b700708f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - scitools-iris
+
+test:
+  imports:
+    - cube_helper
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/MetOffice/cube_helper
+  summary: Cube Helper is a package to make equalisation, concatenation, and analysis of Iris cubes easier.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jonseddon

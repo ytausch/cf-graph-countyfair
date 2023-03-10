@@ -1,0 +1,60 @@
+{% set name = "caproto" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 957c86e1e98ef6bbd365ba6b1053f56402aa51ca6981bb90b1bafa0351cde65d
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - caproto-get = caproto.commandline.get:main
+    - caproto-put = caproto.commandline.put:main
+    - caproto-monitor = caproto.commandline.monitor:main
+    - caproto-repeater = caproto.commandline.repeater:main
+    - caproto-shark = caproto.commandline.shark:main
+    - caproto-defaultdict-server = caproto.ioc_examples.defaultdict_server:main
+    - caproto-spoof-beamline = caproto.ioc_examples.spoof_beamline:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - caproto
+    - caproto.asyncio
+  commands:
+    - pip check
+    - caproto-get --help
+    - caproto-put --help
+    - caproto-monitor --help
+    - caproto-repeater --help
+    - caproto-shark --help
+    - caproto-defaultdict-server --help
+    - caproto-spoof-beamline --help
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/caproto/
+  summary: a sans-I/O implementation of the EPICS Channel Access protocol
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - conda-forge/event-model
+    - danielballan
+    - klauer
+    - tacaswell

@@ -1,0 +1,62 @@
+{% set name = "jupyter_server" %}
+{% set version = 1.0.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupyter_server-{{ version }}.tar.gz
+  sha256: d65f63d2de788b8a2cba6f7fc4c63940d8aca494713e36a6535bde21c1583620
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - jupyter-server = jupyter_server.serverapp:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ipython_genutils
+    - jinja2
+    - jupyter_client >=6.1.1
+    - jupyter_core >=4.4.0
+    - nbconvert
+    - nbformat
+    - prometheus_client
+    - python
+    - pywin32 >=1.0  # [win]
+    - pyzmq >=17
+    - send2trash
+    - terminado >=0.8.3
+    - tornado >=5.0
+    - traitlets >=4.2.1
+
+test:
+  imports:
+    - jupyter_server
+    - jupyter_server.auth
+  commands:
+    - pip check
+    - jupyter-server --help
+  requires:
+    - pip
+
+about:
+  home: http://jupyter.org
+  summary: The backend—i.e. core services, APIs, and REST endpoints—to Jupyter web applications.
+  license: BSD-3-Clause
+  license_file: COPYING.md
+
+extra:
+  recipe-maintainers:
+    - SylvainCorlay
+    - maartenbreddels
+    - blink1073
+    - minrk
+    - jasongrout

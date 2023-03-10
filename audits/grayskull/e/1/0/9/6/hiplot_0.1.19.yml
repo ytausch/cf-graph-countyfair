@@ -1,0 +1,46 @@
+{% set name = "hiplot" %}
+{% set version = 0.1.19 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hiplot-{{ version }}.tar.gz
+  sha256: 723bca4852eb8d3a1d8fd3b2f47ed945e59585f3c8645add47772e22ddd8fcc4
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - beautifulsoup4
+    - flask
+    - flask-compress
+    - ipython >=7.0.1
+    - python >=3.6
+
+test:
+  imports:
+    - hiplot
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/facebookresearch/hiplot
+  summary: High dimensional Interactive Plotting tool
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - rpanai
+    - danthe3rd

@@ -1,0 +1,53 @@
+{% set name = "globus-cli" %}
+{% set version = 1.14.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/globus-cli-{{ version }}.tar.gz
+  sha256: 21e70a4fc0e8be713d4183d635c81e51cb18a66ac53a788c56ef0769ad085dda
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - globus = globus_cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - click >=7.1.1,<8.0
+    - configobj >=5.0.6,<6.0.0
+    - cryptography >=1.8.1,<3.0.0
+    - globus-sdk ==1.9.0
+    - jmespath ==0.9.4
+    - python
+    - requests >=2.0.0,<3.0.0
+    - six >=1.10.0,<2.0.0
+
+test:
+  imports:
+    - globus_cli
+    - globus_cli.commands
+  commands:
+    - pip check
+    - globus --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/globus/globus-cli
+  summary: Globus CLI
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - xylar
+    - lukaszlacinski

@@ -1,0 +1,52 @@
+{% set name = "potentials" %}
+{% set version = 0.2.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/potentials-{{ version }}.tar.gz
+  sha256: f9af2fbd910f47bb157dcc0f8611a63739e2e8ce008e157cd8ea3d86ae445aca
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - bibtexparser
+    - cdcs ==0.1.4
+    - datamodeldict
+    - habanero
+    - ipywidgets
+    - matplotlib-base
+    - numpy
+    - pandas
+    - python
+    - requests
+    - xmltodict
+
+test:
+  imports:
+    - potentials
+    - potentials.Database
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/usnistgov/potentials
+  summary: 'API database tools for accessing the NIST Interatomic Potentials Repository: explore and download interatomic potentials and computed properties.'
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
+    - lmhale99

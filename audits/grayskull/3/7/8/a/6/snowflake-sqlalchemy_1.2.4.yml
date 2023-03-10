@@ -1,0 +1,43 @@
+{% set name = "snowflake-sqlalchemy" %}
+{% set version = 1.2.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/snowflake-sqlalchemy-{{ version }}.tar.gz
+  sha256: e79d83d4947a0945488699324802eda4ad4a63c7680ad5b2a42c71f4faa2cd8b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - snowflake-connector-python <3.0.0
+    - sqlalchemy <2.0.0
+
+test:
+  imports:
+    - snowflake.sqlalchemy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.snowflake.net/
+  summary: Snowflake SQLAlchemy Dialect
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - xhochy

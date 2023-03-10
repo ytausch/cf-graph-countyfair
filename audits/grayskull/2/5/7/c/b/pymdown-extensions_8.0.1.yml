@@ -1,0 +1,44 @@
+{% set name = "pymdown-extensions" %}
+{% set version = 8.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pymdown-extensions-{{ version }}.tar.gz
+  sha256: 9ba704052d4bdc04a7cd63f7db4ef6add73bafcef22c0cf6b2e3386cf4ece51e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - markdown >=3.2
+    - python >=3.5
+
+test:
+  imports:
+    - pymdownx
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/facelessuser/pymdown-extensions
+  summary: Extension pack for Python Markdown.
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - monaldoj
+    - ewels
+    - maxibor

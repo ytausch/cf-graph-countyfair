@@ -1,0 +1,61 @@
+{% set name = "geemap" %}
+{% set version = 0.7.13 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/geemap-{{ version }}.tar.gz
+  sha256: 5a99bace51dec4ea85cb1c698ddcea691137c77f30db471e8af04f2b05e59fd8
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - geemap=geemap.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - bqplot
+    - click
+    - colour
+    - earthengine-api >=0.1.230
+    - ffmpeg-python
+    - folium >=0.11.0
+    - geeadd >=0.5.1
+    - geocoder
+    - ipyfilechooser
+    - ipyleaflet >=0.13.3
+    - ipynb-py-convert
+    - ipytree
+    - matplotlib-base
+    - python-mss
+    - pillow
+    - pyshp
+    - python >=3.5
+    - voila
+
+test:
+  imports:
+    - geemap
+  commands:
+    - pip check
+    - geemap --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/giswqs/geemap
+  summary: A Python package for interactive mapping using Google Earth Engine and ipyleaflet
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - giswqs

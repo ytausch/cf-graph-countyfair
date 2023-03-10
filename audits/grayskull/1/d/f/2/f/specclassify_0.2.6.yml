@@ -1,0 +1,48 @@
+{% set name = "specclassify" %}
+{% set version = 0.2.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/specclassify-{{ version }}.tar.gz
+  sha256: 9771b3e1f9ff44328c0dfa4d9154945d42cb514591945ec919c7317d168029b0
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - geoarray >=0.8.0
+    - matplotlib-base
+    - numpy
+    - py-tools-ds >=0.12.4
+    - python
+    - scikit-learn
+    - tqdm
+
+test:
+  imports:
+    - specclassify
+    - specclassify.classifiers
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gitext.gfz-potsdam.de/geomultisens/specclassify
+  summary: A Python package for multi- or hyperspectral image classification.
+  license: Unlicense
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - danschef

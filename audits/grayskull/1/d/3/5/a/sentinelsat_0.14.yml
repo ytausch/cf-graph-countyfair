@@ -1,0 +1,49 @@
+{% set name = "sentinelsat" %}
+{% set version = 0.14 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sentinelsat-{{ version }}.tar.gz
+  sha256: beba1351575415eda071e479a114a0086c294c2cf36b7dcd3fa243098f58b6b9
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - click
+    - futures  # [py==27]
+    - geojson >=2
+    - geomet
+    - html2text
+    - python
+    - requests
+    - six
+    - tqdm
+
+test:
+  imports:
+    - sentinelsat
+    - sentinelsat.scripts
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sentinelsat/sentinelsat
+  summary: Utility to search and download Copernicus Sentinel satellite images
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - avalentino

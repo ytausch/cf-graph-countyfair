@@ -1,0 +1,41 @@
+{% set name = "pamqp" %}
+{% set version = 3.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 0a9b49bde3f554ec49b47ebdb789133979985f24d5f4698935ed589a2d4392a4
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - pamqp
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/gmr/pamqp
+  summary: RabbitMQ Focused AMQP low-level library
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - gregfreeman

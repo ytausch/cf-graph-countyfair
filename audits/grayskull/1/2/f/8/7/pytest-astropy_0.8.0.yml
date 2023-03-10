@@ -1,0 +1,53 @@
+{% set name = "pytest-astropy" %}
+{% set version = 0.8.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest-astropy-{{ version }}.tar.gz
+  sha256: 619800eb2cbf64548fbea25268efe7c6f6ae206cb4825f34abd36f27bcf946a2
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - hypothesis >=5.1
+    - pytest >=4.6
+    - pytest-arraydiff >=0.1
+    - pytest-astropy-header >=0.1.2
+    - pytest-cov >=2.0
+    - pytest-doctestplus >=0.2.0
+    - pytest-filter-subpackage >=0.1
+    - pytest-openfiles >=0.3.1
+    - pytest-remotedata >=0.3.1
+    - python >=3.6
+
+test:
+  imports:
+    - pytest_astropy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/astropy/pytest-astropy
+  summary: Meta-package containing dependencies for testing
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - astrofrog-conda-forge
+    - drdavella
+    - mwcraig

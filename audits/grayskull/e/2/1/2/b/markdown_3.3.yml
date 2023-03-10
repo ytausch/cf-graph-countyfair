@@ -1,0 +1,47 @@
+{% set name = "markdown" %}
+{% set version = 3.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Markdown-{{ version }}.tar.gz
+  sha256: 4f4172a4e989b97f96860fa434b89895069c576e2b537c4b4eed265266a7affc
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - markdown_py = markdown.__main__:run
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - importlib-metadata  # [py<38]
+    - python
+
+test:
+  imports:
+    - markdown
+    - markdown.extensions
+  commands:
+    - pip check
+    - markdown_py --help
+  requires:
+    - pip
+
+about:
+  home: https://Python-Markdown.github.io/
+  summary: Python implementation of Markdown.
+  license: BSD-3-Clause
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - djsutherland
+    - philip-khor

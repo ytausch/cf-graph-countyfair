@@ -1,0 +1,51 @@
+{% set name = "jupyterlab-nvdashboard" %}
+{% set version = 0.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupyterlab-nvdashboard-{{ version }}.tar.gz
+  sha256: ff12f20076e8cb52ea3319ccf148458ba6230611b52b835b0eeea10ba37f7fe1
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - nvdashboard = jupyterlab_nvdashboard.server:go
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - bokeh >2.1
+    - jupyter-server-proxy
+    - psutil
+    - pynvml
+    - python
+
+test:
+  imports:
+    - jupyterlab_nvdashboard
+    - jupyterlab_nvdashboard.apps
+  commands:
+    - pip check
+    - nvdashboard --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rapidsai/jupyterlab-nvdashboard
+  summary: A JupyterLab extension for displaying dashboards of GPU usage.
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - jacobtomlinson
+    - rjzamora
+    - owenlamont

@@ -1,0 +1,41 @@
+{% set name = "crc32c" %}
+{% set version = 2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/crc32c-{{ version }}.tar.gz
+  sha256: e0ab12d3d654d937722c950a0c8df00576bed5f8d9f5b7720c8e5723facedb82
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - crc32c
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ICRAR/crc32c
+  summary: A python package implementing the crc32c algorithmin hardware and software
+  license: LGPL-2.1
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pinin4fjords

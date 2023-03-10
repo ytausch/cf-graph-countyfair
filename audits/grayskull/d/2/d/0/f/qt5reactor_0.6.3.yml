@@ -1,0 +1,43 @@
+{% set name = "qt5reactor" %}
+{% set version = 0.6.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/qt5reactor-{{ version }}.tar.gz
+  sha256: c3470a8a25d9a339f9ca6243502a9b2277f181d772b7acbff551d5bc363b7572
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+    - twisted
+
+test:
+  imports:
+    - qt5reactor
+    - qt5reactor.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/twisted/qt5reactor
+  summary: Twisted Qt Integration
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mrakitin

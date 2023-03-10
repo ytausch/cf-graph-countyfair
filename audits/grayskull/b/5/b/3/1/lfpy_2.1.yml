@@ -1,0 +1,52 @@
+{% set name = "lfpy" %}
+{% set version = 2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2cf08add2494f259e5880e9a0f8d4edf690ff2bbeb590030912dbf25bdf192bf
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - cython >=0.20
+    - h5py >=2.5
+    - meautility >=1.4.2
+    - mpi4py >=1.2
+    - numpy >=1.8
+    - python
+    - scipy >=0.14
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - LFPy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://LFPy.readthedocs.io
+  summary: A module for modeling extracellular potentials of multicompartment neuron models built on NEURON
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - espenhgn
+    - minrk

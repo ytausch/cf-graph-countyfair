@@ -1,0 +1,41 @@
+{% set name = "bitarray" %}
+{% set version = 1.5.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/bitarray-{{ version }}.tar.gz
+  sha256: 38fe66d5f7720835703a07fe8d0a4b5eda87f692f3cf4fb01543407b79857edf
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - bitarray
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ilanschnell/bitarray
+  summary: efficient arrays of booleans -- C extension
+  license: NOASSERTION
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nehaljwani

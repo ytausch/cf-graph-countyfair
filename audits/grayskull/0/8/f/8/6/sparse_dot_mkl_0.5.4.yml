@@ -1,0 +1,44 @@
+{% set name = "sparse_dot_mkl" %}
+{% set version = 0.5.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 6dab66a25cdd48bc21b7ba1665d2ca9b001de9a85f028c1fd0e9f898e84f3065
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy
+    - python
+    - scipy
+
+test:
+  imports:
+    - sparse_dot_mkl
+    - sparse_dot_mkl.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/flatironinstitute/sparse_dot
+  summary: Intel MKL wrapper for sparse matrix multiplication
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - asistradition

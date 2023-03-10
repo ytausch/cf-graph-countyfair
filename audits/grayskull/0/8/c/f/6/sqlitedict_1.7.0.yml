@@ -1,0 +1,42 @@
+{% set name = "sqlitedict" %}
+{% set version = 1.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sqlitedict-{{ version }}.tar.gz
+  sha256: 2affcc301aacd4da7511692601ecbde392294205af418498f7d6d3ec0dbcad56
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - sqlitedict
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/piskvorky/sqlitedict
+  summary: Persistent dict in Python, backed up by sqlite3 and pickle, multithread-safe.
+  license: Apache-2.0
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - notestaff
+    - synapticarbors

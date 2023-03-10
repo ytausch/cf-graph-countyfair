@@ -1,0 +1,52 @@
+{% set name = "opentsne" %}
+{% set version = 0.4.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: bc5fb9634e47c10d6d51a9b08bb00f76fc851f142330bd9456703a387f5dbee7
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - nbconvert
+    - numpy
+    - pip
+    - python
+  run:
+    - numpy >=1.14.6
+    - python
+    - scikit-learn >=0.20
+    - scipy
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - openTSNE
+    - openTSNE._matrix_mul
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pavlin-policar/openTSNE
+  summary: Extensible, parallel implementations of t-SNE
+  dev_url: https://github.com/pavlin-policar/openTSNE
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pavlin-policar

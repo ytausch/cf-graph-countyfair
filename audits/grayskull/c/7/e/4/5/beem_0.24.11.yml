@@ -1,0 +1,62 @@
+{% set name = "beem" %}
+{% set version = 0.24.11 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/beem-{{ version }}.tar.gz
+  sha256: 124a4b87cf80ff5190f3b6f2520a87b59cd28564bf574a24fe88f4d4b69fad3a
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - beempy=beem.cli:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - appdirs
+    - asn1crypto
+    - click
+    - click-shell
+    - diff-match-patch
+    - ecdsa
+    - events
+    - future
+    - prettytable
+    - pycryptodomex
+    - pylibscrypt
+    - python
+    - pytz
+    - pyyaml >=5.1
+    - requests
+    - scrypt
+    - websocket-client
+
+test:
+  imports:
+    - beem
+    - beemapi
+  commands:
+    - pip check
+    - beempy --help
+  requires:
+    - pip
+
+about:
+  home: http://www.github.com/holgern/beem
+  summary: Unofficial Python library for HIVE and STEEM
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - holgern

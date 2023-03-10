@@ -1,0 +1,48 @@
+{% set name = "azure-keyvault-keys" %}
+{% set version = 4.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/azure-keyvault-keys-{{ version }}.zip
+  sha256: e47b76ca5d99b12436c64ce4431271cd6744fba017f282991b84ce303e0b9eaa
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - azure-common ~=1.1
+    - azure-core <2.0.0,>=1.7.0
+    - azure-keyvault-nspkg  # [py<30]
+    - cryptography >=2.1.4
+    - enum34 >=1.0.4  # [py<34]
+    - msrest >=0.6.0
+    - python
+    - typing  # [py<35]
+
+test:
+  imports:
+    - azure.keyvault.keys
+    - azure.keyvault.keys._generated
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Azure/azure-sdk-for-python/tree/master/sdk/keyvault/azure-keyvault-keys
+  summary: Microsoft Azure Key Vault Keys Client Library for Python
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - dhirschfeld

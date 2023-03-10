@@ -1,0 +1,50 @@
+{% set name = "jhsingle-native-proxy" %}
+{% set version = 0.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jhsingle-native-proxy-{{ version }}.tar.gz
+  sha256: 426e84fbacd4cc02b65f3b9989886d8218a0eaa162fb7d2f1f971eeba77d05d2
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - jhsingle-native-proxy = jhsingle_native_proxy.main:run
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - aiohttp
+    - click >=7.0
+    - jupyterhub >=1.0.0
+    - python >=3.6
+    - simpervisor
+    - tornado >=5.1
+
+test:
+  imports:
+    - jhsingle_native_proxy
+  commands:
+    - pip check
+    - jhsingle-native-proxy --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ideonate/jhsingle-native-proxy
+  summary: Wrap an arbitrary webapp so it can be used in place of jupyter-singleuser in a JupyterHub setting
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - danlester
+    - fcollonval

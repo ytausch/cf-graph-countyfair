@@ -1,0 +1,48 @@
+{% set name = "gitpython" %}
+{% set version = 3.1.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/GitPython-{{ version }}.tar.gz
+  sha256: a03f728b49ce9597a6655793207c6ab0da55519368ff5961e4a74ae475b9fa8e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - ez_setup
+    - pip
+    - python >=3.4
+  run:
+    - gitdb >=4.0.1,<5
+    - python >=3.4
+
+test:
+  imports:
+    - git.__init__
+    - git.cmd
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/gitpython-developers/GitPython
+  summary: Python Git Library
+  doc_url: https://pythonhosted.org/GitPython/
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - pelson
+    - ocefpaf
+    - xhochy

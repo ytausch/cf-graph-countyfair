@@ -1,0 +1,50 @@
+{% set name = "radical.analytics" %}
+{% set version = 0.90.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 91a11e920f55381f8989b9d714ae99094eb248e70443957f0cc6e03eb55d461c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - matplotlib-base <=3.0
+    - more-itertools
+    - numpy
+    - pandas
+    - psutil
+    - python >=3.5
+    - radical.utils >=0.90
+    - sqlalchemy
+
+test:
+  imports:
+    - radical
+    - radical.analytics
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.github.com/radical-cybertools/radical.analytics/
+  summary: The RADICAL analytics framework
+  license: GPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - andre-merzky
+    - iparask

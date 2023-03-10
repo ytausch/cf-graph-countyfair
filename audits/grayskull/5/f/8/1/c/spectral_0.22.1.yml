@@ -1,0 +1,44 @@
+{% set name = "spectral" %}
+{% set version = 0.22.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 3803aaf132b03dfae95b91f881ac97d895d04bc5f0c73676c1aff681e607d3a1
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy
+    - python
+
+test:
+  imports:
+    - spectral
+    - spectral.algorithms
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://spectralpython.net
+  summary: Spectral Python (SPy) is a Python module for hyperspectral image processing.
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - lewismc
+    - tboggs

@@ -1,0 +1,43 @@
+{% set name = "ipyspin" %}
+{% set version = 0.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ipyspin-{{ version }}.tar.gz
+  sha256: a163d34e7b6123f0fb2afa2f3894d1c58ef889488d707f0c820ed62670db55ac
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ipywidgets >=7.0.0
+    - python
+
+test:
+  imports:
+    - ipyspin
+    - ipyspin.nbextension
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/davidbrochart/ipyspin
+  summary: A Jupyter widget library for dynamically creating spinning activity indicators
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - davidbrochart

@@ -1,0 +1,53 @@
+{% set name = "digital_rf" %}
+{% set version = 2.6.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 44447d94efe43b6b3c5799d768bb213a717be661b0333cbd67554d665dcdb91a
+
+build:
+  number: 0
+  entry_points:
+    - drf=digital_rf.drf_command:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - h5py
+    - numpy
+    - packaging
+    - python
+    - python-dateutil
+    - pytz
+    - six
+    - watchdog
+
+test:
+  imports:
+    - digital_rf
+    - gr_digital_rf
+  commands:
+    - pip check
+    - drf --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/MITHaystack/digital_rf
+  summary: Python tools to read/write Digital RF data in HDF5 format
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ryanvolz

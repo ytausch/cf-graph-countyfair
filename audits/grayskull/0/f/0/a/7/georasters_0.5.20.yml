@@ -1,0 +1,55 @@
+{% set name = "georasters" %}
+{% set version = 0.5.20 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/georasters-{{ version }}.tar.gz
+  sha256: 3e43548f312b81a88e4b09dd1d0d629dff8a051732e8a4f214e1febffbc2a8c3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - affine
+    - coverage
+    - docopt
+    - fiona
+    - gdal
+    - geopandas
+    - matplotlib-base
+    - numpy
+    - pandas
+    - pyproj
+    - pysal
+    - python
+    - rasterstats
+    - scikit-image
+
+test:
+  imports:
+    - georasters
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/ozak/georasters
+  summary: Tools for working with Geographical Information System Rasters
+  license: GPL-3.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - ozak

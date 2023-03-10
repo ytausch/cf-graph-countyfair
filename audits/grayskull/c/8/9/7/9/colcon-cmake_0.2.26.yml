@@ -1,0 +1,46 @@
+{% set name = "colcon-cmake" %}
+{% set version = 0.2.26 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/colcon-cmake-{{ version }}.tar.gz
+  sha256: 5a227fe812766be5fc3895c821bf9190f571e8c25eb73962967310d6b524349f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - colcon-core >=0.5.6
+    - colcon-library-path
+    - colcon-test-result >=0.3.3
+    - python
+
+test:
+  imports:
+    - colcon_cmake
+    - colcon_cmake.argcomplete_completer
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://colcon.readthedocs.io
+  summary: Extension for colcon to support CMake packages.
+  license: AFL-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - seanyen
+    - wolfv

@@ -1,0 +1,45 @@
+{% set name = "jupyter-flex" %}
+{% set version = 0.6.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupyter-flex-{{ version }}.tar.gz
+  sha256: cdd048ccab85942be49c23cec4c8849103788f81692f622b335ce0c18e5f6fa6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+    - setuptools_scm
+  run:
+    - nbconvert >=6.0.7,<7
+    - python >=3.7
+    - voila >=0.2.0,<0.3
+
+test:
+  imports:
+    - jupyter_flex
+    - jupyter_flex.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/danielfrg/jupyter-flex
+  summary: Easily create Dashboards using Jupyter Notebooks
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - ocefpaf

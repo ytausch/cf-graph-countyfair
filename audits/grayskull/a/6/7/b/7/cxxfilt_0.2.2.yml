@@ -1,0 +1,43 @@
+{% set name = "cxxfilt" %}
+{% set version = 0.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: ef6810e76d16c95c11b96371e2d8eefd1d270ec03f9bcd07590e8dcc2c69e92b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - cxxfilt
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/afq984/python-cxxfilt
+  summary: Python interface to c++filt / abi::__cxa_demangle
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - oblute
+    - benhuff
+    - rluria14

@@ -1,0 +1,48 @@
+{% set name = "deepxde" %}
+{% set version = 0.8.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/DeepXDE-{{ version }}.tar.gz
+  sha256: 48c1b0d7915ec7b1436a4c09e1582cff137465da70aa0399d7e6faa40eaf1fa9
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - matplotlib-base
+    - numpy
+    - python
+    - salib
+    - scikit-learn
+    - scipy
+    - tensorflow >=1.14.0
+
+test:
+  imports:
+    - deepxde
+    - deepxde.data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/lululxvi/deepxde
+  summary: Deep learning library for solving differential equations
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - lululxvi

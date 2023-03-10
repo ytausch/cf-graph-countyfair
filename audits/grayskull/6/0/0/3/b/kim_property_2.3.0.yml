@@ -1,0 +1,43 @@
+{% set name = "kim_property" %}
+{% set version = 2.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/kim-property-{{ version }}.tar.gz
+  sha256: ab265f07265735054da72892f02904f4503e8da20e937ee478925bdcc8171044
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - kim-edn
+    - python >=3.6
+
+test:
+  imports:
+    - kim_property
+    - tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/openkim/kim-property
+  summary: kim-property - KIM-PROPERTY utility module.
+  license: NOASSERTION
+  license_file: LICENSE.CDDL
+
+extra:
+  recipe-maintainers:
+    - yafshar

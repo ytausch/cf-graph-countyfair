@@ -1,0 +1,50 @@
+{% set name = "physics-tenpy" %}
+{% set version = 0.7.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/physics-tenpy-{{ version }}.tar.gz
+  sha256: f6a701e31e48b9e1486a5781f6ca795f5f60f6d892c68f92cccdc8b2da73bb20
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - cython >=0.29
+    - numpy >=1.13
+    - python
+    - scipy >=0.18
+    - setuptools >=30.3.0
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - tenpy
+    - tenpy.algorithms
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/tenpy/tenpy
+  summary: Simulation of quantum many-body systems with tensor networks in Python
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jhauschild

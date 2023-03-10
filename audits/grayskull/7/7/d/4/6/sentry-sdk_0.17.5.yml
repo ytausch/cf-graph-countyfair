@@ -1,0 +1,44 @@
+{% set name = "sentry-sdk" %}
+{% set version = 0.17.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sentry-sdk-{{ version }}.tar.gz
+  sha256: 02f2a72698453f722b102562eb6430d2a82d6c6c40f2b991ed69e7628142de6a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - certifi
+    - python
+    - urllib3 >=1.10.0
+
+test:
+  imports:
+    - sentry_sdk
+    - sentry_sdk.integrations
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/getsentry/sentry-python
+  summary: Python client for Sentry (https://sentry.io)
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - djsutherland

@@ -1,0 +1,51 @@
+{% set name = "skypy" %}
+{% set version = 0.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/skypy-{{ version }}.tar.gz
+  sha256: 32d3c457f150b89f3639c56dea8693dfc4a91e407bdbe718345fbb95edcb40e5
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - skypy = skypy.pipeline.scripts.skypy:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - astropy
+    - networkx
+    - numpy
+    - python >=3.6
+    - pyyaml
+    - scipy
+
+test:
+  imports:
+    - skypy
+    - skypy.cluster
+  commands:
+    - pip check
+    - skypy --help
+  requires:
+    - pip
+
+about:
+  home: http://skypy.info
+  summary: A package for modelling the Universe.
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - rrjbca

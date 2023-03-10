@@ -1,0 +1,63 @@
+{% set name = "datashader" %}
+{% set version = 0.11.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/datashader-{{ version }}.tar.gz
+  sha256: b1f80415f72f92ccb660aaea7b2881ddd35d07254f7c44101709d42e819d6be6
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - datashader = datashader.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - param
+    - pip
+    - pyct-core
+    - python
+  run:
+    - bokeh
+    - colorcet >=0.9.0
+    - dask-core >=0.18.0
+    - datashape >=0.5.1
+    - numba >=0.37.0,!=0.49.*,!=0.50.*
+    - numpy >=1.7
+    - pandas >=0.24.1
+    - param >=1.6.0
+    - pillow >=3.1.1
+    - pyct-core ==0.4.6
+    - python
+    - scipy
+    - toolz >=0.7.4
+    - xarray >=0.9.6
+
+test:
+  imports:
+    - datashader
+    - datashader.data_libraries
+  commands:
+    - pip check
+    - datashader --help
+  requires:
+    - pip
+
+about:
+  home: http://datashader.org
+  summary: Data visualization toolchain based on aggregating into a grid
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - jbednar
+    - ocefpaf
+    - philippjfr
+    - jsignell

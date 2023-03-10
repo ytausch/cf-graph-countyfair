@@ -1,0 +1,45 @@
+{% set name = "xphyle" %}
+{% set version = 4.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xphyle-{{ version }}.tar.gz
+  sha256: cdedacba0667ff864d9ad1a600f80734c942cceb70260735482bea2a16c18365
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+    - setuptools_scm ==3.5.0
+  run:
+    - pokrok
+    - python
+
+test:
+  imports:
+    - xphyle
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jdidion/xphyle
+  summary: Utilities for working with files.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jdidion
+    - rhpvorderman

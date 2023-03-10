@@ -1,0 +1,42 @@
+{% set name = "fastprogress" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/fastprogress-{{ version }}.tar.gz
+  sha256: 89e28ac1d2a5412aab18ee3f3dfd1ee8b5c1f2f7a44d0add0d0d4f69f0191bfe
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - numpy
+    - python >=3.6
+
+test:
+  imports:
+    - fastprogress
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/fastai/fastprogress
+  summary: A nested progress with plotting options for fastai
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - andersy005

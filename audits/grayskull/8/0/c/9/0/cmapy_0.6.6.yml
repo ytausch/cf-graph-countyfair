@@ -1,0 +1,44 @@
+{% set name = "cmapy" %}
+{% set version = 0.6.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: cb52a6b3057c49a146fb0964b8302f2fb7d61dfe6ae6de1a98b636aace805255
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - matplotlib-base
+    - numpy
+    - opencv-python >=3.3
+    - python
+
+test:
+  imports:
+    - cmapy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gitlab.com/cvejarano-oss/cmapy/
+  summary: Use Matplotlib colormaps with OpenCV in Python.
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - apcamargo

@@ -1,0 +1,47 @@
+{% set name = "oct2py" %}
+{% set version = 5.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 7e7f03724d60745b6ff49760027712a5ae22ed3c67f8d4560ba8a80c2ebdfaf0
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy >=1.12
+    - octave_kernel >=0.31.0
+    - python
+    - scipy >=0.17
+
+test:
+  imports:
+    - oct2py
+    - oct2py.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/blink1073/oct2py
+  summary: Python to GNU Octave bridge --> run m-files from python.
+  doc_url: https://pythonhosted.org/oct2py/
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - blink1073
+    - ocefpaf

@@ -1,0 +1,48 @@
+{% set name = "pyasdf" %}
+{% set version = 0.7.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyasdf-{{ version }}.tar.gz
+  sha256: 4416efca9ec212b486ee512a09aec923752f3783017ffd439f58b230f8ffd99a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - colorama
+    - dill
+    - h5py
+    - numpy
+    - obspy >=1.2.1
+    - prov
+    - python >=3.7
+
+test:
+  imports:
+    - pyasdf
+    - pyasdf.scripts
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/SeismicData/pyasdf
+  summary: Python module for the Adaptable Seismic Data Format (ASDF).
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - krischer

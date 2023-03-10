@@ -1,0 +1,48 @@
+{% set name = "fletcher" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/fletcher-{{ version }}.tar.gz
+  sha256: 611111e657861331dec1cf2a456a4a00afc58af92c79da8863449b20f6d58eac
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.0
+    - setuptools_scm
+  run:
+    - numba >=0.49
+    - pandas >=1.0
+    - pyarrow >=0.17.0
+    - python >=3.0
+    - six
+
+test:
+  imports:
+    - benchmarks
+    - fletcher
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/xhochy/fletcher
+  summary: Pandas ExtensionDType/Array backed by Apache Arrow
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - xhochy
+    - fjetter

@@ -1,0 +1,66 @@
+{% set name = "dtale" %}
+{% set version = 1.13.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dtale-{{ version }}.tar.gz
+  sha256: 976938a6fffb4fbfeec32c615218e7017ee7bba47817d4ef4e7b33f94f4d46a6
+
+build:
+  number: 0
+  entry_points:
+    - dtale = dtale.cli.script:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pypandoc
+    - pytest
+    - python
+    - six
+  run:
+    - dash >=1.5.0
+    - dash-bootstrap-components
+    - dash-daq
+    - dash_colorscales
+    - flask >=1.0
+    - flask-compress
+    - flask-ngrok  # [py>30]
+    - future >=0.14.0
+    - itsdangerous
+    - lz4 <=2.2.1  # [py<30]
+    - pandas
+    - python
+    - requests
+    - scikit-learn >='0.21.0
+    - scipy
+    - six
+    - statsmodels
+    - xarray
+
+test:
+  imports:
+    - dtale
+    - dtale.charts
+  commands:
+    - pip check
+    - dtale --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/man-group/dtale
+  summary: Web Client for Visualizing Pandas Objects
+  license: LGPL-2.1
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - astrojuanlu
+    - AlexS12
+    - aschonfeld

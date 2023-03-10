@@ -1,0 +1,44 @@
+{% set name = "wasabi" %}
+{% set version = 0.8.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/wasabi-{{ version }}.tar.gz
+  sha256: 75fec6db6193c8615d7f398ae4aa2c4ad294e6e3e81c6a6dbbbd3864ee2223c3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - wasabi
+    - wasabi.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://ines.io
+  summary: A lightweight console printing and formatting toolkit
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ines
+    - honnibal
+    - adrianeboyd

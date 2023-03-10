@@ -1,0 +1,42 @@
+{% set name = "nest-asyncio" %}
+{% set version = 1.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nest_asyncio-{{ version }}.tar.gz
+  sha256: b86c3193abda5b2eeccf8c79894bc71c680369a178f4b068514ac00720b14e01
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - nest_asyncio
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/erdewit/nest_asyncio
+  summary: Patch asyncio to allow nested event loops
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - yehoshuadimarsky
+    - SylvainCorlay

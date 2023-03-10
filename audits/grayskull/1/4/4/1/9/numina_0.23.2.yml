@@ -1,0 +1,80 @@
+{% set name = "numina" %}
+{% set version = 0.23.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/numina-{{ version }}.tar.gz
+  sha256: bb9a61d6541f342fcc91ead2ed33b9b89156c339628b5e5fb0761a5451b18a4a
+
+build:
+  number: 0
+  entry_points:
+    - numina = numina.user.cli:main
+    - numina-apply_integer_offsets = numina.array.wavecalib.apply_integer_offsets:main
+    - numina-bpm = numina.array.bpm:main
+    - numina-check_wlcalib = numina.array.wavecalib.check_wlcalib:main
+    - numina-imath = numina.tools.imath:main
+    - numina-r6-addnf = numina.tools.r6_addnf:main
+    - numina-r6-imcombine = numina.tools.r6_imcombine:main
+    - numina-r6-insert_keyword = numina.tools.r6_insert_keyword:main
+    - numina-r6-replace_image = numina.tools.r6_replace_image:main
+    - numina-wavecalib = numina.array.wavecalib.__main__:main
+    - numina-ximshow = numina.array.display.ximshow:main
+    - numina-ximplotxy = numina.array.display.ximplotxy:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - astropy  # [py>=3]
+    - contextlib2  # [py<35]
+    - enum34  # [py<34]
+    - lmfit
+    - matplotlib-base
+    - numpy
+    - python
+    - python-dateutil
+    - pyyaml
+    - scikit-image
+    - scipy
+    - setuptools >=39.2
+    - six >=1.7
+
+test:
+  imports:
+    - numina
+    - numina.array
+  commands:
+    - pip check
+    - numina --help
+    - numina-apply_integer_offsets --help
+    - numina-bpm --help
+    - numina-check_wlcalib --help
+    - numina-imath --help
+    - numina-r6-addnf --help
+    - numina-r6-imcombine --help
+    - numina-r6-insert_keyword --help
+    - numina-r6-replace_image --help
+    - numina-wavecalib --help
+    - numina-ximshow --help
+    - numina-ximplotxy --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/guaix-ucm/numina
+  summary: Astronomy data reduction library
+  license: GPL-3.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - sergiopasra

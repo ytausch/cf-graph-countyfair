@@ -1,0 +1,44 @@
+{% set name = "urwid" %}
+{% set version = 2.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/urwid-{{ version }}.tar.gz
+  sha256: 588bee9c1cb208d0906a9f73c613d2bd32c3ed3702012f51efe318a3f2127eae
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - urwid
+    - urwid.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://urwid.org/
+  summary: A full-featured console (xterm et al.) user interface library
+  license: LGPL-2.1
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - scopatz
+    - asmeurer
+    - ocefpaf

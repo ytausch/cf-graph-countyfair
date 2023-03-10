@@ -1,0 +1,47 @@
+{% set name = "pyspnego" %}
+{% set version = 0.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyspnego-{{ version }}.tar.gz
+  sha256: 87193ad5c47096bdc65c93cb2d2d9826657f887f90d38713d5676465f7d472aa
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cython
+    - pip
+    - python
+  run:
+    - cryptography
+    - enum34  # [py<35]
+    - python
+
+test:
+  imports:
+    - spnego
+    - spnego._ntlm_raw
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jborean93/pyspnego
+  summary: Windows Negotiate Authentication Client and Server
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dhirschfeld
+    - krisevans
+    - rzillman

@@ -1,0 +1,45 @@
+{% set name = "pymultinest" %}
+{% set version = 2.10 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 9b70b9b8c576c267632e182ae0594f98d53eff3334a9ef8e8f31d0643a59df3c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - pycuba
+    - pymultinest
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://johannesbuchner.github.com/PyMultiNest/
+  summary: Access modules for the MultiNest and Cuba integration libraries
+  license: MIT
+  license_file: .eggs/pytest_runner-5.2-py3.7.egg/EGG-INFO/LICENSE
+
+extra:
+  recipe-maintainers:
+    - giacomov
+    - JohannesBuchner
+    - beckermr

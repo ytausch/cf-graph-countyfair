@@ -1,0 +1,49 @@
+{% set name = "kombu" %}
+{% set version = 5.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/kombu-{{ version }}.tar.gz
+  sha256: 2e9a346a2875f95becaf1bfaa52112a377a773fc0b2632173531f6bd46435975
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - amqp >=2.6.0,<2.7
+    - importlib-metadata >=0.18  # [py<38]
+    - python
+
+test:
+  imports:
+    - kombu
+    - kombu.asynchronous
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://kombu.readthedocs.io
+  summary: Messaging library for Python.
+  doc_url: https://pythonhosted.org/kombu/
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - anguslees
+    - kwilcox
+    - pmlandwehr
+    - igortg

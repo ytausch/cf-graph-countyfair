@@ -1,0 +1,44 @@
+{% set name = "batman-package" %}
+{% set version = 2.4.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/batman-package-{{ version }}.tar.gz
+  sha256: 38da235c12399b1477fecd40d4218d7c41b944c260e5c02f3b97c746c71d31be
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+    - wheel
+  run:
+    - numpy
+    - python
+
+test:
+  imports:
+    - batman
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/lkreidberg/batman
+  summary: Fast transit light curve modeling
+  license: GPL-3.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - mwcraig

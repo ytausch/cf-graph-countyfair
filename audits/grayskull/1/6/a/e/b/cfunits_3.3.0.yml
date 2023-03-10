@@ -1,0 +1,45 @@
+{% set name = "cfunits" %}
+{% set version = 3.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cfunits-{{ version }}.tar.gz
+  sha256: cdfa136f405d4f2b201f7494f5873cf45467d2de6ca22c0596956b9705b7a703
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - cftime >=1.2.1
+    - numpy >=1.15
+    - python >=3.6
+
+test:
+  imports:
+    - cfunits
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://bitbucket.org/cfpython/cfunits-python
+  summary: A python interface to UNIDATA's UDUNITS-2 package with CF extensions
+  doc_url: https://pythonhosted.org/cfunits/
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - cehbrecht
+    - ocefpaf

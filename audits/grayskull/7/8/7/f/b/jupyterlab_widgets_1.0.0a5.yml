@@ -1,0 +1,44 @@
+{% set name = "jupyterlab_widgets" %}
+{% set version = 1.0.0a5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupyterlab_widgets-{{ version }}.tar.gz
+  sha256: 6435eb4df6f9c63533dadd9d2d4cca280bf28a22f0b94627b6ddbcdea6db2384
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - jupyter_packaging
+    - pip
+    - python >=3.6
+  run:
+    - jupyterlab ~=3.0.0rc4
+    - python >=3.6
+
+test:
+  imports:
+    - jupyterlab_widgets
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jupyter-widgets/ipywidgets
+  summary: A JupyterLab extension.
+  license: EPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jasongrout
+    - SylvainCorlay

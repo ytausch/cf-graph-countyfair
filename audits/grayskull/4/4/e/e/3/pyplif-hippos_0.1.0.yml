@@ -1,0 +1,49 @@
+{% set name = "pyplif-hippos" %}
+{% set version = 0.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: eaf643d9aa940e28b5d6b25c0988f9d0826cce6d1d393d9af822ed88fcfc52d8
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - hippos=pyplif_hippos.hippos:main
+    - hippos-genref=pyplif_hippos.hippos_genref:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - bitstring >=0.8.1
+    - numpy >=1.6.2
+    - openbabel >=2.4.0
+    - python
+
+test:
+  imports:
+    - pyplif_hippos
+    - pyplif_hippos.initialize
+  commands:
+    - pip check
+    - hippos --help
+    - hippos-genref --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/radifar/PyPLIF-HIPPOS
+  license: BSD-4-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - radifar

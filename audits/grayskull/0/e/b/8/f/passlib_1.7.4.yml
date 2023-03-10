@@ -1,0 +1,44 @@
+{% set name = "passlib" %}
+{% set version = 1.7.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/passlib-{{ version }}.tar.gz
+  sha256: defd50f72b65c5402ab2c573830a6978e5f202ad0d984793c8dde2c4152ebe04
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - passlib
+    - passlib._setup
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://passlib.readthedocs.io
+  summary: comprehensive password hashing framework supporting over 30 schemes
+  doc_url: https://pythonhosted.org/passlib/
+  license: CC0-1.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pmlandwehr
+    - xhochy

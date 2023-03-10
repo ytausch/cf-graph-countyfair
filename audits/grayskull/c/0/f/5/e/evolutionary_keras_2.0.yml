@@ -1,0 +1,45 @@
+{% set name = "evolutionary_keras" %}
+{% set version = 2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/evolutionary_keras-{{ version }}.tar.gz
+  sha256: 9e553430c6aad3a6b1e9ba15343f0438bff02ad0b4d987885f060780aa7097d9
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - cma
+    - numpy
+    - python >=3.6
+    - tensorflow >2.1*
+
+test:
+  imports:
+    - evolutionary_keras
+    - evolutionary_keras.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/N3PDF/evolutionary_keras
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - scarlehoff
+    - scarrazza
+    - roystegeman

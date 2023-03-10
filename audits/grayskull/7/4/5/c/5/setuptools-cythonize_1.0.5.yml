@@ -1,0 +1,46 @@
+{% set name = "setuptools-cythonize" %}
+{% set version = 1.0.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/setuptools-cythonize-{{ version }}.tar.gz
+  sha256: b3691c8ccdb971ed65e131adf267edc01011554097e7e81910c11ea08a24695e
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - pip
+    - python
+  run:
+    - cython >=0.25.2
+    - python
+    - setuptools >=36.2.0
+    - wheel >=0.29.0
+
+test:
+  imports:
+    - setuptools_cythonize
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/anxuae/setuptools-cythonize
+  summary: Distribute python modules/packages as binary files (compilation based on Cython)
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tschoonj

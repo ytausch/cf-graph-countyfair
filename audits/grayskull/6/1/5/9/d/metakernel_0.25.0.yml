@@ -1,0 +1,48 @@
+{% set name = "metakernel" %}
+{% set version = 0.25.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/metakernel-{{ version }}.tar.gz
+  sha256: f0641ac4b2f86cdaf8e3fd662bb8a8bb6c873f19aa1030ef08199f02a28e4dbb
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ipykernel
+    - pexpect >=4.2
+    - python
+
+test:
+  imports:
+    - metakernel
+    - metakernel.magics
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Calysto/metakernel
+  summary: Metakernel for Jupyter
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - ericdill
+    - mariusvniekerk
+    - blink1073
+    - dsblank

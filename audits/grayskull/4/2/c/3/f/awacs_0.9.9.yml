@@ -1,0 +1,44 @@
+{% set name = "awacs" %}
+{% set version = 0.9.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/awacs-{{ version }}.tar.gz
+  sha256: ac2cf1544a2eaf0d83dfb4d65e3e1b990fc65a3c99f82e1cb6db90fcc662ce4e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+  run:
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+
+test:
+  imports:
+    - awacs
+    - awacs.helpers
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cloudtools/awacs
+  summary: AWS Access Policy Language creation library
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - agcopenhaver
+    - rluria14
+    - oblute

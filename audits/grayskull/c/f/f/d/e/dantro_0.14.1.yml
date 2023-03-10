@@ -1,0 +1,56 @@
+{% set name = "dantro" %}
+{% set version = 0.14.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dantro-{{ version }}.tar.gz
+  sha256: 64704e098dee39f668c7b7d35d32b6db86aa44a15c31d45f99fea1021a5a0b31
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dask-core >=2.10.1
+    - distributed >=2.10.0
+    - h5py >=2.10.0
+    - matplotlib-base >=3.2.1
+    - networkx >=2.2
+    - numpy >=1.17.4
+    - paramspace >=2.5.1
+    - python
+    - ruamel.yaml >=0.16.10
+    - scipy >=1.4.1
+    - sympy >=1.6.1
+    - toolz >=0.10.0
+    - xarray >=0.16.0
+
+test:
+  imports:
+    - dantro
+    - dantro.containers
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://ts-gitlab.iup.uni-heidelberg.de/utopia/dantro
+  summary: Handle, transform, and visualize hierarchically structured data
+  license: LGPL-3.0
+  license_file: COPYING.LESSER
+
+extra:
+  recipe-maintainers:
+    - blsqr
+    - jeremiastraub
+    - herdeanu

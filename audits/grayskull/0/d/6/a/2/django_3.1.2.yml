@@ -1,0 +1,51 @@
+{% set name = "django" %}
+{% set version = 3.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Django-{{ version }}.tar.gz
+  sha256: a2127ad0150ec6966655bedf15dbbff9697cc86d61653db2da1afa506c0b04cc
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - django-admin = django.core.management:execute_from_command_line
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - asgiref ~=3.2.10
+    - python >=3.6
+    - pytz
+    - sqlparse >=0.2.2
+
+test:
+  imports:
+    - django
+    - django.apps
+  commands:
+    - pip check
+    - django-admin --help
+  requires:
+    - pip
+
+about:
+  home: https://www.djangoproject.com/
+  summary: A high-level Python Web framework that encourages rapid development and clean, pragmatic design.
+  dev_url: https://github.com/django/django
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kwilcox
+    - ocefpaf
+    - astamminger

@@ -1,0 +1,51 @@
+{% set name = "dask" %}
+{% set version = 2.30.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dask-{{ version }}.tar.gz
+  sha256: a1669022e25de99b227c3d83da4801f032415962dac431099bf0534648e41a54
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+    - pyyaml
+
+test:
+  imports:
+    - dask
+    - dask.array
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dask/dask/
+  summary: Parallel PyData with Task Scheduling
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - alimanfoo
+    - jakirkham
+    - jcrist
+    - koverholt
+    - martindurant
+    - mrocklin
+    - pitrou
+    - tomaugspurger
+    - jrbourbeau

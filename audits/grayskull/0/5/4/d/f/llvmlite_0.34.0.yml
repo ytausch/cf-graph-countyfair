@@ -1,0 +1,46 @@
+{% set name = "llvmlite" %}
+{% set version = 0.34.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: f03ee0d19bca8f2fe922bb424a909d05c28411983b0c2bc58b020032a0d11f63
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - wheel
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - llvmlite
+    - llvmlite.binding
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://llvmlite.pydata.org
+  summary: lightweight wrapper around basic LLVM functionality
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - souravsingh
+    - marcelotrevisani
+    - xhochy

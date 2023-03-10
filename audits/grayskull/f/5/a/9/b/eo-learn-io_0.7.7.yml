@@ -1,0 +1,48 @@
+{% set name = "eo-learn-io" %}
+{% set version = 0.7.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2fee3f45c75c78c7b0e808bbaa79518c1c60f60e33a3e3eaa165cca86e97fbec
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - eo-learn-core
+    - python >=3.6
+    - rasterio
+
+test:
+  imports:
+    - eolearn
+    - eolearn.io
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sentinel-hub/eo-learn
+  summary: A collection of input/output utilities and EOTasks
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mwilson8
+    - dcunn
+    - oblute
+    - rluria14
+    - benhuff

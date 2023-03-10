@@ -1,0 +1,50 @@
+{% set name = "pyls-memestra" %}
+{% set version = 0.0.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyls-memestra-{{ version }}.tar.gz
+  sha256: 860223ff64740415706407f4e84b365bb6fc2f4409904a4447ce0eeab4a5995a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - beniget
+    - deprecated
+    - gast
+    - memestra
+    - nbformat
+    - python
+    - python-language-server
+    - pyyaml
+
+test:
+  imports:
+    - pyls_memestra
+    - tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/QuantStack/pyls-memestra
+  summary: Memestra plugin for the Python Language Server
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - marimeireles
+    - SylvainCorlay

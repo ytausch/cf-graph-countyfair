@@ -1,0 +1,47 @@
+{% set name = "eland" %}
+{% set version = 7.9.1a1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/eland-{{ version }}.tar.gz
+  sha256: 3efba79963fb3222f52184ec382fb02b7d52af3e0295e0344038395c93d5d4bb
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - elasticsearch >=7.7
+    - matplotlib-base
+    - numpy
+    - pandas >=1
+    - python >=3.6
+
+test:
+  imports:
+    - eland
+    - eland.ml
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/elastic/eland
+  summary: Python Client and Toolkit for DataFrames, Big Data, Machine Learning and ETL in Elasticsearch
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - sethmlarson
+    - stevedodson

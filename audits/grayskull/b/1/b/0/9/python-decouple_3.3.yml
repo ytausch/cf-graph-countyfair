@@ -1,0 +1,41 @@
+{% set name = "python-decouple" %}
+{% set version = 3.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 55c546b85b0c47a15a47a4312d451a437f7344a9be3e001660bccd93b637de95
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - decouple
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/henriquebastos/python-decouple/
+  summary: Strict separation of settings from code.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - xmnlab

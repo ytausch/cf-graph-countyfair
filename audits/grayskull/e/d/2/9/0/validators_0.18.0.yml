@@ -1,0 +1,44 @@
+{% set name = "validators" %}
+{% set version = 0.18.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/validators-{{ version }}.tar.gz
+  sha256: bad0cf89a7f2e0aa9c4b76fa5f1d2309125a2c77eb176f03b89a6d5059271e63
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.4
+  run:
+    - decorator >=3.4.0
+    - python >=3.4
+    - six >=1.4.0
+
+test:
+  imports:
+    - validators
+    - validators.i18n
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/kvesteri/validators
+  summary: Python Data Validation for Humans™.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - brl0

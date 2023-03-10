@@ -1,0 +1,53 @@
+{% set name = "memestra" %}
+{% set version = 0.0.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/memestra-{{ version }}.tar.gz
+  sha256: 1ed38e73af0e58751b980d482019f207afd241d59ca63796e767a959e6966955
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - memestra = memestra.memestra:run
+    - memestra-cache = memestra.caching:run
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.4
+  run:
+    - beniget
+    - gast
+    - nbconvert
+    - nbformat
+    - python >=3.4
+    - pyyaml
+
+test:
+  imports:
+    - memestra
+  commands:
+    - pip check
+    - memestra --help
+    - memestra-cache --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/QuantStack/memestra
+  summary: Memestra checks code for places where deprecated functions are called
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - davidbrochart
+    - SylvainCorlay
+    - marimeireles

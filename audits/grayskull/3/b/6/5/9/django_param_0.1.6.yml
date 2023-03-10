@@ -1,0 +1,51 @@
+{% set name = "django_param" %}
+{% set version = 0.1.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/django_param-{{ version }}.tar.gz
+  sha256: 8979f21a2a805ed3e87af65428dac15a09ffb5c4b6567d5f9b082751738a48ae
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - django >=2.2,<2.3
+    - django-colorfield >=0.3,<0.4
+    - django-gravatar2 >=1.4,<1.5
+    - django-select2 >=7.1,<7.2
+    - pandas >=0.25,<0.26
+    - param >=1.9,<2.0
+    - psycopg2 >=2.8,<2.9
+    - python
+    - pyyaml >=5.1,<5.2
+
+test:
+  imports:
+    - django_param
+    - django_param.custom_field
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Aquaveo/django_param
+  summary: django_param provides ParamForm class which allows python param to be used in django form.
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - swainn
+    - gagelarsen

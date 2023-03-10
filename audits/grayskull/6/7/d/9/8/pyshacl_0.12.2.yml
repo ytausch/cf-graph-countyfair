@@ -1,0 +1,49 @@
+{% set name = "pyshacl" %}
+{% set version = 0.12.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 96f4955631bdb3aeb4bb1fd41023d44007e0621b81b12cf4a6992684c53822bc
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pyshacl = pyshacl.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - owlrl >=5.2.1,<6.0.0
+    - python >=3.6,<4.0
+    - rdflib >=5.0.0,<6.0.0
+    - rdflib-jsonld >=0.5.0,<0.6.0
+
+test:
+  imports:
+    - benchmarks
+    - examples
+  commands:
+    - pip check
+    - pyshacl --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/RDFLib/pySHACL
+  summary: Python SHACL Validator
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - bollwyvl
+    - satra

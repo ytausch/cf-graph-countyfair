@@ -1,0 +1,46 @@
+{% set name = "plasmaboundaries" %}
+{% set version = 0.1.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/plasmaboundaries-{{ version }}.tar.gz
+  sha256: e85d9c137fc944ff4d56d4c620fe204e8c71532241c6103a54db6433e2738f1e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - matplotlib-base
+    - numpy
+    - python
+    - scipy
+    - sympy
+
+test:
+  imports:
+    - plasmaboundaries
+    - tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/RemiTheWarrior/plasma-boundaries
+  summary: Determine plasma flux functions for various plasma parameters and plasma configurations
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - RemiTheWarrior

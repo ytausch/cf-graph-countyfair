@@ -1,0 +1,45 @@
+{% set name = "rioxarray" %}
+{% set version = 0.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rioxarray-{{ version }}.tar.gz
+  sha256: 833cef39c747b1d02171e911efea3b19976abd7f169d22e1537e6732be848bc6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - pyproj >=2.2
+    - python >=3.6
+    - rasterio
+    - scipy
+    - xarray
+
+test:
+  imports:
+    - rioxarray
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/corteva/rioxarray
+  summary: rasterio xarray extension.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - snowman2

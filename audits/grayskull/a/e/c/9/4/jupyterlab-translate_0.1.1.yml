@@ -1,0 +1,50 @@
+{% set name = "jupyterlab-translate" %}
+{% set version = 0.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupyterlab-translate-{{ version }}.tar.gz
+  sha256: bbd8b50d02397a179e14192bff410983e9012e6f6ceb455cb002e1eea26b448c
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - jupyterlab-translate = jupyterlab_translate.cli:main
+    - gettext-extract = jupyterlab_translate.gettext_extract:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - babel
+    - click
+    - cookiecutter
+    - polib
+    - python
+
+test:
+  imports:
+    - jupyterlab_translate
+  commands:
+    - pip check
+    - jupyterlab-translate --help
+    - gettext-extract --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jupyterlab/jupyterlab-translate
+  summary: Jupyterlab Language Pack Translations Helper
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - goanpeca

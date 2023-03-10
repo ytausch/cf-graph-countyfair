@@ -1,0 +1,49 @@
+{% set name = "radon" %}
+{% set version = 4.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: b73f6f469c15c9616e0f7ce12080a9ecdee9f2335bdbb5ccea1f2bae26e8d20d
+
+build:
+  number: 0
+  entry_points:
+    - radon = radon:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - colorama ==0.4.1  # [py<=34]
+    - flake8-polyfill
+    - future
+    - mando >=0.6,<0.7
+    - python
+
+test:
+  imports:
+    - radon
+    - radon.cli
+  commands:
+    - pip check
+    - radon --help
+  requires:
+    - pip
+
+about:
+  home: https://radon.readthedocs.org/
+  summary: Code Metrics in Python
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - igortg
+    - tonybaloney

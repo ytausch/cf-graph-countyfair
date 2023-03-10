@@ -1,0 +1,46 @@
+{% set name = "fastapi" %}
+{% set version = 0.61.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d0b3f629f8d165a21ee082bf31e1697c391c1cdf940304408614b5b7c59d1fb3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - pydantic >=1.0.0,<2.0.0
+    - python >=3.6
+    - starlette ==0.13.6
+
+test:
+  imports:
+    - fastapi
+    - fastapi.dependencies
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/tiangolo/fastapi
+  summary: FastAPI framework, high performance, easy to learn, fast to code, ready for production
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dhirschfeld
+    - tiangolo
+    - synapticarbors

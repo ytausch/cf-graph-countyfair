@@ -1,0 +1,50 @@
+{% set name = "streamz" %}
+{% set version = 0.5.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 787ade4796c5b2e79af2aac678841ba3748a65a3adce150697dcdd31c4f80365
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+    - six
+    - toolz
+    - tornado
+    - zict
+
+test:
+  imports:
+    - streamz
+    - streamz.dataframe
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/python-streamz/streamz/
+  summary: Streams
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - CJ-Wright
+    - mrocklin
+    - jrmlhermitte
+    - mariusvniekerk
+    - martindurant

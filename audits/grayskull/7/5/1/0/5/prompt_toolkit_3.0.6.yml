@@ -1,0 +1,46 @@
+{% set name = "prompt_toolkit" %}
+{% set version = 3.0.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 7630ab85a23302839a0f26b31cc24f518e6155dea1ed395ea61b42c45941b6a6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+    - wcwidth
+
+test:
+  imports:
+    - prompt_toolkit
+    - prompt_toolkit.application
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/prompt-toolkit/python-prompt-toolkit
+  summary: Library for building powerful interactive command lines in Python
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - ocefpaf
+    - scopatz
+    - asmeurer

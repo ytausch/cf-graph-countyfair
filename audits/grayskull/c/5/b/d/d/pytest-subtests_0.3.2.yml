@@ -1,0 +1,44 @@
+{% set name = "pytest-subtests" %}
+{% set version = 0.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 677281a196092c06d3da8e6408f0c1362b3f7b180e3c0e9113c7209b6b48afd7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+    - setuptools >=40.0
+    - setuptools_scm
+  run:
+    - pytest >=4.4.0
+    - python >=3.5
+
+test:
+  imports:
+    - pytest_subtests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pytest-dev/pytest-subtests
+  summary: unittest subTest() support and subtests fixture
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nicoddemus

@@ -1,0 +1,45 @@
+{% set name = "pyepics" %}
+{% set version = 3.4.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyepics-{{ version }}.tar.gz
+  sha256: 860de6a60b8420afb5f36216769d9e30bca91c501205cb3723529a8f9caed218
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - epics
+    - epics.autosave
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://pyepics.github.io/pyepics/
+  summary: Epics Channel Access for Python
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - hhslepicka
+    - mrakitin
+    - stuartcampbell
+    - tacaswell

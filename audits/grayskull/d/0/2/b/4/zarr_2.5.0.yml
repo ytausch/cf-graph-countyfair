@@ -1,0 +1,51 @@
+{% set name = "zarr" %}
+{% set version = 2.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/zarr-{{ version }}.tar.gz
+  sha256: d54f060739208392494c3dbcbfdf41c8df9fa23d9a32b91aea0549b4c5e2b77f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+    - setuptools >=38.6.0
+    - setuptools-scm >1.5.4
+    - setuptools_scm
+  run:
+    - asciitree
+    - fasteners
+    - numcodecs >=0.6.4
+    - numpy >=1.7
+    - python >=3.5
+
+test:
+  imports:
+    - zarr
+    - zarr.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/zarr-developers/zarr-python
+  summary: An implementation of chunked, compressed, N-dimensional arrays for Python.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - alimanfoo
+    - jakirkham
+    - jrbourbeau

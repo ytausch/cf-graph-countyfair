@@ -1,0 +1,50 @@
+{% set name = "wordcloud" %}
+{% set version = 1.8.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/wordcloud-{{ version }}.tar.gz
+  sha256: 35563d96802d29c876ef8fd9e83304ef796cee40b2e51c0a7fa570d468073236
+
+build:
+  number: 0
+  entry_points:
+    - wordcloud_cli=wordcloud.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - matplotlib-base
+    - numpy >=1.6.1
+    - pillow
+    - python
+
+test:
+  imports:
+    - wordcloud
+  commands:
+    - pip check
+    - wordcloud_cli --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/amueller/word_cloud
+  summary: A little word cloud generator
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - amueller
+    - ericdill
+    - ocefpaf

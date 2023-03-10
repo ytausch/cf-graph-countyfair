@@ -1,0 +1,43 @@
+{% set name = "transitions" %}
+{% set version = 0.8.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/transitions-{{ version }}.tar.gz
+  sha256: e60203588a28d128fee17d0dc6c63de68702c42201c25494cea09917f220319a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - six
+
+test:
+  imports:
+    - transitions
+    - transitions.extensions
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/pytransitions/transitions
+  summary: A lightweight, object-oriented Python state machine implementation with many extensions.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - bollwyvl

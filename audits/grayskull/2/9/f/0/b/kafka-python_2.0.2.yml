@@ -1,0 +1,44 @@
+{% set name = "kafka-python" %}
+{% set version = 2.0.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/kafka-python-{{ version }}.tar.gz
+  sha256: 04dfe7fea2b63726cd6f3e79a2d86e709d608d74406638c5da33a01d45a9d7e3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - tox
+  run:
+    - python
+
+test:
+  imports:
+    - kafka
+    - kafka.admin
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dpkp/kafka-python
+  summary: Pure Python client for Apache Kafka
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pmlandwehr
+    - synapticarbors

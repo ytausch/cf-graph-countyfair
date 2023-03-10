@@ -1,0 +1,44 @@
+{% set name = "pyxdf" %}
+{% set version = 1.16.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d7744a8ba81992aa44d0ce740c256113324178903cbe18a754ee9f2735649123
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - numpy
+    - python
+
+test:
+  imports:
+    - pyxdf
+    - pyxdf.test
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/xdf-modules/xdf-Python
+  summary: Python library for importing XDF (Extensible Data Format)
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - hoechenberger

@@ -1,0 +1,44 @@
+{% set name = "localstack-client" %}
+{% set version = 1.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/localstack-client-{{ version }}.tar.gz
+  sha256: 890698778fc83bf54b44258bc0ae72501109e783f6cb82b8c55cd0028340cefb
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - boto3
+    - python
+
+test:
+  imports:
+    - localstack_client
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/localstack/localstack-python-client
+  summary: A lightweight Python client for LocalStack.
+  license: Apache-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - mwilson8
+    - oblute
+    - benhuff

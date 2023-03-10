@@ -1,0 +1,49 @@
+{% set name = "intake-xarray" %}
+{% set version = 0.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/intake-xarray-{{ version }}.tar.gz
+  sha256: 1ab910b4fde2b31573742ddda273f3fe284d25a56ac75f4f51932b6766385644
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dask-core >=2.2
+    - intake >=0.5.2
+    - netcdf4
+    - python
+    - xarray >=0.12.0
+    - zarr
+
+test:
+  imports:
+    - intake_xarray
+    - intake_xarray.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ContinuumIO/intake-xarray
+  summary: xarray plugins for Intake
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - jsignell
+    - martindurant

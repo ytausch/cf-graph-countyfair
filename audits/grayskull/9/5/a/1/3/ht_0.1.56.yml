@@ -1,0 +1,45 @@
+{% set name = "ht" %}
+{% set version = 0.1.56 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 85477875e01065f5f547e5df231834af8f994f036a53e955c8bd4f224614983c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - fluids >=0.1.83
+    - numpy >=1.5.0
+    - python
+    - scipy >=0.9.0
+
+test:
+  imports:
+    - ht
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/CalebBell/ht
+  summary: Heat transfer component of Chemical Engineering Design Library (ChEDL)
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - volpatto
+    - CalebBell

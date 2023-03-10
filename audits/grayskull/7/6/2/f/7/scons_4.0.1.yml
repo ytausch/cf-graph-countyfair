@@ -1,0 +1,53 @@
+{% set name = "scons" %}
+{% set version = 4.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 722ed104b5c624ecdc89bd4e02b094d2b14d99d47b5d0501961e47f579a2007c
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - scons = SCons.Script.Main:main
+    - sconsign = SCons.Utilities.sconsign:main
+    - scons-configure-cache = SCons.Utilities.ConfigureCache:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools
+  run:
+    - python
+    - pywin32 >=1.0  # [win]
+    - setuptools
+
+test:
+  imports:
+    - SCons
+    - SCons.Node
+  commands:
+    - pip check
+    - scons --help
+    - sconsign --help
+    - scons-configure-cache --help
+  requires:
+    - pip
+
+about:
+  home: http://www.scons.org/
+  summary: Open Source next-generation build tool.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - stuertz
+    - nicoddemus

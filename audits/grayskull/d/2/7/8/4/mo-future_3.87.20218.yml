@@ -1,0 +1,41 @@
+{% set name = "mo-future" %}
+{% set version = 3.87.20218 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 1362093e75ca39a3bb5c38e4c704cefa2f1686a4410d99a4618e9fb3762ee422
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - mo_future
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/klahnakoski/mo-future
+  summary: More future! Make Python 2/3 compatibility a bit easier
+  license: MPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - xhochy

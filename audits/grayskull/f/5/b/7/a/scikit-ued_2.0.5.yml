@@ -1,0 +1,55 @@
+{% set name = "scikit-ued" %}
+{% set version = 2.0.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 79485688f40e9a50d2643bc38ed078a5a651d957221b9a83bd95c31688318942
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - skued = skued.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - crystals >=1.1.2,<2
+    - matplotlib-base >=3.0.0,<4
+    - npstreams >=1.6.2,<2
+    - numpy >=1.15,<2
+    - python >=3.6
+    - pywavelets >=1.0.0
+    - pyyaml >=3.1
+    - scikit-image >=0.15,<0.19
+    - scipy >=1.0.0
+    - tifffile >=0.13
+
+test:
+  imports:
+    - skued
+    - skued.baseline
+  commands:
+    - pip check
+    - skued --help
+  requires:
+    - pip
+
+about:
+  home: http://scikit-ued.readthedocs.io
+  summary: Collection of algorithms and functions for ultrafast electron scattering
+  dev_url: https://github.com/LaurentRDC/scikit-ued
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - LaurentRDC

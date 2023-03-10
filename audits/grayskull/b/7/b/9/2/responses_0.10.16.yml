@@ -1,0 +1,46 @@
+{% set name = "responses" %}
+{% set version = 0.10.16 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: fa125311607ab3e57d8fcc4da20587f041b4485bdfb06dd6bdf19d8b66f870c1
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - cookies  # [py<34]
+    - mock  # [py<33]
+    - python
+    - requests >=2.0
+    - six
+    - urllib3 >=1.25.10
+
+test:
+  imports:
+    - responses
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/getsentry/responses
+  summary: A utility library for mocking out the `requests` Python library.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mariusvniekerk

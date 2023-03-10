@@ -1,0 +1,47 @@
+{% set name = "archspec" %}
+{% set version = 0.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 34bafad493b41208857232e21776216d716de37ab051a6a4a1cc1653f7e26423
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - archspec = archspec.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+  run:
+    - click >=7.1.2,<8.0
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+    - six >=1.13.0,<2.0.0
+
+test:
+  imports:
+    - archspec
+    - archspec.cpu
+  commands:
+    - pip check
+    - archspec --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/archspec/archspec
+  summary: A library to query system architecture
+  license: Apache-2.0
+  license_file: LICENSE-APACHE
+
+extra:
+  recipe-maintainers:
+    - isuruf

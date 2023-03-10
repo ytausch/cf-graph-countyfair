@@ -1,0 +1,47 @@
+{% set name = "arc3o" %}
+{% set version = 0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/arc3o-{{ version }}.tar.gz
+  sha256: b5f863ceeefec9c923dd3cd9cee8838239b11047e3ac010d1b61a81f93cadc90
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - numpy
+    - pandas
+    - pathos
+    - python >=3.5
+    - tqdm
+    - xarray
+
+test:
+  imports:
+    - arc3o
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ClimateClara/arc3o
+  summary: An observation operator for the Arctic Ocean for 6.9 GHz
+  dev_url: https://github.com/ClimateClara/arc3o
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ClimateClara

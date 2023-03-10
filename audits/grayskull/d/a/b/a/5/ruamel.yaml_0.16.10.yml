@@ -1,0 +1,46 @@
+{% set name = "ruamel.yaml" %}
+{% set version = 0.16.10 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ruamel.yaml-{{ version }}.tar.gz
+  sha256: 099c644a778bf72ffa00524f78dd0b6476bca94a1da344130f4bf3381ce5b954
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - wheel
+  run:
+    - python
+
+test:
+  imports:
+    - ruamel
+    - ruamel.yaml
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://sourceforge.net/p/ruamel-yaml/code/ci/default/tree
+  summary: ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - pelson
+    - mwcraig
+    - ocefpaf
+    - mbargull

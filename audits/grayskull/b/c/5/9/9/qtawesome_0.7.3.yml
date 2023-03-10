@@ -1,0 +1,48 @@
+{% set name = "qtawesome" %}
+{% set version = 0.7.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/QtAwesome-{{ version }}.tar.gz
+  sha256: b98b9038d19190e83ab26d91c4d8fc3a36591ee2bc7f5016d4438b8240d097bd
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - qta-browser=qtawesome.icon_browser:run
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - qtpy
+    - six
+
+test:
+  imports:
+    - qtawesome
+  commands:
+    - pip check
+    - qta-browser --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/spyder-ide/qtawesome
+  summary: FontAwesome icons in PyQt and PySide applications
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - SylvainCorlay
+    - ccordoba12
+    - dalthviz

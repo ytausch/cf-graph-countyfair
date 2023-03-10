@@ -1,0 +1,46 @@
+{% set name = "firefly-client" %}
+{% set version = 2.4.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/firefly_client-{{ version }}.tar.gz
+  sha256: 4e200b8e3c8399206b9e10af386fe5f8aefa5dc77f3bc48b9182f570ebba70ec
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - future
+    - python
+    - requests
+    - ws4py
+
+test:
+  imports:
+    - firefly_client
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/Caltech-IPAC/firefly_client
+  summary: Python API for Firefly
+  license: NOASSERTION
+  license_file: License.txt
+
+extra:
+  recipe-maintainers:
+    - brianv0
+    - robyww
+    - loitly

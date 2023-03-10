@@ -1,0 +1,43 @@
+{% set name = "starlette" %}
+{% set version = 0.13.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/starlette-{{ version }}.tar.gz
+  sha256: 82df29b2149437ad828a883674bf031788600c876dae50835e98398bd1706183
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - starlette
+    - starlette/middleware
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/encode/starlette
+  summary: The little ASGI library that shines.
+  license: BSD-3-Clause
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - carlodri
+    - dgasmith

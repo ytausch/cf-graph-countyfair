@@ -1,0 +1,50 @@
+{% set name = "graphene-django" %}
+{% set version = 2.13.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 8a4efc7bf954ba0b5a28d3cdb090b36941aca6b83d211e3cd3ab29cf53ac6154
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - django >=1.11
+    - graphene >=2.1.7,<3
+    - graphql-core >=2.1.0,<3
+    - promise >=2.1
+    - python
+    - singledispatch >=3.4.0.3
+    - six >=1.10.0
+    - unidecode >=1.1.1,<2
+
+test:
+  imports:
+    - graphene_django
+    - graphene_django.debug
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/graphql-python/graphene-django
+  summary: Graphene Django integration
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - KingDarBoja

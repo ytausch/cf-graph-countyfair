@@ -1,0 +1,47 @@
+{% set name = "libcst" %}
+{% set version = 0.3.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: b5185c84f0e4a38409aac59f53a71741bec8c1b1159c874996b3266daafe63e5
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dataclasses  # [py<37]
+    - python
+    - pyyaml >=5.2
+    - typing-extensions >=3.7.4.2
+    - typing_inspect >=0.4.0
+
+test:
+  imports:
+    - libcst
+    - libcst._nodes
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Instagram/LibCST
+  summary: A concrete syntax tree with AST-like properties for Python 3.5, 3.6, 3.7 and 3.8 programs.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nehaljwani
+    - bollwyvl

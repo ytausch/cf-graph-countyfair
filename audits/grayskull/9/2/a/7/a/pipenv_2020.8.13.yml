@@ -1,0 +1,54 @@
+{% set name = "pipenv" %}
+{% set version = 2020.8.13 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: eff0e10eadb330f612edfa5051d3d8e775e9e0e918c3c50361da703bd0daa035
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  entry_points:
+    - pipenv=pipenv:cli
+    - pipenv-resolver=pipenv.resolver:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - certifi
+    - enum34  # [py<3]
+    - pip >=18.0
+    - python
+    - setuptools >=36.2.1
+    - typing  # [py<35]
+    - virtualenv
+    - virtualenv-clone >=0.2.5
+
+test:
+  imports:
+    - pipenv
+    - pipenv.cli
+  commands:
+    - pip check
+    - pipenv --help
+    - pipenv-resolver --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pypa/pipenv
+  summary: Python Development Workflow for Humans.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - roccqqck

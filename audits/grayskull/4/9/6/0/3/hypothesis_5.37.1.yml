@@ -1,0 +1,49 @@
+{% set name = "hypothesis" %}
+{% set version = 5.37.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hypothesis-{{ version }}.tar.gz
+  sha256: 9b524052b0c5ed584d8c3a1c21a5b5d6333378a8b20b652792af762827401681
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - hypothesis = hypothesis.extra.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - attrs >=19.2.0
+    - python >=3.6
+    - sortedcontainers >=2.1.0,<3.0.0
+
+test:
+  imports:
+    - hypothesis
+    - hypothesis.extra
+  commands:
+    - pip check
+    - hypothesis --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/HypothesisWorks/hypothesis/tree/master/hypothesis-python
+  summary: A library for property-based testing
+  license: MPL-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - ericmjl
+    - jochym
+    - tadeu

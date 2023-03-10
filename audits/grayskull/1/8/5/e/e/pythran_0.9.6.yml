@@ -1,0 +1,56 @@
+{% set name = "pythran" %}
+{% set version = 0.9.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2d102a55d9d53f77cf0f4a904eeb5cbaa8fe76e4892319a859fc618401e2f6ba
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pythran = pythran.run:run
+    - pythran-config = pythran.config:run
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - beniget ~=0.2.1
+    - decorator
+    - gast ~=0.3.3
+    - networkx >=2
+    - numpy
+    - ply >=3.4
+    - python
+    - six
+
+test:
+  imports:
+    - omp
+    - pythran
+  commands:
+    - pip check
+    - pythran --help
+    - pythran-config --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/serge-sans-paille/pythran
+  summary: Ahead of Time compiler for numeric kernels
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - saraedum
+    - serge-sans-paille

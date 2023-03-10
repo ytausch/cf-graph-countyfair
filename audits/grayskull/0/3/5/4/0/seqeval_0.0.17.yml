@@ -1,0 +1,46 @@
+{% set name = "seqeval" %}
+{% set version = 0.0.17 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/seqeval-{{ version }}.tar.gz
+  sha256: 382043fef1d13e2d236b9fec0bcbfeb7974877a027d798644bc8c8c6a3742910
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - keras >=2.2.4
+    - numpy >=1.14.0
+    - python
+
+test:
+  imports:
+    - seqeval
+    - seqeval.metrics
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/chakki-works/seqeval
+  summary: Testing framework for sequence labeling
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - oblute
+    - benhuff

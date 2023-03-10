@@ -1,0 +1,44 @@
+{% set name = "paste" %}
+{% set version = 3.4.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Paste-{{ version }}.tar.gz
+  sha256: de4dccf92e06d505add5a634e01d2ddb7a15a53f68c522c57531c8e69ba4bd1a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - six >=1.4.0
+
+test:
+  imports:
+    - paste
+    - paste.auth
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pythonpaste.readthedocs.io/
+  summary: Tools for using a Web Server Gateway Interface stack
+  license: MIT
+  license_file: docs/license.txt
+
+extra:
+  recipe-maintainers:
+    - kwilcox
+    - daf

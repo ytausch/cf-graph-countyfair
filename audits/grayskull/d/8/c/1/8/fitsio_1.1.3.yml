@@ -1,0 +1,45 @@
+{% set name = "fitsio" %}
+{% set version = 1.1.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/fitsio-{{ version }}.tar.gz
+  sha256: abed9700a1aaada9a74315b17bd0b14f4c08603a35783fc51a12e02c0e33b797
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy
+    - pip
+    - python
+  run:
+    - python
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - fitsio
+    - fitsio.hdu
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/esheldon/fitsio
+  summary: A full featured python library to read from and write to FITS files.
+  license: GPL-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - beckermr

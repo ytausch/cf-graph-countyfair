@@ -1,0 +1,42 @@
+{% set name = "remi" %}
+{% set version = 2020.8.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2a1953747fd01bfda25381624f6b84d83586d247f6b47282dbafff348fd05d88
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - editor
+    - editor.widgets
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dddomodossola/remi
+  summary: Python REMote Interface library
+  license: Apache-1.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - silun

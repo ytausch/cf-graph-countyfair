@@ -1,0 +1,43 @@
+{% set name = "pylatex" %}
+{% set version = 1.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PyLaTeX-{{ version }}.tar.gz
+  sha256: 25d68aa0c7c10b1d6d95092933ffa3efeb84a57d614f68e12935985fbcdae85e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ordered-set
+    - python
+
+test:
+  imports:
+    - pylatex
+    - pylatex.base_classes
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/JelteF/PyLaTeX
+  summary: A Python library for creating LaTeX files and snippets
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Hoxbro

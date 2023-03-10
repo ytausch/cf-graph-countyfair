@@ -1,0 +1,41 @@
+{% set name = "crossenv" %}
+{% set version = 1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/crossenv-{{ version }}.tar.gz
+  sha256: ed6800af1d7b30dd0e594566febc6f135cb5be378f7c5698c64228bcccc7d6c6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.4
+  run:
+    - python >=3.4
+
+test:
+  imports:
+    - crossenv
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/benfogle/crossenv
+  summary: A cross-compiling tool for Python extension modules
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - isuruf

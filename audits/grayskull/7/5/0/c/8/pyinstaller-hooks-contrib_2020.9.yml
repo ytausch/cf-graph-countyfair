@@ -1,0 +1,43 @@
+{% set name = "pyinstaller-hooks-contrib" %}
+{% set version = 2020.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyinstaller-hooks-contrib-{{ version }}.tar.gz
+  sha256: a5fd45a920012802e3f2089e1d3501ef2f49265dfea8fc46c3310f18e3326c91
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools >=30.3.0
+  run:
+    - python
+
+test:
+  imports:
+    - _pyinstaller_hooks_contrib
+    - _pyinstaller_hooks_contrib.hooks
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyinstaller/pyinstaller-hooks-contrib
+  summary: Community maintained hooks for PyInstaller
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nehaljwani

@@ -1,0 +1,57 @@
+{% set name = "nbcelltests" %}
+{% set version = 0.2.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nbcelltests-{{ version }}.tar.gz
+  sha256: 4e9b410861a523a298c72779fcf3334d42aa2163e2af1bd4e9d3fcf70585a17f
+
+build:
+  number: 0
+  entry_points:
+    - nbcelltests=nbcelltests.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - jupyter_packaging
+    - pip
+    - python
+  run:
+    - backports.tempfile  # [py<3]
+    - flake8
+    - nbconvert
+    - nbformat >=4.0.0
+    - nbval >=0.9.1
+    - notebook
+    - parameterized
+    - pytest >=4.4.0
+    - pytest-cov
+    - pytest-html >=1.20.0
+    - python
+
+test:
+  imports:
+    - nbcelltests
+    - nbcelltests.lint
+  commands:
+    - pip check
+    - nbcelltests --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jpmorganchase/nbcelltests
+  summary: Cell-by-cell tests for JupyterLab
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - timkpaine
+    - ceball
+    - vidartf

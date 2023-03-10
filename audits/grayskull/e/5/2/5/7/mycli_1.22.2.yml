@@ -1,0 +1,54 @@
+{% set name = "mycli" %}
+{% set version = 1.22.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: fb2e5dc74a8ec75049ebf02c0d7f14238a279a7eacb31138ac6d8f524aea02d3
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - mycli = mycli.main:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - cli_helpers >1.1.0
+    - click >=7.0
+    - configobj >=5.0.5
+    - cryptography >=1.0.0
+    - prompt-toolkit <4.0.0,>=3.0.0
+    - prompt_toolkit >=3.0.0,<4.0.0
+    - pygments >=1.6
+    - pymysql >=0.9.2
+    - python >=3.6
+    - sqlparse >=0.3.0,<0.4.0
+
+test:
+  imports:
+    - mycli
+    - mycli.packages
+  commands:
+    - pip check
+    - mycli --help
+  requires:
+    - pip
+
+about:
+  home: http://mycli.net
+  summary: CLI for MySQL Database. With auto-completion and syntax highlighting.
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - tschoonj

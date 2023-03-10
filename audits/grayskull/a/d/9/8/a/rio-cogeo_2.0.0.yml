@@ -1,0 +1,47 @@
+{% set name = "rio-cogeo" %}
+{% set version = 2.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rio-cogeo-{{ version }}.tar.gz
+  sha256: eb6d3f779ba1b25621b221b58fb7cd2a9b24d29c72b785fcfc67868189a4ef85
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.0
+  run:
+    - click
+    - mercantile ~=1.1
+    - numpy ~=1.15
+    - python >=3.0
+    - rasterio ~=1.1
+    - supermercado
+
+test:
+  imports:
+    - rio_cogeo
+    - rio_cogeo.scripts
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cogeotiff/rio-cogeo
+  summary: Cloud Optimized GeoTIFF (COGEO) creation plugin for rasterio
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf

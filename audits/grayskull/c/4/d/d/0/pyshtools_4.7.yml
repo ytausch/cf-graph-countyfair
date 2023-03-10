@@ -1,0 +1,54 @@
+{% set name = "pyshtools" %}
+{% set version = 4.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyshtools-{{ version }}.tar.gz
+  sha256: da1d459ca04dcaec9c9637dfe8b178b53fb510333e3d106214950560a1a0d784
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - numpy
+    - pip
+    - pypandoc
+    - python >=3.6
+  run:
+    - astropy
+    - matplotlib-base >=3.3
+    - numpy >=1.19.1
+    - pooch >=1.1
+    - python >=3.6
+    - requests
+    - scipy >=0.14.0
+    - tqdm
+    - xarray
+
+test:
+  imports:
+    - pyshtools
+    - pyshtools.constants
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://shtools.github.io/SHTOOLS/
+  summary: SHTOOLS - Spherical Harmonic Tools
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - megies
+    - moorepants
+    - markwieczorek

@@ -1,0 +1,45 @@
+{% set name = "colcon-python-setup-py" %}
+{% set version = 0.2.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/colcon-python-setup-py-{{ version }}.tar.gz
+  sha256: eec293085c4301797706d9e61634fa0cb2136be9b820aa556b2b8baa0bde412d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - colcon-core >=0.6.1
+    - python
+    - setuptools
+
+test:
+  imports:
+    - colcon_python_setup_py
+    - colcon_python_setup_py.package_augmentation
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://colcon.readthedocs.io
+  summary: Extension for colcon to support Python packages with the metadata in the setup.py file.
+  license: AFL-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - seanyen
+    - wolfv

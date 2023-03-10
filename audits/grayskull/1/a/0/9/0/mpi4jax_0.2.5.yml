@@ -1,0 +1,41 @@
+{% set name = "mpi4jax" %}
+{% set version = 0.2.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/mpi4jax-{{ version }}.tar.gz
+  sha256: 817f246d7f7c61af0a751ec227893f9fe17316e2c2d3af7df7515276be2f94a9
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cython
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - mpi4jax
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/PhilipVinc/mpi4jax
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - PhilipVinc

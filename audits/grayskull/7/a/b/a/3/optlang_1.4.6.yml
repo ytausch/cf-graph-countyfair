@@ -1,0 +1,47 @@
+{% set name = "optlang" %}
+{% set version = 1.4.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/optlang-{{ version }}.tar.gz
+  sha256: b97a7193357d9b7da044868cfb014dd49a3782f620920be5007fdadf4d8c56c5
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+  run:
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+    - six >=1.9
+    - swiglpk >=1.4.3
+    - sympy >=1.0
+
+test:
+  imports:
+    - optlang
+    - optlang.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/opencobra/optlang
+  summary: Formulate optimization problems using sympy expressions and solve them using interfaces to third-party optimization software (e.g. GLPK).
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - druvus
+    - Midnighter
+    - phantomas1234

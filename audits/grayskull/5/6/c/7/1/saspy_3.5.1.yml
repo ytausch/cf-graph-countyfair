@@ -1,0 +1,41 @@
+{% set name = "saspy" %}
+{% set version = 3.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/saspy-{{ version }}.tar.gz
+  sha256: 81729d317988c111723d4c08a7572704d77ee2aa7f02b65ffa2a0fd3e9760a24
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - saspy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sassoftware/saspy
+  summary: A Python interface to SAS
+  license: Apache-2.0
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - danielfrg

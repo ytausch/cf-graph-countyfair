@@ -1,0 +1,44 @@
+{% set name = "neworder" %}
+{% set version = 0.0.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/neworder-{{ version }}.tar.gz
+  sha256: 43eb1fdc8aff099a4a40ae0b1011e7f676780157731c00e03594c531f151c57b
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - pybind11 >=2.5.0
+    - pytest-runner
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - neworder
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://neworder.readthedocs.io
+  summary: A dynamic microsimulation framework
+  license: MIT
+  license_file: .eggs/pytest_runner-5.2-py3.7.egg/EGG-INFO/LICENSE
+
+extra:
+  recipe-maintainers:
+    - virgesmith

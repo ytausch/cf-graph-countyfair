@@ -1,0 +1,44 @@
+{% set name = "healsparse" %}
+{% set version = 1.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/healsparse-{{ version }}.tar.gz
+  sha256: 130404941f1eff386c4aadd9fd20445a16e5e72f371538971af80612b516e1b2
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - astropy
+    - healpy
+    - numpy
+    - python
+
+test:
+  imports:
+    - healsparse
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/lsstdesc/healsparse
+  summary: Sparse healpix maps and geometry library
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - erykoff

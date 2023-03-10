@@ -1,0 +1,45 @@
+{% set name = "pynamodb" %}
+{% set version = 4.3.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pynamodb-{{ version }}.tar.gz
+  sha256: ced47c200073dbbfafb10b26931b9c9bf3c6b898f41dffa3676f5c2e2eddc2f0
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - botocore >=1.12.54
+    - python
+    - python-dateutil >=2.1,<3.0.0
+    - six
+
+test:
+  imports:
+    - pynamodb
+    - pynamodb.connection
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://jlafon.io/pynamodb.html
+  summary: A Pythonic Interface to DynamoDB
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - sodre

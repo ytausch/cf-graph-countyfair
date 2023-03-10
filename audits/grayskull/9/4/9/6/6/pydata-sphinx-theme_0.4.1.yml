@@ -1,0 +1,42 @@
+{% set name = "pydata-sphinx-theme" %}
+{% set version = 0.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pydata-sphinx-theme-{{ version }}.tar.gz
+  sha256: 4e95d0dca0a64ba9471a89cdb6197cf8bb81b31f75ad0b7b6f0e85196fb7fe39
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+    - sphinx
+
+test:
+  imports:
+    - pydata_sphinx_theme
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pandas-dev/pydata-sphinx-theme
+  summary: Bootstrap-based Sphinx theme from the PyData community
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jorisvandenbossche

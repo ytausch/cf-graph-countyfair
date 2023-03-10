@@ -1,0 +1,63 @@
+{% set name = "pyinstaller" %}
+{% set version = 4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyinstaller-{{ version }}.tar.gz
+  sha256: 970beb07115761d5e4ec317c1351b712fd90ae7f23994db914c633281f99bab0
+
+build:
+  number: 0
+  entry_points:
+    - pyinstaller = PyInstaller.__main__:run
+    - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
+    - pyi-bindepend = PyInstaller.utils.cliutils.bindepend:run
+    - pyi-grab_version = PyInstaller.utils.cliutils.grab_version:run
+    - pyi-makespec = PyInstaller.utils.cliutils.makespec:run
+    - pyi-set_version = PyInstaller.utils.cliutils.set_version:run
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools >=39.2.0
+  run:
+    - altgraph
+    - macholib >=1.8  # [darwin]
+    - pefile >=2017.8.1  # [win]
+    - pyinstaller-hooks-contrib >=2020.6
+    - python
+    - pywin32-ctypes >=0.2.0  # [win]
+    - setuptools
+
+test:
+  imports:
+    - PyInstaller
+  commands:
+    - pip check
+    - pyinstaller --help
+    - pyi-archive_viewer --help
+    - pyi-bindepend --help
+    - pyi-grab_version --help
+    - pyi-makespec --help
+    - pyi-set_version --help
+  requires:
+    - pip
+
+about:
+  home: http://www.pyinstaller.org/
+  summary: PyInstaller bundles a Python application and all its dependencies into a single package.
+  doc_url: https://pythonhosted.org/pyinstaller/
+  license: Apache-2.0
+  license_file: COPYING.txt
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - nicoddemus
+    - nehaljwani

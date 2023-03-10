@@ -1,0 +1,52 @@
+{% set name = "pynwb" %}
+{% set version = 1.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pynwb-{{ version }}.tar.gz
+  sha256: 6a46f29d5b30a0cc5f9c2935d870f5b7f7bdcd77393fec307b04c92539b2a9ca
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - h5py >=2.9
+    - hdmf >=2.1.0,<3
+    - numpy >=1.16
+    - pandas >=0.23
+    - python
+    - python-dateutil >=2.7
+
+test:
+  imports:
+    - pynwb
+    - pynwb.io
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/NeurodataWithoutBorders/pynwb
+  summary: Package for working with Neurodata stored in the NWB format
+  license: BSD-3-Clause
+  license_file: license.txt
+
+extra:
+  recipe-maintainers:
+    - ajtritt
+    - bendichter
+    - dorukozturk
+    - jcfr
+    - oruebel
+    - rly

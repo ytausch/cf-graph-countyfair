@@ -1,0 +1,42 @@
+{% set name = "tuna" %}
+{% set version = 0.4.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/tuna-{{ version }}.tar.gz
+  sha256: a487b13fa564101bbc71b731689e1f86b599789c3d940f4b2f40580eefd2133e
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - importlib-metadata  # [py<38]
+    - python
+
+test:
+  imports:
+    - tuna
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/nschloe/tuna
+  summary: Visualize Python performance profiles
+  license: GPL-3.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - hmaarrfk

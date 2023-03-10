@@ -1,0 +1,51 @@
+{% set name = "hydrodata" %}
+{% set version = 0.7.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hydrodata-{{ version }}.tar.gz
+  sha256: 5f3aa5bec0f550091ac14348f4db437bb3d8c5d764e56d47f018a2922f77bec6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools >=41.2
+    - setuptools_scm
+  run:
+    - folium
+    - lxml
+    - matplotlib-base
+    - py3dep
+    - pydaymet
+    - pygeoogc
+    - pygeoutils
+    - pynhd
+    - python >=3.6
+
+test:
+  imports:
+    - hydrodata
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cheginit/hydrodata
+  summary: A portal to access hydrology and climatology databases in Python
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - cheginit

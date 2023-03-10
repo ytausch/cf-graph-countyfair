@@ -1,0 +1,46 @@
+{% set name = "srsly" %}
+{% set version = 2.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/srsly-{{ version }}.tar.gz
+  sha256: f994a266f6e547c8ffe803cb90baed7ca566831f924e0491402564ba0d185e66
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cython
+    - cython >=0.25
+    - pip
+    - python >=3.6
+    - wheel
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - srsly
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/explosion/srsly
+  summary: Modern high-performance serialization utilities for Python
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ines
+    - honnibal
+    - adrianeboyd

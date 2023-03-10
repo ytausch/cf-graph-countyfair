@@ -1,0 +1,52 @@
+{% set name = "pytest-selenium" %}
+{% set version = 2.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest-selenium-{{ version }}.tar.gz
+  sha256: a0008e6dce7c68501369c1c543420f5906ffada493d4ff0c5d9d5ccdf4022203
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - pytest >=5.0.0
+    - pytest-base-url
+    - pytest-html >=1.14.0
+    - pytest-variables >=1.5.0
+    - python >=3.6
+    - requests
+    - selenium >=3.0.0
+    - tenacity >=6,<7
+
+test:
+  imports:
+    - pytest_selenium
+    - pytest_selenium.drivers
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pytest-dev/pytest-selenium
+  summary: pytest plugin for Selenium
+  license: MPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - birdsarah
+    - davehunt
+    - nicoddemus

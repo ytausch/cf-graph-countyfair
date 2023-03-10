@@ -1,0 +1,51 @@
+{% set name = "pygeoogc" %}
+{% set version = 0.1.10 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pygeoogc-{{ version }}.tar.gz
+  sha256: 35230cedc9d7f6b10e85e1eef579ff8be21c3047ae933c4649a7eb9198f3a1e8
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools >=41.2
+    - setuptools_scm
+  run:
+    - dataclasses
+    - defusedxml
+    - orjson
+    - owslib
+    - pyproj
+    - python >=3.6
+    - requests
+    - setuptools
+    - shapely
+
+test:
+  imports:
+    - pygeoogc
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cheginit/pygeoogc
+  summary: An interface to ArcGIS RESTful-, WFS-, and WMS-based services.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - cheginit

@@ -1,0 +1,55 @@
+{% set name = "dash" %}
+{% set version = 1.14.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 7a55e2f5381bf3323873a9b5e7dbb8112a5c8c5e7fe7e554bda2ed9d3f3e04fc
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - dash-generate-components = dash.development.component_generator:cli
+    - renderer = dash.development.build_process:renderer
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2
+  run:
+    - dash-core-components ==1.10.2
+    - dash-html-components ==1.0.3
+    - dash-renderer ==1.6.0
+    - dash-table ==4.9.0
+    - flask >=1.0.2
+    - flask-compress
+    - future
+    - plotly
+    - python !=3.0,!=3.1,!=3.2
+
+test:
+  imports:
+    - dash
+    - dash.development
+  commands:
+    - pip check
+    - dash-generate-components --help
+    - renderer --help
+  requires:
+    - pip
+
+about:
+  home: https://plotly.com/dash
+  summary: A Python framework for building reactive web-apps. Developed by Plotly.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - moorepants

@@ -1,0 +1,46 @@
+{% set name = "sphinx-automodapi" %}
+{% set version = 0.13 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sphinx-automodapi-{{ version }}.tar.gz
+  sha256: e1019336df7f7f0bcbf848eff7b84e7bef71691a57d8b5bda9107a2a046a226a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+    - sphinx >=1.7
+
+test:
+  imports:
+    - sphinx_automodapi
+    - sphinx_automodapi.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://astropy.org
+  summary: Sphinx extension for auto-generating API documentation for entire modules
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - astrofrog-conda-forge
+    - drdavella
+    - mwcraig
+    - bsipocz

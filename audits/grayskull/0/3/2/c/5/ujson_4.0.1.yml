@@ -1,0 +1,46 @@
+{% set name = "ujson" %}
+{% set version = 4.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ujson-{{ version }}.tar.gz
+  sha256: 26cf6241b36ff5ce4539ae687b6b02673109c5e3efc96148806a7873eaa229d3
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - python
+
+test:
+  imports:
+    - ujson
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ultrajson/ultrajson
+  summary: Ultra fast JSON encoder and decoder for Python
+  dev_url: https://github.com/ultrajson/ultrajson
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - kszucs
+    - synapticarbors

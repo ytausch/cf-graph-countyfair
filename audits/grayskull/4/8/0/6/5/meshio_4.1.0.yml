@@ -1,0 +1,45 @@
+{% set name = "meshio" %}
+{% set version = 4.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 7f7494d419d2a5602fc6173535096295a46a1948bd8d3095095c0cecae74e768
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - importlib-metadata  # [py<38]
+    - numpy
+    - python
+
+test:
+  imports:
+    - meshio
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/nschloe/meshio
+  summary: I/O for many mesh formats
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - nschloe
+    - MuellerSeb
+    - banesullivan

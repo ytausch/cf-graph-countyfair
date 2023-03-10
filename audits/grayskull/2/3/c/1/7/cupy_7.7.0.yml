@@ -1,0 +1,48 @@
+{% set name = "cupy" %}
+{% set version = 7.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: b4032adf839f63bab7fc9f3e7066ef86abe0928e834aa5d132e4e7ce907951ed
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - cupy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://cupy.dev/
+  summary: 'CuPy: NumPy-like API accelerated with CUDA'
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - leofang
+    - kmaehashi
+    - beam2d
+    - asi1024
+    - emcastillo
+    - hvy
+    - toslunar

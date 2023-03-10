@@ -1,0 +1,42 @@
+{% set name = "aiosmtplib" %}
+{% set version = 1.1.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aiosmtplib-{{ version }}.tar.gz
+  sha256: 8270d0a06475aa05b9276fc954fbd08a1f6c59d0452b4899413d8bca1db24541
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5,<4.0
+  run:
+    - python >=3.5,<4.0
+
+test:
+  imports:
+    - aiosmtplib
+    - docs
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cole/aiosmtplib
+  summary: asyncio SMTP client
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - mcs07

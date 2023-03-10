@@ -1,0 +1,45 @@
+{% set name = "meautility" %}
+{% set version = 1.4.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/MEAutility-{{ version }}.tar.gz
+  sha256: 63466aa36d7a5247e2cfa31d0a75e8a5dfab58975f8d18737dac8da1b252a5f5
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - matplotlib-base
+    - numpy
+    - python
+    - pyyaml
+
+test:
+  imports:
+    - MEAutility
+    - MEAutility.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/alejoe91/MEAutility
+  summary: Python package for multi-electrode array (MEA) handling and stimulation.
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - alejoe91

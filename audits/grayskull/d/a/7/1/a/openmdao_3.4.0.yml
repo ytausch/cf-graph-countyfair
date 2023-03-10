@@ -1,0 +1,57 @@
+{% set name = "openmdao" %}
+{% set version = 3.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/openmdao-{{ version }}.tar.gz
+  sha256: c7e9d6bb9045aa1f537b9016683add16560f10b1f9706486e50f3fba45c770fb
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - wingproj=openmdao.devtools.wingproj:run_wing
+    - webview=openmdao.utils.webview:webview_argv
+    - run_om_test=openmdao.devtools.run_test:run_test
+    - openmdao=openmdao.utils.om:openmdao_cmd
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - networkx >=2.0
+    - numpy
+    - pydoe2
+    - pyparsing
+    - python >=3.6
+    - requests
+    - scipy
+
+test:
+  imports:
+    - openmdao
+    - openmdao.approximation_schemes
+  commands:
+    - pip check
+    - wingproj --help
+    - webview --help
+    - run_om_test --help
+    - openmdao --help
+  requires:
+    - pip
+
+about:
+  home: http://openmdao.org
+  summary: OpenMDAO framework infrastructure
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - bollwyvl

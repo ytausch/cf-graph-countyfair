@@ -1,0 +1,51 @@
+{% set name = "importnb" %}
+{% set version = 0.6.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 255973c6285c8a96d95012f1612ab5ba0b089e5a467386544d25cbff9c0dc1ac
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - importnb-install = importnb.utils.ipython:install
+    - importnb-uninstall = importnb.utils.ipython:uninstall
+    - nbdoctest = importnb.utils.nbdoctest:_test
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.4
+  run:
+    - importlib_resources
+    - python >=3.4
+
+test:
+  imports:
+    - importnb
+    - importnb.utils
+  commands:
+    - pip check
+    - importnb-install --help
+    - importnb-uninstall --help
+    - nbdoctest --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/deathbeds/importnb
+  summary: Import Jupyter (ne IPython) notebooks into tests and scripts.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - bollwyvl

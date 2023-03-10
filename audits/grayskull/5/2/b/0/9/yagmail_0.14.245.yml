@@ -1,0 +1,45 @@
+{% set name = "yagmail" %}
+{% set version = 0.14.245 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/yagmail-{{ version }}.tar.gz
+  sha256: b1ad2d7d8be71fa2861d5c68bbf83858f0ab89f08d01180e2144216b063dce61
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - yagmail = yagmail.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - premailer
+    - python
+
+test:
+  imports:
+    - yagmail
+  commands:
+    - pip check
+    - yagmail --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/kootenpv/yagmail
+  summary: Yet Another GMAIL client
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - setu4993

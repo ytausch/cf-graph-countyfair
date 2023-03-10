@@ -1,0 +1,44 @@
+{% set name = "stdlib-list" %}
+{% set version = 0.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/stdlib-list-{{ version }}.tar.gz
+  sha256: 66c1c1724a12667cdb35be9f43181c3e6646c194e631efaaa93c1f2c2c7a1f7f
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - functools32  # [py<32]
+    - python
+
+test:
+  imports:
+    - stdlib_list
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jackmaney/python-stdlib-list
+  summary: A list of Python Standard Libraries (2.6-7, 3.2-8).
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ericdill
+    - parente
+    - marshall245
+    - jackmaney

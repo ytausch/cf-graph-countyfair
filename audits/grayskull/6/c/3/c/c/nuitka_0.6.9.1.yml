@@ -1,0 +1,48 @@
+{% set name = "nuitka" %}
+{% set version = 0.6.9.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Nuitka-{{ version }}.tar.gz
+  sha256: 0b6f1e2513a273957092dfe92a7e2cf526bf989e77c68fde984ccdca8024051d
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - nuitka3 = nuitka.__main__:main
+    - nuitka3-run = nuitka.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - nuitka
+    - nuitka.build
+  commands:
+    - pip check
+    - nuitka3 --help
+    - nuitka3-run --help
+  requires:
+    - pip
+
+about:
+  home: https://nuitka.net
+  summary: Python compiler with full language support and CPython compatibility
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - frol
+    - kayhayen

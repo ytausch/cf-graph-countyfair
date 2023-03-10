@@ -1,0 +1,48 @@
+{% set name = "blackdoc" %}
+{% set version = 0.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/blackdoc-{{ version }}.tar.gz
+  sha256: 1573230228009268b506ea2590ecedc41c8604b86706645b177bd7d64193db19
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - blackdoc=blackdoc.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - black
+    - importlib-metadata  # [py<38]
+    - more-itertools
+    - python
+
+test:
+  imports:
+    - blackdoc
+    - blackdoc.formats
+  commands:
+    - pip check
+    - blackdoc --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/keewis/blackdoc
+  summary: run black on documentation code snippets
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - keewis

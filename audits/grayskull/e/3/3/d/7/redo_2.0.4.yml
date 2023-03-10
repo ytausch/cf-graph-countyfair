@@ -1,0 +1,45 @@
+{% set name = "redo" %}
+{% set version = 2.0.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/redo-{{ version }}.tar.gz
+  sha256: 81066955041c853b0e6491eb65a0877dce45131c4cfa3d42d923fc2aa8f7a043
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - retry = redo.cmd:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - redo
+  commands:
+    - pip check
+    - retry --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mozilla-releng/redo
+  summary: Utilities to retry Python callables.
+  license: MPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jaimergp
+    - mozbhearsum

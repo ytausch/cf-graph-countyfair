@@ -1,0 +1,45 @@
+{% set name = "quaternionic" %}
+{% set version = 0.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/quaternionic-{{ version }}.tar.gz
+  sha256: f4909d34c2b3d2e86190db0a0e82e41cd0437a8ddce4546725da7758245d44cd
+
+build:
+  number: 0
+  skip: true   # [py>=40 or py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - importlib-metadata >=1.0,<2.0  # [py<38]
+    - numba >=0.50,<0.51
+    - numpy >=1.13,<2.0
+    - python
+    - scipy >=1.0,<2.0
+
+test:
+  imports:
+    - quaternionic
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/moble/quaternionic
+  summary: Interpret numpy arrays as quaternionic arrays with numba acceleration
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - moble

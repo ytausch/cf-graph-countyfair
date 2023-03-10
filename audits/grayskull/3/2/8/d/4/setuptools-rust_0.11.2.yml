@@ -1,0 +1,46 @@
+{% set name = "setuptools-rust" %}
+{% set version = 0.11.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 02c16a2e155190e3eca8a9d41937a33e32d41d42d4c7ee7a81e50d9ba952e2bc
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools >=41
+    - setuptools_scm>=3.4.3
+    - wheel
+  run:
+    - python
+    - semantic_version >=2.6.0
+    - toml >=0.9.0
+
+test:
+  imports:
+    - setuptools_rust
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/PyO3/setuptools-rust
+  summary: Setuptools rust extension plugin
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nicoddemus

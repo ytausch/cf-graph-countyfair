@@ -1,0 +1,47 @@
+{% set name = "rollbar" %}
+{% set version = 0.15.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rollbar-{{ version }}.tar.gz
+  sha256: 96b63df27a47232aa16a142d2f5812073f8bf7db2b81c5f7981b9a4d4659468c
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - rollbar=rollbar.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - requests >=0.12.1
+    - six >=1.9.0
+
+test:
+  imports:
+    - rollbar
+    - rollbar.contrib
+  commands:
+    - pip check
+    - rollbar --help
+  requires:
+    - pip
+
+about:
+  home: http://github.com/rollbar/pyrollbar
+  summary: Easy and powerful exception tracking with Rollbar. Send messages and exceptions with arbitrary context, get back aggregates, and debug production issues quickly.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - TheOriginalAlex

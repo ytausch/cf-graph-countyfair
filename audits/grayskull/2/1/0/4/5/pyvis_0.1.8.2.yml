@@ -1,0 +1,46 @@
+{% set name = "pyvis" %}
+{% set version = 0.1.8.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 191b881613fa22dc1a008140ca5990f4c72a69fd8ac80efc1e89ca5e08b1b04d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ipython >=5.3.0
+    - jinja2 >=2.9.6
+    - jsonpickle >=1.4.1
+    - networkx >=1.11
+    - python
+
+test:
+  imports:
+    - pyvis
+    - pyvis.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/WestHealth/pyvis
+  summary: A Python network visualization library
+  license: BSD-1-Clause
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf

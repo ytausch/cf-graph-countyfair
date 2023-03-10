@@ -1,0 +1,60 @@
+{% set name = "abc-classroom" %}
+{% set version = 0.1.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/abc-classroom-{{ version }}.tar.gz
+  sha256: c7ca1aa7c52898b8c37770b7d1ac6ab003e5a2fdcbe68612393ed77e6d7c336d
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - abc-init = abcclassroom.__main__:init
+    - abc-quickstart = abcclassroom.__main__:quickstart
+    - abc-new-template = abcclassroom.__main__:new_template
+    - abc-update-template = abcclassroom.__main__:update_template
+    - abc-clone = abcclassroom.__main__:clone
+    - abc-feedback = abcclassroom.__main__:feedback
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - github3.py
+    - jinja2
+    - nbclean
+    - nbformat
+    - papermill
+    - python
+    - ruamel.yaml
+
+test:
+  imports:
+    - abcclassroom
+  commands:
+    - pip check
+    - abc-init --help
+    - abc-quickstart --help
+    - abc-new-template --help
+    - abc-update-template --help
+    - abc-clone --help
+    - abc-feedback --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/earthlab/abc-classroom
+  summary: Efficiently manage github classroom assignments from the command line.
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - lwasser

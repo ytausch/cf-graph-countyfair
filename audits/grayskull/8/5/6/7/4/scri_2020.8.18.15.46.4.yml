@@ -1,0 +1,50 @@
+{% set name = "scri" %}
+{% set version = 2020.8.18.15.46.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/scri-{{ version }}.tar.gz
+  sha256: ef8b08f622e6ab3a1a218ce44cec257d591ad34badebf94d55b7b245aa0bd63e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - h5py
+    - numba >=0.49.1
+    - numpy >=1.13
+    - numpy-quaternion >=2019.7.15.12.50.36
+    - python >=3.6
+    - scipy >=0.18.0
+    - spherical_functions >=2020.8.18.15.37.20
+    - spinsfast
+    - sxs
+
+test:
+  imports:
+    - scri
+    - scri.LVC
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/moble/scri
+  summary: Manipulating time-dependent functions of spin-weighted spherical harmonics
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - moble

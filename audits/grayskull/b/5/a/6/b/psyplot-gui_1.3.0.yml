@@ -1,0 +1,49 @@
+{% set name = "psyplot-gui" %}
+{% set version = 1.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/psyplot-gui-{{ version }}.tar.gz
+  sha256: d73e5f5291149587aa7ae125e9949528b1d127b9dd0f09a4a510a73c977768a0
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - fasteners
+    - psyplot >=1.3.0
+    - python
+    - qtconsole
+    - sphinx >=2.4.0
+    - sphinx_rtd_theme
+
+test:
+  imports:
+    - psyplot_gui
+    - psyplot_gui.compat
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/psyplot/psyplot-gui
+  summary: Graphical user interface for the psyplot package
+  dev_url: https://github.com/psyplot/psyplot-gui
+  license: GPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Chilipp

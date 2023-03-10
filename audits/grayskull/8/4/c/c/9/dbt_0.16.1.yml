@@ -1,0 +1,46 @@
+{% set name = "dbt" %}
+{% set version = 0.16.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: bff0aec4dd8582317c248bc845212c2ea1783396e9572f65b60068cbcfdbcd6c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dbt-bigquery ==0.16.1
+    - dbt-core ==0.16.1
+    - dbt-postgres ==0.16.1
+    - dbt-redshift ==0.16.1
+    - dbt-snowflake ==0.16.1
+    - python
+
+test:
+  imports:
+    - dbt
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/fishtown-analytics/dbt
+  summary: With dbt, data analysts and engineers can build analytics the way engineers build applications.
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - drewbanin
+    - jthandy

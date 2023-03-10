@@ -1,0 +1,44 @@
+{% set name = "pyreadr" %}
+{% set version = 0.3.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyreadr-{{ version }}.tar.gz
+  sha256: 22ef2e8ec5c3ffaecf63a0b19fa3ef55c9105a53875b0d77aefb5e351734bcbb
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - pip
+    - python
+  run:
+    - pandas >0.24.0
+    - python
+
+test:
+  imports:
+    - pyreadr
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ofajardo/pyreadr
+  summary: Reads/writes R RData and Rds files into/from pandas data frames.
+  license: AGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ofajardo

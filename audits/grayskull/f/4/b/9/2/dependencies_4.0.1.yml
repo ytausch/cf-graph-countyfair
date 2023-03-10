@@ -1,0 +1,42 @@
+{% set name = "dependencies" %}
+{% set version = 4.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dependencies-{{ version }}.tar.gz
+  sha256: a77c8779a08285632c67feba9883c4ad04af25496848386aa3092b2b8ec327e1
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<3.9
+  run:
+    - python >=3.6,<3.9
+
+test:
+  imports:
+    - _dependencies
+    - _dependencies.checks
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/dependencies/
+  summary: Dependency Injection for Humans
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nicoddemus

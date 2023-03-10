@@ -1,0 +1,44 @@
+{% set name = "shortcutter" %}
+{% set version = 0.1.21 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/shortcutter-{{ version }}.tar.gz
+  sha256: f0806c5c0e5405013917d7f76f2448da538a5be5c89d1d7a500cf874565c0cbd
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - shortcutter = shortcutter:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - shortcutter
+  commands:
+    - pip check
+    - shortcutter --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/kiwi0fruit/shortcutter
+  summary: Easy cross-platform creation of shortcuts supporting virtual and Anaconda environments (fork of Shortcut)
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kiwi0fruit

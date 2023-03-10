@@ -1,0 +1,43 @@
+{% set name = "animatplot" %}
+{% set version = 0.4.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/animatplot-{{ version }}.tar.gz
+  sha256: f41be9138609728fafc475ca52f3be693638ca4ed9bd68601b88a5f8cc47b81e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - matplotlib-base >=2.2
+    - python >=3.5
+
+test:
+  imports:
+    - animatplot
+    - animatplot.animations
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/t-makaro/animatplot/
+  summary: Making animating in matplotlib easy
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - t-makaro

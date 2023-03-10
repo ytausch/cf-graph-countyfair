@@ -1,0 +1,73 @@
+{% set name = "notebook" %}
+{% set version = 6.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 21c38373a8cc179c65b4e49172c7a3af712c42a0be237d811287680a6c8b9ad6
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - jupyter-notebook = notebook.notebookapp:main
+    - jupyter-nbextension = notebook.nbextensions:main
+    - jupyter-serverextension = notebook.serverextensions:main
+    - jupyter-bundlerextension = notebook.bundler.bundlerextensions:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - wheel
+  run:
+    - argon2-cffi
+    - ipykernel
+    - ipython_genutils
+    - jinja2
+    - jupyter_client >=5.3.4
+    - jupyter_core >=4.6.1
+    - nbconvert
+    - nbformat
+    - prometheus_client
+    - python >=3.5
+    - pyzmq >=17
+    - send2trash
+    - terminado >=0.8.3
+    - tornado >=5.0
+    - traitlets >=4.2.1
+
+test:
+  imports:
+    - notebook
+    - notebook.auth
+  commands:
+    - pip check
+    - jupyter-notebook --help
+    - jupyter-nbextension --help
+    - jupyter-serverextension --help
+    - jupyter-bundlerextension --help
+  requires:
+    - pip
+
+about:
+  home: http://jupyter.org
+  summary: A web-based notebook environment for interactive computing
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - SylvainCorlay
+    - jakirkham
+    - minrk
+    - pelson
+    - gnestor
+    - takluyver
+    - lresende
+    - bollwyvl
+    - blink1073

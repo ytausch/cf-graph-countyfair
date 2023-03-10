@@ -1,0 +1,47 @@
+{% set name = "django-rosetta" %}
+{% set version = 0.9.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 0315a6406818c51f0f0fe04aa30328e802c8befcab1d3a34a242961284cb3387
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - tox
+  run:
+    - django >=1.11
+    - polib >=1.1.0
+    - python
+    - requests >=2.1.0
+    - six >=1.2.0
+
+test:
+  imports:
+    - rosetta
+    - rosetta.conf
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mbi/django-rosetta
+  summary: A Django application that eases the translation of Django projects
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kcemenike

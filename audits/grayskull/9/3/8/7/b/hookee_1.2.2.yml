@@ -1,0 +1,49 @@
+{% set name = "hookee" %}
+{% set version = 1.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hookee-{{ version }}.tar.gz
+  sha256: 9718515fa2731b46aa26f9e1f1f517d1f8fc647cd2e884370b651ce4d0b8abbb
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+  run:
+    - click
+    - confuse
+    - flask
+    - future
+    - pluginbase
+    - pyngrok >=4.1.12
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+    - python-dotenv
+
+test:
+  imports:
+    - hookee
+    - hookee.plugins
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/alexdlaird/hookee
+  summary: Command line webhooks, on demand.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - alexdlaird

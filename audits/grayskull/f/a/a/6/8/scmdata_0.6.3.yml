@@ -1,0 +1,51 @@
+{% set name = "scmdata" %}
+{% set version = 0.6.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 9d07526474c1a7e636d0d8464bea89dd08f6a888e3321cfc85bfe8ebfd5a8384
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - cftime
+    - numpy
+    - openscm-units
+    - pandas >=1.0.4
+    - pint-pandas ==0.1.0
+    - python
+    - python-dateutil
+    - xarray
+
+test:
+  imports:
+    - scmdata
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/openscm/scmdata
+  summary: Data handling for simple climate model data
+  dev_url: https://github.com/openscm/scmdata
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - znicholls
+    - lewisjared

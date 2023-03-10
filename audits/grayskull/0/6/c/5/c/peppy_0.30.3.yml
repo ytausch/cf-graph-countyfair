@@ -1,0 +1,47 @@
+{% set name = "peppy" %}
+{% set version = 0.30.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/peppy-{{ version }}.tar.gz
+  sha256: 55d2977bfc6ac3cce659d56dfaea2ec564777f1804abd2b8fb6b59dcf6cf2e5b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - attmap >=0.12.5
+    - logmuse >=0.2
+    - numexpr >=2.6.2
+    - pandas >=0.24.2
+    - python
+    - pyyaml >=5
+    - ubiquerg >=0.5.2
+
+test:
+  imports:
+    - peppy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pepkit/peppy/
+  summary: A python-based project metadata manager for portable encapsulated projects
+  license: BSD-2-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - stolarczyk

@@ -1,0 +1,45 @@
+{% set name = "httpcore" %}
+{% set version = 0.11.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/httpcore-{{ version }}.tar.gz
+  sha256: 35ffc735d746b83f8fc6d36f82600e56117b9e8adc65d0c0423264b6ebfef7bf
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - h11 >=0.8,<0.10
+    - python >=3.6
+    - sniffio ==1.*
+
+test:
+  imports:
+    - httpcore
+    - httpcore/_async
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/encode/httpcore
+  summary: A minimal low-level HTTP client.
+  dev_url: https://github.com/encode/httpcore
+  license: BSD-3-Clause
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - nicoddemus

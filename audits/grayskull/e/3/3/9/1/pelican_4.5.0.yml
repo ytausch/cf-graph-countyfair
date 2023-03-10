@@ -1,0 +1,63 @@
+{% set name = "pelican" %}
+{% set version = 4.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pelican-{{ version }}.tar.gz
+  sha256: d08119a3ed3eb7d3f2d0a9a5b929be648ad3c84d018b19517ecc608383b824e6
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pelican = pelican.__main__:main
+    - pelican-import = pelican.tools.pelican_import:main
+    - pelican-quickstart = pelican.tools.pelican_quickstart:main
+    - pelican-themes = pelican.tools.pelican_themes:main
+    - pelican-plugins = pelican.plugins._utils:list_plugins
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - blinker
+    - docutils >=0.15
+    - feedgenerator >=1.9
+    - jinja2 >=2.11
+    - pygments
+    - python
+    - python-dateutil
+    - pytz >=0a
+    - unidecode
+
+test:
+  imports:
+    - pelican
+    - pelican.tests
+  commands:
+    - pip check
+    - pelican --help
+    - pelican-import --help
+    - pelican-quickstart --help
+    - pelican-themes --help
+    - pelican-plugins --help
+  requires:
+    - pip
+
+about:
+  home: https://getpelican.com/
+  summary: Static site generator supporting reStructuredText and Markdown source content.
+  dev_url: https://github.com/getpelican/pelican
+  license: AGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - mwcraig

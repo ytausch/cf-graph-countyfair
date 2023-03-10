@@ -1,0 +1,43 @@
+{% set name = "parso" %}
+{% set version = 0.8.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2b6db14759c528d857eeb9eac559c2166b2554548af39f5198bdfb976f72aa64
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - parso
+    - parso.pgen2
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/davidhalter/parso
+  summary: A Python Parser
+  license: CC0-1.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - iron0012
+    - synapticarbors

@@ -1,0 +1,55 @@
+{% set name = "pymc3" %}
+{% set version = 3.9.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: abe046f5a5d0e5baee80b7c4bc0a4c218f61b517b62d77be4f89cf4784c27d78
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - arviz >=0.9.0
+    - contextvars  # [py<37]
+    - dataclasses  # [py<37]
+    - fastprogress >=0.2.0
+    - h5py >=2.7.0
+    - numpy >=1.13.0
+    - pandas >=0.18.0
+    - patsy >=0.5.1
+    - python
+    - scipy >=0.18.1
+    - theano >=1.0.5
+    - typing-extensions >=3.7.4
+
+test:
+  imports:
+    - pymc3
+    - pymc3.backends
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/pymc-devs/pymc3
+  summary: 'Probabilistic Programming in Python: Bayesian Modeling and Probabilistic Machine Learning with Theano'
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ericmjl
+    - springcoil
+    - twiecki

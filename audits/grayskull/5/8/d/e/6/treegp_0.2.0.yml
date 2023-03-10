@@ -1,0 +1,47 @@
+{% set name = "treegp" %}
+{% set version = 0.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 98c73a19cea1f88361bee77cac7db578de8bbc0d7c92b137c1da66bfa14f0bf8
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - fitsio >=0.9.12
+    - iminuit
+    - numpy
+    - python
+    - scikit-learn >=0.18
+    - scipy
+    - treecorr >=4.0
+
+test:
+  imports:
+    - treegp
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/PFLeget/treegp
+  summary: treegp
+  license: BSD-1-Clause
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - beckermr

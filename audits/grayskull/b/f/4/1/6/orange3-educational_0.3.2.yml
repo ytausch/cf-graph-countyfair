@@ -1,0 +1,45 @@
+{% set name = "orange3-educational" %}
+{% set version = 0.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Orange3-Educational-{{ version }}.tar.gz
+  sha256: 1af6f0da68c2a5ceeaf3a0513a2dcbe8560c5df32aa10529628ba0953242c3c1
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - beautifulsoup4
+    - numpy
+    - orange3 >=3.24.0
+    - python
+
+test:
+  imports:
+    - orangecontrib
+    - orangecontrib.educational
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/biolab/orange3-educational
+  summary: Orange Educational add-on for Orange data mining software package.
+  license: GPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - primozgodec

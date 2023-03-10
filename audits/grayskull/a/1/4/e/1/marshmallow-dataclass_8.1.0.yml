@@ -1,0 +1,44 @@
+{% set name = "marshmallow-dataclass" %}
+{% set version = 8.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/marshmallow_dataclass-{{ version }}.tar.gz
+  sha256: 4b72871eb1d479d32b70e1408e58d086f2367355640578ece848b880a07124e3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - marshmallow >=3.0.0,<4.0
+    - python >=3.6
+    - typing_inspect
+
+test:
+  imports:
+    - marshmallow_dataclass
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/lovasoa/marshmallow_dataclass
+  summary: Python library to convert dataclasses into marshmallow schemas.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - lovasoa
+    - ElenaBossolini

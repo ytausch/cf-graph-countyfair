@@ -1,0 +1,44 @@
+{% set name = "reportlab" %}
+{% set version = 3.5.46 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 56d71b78e7e4bb31a93e1dff13c22d19b7fb3890b021a39b6c3661b095bd7de8
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - pillow >=4.0.0
+    - python
+
+test:
+  imports:
+    - reportlab
+    - reportlab.graphics
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.reportlab.com/
+  summary: The Reportlab Toolkit
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - mcs07

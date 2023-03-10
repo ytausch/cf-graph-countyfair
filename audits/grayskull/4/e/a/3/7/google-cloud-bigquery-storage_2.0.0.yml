@@ -1,0 +1,47 @@
+{% set name = "google-cloud-bigquery-storage" %}
+{% set version = 2.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/google-cloud-bigquery-storage-{{ version }}.tar.gz
+  sha256: cebeaf1da7b7e4e3fd95e4a51a6d9c26dc49027d5191ba1fe894d9e1ef259592
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - google-api-core >=1.22.2,<2.0.0dev
+    - libcst >=0.2.5
+    - proto-plus >=1.4.0
+    - python >=3.6
+
+test:
+  imports:
+    - google
+    - google.cloud
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/googleapis/python-bigquery-storage
+  summary: BigQuery Storage API API client library
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - leahecole
+    - pshiko
+    - tswast

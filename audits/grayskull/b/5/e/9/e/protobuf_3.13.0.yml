@@ -1,0 +1,50 @@
+{% set name = "protobuf" %}
+{% set version = 3.13.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/protobuf-{{ version }}.tar.gz
+  sha256: 6a82e0c8bb2bf58f606040cc5814e07715b2094caeba281e2e7d0b0e2e397db5
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - wheel
+  run:
+    - python
+    - setuptools
+    - six >=1.9
+
+test:
+  imports:
+    - google
+    - google.protobuf
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://developers.google.com/protocol-buffers/
+  summary: Protocol Buffers
+  license: BSD-3-Clause
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - dopplershift
+    - jakirkham
+    - jjhelmus
+    - ocefpaf
+    - hajapy
+    - xhochy

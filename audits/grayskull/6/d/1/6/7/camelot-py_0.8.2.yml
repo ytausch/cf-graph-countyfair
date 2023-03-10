@@ -1,0 +1,52 @@
+{% set name = "camelot-py" %}
+{% set version = 0.8.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/camelot-py-{{ version }}.tar.gz
+  sha256: 8e1e2a8e59c2dbdce9a6790f7007cd091343b136e29d64a45c8fd09c11360057
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - camelot = camelot.cli:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - chardet >=3.0.4
+    - click >=6.7
+    - numpy >=1.13.3
+    - openpyxl >=2.5.8
+    - pandas >=0.23.4
+    - pdfminer.six >=20200726
+    - pypdf2 >=1.26.0
+    - python
+
+test:
+  imports:
+    - camelot
+    - camelot.ext
+  commands:
+    - pip check
+    - camelot --help
+  requires:
+    - pip
+
+about:
+  home: http://camelot-py.readthedocs.io/
+  summary: PDF Table Extraction for Humans.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - vinayak-mehta

@@ -1,0 +1,47 @@
+{% set name = "atlassian-python-api" %}
+{% set version = 1.17.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/atlassian-python-api-{{ version }}.tar.gz
+  sha256: cbd7941fa7e1eb6f63e12724277894350298745480297658da912e07234314cc
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - oauthlib
+    - python
+    - requests
+    - requests-oauthlib
+    - six
+
+test:
+  imports:
+    - atlassian
+    - tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/atlassian-api/atlassian-python-api
+  summary: Python Atlassian REST API Wrapper
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dbast
+    - epilif1017a

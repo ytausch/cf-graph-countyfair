@@ -1,0 +1,59 @@
+{% set name = "grayskull" %}
+{% set version = 0.8.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/grayskull-{{ version }}.tar.gz
+  sha256: 923f164eb96e6528cdac94b747dee3dca2116809f29f35aa226f1882a3b07a87
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - grayskull = grayskull.__main__:main
+    - greyskull = grayskull.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+    - setuptools >=30.3.0
+    - setuptools_scm
+  run:
+    - colorama
+    - pip
+    - progressbar2 >=3.53.0
+    - python >=3.7
+    - rapidfuzz >=0.7.6
+    - requests
+    - ruamel.yaml >=0.16.10
+    - ruamel.yaml.jinja2
+    - setuptools >=30.3.0
+    - stdlib-list
+
+test:
+  imports:
+    - grayskull
+    - grayskull.base
+  commands:
+    - pip check
+    - grayskull --help
+    - greyskull --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/marcelotrevisani/grayskull
+  summary: Project to generate recipes for conda packages.
+  dev_url: https://github.com/marcelotrevisani/grayskull
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - marcelotrevisani

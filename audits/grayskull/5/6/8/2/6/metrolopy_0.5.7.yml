@@ -1,0 +1,46 @@
+{% set name = "metrolopy" %}
+{% set version = 0.5.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/metrolopy-{{ version }}.tar.gz
+  sha256: 63afaab360ef9086705fc0dbda601aaeb0b9298e347906bd099218782d8ecdf2
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - matplotlib-base
+    - numpy
+    - pandas
+    - python
+    - scipy
+
+test:
+  imports:
+    - metrolopy
+    - metrolopy.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://nrc-cnrc.github.io/MetroloPy/
+  summary: 'tools for dealing with measured quantities: uncertainty propagation and unit conversion'
+  license: GPL-3.0
+  license_file: metrolopy/license.txt
+
+extra:
+  recipe-maintainers:
+    - hvparks

@@ -1,0 +1,78 @@
+{% set name = "pymatgen" %}
+{% set version = 2020.9.14 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pymatgen-{{ version }}.tar.gz
+  sha256: e00268a5f172db881d10d70831a882d9b045ae05ceea78c977e1031b89688f07
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - pmg = pymatgen.cli.pmg:main
+    - feff_input_generation = pymatgen.cli.feff_input_generation:main
+    - feff_plot_cross_section = pymatgen.cli.feff_plot_cross_section:main
+    - feff_plot_dos = pymatgen.cli.feff_plot_dos:main
+    - gaussian_analyzer = pymatgen.cli.gaussian_analyzer:main
+    - get_environment = pymatgen.cli.get_environment:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy >=1.14.3
+    - pip
+    - python
+    - setuptools >=18.0
+  run:
+    - dataclasses >=0.6  # [py<37]
+    - matplotlib-base >=1.5
+    - monty >=3.0.2
+    - networkx >=2.2
+    - numpy >=1.14.3
+    - palettable >=3.1.1
+    - pandas
+    - plotly >=4.5.0
+    - python
+    - requests
+    - ruamel.yaml >=0.15.6
+    - scipy >=1.5.0
+    - spglib >=1.9.9.44
+    - sympy
+    - tabulate
+    - uncertainties >=3.1.4
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - pymatgen
+    - pymatgen.alchemy
+  commands:
+    - pip check
+    - pmg --help
+    - feff_input_generation --help
+    - feff_plot_cross_section --help
+    - feff_plot_dos --help
+    - gaussian_analyzer --help
+    - get_environment --help
+  requires:
+    - pip
+
+about:
+  home: https://www.pymatgen.org
+  summary: Python Materials Genomics is a robust materials analysis code that defines core object representations for structures and molecules with support for many electronic structure codes. It is currently the core analysis code powering the Materials Project (https://www.materialsproject.org).
+  doc_url: https://pythonhosted.org/pymatgen/
+  license: MIT
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
+    - shyuep
+    - mkhorton

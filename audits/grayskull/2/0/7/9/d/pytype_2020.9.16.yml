@@ -1,0 +1,63 @@
+{% set name = "pytype" %}
+{% set version = 2020.9.16 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytype-{{ version }}.tar.gz
+  sha256: 5306288b9e30a6ff11f93eb3d53355ed0bd47125231913627cac06de5457f673
+
+build:
+  number: 0
+  skip: true   # [py>=39 or py2k]
+  entry_points:
+    - annotate-ast = pytype.tools.annotate_ast.main:main
+    - merge-pyi = pytype.tools.merge_pyi.main:main
+    - pytd = pytype.pytd.main:main
+    - pytype = pytype.tools.analyze_project.main:main
+    - pytype-single = pytype.single:main
+    - pyxref = pytype.tools.xref.main:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - attrs
+    - importlab >=0.5.1
+    - ninja
+    - python
+    - pyyaml >=3.11
+    - six
+    - typed-ast
+
+test:
+  imports:
+    - pytype
+    - pytype.overlays
+  commands:
+    - pip check
+    - annotate-ast --help
+    - merge-pyi --help
+    - pytd --help
+    - pytype --help
+    - pytype-single --help
+    - pyxref --help
+  requires:
+    - pip
+
+about:
+  home: https://google.github.io/pytype
+  summary: Python type inferencer
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - marcelotrevisani

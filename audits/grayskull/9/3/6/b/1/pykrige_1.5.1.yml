@@ -1,0 +1,44 @@
+{% set name = "pykrige" %}
+{% set version = 1.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/PyKrige-{{ version }}.tar.gz
+  sha256: 8265af45854919096af0d0b48d12e58354a370f5803326b2e09c8bdb8b686892
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cython
+    - numpy
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - pykrige
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/GeoStat-Framework/PyKrige
+  summary: Kriging Toolkit for Python.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - rth
+    - MuellerSeb

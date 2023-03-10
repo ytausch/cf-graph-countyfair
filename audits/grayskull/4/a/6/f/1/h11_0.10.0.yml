@@ -1,0 +1,42 @@
+{% set name = "h11" %}
+{% set version = 0.10.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/h11-{{ version }}.tar.gz
+  sha256: 311dc5478c2568cc07262e0381cdfc5b9c6ba19775905736c87e81ae6662b9fd
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - h11
+    - h11.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/python-hyper/h11
+  summary: A pure-Python, bring-your-own-I/O implementation of HTTP/1.1
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - carlodri

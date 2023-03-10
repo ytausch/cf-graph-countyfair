@@ -1,0 +1,44 @@
+{% set name = "pyout" %}
+{% set version = 0.6.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: ce78d6ef747b5330da01751f2f6cbfc64f8768086fa56a88cd559b53134d87ae
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - blessings  # [not win]
+    - jsonschema >=3.0.0
+    - python
+
+test:
+  imports:
+    - pyout
+    - pyout.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyout/pyout.git
+  summary: Terminal styling for tabular data
+  license: MIT
+  license_file: .eggs/pytest_runner-5.2-py3.7.egg/EGG-INFO/LICENSE
+
+extra:
+  recipe-maintainers:
+    - yarikoptic

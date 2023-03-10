@@ -1,0 +1,44 @@
+{% set name = "django-filter" %}
+{% set version = 2.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/django-filter-{{ version }}.tar.gz
+  sha256: 84e9d5bb93f237e451db814ed422a3a625751cbc9968b484ecc74964a8696b06
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - django >=2.2
+    - python >=3.5
+
+test:
+  imports:
+    - django_filters
+    - django_filters.rest_framework
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/carltongibson/django-filter/tree/master
+  summary: Django-filter is a reusable Django application for allowing users to filter querysets dynamically.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kwilcox
+    - ocefpaf

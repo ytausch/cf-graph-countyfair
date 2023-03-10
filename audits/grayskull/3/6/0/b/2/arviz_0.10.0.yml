@@ -1,0 +1,54 @@
+{% set name = "arviz" %}
+{% set version = 0.10.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/arviz-{{ version }}.tar.gz
+  sha256: dc1f08ce02459989dd4f41fa6012e736cf2ba00ee44b29bebe0a451c58a68e42
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - matplotlib-base >=3.0
+    - netcdf4
+    - numpy >=1.12
+    - packaging
+    - pandas >=0.23
+    - python
+    - scipy >=0.19
+    - setuptools >=38.4
+    - xarray >=0.16.1
+
+test:
+  imports:
+    - arviz
+    - arviz.data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/arviz-devs/arviz
+  summary: Exploratory analysis of Bayesian models
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ericmjl
+    - canyon289
+    - aloctavodia
+    - ColCarroll
+    - ahartikainen

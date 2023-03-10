@@ -1,0 +1,50 @@
+{% set name = "xnat" %}
+{% set version = 0.3.25 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xnat-{{ version }}.tar.gz
+  sha256: 37b30a98a72fe4c7e636cd6a433da9fd6edfd7dee109f185849c78e9dc54effd
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - xnat_cp_project = xnat.scripts.copy_project:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - isodate >=0.5.4
+    - progressbar2 >=3.11.0
+    - python
+    - requests >=2.10.0
+    - six >=1.13.0
+    - sphinx_rtd_theme >=0.1.9
+
+test:
+  imports:
+    - xnat
+    - xnat.scripts
+  commands:
+    - pip check
+    - xnat_cp_project --help
+  requires:
+    - pip
+
+about:
+  home: https://gitlab.com/radiology/infrastructure/xnatpy
+  summary: An XNAT client that exposes the XNAT REST interface as python objects. Part of the interface is automatically generated based on the servers data model as defined by the xnat schema.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pauldmccarthy

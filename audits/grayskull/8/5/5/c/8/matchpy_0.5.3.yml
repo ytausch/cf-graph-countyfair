@@ -1,0 +1,48 @@
+{% set name = "matchpy" %}
+{% set version = 0.5.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/matchpy-{{ version }}.tar.gz
+  sha256: 1eb6122f166ae3e956f836a41bfbd0ffab2fac6ff1f322d26680d6b0d192f10f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python >=3.6
+    - setuptools >=36.7.0
+  run:
+    - hopcroftkarp >=1.2,<2.0
+    - multiset >=2.0,<3.0
+    - python >=3.6
+
+test:
+  imports:
+    - matchpy
+    - matchpy.expressions
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/HPAC/matchpy
+  summary: A library for pattern matching on symbolic expressions.
+  dev_url: https://github.com/HPAC/matchpy
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - asmeurer
+    - henrik227

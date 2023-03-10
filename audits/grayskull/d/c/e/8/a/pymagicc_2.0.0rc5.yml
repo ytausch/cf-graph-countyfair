@@ -1,0 +1,49 @@
+{% set name = "pymagicc" %}
+{% set version = 2.0.0rc5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 3aa2783d5f0747b5e9e8ed5a0e717d73f8523b66d2e24a71058e9ee322429806
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - f90nml
+    - pandas-datapackage-reader
+    - python
+    - pyyaml
+    - scmdata >=0.6.3
+
+test:
+  imports:
+    - pymagicc
+    - pymagicc.definitions
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/openscm/pymagicc
+  summary: Python wrapper for the simple climate model MAGICC
+  dev_url: https://github.com/openscm/pymagicc
+  license: AGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - znicholls
+    - rgieseke

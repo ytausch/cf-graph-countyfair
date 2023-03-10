@@ -1,0 +1,54 @@
+{% set name = "ai2thor" %}
+{% set version = 2.4.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 0037335c8766aec8e251a37e1602b121f793611c5bfeac00740a832cccc9f805
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - aws-requests-auth
+    - botocore
+    - flask
+    - msgpack
+    - numpy
+    - opencv-python
+    - pillow
+    - progressbar2
+    - python
+    - pyyaml
+    - requests
+    - werkzeug >=0.15.0
+
+test:
+  imports:
+    - ai2thor
+    - ai2thor.util
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/allenai/ai2thor
+  summary: AI2 Thor framework
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - systemshift

@@ -1,0 +1,50 @@
+{% set name = "pyomo" %}
+{% set version = 5.7.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Pyomo-{{ version }}.tar.gz
+  sha256: 1228204d7eb4cdd217fed6323a7434de68e89a2aaa74085ea47f1b42fb64d8cd
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cython
+    - pip
+    - python
+  run:
+    - enum34  # [py<34]
+    - ply
+    - python
+    - pyutilib >=6.0
+    - six >=1.4
+
+test:
+  imports:
+    - pyomo
+    - pyomo.bilevel
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://pyomo.org
+  summary: 'Pyomo: Python Optimization Modeling Objects'
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - whart222
+    - jsiirola
+    - astrojuanlu
+    - blnicho

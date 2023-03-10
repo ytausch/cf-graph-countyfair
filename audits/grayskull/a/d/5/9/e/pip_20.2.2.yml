@@ -1,0 +1,55 @@
+{% set name = "pip" %}
+{% set version = 20.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 58a3b0b55ee2278104165c7ee7bc8e2db6f635067f3c66cf637113ec5aa71584
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pip=pip._internal.cli.main:main
+    - pip3=pip._internal.cli.main:main
+    - pip3.7=pip._internal.cli.main:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+  run:
+    - python !=3.0,!=3.1,!=3.2,!=3.3,!=3.4
+
+test:
+  imports:
+    - pip
+    - pip._internal
+  commands:
+    - pip check
+    - pip --help
+    - pip3 --help
+    - pip3.7 --help
+  requires:
+    - pip
+
+about:
+  home: https://pip.pypa.io/
+  summary: The PyPA recommended tool for installing Python packages.
+  dev_url: https://github.com/pypa/pip
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - jjhelmus
+    - msarahan
+    - pelson
+    - ocefpaf
+    - mingwandroid

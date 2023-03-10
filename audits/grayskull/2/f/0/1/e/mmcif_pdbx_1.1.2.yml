@@ -1,0 +1,41 @@
+{% set name = "mmcif_pdbx" %}
+{% set version = 1.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: e37268046e15b2a348aa2298cdba79ae2dae3f43e0a0b0ddd46066a681410811
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - pdbx
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Electrostatics/mmcif_pdbx
+  summary: Python utilities for PDBx/mmCIF storage model
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - sobolevnrm
+    - tsenapathi

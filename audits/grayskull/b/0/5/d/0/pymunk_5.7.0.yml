@@ -1,0 +1,45 @@
+{% set name = "pymunk" %}
+{% set version = 5.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pymunk-{{ version }}.zip
+  sha256: 585aabe9a7039b7a2dc07217120b6ccfc2abc200bd381187e0912ae852a63894
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+    - wheel
+  run:
+    - cffi !=1.13.1
+    - python
+
+test:
+  imports:
+    - pymunk
+    - pymunk.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.pymunk.org
+  summary: Pymunk is a easy-to-use pythonic 2d physics library
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - viblo

@@ -1,0 +1,58 @@
+{% set name = "adversarial-robustness-toolbox" %}
+{% set version = 1.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/adversarial-robustness-toolbox-{{ version }}.tar.gz
+  sha256: b3f9648c3aec6de7295a5b8de5b2c4237e5b273131e26d99f95b5e06ae64d80b
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - cma
+    - ffmpeg-python
+    - matplotlib-base
+    - mypy
+    - numpy
+    - pillow
+    - pydub
+    - python
+    - resampy
+    - scikit-learn ==0.22.2
+    - scipy ==1.4.1
+    - setuptools
+    - six
+    - statsmodels
+    - tqdm
+
+test:
+  imports:
+    - art
+    - art.attacks
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/IBM/adversarial-robustness-toolbox
+  summary: Toolbox for adversarial machine learning.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - rluria14
+    - oblute
+    - ndmaxar

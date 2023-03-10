@@ -1,0 +1,55 @@
+{% set name = "tskit" %}
+{% set version = 0.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/tskit-{{ version }}.tar.gz
+  sha256: dd5c86a1c5e38c74c3330b17ff019c594cf24d594914a8102085d658601879fa
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - tskit=tskit.cli:tskit_main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy >=1.7
+    - pip
+    - python
+  run:
+    - attrs >=19.2.0
+    - h5py >=2.6.0
+    - jsonschema >=3.0.0
+    - numpy >=1.7
+    - python
+    - svgwrite >=1.1.10
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - tskit
+  commands:
+    - pip check
+    - tskit --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/tskit-dev/tskit
+  summary: The tree sequence toolkit.
+  dev_url: https://github.com/tskit-dev/tskit
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jeromekelleher
+    - benjeffery

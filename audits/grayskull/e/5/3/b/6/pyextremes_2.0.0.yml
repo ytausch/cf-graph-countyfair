@@ -1,0 +1,47 @@
+{% set name = "pyextremes" %}
+{% set version = 2.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyextremes-{{ version }}.tar.gz
+  sha256: edb9b839fcb2a5c80873e777e8efedf749324a5efa41c1e432b42c915b857d15
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - emcee >=3.0
+    - matplotlib-base
+    - numpy
+    - pandas
+    - python >=3.7
+    - scipy
+
+test:
+  imports:
+    - pyextremes
+    - pyextremes.extremes
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/georgebv/pyextremes
+  summary: Extreme Value Analysis (EVA) in Python
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - georgebv

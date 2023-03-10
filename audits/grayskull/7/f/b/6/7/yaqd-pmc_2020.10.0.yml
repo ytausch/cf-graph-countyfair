@@ -1,0 +1,47 @@
+{% set name = "yaqd-pmc" %}
+{% set version = 2020.10.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/yaqd-pmc-{{ version }}.tar.gz
+  sha256: 56f1121f519cc44791d17a5be6b0db098fd34370e32a5c21b1e364647e4f87fa
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - yaqd-pmc = yaqd_pmc._pmc:PmcMotor.main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - python >=3.7
+    - yaqd-core >=2020.06.3
+
+test:
+  imports:
+    - yaqd_pmc
+  commands:
+    - pip check
+    - yaqd-pmc --help
+  requires:
+    - pip
+
+about:
+  home: https://yaq.fyi
+  summary: yaq daemons for Precision MicroControl Corp. hardware
+  dev_url: https://gitlab.com/yaq/yaqd-pmc
+  license: LGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - untzag
+    - ksunden

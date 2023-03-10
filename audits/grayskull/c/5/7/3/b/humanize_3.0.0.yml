@@ -1,0 +1,47 @@
+{% set name = "humanize" %}
+{% set version = 3.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/humanize-{{ version }}.tar.gz
+  sha256: db08acbd8e31954f146467a213a112c4b80a5b8e319e06b76aa184a679bd8b48
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - python >=3.6
+    - setuptools
+
+test:
+  imports:
+    - humanize
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jmoiron/humanize
+  summary: Python humanize utilities
+  dev_url: https://github.com/jmoiron/humanize
+  license: MIT
+  license_file: .eggs/setuptools_scm-4.1.2-py3.7.egg/EGG-INFO/LICENSE
+
+extra:
+  recipe-maintainers:
+    - ericdill
+    - licode
+    - tacaswell
+    - ocefpaf

@@ -1,0 +1,55 @@
+{% set name = "pywps" %}
+{% set version = 4.2.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pywps-{{ version }}.tar.gz
+  sha256: c14ec5305583765db926ca5b33924a140123e3ee9b0e25dd713c894b384271fa
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - joblauncher=pywps.processing.job:launcher
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - flufl.enum
+    - jinja2
+    - jsonschema
+    - lxml
+    - owslib
+    - pathlib
+    - python
+    - python-dateutil
+    - requests
+    - sqlalchemy
+    - werkzeug
+
+test:
+  imports:
+    - pywps
+    - pywps.app
+  commands:
+    - pip check
+    - joblauncher --help
+  requires:
+    - pip
+
+about:
+  home: https://pywps.org
+  summary: PyWPS is an implementation of the Web Processing Service standard from the Open Geospatial Consortium. PyWPS is written in Python.
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - cehbrecht

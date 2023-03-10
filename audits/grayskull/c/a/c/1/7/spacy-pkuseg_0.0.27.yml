@@ -1,0 +1,51 @@
+{% set name = "spacy-pkuseg" %}
+{% set version = 0.0.27 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/spacy_pkuseg-{{ version }}.tar.gz
+  sha256: 0ab597e0eea9357ffa21e9ccba0f06af07db6b48cbe3cbb811916b68f5284a38
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy >=1.16.0
+    - pip
+    - python
+  run:
+    - cython
+    - numpy >=1.16.0
+    - python
+    - srsly >=2.3.0,<3.0.0
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - spacy_pkuseg
+    - spacy_pkuseg.dicts
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/explosion/spacy-pkuseg
+  summary: A small package for Chinese word segmentation
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ines
+    - honnibal
+    - adrianeboyd

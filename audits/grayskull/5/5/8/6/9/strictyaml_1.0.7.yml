@@ -1,0 +1,43 @@
+{% set name = "strictyaml" %}
+{% set version = 1.0.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 35eb801732ded9ebd3de429c4fea2e05690947fb2f96cffb9989c4d7c423105d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - python-dateutil >=2.6.0
+    - ruamel.yaml >=0.14.2
+
+test:
+  imports:
+    - strictyaml
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://hitchdev.com/strictyaml
+  summary: Strict, typed YAML parser
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - mcs07

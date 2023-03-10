@@ -1,0 +1,41 @@
+{% set name = "safer" %}
+{% set version = 4.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/safer-{{ version }}.tar.gz
+  sha256: a787bcc8c873e83a8fac30a1806893c35e206a9e8e2564be149426195f9530af
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - safer
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rec/safer
+  summary: A safer file opener
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf

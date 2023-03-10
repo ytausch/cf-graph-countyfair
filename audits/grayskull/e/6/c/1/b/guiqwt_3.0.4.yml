@@ -1,0 +1,59 @@
+{% set name = "guiqwt" %}
+{% set version = 3.0.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: e1ea9aff051a21c85667cf7ad3e808583801a116a8e10396b1f86d458fd3f033
+
+build:
+  number: 0
+  entry_points:
+    - guiqwt-tests-py3 = guiqwt.tests:run
+    - sift-py3 = guiqwt.tests.sift:run
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - guidata
+    - numpy
+    - pip
+    - python
+    - sphinx
+  run:
+    - guidata >=1.7.0
+    - numpy >=1.3
+    - pillow
+    - python
+    - pythonqwt >=0.5.0
+    - scipy >=0.7
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - guiqwt
+    - guiqwt.tests
+  commands:
+    - pip check
+    - guiqwt-tests-py3 --help
+    - sift-py3 --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/PierreRaybaut/guiqwt
+  summary: guiqwt is a set of tools for curve and image plotting (extension to PythonQwt)
+  license: CECILL-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - denivyruck
+    - marcelotrevisani

@@ -1,0 +1,45 @@
+{% set name = "empymod" %}
+{% set version = 2.0.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/empymod-{{ version }}.tar.gz
+  sha256: 559eb95e9409ccad5a71b01498857fe5b1d904e133387dcdd31784642506f7b0
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - numba >=0.44
+    - python >=3.6
+    - scipy >=1.0.0
+
+test:
+  imports:
+    - empymod
+    - empymod.scripts
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://empymod.github.io
+  summary: Open-source full 3D electromagnetic modeller for 1D VTI media
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - prisae

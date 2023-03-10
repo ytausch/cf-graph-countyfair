@@ -1,0 +1,52 @@
+{% set name = "suspect" %}
+{% set version = 0.4.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/suspect-{{ version }}.tar.gz
+  sha256: b4005ed96657e4332d32f1e2525a11c8fabf47c9d3ea0a29fb2b51fdabc6675c
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - anonymize_twix = suspect.scripts.anonymize:anonymize_twix
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - lmfit
+    - nibabel
+    - numpy
+    - parse
+    - parsley
+    - pydicom
+    - python
+    - pywavelets
+    - scipy
+
+test:
+  imports:
+    - suspect
+    - suspect.basis
+  commands:
+    - pip check
+    - anonymize_twix --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/bennyrowland/suspect.git
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - danilomendesdias

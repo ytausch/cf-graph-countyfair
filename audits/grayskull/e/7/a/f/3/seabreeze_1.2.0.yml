@@ -1,0 +1,44 @@
+{% set name = "seabreeze" %}
+{% set version = 1.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d67fd8a91dcccd71ded2f9eee7eed286ba24c64bd3db94c96aac947962561de1
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cython
+    - pip
+    - pkgconfig
+    - python
+  run:
+    - future
+    - numpy <1.17  # [py<36]
+    - python
+
+test:
+  imports:
+    - seabreeze
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ap--/python-seabreeze
+  summary: Python interface module for Ocean Optics spectrometers. This software is not associated with Ocean Optics. Use it at your own risk.
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - ap--

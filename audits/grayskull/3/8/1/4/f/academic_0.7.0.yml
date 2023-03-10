@@ -1,0 +1,45 @@
+{% set name = "academic" %}
+{% set version = 0.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/academic-{{ version }}.tar.gz
+  sha256: fe0d093d3ffeac63464d284e328b3061d10222a65c4a80b89965063babb790fe
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - bibtexparser ==1.1.0
+    - python >=3.6
+    - requests
+    - ruamel.yaml ==0.16.10
+    - toml
+
+test:
+  imports:
+    - academic
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://wowchemy.com
+  summary: Import publications from your reference manager to Hugo
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - hoechenberger

@@ -1,0 +1,52 @@
+{% set name = "osmnx" %}
+{% set version = 0.16.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/osmnx-{{ version }}.tar.gz
+  sha256: 92b12a5a15e77eaa0e9822e1ebcb323eb8603257978c1fd394f9f33f508e59b3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - descartes >=1.1
+    - geopandas >=0.8
+    - matplotlib-base >=3.3
+    - networkx >=2.5
+    - numpy >=1.19
+    - pandas >=1.1
+    - pyproj >=2.6
+    - python >=3.6
+    - requests >=2.24
+    - rtree >=0.9
+    - shapely >=1.7
+
+test:
+  imports:
+    - osmnx
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/gboeing/osmnx
+  summary: Retrieve, model, analyze, and visualize OpenStreetMap street networks and other spatial data
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - gboeing

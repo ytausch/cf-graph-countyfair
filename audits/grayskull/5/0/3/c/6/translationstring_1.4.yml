@@ -1,0 +1,43 @@
+{% set name = "translationstring" %}
+{% set version = 1.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/translationstring-{{ version }}.tar.gz
+  sha256: bf947538d76e69ba12ab17283b10355a9ecfbc078e6123443f43f2107f6376f3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - translationstring
+    - translationstring.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Pylons/translationstring
+  summary: Utility library for i18n relied on by various Repoze and Pyramid packages
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - lincrosenbach
+    - kfasolin

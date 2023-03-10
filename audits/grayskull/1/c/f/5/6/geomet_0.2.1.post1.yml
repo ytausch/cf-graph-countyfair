@@ -1,0 +1,46 @@
+{% set name = "geomet" %}
+{% set version = 0.2.1.post1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/geomet-{{ version }}.tar.gz
+  sha256: 91d754f7c298cbfcabd3befdb69c641c27fe75e808b27aa55028605761d17e95
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - geomet=geomet.tool:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.3,<4.0
+  run:
+    - click
+    - python >=3.3,<4.0
+    - six
+
+test:
+  imports:
+    - geomet
+  commands:
+    - pip check
+    - geomet --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/geomet/geomet
+  summary: GeoJSON <-> WKT/WKB conversion utilities
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - avalentino

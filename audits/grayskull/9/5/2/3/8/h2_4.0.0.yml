@@ -1,0 +1,43 @@
+{% set name = "h2" %}
+{% set version = 4.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/h2-{{ version }}.tar.gz
+  sha256: bb7ac7099dd67a857ed52c815a6192b6b1f5ba6b516237fc24a085341340593d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - hpack >=4.0,<5
+    - hyperframe >=6.0,<7
+    - python >=3.6
+
+test:
+  imports:
+    - h2
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/python-hyper/hyper-h2
+  summary: HTTP/2 State-Machine based protocol implementation
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - primozgodec

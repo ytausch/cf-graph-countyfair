@@ -1,0 +1,47 @@
+{% set name = "pynhd" %}
+{% set version = 0.1.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pynhd-{{ version }}.tar.gz
+  sha256: ac93d5abe4d21cbdf161361c63ff403227d2f33aa0de58286484765639f80475
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools >=41.2
+    - setuptools_scm
+  run:
+    - networkx
+    - pygeoogc
+    - pygeoutils
+    - python >=3.6
+    - setuptools
+
+test:
+  imports:
+    - pynhd
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cheginit/pynhd
+  summary: Process and access NHDPlus V2 data through NLDI and WaterData web services.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - cheginit

@@ -1,0 +1,53 @@
+{% set name = "hdmf" %}
+{% set version = 2.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hdmf-{{ version }}.tar.gz
+  sha256: 55db10dc87f2898e31f1535ae97f081df6cd83d4f928bd6eb6fc796395d275a8
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - validate_hdmf_spec=hdmf.testing.validate_spec:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - h5py >=2.9
+    - jsonschema >=2.6.0
+    - numpy >=1.16
+    - pandas >=0.23
+    - python
+    - ruamel.yaml >=0.15
+    - scipy >=1.1
+
+test:
+  imports:
+    - hdmf
+    - hdmf.backends
+  commands:
+    - pip check
+    - validate_hdmf_spec --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/hdmf-dev/hdmf
+  summary: A package for standardizing hierarchical object data
+  license: BSD-3-Clause
+  license_file: license.txt
+
+extra:
+  recipe-maintainers:
+    - ajtritt
+    - rly
+    - oruebel

@@ -1,0 +1,49 @@
+{% set name = "keystoneauth1" %}
+{% set version = 4.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 9496bfcc27eff3d05271e10aa64684b7c1fd12a4d96f58511f2286312d9c89a1
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pbr >=2.0.0
+    - pip
+    - python >=3.6
+  run:
+    - iso8601 >=0.1.11
+    - os-service-types >=1.2.0
+    - pbr !=2.1.0,>=2.0.0
+    - python >=3.6
+    - requests >=2.14.2
+    - six >=1.10.0
+    - stevedore >=1.20.0
+
+test:
+  imports:
+    - keystoneauth1
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://docs.openstack.org/keystoneauth/latest/
+  summary: Authentication Library for OpenStack Identity
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pmlandwehr
+    - tschoonj

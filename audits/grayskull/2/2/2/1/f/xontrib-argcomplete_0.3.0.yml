@@ -1,0 +1,42 @@
+{% set name = "xontrib-argcomplete" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xontrib-argcomplete-{{ version }}.tar.gz
+  sha256: aa16647ea47e2a02e9af0c0240e02d328abe155499d173d2ab1c1d0554fe7d1e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - argcomplete
+    - python >=3.6
+
+test:
+  imports:
+    - xontrib
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/anki-code/xontrib-argcomplete
+  summary: Argcomplete support for python and xonsh scripts in xonsh shell.
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - scopatz

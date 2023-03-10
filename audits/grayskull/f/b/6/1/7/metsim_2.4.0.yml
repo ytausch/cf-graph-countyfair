@@ -1,0 +1,56 @@
+{% set name = "metsim" %}
+{% set version = 2.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/metsim-{{ version }}.tar.gz
+  sha256: 58b284109766827a86a734f79607084b3e574c46f9e7450e057a7be4cafafa4e
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - ms = metsim.cli.ms:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - dask-core
+    - distributed
+    - netcdf4
+    - numba
+    - numpy
+    - pandas >=0.25.0
+    - python >=3.7
+    - scipy
+    - toolz
+    - xarray >=0.11.0
+
+test:
+  imports:
+    - metsim
+    - metsim.cli
+  commands:
+    - pip check
+    - ms --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/UW-Hydro/MetSim
+  summary: Meteorology Simulator
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jhamman
+    - arbennett
+    - bartnijssen

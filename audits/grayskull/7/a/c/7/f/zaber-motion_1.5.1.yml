@@ -1,0 +1,47 @@
+{% set name = "zaber-motion" %}
+{% set version = 1.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/zaber_motion-{{ version }}.tar.gz
+  sha256: f2acd39195587e07d9f37e399c6f1ea44ffeceb7105eb29e8227c715f05e6766
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - protobuf ==3.12.2
+    - python
+    - rx >=3.0.0
+    - zaber-motion-bindings-darwin ==1.5.1  # [osx]
+    - zaber-motion-bindings-linux ==1.5.1  # [linux]
+    - zaber-motion-bindings-windows ==1.5.1  # [win]
+
+test:
+  imports:
+    - zaber_motion
+    - zaber_motion.ascii
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gitlab.com/ZaberTech/zaber-motion-lib
+  summary: A library for communicating with Zaber devices
+  license: AGPL-1.0-or-later
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - hmaarrfk

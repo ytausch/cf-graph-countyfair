@@ -1,0 +1,47 @@
+{% set name = "oop-ext" %}
+{% set version = 1.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/oop-ext-{{ version }}.tar.gz
+  sha256: ad9126d995f19ec2272e18dae8452a174d916f3e61c76b799a915ee01cfd9203
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - attrs
+    - python >=3.6
+
+test:
+  imports:
+    - oop_ext
+    - oop_ext.foundation
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/ESSS/oop-ext
+  summary: OOP Extensions is a set of utilities for object oriented programming which is missing on Python core libraries.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - gcardozo123
+    - lincrosenbach
+    - kfasolin
+    - nicoddemus

@@ -1,0 +1,44 @@
+{% set name = "symstore" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/symstore-{{ version }}.tar.gz
+  sha256: 4a62e36ed35200b8978e757a06d58e3482247d79c39cf196076755ae5fd8eb83
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - symstore=symstore.command_line:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - symstore
+  commands:
+    - pip check
+    - symstore --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/elmirjagudin/symstore
+  summary: publish PDB and PE files to symbols store
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - elmirjagudin

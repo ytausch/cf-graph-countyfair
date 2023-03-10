@@ -1,0 +1,46 @@
+{% set name = "radical.saga" %}
+{% set version = 1.5.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/radical.saga-{{ version }}.tar.gz
+  sha256: e35fd6cbbe76061003bad90a7eeb2bdaad22624dbec74e5904b0f644538fc237
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - apache-libcloud
+    - parse
+    - python >=3.6
+    - radical.utils
+
+test:
+  imports:
+    - radical.saga
+    - radical.saga.adaptors
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://radical-cybertools.github.io/radical.saga/
+  summary: A light-weight access layer for distributed computing infrastructure (http://radical.rutgers.edu/)
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - andre-merzky
+    - iparask

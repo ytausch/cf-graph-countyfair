@@ -1,0 +1,56 @@
+{% set name = "uncertainpy" %}
+{% set version = 1.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/uncertainpy-{{ version }}.tar.gz
+  sha256: d89cc4dd6b3f83ea5d8383d7d61b7c24cb729240c83d28a840149944fe4226b8
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.0
+  run:
+    - chaospy >=3.3.0
+    - exdir
+    - h5py
+    - matplotlib-base >=3,<3.2
+    - multiprocess
+    - numpy >=1.16
+    - python >=3.0
+    - ruamel.yaml
+    - salib
+    - scipy >=1.4.1
+    - seaborn
+    - six
+    - tqdm
+    - xvfbwrapper
+
+test:
+  imports:
+    - uncertainpy
+    - uncertainpy.core
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/simetenn/uncertainpy
+  summary: A python toolbox for uncertainty quantification and sensitivity analysis tailored towards neuroscience models.
+  license: GPL-3.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - volpatto
+    - simetenn

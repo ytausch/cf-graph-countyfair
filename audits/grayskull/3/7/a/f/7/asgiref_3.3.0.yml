@@ -1,0 +1,42 @@
+{% set name = "asgiref" %}
+{% set version = 3.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/asgiref-{{ version }}.tar.gz
+  sha256: cd88907ecaec59d78e4ac00ea665b03e571cb37e3a0e37b3702af1a9e86c365a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - asgiref
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/django/asgiref/
+  summary: ASGI specs, helper code, and adapters
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dhirschfeld
+    - carlodri

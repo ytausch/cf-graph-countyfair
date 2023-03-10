@@ -1,0 +1,74 @@
+{% set name = "snowflake-connector-python" %}
+{% set version = 2.3.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/snowflake-connector-python-{{ version }}.tar.gz
+  sha256: beb9a9863e263ff51acb28c5643bb42de2297bdc705bad3941a63f6ec6a9472b
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - snowflake-dump-ocsp-response = snowflake.connector.tool.dump_ocsp_response:main
+    - snowflake-dump-ocsp-response-cache = snowflake.connector.tool.dump_ocsp_response_cache:main
+    - snowflake-dump-certs = snowflake.connector.tool.dump_certs:main
+    - snowflake-export-certs = snowflake.connector.tool.export_certs:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - pyarrow
+    - python
+  run:
+    - asn1crypto >0.24.0,<2.0.0
+    - azure-common <2.0.0
+    - azure-storage-blob <12.0.0  # [py<=35]
+    - boto3 >=1.4.4,<1.15
+    - certifi <2021.0.0
+    - cffi >=1.9,<1.15
+    - cryptography >=2.5.0,<3.0.0
+    - idna <2.10
+    - oscrypto <2.0.0
+    - pycryptodomex >=3.2,!=3.5.0,<4.0.0
+    - pyjwt <2.0.0
+    - pyopenssl >=16.2.0,<21.0.0
+    - python
+    - pytz <2021.0
+    - requests <2.24.0
+    - urllib3 >=1.20,<1.26.0
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - snowflake.connector
+    - snowflake.connector.tool
+  commands:
+    - pip check
+    - snowflake-dump-ocsp-response --help
+    - snowflake-dump-ocsp-response-cache --help
+    - snowflake-dump-certs --help
+    - snowflake-export-certs --help
+  requires:
+    - pip
+
+about:
+  home: https://www.snowflake.com/
+  summary: Snowflake Connector for Python
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - hajapy
+    - talues
+    - xhochy

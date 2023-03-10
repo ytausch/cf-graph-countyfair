@@ -1,0 +1,44 @@
+{% set name = "argo-workflows" %}
+{% set version = 3.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/argo-workflows-{{ version }}.tar.gz
+  sha256: d77b58a13f5a63515fe6ce2c9f2301cbb1c37fee9fe38d906ebd1e8fb557c935
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - kubernetes >=11.0.0
+    - mock
+    - python
+
+test:
+  imports:
+    - argo.workflows
+    - argo.workflows.client
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/argoproj-labs/argo-client-python
+  summary: Community Maintained Python client for Argo Workflows
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - hadim

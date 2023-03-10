@@ -1,0 +1,46 @@
+{% set name = "statmorph" %}
+{% set version = 0.3.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/statmorph-{{ version }}.tar.gz
+  sha256: a84049c64a43d6b1f25f3ebbfbd078f8c6da6e60df7422b11519958ac078d599
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - astropy >=2.0
+    - photutils >=0.5
+    - python
+    - scikit-image >=0.14
+    - scipy >=0.19
+
+test:
+  imports:
+    - statmorph
+    - statmorph.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/vrodgom/statmorph
+  summary: Non-parametric morphological diagnostics of galaxy images
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - vrodgom

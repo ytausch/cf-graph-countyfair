@@ -1,0 +1,51 @@
+{% set name = "hist" %}
+{% set version = 2.0.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/hist-{{ version }}.tar.gz
+  sha256: 8fb8ddf90d4b33c1c941a7ba4fb5cf8d381eae568f368c1ec1f6152967a9b065
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - hist=hist.classichist:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - boost-histogram ~=0.11.0
+    - histoprint >=1.4
+    - numpy >=1.13.3
+    - python
+    - typing-extensions  # [py<38]
+
+test:
+  imports:
+    - hist
+    - hist.axis
+  commands:
+    - pip check
+    - hist --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/scikit-hep/hist
+  summary: Hist classes and utilities
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - chrisburr
+    - henryiii
+    - LovelyBuggies

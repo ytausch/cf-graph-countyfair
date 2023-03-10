@@ -1,0 +1,48 @@
+{% set name = "jug" %}
+{% set version = 2.0.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Jug-{{ version }}.tar.gz
+  sha256: 3656355c1f9cd1731065c9d589f66d33653cbe5e0879cbe5d8447b51e4ddb4ec
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - jug = jug.jug:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - redis
+    - six
+
+test:
+  imports:
+    - jug
+    - jug.backends
+  commands:
+    - pip check
+    - jug --help
+  requires:
+    - pip
+
+about:
+  home: https://jug.readthedocs.io
+  summary: A Task Based Parallelization Framework
+  doc_url: https://pythonhosted.org/Jug/
+  license: MIT
+  license_file: COPYING.MIT
+
+extra:
+  recipe-maintainers:
+    - luispedro

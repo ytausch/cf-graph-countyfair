@@ -1,0 +1,44 @@
+{% set name = "dlib" %}
+{% set version = 19.20.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: a3f5070df590c3f510dde2f4c84b1b20e3ef64a02932ed657da490834ecac7e4
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - dlib
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/davisking/dlib
+  summary: A toolkit for making real world machine learning and data analysis applications
+  license: MIT
+  license_file: dlib/LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - patricksnape
+    - aldanor

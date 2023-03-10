@@ -1,0 +1,45 @@
+{% set name = "trimesh" %}
+{% set version = 3.8.10 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/trimesh-{{ version }}.tar.gz
+  sha256: 24fb0f7f8b8745e181b215a294eb1b22acd3e739d757892394d4c32f74e5c069
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy
+    - python
+    - setuptools
+
+test:
+  imports:
+    - trimesh
+    - trimesh.exchange
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mikedh/trimesh
+  summary: Import, export, process, analyze and view triangular meshes.
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - mikedh
+    - pauldmccarthy

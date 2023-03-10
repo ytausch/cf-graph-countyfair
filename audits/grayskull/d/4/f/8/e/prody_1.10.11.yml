@@ -1,0 +1,54 @@
+{% set name = "prody" %}
+{% set version = 1.10.11 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ProDy-{{ version }}.tar.gz
+  sha256: 123ca1bab47c87501ee592c21637aea5a9618056a3ecbe54e9b3455b35cf6228
+
+build:
+  number: 0
+  entry_points:
+    - prody=prody.apps:prody_main
+    - evol=prody.apps:evol_main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy
+    - pip
+    - python
+  run:
+    - biopython
+    - numpy >=1.10
+    - pyparsing
+    - python
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - prody
+    - prody.apps
+  commands:
+    - pip check
+    - prody --help
+    - evol --help
+  requires:
+    - pip
+
+about:
+  home: http://www.csb.pitt.edu/ProDy
+  summary: A Python Package for Protein Dynamics Analysis
+  license: Apache-2.0
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - jamesmkrieger
+    - simonbray

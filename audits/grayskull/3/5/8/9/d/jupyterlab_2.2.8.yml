@@ -1,0 +1,61 @@
+{% set name = "jupyterlab" %}
+{% set version = 2.2.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupyterlab-{{ version }}.tar.gz
+  sha256: c8377bee30504919c1e79949f9fe35443ab7f5c4be622c95307e8108410c8b8c
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - jupyter-lab = jupyterlab.labapp:main
+    - jupyter-labextension = jupyterlab.labextensions:main
+    - jupyter-labhub = jupyterlab.labhubapp:main
+    - jlpm = jupyterlab.jlpmapp:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - jinja2 >=2.10
+    - jupyterlab_server >=1.1.5,<2.0
+    - notebook >=4.3.1
+    - python >=3.5
+    - tornado !=6.0.0,!=6.0.1,!=6.0.2
+
+test:
+  imports:
+    - jupyterlab
+    - jupyterlab.handlers
+  commands:
+    - pip check
+    - jupyter-lab --help
+    - jupyter-labextension --help
+    - jupyter-labhub --help
+    - jlpm --help
+  requires:
+    - pip
+
+about:
+  home: http://jupyter.org
+  summary: The JupyterLab notebook server extension.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jasongrout
+    - blink1073
+    - jochym
+    - ian-r-rose
+    - afshin
+    - ellisonbg
+    - saulshanabrook

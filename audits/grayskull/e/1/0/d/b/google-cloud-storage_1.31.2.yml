@@ -1,0 +1,49 @@
+{% set name = "google-cloud-storage" %}
+{% set version = 1.31.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/google-cloud-storage-{{ version }}.tar.gz
+  sha256: 74bbb5b2d0b249de4a52f561435d0c3570ddc19b249653ae588ec0abcc3c81e6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+  run:
+    - google-auth >=1.11.0,<2.0dev
+    - google-cloud-core >=1.4.1,<2.0dev
+    - google-resumable-media >=1.0.0,<2.0dev
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+    - requests >=2.18.0,<3.0.0dev
+
+test:
+  imports:
+    - google
+    - google.cloud
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/googleapis/python-storage
+  summary: Google Cloud Storage API client library
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - andreyz4k
+    - johanneskoester
+    - leahecole
+    - tswast

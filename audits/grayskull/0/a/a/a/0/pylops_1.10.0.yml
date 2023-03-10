@@ -1,0 +1,47 @@
+{% set name = "pylops" %}
+{% set version = 1.10.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pylops-{{ version }}.tar.gz
+  sha256: a9ce5ad9a2c50dd2d93c6651b614404d35d60b1b4cf4e4c27dfd798361ba8121
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+    - setuptools_scm
+  run:
+    - numpy >=1.15.0
+    - python
+    - scipy
+
+test:
+  imports:
+    - pylops
+    - pylops.avo
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pypi.org/project/pylops/
+  summary: Python library implementing linear operators to allow solving large-scale optimization problems without requiring to explicitly create a dense (or sparse) matrix.
+  license: LGPL-3.0
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
+    - mrava87

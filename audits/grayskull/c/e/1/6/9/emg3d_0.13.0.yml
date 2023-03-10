@@ -1,0 +1,48 @@
+{% set name = "emg3d" %}
+{% set version = 0.13.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/emg3d-{{ version }}.tar.gz
+  sha256: a3d2018b6e9d50a9e0971c565530fc950ffe1848232aa180bc011059bfee8935
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - emg3d=emg3d.cli.main:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+    - setuptools_scm
+  run:
+    - numba >=0.45.0
+    - python >=3.7
+    - scipy >=1.4.0
+
+test:
+  imports:
+    - emg3d
+    - emg3d.cli
+  commands:
+    - pip check
+    - emg3d --help
+  requires:
+    - pip
+
+about:
+  home: https://empymod.github.io
+  summary: A multigrid solver for 3D electromagnetic diffusion.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - prisae

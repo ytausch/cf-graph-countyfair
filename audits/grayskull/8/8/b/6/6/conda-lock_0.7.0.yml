@@ -1,0 +1,54 @@
+{% set name = "conda-lock" %}
+{% set version = 0.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/conda_lock-{{ version }}.tar.gz
+  sha256: e28a956b876c2a860a5035e130a78e5c31ece863382fdd34cdb71df4a7f8bbf7
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - conda-lock = conda_lock:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools >=41.2
+    - setuptools_scm
+  run:
+    - ensureconda >=1.1
+    - jinja2
+    - python >=3.6
+    - pyyaml >=5.1
+    - requests >=2
+    - toml
+
+test:
+  imports:
+    - conda_lock
+    - conda_lock.src_parser
+  commands:
+    - pip check
+    - conda-lock --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mariusvniekerk/conda-lock
+  summary: Lockfiles for conda
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ericdill
+    - mariusvniekerk
+    - ocefpaf

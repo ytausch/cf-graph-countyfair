@@ -1,0 +1,47 @@
+{% set name = "ezdxf" %}
+{% set version = 0.14.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ezdxf-{{ version }}.zip
+  sha256: fdd88d188861113ea4e0af3a7c742065c9f44c4ce1e4368936b34421b47a8a0b
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - dxfpp = ezdxf.pp.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - wheel
+  run:
+    - pyparsing >=2.0.1
+    - python >=3.6
+
+test:
+  imports:
+    - ezdxf
+    - ezdxf.addons
+  commands:
+    - pip check
+    - dxfpp --help
+  requires:
+    - pip
+
+about:
+  home: https://ezdxf.mozman.at
+  summary: A Python package to create/manipulate DXF drawings.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - csachs

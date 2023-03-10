@@ -1,0 +1,56 @@
+{% set name = "sunpy" %}
+{% set version = 2.0.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sunpy-{{ version }}.tar.gz
+  sha256: 678e7e2e94c802aab86fbbf46abeb0396898f653602e68b7b4ac9eab240e1569
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - extension_helpers
+    - pip
+    - python
+    - setuptools_scm
+  run:
+    - astropy >=3.2
+    - importlib-metadata  # [py<38]
+    - matplotlib-base >=2.2.2
+    - numpy >=1.15.0
+    - pandas >=0.23.0
+    - parfive>=1.1.0  # [py>=37]
+    - python
+    - scipy >=1.0.0
+
+test:
+  imports:
+    - sunpy
+    - sunpy.cm
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://sunpy.org
+  summary: '"SunPy: Python for Solar Physics"'
+  doc_url: https://pythonhosted.org/sunpy/
+  license: BSD-2-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - cadair
+    - ehsteve
+    - wtbarnes

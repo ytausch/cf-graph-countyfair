@@ -1,0 +1,46 @@
+{% set name = "zope.interface" %}
+{% set version = 5.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/zope.interface-{{ version }}.tar.gz
+  sha256: 5e98cd35f2ae34e7830f3c91675bf418e6ee985817568d982c44dabd7345325b
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - setuptools
+
+test:
+  imports:
+    - zope
+    - zope.interface
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/zopefoundation/zope.interface
+  summary: Interfaces for Python
+  license: ZPL-2.1
+  license_file: COPYRIGHT.txt
+
+extra:
+  recipe-maintainers:
+    - isuruf
+    - ocefpaf

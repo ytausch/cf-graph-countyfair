@@ -1,0 +1,62 @@
+{% set name = "compas" %}
+{% set version = 0.16.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/COMPAS-{{ version }}.tar.gz
+  sha256: e19e33fdded394934d11c81ee4859fa1b9bd4790962830ec5891757d383155c4
+
+build:
+  number: 0
+  entry_points:
+    - compas_rpc=compas.rpc.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - cython
+    - ezdxf
+    - imageio >=2.7  # [py>=35]
+    - jsonschema
+    - laspy
+    - matplotlib-base >=2.2  # [py>=35 and not win]
+    - networkx
+    - numba
+    - numpy >=1.15.4
+    - pillow
+    - planarity
+    - pycollada
+    - python
+    - schema
+    - scipy >=1.1
+    - sympy
+
+test:
+  imports:
+    - compas
+    - compas_blender
+  commands:
+    - pip check
+    - compas_rpc --help
+  requires:
+    - pip
+
+about:
+  home: http://compas-dev.github.io
+  summary: The COMPAS framework
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - brgcode
+    - gonzalocasas

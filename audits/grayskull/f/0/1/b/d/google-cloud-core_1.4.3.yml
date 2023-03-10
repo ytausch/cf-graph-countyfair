@@ -1,0 +1,45 @@
+{% set name = "google-cloud-core" %}
+{% set version = 1.4.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/google-cloud-core-{{ version }}.tar.gz
+  sha256: 21afb70c1b0bce8eeb8abb5dca63c5fd37fc8aea18f4b6d60e803bd3d27e6b80
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+  run:
+    - google-api-core >=1.19.0,<2.0.0dev
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+
+test:
+  imports:
+    - google
+    - google.cloud
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/googleapis/python-cloud-core
+  summary: Google Cloud API client core library
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - leahecole
+    - parthea
+    - tswast

@@ -1,0 +1,47 @@
+{% set name = "pytest-django" %}
+{% set version = 3.10.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest-django-{{ version }}.tar.gz
+  sha256: 4de6dbd077ed8606616958f77655fed0d5e3ee45159475671c7fa67596c6dba6
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+    - setuptools_scm >=1.11.1
+  run:
+    - pathlib2  # [py<34]
+    - pytest >=3.6
+    - python
+
+test:
+  imports:
+    - pytest_django
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://pytest-django.readthedocs.io/
+  summary: A Django plugin for pytest.
+  dev_url: https://github.com/pytest-dev/pytest-django
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - kwilcox
+    - ocefpaf

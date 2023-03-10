@@ -1,0 +1,43 @@
+{% set name = "dask-mpi" %}
+{% set version = 2.21.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 76e153fc8c58047d898970b33ede0ab1990bd4e69cc130c6627a96f11b12a1a7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - dask_mpi
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dask/dask-mpi
+  summary: Deploy Dask using mpi4py
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - kmpaul
+    - andersy005
+    - mrocklin

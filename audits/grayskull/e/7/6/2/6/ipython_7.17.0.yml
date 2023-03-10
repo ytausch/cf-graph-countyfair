@@ -1,0 +1,72 @@
+{% set name = "ipython" %}
+{% set version = 7.17.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: b70974aaa2674b05eb86a910c02ed09956a33f2dd6c71afc60f0b128a77e7f28
+
+build:
+  number: 0
+  skip: true   # [py<37]
+  entry_points:
+    - ipython = IPython:start_ipython
+    - iptest = IPython.testing.iptestcontroller:main
+    - ipython3 = IPython:start_ipython
+    - iptest3 = IPython.testing.iptestcontroller:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+  run:
+    - appnope  # [darwin]
+    - backcall
+    - colorama  # [win]
+    - decorator
+    - jedi >=0.10
+    - pexpect
+    - pickleshare
+    - prompt-toolkit !=3.0.0,!=3.0.1,<3.1.0,>=2.0.0
+    - prompt_toolkit >=2.0.0,<3.1.0,!=3.0.0,!=3.0.1
+    - pygments
+    - python
+    - setuptools >=18.5
+    - traitlets >=4.2
+
+test:
+  imports:
+    - IPython
+    - IPython.core
+  commands:
+    - pip check
+    - ipython --help
+    - iptest --help
+    - ipython3 --help
+    - iptest3 --help
+  requires:
+    - pip
+
+about:
+  home: https://ipython.org
+  summary: 'IPython: Productive Interactive Computing'
+  dev_url: https://github.com/ipython/ipython
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Carreau
+    - jakirkham
+    - fperez
+    - ellisonbg
+    - minrk
+    - ocefpaf
+    - pelson
+    - takluyver
+    - bollwyvl
+    - blink1073

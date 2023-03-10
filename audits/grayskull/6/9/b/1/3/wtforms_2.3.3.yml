@@ -1,0 +1,44 @@
+{% set name = "wtforms" %}
+{% set version = 2.3.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 81195de0ac94fbc8368abbaf9197b88c4f3ffd6c2719b5bf5fc9da744f3d829c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - markupsafe
+    - python
+
+test:
+  imports:
+    - wtforms
+    - wtforms.csrf
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://wtforms.readthedocs.io/
+  summary: A flexible forms validation and rendering library for Python web development.
+  license: BSD-3-Clause
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - mcs07
+    - synapticarbors

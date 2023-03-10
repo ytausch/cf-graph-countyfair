@@ -1,0 +1,57 @@
+{% set name = "datarobot" %}
+{% set version = 2.22.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/datarobot-{{ version }}.tar.gz
+  sha256: 80b6511791297de08ce8cbabed68f8c3bd2b5af4233b69f529e7fe973c3bdc41
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest
+    - python
+  run:
+    - attrs >=19.1.0,<20.0
+    - contextlib2 >=0.5.5
+    - pandas >=0.15
+    - python
+    - pyyaml >=3.11
+    - requests >=2.21
+    - requests-toolbelt >=0.6
+    - trafaret >=0.7,<2.0,!=1.1.0
+    - urllib3 >=1.23
+
+test:
+  imports:
+    - datarobot
+    - datarobot._experimental
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://datarobot.com
+  summary: This client library is designed to support the DataRobot API.
+  license: Apache-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - daveblumstein
+    - dsakagi
+    - elatt
+    - madmott
+    - nott
+    - peterhurford
+    - mclapper3

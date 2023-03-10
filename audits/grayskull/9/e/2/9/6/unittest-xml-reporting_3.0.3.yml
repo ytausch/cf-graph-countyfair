@@ -1,0 +1,43 @@
+{% set name = "unittest-xml-reporting" %}
+{% set version = 3.0.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/unittest-xml-reporting-{{ version }}.tar.gz
+  sha256: 89ad3376cc63dc0f7227c1e39d03d5f6a20807fef989c57d8c623446b5f79575
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+
+test:
+  imports:
+    - xmlrunner
+    - xmlrunner.extra
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/xmlrunner/unittest-xml-reporting/tree/master/
+  summary: unittest-based test runner with Ant/JUnit like XML reporting.
+  license: BSD-1-Clause
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - oblute
+    - benhuff

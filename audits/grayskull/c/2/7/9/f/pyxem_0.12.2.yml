@@ -1,0 +1,52 @@
+{% set name = "pyxem" %}
+{% set version = 0.12.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyxem-{{ version }}.tar.gz
+  sha256: 77b74213852d61b7c3603d782558a9435afafb8fdfabae6a2d5be6fee7cf397d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - diffsims >=0.3
+    - hyperspy ==1.5.2
+    - ipywidgets
+    - lmfit >=0.9.12
+    - matplotlib-base >=3.1.1
+    - numba
+    - pyfai
+    - python
+    - scikit-image >=0.15.0,<0.17
+    - scikit-learn >=0.19
+
+test:
+  imports:
+    - pyxem
+    - pyxem.components
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyxem/pyxem
+  summary: multi-dimensional diffraction microscopy
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dnjohnstone
+    - pc494

@@ -1,0 +1,54 @@
+{% set name = "bmi-tester" %}
+{% set version = 0.5.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/bmi-tester-{{ version }}.tar.gz
+  sha256: 3ff0047cf8a88a93d752a91d6860f214cc3c4f90924794f41579b9592e8fbb33
+
+build:
+  number: 0
+  entry_points:
+    - bmi-test=bmi_tester.bmipytest:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - click
+    - model_metadata
+    - numpy
+    - py-scripting
+    - pytest
+    - pytest-dependency
+    - python
+    - standard_names
+
+test:
+  imports:
+    - bmi_tester
+    - bmi_tester.bootstrap
+  commands:
+    - pip check
+    - bmi-test --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/csdms/bmi-tester
+  summary: Test Python BMI bindings.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mcflugen
+    - mdpiper

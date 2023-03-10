@@ -1,0 +1,46 @@
+{% set name = "cffi" %}
+{% set version = 1.14.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cffi-{{ version }}.tar.gz
+  sha256: f92f789e4f9241cd262ad7a555ca2c648a98178a953af117ef7fad46aa1d5591
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - pycparser
+    - python
+
+test:
+  imports:
+    - cffi
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://cffi.readthedocs.org
+  summary: Foreign Function Interface for Python calling C code.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - goanpeca
+    - inducer
+    - ocefpaf
+    - mingwandroid

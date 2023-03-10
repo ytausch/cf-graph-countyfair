@@ -1,0 +1,48 @@
+{% set name = "chiscore" %}
+{% set version = 0.2.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/chiscore-{{ version }}.tar.gz
+  sha256: 0c7e184466b64f5a6dae6353d87a3573d7d525be695e246483bbc28037541e2c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner >=5
+    - python
+  run:
+    - chi2comb >=0.1.0
+    - numpy >=1.17
+    - pytest >=5
+    - pytest-doctestplus >=0.8.0
+    - python
+    - scipy >=1.0.1
+
+test:
+  imports:
+    - chiscore
+    - chiscore._data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/limix/chiscore
+  summary: Test statistics from linear combination of chi-squared distributions.
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - Horta

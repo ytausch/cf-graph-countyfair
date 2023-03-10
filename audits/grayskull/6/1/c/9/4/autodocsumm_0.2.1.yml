@@ -1,0 +1,42 @@
+{% set name = "autodocsumm" %}
+{% set version = 0.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/autodocsumm-{{ version }}.tar.gz
+  sha256: 8e70916f523149a9c15f117119c7ad475391d2aef62f637574e79751070654b4
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - python >=3.5
+    - sphinx >=2.2
+
+test:
+  imports:
+    - autodocsumm
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Chilipp/autodocsumm
+  summary: Extended sphinx autodoc including automatic autosummaries
+  license: GPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - Chilipp

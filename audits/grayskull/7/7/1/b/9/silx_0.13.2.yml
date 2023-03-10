@@ -1,0 +1,59 @@
+{% set name = "silx" %}
+{% set version = 0.13.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/silx-{{ version }}.tar.gz
+  sha256: 0bc5a5a30499b9d620c795a20948151a4057aba16ff08dfe637f7a923b4697d4
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  entry_points:
+    - silx = silx.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython >=0.21.1
+    - numpy >=1.12
+    - pip
+    - python
+    - setuptools
+  run:
+    - fabio >=0.9
+    - h5py
+    - numpy >=1.19.1
+    - python
+    - setuptools
+    - six
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - silx
+    - silx.app
+  commands:
+    - pip check
+    - silx --help
+  requires:
+    - pip
+
+about:
+  home: http://www.silx.org/
+  summary: Software library for X-ray data analysis
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - CJ-Wright
+    - tschoonj
+    - vallsv
+    - t20100

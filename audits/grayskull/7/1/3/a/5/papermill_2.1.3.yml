@@ -1,0 +1,56 @@
+{% set name = "papermill" %}
+{% set version = 2.1.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/papermill-{{ version }}.tar.gz
+  sha256: ecd4cafa9179693b0eedc3b6f4560f9ee47826a6e366e42bfa3cc20f7931b3f8
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - papermill = papermill.cli:papermill
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - ansiwrap
+    - black
+    - click
+    - entrypoints
+    - nbclient >=0.2.0
+    - nbformat
+    - python >=3.6
+    - pyyaml
+    - requests
+    - tenacity
+    - tqdm >=4.32.2
+
+test:
+  imports:
+    - papermill
+  commands:
+    - pip check
+    - papermill --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/nteract/papermill
+  summary: Parametrize and run Jupyter and nteract Notebooks
+  dev_url: https://github.com/nteract/papermill/
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - MSeal
+    - willingc

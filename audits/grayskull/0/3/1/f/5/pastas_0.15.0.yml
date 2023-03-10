@@ -1,0 +1,47 @@
+{% set name = "pastas" %}
+{% set version = 0.15.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 84f8aab6f7cf7e308e0aab037cfadabab20087047c808e80bab41aa8264acf80
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - matplotlib-base >=2.0
+    - numpy >=1.15
+    - pandas >=0.25
+    - python
+    - scipy >=1.1
+
+test:
+  imports:
+    - pastas
+    - pastas.io
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pastas/pastas
+  summary: Python package to perform time series analysis of hydrological time series.
+  dev_url: https://github.com/pastas/pastas
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - jentjr

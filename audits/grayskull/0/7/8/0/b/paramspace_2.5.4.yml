@@ -1,0 +1,44 @@
+{% set name = "paramspace" %}
+{% set version = 2.5.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/paramspace-{{ version }}.tar.gz
+  sha256: 8694457abc46686b2e1bb0900a1c0381f1327c3955e3229a470be06db03d55fc
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy >=1.17.3
+    - python
+    - ruamel.yaml >=0.16.5
+    - xarray >=0.10.9
+
+test:
+  imports:
+    - paramspace
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://gitlab.com/blsqr/paramspace
+  summary: Dictionary-based, multi-dimensional parameter space iteration
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - blsqr

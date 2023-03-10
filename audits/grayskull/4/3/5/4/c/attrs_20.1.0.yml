@@ -1,0 +1,44 @@
+{% set name = "attrs" %}
+{% set version = 20.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/attrs-{{ version }}.tar.gz
+  sha256: 0ef97238856430dcf9228e07f316aefc17e8939fc8507e18c6501b761ef1a42a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+  run:
+    - python !=3.0,!=3.1,!=3.2,!=3.3
+
+test:
+  imports:
+    - attr
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://www.attrs.org/
+  summary: Classes Without Boilerplate
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - CJ-Wright
+    - licode
+    - nicoddemus
+    - jochym

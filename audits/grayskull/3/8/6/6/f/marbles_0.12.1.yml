@@ -1,0 +1,45 @@
+{% set name = "marbles" %}
+{% set version = 0.12.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 6c729cc81671eaa71a79b587c3d58d6d90db775a8d0fe2a3b1e4e8a0376d20ff
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - marbles.core
+    - marbles.mixins
+    - python
+
+test:
+  imports:
+    - marbles
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/twosigma/marbles
+  summary: Read better test failures
+  dev_url: https://github.com/twosigma/marbles
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - thejunglejane
+    - leifwalsh

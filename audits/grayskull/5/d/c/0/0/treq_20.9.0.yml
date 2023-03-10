@@ -1,0 +1,49 @@
+{% set name = "treq" %}
+{% set version = 20.9.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/treq-{{ version }}.tar.gz
+  sha256: 83cd2ca75aef4f1fbdbe144c186426d930c3e8b20385df8cec9e12d442986da2
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - incremental
+    - pip
+    - python
+  run:
+    - attrs
+    - hyperlink >=19.0.0
+    - incremental
+    - python
+    - requests >=2.1.0
+    - six
+    - twisted >=18.7.0  # [py>=37]
+
+test:
+  imports:
+    - treq
+    - treq.test
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/twisted/treq
+  summary: High-level Twisted HTTP Client API
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - synapticarbors

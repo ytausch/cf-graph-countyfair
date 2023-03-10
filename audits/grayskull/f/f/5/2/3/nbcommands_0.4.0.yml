@@ -1,0 +1,61 @@
+{% set name = "nbcommands" %}
+{% set version = 0.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: a0948abf025f522da68ae0a0d418973a6f6d253c1eb18ed576b0613c525aaa27
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - nbblack = nbcommands._black:_black
+    - nbtouch = nbcommands._touch:touch
+    - nbgrep = nbcommands._grep:grep
+    - nbhead = nbcommands._head:head
+    - nbtail = nbcommands._tail:tail
+    - nbcat = nbcommands._cat:cat
+    - nbless = nbcommands._less:less
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - black >=19.10b0
+    - click >=7.0
+    - colorama >=0.4.1
+    - nbformat >=4.4.0
+    - pygments >=2.4.2
+    - python
+
+test:
+  imports:
+    - nbcommands
+  commands:
+    - pip check
+    - nbblack --help
+    - nbtouch --help
+    - nbgrep --help
+    - nbhead --help
+    - nbtail --help
+    - nbcat --help
+    - nbless --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/vinayak-mehta/nbcommands
+  summary: Unix commands for Jupyter notebooks.
+  license: Apache-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - vinayak-mehta

@@ -1,0 +1,62 @@
+{% set name = "neptune-client" %}
+{% set version = 0.4.122 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/neptune-client-{{ version }}.tar.gz
+  sha256: 66213af4739381f5cf727134bb7444c6349177899f2270fe199545d25c8046b4
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - neptune = neptune_cli.main:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - bravado
+    - click >=7.0
+    - future >=0.17.1
+    - gitpython >=2.0.8
+    - oauthlib >=2.1.0
+    - packaging
+    - pandas
+    - pillow >=1.1.6
+    - py3nvml
+    - pyjwt
+    - python
+    - requests >=2.20.0
+    - requests-oauthlib >=1.0.0
+    - six >=1.12.0
+    - websocket-client >=0.35.0
+
+test:
+  imports:
+    - neptune
+    - neptune.internal
+  commands:
+    - pip check
+    - neptune --help
+  requires:
+    - pip
+
+about:
+  home: https://neptune.ai/
+  summary: Neptune Client
+  license: Apache-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - szymon-kuklewicz
+    - aniezurawski
+    - hubertjaworskineptune
+    - pitercl

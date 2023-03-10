@@ -1,0 +1,51 @@
+{% set name = "foolbox" %}
+{% set version = 3.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/foolbox-{{ version }}.tar.gz
+  sha256: c827e749845b92bc8ab3afaf9c5b40c3d127bfe25dca2f84b228ff3e61be04af
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - eagerpy ==0.29.0
+    - gitpython >=3.0.7
+    - numpy
+    - python
+    - requests >=2.24.0
+    - scipy
+    - setuptools
+    - typing-extensions >=3.7.4.1
+
+test:
+  imports:
+    - foolbox
+    - foolbox.attacks
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/bethgelab/foolbox
+  summary: Foolbox Native is an adversarial attacks library that works natively with PyTorch, TensorFlow and JAX
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ndmaxar
+    - oblute
+    - rluria14

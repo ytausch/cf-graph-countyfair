@@ -1,0 +1,49 @@
+{% set name = "nbautoexport" %}
+{% set version = 0.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nbautoexport-{{ version }}.tar.gz
+  sha256: ef9385ed60ae58550126b823e95c43d2b3f9f949638a82a3a796ad5a115092a3
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - nbautoexport=nbautoexport.nbautoexport:app
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - jupyter_contrib_nbextensions >=0.5.1
+    - nbconvert >=5.6.1,<6
+    - packaging
+    - pydantic
+    - python >=3.6
+    - typer >=0.3.0
+
+test:
+  imports:
+    - nbautoexport
+  commands:
+    - pip check
+    - nbautoexport --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/drivendataorg/nbautoexport
+  summary: Automatically export Jupyter notebooks to various file formats (.py, .html, and more) on save.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jayqi

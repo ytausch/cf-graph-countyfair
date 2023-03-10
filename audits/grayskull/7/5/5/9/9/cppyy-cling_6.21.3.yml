@@ -1,0 +1,52 @@
+{% set name = "cppyy-cling" %}
+{% set version = 6.21.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/cppyy-cling-{{ version }}.tar.gz
+  sha256: bc51dac3ff712bedf7be8f274fad60b9622ce6e0983ccf989ac581253dcba645
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - cling-config = cppyy_backend._cling_config:main
+    - genreflex = cppyy_backend._genreflex:main
+    - rootcling = cppyy_backend._rootcling:main
+    - cppyy-generator = cppyy_backend._cppyy_generator:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - wheel
+  run:
+    - python
+
+test:
+  imports:
+    - cppyy_backend
+  commands:
+    - pip check
+    - cling-config --help
+    - genreflex --help
+    - rootcling --help
+    - cppyy-generator --help
+  requires:
+    - pip
+
+about:
+  home: https://root.cern.ch/cling
+  summary: Re-packaged Cling, as backend for cppyy
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - saraedum
+    - isuruf

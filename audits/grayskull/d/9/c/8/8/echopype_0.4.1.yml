@@ -1,0 +1,52 @@
+{% set name = "echopype" %}
+{% set version = 0.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/echopype-{{ version }}.tar.gz
+  sha256: f7a2616b54d4b367d729c9b22a77874aabe8f6f286685cbe1f70fb8fa856f50f
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - dask-core
+    - matplotlib-base
+    - netcdf4
+    - numpy
+    - pynmea2
+    - python
+    - pytz
+    - scipy
+    - xarray
+    - zarr
+
+test:
+  imports:
+    - echopype
+    - echopype.convert
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/OSOceanAcoustics/echopype
+  summary: Enhancing the interoperability and scalability in analyzing ocean sonar data
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - lsetiawan
+    - leewujung

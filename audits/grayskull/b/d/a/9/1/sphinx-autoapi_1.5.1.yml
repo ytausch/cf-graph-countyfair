@@ -1,0 +1,47 @@
+{% set name = "sphinx-autoapi" %}
+{% set version = 1.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sphinx-autoapi-{{ version }}.tar.gz
+  sha256: 4d50878323b80b66abdc4046c1632636473414653bac450b58832b8ee9f6a9a6
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34 or py==35]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - astroid <2  # [py<3]
+    - jinja2
+    - python
+    - pyyaml
+    - sphinx >=1.6
+    - unidecode
+
+test:
+  imports:
+    - autoapi
+    - autoapi.mappers
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/readthedocs/sphinx-autoapi
+  summary: Sphinx API documentation generator
+  license: MIT
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - CurtLH

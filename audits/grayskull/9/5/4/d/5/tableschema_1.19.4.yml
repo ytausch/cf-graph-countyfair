@@ -1,0 +1,57 @@
+{% set name = "tableschema" %}
+{% set version = 1.19.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/tableschema-{{ version }}.tar.gz
+  sha256: d3809ea6936991cf54f938a8f5645260db00a916f30b4d5614a97b7f4759a903
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - tableschema = tableschema.__main__:cli
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - cached-property >=1.5
+    - click >=3.3
+    - isodate >=0.5.4
+    - jsonschema >=2.5
+    - pyrsistent <0.17
+    - python
+    - python-dateutil >=2.4
+    - requests >=2.5
+    - rfc3986 >=1.1.0
+    - six >=1.9
+    - tabulator >=1.51.3
+    - unicodecsv >=0.14
+
+test:
+  imports:
+    - tableschema
+    - tableschema.constraints
+  commands:
+    - pip check
+    - tableschema --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/frictionlessdata/tableschema-py
+  summary: A utility library for working with Table Schema in Python
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - roll

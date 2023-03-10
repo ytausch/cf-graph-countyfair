@@ -1,0 +1,52 @@
+{% set name = "rfi-file-monitor" %}
+{% set version = 0.1.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rfi-file-monitor-{{ version }}.tar.gz
+  sha256: efb09ef41fad7a7faa4a5644163b819c3a414179cd63591b3143a92e3d6ccfec
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - rfi-file-monitor = rfi_file_monitor:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.8
+  run:
+    - boto3
+    - bugsnag
+    - munch
+    - paramiko
+    - pygobject
+    - python >=3.8
+    - pyyaml
+    - watchdog
+
+test:
+  imports:
+    - rfi_file_monitor
+    - rfi_file_monitor.data
+  commands:
+    - pip check
+    - rfi-file-monitor --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/RosalindFranklinInstitute/rfi-file-monitor
+  summary: Easy to use file monitor GUI with user-definable operations
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - tschoonj

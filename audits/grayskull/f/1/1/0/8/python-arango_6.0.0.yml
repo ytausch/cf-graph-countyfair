@@ -1,0 +1,45 @@
+{% set name = "python-arango" %}
+{% set version = 6.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/python-arango-{{ version }}.tar.gz
+  sha256: 830e1994b2cc2f323072dffe5a4aeaa194dbf369090f102348aea87a647cc767
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - pyjwt
+    - python
+    - requests
+    - requests-toolbelt
+    - six
+
+test:
+  imports:
+    - arango
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/joowani/python-arango
+  summary: Python Driver for ArangoDB
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - carlodri

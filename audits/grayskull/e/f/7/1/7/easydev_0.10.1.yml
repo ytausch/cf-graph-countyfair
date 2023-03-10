@@ -1,0 +1,51 @@
+{% set name = "easydev" %}
+{% set version = 0.10.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/easydev-{{ version }}.tar.gz
+  sha256: faa791f0b1ef87bddab4d873c5a2c2be539b8a03c177242b1b402412a0dd69d1
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - easydev_buildPackage=easydev.package:buildPackage
+    - browse=easydev.browser:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - colorama
+    - colorlog
+    - pexpect
+    - python
+
+test:
+  imports:
+    - easydev
+    - easydev.share
+  commands:
+    - pip check
+    - easydev_buildPackage --help
+    - browse --help
+  requires:
+    - pip
+
+about:
+  home: http://github.com/cokelaer/easydev
+  summary: Common utilities to ease the development of Python packages
+  doc_url: https://pythonhosted.org/easydev/
+  license: BSD-3-Clause
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - cokelaer

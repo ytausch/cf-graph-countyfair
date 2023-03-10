@@ -1,0 +1,48 @@
+{% set name = "econ-ark" %}
+{% set version = 0.10.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2e528c003e0ae2c70661ed2f0d1288b4b87414e6ecae387b7e5ecbc9048746bb
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - dill
+    - joblib
+    - matplotlib-base
+    - numpy
+    - python >=3.6
+    - scipy
+
+test:
+  imports:
+    - HARK
+    - HARK.ConsumptionSaving
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/econ-ark/HARK
+  summary: Heterogenous Agents Resources & toolKit
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - MridulS
+    - shaunagm

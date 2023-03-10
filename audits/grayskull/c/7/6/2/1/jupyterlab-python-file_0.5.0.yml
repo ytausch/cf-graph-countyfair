@@ -1,0 +1,43 @@
+{% set name = "jupyterlab-python-file" %}
+{% set version = 0.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupyterlab-python-file-{{ version }}.tar.gz
+  sha256: f0ba49cb75b105d5f9e790e0cae5361bc16bb0efae75abf904a8c911861506a6
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - jupyter_packaging
+    - pip
+    - python >=3.6
+  run:
+    - jupyterlab >=3.0.0rc0,==3.*
+    - python >=3.6
+
+test:
+  imports:
+    - jupyterlab-python-file
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/jtpio/jupyterlab-python-file.git
+  summary: Create Python Files from JupyterLab
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jtpio

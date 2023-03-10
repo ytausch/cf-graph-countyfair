@@ -1,0 +1,50 @@
+{% set name = "dustmaps" %}
+{% set version = 1.0.5 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dustmaps-{{ version }}.tar.gz
+  sha256: b58bb51e262762349a2071bdada26e3457c60ea078c807765bd5ac8c329ba61a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - astropy
+    - h5py
+    - healpy
+    - numpy
+    - progressbar2
+    - python
+    - requests
+    - scipy
+    - six
+
+test:
+  imports:
+    - dustmaps
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/gregreen/dustmaps
+  summary: Uniform interface for multiple dust reddening maps.
+  license: GPL-2.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - guillochon
+    - pkgw

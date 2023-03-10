@@ -1,0 +1,54 @@
+{% set name = "dask-ml" %}
+{% set version = 1.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dask-ml-{{ version }}.tar.gz
+  sha256: 5f93e8560217ebbc5a2254eaf705e9cad8e1c82012567c658e26464a74fbab76
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+  run:
+    - dask-glm >=0.2.0
+    - dask>=2.4.0
+    - distributed >=2.4.0
+    - multipledispatch >=0.4.9
+    - numba
+    - numpy >=1.17.3
+    - packaging
+    - pandas >=0.24.2
+    - python >=3.6
+    - scikit-learn >=0.23
+    - scipy
+
+test:
+  imports:
+    - dask_ml
+    - dask_ml.cluster
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dask/dask-ml
+  summary: A library for distributed and parallel machine learning
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - TomAugspurger
+    - jrbourbeau

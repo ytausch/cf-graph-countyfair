@@ -1,0 +1,53 @@
+{% set name = "pyabel" %}
+{% set version = 0.8.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c6dc00b0af37be9a2dd20e667a4c805b53a05bfe24061936f45aed245ed21a4f
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - numpy >=1.6
+    - python
+    - scipy >=0.14
+    - setuptools >=16.0
+    - six >=1.10.0
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - abel
+    - abel.lib
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/PyAbel/PyAbel
+  summary: A Python package for forward and inverse Abel transforms
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - DanHickstein
+    - rth
+    - stggh
+    - DhrubajyotiDas

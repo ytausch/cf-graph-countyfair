@@ -1,0 +1,45 @@
+{% set name = "xsum" %}
+{% set version = 1.1.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xsum-{{ version }}.tar.gz
+  sha256: 21ff547dbb64e8ddefd376f2889349c7a94fce69e7fc417fc661068b298473b1
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - pybind11 >=2.5.0
+    - python
+  run:
+    - numpy
+    - python
+
+test:
+  imports:
+    - tests
+    - tests.test_xsum
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/yafshar/xsum
+  summary: Fast Exact Summation Using Small and Large Superaccumulators
+  license: BSD-3-Clause
+  license_file: .eggs/pybind11-2.5.0-py3.7.egg/EGG-INFO/LICENSE
+
+extra:
+  recipe-maintainers:
+    - yafshar

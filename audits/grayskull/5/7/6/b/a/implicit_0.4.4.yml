@@ -1,0 +1,48 @@
+{% set name = "implicit" %}
+{% set version = 0.4.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/implicit-{{ version }}.tar.gz
+  sha256: 4ec4966a6e34c676695528bfee3465c48cf7e0ba49594ad96ffb7608c795c2f6
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython >=0.24
+    - pip
+    - python
+  run:
+    - numpy
+    - python
+    - scipy >=0.16
+    - tqdm >=4.27
+
+test:
+  imports:
+    - implicit
+    - implicit.cuda
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/benfred/implicit/
+  summary: Collaborative Filtering for Implicit Datasets
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - rth
+    - benfred

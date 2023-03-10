@@ -1,0 +1,58 @@
+{% set name = "dataprep" %}
+{% set version = 0.2.11 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: f662d667de49a80701499f462749b8cae7f358d915613a0203c9023a20062b89
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6,<4.0
+  run:
+    - aiohttp >=3.6.2,<4.0.0
+    - bokeh >=2.0,<2.1
+    - dask>=2.22,<2.23
+    - jinja2 >=2.11,<2.12
+    - jsonpath-ng >=1.5.1,<2.0.0
+    - jsonschema >=3.2,<3.3
+    - lxml >=4.5,<4.6
+    - nltk >=3.5,<4.0
+    - numpy >=1.18,<1.19
+    - pandas >=1.0,<1.1
+    - pillow >=7.1.2,<8.0.0
+    - python >=3.6,<4.0
+    - requests >=2.23,<2.24
+    - scipy >=1.4,<1.5
+    - tornado ==5.0.2
+    - tqdm >=4.47.0,<5.0.0
+    - wordcloud >=1.7.0,<2.0.0
+
+test:
+  imports:
+    - dataprep
+    - dataprep.assets
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sfu-db/dataprep
+  summary: 'Dataprep: Data Preparation in Python'
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - dovahcrow

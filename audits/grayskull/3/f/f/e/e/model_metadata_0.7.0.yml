@@ -1,0 +1,51 @@
+{% set name = "model_metadata" %}
+{% set version = 0.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/model_metadata-{{ version }}.tar.gz
+  sha256: 06e4f735c414097d83d2a176c7bbf224a8d5ed089d99535914aa2ff87c8ef080
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - mmd=model_metadata.cli.main:mmd
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools
+  run:
+    - binaryornot
+    - click
+    - jinja2
+    - packaging
+    - python
+    - pyyaml
+
+test:
+  imports:
+    - model_metadata
+    - model_metadata.cli
+  commands:
+    - pip check
+    - mmd --help
+  requires:
+    - pip
+
+about:
+  home: http://csdms.colorado.edu
+  summary: Model Metadata
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mcflugen

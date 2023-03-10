@@ -1,0 +1,48 @@
+{% set name = "gdown" %}
+{% set version = 3.12.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/gdown-{{ version }}.tar.gz
+  sha256: 4b3a1301e57bfd8dce939bf25ef8fbb4b23967fd0f878eede328bdcc41386bac
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - gdown=gdown.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - filelock
+    - python
+    - requests
+    - six
+    - tqdm
+
+test:
+  imports:
+    - gdown
+  commands:
+    - pip check
+    - gdown --help
+  requires:
+    - pip
+
+about:
+  home: http://github.com/wkentaro/gdown
+  summary: Google Drive direct download of big files.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - hmaarrfk

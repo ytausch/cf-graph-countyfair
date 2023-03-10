@@ -1,0 +1,45 @@
+{% set name = "tomlkit" %}
+{% set version = 0.7.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: ac57f29693fab3e309ea789252fcce3061e19110085aa31af5446ca749325618
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33 or py==34]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - enum34 >=1.1,<2.0  # [py>=27 and py<28]
+    - functools32 >=3.2.3,<4.0.0  # [py>=27 and py<28]
+    - python
+    - typing >=3.6,<4.0  # [py>=27 and py<28 or py>=34 and py<35]
+
+test:
+  imports:
+    - tests
+    - tomlkit
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sdispater/tomlkit
+  summary: Style preserving TOML library
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ocefpaf

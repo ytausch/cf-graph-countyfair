@@ -1,0 +1,56 @@
+{% set name = "virtualenv" %}
+{% set version = 20.0.33 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/virtualenv-{{ version }}.tar.gz
+  sha256: a5e0d253fe138097c6559c906c528647254f437d1019af9d5a477b09bfa7300f
+
+build:
+  number: 0
+  skip: true   # [py==30 or py==31 or py==32 or py==33]
+  entry_points:
+    - virtualenv=virtualenv.__main__:run_with_catch
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - setuptools_scm
+    - setuptools_scm >=2
+  run:
+    - appdirs >=1.4.3,<2
+    - distlib >=0.3.1,<1
+    - filelock >=3.0.0,<4
+    - importlib-metadata >=0.12,<3  # [py<38]
+    - importlib_resources >=1.0  # [py<37]
+    - pathlib2 >=2.3.3,<3  # [py<34]
+    - python
+    - six >=1.9.0,<2
+
+test:
+  imports:
+    - virtualenv
+    - virtualenv.activation
+  commands:
+    - pip check
+    - virtualenv --help
+  requires:
+    - pip
+
+about:
+  home: https://virtualenv.pypa.io/
+  summary: Virtual Python Environment builder
+  dev_url: https://github.com/pypa/virtualenv
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mingwandroid
+    - kalefranz

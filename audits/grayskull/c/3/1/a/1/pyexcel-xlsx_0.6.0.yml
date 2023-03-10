@@ -1,0 +1,46 @@
+{% set name = "pyexcel-xlsx" %}
+{% set version = 0.6.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyexcel-xlsx-{{ version }}.tar.gz
+  sha256: 55754f764252461aca6871db203f4bd1370ec877828e305e6be1de5f9aa6a79d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - gease
+    - pip
+    - python >=3.6
+  run:
+    - openpyxl >=2.6.1
+    - pyexcel-io >=0.6.2
+    - python >=3.6
+
+test:
+  imports:
+    - pyexcel_xlsx
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyexcel/pyexcel-xlsx
+  summary: A wrapper library to read, manipulate and write data in xlsx and xlsmformat
+  doc_url: https://pythonhosted.org/pyexcel-xlsx/
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - williamjamir
+    - nicoddemus

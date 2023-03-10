@@ -1,0 +1,74 @@
+{% set name = "dagster" %}
+{% set version = 0.9.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dagster-{{ version }}.tar.gz
+  sha256: cf61a9c78e85b73956490db3519f86767ea708585002c1407840ddf9cf4f073c
+
+build:
+  number: 0
+  entry_points:
+    - dagster = dagster.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - alembic >=1.2.1
+    - backports.tempfile  # [py<3]
+    - click >=5.0
+    - coloredlogs >=6.1
+    - contextlib2 >=0.5.4
+    - docstring_parser ==0.7.1  # [py>=36]
+    - enum34  # [py<34]
+    - funcsigs
+    - functools32  # [py<3]
+    - future
+    - futures  # [py<3]
+    - grpcio ==1.30.0
+    - pathlib2 >=2.3.4  # [py<3]
+    - protobuf ==3.12.4
+    - psutil >=1.0  # [win]
+    - pyrsistent >=0.14.8  # [py>=3]
+    - python
+    - python-dateutil
+    - pytz
+    - pywin32 !=226  # [win]
+    - pyyaml
+    - requests
+    - rx <=1.6.1
+    - six
+    - sqlalchemy >=1.0
+    - toposort >=1.0
+    - tqdm
+    - typing  # [py<3]
+    - watchdog >=0.8.3
+
+test:
+  imports:
+    - dagster
+    - dagster.api
+  commands:
+    - pip check
+    - dagster --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dagster-io/dagster
+  summary: A data orchestrator for machine learning, analytics, and ETL.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - xhochy
+    - bollwyvl
+    - mgasner

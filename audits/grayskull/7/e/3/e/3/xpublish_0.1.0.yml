@@ -1,0 +1,54 @@
+{% set name = "xpublish" %}
+{% set version = 0.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: fb31b2937a80f607dd7d1e5739a5137ca7ed6de5211fe3ec9c1ded0d89b3486a
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools >=30.3.0
+    - setuptools_scm
+  run:
+    - cachey
+    - dask
+    - fastapi >=0.59
+    - numcodecs
+    - numpy >=1.17
+    - python >=3.6
+    - toolz
+    - uvicorn
+    - xarray >=0.16
+    - zarr
+
+test:
+  imports:
+    - xpublish
+    - xpublish.routers
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/xarray-contrib/xpublish
+  summary: Publish Xarray Datasets via a REST API.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jhamman
+    - andersy005

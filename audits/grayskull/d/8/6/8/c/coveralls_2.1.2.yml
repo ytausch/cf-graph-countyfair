@@ -1,0 +1,47 @@
+{% set name = "coveralls" %}
+{% set version = 2.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 4430b862baabb3cf090d36d84d331966615e4288d8a8c5957e0fd456d0dd8bd6
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - coveralls = coveralls.cli:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - coverage >=4.1,<6.0
+    - docopt >=0.6.1
+    - python >=3.5
+    - requests >=1.0.0
+
+test:
+  imports:
+    - coveralls
+  commands:
+    - pip check
+    - coveralls --help
+  requires:
+    - pip
+
+about:
+  home: http://github.com/coveralls-clients/coveralls-python
+  summary: Show coverage stats online via coveralls.io
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - thekevjames

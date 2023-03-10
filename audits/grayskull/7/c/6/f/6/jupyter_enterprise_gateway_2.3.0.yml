@@ -1,0 +1,61 @@
+{% set name = "jupyter_enterprise_gateway" %}
+{% set version = 2.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupyter_enterprise_gateway-{{ version }}.tar.gz
+  sha256: 473078d5624ffc1bd9c9bf23f3a8621a1562266a27d37e2314670fc68902fc53
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - jupyter-enterprisegateway = enterprise_gateway:launch_instance
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - docker-py >=3.5.0
+    - future
+    - jinja2 >=2.10
+    - jupyter_client >=6.1
+    - jupyter_core >=4.6.0
+    - kubernetes >=4.0.0
+    - notebook >=6.1.0
+    - paramiko >=2.1.2
+    - pexpect >=4.2.0
+    - pycryptodomex >=3.9.7
+    - python >=3.5
+    - pyzmq >=17.0.0
+    - requests >=2.7,<3.0
+    - tornado >=4.2.0
+    - traitlets >=4.3.3
+    - yarn-api-client >=1.0
+
+test:
+  imports:
+    - enterprise_gateway
+    - enterprise_gateway.base
+  commands:
+    - pip check
+    - jupyter-enterprisegateway --help
+  requires:
+    - pip
+
+about:
+  home: http://github.com/jupyter-incubator/enterprise_gateway
+  summary: A web server for spawning and communicating with remote Jupyter kernels
+  license: BSD-3-Clause
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - lresende
+    - kevin-bates

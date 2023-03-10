@@ -1,0 +1,56 @@
+{% set name = "rift" %}
+{% set version = 0.0.15.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2ecdc25c5ccf5988524523a8d2de4789f9c687bfba7b01f0516d26303ad9a428
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - corner
+    - gwdatafind
+    - h5py
+    - lalsuite
+    - ligo-segments
+    - matplotlib-base
+    - numba
+    - numpy
+    - pip
+    - python
+    - python-ligo-lw
+    - scikit-learn
+    - setuptools
+    - six
+
+test:
+  imports:
+    - RIFT
+    - RIFT.integrators
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://git.ligo.org/richard-oshaughnessy/research-projects-RIT
+  summary: RIFT parameter estimation pipeline. Note branch used is temp-RIT-Tides-port_python3_restructure_package (which will become master shortly)!
+  license: MIT
+  license_file: LICENSE.md
+
+extra:
+  recipe-maintainers:
+    - duncanmmacleod
+    - oshaughn

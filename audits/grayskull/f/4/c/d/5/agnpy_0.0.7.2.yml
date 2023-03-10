@@ -1,0 +1,46 @@
+{% set name = "agnpy" %}
+{% set version = 0.0.7.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/agnpy-{{ version }}.tar.gz
+  sha256: a95f8b82f3aef66c9fdf43c15076e8ee3d2f9cb8aac9f8e1b1fa75456f5eb0b1
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - astropy
+    - matplotlib-base
+    - numpy
+    - python >=3.6
+    - scipy
+
+test:
+  imports:
+    - agnpy
+    - agnpy.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/cosimoNigro/agnpy
+  summary: Modelling jetted Active Galactic Nuclei radiative processes with python
+  license: GPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mwcraig

@@ -1,0 +1,80 @@
+{% set name = "vcstool" %}
+{% set version = 0.2.14 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c51300f074ea9c5da162ed8f3bc354c3fd69564895fee90abf1e1bd525919f2b
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - vcs = vcstool.commands.vcs:main
+    - vcs-branch = vcstool.commands.branch:main
+    - vcs-bzr = vcstool.commands.custom:bzr_main
+    - vcs-custom = vcstool.commands.custom:main
+    - vcs-diff = vcstool.commands.diff:main
+    - vcs-export = vcstool.commands.export:main
+    - vcs-git = vcstool.commands.custom:git_main
+    - vcs-help = vcstool.commands.help:main
+    - vcs-hg = vcstool.commands.custom:hg_main
+    - vcs-import = vcstool.commands.import_:main
+    - vcs-log = vcstool.commands.log:main
+    - vcs-pull = vcstool.commands.pull:main
+    - vcs-push = vcstool.commands.push:main
+    - vcs-remotes = vcstool.commands.remotes:main
+    - vcs-status = vcstool.commands.status:main
+    - vcs-svn = vcstool.commands.custom:svn_main
+    - vcs-validate = vcstool.commands.validate:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - pyyaml
+    - setuptools
+
+test:
+  imports:
+    - vcstool
+    - vcstool.clients
+  commands:
+    - pip check
+    - vcs --help
+    - vcs-branch --help
+    - vcs-bzr --help
+    - vcs-custom --help
+    - vcs-diff --help
+    - vcs-export --help
+    - vcs-git --help
+    - vcs-help --help
+    - vcs-hg --help
+    - vcs-import --help
+    - vcs-log --help
+    - vcs-pull --help
+    - vcs-push --help
+    - vcs-remotes --help
+    - vcs-status --help
+    - vcs-svn --help
+    - vcs-validate --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dirk-thomas/vcstool
+  summary: vcstool provides a command line tool to invoke vcs commands on multiple repositories.
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - seanyen
+    - wolfv

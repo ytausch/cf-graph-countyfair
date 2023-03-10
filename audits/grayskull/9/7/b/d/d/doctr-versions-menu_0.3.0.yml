@@ -1,0 +1,49 @@
+{% set name = "doctr-versions-menu" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: d49166b7a0a1a0ce14f37a5314d420de69421a1764307f91c9910a02852d7c95
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - click >=6.7
+    - configobj >=5.0.6
+    - doctr
+    - packaging
+    - pyparsing >=2.0.2
+    - python >=3.5
+    - setuptools
+    - sphinx
+
+test:
+  imports:
+    - doctr_versions_menu
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/goerz/doctr_versions_menu
+  summary: Sphinx extension and command to add a versions menu to Doctr-deployed documentation
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - hhslepicka
+    - goerz

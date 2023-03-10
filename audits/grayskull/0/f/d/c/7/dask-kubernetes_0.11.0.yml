@@ -1,0 +1,47 @@
+{% set name = "dask-kubernetes" %}
+{% set version = 0.11.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dask-kubernetes-{{ version }}.tar.gz
+  sha256: df95af070a94de7cca9325374afc30a1377b2f1f934257a6b52937919b9b4680
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - dask-core >=2.5.2
+    - distributed >=2.5.2
+    - kubernetes >=9
+    - kubernetes_asyncio >=9
+    - python >=3.5
+
+test:
+  imports:
+    - dask_kubernetes
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/dask/dask-kubernetes
+  summary: Native Kubernetes integration for Dask
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mrocklin
+    - ocefpaf
+    - jacobtomlinson

@@ -1,0 +1,44 @@
+{% set name = "intbitset" %}
+{% set version = 2.4.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/intbitset-{{ version }}.tar.gz
+  sha256: 44bca80b8cc702d5a56f0686f2bb5e028ab4d0c2c1761941589d46b7fa2c701c
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - six
+
+test:
+  imports:
+    - intbitset_helper
+    - intbitset_version
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://github.com/inveniosoftware/intbitset/
+  summary: C-based extension implementing fast integer bit sets.
+  license: LGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - gtonkinhill

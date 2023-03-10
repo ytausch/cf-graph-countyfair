@@ -1,0 +1,44 @@
+{% set name = "dropbox" %}
+{% set version = 10.5.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dropbox-{{ version }}.tar.gz
+  sha256: 1a4965c84db5b64cad0c758e71f1a06a37c15fb31249a7ccec2f16298d5112c7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - pytest-runner
+    - python
+  run:
+    - python
+    - requests >=2.16.2
+    - six >=1.12.0
+
+test:
+  imports:
+    - dropbox
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.dropbox.com/developers
+  summary: Official Dropbox API Client
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - guillochon

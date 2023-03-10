@@ -1,0 +1,46 @@
+{% set name = "pygithub" %}
+{% set version = 1.52 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: fc11a182ca3d88dde6ab2fbbd07e3441685cc8b738f7813fcbfc18be28c1d8ed
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+  run:
+    - deprecated
+    - pyjwt
+    - python >=3.5
+    - requests >=2.14.0
+
+test:
+  imports:
+    - github
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://pygithub.readthedocs.io/en/latest/
+  summary: Use the full Github API v3
+  license: GPL-3.0
+  license_file: COPYING
+
+extra:
+  recipe-maintainers:
+    - jakirkham
+    - pelson
+    - xmnlab

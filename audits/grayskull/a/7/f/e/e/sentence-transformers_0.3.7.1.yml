@@ -1,0 +1,51 @@
+{% set name = "sentence-transformers" %}
+{% set version = 0.3.7.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sentence-transformers-{{ version }}.tar.gz
+  sha256: ad2a468d15603ec7554105edb15a66f78e3c5b6f23c06a8c995f7bbc3235ca2d
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - nltk
+    - numpy
+    - python
+    - scikit-learn
+    - scipy
+    - torch >=1.2.0
+    - tqdm
+    - transformers >=3.1.0,<3.4.0
+
+test:
+  imports:
+    - sentence_transformers
+    - sentence_transformers.datasets
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/UKPLab/sentence-transformers
+  summary: Sentence Embeddings using BERT / RoBERTa / XLNet
+  license: Apache-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - rluria14
+    - oblute
+    - ndmaxar

@@ -1,0 +1,46 @@
+{% set name = "shapely" %}
+{% set version = 1.7.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/Shapely-{{ version }}.tar.gz
+  sha256: 1641724c1055459a7e2b8bbe47ba25bdc89554582e62aec23cb3f3ca25f9b129
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - shapely
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Toblerity/Shapely
+  summary: Geometric objects, predicates, and operations
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - ocefpaf
+    - pelson
+    - phobson
+    - xylar

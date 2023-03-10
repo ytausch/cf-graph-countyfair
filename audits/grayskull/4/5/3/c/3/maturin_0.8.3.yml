@@ -1,0 +1,44 @@
+{% set name = "maturin" %}
+{% set version = 0.8.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/maturin-{{ version }}.tar.gz
+  sha256: c4916d17a8f0f8fc8d712af372dfc5eb4544e73044ecb9d5fca940b5c121bb88
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+    - toml
+    - wheel
+  run:
+    - python >=3.5
+    - toml ~=0.10.0
+
+test:
+  imports:
+    - maturin
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyo3/maturin
+  summary: Build and publish crates with pyo3, rust-cpython and cffi bindings as well as rust binaries as python packages
+  license: MIT
+  license_file: license-mit
+
+extra:
+  recipe-maintainers:
+    - apcamargo

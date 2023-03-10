@@ -1,0 +1,43 @@
+{% set name = "histoprint" %}
+{% set version = 1.5.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/histoprint-{{ version }}.tar.gz
+  sha256: da7d156586430f0427d5f0e8f371787ae9c850bd9f64f928c14e90e2821c1baa
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - click >=7.0.0
+    - numpy >=1.0.0
+    - python
+
+test:
+  imports:
+    - histoprint
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/scikit-hep/histoprint
+  summary: histoprint
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mbhall88

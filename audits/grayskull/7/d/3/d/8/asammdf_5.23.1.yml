@@ -1,0 +1,57 @@
+{% set name = "asammdf" %}
+{% set version = 5.23.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/asammdf-{{ version }}.tar.gz
+  sha256: 7cd9c6fd11403c7c14399d822f2492f40a8ad8e1a16dd12e6ae4fe6219ab03b6
+
+build:
+  number: 0
+  entry_points:
+    - asammdf=asammdf.gui.asammdfgui:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - numpy
+    - pip
+    - python
+  run:
+    - canmatrix
+    - cchardet ==2.1.5
+    - lxml
+    - lz4
+    - natsort
+    - numexpr
+    - numpy >=1.16.1
+    - pandas
+    - python
+    - wheel
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - asammdf
+    - asammdf.blocks
+  commands:
+    - pip check
+    - asammdf --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/danielhrisca/asammdf
+  summary: ASAM MDF measurement data file parser
+  license: LGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - danielhrisca

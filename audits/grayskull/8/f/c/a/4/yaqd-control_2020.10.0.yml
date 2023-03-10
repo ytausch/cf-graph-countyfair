@@ -1,0 +1,52 @@
+{% set name = "yaqd-control" %}
+{% set version = 2020.10.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/yaqd-control-{{ version }}.tar.gz
+  sha256: 230a4a5c508d3c63937cc62b741d8424d14bb4a99c2ebe192acc26cc890ab046
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - yaqd = yaqd_control.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - appdirs
+    - click
+    - colorama
+    - prettytable !=1.0.0
+    - python >=3.7
+    - toml
+    - yaqc
+
+test:
+  imports:
+    - yaqd_control
+  commands:
+    - pip check
+    - yaqd --help
+  requires:
+    - pip
+
+about:
+  home: https://yaq.fyi
+  summary: Command line tools for inspecting and controlling yaq daemons.
+  dev_url: https://gitlab.com/yaq/yaqd-control
+  license: LGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - untzag
+    - ksunden

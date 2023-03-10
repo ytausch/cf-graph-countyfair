@@ -1,0 +1,58 @@
+{% set name = "satpy" %}
+{% set version = 0.23.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/satpy-{{ version }}.tar.gz
+  sha256: 9be93b4791e323310933561fbbdd9dd96070ed29f99bc88a46561ae3d086485e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+    - setuptools_scm
+    - setuptools_scm_git_archive
+  run:
+    - dask-core >=0.17.1
+    - numpy >=1.13
+    - pillow
+    - pykdtree
+    - pyproj
+    - pyresample >=1.11.0
+    - python >=3.6
+    - pyyaml
+    - trollimage >1.10.1
+    - trollsift
+    - xarray >=0.10.1,!=0.13.0
+    - zarr
+
+test:
+  imports:
+    - satpy
+    - satpy.composites
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pytroll/satpy
+  summary: Python package for earth-observing satellite data processing
+  license: GPL-3.0
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - djhoese
+    - mraspaud
+    - adybbroe
+    - pnuu

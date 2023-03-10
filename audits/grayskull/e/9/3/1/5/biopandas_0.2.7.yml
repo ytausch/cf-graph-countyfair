@@ -1,0 +1,47 @@
+{% set name = "biopandas" %}
+{% set version = 0.2.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c5afe4be57c7119d0269600b9fdba98aa6c1e8db520f1a553a13439dccef6c1c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - numpy >=1.16.2
+    - pandas >=0.24.2
+    - python
+    - setuptools
+
+test:
+  imports:
+    - biopandas
+    - biopandas.mol2
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/rasbt/biopandas
+  summary: Machine Learning Library Extensions
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - rasbt
+    - souravsingh
+    - moorepants

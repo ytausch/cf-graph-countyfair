@@ -1,0 +1,44 @@
+{% set name = "jupyter-jaeger" %}
+{% set version = 1.0.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: c49006760f2eb63689af195c64f066ab8d1ec1dee882f5868a05804e38a20e03
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - jaeger_browser
+    - jupyter-server-proxy
+    - notebook
+    - python >=3.6
+
+test:
+  imports:
+    - jupyter_jaeger
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/Quansight/jupyter-browser
+  summary: Provides jupyter server proxy endpoints for launching Jaeger.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - scopatz

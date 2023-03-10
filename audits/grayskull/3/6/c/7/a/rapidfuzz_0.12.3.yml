@@ -1,0 +1,42 @@
+{% set name = "rapidfuzz" %}
+{% set version = 0.12.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rapidfuzz-{{ version }}.tar.gz
+  sha256: 4c181212546cdaa8dada02dbb4212c7ea9a04ba31237b2024be3c76af7e01d08
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - rapidfuzz
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/maxbachmann/rapidfuzz
+  summary: rapid fuzzy string matching
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - maxbachmann

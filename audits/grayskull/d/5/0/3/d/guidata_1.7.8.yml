@@ -1,0 +1,47 @@
+{% set name = "guidata" %}
+{% set version = 1.7.8 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 6411f92e376e0c4e1682bc38e23b6852b2b90b9ad7076f45890f9261da56c966
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - guidata-tests-py3 = guidata.tests:run
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+    - sphinx
+  run:
+    - python
+
+test:
+  imports:
+    - guidata
+    - guidata.dataset
+  commands:
+    - pip check
+    - guidata-tests-py3 --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/PierreRaybaut/guidata
+  summary: Automatic graphical user interfaces generation for easy dataset editing and display
+  license: CECILL-2.0
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - marcelotrevisani
+    - denivyruck

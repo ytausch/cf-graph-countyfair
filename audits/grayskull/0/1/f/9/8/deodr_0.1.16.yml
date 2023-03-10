@@ -1,0 +1,50 @@
+{% set name = "deodr" %}
+{% set version = 0.1.16 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/deodr-{{ version }}.tar.gz
+  sha256: 2cf0dbde3439d64581f72864a0a97ca93fcf7639029a621ed5e9b3138431cced
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+    - scipy
+  run:
+    - python
+    - scipy
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - deodr
+    - deodr.examples
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/martinResearch/DEODR
+  summary: A differentiable renderer with Pytorch,Tensorflow and Matlab interfaces.
+  license: BSD-2-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ndmaxar
+    - oblute
+    - rluria14

@@ -1,0 +1,49 @@
+{% set name = "dabl" %}
+{% set version = 0.1.9 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/dabl-{{ version }}.tar.gz
+  sha256: 21f3fe8b39b6503441e3a856d7d976c7914def1fc0419a17723cd4af9839b7ee
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - matplotlib-base
+    - numpy
+    - pandas
+    - python
+    - scikit-learn
+    - scipy
+    - seaborn
+
+test:
+  imports:
+    - dabl
+    - dabl.datasets
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/amueller/dabl
+  summary: Data Analysis Baseline Library
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - krisevans
+    - dhirschfeld

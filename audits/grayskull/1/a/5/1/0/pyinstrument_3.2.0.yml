@@ -1,0 +1,48 @@
+{% set name = "pyinstrument" %}
+{% set version = 3.2.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyinstrument-{{ version }}.tar.gz
+  sha256: ce8fef6ea88349f0060b6d974483fd64d2c061346e6b78bca6357509a5121665
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - pyinstrument = pyinstrument.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - pyinstrument_cext >=0.2.2
+    - python
+
+test:
+  imports:
+    - pyinstrument
+    - pyinstrument.renderers
+  commands:
+    - pip check
+    - pyinstrument --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/joerick/pyinstrument
+  summary: Call stack profiler for Python. Shows you why your code is slow!
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - pmlandwehr
+    - moorepants
+    - asmeurer

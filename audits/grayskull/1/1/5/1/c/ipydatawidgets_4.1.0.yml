@@ -1,0 +1,47 @@
+{% set name = "ipydatawidgets" %}
+{% set version = 4.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ipydatawidgets-{{ version }}.tar.gz
+  sha256: d9f94828c11e3b40350fb14a02e027f42670a7c372bcb30db18d552dcfab7c01
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - ipywidgets >=7.0.0
+    - numpy
+    - python
+    - six
+    - traittypes >=0.2.0
+
+test:
+  imports:
+    - ipydatawidgets
+    - ipydatawidgets.nbextension
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/vidartf/ipydatawidgets
+  summary: A set of widgets to help facilitate reuse of large datasets across widgets
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - vidartf
+    - jasongrout

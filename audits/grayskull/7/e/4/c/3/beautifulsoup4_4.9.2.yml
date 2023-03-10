@@ -1,0 +1,43 @@
+{% set name = "beautifulsoup4" %}
+{% set version = 4.9.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/beautifulsoup4-{{ version }}.tar.gz
+  sha256: 1edf5e39f3a5bc6e38b235b369128416c7239b34f692acccececb040233032a1
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - soupsieve >1.2,<2.0  # [py<30]
+
+test:
+  imports:
+    - bs4
+    - bs4.builder
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://www.crummy.com/software/BeautifulSoup/bs4/
+  summary: Screen-scraping library
+  license: MIT
+  license_file: COPYING.txt
+
+extra:
+  recipe-maintainers:
+    - jschueller
+    - nehaljwani

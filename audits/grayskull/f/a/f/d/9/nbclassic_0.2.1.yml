@@ -1,0 +1,49 @@
+{% set name = "nbclassic" %}
+{% set version = 0.2.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/nbclassic-{{ version }}.tar.gz
+  sha256: fc45b48045c217de3df1f942ce8548a9aa81cbc78836958e2bb829aa49beb4d7
+
+build:
+  number: 0
+  noarch: python
+  entry_points:
+    - jupyter-nbclassic = nbclassic.notebookapp:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - jupyter_server ~=1.0.1
+    - notebook <7
+    - python >=3.6
+
+test:
+  imports:
+    - nbclassic
+    - nbclassic.notebook
+  commands:
+    - pip check
+    - jupyter-nbclassic --help
+  requires:
+    - pip
+
+about:
+  home: http://jupyter.org
+  summary: Jupyter Notebook as a Jupyter Server Extension.
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jasongrout
+    - afshin
+    - jtpio

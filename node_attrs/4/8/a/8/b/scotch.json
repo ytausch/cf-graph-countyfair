@@ -1,0 +1,3799 @@
+{
+ "archived": false,
+ "branch": "main",
+ "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  },
+  "provider": {
+   "linux_aarch64": "azure",
+   "linux_ppc64le": "azure"
+  }
+ },
+ "feedstock_name": "scotch",
+ "hash_type": "sha256",
+ "linux_64_meta_yaml": {
+  "about": {
+   "description": "Software package and libraries for sequential and parallel\ngraph partitioning, static mapping and clustering, sequential\nmesh and hypergraph partitioning, and sequential and parallel\nsparse matrix block ordering.\n",
+   "dev_url": "https://gitlab.inria.fr/scotch/scotch",
+   "doc_url": "http://gforge.inria.fr/docman/?group_id=248&dirid=326",
+   "home": "https://www.labri.fr/perso/pelegrin/scotch/",
+   "license": "CECILL-C",
+   "license_file": "doc/CeCILL-C_V1-en.txt",
+   "summary": "SCOTCH: Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "scotch-pkgs",
+   "version": "7.0.3"
+  },
+  "source": {
+   "fn": "scotch-v7.0.3.tar.gz",
+   "patches": [
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch"
+   ],
+   "sha256": "5b5351f0ffd6fcae9ae7eafeccaa5a25602845b9ffd1afb104db932dd4d4f3c5",
+   "url": "https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.3/scotch-v7.0.3.tar.gz"
+  }
+ },
+ "linux_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "bison",
+    "c_compiler_stub",
+    "cmake",
+    "flex",
+    "fortran_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "bzip2",
+    "openmpi",
+    "xz",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libptscotch",
+    "libscotch",
+    "scotch",
+    "zlib"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub"
+   ]
+  }
+ },
+ "linux_aarch64_meta_yaml": {
+  "about": {
+   "description": "Software package and libraries for sequential and parallel\ngraph partitioning, static mapping and clustering, sequential\nmesh and hypergraph partitioning, and sequential and parallel\nsparse matrix block ordering.\n",
+   "dev_url": "https://gitlab.inria.fr/scotch/scotch",
+   "doc_url": "http://gforge.inria.fr/docman/?group_id=248&dirid=326",
+   "home": "https://www.labri.fr/perso/pelegrin/scotch/",
+   "license": "CECILL-C",
+   "license_file": "doc/CeCILL-C_V1-en.txt",
+   "summary": "SCOTCH: Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "scotch-pkgs",
+   "version": "7.0.3"
+  },
+  "source": {
+   "fn": "scotch-v7.0.3.tar.gz",
+   "patches": [
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch"
+   ],
+   "sha256": "5b5351f0ffd6fcae9ae7eafeccaa5a25602845b9ffd1afb104db932dd4d4f3c5",
+   "url": "https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.3/scotch-v7.0.3.tar.gz"
+  }
+ },
+ "linux_aarch64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "bison",
+    "c_compiler_stub",
+    "cmake",
+    "flex",
+    "fortran_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "bzip2",
+    "openmpi",
+    "xz",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libptscotch",
+    "libscotch",
+    "scotch",
+    "zlib"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub"
+   ]
+  }
+ },
+ "linux_ppc64le_meta_yaml": {
+  "about": {
+   "description": "Software package and libraries for sequential and parallel\ngraph partitioning, static mapping and clustering, sequential\nmesh and hypergraph partitioning, and sequential and parallel\nsparse matrix block ordering.\n",
+   "dev_url": "https://gitlab.inria.fr/scotch/scotch",
+   "doc_url": "http://gforge.inria.fr/docman/?group_id=248&dirid=326",
+   "home": "https://www.labri.fr/perso/pelegrin/scotch/",
+   "license": "CECILL-C",
+   "license_file": "doc/CeCILL-C_V1-en.txt",
+   "summary": "SCOTCH: Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "scotch-pkgs",
+   "version": "7.0.3"
+  },
+  "source": {
+   "fn": "scotch-v7.0.3.tar.gz",
+   "patches": [
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch"
+   ],
+   "sha256": "5b5351f0ffd6fcae9ae7eafeccaa5a25602845b9ffd1afb104db932dd4d4f3c5",
+   "url": "https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.3/scotch-v7.0.3.tar.gz"
+  }
+ },
+ "linux_ppc64le_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "bison",
+    "c_compiler_stub",
+    "cmake",
+    "flex",
+    "fortran_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "bzip2",
+    "openmpi",
+    "xz",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libptscotch",
+    "libscotch",
+    "scotch",
+    "zlib"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub"
+   ]
+  }
+ },
+ "meta_yaml": {
+  "about": {
+   "description": "Software package and libraries for sequential and parallel\ngraph partitioning, static mapping and clustering, sequential\nmesh and hypergraph partitioning, and sequential and parallel\nsparse matrix block ordering.\n",
+   "dev_url": "https://gitlab.inria.fr/scotch/scotch",
+   "doc_url": "http://gforge.inria.fr/docman/?group_id=248&dirid=326",
+   "home": "https://www.labri.fr/perso/pelegrin/scotch/",
+   "license": "CECILL-C",
+   "license_file": "doc/CeCILL-C_V1-en.txt",
+   "summary": "SCOTCH: Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "scotch-pkgs",
+   "version": "7.0.3"
+  },
+  "source": {
+   "fn": "scotch-v7.0.3.tar.gz",
+   "patches": [
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch"
+   ],
+   "sha256": "5b5351f0ffd6fcae9ae7eafeccaa5a25602845b9ffd1afb104db932dd4d4f3c5",
+   "url": "https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.3/scotch-v7.0.3.tar.gz"
+  }
+ },
+ "name": "scotch-pkgs",
+ "osx_64_meta_yaml": {
+  "about": {
+   "description": "Software package and libraries for sequential and parallel\ngraph partitioning, static mapping and clustering, sequential\nmesh and hypergraph partitioning, and sequential and parallel\nsparse matrix block ordering.\n",
+   "dev_url": "https://gitlab.inria.fr/scotch/scotch",
+   "doc_url": "http://gforge.inria.fr/docman/?group_id=248&dirid=326",
+   "home": "https://www.labri.fr/perso/pelegrin/scotch/",
+   "license": "CECILL-C",
+   "license_file": "doc/CeCILL-C_V1-en.txt",
+   "summary": "SCOTCH: Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "scotch-pkgs",
+   "version": "7.0.3"
+  },
+  "source": {
+   "fn": "scotch-v7.0.3.tar.gz",
+   "patches": [
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch"
+   ],
+   "sha256": "5b5351f0ffd6fcae9ae7eafeccaa5a25602845b9ffd1afb104db932dd4d4f3c5",
+   "url": "https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.3/scotch-v7.0.3.tar.gz"
+  }
+ },
+ "osx_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "bison",
+    "c_compiler_stub",
+    "cmake",
+    "flex",
+    "fortran_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "bzip2",
+    "openmpi",
+    "xz",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libptscotch",
+    "libscotch",
+    "scotch",
+    "zlib"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub"
+   ]
+  }
+ },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "Software package and libraries for sequential and parallel\ngraph partitioning, static mapping and clustering, sequential\nmesh and hypergraph partitioning, and sequential and parallel\nsparse matrix block ordering.\n",
+   "dev_url": "https://gitlab.inria.fr/scotch/scotch",
+   "doc_url": "http://gforge.inria.fr/docman/?group_id=248&dirid=326",
+   "home": "https://www.labri.fr/perso/pelegrin/scotch/",
+   "license": "CECILL-C",
+   "license_file": "doc/CeCILL-C_V1-en.txt",
+   "summary": "SCOTCH: Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener",
+    "basnijholt",
+    "dalcinl",
+    "minrk",
+    "davidbrochart",
+    "SylvainCorlay",
+    "Tobias-Fischer",
+    "matthiasdiener"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "${RECIPE_DIR}/build-scotch.sh"
+    },
+    "name": "libscotch",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "fortran_compiler_stub",
+      "cmake",
+      "make",
+      "bison <3.8",
+      "flex"
+     ],
+     "host": [
+      "zlib",
+      "bzip2",
+      "xz",
+      "openmpi"
+     ],
+     "run": [
+      "zlib"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/scotch.h\"",
+      "test -f \"${PREFIX}/include/scotchf.h\"",
+      "test -f \"${PREFIX}/include/esmumps.h\"",
+      "test ! -f \"${PREFIX}/include/metis.h\"",
+      "test -f \"${PREFIX}/include/scotch/metis.h\"",
+      "test ! -f \"${PREFIX}/bin/gord\""
+     ],
+     "requires": [
+      "c_compiler_stub"
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": [
+      "cmake --install ./build --component=libptscotch"
+     ]
+    },
+    "name": "libptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/lib/libptscotch${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherr${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptscotcherrexit${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/lib/libptesmumps${SHLIB_EXT}\"",
+      "test -f \"${PREFIX}/include/ptscotch.h\"",
+      "test -f \"${PREFIX}/include/ptscotchf.h\"",
+      "test -f \"${PREFIX}/include/ptesmumps.h\"",
+      "test -f \"${PREFIX}/include/scotch/parmetis.h\"",
+      "test ! -f \"${PREFIX}/include/parmetis.h\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ],
+     "requires": [
+      "cmake",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "openmpi"
+     ],
+     "run_exports": [
+      "scotch"
+     ],
+     "script": "cmake --install ./build --component=scotch"
+    },
+    "name": "scotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libscotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test ! -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   },
+   {
+    "about": {
+     "summary": "PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package"
+    },
+    "build": {
+     "run_exports": [
+      "ptscotch"
+     ],
+     "script": "cmake --install ./build --component=ptscotch"
+    },
+    "name": "ptscotch",
+    "requirements": {
+     "build": [
+      "cmake"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "libptscotch",
+      "scotch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f \"${PREFIX}/bin/gord\"",
+      "test -f \"${PREFIX}/bin/dgord\""
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "scotch-pkgs",
+   "version": "7.0.3"
+  },
+  "source": {
+   "fn": "scotch-v7.0.3.tar.gz",
+   "patches": [
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch",
+    "0001-Remove-unconditional-testing.patch",
+    "0002-add-COMPONENT-labels-for-easier-split-installation.patch",
+    "0003-put-metis-headers-in-include-scotch.patch",
+    "0004-fix-language-requirement.patch",
+    "0005-use-external-dummysizes.patch",
+    "0006-fix-ptesmumps.h.patch"
+   ],
+   "sha256": "5b5351f0ffd6fcae9ae7eafeccaa5a25602845b9ffd1afb104db932dd4d4f3c5",
+   "url": "https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.3/scotch-v7.0.3.tar.gz"
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "bison",
+    "c_compiler_stub",
+    "cmake",
+    "flex",
+    "fortran_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "bzip2",
+    "openmpi",
+    "xz",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libptscotch",
+    "libscotch",
+    "scotch",
+    "zlib"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub"
+   ]
+  }
+ },
+ "outputs_names": {
+  "__set__": true,
+  "elements": [
+   "libptscotch",
+   "libscotch",
+   "ptscotch",
+   "scotch"
+  ]
+ },
+ "parsing_error": false,
+ "pr_info": {
+  "__lazy_json__": "pr_info/scotch.json"
+ },
+ "raw_meta_yaml": "{% set name = \"scotch\" %}\n{% set version = \"7.0.3\" %}\n{% set major = version.split('.')[0] %}\n{% set minor = version.split('.')[1] %}\n\npackage:\n  name: {{ name }}-pkgs\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-v{{ version }}.tar.gz\n  url: https://gitlab.inria.fr/scotch/scotch/-/archive/v{{ version }}/scotch-v{{ version }}.tar.gz\n  sha256: 5b5351f0ffd6fcae9ae7eafeccaa5a25602845b9ffd1afb104db932dd4d4f3c5\n  patches:\n    - 0001-Remove-unconditional-testing.patch\n    - 0002-add-COMPONENT-labels-for-easier-split-installation.patch\n    - 0003-put-metis-headers-in-include-scotch.patch\n    - 0004-fix-language-requirement.patch\n    - 0005-use-external-dummysizes.patch\n    - 0006-fix-ptesmumps.h.patch\n\nbuild:\n  skip: true  # [win]\n  number: 0\n\noutputs:\n  - name: libscotch\n    build:\n      script: ${RECIPE_DIR}/build-scotch.sh\n      run_exports:\n        - {{ pin_subpackage('scotch', max_pin='x.x.x') }}\n      ignore_run_exports:\n        - {{ mpi }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('fortran') }}\n        - cmake\n        - make\n        - {{ mpi }}  # [build_platform != target_platform]\n        - bison <3.8\n        - flex\n      host:\n        - zlib\n        - bzip2\n        - xz\n        - {{ mpi }}\n      run:\n        - zlib\n\n    test:\n      requires:\n        - {{ compiler('c') }}\n      commands:\n        {% for lib in [\n          'scotch',\n          'scotcherr',\n          'scotcherrexit',\n          'esmumps',\n        ]\n        %}\n        - test -f \"${PREFIX}/lib/lib{{ lib }}${SHLIB_EXT}\"\n        {% endfor %}\n        - test -f \"${PREFIX}/include/scotch.h\"\n        - test -f \"${PREFIX}/include/scotchf.h\"\n        - test -f \"${PREFIX}/include/esmumps.h\"\n        - test ! -f \"${PREFIX}/include/metis.h\"\n        - test -f \"${PREFIX}/include/scotch/metis.h\"\n        - test ! -f \"${PREFIX}/bin/gord\"\n\n  - name: libptscotch\n    build:\n      script:\n        - cmake --install ./build --component=libptscotch\n      run_exports:\n        - {{ pin_subpackage('ptscotch', max_pin='x.x.x') }}\n    requirements:\n      build:\n        - cmake\n        - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]\n      host:\n        - {{ mpi }}\n      run:\n        - {{ pin_subpackage(\"scotch\", exact=True) }}\n    test:\n      requires:\n        - cmake\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n      commands:\n        {% for lib in [\n          'ptscotch',\n          'ptscotcherr',\n          'ptscotcherrexit',\n          'ptesmumps'\n        ]\n        %}\n        - test -f \"${PREFIX}/lib/lib{{ lib }}${SHLIB_EXT}\"\n        {% endfor %}\n        - test -f \"${PREFIX}/include/ptscotch.h\"\n        - test -f \"${PREFIX}/include/ptscotchf.h\"\n        - test -f \"${PREFIX}/include/ptesmumps.h\"\n        - test -f \"${PREFIX}/include/scotch/parmetis.h\"\n        - test ! -f \"${PREFIX}/include/parmetis.h\"\n        - test ! -f \"${PREFIX}/bin/dgord\"\n    about:\n      summary: 'PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package'\n\n  - name: scotch\n    build:\n      script: cmake --install ./build --component=scotch\n      run_exports:\n        - {{ pin_subpackage('scotch', max_pin='x.x.x') }}\n      ignore_run_exports:\n        - {{ mpi }}\n    requirements:\n      build:\n        - cmake\n      host:\n        # This is needed to get the correct package hash\n        - {{ mpi }}\n      run:\n        - {{ pin_subpackage('libscotch', exact=True) }}\n    test:\n      commands:\n        - test -f \"${PREFIX}/bin/gord\"\n        - test ! -f \"${PREFIX}/bin/dgord\"\n\n  - name: ptscotch\n    build:\n      script: cmake --install ./build --component=ptscotch\n      run_exports:\n        - {{ pin_subpackage('ptscotch', max_pin='x.x.x') }}\n    requirements:\n      build:\n        - cmake\n      host:\n        # This is needed to get the correct package hash\n        - {{ mpi }}\n      run:\n        - {{ pin_subpackage('libptscotch', exact=True) }}\n        - {{ pin_subpackage('scotch', exact=True) }}\n    test:\n      commands:\n        - test -f \"${PREFIX}/bin/gord\"\n        - test -f \"${PREFIX}/bin/dgord\"\n    about:\n      summary: 'PT-SCOTCH: (Parallel) Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package'\n\nabout:\n  home: https://www.labri.fr/perso/pelegrin/scotch/\n  license: CECILL-C\n  license_file: doc/CeCILL-C_V1-en.txt\n  summary: 'SCOTCH: Static Mapping, Graph, Mesh and Hypergraph Partitioning, and Parallel and Sequential Sparse Matrix Ordering Package'\n  description: |\n    Software package and libraries for sequential and parallel\n    graph partitioning, static mapping and clustering, sequential\n    mesh and hypergraph partitioning, and sequential and parallel\n    sparse matrix block ordering.\n  doc_url: http://gforge.inria.fr/docman/?group_id=248&dirid=326\n  dev_url: https://gitlab.inria.fr/scotch/scotch\n\nextra:\n  recipe-maintainers:\n    - basnijholt\n    - dalcinl\n    - minrk\n    - davidbrochart\n    - SylvainCorlay\n    - Tobias-Fischer\n    - matthiasdiener\n",
+ "req": {
+  "__set__": true,
+  "elements": [
+   "bison",
+   "bzip2",
+   "c_compiler_stub",
+   "cmake",
+   "flex",
+   "fortran_compiler_stub",
+   "libptscotch",
+   "libscotch",
+   "make",
+   "openmpi",
+   "scotch",
+   "xz",
+   "zlib"
+  ]
+ },
+ "requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "bison",
+    "c_compiler_stub",
+    "cmake",
+    "flex",
+    "fortran_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "bzip2",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "fortran_compiler_stub",
+    "openmpi",
+    "xz",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "fortran_compiler_stub",
+    "libptscotch",
+    "libscotch",
+    "scotch",
+    "zlib"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub"
+   ]
+  }
+ },
+ "strong_exports": false,
+ "total_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "bison <3.8",
+    "c_compiler_stub",
+    "cmake",
+    "flex",
+    "fortran_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "bzip2",
+    "openmpi",
+    "xz",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libptscotch",
+    "libscotch",
+    "scotch",
+    "zlib"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub"
+   ]
+  }
+ },
+ "url": "https://gitlab.inria.fr/scotch/scotch/-/archive/v7.0.3/scotch-v7.0.3.tar.gz",
+ "version": "7.0.3",
+ "version_pr_info": {
+  "__lazy_json__": "version_pr_info/scotch.json"
+ }
+}

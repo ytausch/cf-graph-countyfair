@@ -1,0 +1,47 @@
+{% set name = "deepgraph" %}
+{% set version = 0.2.3 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/DeepGraph-{{ version }}.tar.gz
+  sha256: 67a5483c7763822fa20e0f815e321a6cc5bb9b48d0755f1154fd28bbfd36ca26
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - cython
+    - numpy
+    - pip
+    - python
+  run:
+    - numpy >=1.6
+    - pandas >=0.17.0
+    - python
+    - {{ pin_compatible('numpy') }}
+
+test:
+  imports:
+    - deepgraph
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/deepgraph/deepgraph/
+  summary: Analyze Data with Pandas-based Networks.
+  license: BSD-3-Clause
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - dominiktraxl

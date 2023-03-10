@@ -1,0 +1,53 @@
+{% set name = "instaseis" %}
+{% set version = 1.4.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 7b89b338bfb81b24f29d92ff1bbebc7cc04d65be2624c93c84bbd81ef4b13047
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+  host:
+    - pip
+    - python
+  run:
+    - geographiclib
+    - h5py
+    - jsonschema >=2.4.0
+    - numpy
+    - obspy >=1.2.1
+    - python
+    - requests
+    - tornado >=6.0.0
+
+test:
+  imports:
+    - instaseis
+    - instaseis.benchmark
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://instaseis.net
+  summary: 'Instaseis: Instant Global Broadband Seismograms Based on a Waveform Database'
+  license: AFL-1.1
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - krischer
+    - martinvandriel
+    - sstaehler

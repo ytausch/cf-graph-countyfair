@@ -1,0 +1,48 @@
+{% set name = "pyexcel" %}
+{% set version = 0.6.4 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyexcel-{{ version }}.tar.gz
+  sha256: a4f3589e2987856ed22fa5fa38bc1a819a1a7530fb21d5126ceeef02a40f42ef
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - gease
+    - pip
+    - python >=3.6
+  run:
+    - lml >=0.0.4
+    - pyexcel-io >=0.5.19
+    - python >=3.6
+    - texttable >=0.8.2
+
+test:
+  imports:
+    - pyexcel
+    - pyexcel.docstrings
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pyexcel/pyexcel
+  summary: A wrapper library that provides one API to read, manipulate and writedata in different excel formats
+  doc_url: https://pythonhosted.org/pyexcel/
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - williamjamir
+    - nicoddemus

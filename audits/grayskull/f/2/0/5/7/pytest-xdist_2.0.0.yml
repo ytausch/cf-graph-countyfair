@@ -1,0 +1,48 @@
+{% set name = "pytest-xdist" %}
+{% set version = 2.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pytest-xdist-{{ version }}.tar.gz
+  sha256: 3217b1f40290570bf27b1f82714fc4ed44c3260ba9b2f6cde0372378fc707ad3
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.5
+    - setuptools_scm
+  run:
+    - execnet >=1.1
+    - psutil >=3.0.0
+    - pytest >=6.0.0
+    - pytest-forked
+    - python >=3.5
+
+test:
+  imports:
+    - xdist
+    - xdist.scheduler
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/pytest-dev/pytest-xdist
+  summary: pytest xdist plugin for distributed testing and loop-on-failing modes
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - goanpeca
+    - nicoddemus

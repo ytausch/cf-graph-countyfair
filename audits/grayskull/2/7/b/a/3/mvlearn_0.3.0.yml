@@ -1,0 +1,51 @@
+{% set name = "mvlearn" %}
+{% set version = 0.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: ae8e472c610beb94b30e20bd229a6b20dff2e66cab94ef8bf18de19c6633ffad
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - graspy >=0.1.1
+    - joblib >=0.11
+    - matplotlib-base >=3.0.0
+    - numpy >=1.17.0
+    - pandas >=0.25.0
+    - python
+    - python-picard >=0.4
+    - scikit-learn >=0.19.1
+    - scipy >=1.1.0
+    - seaborn >=0.9.0
+
+test:
+  imports:
+    - mvlearn
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/NeuroDataDesign/mvlearn
+  summary: A set of python modules for multiview learning
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - gmischl1
+    - rflperry

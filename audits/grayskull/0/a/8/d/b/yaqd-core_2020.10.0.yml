@@ -1,0 +1,47 @@
+{% set name = "yaqd-core" %}
+{% set version = 2020.10.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/yaqd-core-{{ version }}.tar.gz
+  sha256: 88638d92d4418f92d0a29ed9856fd657a3c585a915b412245785b7b0eef5163e
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.7
+  run:
+    - appdirs
+    - fastavro >=0.24.0
+    - python >=3.7
+    - toml
+
+test:
+  imports:
+    - yaqd_core
+    - yaqd_core._hardware
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://yaq.fyi
+  summary: Core python package for implementing yaq deamons, and associated utilities.
+  dev_url: https://gitlab.com/yaq/yaq-python
+  license: LGPL-3.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - untzag
+    - ksunden

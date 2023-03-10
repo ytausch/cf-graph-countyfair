@@ -1,0 +1,56 @@
+{% set name = "snorkel" %}
+{% set version = 0.9.6 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 2015462f575c7cd8bdc01ca37ea4635530e29a70b5d6440480b5336c8b59a1d0
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - munkres >=1.0.6
+    - networkx >=2.2,<2.4
+    - numpy >=1.16.0,<2.0.0
+    - pandas >=0.25.0,<2.0.0
+    - python >=3.6
+    - scikit-learn >=0.20.2,<0.22.0
+    - scipy >=1.2.0,<2.0.0
+    - tensorboard >=1.14.0,<2.0.0
+    - torch >=1.2.0,<2.0.0
+    - tqdm >=4.33.0,<5.0.0
+
+test:
+  imports:
+    - snorkel
+    - snorkel.analysis
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/snorkel-team/snorkel
+  summary: A system for quickly generating training data with weak supervision
+  dev_url: https://github.com/snorkel-team/snorkel/
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - henryre
+    - vincentschen
+    - adbeda
+    - oblute
+    - rluria14

@@ -1,0 +1,44 @@
+{% set name = "law" %}
+{% set version = 0.0.41 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 3b6e457bb99da69ddab03e91a80057958ee9477dba7bb6f8823059b2cbce19b3
+
+build:
+  number: 0
+  skip: true   # [py>=40]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - luigi >=2.8.2  # [py>=30]
+    - python
+    - six >=1.10
+
+test:
+  imports:
+    - law
+    - law.cli
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/riga/law
+  summary: Build large-scale task workflows using luigi, remote job submission, remote targets, and environment
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - riga

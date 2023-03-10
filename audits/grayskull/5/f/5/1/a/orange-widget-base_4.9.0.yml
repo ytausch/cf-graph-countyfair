@@ -1,0 +1,50 @@
+{% set name = "orange-widget-base" %}
+{% set version = 4.9.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/orange-widget-base-{{ version }}.tar.gz
+  sha256: 737642c0d480d5c53fc366fe82a6c481e076a9a5b5fffee7958c8f85ca69c55d
+
+build:
+  number: 0
+  skip: true   # [py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - anyqt
+    - appnope  # [darwin]
+    - matplotlib-base
+    - orange-canvas-core >=0.1.8a,<0.2a
+    - pyqtgraph
+    - python
+
+test:
+  imports:
+    - orangewidget
+    - orangewidget.report
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: http://orange.biolab.si/
+  summary: Base Widget for Orange Canvas
+  license: GPL-3.0-or-later
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - ales-erjavec
+    - lanzagar
+    - markotoplak
+    - primozgodec

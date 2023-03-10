@@ -1,0 +1,43 @@
+{% set name = "pyls-spyder" %}
+{% set version = 0.1.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyls-spyder-{{ version }}.tar.gz
+  sha256: 2cd86848000740dcb2653b1c6285ed8e5641154f2fe2eb3104660c221d16fa3c
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - python
+    - python-language-server
+
+test:
+  imports:
+    - pyls_spyder
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/spyder-ide/pyls-spyder
+  summary: Spyder extensions for the python-language-server
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - andfoy
+    - ccordoba12

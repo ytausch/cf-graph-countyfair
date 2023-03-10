@@ -1,0 +1,44 @@
+{% set name = "easybuild-framework" %}
+{% set version = 4.3.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/easybuild-framework-{{ version }}.tar.gz
+  sha256: 97c42d8f26ebc6fc43748442a9f0bbbc5316ae38b8320f7052695d9b77e101ab
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - easybuild
+    - pip
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - easybuild
+    - easybuild.base
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://easybuilders.github.io/easybuild
+  summary: The EasyBuild framework supports the creation of custom easyblocks that implement support for installing particular (groups of) software packages.
+  license: GPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jerowe
+    - boegel

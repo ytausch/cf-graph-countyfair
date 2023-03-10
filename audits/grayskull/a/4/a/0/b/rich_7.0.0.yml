@@ -1,0 +1,47 @@
+{% set name = "rich" %}
+{% set version = 7.0.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rich-{{ version }}.tar.gz
+  sha256: 291700f5c09fae83676f44781d01a292c39efad9505dd4724899646b794f9afb
+
+build:
+  number: 0
+  skip: true   # [py>=40 or py2k]
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - colorama >=0.4.0,<0.5.0
+    - commonmark >=0.9.0,<0.10.0
+    - dataclasses >=0.7,<0.8  # [py>=36 and py<37]
+    - pygments >=2.6.0,<3.0.0
+    - python
+    - typing-extensions >=3.7.4,<4.0.0
+
+test:
+  imports:
+    - rich
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/willmcgugan/rich
+  summary: Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - jan-janssen
+    - willmcgugan

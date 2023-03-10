@@ -1,0 +1,44 @@
+{% set name = "flake8-rst-docstrings" %}
+{% set version = 0.0.14 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/flake8-rst-docstrings-{{ version }}.tar.gz
+  sha256: 8f8bcb18f1408b506dd8ba2c99af3eac6128f6911d4bf6ff874b94caa70182a2
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - flake8 >=3.0.0
+    - python
+    - restructuredtext_lint
+
+test:
+  imports:
+    - flake8_rst_docstrings
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/peterjc/flake8-rst-docstrings
+  summary: Python docstring reStructuredText (RST) validator
+  dev_url: https://github.com/peterjc/flake8-rst-docstrings/
+  license: MIT
+  license_file: LICENSE.rst
+
+extra:
+  recipe-maintainers:
+    - peterjc

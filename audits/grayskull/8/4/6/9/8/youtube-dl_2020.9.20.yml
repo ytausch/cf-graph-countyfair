@@ -1,0 +1,43 @@
+{% set name = "youtube-dl" %}
+{% set version = 2020.9.20 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/youtube_dl-{{ version }}.tar.gz
+  sha256: 67fb9bfa30f5b8f06227c478a8a6ed04af1f97ad4e81dd7e2ce518df3e275391
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - py2exe
+    - python
+  run:
+    - python
+
+test:
+  imports:
+    - youtube_dl
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/ytdl-org/youtube-dl
+  summary: YouTube video downloader
+  license: Unlicense
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - nehaljwani
+    - ocefpaf

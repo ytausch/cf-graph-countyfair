@@ -1,0 +1,46 @@
+{% set name = "jupyter_conda" %}
+{% set version = 3.4.0 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 147c8151656b4fee70a0253401a4ca89e4aa0e63d301c11b18f8c27ba9987181
+
+build:
+  number: 0
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - nb_conda_kernels >=2.2.0
+    - notebook >=4.3.1
+    - packaging
+    - python
+    - typing  # [py<37]
+
+test:
+  imports:
+    - jupyter_conda
+    - jupyter_conda.tests
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/fcollonval/jupyter_conda
+  summary: Manage your conda environments from the Jupyter Notebook and JupyterLab
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - fcollonval
+    - dbast

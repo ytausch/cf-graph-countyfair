@@ -1,0 +1,54 @@
+{% set name = "python-language-server" %}
+{% set version = 0.35.1 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/python-language-server-{{ version }}.tar.gz
+  sha256: 6e0c9a3b2ae98e0eb22e98ed6b3c4e190a6bf9e27af53efd2396da60cd92b221
+
+build:
+  number: 0
+  entry_points:
+    - pyls = pyls.__main__:main
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python
+  run:
+    - backports.functools_lru_cache  # [py<32]
+    - configparser  # [py<30]
+    - future >=0.14.0  # [py<3]
+    - jedi >=0.17.0,<0.18.0
+    - pluggy
+    - python
+    - python-jsonrpc-server >=0.4.0
+    - ujson <=2.0.3  # [not win and py<30]
+
+test:
+  imports:
+    - pyls
+    - pyls.config
+  commands:
+    - pip check
+    - pyls --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/palantir/python-language-server
+  summary: Python Language Server for the Language Server Protocol
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - goanpeca
+    - ccordoba12
+    - rlaverde
+    - andfoy

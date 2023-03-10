@@ -1,0 +1,52 @@
+{% set name = "mir-flare" %}
+{% set version = 0.1.2 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/mir-flare-{{ version }}.tar.gz
+  sha256: 2e3a2fdf7e34ac8bb93939acfd9a532853eaccf0e072e7271fbc99154ca44ed7
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - ase
+    - ipython
+    - memory_profiler
+    - nbsphinx
+    - nptyping
+    - numba
+    - numpy >=1.16.0
+    - pymatgen
+    - pytest >=4.6
+    - python >=3.6
+    - scipy
+
+test:
+  imports:
+    - flare
+    - flare.ase
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/mir-group/flare
+  summary: Fast Learning of Atomistic Rare Events
+  license: MIT
+  license_file: PLEASE_ADD_LICENSE_FILE
+
+extra:
+  recipe-maintainers:
+    - jan-janssen

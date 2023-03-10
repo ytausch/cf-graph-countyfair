@@ -1,0 +1,53 @@
+{% set name = "eo-learn-features" %}
+{% set version = 0.7.7 %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 9b6e6d6cfe4f08c1ce7d608c7393bd82a195093ecf55cd1357a86ecf408ad907
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - eo-learn-core
+    - numba >=0.43.1
+    - numpy
+    - python >=3.6
+    - python-dateutil
+    - scikit-image
+    - scikit-learn
+    - scipy
+
+test:
+  imports:
+    - eolearn
+    - eolearn.features
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/sentinel-hub/eo-learn
+  summary: A collection of feature manipulation utilities and EOTasks
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - mwilson8
+    - dcunn
+    - oblute
+    - rluria14
+    - benhuff
