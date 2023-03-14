@@ -6,6 +6,10 @@ on:
       - master
   pull_request: null
 
+concurrency:
+  group: cf-graph-countyfair
+  cancel-in-progress: true
+
 jobs:
   bot:
     name: check graph loads
@@ -13,12 +17,7 @@ jobs:
     defaults:
       run:
         shell: bash -l {0}
-    steps:
-      - name: cancel previous runs
-        uses: styfle/cancel-workflow-action@0.6.0
-        with:
-          access_token: ${{ github.token }}
-    
+    steps:    
       - uses: actions/checkout@v3
         with:
           path: cf-graph
