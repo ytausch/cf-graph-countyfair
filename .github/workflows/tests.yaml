@@ -29,7 +29,7 @@ jobs:
 
       - name: install bot code
         run: |
-          mamba install -y -q pygithub requests git
+          mamba install -y -q pygithub requests git pytest
 
           git config --global user.name regro-cf-autotick-bot
           git config --global user.email 36490558+regro-cf-autotick-bot@users.noreply.github.com
@@ -42,9 +42,8 @@ jobs:
 
           git clone --depth=1 https://github.com/regro/cf-scripts.git
           pushd cf-scripts
-          mamba install --quiet --yes --file requirements/run
-          mamba install --quiet --yes pytest
-          python setup.py develop
+          conda env update --file environment.yml
+          python -m pip install -e .
           popd
 
           git clone --depth=1 https://github.com/conda-forge/conda-forge-pinning-feedstock.git
