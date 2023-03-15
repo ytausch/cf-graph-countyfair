@@ -25,7 +25,7 @@
   },
   "package": {
    "name": "astromatic-source-extractor",
-   "version": "2.25.0"
+   "version": "2.28.0"
   },
   "requirements": {
    "build": [
@@ -36,11 +36,14 @@
     "make"
    ],
    "host": [
+    "cfitsio",
     "fftw",
-    "liblapacke"
+    "openblas"
    ],
    "run": [
-    "fftw"
+    "cfitsio",
+    "fftw",
+    "openblas"
    ]
   },
   "source": {
@@ -49,8 +52,8 @@
     "0002-Disable_ldactoasc_build.patch",
     "0003-Rename_CLI_tool.patch"
    ],
-   "sha256": "ab8ec8fe2d5622a94eb3a20d007e0c54bf2cdc04b8d632667b2e951c02819d8e",
-   "url": "https://github.com/astromatic/sextractor/archive/2.25.0.tar.gz"
+   "sha256": "36f5afcdfe74cbf1904038a4def0166c1e1dde883e0030b87280dfbdfcd81969",
+   "url": "https://github.com/astromatic/sextractor/archive/2.28.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -76,14 +79,17 @@
   "host": {
    "__set__": true,
    "elements": [
+    "cfitsio",
     "fftw",
-    "liblapacke"
+    "openblas"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "fftw"
+    "cfitsio",
+    "fftw",
+    "openblas"
    ]
   },
   "test": {
@@ -114,7 +120,7 @@
   },
   "package": {
    "name": "astromatic-source-extractor",
-   "version": "2.25.0"
+   "version": "2.28.0"
   },
   "requirements": {
    "build": [
@@ -130,14 +136,20 @@
     "make"
    ],
    "host": [
+    "cfitsio",
     "fftw",
-    "liblapacke",
+    "openblas",
+    "cfitsio",
     "fftw",
-    "liblapacke"
+    "openblas"
    ],
    "run": [
+    "cfitsio",
     "fftw",
-    "fftw"
+    "openblas",
+    "cfitsio",
+    "fftw",
+    "openblas"
    ]
   },
   "source": {
@@ -149,8 +161,8 @@
     "0002-Disable_ldactoasc_build.patch",
     "0003-Rename_CLI_tool.patch"
    ],
-   "sha256": "ab8ec8fe2d5622a94eb3a20d007e0c54bf2cdc04b8d632667b2e951c02819d8e",
-   "url": "https://github.com/astromatic/sextractor/archive/2.25.0.tar.gz"
+   "sha256": "36f5afcdfe74cbf1904038a4def0166c1e1dde883e0030b87280dfbdfcd81969",
+   "url": "https://github.com/astromatic/sextractor/archive/2.28.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -186,7 +198,7 @@
   },
   "package": {
    "name": "astromatic-source-extractor",
-   "version": "2.25.0"
+   "version": "2.28.0"
   },
   "requirements": {
    "build": [
@@ -197,11 +209,14 @@
     "make"
    ],
    "host": [
+    "cfitsio",
     "fftw",
-    "liblapacke"
+    "openblas"
    ],
    "run": [
-    "fftw"
+    "cfitsio",
+    "fftw",
+    "openblas"
    ]
   },
   "source": {
@@ -210,8 +225,8 @@
     "0002-Disable_ldactoasc_build.patch",
     "0003-Rename_CLI_tool.patch"
    ],
-   "sha256": "ab8ec8fe2d5622a94eb3a20d007e0c54bf2cdc04b8d632667b2e951c02819d8e",
-   "url": "https://github.com/astromatic/sextractor/archive/2.25.0.tar.gz"
+   "sha256": "36f5afcdfe74cbf1904038a4def0166c1e1dde883e0030b87280dfbdfcd81969",
+   "url": "https://github.com/astromatic/sextractor/archive/2.28.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -236,14 +251,17 @@
   "host": {
    "__set__": true,
    "elements": [
+    "cfitsio",
     "fftw",
-    "liblapacke"
+    "openblas"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "fftw"
+    "cfitsio",
+    "fftw",
+    "openblas"
    ]
   },
   "test": {
@@ -261,17 +279,18 @@
  "pr_info": {
   "__lazy_json__": "pr_info/astromatic-source-extractor.json"
  },
- "raw_meta_yaml": "{% set name = \"sextractor\" %}\n{% set version = \"2.25.0\" %}\n\npackage:\n  name: astromatic-source-extractor\n  version: {{ version }}\n\nsource:\n  url: https://github.com/astromatic/{{ name }}/archive/{{ version }}.tar.gz\n  sha256: ab8ec8fe2d5622a94eb3a20d007e0c54bf2cdc04b8d632667b2e951c02819d8e\n  patches:\n    - 0001-Search-lapacke-library.patch\n    # Disable the compilation of ldactoasc.\n    # See https://www.astromatic.net/forum/showthread.php?tid=902\n    - 0002-Disable_ldactoasc_build.patch\n    # Rename the executable and its man page\n    - 0003-Rename_CLI_tool.patch\n\nbuild:\n  skip: true  # [win]\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - autoconf\n    - automake\n    - libtool\n    - make\n  host:\n    - fftw\n    - liblapacke\n  run:\n    - fftw\n\ntest:\n  source_files:\n    - tests\n  commands:\n    # These are simple existence tests.\n    # The actual test suite is run via autotools in build.sh.\n    - test -f ${CONDA_PREFIX}/bin/source-extractor\n    - test $(readlink -f ${CONDA_PREFIX}/bin/sex) = ${CONDA_PREFIX}/bin/source-extractor  # [linux]\n\nabout:\n  home: http://www.astromatic.net/software/sextractor\n  license: GPL-3.0\n  license_file: LICENSE\n  summary: Extract catalogs of sources from astronomical images\n  description: |\n    SExtractor (Source-Extractor) is a program that builds a catalog of objects\n    from an astronomical image. It is particularly oriented towards the\n    reduction of large scale galaxy-survey data, but it also performs well on\n    moderately crowded star fields.\n  doc_url: https://sextractor.readthedocs.io/\n  dev_url: https://github.com/astromatic/sextractor\n\nextra:\n  recipe-maintainers:\n    - drbixx\n    - teake\n",
+ "raw_meta_yaml": "{% set name = \"sextractor\" %}\n{% set version = \"2.28.0\" %}\n\npackage:\n  name: astromatic-source-extractor\n  version: {{ version }}\n\nsource:\n  url: https://github.com/astromatic/{{ name }}/archive/{{ version }}.tar.gz\n  sha256: 36f5afcdfe74cbf1904038a4def0166c1e1dde883e0030b87280dfbdfcd81969\n  patches:\n    - 0001-Search-lapacke-library.patch\n    # Disable the compilation of ldactoasc.\n    # See https://www.astromatic.net/forum/showthread.php?tid=902\n    - 0002-Disable_ldactoasc_build.patch\n    # Rename the executable and its man page\n    - 0003-Rename_CLI_tool.patch\n\nbuild:\n  skip: true  # [win]\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - autoconf\n    - automake\n    - libtool\n    - make\n  host:\n    - cfitsio\n    - fftw\n    - openblas\n  run:\n    - cfitsio\n    - fftw\n    - openblas\n\ntest:\n  source_files:\n    - tests\n  commands:\n    # These are simple existence tests.\n    # The actual test suite is run via autotools in build.sh.\n    - test -f ${CONDA_PREFIX}/bin/source-extractor\n    - test $(readlink -f ${CONDA_PREFIX}/bin/sex) = ${CONDA_PREFIX}/bin/source-extractor  # [linux]\n\nabout:\n  home: http://www.astromatic.net/software/sextractor\n  license: GPL-3.0\n  license_file: LICENSE\n  summary: Extract catalogs of sources from astronomical images\n  description: |\n    SExtractor (Source-Extractor) is a program that builds a catalog of objects\n    from an astronomical image. It is particularly oriented towards the\n    reduction of large scale galaxy-survey data, but it also performs well on\n    moderately crowded star fields.\n  doc_url: https://sextractor.readthedocs.io/\n  dev_url: https://github.com/astromatic/sextractor\n\nextra:\n  recipe-maintainers:\n    - drbixx\n    - teake\n",
  "req": {
   "__set__": true,
   "elements": [
    "autoconf",
    "automake",
    "c_compiler_stub",
+   "cfitsio",
    "fftw",
-   "liblapacke",
    "libtool",
-   "make"
+   "make",
+   "openblas"
   ]
  },
  "requirements": {
@@ -289,15 +308,18 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "cfitsio",
     "fftw",
-    "liblapacke"
+    "openblas"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "fftw"
+    "cfitsio",
+    "fftw",
+    "openblas"
    ]
   },
   "test": {
@@ -320,14 +342,17 @@
   "host": {
    "__set__": true,
    "elements": [
+    "cfitsio",
     "fftw",
-    "liblapacke"
+    "openblas"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "fftw"
+    "cfitsio",
+    "fftw",
+    "openblas"
    ]
   },
   "test": {
@@ -335,8 +360,8 @@
    "elements": []
   }
  },
- "url": "https://github.com/astromatic/sextractor/archive/2.25.0.tar.gz",
- "version": "2.25.0",
+ "url": "https://github.com/astromatic/sextractor/archive/2.28.0.tar.gz",
+ "version": "2.28.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/astromatic-source-extractor.json"
  }
