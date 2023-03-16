@@ -18,7 +18,7 @@
   },
   "build": {
    "merge_build_host": true,
-   "number": "4"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -32,7 +32,7 @@
   },
   "package": {
    "name": "ambertools",
-   "version": "22.0"
+   "version": "22.1"
   },
   "requirements": {
    "build": [
@@ -365,7 +365,7 @@
   },
   "build": {
    "merge_build_host": true,
-   "number": "4"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -385,7 +385,7 @@
   },
   "package": {
    "name": "ambertools",
-   "version": "22.0"
+   "version": "22.1"
   },
   "requirements": {
    "build": [
@@ -861,7 +861,7 @@
   },
   "build": {
    "merge_build_host": true,
-   "number": "4"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -875,7 +875,7 @@
   },
   "package": {
    "name": "ambertools",
-   "version": "22.0"
+   "version": "22.1"
   },
   "requirements": {
    "build": [
@@ -1222,7 +1222,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ambertools.json"
  },
- "raw_meta_yaml": "{% set name = \"AmberTools\" %}\n# Versioning scheme uses AmberTools major release as MAJOR version number, patch level as MINOR version number\n# Update the MINOR version number as new patch releases come out\n{% set version = \"22.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://ambermd.org/downloads/AmberTools22jlmrcc.tar.bz2\n  sha256: 1571d4e0f7d45b2a71dce5999fa875aea8c90ee219eb218d7916bf30ea229121\n  patches:\n    - patches/do_not_symlink_missing_ff12pol.patch\n    - patches/do_not_install_vendored_parmed.patch\n    - patches/do_not_vendor_packmol.patch\n\nbuild:\n  number: 4\n  skip: True  # [win or py2k or ppc64le or aarch64]\n  # Some binaries (e.g. nab) hardcode the path to the compiler in BUILD_PREFIX\n  # which does not get replaced and causes errors on runtime\n  # because that path does not exist. This is a workaround but\n  # since we are not cross-compiling (so far), we should be ok for now\n  merge_build_host: True\n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - bc\n    - flex\n    - patch\n    - tcsh\n    - bison\n    - make\n    - cmake         # [not osx]\n    - cmake 3.20.*  # [osx]\n    - perl\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux and not aarch64]\n    - openssl\n    # WORKAROUND\n    - ld_impl_linux-64  2.39.*  # [linux-64]\n  host:\n    - python\n    - setuptools\n    - cython\n    - numpy\n    - scipy\n    - matplotlib-base\n    - bzip2\n    - zlib\n    - boost-cpp\n    - libnetcdf\n    - netcdf-fortran\n    - pthread-stubs\n    - fftw\n    - arpack\n    - libblas\n    - liblapack\n    - xorg-libxt  # [unix]\n    - xorg-libxext   # [unix]\n    - xorg-libx11   # [unix]\n    - readline\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux and not aarch64]\n    - parmed 3.4.1\n    - packmol\n    - openssl\n    # WORKAROUND\n    - ld_impl_linux-64  2.39.*  # [linux-64]\n  run:\n    - python\n    - setuptools\n    - perl\n    - cython\n    - numpy\n    - scipy\n    - matplotlib-base\n    - boost-cpp\n    - libnetcdf\n    - netcdf-fortran\n    - fftw\n    - libblas\n    - liblapack\n    - xorg-libxt  # [unix]\n    - xorg-libxext  # [unix]\n    - xorg-libx11   # [unix]\n    - readline\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux and not aarch64]\n    - parmed >=3.4.1,<4.0.0a\n    - packmol\n  run_constrained:\n    - ambermini ==9999999999\n\ntest:\n  requires:\n    - {{ compiler('c') }}  # we need this for `nab` tests\n{% if unit_tests == \"run\" %}\n    - {{ compiler('fortran') }}\n    - {{ compiler('cxx') }}\n    - util-linux  # [linux64]\n    - make\n{% endif %}\n    - tcsh\n    # Try to force a library incompatibility error in osx (see #22)\n    - lxml  # [osx]\n    - rdkit  # [osx]\n  source_files:\n{% if unit_tests == \"run\" %}\n    - \"*\"\n{% else %}\n    # we need to copy at least one file, otherwise we can't use SRC_DIR in run_test.sh\n    - README\n{% endif %}\n  # commands: check run_test.sh for CLI tests\n  imports:\n    - parmed\n    - pdb4amber\n    - pymsmt\n    - pytraj\n    - sander\n    # Try to force a library incompatibility error in osx (see #22)\n    - rdkit  # [osx]\n    - rdkit.Chem.AllChem  # [osx]\n\nabout:\n  home: http://ambermd.org/AmberTools.php\n  license: Multiple\n  license_file: AmberTools/LICENSE\n  summary: 'AmberTools is a set of programs for biomolecular simulation and analysis'\n  description: |\n    AmberTools is a set of programs for biomolecular simulation and analysis.\n    They are designed to work well with each other, and with the \"regular\" Amber\n    suite of programs. You can perform many simulation tasks with AmberTools,\n    and you can do more extensive simulations with the combination of AmberTools\n    and Amber itself.\n\nextra:\n  recipe-maintainers:\n    - simonbray\n    - jaimergp\n",
+ "raw_meta_yaml": "{% set name = \"AmberTools\" %}\n# Versioning scheme uses AmberTools major release as MAJOR version number, patch level as MINOR version number\n# Update the MINOR version number as new patch releases come out\n{% set version = \"22.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://ambermd.org/downloads/AmberTools22jlmrcc.tar.bz2\n  sha256: 1571d4e0f7d45b2a71dce5999fa875aea8c90ee219eb218d7916bf30ea229121\n  patches:\n    - patches/do_not_symlink_missing_ff12pol.patch\n    - patches/do_not_install_vendored_parmed.patch\n    - patches/do_not_vendor_packmol.patch\n\nbuild:\n  number: 0\n  skip: True  # [win or py2k or ppc64le or aarch64]\n  # Some binaries (e.g. nab) hardcode the path to the compiler in BUILD_PREFIX\n  # which does not get replaced and causes errors on runtime\n  # because that path does not exist. This is a workaround but\n  # since we are not cross-compiling (so far), we should be ok for now\n  merge_build_host: True\n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - bc\n    - flex\n    - patch\n    - tcsh\n    - bison\n    - make\n    - cmake         # [not osx]\n    - cmake 3.20.*  # [osx]\n    - perl\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux and not aarch64]\n    - openssl\n    # WORKAROUND\n    - ld_impl_linux-64  2.39.*  # [linux-64]\n  host:\n    - python\n    - setuptools\n    - cython\n    - numpy\n    - scipy\n    - matplotlib-base\n    - bzip2\n    - zlib\n    - boost-cpp\n    - libnetcdf\n    - netcdf-fortran\n    - pthread-stubs\n    - fftw\n    - arpack\n    - libblas\n    - liblapack\n    - xorg-libxt  # [unix]\n    - xorg-libxext   # [unix]\n    - xorg-libx11   # [unix]\n    - readline\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux and not aarch64]\n    - parmed 3.4.1\n    - packmol\n    - openssl\n    # WORKAROUND\n    - ld_impl_linux-64  2.39.*  # [linux-64]\n  run:\n    - python\n    - setuptools\n    - perl\n    - cython\n    - numpy\n    - scipy\n    - matplotlib-base\n    - boost-cpp\n    - libnetcdf\n    - netcdf-fortran\n    - fftw\n    - libblas\n    - liblapack\n    - xorg-libxt  # [unix]\n    - xorg-libxext  # [unix]\n    - xorg-libx11   # [unix]\n    - readline\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux and not aarch64]\n    - parmed >=3.4.1,<4.0.0a\n    - packmol\n  run_constrained:\n    - ambermini ==9999999999\n\ntest:\n  requires:\n    - {{ compiler('c') }}  # we need this for `nab` tests\n{% if unit_tests == \"run\" %}\n    - {{ compiler('fortran') }}\n    - {{ compiler('cxx') }}\n    - util-linux  # [linux64]\n    - make\n{% endif %}\n    - tcsh\n    # Try to force a library incompatibility error in osx (see #22)\n    - lxml  # [osx]\n    - rdkit  # [osx]\n  source_files:\n{% if unit_tests == \"run\" %}\n    - \"*\"\n{% else %}\n    # we need to copy at least one file, otherwise we can't use SRC_DIR in run_test.sh\n    - README\n{% endif %}\n  # commands: check run_test.sh for CLI tests\n  imports:\n    - parmed\n    - pdb4amber\n    - pymsmt\n    - pytraj\n    - sander\n    # Try to force a library incompatibility error in osx (see #22)\n    - rdkit  # [osx]\n    - rdkit.Chem.AllChem  # [osx]\n\nabout:\n  home: http://ambermd.org/AmberTools.php\n  license: Multiple\n  license_file: AmberTools/LICENSE\n  summary: 'AmberTools is a set of programs for biomolecular simulation and analysis'\n  description: |\n    AmberTools is a set of programs for biomolecular simulation and analysis.\n    They are designed to work well with each other, and with the \"regular\" Amber\n    suite of programs. You can perform many simulation tasks with AmberTools,\n    and you can do more extensive simulations with the combination of AmberTools\n    and Amber itself.\n\nextra:\n  recipe-maintainers:\n    - simonbray\n    - jaimergp\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1454,7 +1454,7 @@
   }
  },
  "url": "https://ambermd.org/downloads/AmberTools22jlmrcc.tar.bz2",
- "version": "22.0",
+ "version": "22.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/ambertools.json"
  }
