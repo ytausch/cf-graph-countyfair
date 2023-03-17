@@ -15,7 +15,7 @@
    "summary": "The Mesh-Oriented datABase"
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "run_exports": [
     "moab * mpi_openmpi_tempest_*",
     "moab * mpi_openmpi_tempest_*",
@@ -42,7 +42,7 @@
     "moab * mpi_openmpi_tempest_*",
     "moab * mpi_openmpi_tempest_*"
    ],
-   "string": "mpi_openmpi_tempest_py311h1234567_2"
+   "string": "mpi_openmpi_tempest_py311h1234567_3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1218,7 +1218,7 @@
    "summary": "The Mesh-Oriented datABase"
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "run_exports": [
     "moab * mpi_openmpi_tempest_*",
     "moab * mpi_openmpi_tempest_*",
@@ -1269,7 +1269,7 @@
     "moab * mpi_openmpi_tempest_*",
     "moab * mpi_openmpi_tempest_*"
    ],
-   "string": "mpi_openmpi_tempest_py310h1234567_2"
+   "string": "mpi_openmpi_tempest_py310h1234567_3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -3473,7 +3473,7 @@
    "summary": "The Mesh-Oriented datABase"
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "run_exports": [
     "moab * mpi_openmpi_tempest_*",
     "moab * mpi_openmpi_tempest_*",
@@ -3500,7 +3500,7 @@
     "moab * mpi_openmpi_tempest_*",
     "moab * mpi_openmpi_tempest_*"
    ],
-   "string": "mpi_openmpi_tempest_py310h1234567_2"
+   "string": "mpi_openmpi_tempest_py310h1234567_3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -4675,7 +4675,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/moab.json"
  },
- "raw_meta_yaml": "{% set name = \"moab\" %}\n{% set version = \"5.4.1\" %}\n{% set build = 2 %}\n\n# ensure mpi is defined (needed for conda-smithy recipe-lint)\n{% set mpi = mpi or 'nompi' %}\n\n# ensure tempest is defined (needed for conda-smithy recipe-lint)\n{% set tempest = tempest or 'notempest' %}\n\n{% if mpi == 'nompi' and tempest == 'notempest' %}\n# prioritize nompi and notempest variant via build number\n{% set build = build + 100 %}\n{% endif %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: http://ftp.mcs.anl.gov/pub/fathom/{{ name }}-{{ version }}.tar.gz\n  sha256: 3625e25321bf37f88d98438f5d56c280b2774172602d8b6eb6c34eedf37686fc\nbuild:\n  number: {{ build }}\n\n  # add build string so packages can depend on\n  # mpi or nompi and tempest or notempest variants explicitly:\n  # `moab * mpi_mpich_tempest_*` for mpich and tempest\n  # `moab * mpi_*_tempest_*` for any mpi and tempest\n  # `moab * nompi_tempest_*` for no mpi and tempest\n  # `moab * mpi_mpich_notempest_*` for mpich and no tempest\n  # `moab * mpi_*_notempest_*` for any mpi and no tempest\n  # `moab * nompi_notempest_*` for no mpi and no tempest\n\n  {% if mpi != 'nompi' %}\n  {% set mpi_prefix = \"mpi_\" + mpi %}\n  {% else %}\n  {% set mpi_prefix = \"nompi\" %}\n  {% endif %}\n  string: {{ mpi_prefix }}_{{ tempest }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build }}\n\n  {% if mpi != 'nompi' %}\n  run_exports:\n    - {{ name }} * {{ mpi_prefix }}_{{ tempest }}_*\n  {% endif %}\n\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - automake\n    - libtool\n    - make\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - openssh  # [mpi == 'openmpi']\n  host:\n    - python\n    - pip >=22.0\n    - cython\n    - eigen\n    # need to list hdf5 and libnetcdf twice to get version\n    # pinning from conda_build_config and build pinning from {{ mpi_prefix }}\n    - hdf5\n    - hdf5 * {{ mpi_prefix }}_*\n    - libblas\n    - liblapack\n    - libnetcdf  # [tempest == 'tempest']\n    - libnetcdf * {{ mpi_prefix }}_*  # [tempest == 'tempest']\n    - metis\n    - {{ mpi }}  # [mpi != 'nompi']\n    - numpy\n    - setuptools\n    - tempest-remap 2.1.6  # [tempest == 'tempest']\n    - zoltan * {{ mpi_prefix }}_*   # [mpi != 'nompi']\n\n  run:\n    - python\n    - hdf5 * {{ mpi_prefix }}_*\n    - libblas\n    - liblapack\n    - libnetcdf * {{ mpi_prefix }}_*  # [tempest == 'tempest']\n    - metis\n    - {{ mpi }}  # [mpi != 'nompi']\n    - numpy\n    - openssh  # [mpi == 'openmpi']\n    - setuptools\n    - tempest-remap 2.1.6  # [tempest == 'tempest']\n    - zoltan * {{ mpi_prefix }}_*   # [mpi != 'nompi']\n\ntest:\n  source_files:\n    - MeshFiles/unittest/surfrandomtris-4part.h5m\n    - examples/python/laplaciansmoother.py\n  imports:\n    - pymoab\n  commands:\n    - test -f ${PREFIX}/lib/libMOAB.so  # [linux]\n    - test -f ${PREFIX}/lib/libMOAB.dylib  # [osx]\n    - python examples/python/laplaciansmoother.py MeshFiles/unittest/surfrandomtris-4part.h5m 25\n    - mbtempest --help  # [tempest == 'tempest']\n\nabout:\n  home: http://press3.mcs.anl.gov/sigma/moab-library/\n  license: LGPL-3.0-or-later\n  license_file: LICENSE\n  summary: The Mesh-Oriented datABase\n  description: |\n    The Mesh-Oriented datABase (MOAB) is a component for representing and\n    evaluating mesh data. MOAB can store structured and unstructured mesh,\n    consisting of elements in the finite element zoo plus polygons and\n    polyhedra.\n  doc_url: http://press3.mcs.anl.gov/sigma/moab-library/\n  dev_url: https://bitbucket.org/fathomteam/moab.git\n\nextra:\n  recipe-maintainers:\n    - xylar\n    - vijaysm\n    - scopatz\n    - iulian787\n    - gonuke\n",
+ "raw_meta_yaml": "{% set name = \"moab\" %}\n{% set version = \"5.4.1\" %}\n{% set build = 3 %}\n\n# ensure mpi is defined (needed for conda-smithy recipe-lint)\n{% set mpi = mpi or 'nompi' %}\n\n# ensure tempest is defined (needed for conda-smithy recipe-lint)\n{% set tempest = tempest or 'notempest' %}\n\n{% if mpi == 'nompi' and tempest == 'notempest' %}\n# prioritize nompi and notempest variant via build number\n{% set build = build + 100 %}\n{% endif %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: http://ftp.mcs.anl.gov/pub/fathom/{{ name }}-{{ version }}.tar.gz\n  sha256: 3625e25321bf37f88d98438f5d56c280b2774172602d8b6eb6c34eedf37686fc\nbuild:\n  number: {{ build }}\n\n  # add build string so packages can depend on\n  # mpi or nompi and tempest or notempest variants explicitly:\n  # `moab * mpi_mpich_tempest_*` for mpich and tempest\n  # `moab * mpi_*_tempest_*` for any mpi and tempest\n  # `moab * nompi_tempest_*` for no mpi and tempest\n  # `moab * mpi_mpich_notempest_*` for mpich and no tempest\n  # `moab * mpi_*_notempest_*` for any mpi and no tempest\n  # `moab * nompi_notempest_*` for no mpi and no tempest\n\n  {% if mpi != 'nompi' %}\n  {% set mpi_prefix = \"mpi_\" + mpi %}\n  {% else %}\n  {% set mpi_prefix = \"nompi\" %}\n  {% endif %}\n  string: {{ mpi_prefix }}_{{ tempest }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build }}\n\n  {% if mpi != 'nompi' %}\n  run_exports:\n    - {{ name }} * {{ mpi_prefix }}_{{ tempest }}_*\n  {% endif %}\n\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - automake\n    - libtool\n    - make\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - openssh  # [mpi == 'openmpi']\n  host:\n    - python\n    - pip >=22.0\n    - cython\n    - eigen\n    # need to list hdf5 and libnetcdf twice to get version\n    # pinning from conda_build_config and build pinning from {{ mpi_prefix }}\n    - hdf5\n    - hdf5 * {{ mpi_prefix }}_*\n    - libblas\n    - liblapack\n    - libnetcdf  # [tempest == 'tempest']\n    - libnetcdf * {{ mpi_prefix }}_*  # [tempest == 'tempest']\n    - metis\n    - {{ mpi }}  # [mpi != 'nompi']\n    - numpy\n    - setuptools\n    - tempest-remap 2.1.6  # [tempest == 'tempest']\n    - zoltan * {{ mpi_prefix }}_*   # [mpi != 'nompi']\n\n  run:\n    - python\n    - hdf5 * {{ mpi_prefix }}_*\n    - libblas\n    - liblapack\n    - libnetcdf * {{ mpi_prefix }}_*  # [tempest == 'tempest']\n    - metis\n    - {{ mpi }}  # [mpi != 'nompi']\n    - numpy\n    - openssh  # [mpi == 'openmpi']\n    - setuptools\n    - tempest-remap 2.1.6  # [tempest == 'tempest']\n    - zoltan * {{ mpi_prefix }}_*   # [mpi != 'nompi']\n\ntest:\n  source_files:\n    - MeshFiles/unittest/surfrandomtris-4part.h5m\n    - examples/python/laplaciansmoother.py\n  imports:\n    - pymoab\n  commands:\n    - test -f ${PREFIX}/lib/libMOAB.so  # [linux]\n    - test -f ${PREFIX}/lib/libMOAB.dylib  # [osx]\n    - python examples/python/laplaciansmoother.py MeshFiles/unittest/surfrandomtris-4part.h5m 25\n    - mbtempest --help  # [tempest == 'tempest']\n\nabout:\n  home: http://press3.mcs.anl.gov/sigma/moab-library/\n  license: LGPL-3.0-or-later\n  license_file: LICENSE\n  summary: The Mesh-Oriented datABase\n  description: |\n    The Mesh-Oriented datABase (MOAB) is a component for representing and\n    evaluating mesh data. MOAB can store structured and unstructured mesh,\n    consisting of elements in the finite element zoo plus polygons and\n    polyhedra.\n  doc_url: http://press3.mcs.anl.gov/sigma/moab-library/\n  dev_url: https://bitbucket.org/fathomteam/moab.git\n\nextra:\n  recipe-maintainers:\n    - xylar\n    - vijaysm\n    - scopatz\n    - iulian787\n    - gonuke\n",
  "req": {
   "__set__": true,
   "elements": [
