@@ -17,79 +17,228 @@
    "doc_url": "https://rdflib.readthedocs.io",
    "home": "https://github.com/RDFLib/rdflib",
    "license": "BSD-3-Clause",
-   "license_file": "dist/LICENSE",
+   "license_file": "LICENSE",
    "summary": "RDFLib is a Python library for working with RDF, a simple yet powerful language for representing information."
   },
   "build": {
-   "entry_points": [
-    "csv2rdf = rdflib.tools.csv2rdf:main",
-    "rdf2dot = rdflib.tools.rdf2dot:main",
-    "rdfgraphisomorphism = rdflib.tools.graphisomorphism:main",
-    "rdfpipe = rdflib.tools.rdfpipe:main",
-    "rdfs2dot = rdflib.tools.rdfs2dot:main"
-   ],
    "noarch": "python",
-   "number": "0",
-   "script": "cd dist && /usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . --no-deps -vv"
+   "number": "0"
   },
   "extra": {
+   "feedstock-name": "rdflib",
    "recipe-maintainers": [
     "satra",
     "nicholascar",
     "bollwyvl"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "csv2rdf = rdflib.tools.csv2rdf:main",
+      "rdf2dot = rdflib.tools.rdf2dot:main",
+      "rdfgraphisomorphism = rdflib.tools.graphisomorphism:main",
+      "rdfpipe = rdflib.tools.rdfpipe:main",
+      "rdfs2dot = rdflib.tools.rdfs2dot:main"
+     ],
+     "noarch": "python",
+     "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . --no-deps -vv --no-build-isolation"
+    },
+    "name": "rdflib",
+    "requirements": {
+     "host": [
+      "pip",
+      "poetry-core >=1.4.0",
+      "python >=3.7"
+     ],
+     "run": [
+      "importlib-metadata",
+      "isodate >=0.6.0,<0.7.0",
+      "pyparsing >=2.1.0,<4",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "which csv2rdf              || where csv2rdf              || exit 1",
+      "which rdf2dot              || where rdf2dot              || exit 1",
+      "which rdfgraphisomorphism  || where rdfgraphisomorphism  || exit 1",
+      "which rdfpipe              || where rdfpipe              || exit 1",
+      "which rdfs2dot             || where rdfs2dot             || exit 1"
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "rdflib-with-networkx",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "rdflib",
+      "networkx",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "python -c \"from rdflib.extras.external_graph_libs import rdflib_to_networkx_graph; import rdflib; assert rdflib_to_networkx_graph(rdflib.Graph()) is not None\""
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "rdflib-with-html",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "rdflib",
+      "html5lib",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "python -c \"from rdflib.term import _parseHTML; _parseHTML('<html></html>')\""
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "rdflib-with-lxml",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "rdflib",
+      "python >=3.7",
+      "lxml"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "python -c \"from rdflib.plugins.sparql.results import xmlresults; assert xmlresults.lxml_etree\""
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "rdflib-with-all",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "rdflib-with-html",
+      "rdflib-with-lxml",
+      "rdflib-with-networkx",
+      "rdflib",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "_rdflib-tests",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "rdflib-with-all",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test -vv -k \"not (definednamespace_creator or test_prepare_query)\" --cov=rdflib --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=84"
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "pytest-cov",
+      "pytest-subtests"
+     ],
+     "source_files": [
+      "test",
+      "pyproject.toml"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "rdflib",
-   "version": "6.3.0"
+   "name": "rdflib-split",
+   "version": "6.3.1"
   },
   "requirements": {
    "host": [
-    "python >=3.7",
-    "poetry-core >=1.4.0",
-    "pip"
+    "python >=3.7"
    ],
    "run": [
-    "html5lib",
-    "importlib-metadata",
-    "isodate >=0.6.0,<0.7.0",
-    "pyparsing >=2.1.0,<4",
     "python >=3.7"
    ]
   },
-  "source": [
-   {
-    "folder": "dist",
-    "sha256": "6ea39896a4dbe10f933acf33aaab61d52f390d32e8618add4550d52e6a0d4428",
-    "url": "https://pypi.io/packages/source/r/rdflib/rdflib-6.3.0.tar.gz"
-   },
-   {
-    "folder": "src",
-    "sha256": "2a7e0e94463eb0c779f4c2a23800223094a76d9cc42a6d723732364df5e0f92e",
-    "url": "https://github.com/RDFLib/rdflib/archive/refs/tags/6.3.0.tar.gz"
-   }
-  ],
-  "test": {
-   "commands": [
-    "pip check",
-    "cd src && pytest test -vv --cov rdflib --cov-report term-missing:skip-covered --no-cov-on-fail -k \"not (dawg_data_sparql or definednamespace_creator or prepare_query)\" --cov-fail-under 84"
-   ],
-   "imports": [
-    "rdflib"
-   ],
-   "requires": [
-    "pip",
-    "bsddb3",
-    "networkx",
-    "pytest",
-    "pytest-cov",
-    "pytest-subtests",
-    "tabulate"
-   ],
-   "source_files": [
-    "src/test",
-    "src/pyproject.toml"
-   ]
+  "source": {
+   "sha256": "ced41883cdd387a53e73bf54d5db8b076e9675b59d8a601166220aa1e60970b6",
+   "url": "https://pypi.io/packages/source/r/rdflib/rdflib-6.3.1.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -111,20 +260,24 @@
     "html5lib",
     "importlib-metadata",
     "isodate",
+    "lxml",
+    "networkx",
     "pyparsing",
-    "python"
+    "python",
+    "rdflib",
+    "rdflib-with-all",
+    "rdflib-with-html",
+    "rdflib-with-lxml",
+    "rdflib-with-networkx"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "bsddb3",
-    "networkx",
     "pip",
     "pytest",
     "pytest-cov",
-    "pytest-subtests",
-    "tabulate"
+    "pytest-subtests"
    ]
   }
  },
@@ -134,103 +287,265 @@
    "doc_url": "https://rdflib.readthedocs.io",
    "home": "https://github.com/RDFLib/rdflib",
    "license": "BSD-3-Clause",
-   "license_file": "dist/LICENSE",
+   "license_file": "LICENSE",
    "summary": "RDFLib is a Python library for working with RDF, a simple yet powerful language for representing information."
   },
   "build": {
-   "entry_points": [
-    "csv2rdf = rdflib.tools.csv2rdf:main",
-    "rdf2dot = rdflib.tools.rdf2dot:main",
-    "rdfgraphisomorphism = rdflib.tools.graphisomorphism:main",
-    "rdfpipe = rdflib.tools.rdfpipe:main",
-    "rdfs2dot = rdflib.tools.rdfs2dot:main"
-   ],
    "noarch": "python",
-   "number": "0",
-   "script": "cd dist && /usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . --no-deps -vv"
+   "number": "0"
   },
   "extra": {
+   "feedstock-name": "rdflib",
    "recipe-maintainers": [
     "satra",
     "nicholascar",
     "bollwyvl"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "csv2rdf = rdflib.tools.csv2rdf:main",
+      "rdf2dot = rdflib.tools.rdf2dot:main",
+      "rdfgraphisomorphism = rdflib.tools.graphisomorphism:main",
+      "rdfpipe = rdflib.tools.rdfpipe:main",
+      "rdfs2dot = rdflib.tools.rdfs2dot:main"
+     ],
+     "noarch": "python",
+     "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . --no-deps -vv --no-build-isolation"
+    },
+    "name": "rdflib",
+    "requirements": {
+     "host": [
+      "pip",
+      "poetry-core >=1.4.0",
+      "python >=3.7"
+     ],
+     "run": [
+      "importlib-metadata",
+      "isodate >=0.6.0,<0.7.0",
+      "pyparsing >=2.1.0,<4",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "which csv2rdf              || where csv2rdf              || exit 1",
+      "which rdf2dot              || where rdf2dot              || exit 1",
+      "which rdfgraphisomorphism  || where rdfgraphisomorphism  || exit 1",
+      "which rdfpipe              || where rdfpipe              || exit 1",
+      "which rdfs2dot             || where rdfs2dot             || exit 1"
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "rdflib-with-networkx",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "rdflib",
+      "networkx",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "python -c \"from rdflib.extras.external_graph_libs import rdflib_to_networkx_graph; import rdflib; assert rdflib_to_networkx_graph(rdflib.Graph()) is not None\""
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "rdflib-with-html",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "rdflib",
+      "html5lib",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "python -c \"from rdflib.term import _parseHTML; _parseHTML('<html></html>')\""
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "rdflib-with-lxml",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "rdflib",
+      "python >=3.7",
+      "lxml"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "python -c \"from rdflib.plugins.sparql.results import xmlresults; assert xmlresults.lxml_etree\""
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "rdflib-with-all",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "rdflib-with-html",
+      "rdflib-with-lxml",
+      "rdflib-with-networkx",
+      "rdflib",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "_rdflib-tests",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "rdflib-with-all",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test -vv -k \"not (definednamespace_creator or test_prepare_query)\" --cov=rdflib --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=84"
+     ],
+     "imports": [
+      "rdflib"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "pytest-cov",
+      "pytest-subtests"
+     ],
+     "source_files": [
+      "test",
+      "pyproject.toml"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "rdflib",
-   "version": "6.3.0"
+   "name": "rdflib-split",
+   "version": "6.3.1"
   },
   "requirements": {
    "host": [
-    "python >=3.7",
-    "poetry-core >=1.4.0",
-    "pip"
+    "python >=3.7"
    ],
    "run": [
-    "html5lib",
-    "importlib-metadata",
-    "isodate >=0.6.0,<0.7.0",
-    "pyparsing >=2.1.0,<4",
     "python >=3.7"
    ]
   },
-  "source": [
-   {
-    "folder": "dist",
-    "sha256": "6ea39896a4dbe10f933acf33aaab61d52f390d32e8618add4550d52e6a0d4428",
-    "url": "https://pypi.io/packages/source/r/rdflib/rdflib-6.3.0.tar.gz"
-   },
-   {
-    "folder": "src",
-    "sha256": "2a7e0e94463eb0c779f4c2a23800223094a76d9cc42a6d723732364df5e0f92e",
-    "url": "https://github.com/RDFLib/rdflib/archive/refs/tags/6.3.0.tar.gz"
-   }
-  ],
-  "test": {
-   "commands": [
-    "pip check",
-    "cd src && pytest test -vv --cov rdflib --cov-report term-missing:skip-covered --no-cov-on-fail -k \"not (dawg_data_sparql or definednamespace_creator or prepare_query)\" --cov-fail-under 84"
-   ],
-   "imports": [
-    "rdflib"
-   ],
-   "requires": [
-    "pip",
-    "bsddb3",
-    "networkx",
-    "pytest",
-    "pytest-cov",
-    "pytest-subtests",
-    "tabulate"
-   ],
-   "source_files": [
-    "src/test",
-    "src/pyproject.toml"
-   ]
+  "source": {
+   "sha256": "ced41883cdd387a53e73bf54d5db8b076e9675b59d8a601166220aa1e60970b6",
+   "url": "https://pypi.io/packages/source/r/rdflib/rdflib-6.3.1.tar.gz"
   }
  },
- "name": "rdflib",
+ "name": "rdflib-split",
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "rdflib"
+   "_rdflib-tests",
+   "rdflib",
+   "rdflib-split",
+   "rdflib-with-all",
+   "rdflib-with-html",
+   "rdflib-with-lxml",
+   "rdflib-with-networkx"
   ]
  },
  "parsing_error": false,
  "pr_info": {
   "__lazy_json__": "pr_info/rdflib.json"
  },
- "raw_meta_yaml": "{% set version = \"6.3.0\" %}\n{% set test_skips = \"not (dawg_data_sparql or definednamespace_creator or prepare_query)\" %}\n{% set cov_fail_under = 84 %}\n\npackage:\n  name: rdflib\n  version: {{ version }}\n\nsource:\n  - folder: dist\n    url: https://pypi.io/packages/source/r/rdflib/rdflib-{{ version }}.tar.gz\n    sha256: 6ea39896a4dbe10f933acf33aaab61d52f390d32e8618add4550d52e6a0d4428\n  - folder: src\n    url: https://github.com/RDFLib/rdflib/archive/refs/tags/{{ version }}.tar.gz\n    sha256: 2a7e0e94463eb0c779f4c2a23800223094a76d9cc42a6d723732364df5e0f92e\n\nbuild:\n  number: 0\n  script: cd dist && {{ PYTHON }} -m pip install . --no-deps -vv\n  noarch: python\n  entry_points:\n    - csv2rdf = rdflib.tools.csv2rdf:main\n    - rdf2dot = rdflib.tools.rdf2dot:main\n    - rdfgraphisomorphism = rdflib.tools.graphisomorphism:main\n    - rdfpipe = rdflib.tools.rdfpipe:main\n    - rdfs2dot = rdflib.tools.rdfs2dot:main\n\nrequirements:\n  host:\n    - python >=3.7\n    - poetry-core >=1.4.0\n    - pip\n  run:\n    - html5lib  # from extras\n    - importlib-metadata\n    - isodate >=0.6.0,<0.7.0\n    - pyparsing >=2.1.0,<4\n    - python >=3.7\n\ntest:\n  source_files:\n    - src/test\n    - src/pyproject.toml\n  requires:\n    - pip\n    # berkeleydb -> bsddb3\n    # html5lib included in run\n    - bsddb3\n    - networkx\n    - pytest\n    - pytest-cov\n    - pytest-subtests\n    - tabulate  # undeclared, might be removed in >=6.1.2\n  imports:\n    - rdflib\n  commands:\n    - pip check\n    # some missing file not in repo\n    - cd src && pytest test -vv --cov rdflib --cov-report term-missing:skip-covered --no-cov-on-fail -k \"{{ test_skips }}\" --cov-fail-under {{ cov_fail_under }}\n\nabout:\n  home: https://github.com/RDFLib/rdflib\n  license: BSD-3-Clause\n  license_file: dist/LICENSE\n  summary: RDFLib is a Python library for working with RDF, a simple yet powerful language for representing information.\n  dev_url: https://github.com/RDFLib/rdflib\n  doc_url: https://rdflib.readthedocs.io\n\nextra:\n  recipe-maintainers:\n    - satra\n    - nicholascar\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"6.3.1\" %}\n{% set test_skips = \"not (dawg_data_sparql or definednamespace_creator or prepare_query)\" %}\n\npackage:\n  name: rdflib-split\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/r/rdflib/rdflib-{{ version }}.tar.gz\n  sha256: ced41883cdd387a53e73bf54d5db8b076e9675b59d8a601166220aa1e60970b6\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - python >=3.7\n  run:\n    - python >=3.7\n\noutputs:\n  - name: rdflib\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation\n      entry_points:\n        - csv2rdf = rdflib.tools.csv2rdf:main\n        - rdf2dot = rdflib.tools.rdf2dot:main\n        - rdfgraphisomorphism = rdflib.tools.graphisomorphism:main\n        - rdfpipe = rdflib.tools.rdfpipe:main\n        - rdfs2dot = rdflib.tools.rdfs2dot:main\n    requirements:\n      host:\n        - pip\n        - poetry-core >=1.4.0\n        - python >=3.7\n      run:\n        - importlib-metadata\n        - isodate >=0.6.0,<0.7.0\n        - pyparsing >=2.1.0,<4\n        - python >=3.7\n    test:\n      requires:\n        - pip\n      imports:\n        - rdflib\n      commands:\n        - pip check\n        # --help doesn't return 0, just check if they are on $PATH/%PATH%\n        - which csv2rdf              || where csv2rdf              || exit 1\n        - which rdf2dot              || where rdf2dot              || exit 1\n        - which rdfgraphisomorphism  || where rdfgraphisomorphism  || exit 1\n        - which rdfpipe              || where rdfpipe              || exit 1\n        - which rdfs2dot             || where rdfs2dot             || exit 1\n\n  # TODO: apparently had a name change, never updated, and is unlikely to build on windows\n  # - name: rdflib-with-berkeleydb\n  #   build:\n  #     noarch: python\n  #   requirements:\n  #     host:\n  #       - python >=3.7\n  #     run:\n  #       - {{ pin_subpackage(\"rdflib\", max_pin=\"x.x.x\") }}\n  #       - bsddb3\n  #       - python >=3.7\n  #   test:\n  #     requires:\n  #       - pip\n  #     imports:\n  #       - rdflib\n  #     commands:\n  #       - pip check\n  #       - python -c \"from rdflib.plugins.stores import berkeleydb; assert berkeleydb.has_bsddb\"\n\n  - name: rdflib-with-networkx\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7\n      run:\n        - {{ pin_subpackage(\"rdflib\", max_pin=\"x.x.x\") }}\n        - networkx\n        - python >=3.7\n    test:\n      requires:\n        - pip\n      imports:\n        - rdflib\n      commands:\n        - pip check\n        - python -c \"from rdflib.extras.external_graph_libs import rdflib_to_networkx_graph; import rdflib; assert rdflib_to_networkx_graph(rdflib.Graph()) is not None\"\n\n  - name: rdflib-with-html\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7\n      run:\n        - {{ pin_subpackage(\"rdflib\", max_pin=\"x.x.x\") }}\n        - html5lib\n        - python >=3.7\n    test:\n      requires:\n        - pip\n      imports:\n        - rdflib\n      commands:\n        - pip check\n        - python -c \"from rdflib.term import _parseHTML; _parseHTML('<html></html>')\"\n\n  - name: rdflib-with-lxml\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7\n      run:\n        - {{ pin_subpackage(\"rdflib\", max_pin=\"x.x.x\") }}\n        - python >=3.7\n        - lxml\n    test:\n      requires:\n        - pip\n      imports:\n        - rdflib\n      commands:\n        - pip check\n        - python -c \"from rdflib.plugins.sparql.results import xmlresults; assert xmlresults.lxml_etree\"\n\n  - name: rdflib-with-all\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7\n      run:\n        # - {{ pin_subpackage(\"rdflib-with-berkeleydb\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"rdflib-with-html\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"rdflib-with-lxml\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"rdflib-with-networkx\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"rdflib\", max_pin=\"x.x.x\") }}\n        - python >=3.7\n    test:\n      requires:\n        - pip\n      imports:\n        - rdflib\n      commands:\n        - pip check\n\n  - name: _rdflib-tests\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7\n      run:\n        - {{ pin_subpackage(\"rdflib-with-all\", max_pin=\"x.x.x\") }}\n        - python >=3.7\n    test:\n      source_files:\n        - test\n        - pyproject.toml\n      requires:\n        - pip\n        - pytest\n        - pytest-cov\n        - pytest-subtests\n        # - mypy\n      imports:\n        - rdflib\n      commands:\n        - pip check\n        # definednamespace_creator: some test fixtures are missing\n        - pytest test -vv -k \"not (definednamespace_creator or test_prepare_query)\" --cov=rdflib --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=84\n        # TODO: restore\n        #   Found 4 errors in 3 files (checked 118 source files)\n        # - mypy -p rdflib\n\nabout:\n  home: https://github.com/RDFLib/rdflib\n  license: BSD-3-Clause\n  license_file: LICENSE\n  summary: RDFLib is a Python library for working with RDF, a simple yet powerful language for representing information.\n  dev_url: https://github.com/RDFLib/rdflib\n  doc_url: https://rdflib.readthedocs.io\n\nextra:\n  feedstock-name: rdflib\n  recipe-maintainers:\n    - satra\n    - nicholascar\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
    "html5lib",
    "importlib-metadata",
    "isodate",
+   "lxml",
+   "networkx",
    "pip",
    "poetry-core",
    "pyparsing",
-   "python"
+   "python",
+   "rdflib",
+   "rdflib-with-all",
+   "rdflib-with-html",
+   "rdflib-with-lxml",
+   "rdflib-with-networkx"
   ]
  },
  "requirements": {
@@ -252,20 +567,24 @@
     "html5lib",
     "importlib-metadata",
     "isodate",
+    "lxml",
+    "networkx",
     "pyparsing",
-    "python"
+    "python",
+    "rdflib",
+    "rdflib-with-all",
+    "rdflib-with-html",
+    "rdflib-with-lxml",
+    "rdflib-with-networkx"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "bsddb3",
-    "networkx",
     "pip",
     "pytest",
     "pytest-cov",
-    "pytest-subtests",
-    "tabulate"
+    "pytest-subtests"
    ]
   }
  },
@@ -289,25 +608,29 @@
     "html5lib",
     "importlib-metadata",
     "isodate >=0.6.0,<0.7.0",
+    "lxml",
+    "networkx",
     "pyparsing >=2.1.0,<4",
-    "python >=3.7"
+    "python >=3.7",
+    "rdflib",
+    "rdflib-with-all",
+    "rdflib-with-html",
+    "rdflib-with-lxml",
+    "rdflib-with-networkx"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "bsddb3",
-    "networkx",
     "pip",
     "pytest",
     "pytest-cov",
-    "pytest-subtests",
-    "tabulate"
+    "pytest-subtests"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/r/rdflib/rdflib-6.3.0.tar.gz",
- "version": "6.3.0",
+ "url": "https://pypi.io/packages/source/r/rdflib/rdflib-6.3.1.tar.gz",
+ "version": "6.3.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/rdflib.json"
  }
