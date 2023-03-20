@@ -36,7 +36,7 @@
   },
   "package": {
    "name": "bmad",
-   "version": "20230317.0"
+   "version": "20230319.1"
   },
   "requirements": {
    "build": [
@@ -141,8 +141,8 @@
    ]
   },
   "source": {
-   "sha256": "d058e7893120ba235ad0be85f8ae86fc7644db2cfa08a311c7f4cf307c572a37",
-   "url": "https://github.com/bmad-sim/bmad_distribution/releases/download/20230317-0/bmad_dist_2023_0317-0.tgz"
+   "sha256": "bb9b2e65368e958873756971b85ebdcd8c7fdb86be76eb4d7e5d85a3ce6d8018",
+   "url": "https://github.com/bmad-sim/bmad_distribution/releases/download/20230319-1/bmad_dist_2023_0319-1.tgz"
   },
   "test": {
    "commands": [
@@ -253,7 +253,7 @@
   },
   "package": {
    "name": "bmad",
-   "version": "20230317.0"
+   "version": "20230319.1"
   },
   "requirements": {
    "build": [
@@ -452,8 +452,8 @@
    ]
   },
   "source": {
-   "sha256": "d058e7893120ba235ad0be85f8ae86fc7644db2cfa08a311c7f4cf307c572a37",
-   "url": "https://github.com/bmad-sim/bmad_distribution/releases/download/20230317-0/bmad_dist_2023_0317-0.tgz"
+   "sha256": "bb9b2e65368e958873756971b85ebdcd8c7fdb86be76eb4d7e5d85a3ce6d8018",
+   "url": "https://github.com/bmad-sim/bmad_distribution/releases/download/20230319-1/bmad_dist_2023_0319-1.tgz"
   },
   "test": {
    "commands": [
@@ -493,7 +493,7 @@
   },
   "package": {
    "name": "bmad",
-   "version": "20230317.0"
+   "version": "20230319.1"
   },
   "requirements": {
    "build": [
@@ -598,8 +598,8 @@
    ]
   },
   "source": {
-   "sha256": "d058e7893120ba235ad0be85f8ae86fc7644db2cfa08a311c7f4cf307c572a37",
-   "url": "https://github.com/bmad-sim/bmad_distribution/releases/download/20230317-0/bmad_dist_2023_0317-0.tgz"
+   "sha256": "bb9b2e65368e958873756971b85ebdcd8c7fdb86be76eb4d7e5d85a3ce6d8018",
+   "url": "https://github.com/bmad-sim/bmad_distribution/releases/download/20230319-1/bmad_dist_2023_0319-1.tgz"
   },
   "test": {
    "commands": [
@@ -686,7 +686,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/bmad.json"
  },
- "raw_meta_yaml": "{% set name = \"bmad\" %}\n{% set version = \"20230317-0\" %}\n{% set major = version.split(\"-\")[0] %}\n{% set minor = version.split(\"-\")[1] %}\n\n{% set build = 0 %}\n# ensure mpi is defined (needed for conda-smithy recipe-lint)\n{% set mpi = mpi or 'nompi' %}\n\n{% if mpi == 'nompi' %}\n# prioritize nompi variant via build number\n{% set build = build + 100 %}\n{% endif %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version | replace(\"-\", \".\") }}\n\nsource:\n  url: https://github.com/bmad-sim/bmad_distribution/releases/download/{{ version }}/bmad_dist_{{ major[:-4] }}_{{ major[-4:] }}-{{ minor }}.tgz\n  sha256: d058e7893120ba235ad0be85f8ae86fc7644db2cfa08a311c7f4cf307c572a37\n\nbuild:\n  number: {{ build }}\n  skip: true  # [win]\n\n  # add build string so packages can depend on\n  # mpi or nompi variants explicitly:\n  # `pkg * mpi_mpich_*` for mpich\n  # `pkg * mpi_*` for any mpi\n  # `pkg * nompi_*` for no mpi\n\n  {% if mpi != 'nompi' %}\n  {% set mpi_prefix = \"mpi_\" + mpi %}\n  {% else %}\n  {% set mpi_prefix = \"nompi\" %}\n  {% endif %}\n  string: {{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}\n\n  {% if mpi != 'nompi' %}\n\n  run_exports:\n    - {{ name }} * {{ mpi_prefix }}_*\n  {% endif %}  \n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('fortran') }}\n    - cmake\n    - make\n    - automake\n    - autoconf\n    - libtool\n    - m4\n    - pkg-config\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux]\n    - openmpi  # [mpi == \"openmpi\" and (build_platform != target_platform)]    \n  host:\n    - readline\n    - ncurses\n    - cairo\n    - pango\n    - xorg-libxt\n    - pgplot\n    - hdf5\n    - xorg-libx11\n    - xorg-xproto\n    - fftw\n    - libblas\n    - liblapack\n    - lapack95\n    - gsl ==2.6\n    - fgsl\n    - xraylib\n    - {{ mpi }}  # [mpi != 'nompi']    \n  run:\n    - readline\n    - ncurses\n    - cairo\n    - pango\n    - xorg-libxt\n    - pgplot\n    - hdf5\n    - fftw\n    - libblas\n    - liblapack\n    - lapack95\n    - gsl ==2.6\n    - fgsl\n    - xraylib\n    - xorg-libx11\n    - xorg-xproto\n    - libopenblas\n    - libcblas\n    - {{ mpi }}  # [mpi != 'nompi']    \n\ntest:\n  commands:\n    - tao -help\n\nabout:\n  home: https://www.classe.cornell.edu/bmad\n  license: GPL-3.0-or-later\n  license_family: GPL\n  license_file: bmad/Copyright\n  summary: Bmad is an object oriented, open source, subroutine library for relativistic charged-particle dynamics simulations in accelerators and storage rings.\n  description: |\n    Bmad has been developed at Cornell University's Laboratory for Elementary\n    Particle Physics and has been in use since the mid 1990s.\n    Bmad has a wide range of routines to do many things.\n    Bmad can be used to study both single and multi-particle\n    beam dynamics. It has routines to track both particles and\n    macroparticles. Bmad has various tracking algorithms including\n    Runge-Kutta and symplectic (Lie algebraic) integration.\n    Wakefields, and radiation excitation and damping can be simulated.\n    Bmad has routines for calculating transfer matrices, emittances,\n    Twiss parameters, dispersion, coupling, etc.\n  doc_url: https://www.classe.cornell.edu/bmad/manual.html\n\nextra:\n  recipe-maintainers:\n    - hhslepicka\n    - ChristopherMayes\n",
+ "raw_meta_yaml": "{% set name = \"bmad\" %}\n{% set version = \"20230319-1\" %}\n{% set major = version.split(\"-\")[0] %}\n{% set minor = version.split(\"-\")[1] %}\n\n{% set build = 0 %}\n# ensure mpi is defined (needed for conda-smithy recipe-lint)\n{% set mpi = mpi or 'nompi' %}\n\n{% if mpi == 'nompi' %}\n# prioritize nompi variant via build number\n{% set build = build + 100 %}\n{% endif %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version | replace(\"-\", \".\") }}\n\nsource:\n  url: https://github.com/bmad-sim/bmad_distribution/releases/download/{{ version }}/bmad_dist_{{ major[:-4] }}_{{ major[-4:] }}-{{ minor }}.tgz\n  sha256: bb9b2e65368e958873756971b85ebdcd8c7fdb86be76eb4d7e5d85a3ce6d8018\n\nbuild:\n  number: {{ build }}\n  skip: true  # [win]\n\n  # add build string so packages can depend on\n  # mpi or nompi variants explicitly:\n  # `pkg * mpi_mpich_*` for mpich\n  # `pkg * mpi_*` for any mpi\n  # `pkg * nompi_*` for no mpi\n\n  {% if mpi != 'nompi' %}\n  {% set mpi_prefix = \"mpi_\" + mpi %}\n  {% else %}\n  {% set mpi_prefix = \"nompi\" %}\n  {% endif %}\n  string: {{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}\n\n  {% if mpi != 'nompi' %}\n\n  run_exports:\n    - {{ name }} * {{ mpi_prefix }}_*\n  {% endif %}  \n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('fortran') }}\n    - cmake\n    - make\n    - automake\n    - autoconf\n    - libtool\n    - m4\n    - pkg-config\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux]\n    - openmpi  # [mpi == \"openmpi\" and (build_platform != target_platform)]    \n  host:\n    - readline\n    - ncurses\n    - cairo\n    - pango\n    - xorg-libxt\n    - pgplot\n    - hdf5\n    - xorg-libx11\n    - xorg-xproto\n    - fftw\n    - libblas\n    - liblapack\n    - lapack95\n    - gsl ==2.6\n    - fgsl\n    - xraylib\n    - {{ mpi }}  # [mpi != 'nompi']    \n  run:\n    - readline\n    - ncurses\n    - cairo\n    - pango\n    - xorg-libxt\n    - pgplot\n    - hdf5\n    - fftw\n    - libblas\n    - liblapack\n    - lapack95\n    - gsl ==2.6\n    - fgsl\n    - xraylib\n    - xorg-libx11\n    - xorg-xproto\n    - libopenblas\n    - libcblas\n    - {{ mpi }}  # [mpi != 'nompi']    \n\ntest:\n  commands:\n    - tao -help\n\nabout:\n  home: https://www.classe.cornell.edu/bmad\n  license: GPL-3.0-or-later\n  license_family: GPL\n  license_file: bmad/Copyright\n  summary: Bmad is an object oriented, open source, subroutine library for relativistic charged-particle dynamics simulations in accelerators and storage rings.\n  description: |\n    Bmad has been developed at Cornell University's Laboratory for Elementary\n    Particle Physics and has been in use since the mid 1990s.\n    Bmad has a wide range of routines to do many things.\n    Bmad can be used to study both single and multi-particle\n    beam dynamics. It has routines to track both particles and\n    macroparticles. Bmad has various tracking algorithms including\n    Runge-Kutta and symplectic (Lie algebraic) integration.\n    Wakefields, and radiation excitation and damping can be simulated.\n    Bmad has routines for calculating transfer matrices, emittances,\n    Twiss parameters, dispersion, coupling, etc.\n  doc_url: https://www.classe.cornell.edu/bmad/manual.html\n\nextra:\n  recipe-maintainers:\n    - hhslepicka\n    - ChristopherMayes\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -872,8 +872,8 @@
    "elements": []
   }
  },
- "url": "https://github.com/bmad-sim/bmad_distribution/releases/download/20230317-0/bmad_dist_2023_0317-0.tgz",
- "version": "20230317.0",
+ "url": "https://github.com/bmad-sim/bmad_distribution/releases/download/20230319-1/bmad_dist_2023_0319-1.tgz",
+ "version": "20230319.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/bmad.json"
  }
