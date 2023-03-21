@@ -14,156 +14,189 @@
    "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
    "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
    "license": "LGPL-2.1-or-later",
-   "license_family": "GPL",
+   "license_family": "LGPL",
    "license_file": "LGPL",
    "summary": "A networked sound server"
   },
   "build": {
-   "ignore_run_exports_from": [
-    "cxx_compiler_stub",
-    "zlib",
-    "cxx_compiler_stub",
-    "zlib"
-   ],
-   "number": "1",
-   "run_exports": [
-    "pulseaudio",
-    "pulseaudio"
-   ]
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
     "andfoy",
     "ryanvolz",
-    "scopatz",
-    "andfoy",
-    "ryanvolz",
     "scopatz"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "run": [
+      "pulseaudio-client",
+      "pulseaudio-daemon"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "LGPL-2.1-or-later",
+     "license_family": "LGPL",
+     "license_file": "LGPL",
+     "summary": "Client library for pulseaudio, a networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio-client",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "glib",
+      "glib >=2.28.0",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "zlib"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-client.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/pulse/version.h",
+      "test -f ${PREFIX}/lib/libpulse.so",
+      "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
+      "padsp -h",
+      "pacat --help",
+      "pactl --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "GPL",
+     "summary": "A networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-daemon"
+     ]
+    },
+    "name": "pulseaudio-daemon",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "gstreamer-orc",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "alsa-lib",
+      "alsa-lib >=1.0.24",
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "fftw",
+      "fftw >=3.0",
+      "glib",
+      "glib >=2.28.0",
+      "gstreamer-orc",
+      "jack",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libcap",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "libtool",
+      "libtool >=2.4",
+      "libudev",
+      "openssl",
+      "zlib",
+      "pulseaudio-client"
+     ],
+     "run": [
+      "gstreamer-orc",
+      "libtool",
+      "pulseaudio-client"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-daemon.sh",
+    "test": {
+     "commands": [
+      "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
+      "pa-info",
+      "pacmd --help",
+      "pamon --version",
+      "paplay --version",
+      "parec --version",
+      "parecord --version",
+      "pasuspender --help",
+      "pulseaudio --help"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "pulseaudio",
+   "name": "pulseaudio-split",
    "version": "16.1"
-  },
-  "requirements": {
-   "build": [
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config"
-   ],
-   "host": [
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib",
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib"
-   ],
-   "run": [
-    "gstreamer-orc",
-    "libtool",
-    "gstreamer-orc",
-    "libtool"
-   ]
   },
   "source": {
    "patches": [
-    "0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch",
-    "0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch",
     "0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch",
     "0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch"
    ],
    "sha256": "8eef32ce91d47979f95fd9a935e738cd7eb7463430dabc72863251751e504ae4",
    "url": "https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-16.1.tar.xz"
-  },
-  "test": {
-   "commands": [
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help",
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help"
-   ],
-   "requires": [
-    "pkg-config",
-    "pkg-config"
-   ]
   }
  },
  "linux_64_requirements": {
@@ -197,6 +230,7 @@
     "libtool",
     "libudev",
     "openssl",
+    "pulseaudio-client",
     "zlib"
    ]
   },
@@ -204,7 +238,9 @@
    "__set__": true,
    "elements": [
     "gstreamer-orc",
-    "libtool"
+    "libtool",
+    "pulseaudio-client",
+    "pulseaudio-daemon"
    ]
   },
   "test": {
@@ -219,156 +255,189 @@
    "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
    "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
    "license": "LGPL-2.1-or-later",
-   "license_family": "GPL",
+   "license_family": "LGPL",
    "license_file": "LGPL",
    "summary": "A networked sound server"
   },
   "build": {
-   "ignore_run_exports_from": [
-    "cxx_compiler_stub",
-    "zlib",
-    "cxx_compiler_stub",
-    "zlib"
-   ],
-   "number": "1",
-   "run_exports": [
-    "pulseaudio",
-    "pulseaudio"
-   ]
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
     "andfoy",
     "ryanvolz",
-    "scopatz",
-    "andfoy",
-    "ryanvolz",
     "scopatz"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "run": [
+      "pulseaudio-client",
+      "pulseaudio-daemon"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "LGPL-2.1-or-later",
+     "license_family": "LGPL",
+     "license_file": "LGPL",
+     "summary": "Client library for pulseaudio, a networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio-client",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "glib",
+      "glib >=2.28.0",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "zlib"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-client.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/pulse/version.h",
+      "test -f ${PREFIX}/lib/libpulse.so",
+      "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
+      "padsp -h",
+      "pacat --help",
+      "pactl --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "GPL",
+     "summary": "A networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-daemon"
+     ]
+    },
+    "name": "pulseaudio-daemon",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "gstreamer-orc",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "alsa-lib",
+      "alsa-lib >=1.0.24",
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "fftw",
+      "fftw >=3.0",
+      "glib",
+      "glib >=2.28.0",
+      "gstreamer-orc",
+      "jack",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libcap",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "libtool",
+      "libtool >=2.4",
+      "libudev",
+      "openssl",
+      "zlib",
+      "pulseaudio-client"
+     ],
+     "run": [
+      "gstreamer-orc",
+      "libtool",
+      "pulseaudio-client"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-daemon.sh",
+    "test": {
+     "commands": [
+      "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
+      "pa-info",
+      "pacmd --help",
+      "pamon --version",
+      "paplay --version",
+      "parec --version",
+      "parecord --version",
+      "pasuspender --help",
+      "pulseaudio --help"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "pulseaudio",
+   "name": "pulseaudio-split",
    "version": "16.1"
-  },
-  "requirements": {
-   "build": [
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config"
-   ],
-   "host": [
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib",
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib"
-   ],
-   "run": [
-    "gstreamer-orc",
-    "libtool",
-    "gstreamer-orc",
-    "libtool"
-   ]
   },
   "source": {
    "patches": [
-    "0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch",
-    "0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch",
     "0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch",
     "0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch"
    ],
    "sha256": "8eef32ce91d47979f95fd9a935e738cd7eb7463430dabc72863251751e504ae4",
    "url": "https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-16.1.tar.xz"
-  },
-  "test": {
-   "commands": [
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help",
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help"
-   ],
-   "requires": [
-    "pkg-config",
-    "pkg-config"
-   ]
   }
  },
  "linux_aarch64_requirements": {
@@ -402,6 +471,7 @@
     "libtool",
     "libudev",
     "openssl",
+    "pulseaudio-client",
     "zlib"
    ]
   },
@@ -409,7 +479,9 @@
    "__set__": true,
    "elements": [
     "gstreamer-orc",
-    "libtool"
+    "libtool",
+    "pulseaudio-client",
+    "pulseaudio-daemon"
    ]
   },
   "test": {
@@ -424,156 +496,189 @@
    "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
    "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
    "license": "LGPL-2.1-or-later",
-   "license_family": "GPL",
+   "license_family": "LGPL",
    "license_file": "LGPL",
    "summary": "A networked sound server"
   },
   "build": {
-   "ignore_run_exports_from": [
-    "cxx_compiler_stub",
-    "zlib",
-    "cxx_compiler_stub",
-    "zlib"
-   ],
-   "number": "1",
-   "run_exports": [
-    "pulseaudio",
-    "pulseaudio"
-   ]
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
     "andfoy",
     "ryanvolz",
-    "scopatz",
-    "andfoy",
-    "ryanvolz",
     "scopatz"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "run": [
+      "pulseaudio-client",
+      "pulseaudio-daemon"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "LGPL-2.1-or-later",
+     "license_family": "LGPL",
+     "license_file": "LGPL",
+     "summary": "Client library for pulseaudio, a networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio-client",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "glib",
+      "glib >=2.28.0",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "zlib"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-client.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/pulse/version.h",
+      "test -f ${PREFIX}/lib/libpulse.so",
+      "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
+      "padsp -h",
+      "pacat --help",
+      "pactl --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "GPL",
+     "summary": "A networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-daemon"
+     ]
+    },
+    "name": "pulseaudio-daemon",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "gstreamer-orc",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "alsa-lib",
+      "alsa-lib >=1.0.24",
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "fftw",
+      "fftw >=3.0",
+      "glib",
+      "glib >=2.28.0",
+      "gstreamer-orc",
+      "jack",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libcap",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "libtool",
+      "libtool >=2.4",
+      "libudev",
+      "openssl",
+      "zlib",
+      "pulseaudio-client"
+     ],
+     "run": [
+      "gstreamer-orc",
+      "libtool",
+      "pulseaudio-client"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-daemon.sh",
+    "test": {
+     "commands": [
+      "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
+      "pa-info",
+      "pacmd --help",
+      "pamon --version",
+      "paplay --version",
+      "parec --version",
+      "parecord --version",
+      "pasuspender --help",
+      "pulseaudio --help"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "pulseaudio",
+   "name": "pulseaudio-split",
    "version": "16.1"
-  },
-  "requirements": {
-   "build": [
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config"
-   ],
-   "host": [
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib",
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib"
-   ],
-   "run": [
-    "gstreamer-orc",
-    "libtool",
-    "gstreamer-orc",
-    "libtool"
-   ]
   },
   "source": {
    "patches": [
-    "0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch",
-    "0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch",
     "0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch",
     "0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch"
    ],
    "sha256": "8eef32ce91d47979f95fd9a935e738cd7eb7463430dabc72863251751e504ae4",
    "url": "https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-16.1.tar.xz"
-  },
-  "test": {
-   "commands": [
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help",
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help"
-   ],
-   "requires": [
-    "pkg-config",
-    "pkg-config"
-   ]
   }
  },
  "linux_ppc64le_requirements": {
@@ -607,6 +712,7 @@
     "libtool",
     "libudev",
     "openssl",
+    "pulseaudio-client",
     "zlib"
    ]
   },
@@ -614,7 +720,9 @@
    "__set__": true,
    "elements": [
     "gstreamer-orc",
-    "libtool"
+    "libtool",
+    "pulseaudio-client",
+    "pulseaudio-daemon"
    ]
   },
   "test": {
@@ -629,34 +737,12 @@
    "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
    "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
    "license": "LGPL-2.1-or-later",
-   "license_family": "GPL",
+   "license_family": "LGPL",
    "license_file": "LGPL",
    "summary": "A networked sound server"
   },
   "build": {
-   "ignore_run_exports_from": [
-    "cxx_compiler_stub",
-    "zlib",
-    "cxx_compiler_stub",
-    "zlib",
-    "cxx_compiler_stub",
-    "zlib",
-    "cxx_compiler_stub",
-    "zlib",
-    "cxx_compiler_stub",
-    "zlib",
-    "cxx_compiler_stub",
-    "zlib"
-   ],
-   "number": "1",
-   "run_exports": [
-    "pulseaudio",
-    "pulseaudio",
-    "pulseaudio",
-    "pulseaudio",
-    "pulseaudio",
-    "pulseaudio"
-   ]
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -668,230 +754,485 @@
     "scopatz",
     "andfoy",
     "ryanvolz",
-    "scopatz",
-    "andfoy",
-    "ryanvolz",
-    "scopatz",
-    "andfoy",
-    "ryanvolz",
-    "scopatz",
-    "andfoy",
-    "ryanvolz",
     "scopatz"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "run": [
+      "pulseaudio-client",
+      "pulseaudio-daemon"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "LGPL-2.1-or-later",
+     "license_family": "LGPL",
+     "license_file": "LGPL",
+     "summary": "Client library for pulseaudio, a networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio-client",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "glib",
+      "glib >=2.28.0",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "zlib"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-client.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/pulse/version.h",
+      "test -f ${PREFIX}/lib/libpulse.so",
+      "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
+      "padsp -h",
+      "pacat --help",
+      "pactl --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "GPL",
+     "summary": "A networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-daemon"
+     ]
+    },
+    "name": "pulseaudio-daemon",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "gstreamer-orc",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "alsa-lib",
+      "alsa-lib >=1.0.24",
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "fftw",
+      "fftw >=3.0",
+      "glib",
+      "glib >=2.28.0",
+      "gstreamer-orc",
+      "jack",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libcap",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "libtool",
+      "libtool >=2.4",
+      "libudev",
+      "openssl",
+      "zlib",
+      "pulseaudio-client"
+     ],
+     "run": [
+      "gstreamer-orc",
+      "libtool",
+      "pulseaudio-client"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-daemon.sh",
+    "test": {
+     "commands": [
+      "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
+      "pa-info",
+      "pacmd --help",
+      "pamon --version",
+      "paplay --version",
+      "parec --version",
+      "parecord --version",
+      "pasuspender --help",
+      "pulseaudio --help"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "run": [
+      "pulseaudio-client",
+      "pulseaudio-daemon"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "LGPL-2.1-or-later",
+     "license_family": "LGPL",
+     "license_file": "LGPL",
+     "summary": "Client library for pulseaudio, a networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio-client",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "glib",
+      "glib >=2.28.0",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "zlib"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-client.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/pulse/version.h",
+      "test -f ${PREFIX}/lib/libpulse.so",
+      "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
+      "padsp -h",
+      "pacat --help",
+      "pactl --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "GPL",
+     "summary": "A networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-daemon"
+     ]
+    },
+    "name": "pulseaudio-daemon",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "gstreamer-orc",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "alsa-lib",
+      "alsa-lib >=1.0.24",
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "fftw",
+      "fftw >=3.0",
+      "glib",
+      "glib >=2.28.0",
+      "gstreamer-orc",
+      "jack",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libcap",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "libtool",
+      "libtool >=2.4",
+      "libudev",
+      "openssl",
+      "zlib",
+      "pulseaudio-client"
+     ],
+     "run": [
+      "gstreamer-orc",
+      "libtool",
+      "pulseaudio-client"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-daemon.sh",
+    "test": {
+     "commands": [
+      "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
+      "pa-info",
+      "pacmd --help",
+      "pamon --version",
+      "paplay --version",
+      "parec --version",
+      "parecord --version",
+      "pasuspender --help",
+      "pulseaudio --help"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "run": [
+      "pulseaudio-client",
+      "pulseaudio-daemon"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "LGPL-2.1-or-later",
+     "license_family": "LGPL",
+     "license_file": "LGPL",
+     "summary": "Client library for pulseaudio, a networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-client"
+     ]
+    },
+    "name": "pulseaudio-client",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "glib",
+      "glib >=2.28.0",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "zlib"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-client.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/pulse/version.h",
+      "test -f ${PREFIX}/lib/libpulse.so",
+      "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
+      "padsp -h",
+      "pacat --help",
+      "pactl --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "doc_url": "https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/",
+     "home": "https://www.freedesktop.org/wiki/Software/PulseAudio/",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "GPL",
+     "summary": "A networked sound server"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "pulseaudio-daemon"
+     ]
+    },
+    "name": "pulseaudio-daemon",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "gstreamer-orc",
+      "m4",
+      "meson",
+      "ninja",
+      "perl-xml-parser",
+      "pkg-config"
+     ],
+     "host": [
+      "alsa-lib",
+      "alsa-lib >=1.0.24",
+      "check",
+      "dbus",
+      "dbus >=1.4.12",
+      "fftw",
+      "fftw >=3.0",
+      "glib",
+      "glib >=2.28.0",
+      "gstreamer-orc",
+      "jack",
+      "libatomic_ops",
+      "libatomic_ops >=1.2",
+      "libcap",
+      "libsndfile",
+      "libsndfile >=1.0.20",
+      "libsystemd",
+      "libtool",
+      "libtool >=2.4",
+      "libudev",
+      "openssl",
+      "zlib",
+      "pulseaudio-client"
+     ],
+     "run": [
+      "gstreamer-orc",
+      "libtool",
+      "pulseaudio-client"
+     ],
+     "run_constrained": [
+      "pulseaudio"
+     ]
+    },
+    "script": "build-daemon.sh",
+    "test": {
+     "commands": [
+      "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
+      "pa-info",
+      "pacmd --help",
+      "pamon --version",
+      "paplay --version",
+      "parec --version",
+      "parecord --version",
+      "pasuspender --help",
+      "pulseaudio --help"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "pulseaudio",
+   "name": "pulseaudio-split",
    "version": "16.1"
-  },
-  "requirements": {
-   "build": [
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "gstreamer-orc",
-    "m4",
-    "meson",
-    "ninja",
-    "perl-xml-parser",
-    "pkg-config"
-   ],
-   "host": [
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib",
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib",
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib",
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib",
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib",
-    "alsa-lib",
-    "alsa-lib >=1.0.24",
-    "check",
-    "dbus",
-    "dbus >=1.4.12",
-    "fftw",
-    "fftw >=3.0",
-    "glib",
-    "glib >=2.28.0",
-    "gstreamer-orc",
-    "jack",
-    "libatomic_ops",
-    "libatomic_ops >=1.2",
-    "libcap",
-    "libsndfile",
-    "libsndfile >=1.0.20",
-    "libsystemd",
-    "libtool",
-    "libtool >=2.4",
-    "libudev",
-    "openssl",
-    "zlib"
-   ],
-   "run": [
-    "gstreamer-orc",
-    "libtool",
-    "gstreamer-orc",
-    "libtool",
-    "gstreamer-orc",
-    "libtool",
-    "gstreamer-orc",
-    "libtool",
-    "gstreamer-orc",
-    "libtool",
-    "gstreamer-orc",
-    "libtool"
-   ]
   },
   "source": {
    "patches": [
-    "0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch",
-    "0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch",
-    "0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch",
-    "0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch",
-    "0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch",
-    "0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch",
     "0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch",
     "0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch",
     "0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch",
@@ -901,122 +1242,22 @@
    ],
    "sha256": "8eef32ce91d47979f95fd9a935e738cd7eb7463430dabc72863251751e504ae4",
    "url": "https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-16.1.tar.xz"
-  },
-  "test": {
-   "commands": [
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help",
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help",
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help",
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help",
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help",
-    "test -f ${PREFIX}/include/pulse/version.h",
-    "test -f ${PREFIX}/lib/libpulse.so",
-    "test -f ${PREFIX}/lib/pkgconfig/libpulse.pc",
-    "test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so",
-    "pa-info",
-    "pacat --help",
-    "pacmd --help",
-    "pactl --help",
-    "padsp -h",
-    "pamon --version",
-    "paplay --version",
-    "parec --version",
-    "parecord --version",
-    "pasuspender --help",
-    "pulseaudio --help"
-   ],
-   "requires": [
-    "pkg-config",
-    "pkg-config",
-    "pkg-config",
-    "pkg-config",
-    "pkg-config",
-    "pkg-config"
-   ]
   }
  },
- "name": "pulseaudio",
+ "name": "pulseaudio-split",
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "pulseaudio"
+   "pulseaudio",
+   "pulseaudio-client",
+   "pulseaudio-daemon"
   ]
  },
  "parsing_error": false,
  "pr_info": {
   "__lazy_json__": "pr_info/pulseaudio.json"
  },
- "raw_meta_yaml": "{% set name = \"pulseaudio\" %}\n{% set version = \"16.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-{{ version }}.tar.xz\n  sha256: 8eef32ce91d47979f95fd9a935e738cd7eb7463430dabc72863251751e504ae4\n  patches:\n    - 0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch\n    - 0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch\n\nbuild:\n  number: 1\n  skip: true  # [not linux]\n  run_exports:\n    - {{ pin_subpackage('pulseaudio', max_pin='x.x') }}\n  ignore_run_exports_from:\n    - {{ compiler('cxx') }}\n    - zlib\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - gstreamer-orc\n    - m4\n    - meson\n    - ninja\n    - perl-xml-parser\n    - pkg-config\n  host:\n    - alsa-lib\n    - alsa-lib >=1.0.24\n    - check\n    - dbus\n    - dbus >=1.4.12\n    - fftw\n    - fftw >=3.0\n    - glib\n    - glib >=2.28.0\n    - gstreamer-orc\n    - jack\n    - libatomic_ops\n    - libatomic_ops >=1.2\n    - libcap\n    - libsndfile\n    - libsndfile >=1.0.20\n    - libsystemd\n    - libtool\n    - libtool >=2.4\n    - libudev\n    - openssl\n    - zlib\n  run:\n    - {{ pin_compatible('gstreamer-orc', max_pin='x.x') }}\n    - {{ pin_compatible('libtool', max_pin='x') }}\n\ntest:\n  requires:\n    - pkg-config\n  commands:\n    - test -f ${PREFIX}/include/pulse/version.h\n    - test -f ${PREFIX}/lib/libpulse.so\n    - test -f ${PREFIX}/lib/pkgconfig/libpulse.pc\n    - test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so\n    - pa-info\n    - pacat --help\n    - pacmd --help\n    - pactl --help\n    - padsp -h\n    - pamon --version\n    - paplay --version\n    - parec --version\n    - parecord --version\n    - pasuspender --help\n    - pulseaudio --help\n\n\nabout:\n  home: https://www.freedesktop.org/wiki/Software/PulseAudio/\n  license: LGPL-2.1-or-later\n  license_family: GPL\n  license_file: LGPL\n  summary: A networked sound server\n  doc_url: https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/\n\nextra:\n  recipe-maintainers:\n    - andfoy\n    - ryanvolz\n    - scopatz\n",
+ "raw_meta_yaml": "{% set version = \"16.1\" %}\n\npackage:\n  name: pulseaudio-split\n  version: {{ version }}\n\nsource:\n  url: https://www.freedesktop.org/software/pulseaudio/releases/pulseaudio-{{ version }}.tar.xz\n  sha256: 8eef32ce91d47979f95fd9a935e738cd7eb7463430dabc72863251751e504ae4\n  patches:\n    - 0001-pulsecore-static_assert-_Static_assert-for-glibc-2.1.patch\n    - 0002-tests-Skip-tests-that-fail-for-release-build-when-pa.patch\n\nbuild:\n  number: 2\n  skip: true  # [not linux]\n\noutputs:\n  - name: pulseaudio\n    build:\n      run_exports:\n        - {{ pin_subpackage('pulseaudio-client', max_pin='x.x') }}\n    requirements:\n      build:\n        # Add these so the build string gets generated correctly\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n      run:\n        - {{ pin_subpackage('pulseaudio-client', exact=True) }}\n        - {{ pin_subpackage('pulseaudio-daemon', exact=True) }}\n\n  - name: pulseaudio-client\n    script: build-client.sh\n    build:\n      run_exports:\n        - {{ pin_subpackage('pulseaudio-client', max_pin='x.x') }}\n      ignore_run_exports_from:\n        - zlib\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - m4\n        - meson\n        - ninja\n        - perl-xml-parser\n        - pkg-config\n      host:\n        - check\n        - dbus\n        - dbus >=1.4.12\n        - glib\n        - glib >=2.28.0\n        - libatomic_ops\n        - libatomic_ops >=1.2\n        - libsndfile\n        - libsndfile >=1.0.20\n        - libsystemd\n        - zlib\n      run_constrained:\n        - {{ pin_subpackage('pulseaudio', exact=True) }}\n    test:\n      commands:\n        - test -f ${PREFIX}/include/pulse/version.h\n        - test -f ${PREFIX}/lib/libpulse.so\n        - test -f ${PREFIX}/lib/pkgconfig/libpulse.pc\n        - padsp -h\n        - pacat --help\n        - pactl --help\n    about:\n      home: https://www.freedesktop.org/wiki/Software/PulseAudio/\n      license: LGPL-2.1-or-later\n      license_family: LGPL\n      license_file: LGPL\n      summary: Client library for pulseaudio, a networked sound server\n      doc_url: https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/\n  - name: pulseaudio-daemon\n    script: build-daemon.sh\n    build:\n      run_exports:\n        - {{ pin_subpackage('pulseaudio-daemon', max_pin='x.x') }}\n      ignore_run_exports_from:\n        - zlib\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - gstreamer-orc\n        - m4\n        - meson\n        - ninja\n        - perl-xml-parser\n        - pkg-config\n      host:\n        - alsa-lib\n        - alsa-lib >=1.0.24\n        - check\n        - dbus\n        - dbus >=1.4.12\n        - fftw\n        - fftw >=3.0\n        - glib\n        - glib >=2.28.0\n        - gstreamer-orc\n        - jack\n        - libatomic_ops\n        - libatomic_ops >=1.2\n        - libcap\n        - libsndfile\n        - libsndfile >=1.0.20\n        - libsystemd\n        - libtool\n        - libtool >=2.4\n        - libudev\n        - openssl\n        - zlib\n        - {{ pin_subpackage('pulseaudio-client', exact=True) }}\n      run:\n        - {{ pin_compatible('gstreamer-orc', max_pin='x.x') }}\n        - {{ pin_compatible('libtool', max_pin='x') }}\n        - {{ pin_subpackage('pulseaudio-client', exact=True) }}\n      run_constrained:\n        - {{ pin_subpackage('pulseaudio', exact=True) }}\n    test:\n      requires:\n        - pkg-config\n      commands:\n        - test -f `pkg-config --variable=modlibexecdir --dont-define-prefix libpulse`/libprotocol-native.so\n        - pa-info\n        - pacmd --help\n        - pamon --version\n        - paplay --version\n        - parec --version\n        - parecord --version\n        - pasuspender --help\n        - pulseaudio --help\n    about:\n      home: https://www.freedesktop.org/wiki/Software/PulseAudio/\n      license: GPL-2.0-or-later\n      license_family: GPL\n      license_file: GPL\n      summary: A networked sound server\n      doc_url: https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/\n\nabout:\n  home: https://www.freedesktop.org/wiki/Software/PulseAudio/\n  license: LGPL-2.1-or-later\n  license_family: LGPL\n  license_file: LGPL\n  summary: A networked sound server\n  doc_url: https://www.freedesktop.org/wiki/Software/PulseAudio/Documentation/\n\nextra:\n  recipe-maintainers:\n    - andfoy\n    - ryanvolz\n    - scopatz\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1041,6 +1282,8 @@
    "openssl",
    "perl-xml-parser",
    "pkg-config",
+   "pulseaudio-client",
+   "pulseaudio-daemon",
    "zlib"
   ]
  },
@@ -1077,6 +1320,7 @@
     "libtool",
     "libudev",
     "openssl",
+    "pulseaudio-client",
     "zlib"
    ]
   },
@@ -1086,7 +1330,9 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "gstreamer-orc",
-    "libtool"
+    "libtool",
+    "pulseaudio-client",
+    "pulseaudio-daemon"
    ]
   },
   "test": {
@@ -1135,6 +1381,7 @@
     "libtool >=2.4",
     "libudev",
     "openssl",
+    "pulseaudio-client",
     "zlib"
    ]
   },
@@ -1142,7 +1389,9 @@
    "__set__": true,
    "elements": [
     "gstreamer-orc",
-    "libtool"
+    "libtool",
+    "pulseaudio-client",
+    "pulseaudio-daemon"
    ]
   },
   "test": {
