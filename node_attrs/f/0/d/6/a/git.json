@@ -25,7 +25,7 @@
    "ignore_run_exports_from": [
     "perl 5.*"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -144,7 +144,7 @@
    "ignore_run_exports_from": [
     "perl 5.*"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -263,7 +263,7 @@
    "ignore_run_exports_from": [
     "perl 5.*"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -380,7 +380,7 @@
   "build": {
    "detect_binary_files_with_prefix": true,
    "ignore_run_exports_from": null,
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -670,7 +670,7 @@
    "ignore_run_exports_from": [
     "perl 5.*"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -794,7 +794,7 @@
    "ignore_run_exports_from": [
     "perl 5.*"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -914,7 +914,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/git.json"
  },
- "raw_meta_yaml": "{% set version = \"2.40.0\" %}\n\npackage:\n  name: git\n  version: {{ version }}\n\nsource:\n  - url: https://mirrors.edge.kernel.org/pub/software/scm/git/git-{{ version }}.tar.gz  # [not win]\n    folder: code  # [not win]\n    sha256: ab37c343c0ad097282fd311ab9ca521ab3da836e5c4ed2093994f1b7f8575b09  # [not win]\n    patches:   # [not win]\n      - 0001-macOS-Do-not-use-the-system-Wish-urgh.patch  # [not win]\n  - url: https://mirrors.edge.kernel.org/pub/software/scm/git/git-manpages-{{ version }}.tar.gz  # [not win]\n    folder: manpages  # [not win]\n    sha256: fda16047e9c1dd07d9585cc26bbf4002ebf8462ada54cb72b97a0e48135fd435  # [not win]\n  - url: https://mirrors.edge.kernel.org/pub/software/scm/git/git-htmldocs-{{ version }}.tar.gz  # [not win]\n    folder: htmldocs  # [not win]\n    sha256: a3d975b967d52e3756613c1232470c71b9665a65083dd7a0cdfcf9bdc237743b  # [not win]\n\n  - url: https://github.com/git-for-windows/git/releases/download/v{{ version }}.windows.1/PortableGit-{{ version }}-64-bit.7z.exe  # [win64]\n    folder: .  # [win64]\n    sha256: 9031c171fccbf30113b8a9b93b9580b4aca8502dcf2b22c5cd3205212e895b13  # [win64]\n\nbuild:\n  number: 0\n  # git hardcodes paths to external utilities (e.g. curl)\n  detect_binary_files_with_prefix: true\n  ignore_run_exports_from:\n    - perl 5.*  # [unix]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}  # [unix]\n    - autoconf  # [unix]\n    - make      # [unix]\n    - 7za       # [win]\n    - tk        # [unix]\n    - gettext   # [unix]\n  host:\n    - curl      # [unix]\n    - expat     # [unix]\n    - libiconv  # [unix]\n    - openssl   # [unix]\n    - pcre2     # [unix]\n    - perl 5.*  # [unix]\n    - zlib      # [unix]\n  run:\n    # Without the explicit dependency on curl, it seems\n    # that linux_64 fails on the symbol lookup for curl_global_sslset\n    - curl      # [unix]\n    - gettext   # [unix]\n    - perl 5.*  # [unix]\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n\ntest:\n  commands:\n    # Verify git location.\n    - test -f $PREFIX/bin/git                               # [unix]\n    - test -f $PREFIX/bin/gitk                              # [unix]\n    - test -f $PREFIX/bin/git-credential-osxkeychain        # [osx]\n    - if not exist %LIBRARY_PREFIX%\\\\bin\\\\git.exe exit 1    # [win]\n\n    # Run git commands.\n    - git --version\n    - git clone https://github.com/conda-forge/git-feedstock\n\n    # Git credential commands\n    - git-credential-osxkeychain 2>&1 | grep -q usage  # [osx]\n\n    # test completions\n    - bash $PREFIX/share/bash-completion/completions/git  # [unix]\n\n    # confirm toplevel manpage\n    - test -f $PREFIX/man/man1/git.1  # [not win]\n    - test -f $PREFIX/share/man/man1/git.1  # [osx]\n\n    # confirm toplevel html doc page\n    - test -f $PREFIX/share/doc/git/index.html  # [not win]\n\nabout:\n  home: https://git-scm.com/\n  license: GPL-2.0-or-later and LGPL-2.1-or-later\n  license_file: code/COPYING  # [not win]\n  summary: distributed version control system\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - msarahan\n    - pelson\n    - scopatz\n    - ocefpaf\n    - djsutherland\n",
+ "raw_meta_yaml": "{% set version = \"2.40.0\" %}\n\npackage:\n  name: git\n  version: {{ version }}\n\nsource:\n  - url: https://mirrors.edge.kernel.org/pub/software/scm/git/git-{{ version }}.tar.gz  # [not win]\n    folder: code  # [not win]\n    sha256: ab37c343c0ad097282fd311ab9ca521ab3da836e5c4ed2093994f1b7f8575b09  # [not win]\n    patches:   # [not win]\n      - 0001-macOS-Do-not-use-the-system-Wish-urgh.patch  # [not win]\n  - url: https://mirrors.edge.kernel.org/pub/software/scm/git/git-manpages-{{ version }}.tar.gz  # [not win]\n    folder: manpages  # [not win]\n    sha256: fda16047e9c1dd07d9585cc26bbf4002ebf8462ada54cb72b97a0e48135fd435  # [not win]\n  - url: https://mirrors.edge.kernel.org/pub/software/scm/git/git-htmldocs-{{ version }}.tar.gz  # [not win]\n    folder: htmldocs  # [not win]\n    sha256: a3d975b967d52e3756613c1232470c71b9665a65083dd7a0cdfcf9bdc237743b  # [not win]\n\n  - url: https://github.com/git-for-windows/git/releases/download/v{{ version }}.windows.1/PortableGit-{{ version }}-64-bit.7z.exe  # [win64]\n    folder: .  # [win64]\n    sha256: 9031c171fccbf30113b8a9b93b9580b4aca8502dcf2b22c5cd3205212e895b13  # [win64]\n\nbuild:\n  number: 1\n  # git hardcodes paths to external utilities (e.g. curl)\n  detect_binary_files_with_prefix: true\n  ignore_run_exports_from:\n    - perl 5.*  # [unix]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}  # [unix]\n    - autoconf  # [unix]\n    - make      # [unix]\n    - 7za       # [win]\n    - tk        # [unix]\n    - gettext   # [unix]\n  host:\n    - curl      # [unix]\n    - expat     # [unix]\n    - libiconv  # [unix]\n    - openssl   # [unix]\n    - pcre2     # [unix]\n    - perl 5.*  # [unix]\n    - zlib      # [unix]\n  run:\n    # Without the explicit dependency on curl, it seems\n    # that linux_64 fails on the symbol lookup for curl_global_sslset\n    - curl      # [unix]\n    - gettext   # [unix]\n    - perl 5.*  # [unix]\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n\ntest:\n  commands:\n    # Verify git location.\n    - test -f $PREFIX/bin/git                               # [unix]\n    - test -f $PREFIX/bin/gitk                              # [unix]\n    - test -f $PREFIX/bin/git-credential-osxkeychain        # [osx]\n    - if not exist %LIBRARY_PREFIX%\\\\bin\\\\git.exe exit 1    # [win]\n\n    # Run git commands.\n    - git --version\n    - git clone https://github.com/conda-forge/git-feedstock\n\n    # Git credential commands\n    - git-credential-osxkeychain 2>&1 | grep -q usage  # [osx]\n\n    # test completions\n    - bash $PREFIX/share/bash-completion/completions/git  # [unix]\n\n    # confirm toplevel manpage\n    - test -f $PREFIX/man/man1/git.1  # [not win]\n    - test -f $PREFIX/share/man/man1/git.1  # [osx]\n\n    # confirm toplevel html doc page\n    - test -f $PREFIX/share/doc/git/index.html  # [not win]\n\nabout:\n  home: https://git-scm.com/\n  license: GPL-2.0-or-later and LGPL-2.1-or-later\n  license_file: code/COPYING  # [not win]\n  summary: distributed version control system\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - msarahan\n    - pelson\n    - scopatz\n    - ocefpaf\n    - djsutherland\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1027,7 +1027,7 @@
   "build": {
    "detect_binary_files_with_prefix": true,
    "ignore_run_exports_from": null,
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
