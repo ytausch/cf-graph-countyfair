@@ -18,11 +18,13 @@
   },
   "build": {
    "binary_relocation": true,
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "libefp",
    "recipe-maintainers": [
+    "loriab",
+    "slipchenko",
     "loriab",
     "slipchenko",
     "loriab",
@@ -319,6 +321,102 @@
      ]
     },
     "version": "0.6.2"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libefp"
+     ]
+    },
+    "files": [
+     "include/efp.h",
+     "include/libefp/*",
+     "lib/libefp.so*",
+     "share/cmake/libefp/*",
+     "share/libefp/*",
+     "share/libefp/fraglib/*"
+    ],
+    "name": "libefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libblas",
+      "liblapack"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $PREFIX/lib",
+      "ls -l $PREFIX/share/cmake/libefp",
+      "test -f $PREFIX/lib/libefp$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libefp.a",
+      "test -f $PREFIX/include/libefp/efp.h",
+      "test -f $PREFIX/share/cmake/libefp/libefpConfig.cmake",
+      "test -f $PREFIX/share/libefp/fraglib/h2.efp",
+      "ldd -v $PREFIX/lib/libefp$SHLIB_EXT"
+     ]
+    },
+    "version": "1.5.0"
+   },
+   {
+    "about": {
+     "dev_url": "https://github.com/loriab/pylibefp/blob/master/README.md",
+     "doc_source_url": "https://github.com/loriab/pylibefp/blob/master/doc/source/introduction.rst",
+     "home": "https://github.com/loriab/pylibefp",
+     "license": "BSD-3-Clause",
+     "license_family": "BSD",
+     "license_file": "LICENSE",
+     "license_url": "https://opensource.org/licenses/BSD-3-Clause",
+     "summary": "L. A. Burns's Python bindings to libefp"
+    },
+    "files": [
+     "lib/python3.11/site-packages/pylibefp"
+    ],
+    "name": "pylibefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libefp",
+      "python",
+      "pybind11",
+      "pybind11-abi",
+      "qcelemental"
+     ],
+     "run": [
+      "libefp",
+      "python",
+      "qcelemental"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $SP_DIR/pylibefp",
+      "test -f $SP_DIR/pylibefp/core*.so",
+      "ldd -v $SP_DIR/pylibefp/core*.so",
+      "python test_pylibefp.py",
+      "python -c \"import pylibefp; assert pylibefp.test(extras=['--color', 'yes']) == 0\""
+     ],
+     "files": [
+      "test_pylibefp.py"
+     ],
+     "imports": [
+      "pylibefp"
+     ],
+     "requires": [
+      "numpy",
+      "pytest"
+     ]
+    },
+    "version": "0.6.2"
    }
   ],
   "package": {
@@ -327,6 +425,10 @@
   },
   "requirements": {
    "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
@@ -358,12 +460,18 @@
     "pybind11-abi",
     "qcelemental",
     "libblas",
+    "liblapack",
+    "python",
+    "pybind11",
+    "pybind11-abi",
+    "qcelemental",
+    "libblas",
     "liblapack"
    ]
   },
   "source": {
-   "sha256": "7463d064caebb6f734ff3b1e266c799d0487012e70da009a66bf8905985cc5ee",
-   "url": "https://github.com/loriab/pylibefp/archive/v0.6.2.tar.gz"
+   "sha256": "6f9c1e34c2540ec41d0d6934e7861b504c00420e897d918901c4310fa0e55765",
+   "url": "https://github.com/loriab/pylibefp/archive/e44cc32.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -418,11 +526,17 @@
   },
   "build": {
    "binary_relocation": true,
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "libefp",
    "recipe-maintainers": [
+    "loriab",
+    "slipchenko",
+    "loriab",
+    "slipchenko",
+    "loriab",
+    "slipchenko",
     "loriab",
     "slipchenko",
     "loriab",
@@ -741,6 +855,102 @@
     "files": [
      "include/efp.h",
      "include/libefp/*",
+     "lib/libefp.so*",
+     "share/cmake/libefp/*",
+     "share/libefp/*",
+     "share/libefp/fraglib/*"
+    ],
+    "name": "libefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libblas",
+      "liblapack"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $PREFIX/lib",
+      "ls -l $PREFIX/share/cmake/libefp",
+      "test -f $PREFIX/lib/libefp$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libefp.a",
+      "test -f $PREFIX/include/libefp/efp.h",
+      "test -f $PREFIX/share/cmake/libefp/libefpConfig.cmake",
+      "test -f $PREFIX/share/libefp/fraglib/h2.efp",
+      "ldd -v $PREFIX/lib/libefp$SHLIB_EXT"
+     ]
+    },
+    "version": "1.5.0"
+   },
+   {
+    "about": {
+     "dev_url": "https://github.com/loriab/pylibefp/blob/master/README.md",
+     "doc_source_url": "https://github.com/loriab/pylibefp/blob/master/doc/source/introduction.rst",
+     "home": "https://github.com/loriab/pylibefp",
+     "license": "BSD-3-Clause",
+     "license_family": "BSD",
+     "license_file": "LICENSE",
+     "license_url": "https://opensource.org/licenses/BSD-3-Clause",
+     "summary": "L. A. Burns's Python bindings to libefp"
+    },
+    "files": [
+     "lib/python3.11/site-packages/pylibefp"
+    ],
+    "name": "pylibefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libefp",
+      "python",
+      "pybind11",
+      "pybind11-abi",
+      "qcelemental"
+     ],
+     "run": [
+      "libefp",
+      "python",
+      "qcelemental"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $SP_DIR/pylibefp",
+      "test -f $SP_DIR/pylibefp/core*.so",
+      "ldd -v $SP_DIR/pylibefp/core*.so",
+      "python test_pylibefp.py",
+      "python -c \"import pylibefp; assert pylibefp.test(extras=['--color', 'yes']) == 0\""
+     ],
+     "files": [
+      "test_pylibefp.py"
+     ],
+     "imports": [
+      "pylibefp"
+     ],
+     "requires": [
+      "numpy",
+      "pytest"
+     ]
+    },
+    "version": "0.6.2"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libefp"
+     ]
+    },
+    "files": [
+     "include/efp.h",
+     "include/libefp/*",
      "lib/libefp.*dylib",
      "share/cmake/libefp/*",
      "share/libefp/*",
@@ -785,6 +995,102 @@
     },
     "files": [
      "lib/python3.10/site-packages/pylibefp"
+    ],
+    "name": "pylibefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libefp",
+      "python",
+      "pybind11",
+      "pybind11-abi",
+      "qcelemental"
+     ],
+     "run": [
+      "libefp",
+      "python",
+      "qcelemental"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $SP_DIR/pylibefp",
+      "test -f $SP_DIR/pylibefp/core*.so",
+      "otool -L $SP_DIR/pylibefp/core*.so",
+      "python test_pylibefp.py",
+      "python -c \"import pylibefp; assert pylibefp.test(extras=['--color', 'yes']) == 0\""
+     ],
+     "files": [
+      "test_pylibefp.py"
+     ],
+     "imports": [
+      "pylibefp"
+     ],
+     "requires": [
+      "numpy",
+      "pytest"
+     ]
+    },
+    "version": "0.6.2"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libefp"
+     ]
+    },
+    "files": [
+     "include/efp.h",
+     "include/libefp/*",
+     "lib/libefp.*dylib",
+     "share/cmake/libefp/*",
+     "share/libefp/*",
+     "share/libefp/fraglib/*"
+    ],
+    "name": "libefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libblas",
+      "liblapack"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $PREFIX/lib",
+      "ls -l $PREFIX/share/cmake/libefp",
+      "test -f $PREFIX/lib/libefp$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libefp.a",
+      "test -f $PREFIX/include/libefp/efp.h",
+      "test -f $PREFIX/share/cmake/libefp/libefpConfig.cmake",
+      "test -f $PREFIX/share/libefp/fraglib/h2.efp",
+      "otool -L $PREFIX/lib/libefp$SHLIB_EXT"
+     ]
+    },
+    "version": "1.5.0"
+   },
+   {
+    "about": {
+     "dev_url": "https://github.com/loriab/pylibefp/blob/master/README.md",
+     "doc_source_url": "https://github.com/loriab/pylibefp/blob/master/doc/source/introduction.rst",
+     "home": "https://github.com/loriab/pylibefp",
+     "license": "BSD-3-Clause",
+     "license_family": "BSD",
+     "license_file": "LICENSE",
+     "license_url": "https://opensource.org/licenses/BSD-3-Clause",
+     "summary": "L. A. Burns's Python bindings to libefp"
+    },
+    "files": [
+     "lib/python3.11/site-packages/pylibefp"
     ],
     "name": "pylibefp",
     "requirements": {
@@ -1004,6 +1310,101 @@
       "ls -l $SP_DIR/pylibefp",
       "test -f $SP_DIR/pylibefp/core*.so",
       "otool -L $SP_DIR/pylibefp/core*.so",
+      "python test_pylibefp.py",
+      "python -c \"import pylibefp; assert pylibefp.test(extras=['--color', 'yes']) == 0\""
+     ],
+     "files": [
+      "test_pylibefp.py"
+     ],
+     "imports": [
+      "pylibefp"
+     ],
+     "requires": [
+      "numpy",
+      "pytest"
+     ]
+    },
+    "version": "0.6.2"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libefp"
+     ]
+    },
+    "files": [
+     "Library/include/efp.h",
+     "Library/include/libefp/*",
+     "Library/bin/efp*",
+     "Library/lib/efp*",
+     "Library/share/cmake/libefp",
+     "Library/share/libefp/*",
+     "Library/share/libefp/fraglib/*"
+    ],
+    "name": "libefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libblas",
+      "liblapack"
+     ]
+    },
+    "test": {
+     "commands": [
+      "dir %PREFIX%\\\\Library",
+      "dir %PREFIX%\\\\Library\\\\include",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\efp.lib exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\bin\\\\efp.dll exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\include\\\\libefp\\\\efp.h exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\share\\\\cmake\\\\libefp\\\\libefpConfig.cmake exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\share\\\\libefp\\\\fraglib\\\\h2.efp exit 1"
+     ]
+    },
+    "version": "1.5.0"
+   },
+   {
+    "about": {
+     "dev_url": "https://github.com/loriab/pylibefp/blob/master/README.md",
+     "doc_source_url": "https://github.com/loriab/pylibefp/blob/master/doc/source/introduction.rst",
+     "home": "https://github.com/loriab/pylibefp",
+     "license": "BSD-3-Clause",
+     "license_family": "BSD",
+     "license_file": "LICENSE",
+     "license_url": "https://opensource.org/licenses/BSD-3-Clause",
+     "summary": "L. A. Burns's Python bindings to libefp"
+    },
+    "files": [
+     "Lib/site-packages/pylibefp"
+    ],
+    "name": "pylibefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libefp",
+      "python",
+      "pybind11",
+      "pybind11-abi",
+      "qcelemental"
+     ],
+     "run": [
+      "libefp",
+      "python",
+      "qcelemental"
+     ]
+    },
+    "test": {
+     "commands": [
+      "dir %SP_DIR%\\\\pylibefp",
+      "if not exist %SP_DIR%\\\\pylibefp\\\\core*.pyd exit 1",
       "python test_pylibefp.py",
       "python -c \"import pylibefp; assert pylibefp.test(extras=['--color', 'yes']) == 0\""
      ],
@@ -1347,9 +1748,39 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
     "ninja"
    ],
    "host": [
+    "python",
+    "pybind11",
+    "pybind11-abi",
+    "qcelemental",
+    "libblas",
+    "liblapack",
+    "python",
+    "pybind11",
+    "pybind11-abi",
+    "qcelemental",
+    "libblas",
+    "liblapack",
+    "python",
+    "pybind11",
+    "pybind11-abi",
+    "qcelemental",
+    "libblas",
+    "liblapack",
     "python",
     "pybind11",
     "pybind11-abi",
@@ -1407,8 +1838,8 @@
    ]
   },
   "source": {
-   "sha256": "7463d064caebb6f734ff3b1e266c799d0487012e70da009a66bf8905985cc5ee",
-   "url": "https://github.com/loriab/pylibefp/archive/v0.6.2.tar.gz"
+   "sha256": "6f9c1e34c2540ec41d0d6934e7861b504c00420e897d918901c4310fa0e55765",
+   "url": "https://github.com/loriab/pylibefp/archive/e44cc32.tar.gz"
   }
  },
  "name": "libefp-split",
@@ -1426,11 +1857,13 @@
   },
   "build": {
    "binary_relocation": true,
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "libefp",
    "recipe-maintainers": [
+    "loriab",
+    "slipchenko",
     "loriab",
     "slipchenko",
     "loriab",
@@ -1493,6 +1926,102 @@
     },
     "files": [
      "lib/python3.10/site-packages/pylibefp"
+    ],
+    "name": "pylibefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libefp",
+      "python",
+      "pybind11",
+      "pybind11-abi",
+      "qcelemental"
+     ],
+     "run": [
+      "libefp",
+      "python",
+      "qcelemental"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $SP_DIR/pylibefp",
+      "test -f $SP_DIR/pylibefp/core*.so",
+      "otool -L $SP_DIR/pylibefp/core*.so",
+      "python test_pylibefp.py",
+      "python -c \"import pylibefp; assert pylibefp.test(extras=['--color', 'yes']) == 0\""
+     ],
+     "files": [
+      "test_pylibefp.py"
+     ],
+     "imports": [
+      "pylibefp"
+     ],
+     "requires": [
+      "numpy",
+      "pytest"
+     ]
+    },
+    "version": "0.6.2"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libefp"
+     ]
+    },
+    "files": [
+     "include/efp.h",
+     "include/libefp/*",
+     "lib/libefp.*dylib",
+     "share/cmake/libefp/*",
+     "share/libefp/*",
+     "share/libefp/fraglib/*"
+    ],
+    "name": "libefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libblas",
+      "liblapack"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $PREFIX/lib",
+      "ls -l $PREFIX/share/cmake/libefp",
+      "test -f $PREFIX/lib/libefp$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libefp.a",
+      "test -f $PREFIX/include/libefp/efp.h",
+      "test -f $PREFIX/share/cmake/libefp/libefpConfig.cmake",
+      "test -f $PREFIX/share/libefp/fraglib/h2.efp",
+      "otool -L $PREFIX/lib/libefp$SHLIB_EXT"
+     ]
+    },
+    "version": "1.5.0"
+   },
+   {
+    "about": {
+     "dev_url": "https://github.com/loriab/pylibefp/blob/master/README.md",
+     "doc_source_url": "https://github.com/loriab/pylibefp/blob/master/doc/source/introduction.rst",
+     "home": "https://github.com/loriab/pylibefp",
+     "license": "BSD-3-Clause",
+     "license_family": "BSD",
+     "license_file": "LICENSE",
+     "license_url": "https://opensource.org/licenses/BSD-3-Clause",
+     "summary": "L. A. Burns's Python bindings to libefp"
+    },
+    "files": [
+     "lib/python3.11/site-packages/pylibefp"
     ],
     "name": "pylibefp",
     "requirements": {
@@ -1746,9 +2275,19 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
     "ninja"
    ],
    "host": [
+    "python",
+    "pybind11",
+    "pybind11-abi",
+    "qcelemental",
+    "libblas",
+    "liblapack",
     "python",
     "pybind11",
     "pybind11-abi",
@@ -1770,8 +2309,8 @@
    ]
   },
   "source": {
-   "sha256": "7463d064caebb6f734ff3b1e266c799d0487012e70da009a66bf8905985cc5ee",
-   "url": "https://github.com/loriab/pylibefp/archive/v0.6.2.tar.gz"
+   "sha256": "6f9c1e34c2540ec41d0d6934e7861b504c00420e897d918901c4310fa0e55765",
+   "url": "https://github.com/loriab/pylibefp/archive/e44cc32.tar.gz"
   }
  },
  "osx_64_requirements": {
@@ -1823,7 +2362,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/libefp.json"
  },
- "raw_meta_yaml": "{% set name = \"libefp\" %}\n{% set libefp_version = \"1.5.0\" %}\n{% set version = \"0.6.2\" %}\n{% set sha256 = \"7463d064caebb6f734ff3b1e266c799d0487012e70da009a66bf8905985cc5ee\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/loriab/pylibefp/archive/v{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n  # note: above accesses (with checksum) a patch of the upstream project libefp\n  # * upstream project is: https://github.com/libefp2/libefp/archive/15cd7ce.tar.gz  # v1.5.0 + 10 (docs and a cmake lapack patch)\n  # * patched project is:  https://github.com/loriab/libefp/archive/14f8594.tar.gz  # v1.5.0 + 13 (above plus some cmake patches for windows)\n\nbuild:\n  number: 0\n  binary_relocation: true\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n  host:\n    - python\n    - pybind11\n    - pybind11-abi\n    - qcelemental\n    - libblas\n    - liblapack\n\noutputs:\n  - name: libefp\n    version: {{ libefp_version }}\n    build:\n      run_exports:\n        - {{ pin_subpackage('libefp', max_pin='x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - cmake\n        - ninja\n      host:\n        - libblas\n        - liblapack\n    files:\n      - include/efp.h                   # [unix]\n      - include/libefp/*                # [unix]\n      - lib/libefp{{ SHLIB_EXT }}*      # [linux]\n      - lib/libefp.*dylib               # [osx]\n      - share/cmake/libefp/*            # [unix]\n      - share/libefp/*                  # [unix]\n      - share/libefp/fraglib/*          # [unix]\n      - Library/include/efp.h           # [win]\n      - Library/include/libefp/*        # [win]\n      - Library/bin/efp*                # [win]\n      - Library/lib/efp*                # [win]\n      - Library/share/cmake/libefp      # [win]\n      - Library/share/libefp/*          # [win]\n      - Library/share/libefp/fraglib/*  # [win]\n    test:\n      commands:\n        - ls -l $PREFIX/lib                                       # [unix]\n        - ls -l $PREFIX/share/cmake/libefp                        # [unix]\n        - dir %PREFIX%\\\\Library                                   # [win]\n        - dir %PREFIX%\\\\Library\\\\include                          # [win]\n        # Verify library\n        - test -f $PREFIX/lib/libefp$SHLIB_EXT                    # [unix]\n        - test ! -f $PREFIX/lib/libefp.a                          # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\efp.lib exit 1     # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\efp.dll exit 1     # [win]\n        # Verify accessories\n        - test -f $PREFIX/include/libefp/efp.h                    # [unix]\n        - test -f $PREFIX/share/cmake/libefp/libefpConfig.cmake   # [unix]\n        - test -f $PREFIX/share/libefp/fraglib/h2.efp             # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\libefp\\\\efp.h exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\share\\\\cmake\\\\libefp\\\\libefpConfig.cmake exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\share\\\\libefp\\\\fraglib\\\\h2.efp exit 1  # [win]\n        # Inspect linkage\n        - ldd -v $PREFIX/lib/libefp$SHLIB_EXT                     # [linux and build_platform == target_platform]\n        - otool -L $PREFIX/lib/libefp$SHLIB_EXT                   # [osx]\n\n  - name: pylibefp\n    version: {{ version }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      host:\n        - {{ pin_subpackage('libefp', exact=True) }}\n        - python\n        - pybind11\n        - pybind11-abi\n        - qcelemental\n      run:\n        - {{ pin_subpackage('libefp', exact=True) }}\n        - python\n        - {{ pin_compatible('qcelemental', max_pin='x') }}\n    files:\n      - lib/python{{ PY_VER }}/site-packages/pylibefp  # [unix]\n      - Lib/site-packages/pylibefp                     # [win]\n        # if later install cmake config files for Py module, these are the correct filters\n        # - share/cmake/pylibefp/*                         # [unix]\n        # - Library/share/cmake/pylibefp/*                 # [win]\n    test:\n      requires:\n        - numpy\n        - pytest\n      files:\n        - test_pylibefp.py\n      imports:\n        - pylibefp\n      commands:\n        - ls -l $SP_DIR/pylibefp                                  # [unix]\n        - dir %SP_DIR%\\\\pylibefp                                  # [win]\n        # Verify module\n        - test -f $SP_DIR/pylibefp/core*.so                       # [unix]\n        - if not exist %SP_DIR%\\\\pylibefp\\\\core*.pyd exit 1       # [win]\n        # Inspect linkage\n        - ldd -v $SP_DIR/pylibefp/core*.so                        # [linux]\n        - otool -L $SP_DIR/pylibefp/core*.so                      # [osx]\n        # Actually test\n        - python test_pylibefp.py\n        - python -c \"import pylibefp; assert pylibefp.test(extras=['--color', 'yes']) == 0\"\n          # equivalent to above: pytest -v -rws --color yes $SP_DIR/pylibefp  # [unix]\n          # equivalent to above: pytest -v -rws --color yes %SP_DIR%\\\\pylibefp  # [win]\n    about:\n      home: https://github.com/loriab/pylibefp\n      dev_url: https://github.com/loriab/pylibefp/blob/master/README.md\n      doc_source_url: https://github.com/loriab/pylibefp/blob/master/doc/source/introduction.rst\n      license: BSD-3-Clause\n      license_url: https://opensource.org/licenses/BSD-3-Clause\n      license_file: LICENSE\n      license_family: BSD\n      summary: \"L. A. Burns's Python bindings to libefp\"\n\nabout:\n  home: https://github.com/libefp2/libefp\n  dev_url: https://github.com/libefp2/libefp/blob/master/README.md\n  doc_url: https://libefp2.github.io/doxygen_html/index.html\n  license: BSD-2-Clause\n  license_url: https://opensource.org/licenses/BSD-2-Clause\n  license_file: LICENSE_libefp\n  license_family: BSD\n  summary: \"I. Kaliman and L. Slipchenko's parallel implementation of the Effective Fragment Potential (EFP) method\"\n  description: |\n    The Effective Fragment Potential (EFP) method allows one to describe large molecular systems by\n    replacing chemically inert part of a system by a set of Effective Fragments while performing\n    regular ab initio calculation on the chemically active part. The LIBEFP library is a full\n    implementation of the EFP method. It allows users to easily incorporate EFP support into their\n    favourite quantum chemistry package. LIBEFP is interfaced to Q-Chem and Psi4 for QM/EFP calculations.\n\nextra:\n  feedstock-name: libefp\n  recipe-maintainers:\n    - loriab\n    - slipchenko\n\n# Note:\n# * if fraglib locations ever changed in conda recipe, make sure to append to substitution paths in pylibefp/wrapper.py::add_potential()\n",
+ "raw_meta_yaml": "{% set name = \"libefp\" %}\n{% set libefp_version = \"1.5.0\" %}\n{% set version = \"0.6.2\" %}\n{% set sha256 = \"6f9c1e34c2540ec41d0d6934e7861b504c00420e897d918901c4310fa0e55765\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  # url: https://github.com/loriab/pylibefp/archive/v{{ version }}.tar.gz\n  url: https://github.com/loriab/pylibefp/archive/e44cc32.tar.gz  # v0.6.2 + 3\n  sha256: {{ sha256 }}\n  # note: above accesses (with checksum) a patch of the upstream project libefp\n  # * upstream project is: https://github.com/libefp2/libefp/archive/15cd7ce.tar.gz  # v1.5.0 + 10 (docs and a cmake lapack patch)\n  # * patched project is:  https://github.com/loriab/libefp/archive/14f8594.tar.gz  # v1.5.0 + 13 (above plus some cmake patches for windows)\n\nbuild:\n  number: 1\n  binary_relocation: true\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n  host:\n    - python\n    - pybind11\n    - pybind11-abi\n    - qcelemental\n    - libblas\n    - liblapack\n\noutputs:\n  - name: libefp\n    version: {{ libefp_version }}\n    build:\n      run_exports:\n        - {{ pin_subpackage('libefp', max_pin='x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - cmake\n        - ninja\n      host:\n        - libblas\n        - liblapack\n    files:\n      - include/efp.h                   # [unix]\n      - include/libefp/*                # [unix]\n      - lib/libefp{{ SHLIB_EXT }}*      # [linux]\n      - lib/libefp.*dylib               # [osx]\n      - share/cmake/libefp/*            # [unix]\n      - share/libefp/*                  # [unix]\n      - share/libefp/fraglib/*          # [unix]\n      - Library/include/efp.h           # [win]\n      - Library/include/libefp/*        # [win]\n      - Library/bin/efp*                # [win]\n      - Library/lib/efp*                # [win]\n      - Library/share/cmake/libefp      # [win]\n      - Library/share/libefp/*          # [win]\n      - Library/share/libefp/fraglib/*  # [win]\n    test:\n      commands:\n        - ls -l $PREFIX/lib                                       # [unix]\n        - ls -l $PREFIX/share/cmake/libefp                        # [unix]\n        - dir %PREFIX%\\\\Library                                   # [win]\n        - dir %PREFIX%\\\\Library\\\\include                          # [win]\n        # Verify library\n        - test -f $PREFIX/lib/libefp$SHLIB_EXT                    # [unix]\n        - test ! -f $PREFIX/lib/libefp.a                          # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\efp.lib exit 1     # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\efp.dll exit 1     # [win]\n        # Verify accessories\n        - test -f $PREFIX/include/libefp/efp.h                    # [unix]\n        - test -f $PREFIX/share/cmake/libefp/libefpConfig.cmake   # [unix]\n        - test -f $PREFIX/share/libefp/fraglib/h2.efp             # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\libefp\\\\efp.h exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\share\\\\cmake\\\\libefp\\\\libefpConfig.cmake exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\share\\\\libefp\\\\fraglib\\\\h2.efp exit 1  # [win]\n        # Inspect linkage\n        - ldd -v $PREFIX/lib/libefp$SHLIB_EXT                     # [linux and build_platform == target_platform]\n        - otool -L $PREFIX/lib/libefp$SHLIB_EXT                   # [osx]\n\n  - name: pylibefp\n    version: {{ version }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      host:\n        - {{ pin_subpackage('libefp', exact=True) }}\n        - python\n        - pybind11\n        - pybind11-abi\n        - qcelemental\n      run:\n        - {{ pin_subpackage('libefp', exact=True) }}\n        - python\n        - {{ pin_compatible('qcelemental', max_pin='x') }}\n    files:\n      - lib/python{{ PY_VER }}/site-packages/pylibefp  # [unix]\n      - Lib/site-packages/pylibefp                     # [win]\n        # if later install cmake config files for Py module, these are the correct filters\n        # - share/cmake/pylibefp/*                         # [unix]\n        # - Library/share/cmake/pylibefp/*                 # [win]\n    test:\n      requires:\n        - numpy\n        - pytest\n      files:\n        - test_pylibefp.py\n      imports:\n        - pylibefp\n      commands:\n        - ls -l $SP_DIR/pylibefp                                  # [unix]\n        - dir %SP_DIR%\\\\pylibefp                                  # [win]\n        # Verify module\n        - test -f $SP_DIR/pylibefp/core*.so                       # [unix]\n        - if not exist %SP_DIR%\\\\pylibefp\\\\core*.pyd exit 1       # [win]\n        # Inspect linkage\n        - ldd -v $SP_DIR/pylibefp/core*.so                        # [linux]\n        - otool -L $SP_DIR/pylibefp/core*.so                      # [osx]\n        # Actually test\n        - python test_pylibefp.py\n        - python -c \"import pylibefp; assert pylibefp.test(extras=['--color', 'yes']) == 0\"\n          # equivalent to above: pytest -v -rws --color yes $SP_DIR/pylibefp  # [unix]\n          # equivalent to above: pytest -v -rws --color yes %SP_DIR%\\\\pylibefp  # [win]\n    about:\n      home: https://github.com/loriab/pylibefp\n      dev_url: https://github.com/loriab/pylibefp/blob/master/README.md\n      doc_source_url: https://github.com/loriab/pylibefp/blob/master/doc/source/introduction.rst\n      license: BSD-3-Clause\n      license_url: https://opensource.org/licenses/BSD-3-Clause\n      license_file: LICENSE\n      license_family: BSD\n      summary: \"L. A. Burns's Python bindings to libefp\"\n\nabout:\n  home: https://github.com/libefp2/libefp\n  dev_url: https://github.com/libefp2/libefp/blob/master/README.md\n  doc_url: https://libefp2.github.io/doxygen_html/index.html\n  license: BSD-2-Clause\n  license_url: https://opensource.org/licenses/BSD-2-Clause\n  license_file: LICENSE_libefp\n  license_family: BSD\n  summary: \"I. Kaliman and L. Slipchenko's parallel implementation of the Effective Fragment Potential (EFP) method\"\n  description: |\n    The Effective Fragment Potential (EFP) method allows one to describe large molecular systems by\n    replacing chemically inert part of a system by a set of Effective Fragments while performing\n    regular ab initio calculation on the chemically active part. The LIBEFP library is a full\n    implementation of the EFP method. It allows users to easily incorporate EFP support into their\n    favourite quantum chemistry package. LIBEFP is interfaced to Q-Chem and Psi4 for QM/EFP calculations.\n\nextra:\n  feedstock-name: libefp\n  recipe-maintainers:\n    - loriab\n    - slipchenko\n\n# Note:\n# * if fraglib locations ever changed in conda recipe, make sure to append to substitution paths in pylibefp/wrapper.py::add_potential()\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1921,7 +2460,7 @@
    ]
   }
  },
- "url": "https://github.com/loriab/pylibefp/archive/v0.6.2.tar.gz",
+ "url": "https://github.com/loriab/pylibefp/archive/e44cc32.tar.gz",
  "version": "0.6.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/libefp.json"
@@ -1940,7 +2479,7 @@
   },
   "build": {
    "binary_relocation": true,
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "libefp",
@@ -1950,10 +2489,107 @@
     "loriab",
     "slipchenko",
     "loriab",
+    "slipchenko",
+    "loriab",
     "slipchenko"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "run_exports": [
+      "libefp"
+     ]
+    },
+    "files": [
+     "Library/include/efp.h",
+     "Library/include/libefp/*",
+     "Library/bin/efp*",
+     "Library/lib/efp*",
+     "Library/share/cmake/libefp",
+     "Library/share/libefp/*",
+     "Library/share/libefp/fraglib/*"
+    ],
+    "name": "libefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libblas",
+      "liblapack"
+     ]
+    },
+    "test": {
+     "commands": [
+      "dir %PREFIX%\\\\Library",
+      "dir %PREFIX%\\\\Library\\\\include",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\efp.lib exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\bin\\\\efp.dll exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\include\\\\libefp\\\\efp.h exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\share\\\\cmake\\\\libefp\\\\libefpConfig.cmake exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\share\\\\libefp\\\\fraglib\\\\h2.efp exit 1"
+     ]
+    },
+    "version": "1.5.0"
+   },
+   {
+    "about": {
+     "dev_url": "https://github.com/loriab/pylibefp/blob/master/README.md",
+     "doc_source_url": "https://github.com/loriab/pylibefp/blob/master/doc/source/introduction.rst",
+     "home": "https://github.com/loriab/pylibefp",
+     "license": "BSD-3-Clause",
+     "license_family": "BSD",
+     "license_file": "LICENSE",
+     "license_url": "https://opensource.org/licenses/BSD-3-Clause",
+     "summary": "L. A. Burns's Python bindings to libefp"
+    },
+    "files": [
+     "Lib/site-packages/pylibefp"
+    ],
+    "name": "pylibefp",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libefp",
+      "python",
+      "pybind11",
+      "pybind11-abi",
+      "qcelemental"
+     ],
+     "run": [
+      "libefp",
+      "python",
+      "qcelemental"
+     ]
+    },
+    "test": {
+     "commands": [
+      "dir %SP_DIR%\\\\pylibefp",
+      "if not exist %SP_DIR%\\\\pylibefp\\\\core*.pyd exit 1",
+      "python test_pylibefp.py",
+      "python -c \"import pylibefp; assert pylibefp.test(extras=['--color', 'yes']) == 0\""
+     ],
+     "files": [
+      "test_pylibefp.py"
+     ],
+     "imports": [
+      "pylibefp"
+     ],
+     "requires": [
+      "numpy",
+      "pytest"
+     ]
+    },
+    "version": "0.6.2"
+   },
    {
     "build": {
      "run_exports": [
@@ -2257,9 +2893,19 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
     "ninja"
    ],
    "host": [
+    "python",
+    "pybind11",
+    "pybind11-abi",
+    "qcelemental",
+    "libblas",
+    "liblapack",
     "python",
     "pybind11",
     "pybind11-abi",
@@ -2281,8 +2927,8 @@
    ]
   },
   "source": {
-   "sha256": "7463d064caebb6f734ff3b1e266c799d0487012e70da009a66bf8905985cc5ee",
-   "url": "https://github.com/loriab/pylibefp/archive/v0.6.2.tar.gz"
+   "sha256": "6f9c1e34c2540ec41d0d6934e7861b504c00420e897d918901c4310fa0e55765",
+   "url": "https://github.com/loriab/pylibefp/archive/e44cc32.tar.gz"
   }
  },
  "win_64_requirements": {
