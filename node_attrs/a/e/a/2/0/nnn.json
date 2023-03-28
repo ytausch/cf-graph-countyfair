@@ -77,6 +77,12 @@
   }
  },
  "meta_yaml": {
+  "MACOSX_DEPLOYMENT_TARGET": [
+   "10.10"
+  ],
+  "MACOSX_SDK_VERSION": [
+   "10.10"
+  ],
   "about": {
    "home": "https://github.com/jarun/nnn/",
    "license": "BSD-2-Clause",
@@ -114,6 +120,7 @@
    "run": [
     "ncurses",
     "readline",
+    "__osx >=10.9",
     "ncurses",
     "readline"
    ]
@@ -131,6 +138,12 @@
  },
  "name": "nnn",
  "osx_64_meta_yaml": {
+  "MACOSX_DEPLOYMENT_TARGET": [
+   "10.10"
+  ],
+  "MACOSX_SDK_VERSION": [
+   "10.10"
+  ],
   "about": {
    "home": "https://github.com/jarun/nnn/",
    "license": "BSD-2-Clause",
@@ -160,6 +173,7 @@
     "readline"
    ],
    "run": [
+    "__osx >=10.9",
     "ncurses",
     "readline"
    ]
@@ -193,6 +207,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "__osx",
     "ncurses",
     "readline"
    ]
@@ -212,10 +227,11 @@
  "pr_info": {
   "__lazy_json__": "pr_info/nnn.json"
  },
- "raw_meta_yaml": "{% set build = 0 %}\n{% set version = \"4.7\" %}\n\npackage:\n  name: nnn\n  version: {{ version }}\n\nsource:\n  url: https://github.com/jarun/nnn/archive/v{{ version }}.tar.gz\n  sha256: 81ccccc045bfd7ee3f1909cc443158ea0d1833f77d6342fd19c33864a2ab71d1\n\nbuild:\n  number: {{ build }}\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - make\n    - {{ compiler('c') }}\n    - pkg-config\n  host:\n    - ncurses\n    - readline\n  run:\n    - ncurses\n    - readline\n\ntest:\n  commands:\n    - nnn -h\n\nabout:\n  home: https://github.com/jarun/nnn/\n  license: BSD-2-Clause\n  license_file: LICENSE\n  summary: Tiny, lightning fast, feature-packed file manager\n\nextra:\n  recipe-maintainers:\n    - lebedov\n",
+ "raw_meta_yaml": "{% set build = 0 %}\n{% set version = \"4.7\" %}\n\n# fstatat is only available on MacOS 10.10+\nMACOSX_DEPLOYMENT_TARGET:  # [osx and x86_64]\n  - \"10.10\"                # [osx and x86_64]\nMACOSX_SDK_VERSION:        # [osx and x86_64]\n  - \"10.10\"                # [osx and x86_64]\n  \npackage:\n  name: nnn\n  version: {{ version }}\n\nsource:\n  url: https://github.com/jarun/nnn/archive/v{{ version }}.tar.gz\n  sha256: 81ccccc045bfd7ee3f1909cc443158ea0d1833f77d6342fd19c33864a2ab71d1\n\nbuild:\n  number: {{ build }}\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - make\n    - {{ compiler('c') }}\n    - pkg-config\n  host:\n    - ncurses\n    - readline\n  run:\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n    - ncurses\n    - readline\n\ntest:\n  commands:\n    - nnn -h\n\nabout:\n  home: https://github.com/jarun/nnn/\n  license: BSD-2-Clause\n  license_file: LICENSE\n  summary: Tiny, lightning fast, feature-packed file manager\n\nextra:\n  recipe-maintainers:\n    - lebedov\n",
  "req": {
   "__set__": true,
   "elements": [
+   "__osx",
    "c_compiler_stub",
    "make",
    "ncurses",
@@ -243,6 +259,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "__osx",
     "c_compiler_stub",
     "ncurses",
     "readline"
@@ -273,6 +290,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "__osx >=10.9",
     "ncurses",
     "readline"
    ]
