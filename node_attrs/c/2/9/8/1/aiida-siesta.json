@@ -13,7 +13,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -29,19 +29,21 @@
     "name": "aiida-siesta",
     "requirements": {
      "host": [
+      "flit-core",
       "pip",
-      "python >=3.6"
+      "python >=3.8"
      ],
      "run": [
-      "aiida-core >=1.3.0,<2",
-      "aiida-pseudo >=0.6.2",
-      "ase >=3.18,<4.0.0",
-      "python >=3.6",
+      "aiida-core >=2.0.0,<3.0.0",
+      "aiida-pseudo >=0.7.0",
+      "aiida-optimize >=0.5.0",
+      "ase",
+      "python >=3.8",
       "seekpath >=1.9.3,<2",
       "sisl"
      ],
      "run_constrained": [
-      "aiida-siesta.code ==1.3.0"
+      "aiida-siesta.code ==2.0.0"
      ]
     },
     "test": {
@@ -75,7 +77,7 @@
   ],
   "package": {
    "name": "aiida-siesta.meta",
-   "version": "1.3.0"
+   "version": "2.0.0"
   },
   "requirements": {
    "run": [
@@ -84,8 +86,8 @@
    ]
   },
   "source": {
-   "sha256": "e8e99a7f52e955b6b26bbccc02ee830da0ea7b76a586bd4062b0b40a1dc0ec88",
-   "url": "https://pypi.io/packages/source/a/aiida-siesta/aiida-siesta-1.3.0.tar.gz"
+   "sha256": "32c29ec0dcc1b9c685452470a5edfb2ca07b23390b47067f6429c154fbdef83f",
+   "url": "https://pypi.io/packages/source/a/aiida-siesta/aiida-siesta-2.0.0.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -96,6 +98,7 @@
   "host": {
    "__set__": true,
    "elements": [
+    "flit-core",
     "pip",
     "python"
    ]
@@ -104,6 +107,7 @@
    "__set__": true,
    "elements": [
     "aiida-core",
+    "aiida-optimize",
     "aiida-pseudo",
     "aiida-siesta",
     "aiida-siesta.code",
@@ -130,7 +134,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -146,19 +150,21 @@
     "name": "aiida-siesta",
     "requirements": {
      "host": [
+      "flit-core",
       "pip",
-      "python >=3.6"
+      "python >=3.8"
      ],
      "run": [
-      "aiida-core >=1.3.0,<2",
-      "aiida-pseudo >=0.6.2",
-      "ase >=3.18,<4.0.0",
-      "python >=3.6",
+      "aiida-core >=2.0.0,<3.0.0",
+      "aiida-pseudo >=0.7.0",
+      "aiida-optimize >=0.5.0",
+      "ase",
+      "python >=3.8",
       "seekpath >=1.9.3,<2",
       "sisl"
      ],
      "run_constrained": [
-      "aiida-siesta.code ==1.3.0"
+      "aiida-siesta.code ==2.0.0"
      ]
     },
     "test": {
@@ -192,7 +198,7 @@
   ],
   "package": {
    "name": "aiida-siesta.meta",
-   "version": "1.3.0"
+   "version": "2.0.0"
   },
   "requirements": {
    "run": [
@@ -201,8 +207,8 @@
    ]
   },
   "source": {
-   "sha256": "e8e99a7f52e955b6b26bbccc02ee830da0ea7b76a586bd4062b0b40a1dc0ec88",
-   "url": "https://pypi.io/packages/source/a/aiida-siesta/aiida-siesta-1.3.0.tar.gz"
+   "sha256": "32c29ec0dcc1b9c685452470a5edfb2ca07b23390b47067f6429c154fbdef83f",
+   "url": "https://pypi.io/packages/source/a/aiida-siesta/aiida-siesta-2.0.0.tar.gz"
   }
  },
  "name": "aiida-siesta.meta",
@@ -218,15 +224,17 @@
  "pr_info": {
   "__lazy_json__": "pr_info/aiida-siesta.json"
  },
- "raw_meta_yaml": "{% set name = \"aiida-siesta\" %}\n{% set version = \"1.3.0\" %}\n{% set build = 1 %}\n{% set name_code = name + \".code\" %}\n\npackage:\n  name: {{ name|lower }}.meta\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aiida-siesta-{{ version }}.tar.gz\n  sha256: e8e99a7f52e955b6b26bbccc02ee830da0ea7b76a586bd4062b0b40a1dc0ec88\n\nbuild:\n  number: {{ build }}\n  noarch: python\n\nrequirements:\n  run:\n  - {{ pin_subpackage(name, exact=True) }}\n  - {{ pin_subpackage(name_code, exact=True) }}\n\noutputs:\n\n  - name:  {{ name }}\n    build:\n      noarch: python\n      script: 'python -m pip install . --no-deps --ignore-installed -vvv '\n    requirements:\n      host:\n        - pip\n        - python >=3.6\n      run:\n        - aiida-core >=1.3.0,<2\n        - aiida-pseudo >=0.6.2\n        - ase >=3.18,<4.0.0\n        - python >=3.6\n        - seekpath >=1.9.3,<2\n        - sisl\n      run_constrained:\n        - {{ name_code }} =={{ version }}\n    test:\n      imports:\n        - aiida_siesta\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name_code }}\n    build:\n      noarch: python\n    requirements:\n      run:\n        - siesta =4\n    test:\n      commands:\n        - which siesta\n\nabout:\n  home: https://github.com/siesta-project/aiida_siesta_plugin\n  summary: A plugin for Siesta's basic functionality within the AiiDA framework.\n  license: MIT\n  license_file: LICENSE.txt\n\nextra:\n  recipe-maintainers:\n    - chrisjsewell\n",
+ "raw_meta_yaml": "{% set name = \"aiida-siesta\" %}\n{% set version = \"2.0.0\" %}\n{% set build = 0 %}\n{% set name_code = name + \".code\" %}\n\npackage:\n  name: {{ name|lower }}.meta\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/aiida-siesta-{{ version }}.tar.gz\n  sha256: 32c29ec0dcc1b9c685452470a5edfb2ca07b23390b47067f6429c154fbdef83f\n\nbuild:\n  number: {{ build }}\n  noarch: python\n\nrequirements:\n  run:\n    - {{ pin_subpackage(name, exact=True) }}\n    - {{ pin_subpackage(name_code, exact=True) }}\n\noutputs:\n\n  - name: {{ name }}\n    build:\n      noarch: python\n      script: 'python -m pip install . --no-deps --ignore-installed -vvv '\n    requirements:\n      host:\n        - flit-core\n        - pip\n        - python >=3.8\n      run:\n        - aiida-core >=2.0.0,<3.0.0\n        - aiida-pseudo >=0.7.0\n        - aiida-optimize >=0.5.0\n        - ase\n        - python >=3.8\n        - seekpath >=1.9.3,<2\n        - sisl\n      run_constrained:\n        - {{ name_code }} =={{ version }}\n    test:\n      imports:\n        - aiida_siesta\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name_code }}\n    build:\n      noarch: python\n    requirements:\n      run:\n        - siesta =4\n    test:\n      commands:\n        - which siesta\n\nabout:\n  home: https://github.com/siesta-project/aiida_siesta_plugin\n  summary: A plugin for Siesta's basic functionality within the AiiDA framework.\n  license: MIT\n  license_file: LICENSE.txt\n\nextra:\n  recipe-maintainers:\n    - chrisjsewell\n",
  "req": {
   "__set__": true,
   "elements": [
    "aiida-core",
+   "aiida-optimize",
    "aiida-pseudo",
    "aiida-siesta",
    "aiida-siesta.code",
    "ase",
+   "flit-core",
    "pip",
    "python",
    "seekpath",
@@ -242,6 +250,7 @@
   "host": {
    "__set__": true,
    "elements": [
+    "flit-core",
     "pip",
     "python"
    ]
@@ -250,6 +259,7 @@
    "__set__": true,
    "elements": [
     "aiida-core",
+    "aiida-optimize",
     "aiida-pseudo",
     "aiida-siesta",
     "aiida-siesta.code",
@@ -276,19 +286,21 @@
   "host": {
    "__set__": true,
    "elements": [
+    "flit-core",
     "pip",
-    "python >=3.6"
+    "python >=3.8"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "aiida-core >=1.3.0,<2",
-    "aiida-pseudo >=0.6.2",
+    "aiida-core >=2.0.0,<3.0.0",
+    "aiida-optimize >=0.5.0",
+    "aiida-pseudo >=0.7.0",
     "aiida-siesta",
     "aiida-siesta.code",
-    "ase >=3.18,<4.0.0",
-    "python >=3.6",
+    "ase",
+    "python >=3.8",
     "seekpath >=1.9.3,<2",
     "siesta =4",
     "sisl"
@@ -301,8 +313,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/a/aiida-siesta/aiida-siesta-1.3.0.tar.gz",
- "version": "1.3.0",
+ "url": "https://pypi.io/packages/source/a/aiida-siesta/aiida-siesta-2.0.0.tar.gz",
+ "version": "2.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/aiida-siesta.json"
  }
