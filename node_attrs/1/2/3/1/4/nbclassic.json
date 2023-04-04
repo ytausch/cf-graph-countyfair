@@ -26,7 +26,7 @@
     "jupyter-nbclassic-serverextension = nbclassic.serverextensions:main"
    ],
    "noarch": "python",
-   "number": "3",
+   "number": "1",
    "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   },
   "extra": {
@@ -43,7 +43,7 @@
   },
   "package": {
    "name": "nbclassic",
-   "version": "0.5.3"
+   "version": "0.5.4"
   },
   "requirements": {
    "host": [
@@ -98,8 +98,8 @@
    ]
   },
   "source": {
-   "sha256": "889772a7ba524eb781d2901f396540bcad41151e1f7e043f12ebc14a6540d342",
-   "url": "https://pypi.io/packages/source/n/nbclassic/nbclassic-0.5.3.tar.gz"
+   "sha256": "312b3f7d7ff2e6c261d51799bb12e6493498ab47d3469d3a01015d5533fd4d2b",
+   "url": "https://pypi.io/packages/source/n/nbclassic/nbclassic-0.5.4.tar.gz"
   },
   "test": {
    "commands": [
@@ -205,7 +205,7 @@
     "jupyter-nbclassic-serverextension = nbclassic.serverextensions:main"
    ],
    "noarch": "python",
-   "number": "3",
+   "number": "1",
    "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   },
   "extra": {
@@ -222,7 +222,7 @@
   },
   "package": {
    "name": "nbclassic",
-   "version": "0.5.3"
+   "version": "0.5.4"
   },
   "requirements": {
    "host": [
@@ -277,8 +277,8 @@
    ]
   },
   "source": {
-   "sha256": "889772a7ba524eb781d2901f396540bcad41151e1f7e043f12ebc14a6540d342",
-   "url": "https://pypi.io/packages/source/n/nbclassic/nbclassic-0.5.3.tar.gz"
+   "sha256": "312b3f7d7ff2e6c261d51799bb12e6493498ab47d3469d3a01015d5533fd4d2b",
+   "url": "https://pypi.io/packages/source/n/nbclassic/nbclassic-0.5.4.tar.gz"
   },
   "test": {
    "commands": [
@@ -328,7 +328,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/nbclassic.json"
  },
- "raw_meta_yaml": "{% set version = \"0.5.3\" %}\n\n{% set build_number = 1 %}\n\n# nbconvert depends on pandoc which is difficult to build for some platforms (e.g. linux-ppc64le)\n# To ensure nbclassic is always installable we make two variants of nbclassic\n#   * odd build numbers depend on nbconvert and are favoured by the solver\n#   * even build numbers depend on nbconvert-core and are used as a fallback\n{% if nbconvert_variant is not defined %}\n{% set nbconvert_variant = \"nbconvert\" %}\n{% endif %}\n\npackage:\n  name: nbclassic\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/n/nbclassic/nbclassic-{{ version }}.tar.gz\n  sha256: 889772a7ba524eb781d2901f396540bcad41151e1f7e043f12ebc14a6540d342\n\nbuild:\n  number: {{ build_number * 2 + (nbconvert_variant == \"nbconvert\") }}\n  noarch: python\n  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv\n  entry_points:\n    - jupyter-nbclassic = nbclassic.notebookapp:main\n    - jupyter-nbclassic-bundlerextension = nbclassic.bundler.bundlerextensions:main\n    - jupyter-nbclassic-extension = nbclassic.nbextensions:main\n    - jupyter-nbclassic-serverextension = nbclassic.serverextensions:main\n\nrequirements:\n  host:\n    - jupyter-packaging >=0.9,<1\n    - jupyter_server\n    - python >=3.7\n    - babel\n    - pip\n  run:\n    - argon2-cffi\n    - ipykernel\n    - ipython_genutils\n    - jinja2\n    - jupyter_client >=6.1.1\n    - jupyter_core >=4.6.1\n    - jupyter_server >=1.8\n    - {{ nbconvert_variant }} >=5\n    - nbformat\n    - nest-asyncio >=1.5\n    - notebook-shim >=0.1.0\n    - prometheus_client\n    - python >=3.7\n    - pyzmq >=17\n    - send2trash >=1.8.0\n    - terminado >=0.8.3\n    - tornado >=6.1\n    - traitlets >=4.2.1\n\ntest:\n  imports:\n    - nbclassic\n  requires:\n    - pip\n  commands:\n    - pip check\n    - jupyter nbclassic --help\n    - jupyter nbclassic-extension --help\n    - jupyter nbclassic-serverextension --help\n    - jupyter nbclassic-bundlerextension --help\n    - jupyter server extension list\n    - jupyter server extension list 1>server_extensions 2>&1\n    - cat server_extensions | grep -iE \"nbclassic.*enabled\"\n    - cat server_extensions | grep -iE \"nbclassic.*OK\"\n    # #27: is this expected?\n    # - cat server_extensions | grep -iE \"notebook_shim.*enabled\"\n    # - cat server_extensions | grep -iE \"notebook_shim.*OK\"\n  downstreams:\n    - jupyterlab\n    # breaks in mambabuild\n    - jupyterlab_server\n    # breaks with some =cuda* stuff in condabuild, maybe mambabuild\n    # - notebook\n\nabout:\n  home: http://github.com/jupyterlab/nbclassic\n  license: BSD-3-Clause\n  license_file: LICENSE\n  summary: A web-based notebook environment for interactive computing\n  dev_url: https://github.com/jupyter/nbclassic\n  doc_url: https://jupyter-notebook.readthedocs.io\n  description: |\n    The Jupyter NbClassic is a web application that allows you to create and\n    share documents that contain live code, equations, visualizations, and\n    explanatory text. The NbClassic has support for multiple programming\n    languages, sharing, and interactive widgets.\n\nextra:\n  recipe-maintainers:\n    - jasongrout\n    - afshin\n    - jtpio\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"0.5.4\" %}\n\n{% set build_number = 0 %}\n\n# nbconvert depends on pandoc which is difficult to build for some platforms (e.g. linux-ppc64le)\n# To ensure nbclassic is always installable we make two variants of nbclassic\n#   * odd build numbers depend on nbconvert and are favoured by the solver\n#   * even build numbers depend on nbconvert-core and are used as a fallback\n{% if nbconvert_variant is not defined %}\n{% set nbconvert_variant = \"nbconvert\" %}\n{% endif %}\n\npackage:\n  name: nbclassic\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/n/nbclassic/nbclassic-{{ version }}.tar.gz\n  sha256: 312b3f7d7ff2e6c261d51799bb12e6493498ab47d3469d3a01015d5533fd4d2b\n\nbuild:\n  number: {{ build_number * 2 + (nbconvert_variant == \"nbconvert\") }}\n  noarch: python\n  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv\n  entry_points:\n    - jupyter-nbclassic = nbclassic.notebookapp:main\n    - jupyter-nbclassic-bundlerextension = nbclassic.bundler.bundlerextensions:main\n    - jupyter-nbclassic-extension = nbclassic.nbextensions:main\n    - jupyter-nbclassic-serverextension = nbclassic.serverextensions:main\n\nrequirements:\n  host:\n    - jupyter-packaging >=0.9,<1\n    - jupyter_server\n    - python >=3.7\n    - babel\n    - pip\n  run:\n    - argon2-cffi\n    - ipykernel\n    - ipython_genutils\n    - jinja2\n    - jupyter_client >=6.1.1\n    - jupyter_core >=4.6.1\n    - jupyter_server >=1.8\n    - {{ nbconvert_variant }} >=5\n    - nbformat\n    - nest-asyncio >=1.5\n    - notebook-shim >=0.1.0\n    - prometheus_client\n    - python >=3.7\n    - pyzmq >=17\n    - send2trash >=1.8.0\n    - terminado >=0.8.3\n    - tornado >=6.1\n    - traitlets >=4.2.1\n\ntest:\n  imports:\n    - nbclassic\n  requires:\n    - pip\n  commands:\n    - pip check\n    - jupyter nbclassic --help\n    - jupyter nbclassic-extension --help\n    - jupyter nbclassic-serverextension --help\n    - jupyter nbclassic-bundlerextension --help\n    - jupyter server extension list\n    - jupyter server extension list 1>server_extensions 2>&1\n    - cat server_extensions | grep -iE \"nbclassic.*enabled\"\n    - cat server_extensions | grep -iE \"nbclassic.*OK\"\n    # #27: is this expected?\n    # - cat server_extensions | grep -iE \"notebook_shim.*enabled\"\n    # - cat server_extensions | grep -iE \"notebook_shim.*OK\"\n  downstreams:\n    - jupyterlab\n    - jupyterlab_server\n    # breaks with some =cuda* stuff in condabuild, maybe mambabuild\n    # - notebook\n\nabout:\n  home: http://github.com/jupyterlab/nbclassic\n  license: BSD-3-Clause\n  license_file: LICENSE\n  summary: A web-based notebook environment for interactive computing\n  dev_url: https://github.com/jupyter/nbclassic\n  doc_url: https://jupyter-notebook.readthedocs.io\n  description: |\n    The Jupyter NbClassic is a web application that allows you to create and\n    share documents that contain live code, equations, visualizations, and\n    explanatory text. The NbClassic has support for multiple programming\n    languages, sharing, and interactive widgets.\n\nextra:\n  recipe-maintainers:\n    - jasongrout\n    - afshin\n    - jtpio\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -446,8 +446,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/n/nbclassic/nbclassic-0.5.3.tar.gz",
- "version": "0.5.3",
+ "url": "https://pypi.io/packages/source/n/nbclassic/nbclassic-0.5.4.tar.gz",
+ "version": "0.5.4",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/nbclassic.json"
  }
