@@ -37,7 +37,7 @@
     "tbb",
     "tbb"
    ],
-   "number": "0",
+   "number": "1",
    "script": [
     "export CC=\"${CC} -pthread\"",
     "export CXX=\"${CXX} -pthread\"",
@@ -324,7 +324,7 @@
     "tbb",
     "tbb"
    ],
-   "number": "0",
+   "number": "1",
    "script": [
     "export CC=\"${CC} -pthread\"",
     "export CXX=\"${CXX} -pthread\"",
@@ -605,7 +605,7 @@
     "tbb",
     "tbb"
    ],
-   "number": "0",
+   "number": "1",
    "script": [
     "export CC=\"${CC} -pthread\"",
     "export CXX=\"${CXX} -pthread\"",
@@ -931,7 +931,7 @@
     "tbb",
     "tbb"
    ],
-   "number": "0",
+   "number": "1",
    "script": [
     "export CC=\"${CC} -pthread\"",
     "export CXX=\"${CXX} -pthread\"",
@@ -2082,7 +2082,7 @@
     "tbb",
     "tbb"
    ],
-   "number": "0",
+   "number": "1",
    "script": [
     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . --no-deps --ignore-installed -vvv",
     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . --no-deps --ignore-installed -vvv",
@@ -2371,7 +2371,7 @@
     "tbb",
     "tbb"
    ],
-   "number": "0",
+   "number": "1",
    "script": [
     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . --no-deps --ignore-installed -vvv",
     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . --no-deps --ignore-installed -vvv",
@@ -2645,7 +2645,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/numba.json"
  },
- "raw_meta_yaml": "{% set name = \"numba\" %}\n{% set version = \"0.56.4\" %}\n{% set sha256 = \"ab96b731fb9dee12b404b42b7c1fb82c119352648906a80526afa73658895b73\" %}\n\npackage:\n  name: numba\n  version: {{ version }}\n\nsource:\n  # url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  url: https://github.com/numba/{{ name }}/archive/{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\nbuild:\n  number: 0\n  entry_points:\n    - pycc = numba.pycc:main\n    - numba = numba.misc.numba_entry:main\n  script:\n    - export CC=\"${CC} -pthread\"  # [linux]\n    - export CXX=\"${CXX} -pthread\"  # [linux]\n    - {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv\n  ignore_run_exports:\n    # tbb-devel triggers hard dependency on tbb, this is not the case.\n    - tbb\n  skip: true  # [python_impl == 'pypy']\n  skip: true  # [py<37]\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    # llvm is needed for the headers\n    - llvm-openmp              # [osx]\n\n  host:\n    - python\n    - pip\n    - setuptools\n    - llvmlite 0.39.*\n    - numpy\n    - tbb-devel 2021.*,<2021.6\n\n  run:\n    - python\n    - {{ pin_compatible('llvmlite', max_pin='x.x') }}\n    - {{ pin_compatible('numpy') }}\n    - importlib-metadata  # [py < 39]\n    # needed for pkg_resources\n    - setuptools\n\n  run_constrained:\n    - tbb  2021.*  # [not (armv6l or armv7l or aarch64 or linux32 or ppc64le)]\n    # avoid confusion from openblas bugs\n    - libopenblas !=0.3.6  # [x86_64]\n    - libopenblas >=0.3.18, !=0.3.20  # [arm64]\n    # CUDA 10.2 or later is required for CUDA support\n    - cudatoolkit >=10.2\n    # scipy 1.0 or later\n    - scipy >=1.0\n    # NumPy has a hard upper limit.\n    # Also NumPy 1.22.0, 1.22.1, 1.22.2 are all broken for ufuncs\n    # xref: https://github.com/numba/numba/issues/7756\n    - numpy >=1.18,!=1.22.0,!=1.22.1,!=1.22.2,<1.24\n    # CUDA Python 11.6 or later\n    - cuda-python >=11.6\n\ntest:\n  requires:\n    - pip\n    # Required to test optional Numba features\n    - jinja2\n    - cffi\n    - scipy\n    - ipython\n    - setuptools\n    - tbb >=2021.0\n    - llvm-openmp              # [osx]\n    # Need these for AOT. Do not init msvc as it may not be present\n    - {{ compiler('c') }}      # [not win]\n    - {{ compiler('cxx') }}    # [not win]\n\n  imports:\n    - numba\n    - numba.core.annotations\n    - numba.core.datamodel\n    - numba.core.rewrites\n    - numba.core.runtime\n    - numba.core.typeconv\n    - numba.core.typing\n    - numba.core.unsafe\n    - numba.cuda\n    - numba.cuda.cudadrv\n    - numba.cuda.kernels\n    - numba.cuda.simulator\n    - numba.cuda.simulator.cudadrv\n    - numba.cuda.tests\n    - numba.cuda.tests.cudadrv\n    - numba.cuda.tests.cudadrv.data\n    - numba.cuda.tests.cudapy\n    - numba.cuda.tests.cudasim\n    - numba.cuda.tests.nocuda\n    - numba.experimental.jitclass\n    - numba.np.ufunc\n    - numba.pycc\n    - numba.scripts\n    - numba.testing\n    - numba.tests\n    - numba.tests.npyufunc\n\nabout:\n  home: http://numba.pydata.org\n  license: BSD-2-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: NumPy aware dynamic Python compiler using LLVM\n  description: |\n    Numba is an Open Source NumPy-aware optimizing compiler for Python \n    sponsored by Anaconda, Inc. It uses the remarkable LLVM compiler \n    infrastructure to compile Python syntax to machine code.\"\n  doc_url: http://numba.pydata.org/\n  dev_url: https://github.com/numba/numba\n\nextra:\n  recipe-maintainers:\n    - souravsingh\n    - marcelotrevisani\n    - henryiii\n    - mbargull\n    - jakirkham\n    - step21\n",
+ "raw_meta_yaml": "{% set name = \"numba\" %}\n{% set version = \"0.56.4\" %}\n{% set sha256 = \"ab96b731fb9dee12b404b42b7c1fb82c119352648906a80526afa73658895b73\" %}\n\npackage:\n  name: numba\n  version: {{ version }}\n\nsource:\n  # url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  url: https://github.com/numba/{{ name }}/archive/{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\nbuild:\n  number: 1\n  entry_points:\n    - pycc = numba.pycc:main\n    - numba = numba.misc.numba_entry:main\n  script:\n    - export CC=\"${CC} -pthread\"  # [linux]\n    - export CXX=\"${CXX} -pthread\"  # [linux]\n    - {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv\n  ignore_run_exports:\n    # tbb-devel triggers hard dependency on tbb, this is not the case.\n    - tbb\n  skip: true  # [python_impl == 'pypy']\n  skip: true  # [py<37]\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    # llvm is needed for the headers\n    - llvm-openmp              # [osx]\n\n  host:\n    - python\n    - pip\n    - setuptools\n    - llvmlite 0.39.*\n    - numpy\n    - tbb-devel 2021.*,<2021.6\n\n  run:\n    - python\n    - {{ pin_compatible('llvmlite', max_pin='x.x') }}\n    - {{ pin_compatible('numpy') }}\n    - importlib-metadata  # [py < 39]\n    # needed for pkg_resources\n    - setuptools\n\n  run_constrained:\n    - tbb  2021.*  # [not (armv6l or armv7l or aarch64 or linux32 or ppc64le)]\n    # avoid confusion from openblas bugs\n    - libopenblas !=0.3.6  # [x86_64]\n    - libopenblas >=0.3.18, !=0.3.20  # [arm64]\n    # CUDA 10.2 or later is required for CUDA support\n    - cudatoolkit >=10.2\n    # scipy 1.0 or later\n    - scipy >=1.0\n    # NumPy has a hard upper limit.\n    # Also NumPy 1.22.0, 1.22.1, 1.22.2 are all broken for ufuncs\n    # xref: https://github.com/numba/numba/issues/7756\n    - numpy >=1.18,!=1.22.0,!=1.22.1,!=1.22.2,<1.24\n    # CUDA Python 11.6 or later\n    - cuda-python >=11.6\n\ntest:\n  requires:\n    - pip\n    # Required to test optional Numba features\n    - jinja2\n    - cffi\n    - scipy\n    - ipython\n    - setuptools\n    - tbb >=2021.0\n    - llvm-openmp              # [osx]\n    # Need these for AOT. Do not init msvc as it may not be present\n    - {{ compiler('c') }}      # [not win]\n    - {{ compiler('cxx') }}    # [not win]\n\n  imports:\n    - numba\n    - numba.core.annotations\n    - numba.core.datamodel\n    - numba.core.rewrites\n    - numba.core.runtime\n    - numba.core.typeconv\n    - numba.core.typing\n    - numba.core.unsafe\n    - numba.cuda\n    - numba.cuda.cudadrv\n    - numba.cuda.kernels\n    - numba.cuda.simulator\n    - numba.cuda.simulator.cudadrv\n    - numba.cuda.tests\n    - numba.cuda.tests.cudadrv\n    - numba.cuda.tests.cudadrv.data\n    - numba.cuda.tests.cudapy\n    - numba.cuda.tests.cudasim\n    - numba.cuda.tests.nocuda\n    - numba.experimental.jitclass\n    - numba.np.ufunc\n    - numba.pycc\n    - numba.scripts\n    - numba.testing\n    - numba.tests\n    - numba.tests.npyufunc\n\nabout:\n  home: http://numba.pydata.org\n  license: BSD-2-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: NumPy aware dynamic Python compiler using LLVM\n  description: |\n    Numba is an Open Source NumPy-aware optimizing compiler for Python \n    sponsored by Anaconda, Inc. It uses the remarkable LLVM compiler \n    infrastructure to compile Python syntax to machine code.\"\n  doc_url: http://numba.pydata.org/\n  dev_url: https://github.com/numba/numba\n\nextra:\n  recipe-maintainers:\n    - souravsingh\n    - marcelotrevisani\n    - henryiii\n    - mbargull\n    - jakirkham\n    - step21\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -2787,7 +2787,7 @@
     "tbb",
     "tbb"
    ],
-   "number": "0",
+   "number": "1",
    "script": [
     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/python.exe -m pip install . --no-deps --ignore-installed -vvv",
     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/python.exe -m pip install . --no-deps --ignore-installed -vvv",

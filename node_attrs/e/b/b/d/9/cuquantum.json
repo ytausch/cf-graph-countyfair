@@ -16,12 +16,12 @@
    "doc_url": "https://docs.nvidia.com/cuda/cuquantum/index.html",
    "home": "https://developer.nvidia.com/cuquantum-sdk",
    "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-   "license_file": "docs/cuQuantum_license.pdf",
+   "license_file": "LICENSE",
    "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
    "summary": "cuQuantum SDK: A High-Performance Library for Accelerating Quantum Information Science"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -45,7 +45,7 @@
   "outputs": [
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -54,6 +54,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -61,7 +64,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -70,7 +73,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -82,7 +85,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -91,7 +94,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/"
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/"
      ]
     },
     "name": "custatevec",
@@ -104,11 +107,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -123,7 +129,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -132,7 +138,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -147,7 +153,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -156,14 +162,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -180,11 +186,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -202,7 +210,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -241,8 +249,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -267,11 +275,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -280,6 +288,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -287,7 +298,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -296,7 +307,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -308,7 +319,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -317,7 +328,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/"
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/"
      ]
     },
     "name": "custatevec",
@@ -330,11 +341,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -349,7 +363,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -358,7 +372,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -373,7 +387,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -382,14 +396,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -406,11 +420,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -428,7 +444,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -467,8 +483,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -493,11 +509,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -506,6 +522,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -513,7 +532,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -522,7 +541,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -534,7 +553,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -543,7 +562,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/"
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/"
      ]
     },
     "name": "custatevec",
@@ -556,11 +575,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -575,7 +597,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -584,7 +606,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -599,7 +621,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -608,14 +630,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -632,11 +654,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -654,7 +678,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -693,8 +717,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -719,37 +743,37 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    }
   ],
   "package": {
    "name": "cuquantum-sdk",
-   "version": "22.11.0.13"
+   "version": "23.03.0.20"
   },
   "source": [
    {
-    "sha256": "c02f20d4ece8f94c5e29f26613c520664cb888788366b0e2ddbba366e08ceba9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-22.11.0.13-archive.tar.xz"
+    "sha256": "08b31e47adcfbdecad935589e3245a35ee7ee0886f1e8c745aca570213598790",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "c02f20d4ece8f94c5e29f26613c520664cb888788366b0e2ddbba366e08ceba9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-22.11.0.13-archive.tar.xz"
+    "sha256": "08b31e47adcfbdecad935589e3245a35ee7ee0886f1e8c745aca570213598790",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "c02f20d4ece8f94c5e29f26613c520664cb888788366b0e2ddbba366e08ceba9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-22.11.0.13-archive.tar.xz"
+    "sha256": "08b31e47adcfbdecad935589e3245a35ee7ee0886f1e8c745aca570213598790",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    }
   ]
  },
@@ -807,12 +831,12 @@
    "doc_url": "https://docs.nvidia.com/cuda/cuquantum/index.html",
    "home": "https://developer.nvidia.com/cuquantum-sdk",
    "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-   "license_file": "docs/cuQuantum_license.pdf",
+   "license_file": "LICENSE",
    "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
    "summary": "cuQuantum SDK: A High-Performance Library for Accelerating Quantum Information Science"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -836,7 +860,7 @@
   "outputs": [
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -845,6 +869,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -852,7 +879,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -861,7 +888,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -873,7 +900,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -882,7 +909,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
       "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
      ]
     },
@@ -895,11 +922,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -913,7 +943,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -922,7 +952,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -937,7 +967,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -946,14 +976,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -969,11 +999,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -990,7 +1022,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -1028,8 +1060,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -1054,11 +1086,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -1067,6 +1099,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -1074,7 +1109,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -1083,7 +1118,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -1095,7 +1130,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -1104,7 +1139,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
       "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
      ]
     },
@@ -1117,11 +1152,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -1135,7 +1173,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -1144,7 +1182,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -1159,7 +1197,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -1168,14 +1206,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -1191,11 +1229,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -1212,7 +1252,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -1250,8 +1290,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -1276,11 +1316,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -1289,6 +1329,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -1296,7 +1339,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -1305,7 +1348,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -1317,7 +1360,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -1326,7 +1369,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
       "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
      ]
     },
@@ -1339,11 +1382,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -1357,7 +1403,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -1366,7 +1412,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -1381,7 +1427,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -1390,14 +1436,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -1413,11 +1459,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -1434,7 +1482,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -1472,8 +1520,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -1498,37 +1546,37 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    }
   ],
   "package": {
    "name": "cuquantum-sdk",
-   "version": "22.11.0.13"
+   "version": "23.03.0.20"
   },
   "source": [
    {
-    "sha256": "85d8df2e2fd6cb55311ac69e792dfaae87931d399898fefdcbb4773d606ff7e9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-22.11.0.13-archive.tar.xz"
+    "sha256": "11475c96d1b5713ce6646474796ace676c00f1259ba16c2130c7e74a6fb75ea2",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "85d8df2e2fd6cb55311ac69e792dfaae87931d399898fefdcbb4773d606ff7e9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-22.11.0.13-archive.tar.xz"
+    "sha256": "11475c96d1b5713ce6646474796ace676c00f1259ba16c2130c7e74a6fb75ea2",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "85d8df2e2fd6cb55311ac69e792dfaae87931d399898fefdcbb4773d606ff7e9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-22.11.0.13-archive.tar.xz"
+    "sha256": "11475c96d1b5713ce6646474796ace676c00f1259ba16c2130c7e74a6fb75ea2",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    }
   ]
  },
@@ -1584,12 +1632,12 @@
    "doc_url": "https://docs.nvidia.com/cuda/cuquantum/index.html",
    "home": "https://developer.nvidia.com/cuquantum-sdk",
    "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-   "license_file": "docs/cuQuantum_license.pdf",
+   "license_file": "LICENSE",
    "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
    "summary": "cuQuantum SDK: A High-Performance Library for Accelerating Quantum Information Science"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1613,7 +1661,7 @@
   "outputs": [
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -1622,6 +1670,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -1629,7 +1680,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -1638,7 +1689,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -1650,7 +1701,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -1659,7 +1710,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
       "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
      ]
     },
@@ -1672,11 +1723,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -1690,7 +1744,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -1699,7 +1753,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -1714,7 +1768,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -1723,14 +1777,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -1746,11 +1800,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -1767,7 +1823,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -1805,8 +1861,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -1831,11 +1887,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -1844,6 +1900,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -1851,7 +1910,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -1860,7 +1919,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -1872,7 +1931,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -1881,7 +1940,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
       "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
      ]
     },
@@ -1894,11 +1953,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -1912,7 +1974,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -1921,7 +1983,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -1936,7 +1998,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -1945,14 +2007,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -1968,11 +2030,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -1989,7 +2053,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -2027,8 +2091,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -2053,11 +2117,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -2066,6 +2130,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -2073,7 +2140,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -2082,7 +2149,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -2094,7 +2161,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -2103,7 +2170,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
       "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
      ]
     },
@@ -2116,11 +2183,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -2134,7 +2204,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -2143,7 +2213,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -2158,7 +2228,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -2167,14 +2237,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -2190,11 +2260,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -2211,7 +2283,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -2249,8 +2321,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -2275,37 +2347,37 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    }
   ],
   "package": {
    "name": "cuquantum-sdk",
-   "version": "22.11.0.13"
+   "version": "23.03.0.20"
   },
   "source": [
    {
-    "sha256": "6432abc24269b750e2049b32f0ad9d9f573c90af6fd3505434999d0217445d46",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-22.11.0.13-archive.tar.xz"
+    "sha256": "5b4dc4d8d86332f4e988bcb46214a291f2c4058f9a46e36bfa617dc4026a28e7",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "6432abc24269b750e2049b32f0ad9d9f573c90af6fd3505434999d0217445d46",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-22.11.0.13-archive.tar.xz"
+    "sha256": "5b4dc4d8d86332f4e988bcb46214a291f2c4058f9a46e36bfa617dc4026a28e7",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "6432abc24269b750e2049b32f0ad9d9f573c90af6fd3505434999d0217445d46",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-22.11.0.13-archive.tar.xz"
+    "sha256": "5b4dc4d8d86332f4e988bcb46214a291f2c4058f9a46e36bfa617dc4026a28e7",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    }
   ]
  },
@@ -2361,12 +2433,12 @@
    "doc_url": "https://docs.nvidia.com/cuda/cuquantum/index.html",
    "home": "https://developer.nvidia.com/cuquantum-sdk",
    "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-   "license_file": "docs/cuQuantum_license.pdf",
+   "license_file": "LICENSE",
    "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
    "summary": "cuQuantum SDK: A High-Performance Library for Accelerating Quantum Information Science"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -2420,241 +2492,18 @@
   "outputs": [
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
      "build": [],
      "host": [],
      "run": [
-      "custatevec",
-      "cutensornet"
-     ]
-    },
-    "test": {
-     "commands": [
-      "echo \"ok!\""
-     ]
-    },
-    "version": "22.11.0.13"
-   },
-   {
-    "about": {
-     "description": "NVIDIA cuStateVec is a high-performance GPU library dedicated to operations with state vectors\nfor expressing quantum algorithms. cuStateVec is a component of the NVIDIA cuQuantum SDK.\n\nThe packages cuquantum, custatevec, and cutensornet are governed by the NVIDIA cuQuantum\nSoftware License Agreement (EULA). By downloading and using the packages,\nyou accept the terms and conditions of the NVIDIA cuQuantum EULA -\nhttps://docs.nvidia.com/cuda/cuquantum/license.html\n",
-     "dev_url": "https://github.com/NVIDIA/cuQuantum",
-     "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
-     "home": "https://developer.nvidia.com/cuquantum-sdk",
-     "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
-     "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
-     "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
-    },
-    "build": {
-     "ignore_run_exports_from": [
-      "cuda_compiler_stub"
-     ],
-     "missing_dso_whitelist": [
-      "*/libcublas.so*",
-      "*/libcublasLt.so*"
-     ],
-     "number": "2",
-     "post-link": "post-link",
-     "run_exports": [
-      "custatevec"
-     ],
-     "script": [
-      "mkdir -p $PREFIX/include",
-      "mv include/custatevec.h $PREFIX/include/",
-      "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/"
-     ]
-    },
-    "name": "custatevec",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cuda_compiler_stub",
-      "sysroot_linux-64 2.17"
-     ],
-     "host": [],
-     "run": [
-      "cudatoolkit >=11.0,<12"
-     ]
-    },
-    "test": {
-     "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
-     ],
-     "files": [
-      "test_load_elf.c",
-      "cusv_run_test.sh"
-     ],
-     "requires": [
-      "git",
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "sysroot_linux-64 2.17",
-      "cudatoolkit 11.2"
-     ]
-    },
-    "version": "1.2.0"
-   },
-   {
-    "about": {
-     "description": "NVIDIA cuTensorNet is a high-performance GPU library for tensor network computations,\na component of the NVIDIA cuQuantum SDK.\n\nThe packages cuquantum, custatevec, and cutensornet are governed by the NVIDIA cuQuantum\nSoftware License Agreement (EULA). By downloading and using the packages,\nyou accept the terms and conditions of the NVIDIA cuQuantum EULA -\nhttps://docs.nvidia.com/cuda/cuquantum/license.html\n",
-     "dev_url": "https://github.com/NVIDIA/cuQuantum",
-     "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
-     "home": "https://developer.nvidia.com/cuquantum-sdk",
-     "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
-     "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
-     "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
-    },
-    "build": {
-     "ignore_run_exports_from": [
-      "cuda_compiler_stub"
-     ],
-     "missing_dso_whitelist": [
-      "*/libcutensor.so*",
-      "*/libcublas.so*",
-      "*/libcublasLt.so*",
-      "*/libcusolver.so*",
-      "*/libcusparse.so*"
-     ],
-     "number": "2",
-     "post-link": "post-link",
-     "run_exports": [
-      "cutensornet mpi_openmpi_*"
-     ],
-     "script": [
-      "mkdir -p $PREFIX/include",
-      "mv include/cutensornet* $PREFIX/include/",
-      "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
-      "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
-      "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
-      "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
-      "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
-     ],
-     "string": "mpi_openmpi_h1234567_2"
-    },
-    "name": "cutensornet",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cuda_compiler_stub",
-      "sysroot_linux-64 2.17"
-     ],
-     "host": [
-      "openmpi"
-     ],
-     "run": [
-      "cudatoolkit >=11.0,<12",
-      "cutensor >=1.6.1,<2",
-      "openmpi"
-     ],
-     "run_constrained": null
-    },
-    "test": {
-     "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
-      "echo $CUTENSORNET_COMM_LIB",
-      "test -n $CUTENSORNET_COMM_LIB",
-      "test -f $CUTENSORNET_COMM_LIB"
-     ],
-     "files": [
-      "test_load_elf.c",
-      "cutn_run_test.sh"
-     ],
-     "requires": [
-      "git",
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "sysroot_linux-64 2.17",
-      "cudatoolkit 11.2"
-     ]
-    },
-    "version": "2.0.0"
-   },
-   {
-    "about": {
-     "description": "NVIDIA cuQuantum Python provides Python bindings and high-level object-oriented\nmodels for accessing the full functionalities of NVIDIA cuQuantum SDK from Python.\n",
-     "dev_url": "https://github.com/NVIDIA/cuQuantum",
-     "doc_url": "https://docs.nvidia.com/cuda/cuquantum/python/index.html",
-     "home": "https://developer.nvidia.com/cuquantum-sdk",
-     "license": "BSD-3-Clause",
-     "license_file": "LICENSE",
-     "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html#nvidia-cuquantum-python",
-     "summary": "cuQuantum Python: Python APIs for NVIDIA cuQuantum SDK"
-    },
-    "build": {
-     "ignore_run_exports_from": [
-      "cuda_compiler_stub"
-     ],
-     "number": "0",
-     "script": [
-      "cd python",
-      "$PREFIX/bin/python -m pip install --no-deps --no-build-isolation -vv ."
-     ],
-     "script_env": [
-      "CUQUANTUM_ROOT=$PREFIX",
-      "CUTENSOR_ROOT=$PREFIX"
-     ]
-    },
-    "name": "cuquantum-python",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "sysroot_linux-64 2.17"
-     ],
-     "host": [
-      "python",
-      "pip",
-      "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
-      "packaging"
-     ],
-     "run": [
-      "python",
-      "numpy >=1.19",
-      "cupy >=9.5",
       "custatevec",
       "cutensornet"
      ],
      "run_constrained": [
-      "pytorch >=1.10",
-      "mpi4py >=3.1.0"
-     ]
-    },
-    "test": {
-     "commands": [
-      "python -m cuquantum --includes --libs --target custatevec --target cutensornet"
-     ],
-     "imports": [
-      "cuquantum",
-      "cuquantum.custatevec",
-      "cuquantum.cutensornet"
-     ]
-    },
-    "version": "22.11.0.1"
-   },
-   {
-    "build": {
-     "number": "2"
-    },
-    "name": "cuquantum",
-    "requirements": {
-     "build": [],
-     "host": [],
-     "run": [
-      "custatevec",
-      "cutensornet"
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -2662,7 +2511,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -2671,7 +2520,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -2683,7 +2532,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -2692,7 +2541,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/"
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/"
      ]
     },
     "name": "custatevec",
@@ -2705,11 +2554,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -2724,7 +2576,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -2733,7 +2585,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -2748,7 +2600,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -2757,14 +2609,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -2781,11 +2633,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -2803,7 +2657,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -2842,8 +2696,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -2868,11 +2722,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -2881,6 +2735,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -2888,7 +2745,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -2897,7 +2754,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -2909,7 +2766,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -2918,7 +2775,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/"
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/"
      ]
     },
     "name": "custatevec",
@@ -2931,11 +2788,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -2950,7 +2810,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -2959,7 +2819,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -2974,7 +2834,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -2983,14 +2843,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -3007,11 +2867,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -3029,7 +2891,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -3068,8 +2930,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -3094,11 +2956,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -3107,6 +2969,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -3114,7 +2979,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -3123,7 +2988,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -3135,7 +3000,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -3144,24 +3009,27 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
-      "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/"
      ]
     },
     "name": "custatevec",
     "requirements": {
      "build": [
       "c_compiler_stub",
-      "cuda_compiler_stub"
+      "cuda_compiler_stub",
+      "sysroot_linux-64 2.17"
      ],
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -3172,10 +3040,11 @@
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cuda_compiler_stub",
+      "sysroot_linux-64 2.17",
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -3184,7 +3053,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -3199,7 +3068,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -3208,14 +3077,247 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
+    },
+    "name": "cutensornet",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cuda_compiler_stub",
+      "sysroot_linux-64 2.17"
+     ],
+     "host": [
+      "openmpi"
+     ],
+     "run": [
+      "cudatoolkit >=11.0,<12",
+      "cutensor >=1.6.1,<2",
+      "openmpi"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
+    },
+    "test": {
+     "commands": [
+      "./cutn_run_test.sh 23.03.0.20",
+      "echo $CUTENSORNET_COMM_LIB",
+      "test -n $CUTENSORNET_COMM_LIB",
+      "test -f $CUTENSORNET_COMM_LIB"
+     ],
+     "files": [
+      "test_load_elf.c",
+      "cutn_run_test.sh"
+     ],
+     "requires": [
+      "git",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "sysroot_linux-64 2.17",
+      "cudatoolkit 11.2"
+     ]
+    },
+    "version": "2.1.0"
+   },
+   {
+    "about": {
+     "description": "NVIDIA cuQuantum Python provides Python bindings and high-level object-oriented\nmodels for accessing the full functionalities of NVIDIA cuQuantum SDK from Python.\n",
+     "dev_url": "https://github.com/NVIDIA/cuQuantum",
+     "doc_url": "https://docs.nvidia.com/cuda/cuquantum/python/index.html",
+     "home": "https://developer.nvidia.com/cuquantum-sdk",
+     "license": "BSD-3-Clause",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html#nvidia-cuquantum-python",
+     "summary": "cuQuantum Python: Python APIs for NVIDIA cuQuantum SDK"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "cuda_compiler_stub"
+     ],
+     "number": "0",
+     "script": [
+      "cd python",
+      "$PREFIX/bin/python -m pip install --no-deps --no-build-isolation -vv ."
+     ],
+     "script_env": [
+      "CUQUANTUM_ROOT=$PREFIX",
+      "CUTENSOR_ROOT=$PREFIX"
+     ]
+    },
+    "name": "cuquantum-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "sysroot_linux-64 2.17"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "cython",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
+      "packaging"
+     ],
+     "run": [
+      "python",
+      "numpy >=1.19",
+      "cupy >=9.5",
+      "custatevec",
+      "cutensornet"
+     ],
+     "run_constrained": [
+      "pytorch >=1.10",
+      "mpi4py >=3.1.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -m cuquantum --includes --libs --target custatevec --target cutensornet"
+     ],
+     "imports": [
+      "cuquantum",
+      "cuquantum.custatevec",
+      "cuquantum.cutensornet"
+     ]
+    },
+    "version": "23.03.0"
+   },
+   {
+    "build": {
+     "number": "0"
+    },
+    "name": "cuquantum",
+    "requirements": {
+     "build": [],
+     "host": [],
+     "run": [
+      "custatevec",
+      "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
+    },
+    "test": {
+     "commands": [
+      "echo \"ok!\""
+     ]
+    },
+    "version": "23.03.0.20"
+   },
+   {
+    "about": {
+     "description": "NVIDIA cuStateVec is a high-performance GPU library dedicated to operations with state vectors\nfor expressing quantum algorithms. cuStateVec is a component of the NVIDIA cuQuantum SDK.\n\nThe packages cuquantum, custatevec, and cutensornet are governed by the NVIDIA cuQuantum\nSoftware License Agreement (EULA). By downloading and using the packages,\nyou accept the terms and conditions of the NVIDIA cuQuantum EULA -\nhttps://docs.nvidia.com/cuda/cuquantum/license.html\n",
+     "dev_url": "https://github.com/NVIDIA/cuQuantum",
+     "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
+     "home": "https://developer.nvidia.com/cuquantum-sdk",
+     "license": "LicenseRef-cuQuantum-Software-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
+     "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "cuda_compiler_stub"
+     ],
+     "missing_dso_whitelist": [
+      "*/libcublas.so*",
+      "*/libcublasLt.so*"
+     ],
+     "number": "0",
+     "post-link": "post-link",
+     "run_exports": [
+      "custatevec"
+     ],
+     "script": [
+      "mkdir -p $PREFIX/include",
+      "mv include/custatevec.h $PREFIX/include/",
+      "mkdir -p $PREFIX/lib",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
+      "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
+     ]
+    },
+    "name": "custatevec",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cuda_compiler_stub"
+     ],
+     "host": [],
+     "run": [
+      "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
+    },
+    "test": {
+     "commands": [
+      "./cusv_run_test.sh 23.03.0.20"
+     ],
+     "files": [
+      "test_load_elf.c",
+      "cusv_run_test.sh"
+     ],
+     "requires": [
+      "git",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cudatoolkit 11.2"
+     ]
+    },
+    "version": "1.3.0"
+   },
+   {
+    "about": {
+     "description": "NVIDIA cuTensorNet is a high-performance GPU library for tensor network computations,\na component of the NVIDIA cuQuantum SDK.\n\nThe packages cuquantum, custatevec, and cutensornet are governed by the NVIDIA cuQuantum\nSoftware License Agreement (EULA). By downloading and using the packages,\nyou accept the terms and conditions of the NVIDIA cuQuantum EULA -\nhttps://docs.nvidia.com/cuda/cuquantum/license.html\n",
+     "dev_url": "https://github.com/NVIDIA/cuQuantum",
+     "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
+     "home": "https://developer.nvidia.com/cuquantum-sdk",
+     "license": "LicenseRef-cuQuantum-Software-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
+     "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
+    },
+    "build": {
+     "ignore_run_exports_from": [
+      "cuda_compiler_stub"
+     ],
+     "missing_dso_whitelist": [
+      "*/libcutensor.so*",
+      "*/libcublas.so*",
+      "*/libcublasLt.so*",
+      "*/libcusolver.so*",
+      "*/libcusparse.so*"
+     ],
+     "number": "0",
+     "post-link": "post-link",
+     "run_exports": [
+      "cutensornet mpi_openmpi_*"
+     ],
+     "script": [
+      "mkdir -p $PREFIX/include",
+      "mv include/cutensornet* $PREFIX/include/",
+      "mkdir -p $PREFIX/lib",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
+      "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
+      "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
+      "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
+     ],
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -3231,11 +3333,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -3252,7 +3356,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -3290,8 +3394,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -3316,11 +3420,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -3329,6 +3433,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -3336,7 +3443,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -3345,7 +3452,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -3357,7 +3464,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -3366,7 +3473,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
       "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
      ]
     },
@@ -3379,11 +3486,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -3397,7 +3507,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -3406,7 +3516,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -3421,7 +3531,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -3430,14 +3540,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -3453,11 +3563,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -3474,7 +3586,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -3512,8 +3624,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -3538,11 +3650,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -3551,6 +3663,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -3558,7 +3673,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -3567,7 +3682,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -3579,7 +3694,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -3588,7 +3703,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
       "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
      ]
     },
@@ -3601,11 +3716,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -3619,7 +3737,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -3628,7 +3746,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -3643,7 +3761,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -3652,14 +3770,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -3675,11 +3793,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -3696,7 +3816,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -3734,8 +3854,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -3760,11 +3880,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -3773,6 +3893,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -3780,7 +3903,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -3789,7 +3912,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -3801,7 +3924,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -3810,7 +3933,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
       "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
      ]
     },
@@ -3823,11 +3946,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -3841,7 +3967,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -3850,7 +3976,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -3865,7 +3991,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -3874,14 +4000,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -3897,11 +4023,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -3918,7 +4046,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -3956,8 +4084,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -3982,11 +4110,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -3995,6 +4123,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -4002,7 +4133,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -4011,7 +4142,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -4023,7 +4154,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -4032,7 +4163,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
       "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
      ]
     },
@@ -4045,11 +4176,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -4063,7 +4197,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -4072,7 +4206,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -4087,7 +4221,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -4096,14 +4230,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -4119,11 +4253,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -4140,7 +4276,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -4178,8 +4314,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -4204,11 +4340,11 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    },
    {
     "build": {
-     "number": "2"
+     "number": "0"
     },
     "name": "cuquantum",
     "requirements": {
@@ -4217,6 +4353,9 @@
      "run": [
       "custatevec",
       "cutensornet"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
@@ -4224,7 +4363,7 @@
       "echo \"ok!\""
      ]
     },
-    "version": "22.11.0.13"
+    "version": "23.03.0.20"
    },
    {
     "about": {
@@ -4233,7 +4372,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/custatevec/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuStateVec: A High-Performance Library for State Vector Quantum Simulators"
     },
@@ -4245,7 +4384,7 @@
       "*/libcublas.so*",
       "*/libcublasLt.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "custatevec"
@@ -4254,7 +4393,7 @@
       "mkdir -p $PREFIX/include",
       "mv include/custatevec.h $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcustatevec.so* $PREFIX/lib/",
+      "mv lib/11/libcustatevec.so* $PREFIX/lib/",
       "patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so"
      ]
     },
@@ -4267,11 +4406,14 @@
      "host": [],
      "run": [
       "cudatoolkit >=11.0,<12"
+     ],
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
      ]
     },
     "test": {
      "commands": [
-      "./cusv_run_test.sh 22.11.0.13"
+      "./cusv_run_test.sh 23.03.0.20"
      ],
      "files": [
       "test_load_elf.c",
@@ -4285,7 +4427,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "1.2.0"
+    "version": "1.3.0"
    },
    {
     "about": {
@@ -4294,7 +4436,7 @@
      "doc_url": "https://docs.nvidia.com/cuda/cutensornet/index.html",
      "home": "https://developer.nvidia.com/cuquantum-sdk",
      "license": "LicenseRef-cuQuantum-Software-License-Agreement",
-     "license_file": "docs/cuQuantum_license.pdf",
+     "license_file": "LICENSE",
      "license_url": "https://docs.nvidia.com/cuda/cuquantum/license.html",
      "summary": "cuTensorNet: A High-Performance Library for Tensor Network Computations"
     },
@@ -4309,7 +4451,7 @@
       "*/libcusolver.so*",
       "*/libcusparse.so*"
      ],
-     "number": "2",
+     "number": "0",
      "post-link": "post-link",
      "run_exports": [
       "cutensornet mpi_openmpi_*"
@@ -4318,14 +4460,14 @@
       "mkdir -p $PREFIX/include",
       "mv include/cutensornet* $PREFIX/include/",
       "mkdir -p $PREFIX/lib",
-      "mv lib/libcutensornet.so* $PREFIX/lib/",
-      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
+      "mv lib/11/libcutensornet.so* $PREFIX/lib/",
+      "$GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so",
       "mkdir -p \"${PREFIX}/etc/conda/activate.d\"",
       "cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"",
       "mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"",
       "cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\""
      ],
-     "string": "mpi_openmpi_h1234567_2"
+     "string": "mpi_openmpi_h1234567_0"
     },
     "name": "cutensornet",
     "requirements": {
@@ -4341,11 +4483,13 @@
       "cutensor >=1.6.1,<2",
       "openmpi"
      ],
-     "run_constrained": null
+     "run_constrained": [
+      "cuda-version >=11.0,<12"
+     ]
     },
     "test": {
      "commands": [
-      "./cutn_run_test.sh 22.11.0.13",
+      "./cutn_run_test.sh 23.03.0.20",
       "echo $CUTENSORNET_COMM_LIB",
       "test -n $CUTENSORNET_COMM_LIB",
       "test -f $CUTENSORNET_COMM_LIB"
@@ -4362,7 +4506,7 @@
       "cudatoolkit 11.2"
      ]
     },
-    "version": "2.0.0"
+    "version": "2.1.0"
    },
    {
     "about": {
@@ -4400,8 +4544,8 @@
       "python",
       "pip",
       "cython",
-      "custatevec =1.2.0",
-      "cutensornet =2.0.0",
+      "custatevec =1.3.0",
+      "cutensornet =2.1.0",
       "packaging"
      ],
      "run": [
@@ -4426,85 +4570,85 @@
       "cuquantum.cutensornet"
      ]
     },
-    "version": "22.11.0.1"
+    "version": "23.03.0"
    }
   ],
   "package": {
    "name": "cuquantum-sdk",
-   "version": "22.11.0.13"
+   "version": "23.03.0.20"
   },
   "source": [
    {
-    "sha256": "c02f20d4ece8f94c5e29f26613c520664cb888788366b0e2ddbba366e08ceba9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-22.11.0.13-archive.tar.xz"
+    "sha256": "08b31e47adcfbdecad935589e3245a35ee7ee0886f1e8c745aca570213598790",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "c02f20d4ece8f94c5e29f26613c520664cb888788366b0e2ddbba366e08ceba9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-22.11.0.13-archive.tar.xz"
+    "sha256": "08b31e47adcfbdecad935589e3245a35ee7ee0886f1e8c745aca570213598790",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "c02f20d4ece8f94c5e29f26613c520664cb888788366b0e2ddbba366e08ceba9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-22.11.0.13-archive.tar.xz"
+    "sha256": "08b31e47adcfbdecad935589e3245a35ee7ee0886f1e8c745aca570213598790",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "85d8df2e2fd6cb55311ac69e792dfaae87931d399898fefdcbb4773d606ff7e9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-22.11.0.13-archive.tar.xz"
+    "sha256": "11475c96d1b5713ce6646474796ace676c00f1259ba16c2130c7e74a6fb75ea2",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "85d8df2e2fd6cb55311ac69e792dfaae87931d399898fefdcbb4773d606ff7e9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-22.11.0.13-archive.tar.xz"
+    "sha256": "11475c96d1b5713ce6646474796ace676c00f1259ba16c2130c7e74a6fb75ea2",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "85d8df2e2fd6cb55311ac69e792dfaae87931d399898fefdcbb4773d606ff7e9",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-22.11.0.13-archive.tar.xz"
+    "sha256": "11475c96d1b5713ce6646474796ace676c00f1259ba16c2130c7e74a6fb75ea2",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "6432abc24269b750e2049b32f0ad9d9f573c90af6fd3505434999d0217445d46",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-22.11.0.13-archive.tar.xz"
+    "sha256": "5b4dc4d8d86332f4e988bcb46214a291f2c4058f9a46e36bfa617dc4026a28e7",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "6432abc24269b750e2049b32f0ad9d9f573c90af6fd3505434999d0217445d46",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-22.11.0.13-archive.tar.xz"
+    "sha256": "5b4dc4d8d86332f4e988bcb46214a291f2c4058f9a46e36bfa617dc4026a28e7",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    },
    {
-    "sha256": "6432abc24269b750e2049b32f0ad9d9f573c90af6fd3505434999d0217445d46",
-    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-22.11.0.13-archive.tar.xz"
+    "sha256": "5b4dc4d8d86332f4e988bcb46214a291f2c4058f9a46e36bfa617dc4026a28e7",
+    "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-23.03.0.20-archive.tar.xz"
    },
    {
-    "sha256": "cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1",
-    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v22.11.0.tar.gz"
+    "sha256": "9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f",
+    "url": "https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v23.03.0.tar.gz"
    }
   ]
  },
@@ -4522,7 +4666,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cuquantum.json"
  },
- "raw_meta_yaml": "# Make sure the component versions are consistent with the SDK version!\n{% set version = \"22.11.0.13\" %}\n{% set cusv_version = \"1.2.0\" %}\n{% set cutn_version = \"2.0.0\" %}\n\n# prioritize nompi variant via build number\n{% set build_num = 2 %}\n{% if mpi == 'nompi' %}\n{% set cutn_build = build_num + 101 %}\n{% else %}\n{% set cutn_build = build_num %}\n{% endif %}\n\n# encode mpi dependency in the build string\n{% if mpi != \"nompi\" %}\n{% set mpi_prefix = \"mpi_\" + mpi %}\n{% else %}\n{% set mpi_prefix = \"nompi\" %}\n{% endif %}\n\npackage:\n  name: cuquantum-sdk  # dummy\n  version: {{ version }}\n\nsource:\n  - url: https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-{{ version }}-archive.tar.xz  # [linux64]\n    sha256: c02f20d4ece8f94c5e29f26613c520664cb888788366b0e2ddbba366e08ceba9  # [linux64]\n\n  - url: https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-{{ version }}-archive.tar.xz  # [aarch64]\n    sha256: 85d8df2e2fd6cb55311ac69e792dfaae87931d399898fefdcbb4773d606ff7e9  # [aarch64]\n\n  - url: https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-{{ version }}-archive.tar.xz  # [ppc64le]\n    sha256: 6432abc24269b750e2049b32f0ad9d9f573c90af6fd3505434999d0217445d46  # [ppc64le]\n\n  - url: https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v{{ \".\".join(version.split(\".\")[:3]) }}.tar.gz\n    sha256: cfc249a71a8a6aab9f76f90c61ce7cd26cde69e335878134c17122143acbfbb1\n\nbuild:\n  number: {{ build_num }}\n  skip: true  # [not linux or cuda_compiler_version != \"11.2\"]\n\noutputs:\n\n  - name: cuquantum\n    version: {{ version }}\n    build:\n      number: {{ build_num }}\n      skip: true  # [not linux or cuda_compiler_version != \"11.2\"]\n    requirements:\n      build:\n      host:\n      run:\n        - {{ pin_subpackage('custatevec', max_pin='x.x.x') }}\n        - {{ pin_subpackage('cutensornet', max_pin='x.x.x') }}\n    test:\n      commands:\n        - echo \"ok!\"\n\n  - name: custatevec\n    version: {{ cusv_version }}\n    build:\n      number: {{ build_num }}\n      skip: true  # [not linux or cuda_compiler_version != \"11.2\"]\n      script:\n        - mkdir -p $PREFIX/include                                            # [linux]\n        - mv include/custatevec.h $PREFIX/include/                            # [linux]\n        - mkdir -p $PREFIX/lib                                                # [linux]\n        - mv lib/libcustatevec.so* $PREFIX/lib/                               # [linux]\n\n        # Patch for conda-forge:\n        # According to the CUDA support matrix, we require glibc 2.27+ on aarch64-sbsa\n        # and ppc64le, while conda-forge is still on 2.17. However, given that powf is\n        # the only offending symbol that needs a newer glibc, it is the easiest if we\n        # just patch it.\n        - patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so   # [aarch64 or ppc64le]\n      run_exports:\n        - {{ pin_subpackage('custatevec', max_pin='x') }}\n      ignore_run_exports_from:\n        - {{ compiler('cuda') }}\n      missing_dso_whitelist:\n        - '*/libcublas.so*'\n        - '*/libcublasLt.so*'\n      post-link: post-link  # this is supported by conda-build, but undocumented\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cuda') }}\n        - sysroot_linux-64 2.17  # [linux64]\n      host:\n      run:\n        - cudatoolkit >=11.0,<12\n    # apparently conda-build supports full test section spec, the document is super outdated\n    test:\n      requires:\n        - git\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('cuda') }}\n        - sysroot_linux-64 2.17  # [linux64]\n        # make sure we pick up the version matching the docker,\n        # or the linker would complain\n        - cudatoolkit {{ cuda_compiler_version }}\n      files:\n        - test_load_elf.c\n        - cusv_run_test.sh\n      commands:\n        - ./cusv_run_test.sh {{ version }}\n    about:\n      home: https://developer.nvidia.com/cuquantum-sdk\n      license: LicenseRef-cuQuantum-Software-License-Agreement\n      license_url: https://docs.nvidia.com/cuda/cuquantum/license.html\n      license_file: docs/cuQuantum_license.pdf\n      summary: 'cuStateVec: A High-Performance Library for State Vector Quantum Simulators'\n      description: |\n        NVIDIA cuStateVec is a high-performance GPU library dedicated to operations with state vectors\n        for expressing quantum algorithms. cuStateVec is a component of the NVIDIA cuQuantum SDK.\n\n        The packages cuquantum, custatevec, and cutensornet are governed by the NVIDIA cuQuantum\n        Software License Agreement (EULA). By downloading and using the packages,\n        you accept the terms and conditions of the NVIDIA cuQuantum EULA -\n        https://docs.nvidia.com/cuda/cuquantum/license.html\n      doc_url: https://docs.nvidia.com/cuda/custatevec/index.html\n      dev_url: https://github.com/NVIDIA/cuQuantum\n\n  - name: cutensornet\n    version: {{ cutn_version }}\n    build:\n      number: {{ cutn_build }}\n      string: \"{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ cutn_build }}\"\n      skip: true  # [not linux or cuda_compiler_version != \"11.2\"]\n      script:\n        - mkdir -p $PREFIX/include                                            # [linux]\n        - mv include/cutensornet* $PREFIX/include/                            # [linux]\n        - mkdir -p $PREFIX/lib                                                # [linux]\n        - mv lib/libcutensornet.so* $PREFIX/lib/                              # [linux]\n\n        # build the wrapper lib\n        - $GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so  # [mpi != 'nompi']\n        # copy activate/deactivate scripts\n        - mkdir -p \"${PREFIX}/etc/conda/activate.d\"  # [mpi != 'nompi']\n        - cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"  # [mpi != 'nompi']\n        - mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"  # [mpi != 'nompi']\n        - cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\"  # [mpi != 'nompi']\n      run_exports:\n        - {{ pin_subpackage('cutensornet', max_pin='x') }} {{ mpi_prefix }}_*\n      ignore_run_exports_from:\n        - {{ compiler('cuda') }}\n      missing_dso_whitelist:\n        - '*/libcutensor.so*'\n        - '*/libcublas.so*'\n        - '*/libcublasLt.so*'\n        - '*/libcusolver.so*'\n        - '*/libcusparse.so*'\n      post-link: post-link  # this is supported by conda-build, but undocumented\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cuda') }}\n        - sysroot_linux-64 2.17  # [linux64]\n      host:\n        - {{ mpi }}  # [mpi != 'nompi']\n      run:\n        - cudatoolkit >=11.0,<12\n        - cutensor >=1.6.1,<2\n        # conda-forge mpich does not support CUDA...\n        - {{ mpi }} * external*  # [mpi == 'mpich']\n        - {{ mpi }}              # [mpi == 'openmpi']\n      run_constrained:\n        # if users also wanna install mpi, we need to ensure the nompi version is not\n        # picked by the solver, we do so by createing a conflict\n        - openmpi <0.a0          # [mpi == 'nompi']\n        - mpich <0.a0            # [mpi == 'nompi']\n    # apparently conda-build supports full test section spec, the document is super outdated\n    test:\n      requires:\n        - git\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('cuda') }}\n        - sysroot_linux-64 2.17  # [linux64]\n        # make sure we pick up the version matching the docker,\n        # or the linker would complain\n        - cudatoolkit {{ cuda_compiler_version }}\n      files:\n        - test_load_elf.c\n        - cutn_run_test.sh\n      commands:\n        - ./cutn_run_test.sh {{ version }}\n        - echo $CUTENSORNET_COMM_LIB\n        - test -n $CUTENSORNET_COMM_LIB  # [mpi != 'nompi']\n        - test -f $CUTENSORNET_COMM_LIB  # [mpi != 'nompi']\n        - test -z $CUTENSORNET_COMM_LIB  # [mpi == 'nompi']\n    about:\n      home: https://developer.nvidia.com/cuquantum-sdk\n      license: LicenseRef-cuQuantum-Software-License-Agreement\n      license_url: https://docs.nvidia.com/cuda/cuquantum/license.html\n      license_file: docs/cuQuantum_license.pdf\n      summary: 'cuTensorNet: A High-Performance Library for Tensor Network Computations'\n      description: |\n        NVIDIA cuTensorNet is a high-performance GPU library for tensor network computations,\n        a component of the NVIDIA cuQuantum SDK.\n\n        The packages cuquantum, custatevec, and cutensornet are governed by the NVIDIA cuQuantum\n        Software License Agreement (EULA). By downloading and using the packages,\n        you accept the terms and conditions of the NVIDIA cuQuantum EULA -\n        https://docs.nvidia.com/cuda/cuquantum/license.html\n      doc_url: https://docs.nvidia.com/cuda/cutensornet/index.html\n      dev_url: https://github.com/NVIDIA/cuQuantum\n\n  - name: cuquantum-python\n    #version: {{ \".\".join(version.split(\".\")[:3]) }}\n    version: \"22.11.0.1\"  # TODO: revert me\n    build:\n      #number: {{ build_num }}\n      number: 0  # TODO: revert me\n      skip: true  # [not linux or cuda_compiler_version != \"11.2\"]\n      script_env:\n        - CUQUANTUM_ROOT=$PREFIX\n        - CUTENSOR_ROOT=$PREFIX\n      script:\n        - cd python\n        # {{ PYTHON }} is not resolved properly in multi-output recipes...\n        - $PREFIX/bin/python -m pip install --no-deps --no-build-isolation -vv .\n      ignore_run_exports_from:\n        # let cuquantum handle the CUDA deps\n        - {{ compiler('cuda') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('cuda') }}\n        - sysroot_linux-64 2.17  # [linux64]\n      host:\n        - python\n        - pip\n        - cython\n        - custatevec ={{ cusv_version }}\n        - cutensornet ={{ cutn_version }}\n        - packaging\n      run:\n        - python\n        - numpy >=1.19\n        - cupy >=9.5\n        - {{ pin_subpackage('custatevec', max_pin='x') }}\n        - {{ pin_subpackage('cutensornet', max_pin='x') }}\n      run_constrained:\n        - pytorch >=1.10\n        - mpi4py >=3.1.0\n        # we don't have to pin Qiskit or Cirq here because their versions are fairly recent on conda-forge\n    test:\n      imports:\n        - cuquantum\n        - cuquantum.custatevec\n        - cuquantum.cutensornet\n      commands:\n        - python -m cuquantum --includes --libs --target custatevec --target cutensornet\n    about:\n      home: https://developer.nvidia.com/cuquantum-sdk\n      license: BSD-3-Clause\n      license_url: https://docs.nvidia.com/cuda/cuquantum/license.html#nvidia-cuquantum-python\n      license_file: LICENSE\n      summary: \"cuQuantum Python: Python APIs for NVIDIA cuQuantum SDK\"\n      description: |\n        NVIDIA cuQuantum Python provides Python bindings and high-level object-oriented\n        models for accessing the full functionalities of NVIDIA cuQuantum SDK from Python.\n      doc_url: https://docs.nvidia.com/cuda/cuquantum/python/index.html\n      dev_url: https://github.com/NVIDIA/cuQuantum\n\nabout:\n  home: https://developer.nvidia.com/cuquantum-sdk\n  license: LicenseRef-cuQuantum-Software-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/cuquantum/license.html\n  license_file: docs/cuQuantum_license.pdf\n  summary: 'cuQuantum SDK: A High-Performance Library for Accelerating Quantum Information Science'\n  description: |\n    NVIDIA cuQuantum is an SDK of optimized libraries and tools for accelerating quantum computing workflows.\n    Using NVIDIA GPU Tensor Core GPUs, developers can use cuQuantum to speed up quantum circuit simulations\n    based on state vector and tensor network methods by orders of magnitude. Two major components of the\n    SDK are\n\n      - cuStateVec: a high-performance library for state vector computations\n      - cuTensorNet: a high-performance library for tensor network computations\n\n    The packages cuquantum, custatevec, and cutensornet are governed by the NVIDIA cuQuantum\n    Software License Agreement (EULA). By downloading and using the packages,\n    you accept the terms and conditions of the NVIDIA cuQuantum EULA -\n    https://docs.nvidia.com/cuda/cuquantum/license.html\n  doc_url: https://docs.nvidia.com/cuda/cuquantum/index.html\n  dev_url: https://github.com/NVIDIA/cuQuantum\n\nextra:\n  recipe-maintainers:\n    - leofang\n    - JeremyWangNVDA\n    - mtjrider\n    - yangcal\n    - DmitryLyakh\n",
+ "raw_meta_yaml": "# Make sure the component versions are consistent with the SDK version!\n{% set version = \"23.03.0.20\" %}\n{% set cusv_version = \"1.3.0\" %}\n{% set cutn_version = \"2.1.0\" %}\n\n{% set cuda_major = \"11\" %}\n\n# prioritize nompi variant via build number\n{% set build_num = 0 %}\n{% if mpi == 'nompi' %}\n{% set cutn_build = build_num + 100 %}\n{% else %}\n{% set cutn_build = build_num %}\n{% endif %}\n\n# encode mpi dependency in the build string\n{% if mpi != \"nompi\" %}\n{% set mpi_prefix = \"mpi_\" + mpi %}\n{% else %}\n{% set mpi_prefix = \"nompi\" %}\n{% endif %}\n\npackage:\n  name: cuquantum-sdk  # dummy\n  version: {{ version }}\n\nsource:\n  - url: https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-{{ version }}-archive.tar.xz  # [linux64]\n    sha256: 08b31e47adcfbdecad935589e3245a35ee7ee0886f1e8c745aca570213598790  # [linux64]\n\n  - url: https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-sbsa/cuquantum-linux-sbsa-{{ version }}-archive.tar.xz  # [aarch64]\n    sha256: 11475c96d1b5713ce6646474796ace676c00f1259ba16c2130c7e74a6fb75ea2  # [aarch64]\n\n  - url: https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-ppc64le/cuquantum-linux-ppc64le-{{ version }}-archive.tar.xz  # [ppc64le]\n    sha256: 5b4dc4d8d86332f4e988bcb46214a291f2c4058f9a46e36bfa617dc4026a28e7  # [ppc64le]\n\n  - url: https://github.com/NVIDIA/cuQuantum/archive/refs/tags/v{{ \".\".join(version.split(\".\")[:3]) }}.tar.gz\n    sha256: 9ec936b7a730c9ee1651f8df3f5d720c7ab1a951e91aef65f7c81b027e52ec9f\n\nbuild:\n  number: {{ build_num }}\n  skip: true  # [not linux or cuda_compiler_version != \"11.2\"]\n\noutputs:\n\n  - name: cuquantum\n    version: {{ version }}\n    build:\n      number: {{ build_num }}\n      skip: true  # [not linux or cuda_compiler_version != \"11.2\"]\n    requirements:\n      build:\n      host:\n      run:\n        - {{ pin_subpackage('custatevec', max_pin='x.x.x') }}\n        - {{ pin_subpackage('cutensornet', max_pin='x.x.x') }}\n      # https://github.com/conda-forge/cuda-version-feedstock/pull/3 is not merged yet,\n      # otherwise we should add cuda-version to run, not run_constrained\n      run_constrained:\n        - cuda-version >=11.0,<12\n    test:\n      commands:\n        - echo \"ok!\"\n\n  - name: custatevec\n    version: {{ cusv_version }}\n    build:\n      number: {{ build_num }}\n      skip: true  # [not linux or cuda_compiler_version != \"11.2\"]\n      script:\n        - mkdir -p $PREFIX/include                                            # [linux]\n        - mv include/custatevec.h $PREFIX/include/                            # [linux]\n        - mkdir -p $PREFIX/lib                                                # [linux]\n        - mv lib/{{ cuda_major }}/libcustatevec.so* $PREFIX/lib/              # [linux]\n\n        # Patch for conda-forge:\n        # According to the CUDA support matrix, we require glibc 2.27+ on aarch64-sbsa\n        # and ppc64le, while conda-forge is still on 2.17. However, given that powf is\n        # the only offending symbol that needs a newer glibc, it is the easiest if we\n        # just patch it.\n        - patchelf --clear-symbol-version powf $PREFIX/lib/libcustatevec.so   # [aarch64 or ppc64le]\n      run_exports:\n        - {{ pin_subpackage('custatevec', max_pin='x') }}\n      ignore_run_exports_from:\n        - {{ compiler('cuda') }}\n      missing_dso_whitelist:\n        - '*/libcublas.so*'\n        - '*/libcublasLt.so*'\n      post-link: post-link  # this is supported by conda-build, but undocumented\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cuda') }}\n        - sysroot_linux-64 2.17  # [linux64]\n      host:\n      run:\n        - cudatoolkit >=11.0,<12\n      # https://github.com/conda-forge/cuda-version-feedstock/pull/3 is not merged yet,\n      # otherwise we should add cuda-version to run, not run_constrained\n      run_constrained:\n        - cuda-version >=11.0,<12\n    # apparently conda-build supports full test section spec, the document is super outdated\n    test:\n      requires:\n        - git\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('cuda') }}\n        - sysroot_linux-64 2.17  # [linux64]\n        # make sure we pick up the version matching the docker,\n        # or the linker would complain\n        - cudatoolkit {{ cuda_compiler_version }}\n      files:\n        - test_load_elf.c\n        - cusv_run_test.sh\n      commands:\n        - ./cusv_run_test.sh {{ version }}\n    about:\n      home: https://developer.nvidia.com/cuquantum-sdk\n      license: LicenseRef-cuQuantum-Software-License-Agreement\n      license_url: https://docs.nvidia.com/cuda/cuquantum/license.html\n      license_file: LICENSE\n      summary: 'cuStateVec: A High-Performance Library for State Vector Quantum Simulators'\n      description: |\n        NVIDIA cuStateVec is a high-performance GPU library dedicated to operations with state vectors\n        for expressing quantum algorithms. cuStateVec is a component of the NVIDIA cuQuantum SDK.\n\n        The packages cuquantum, custatevec, and cutensornet are governed by the NVIDIA cuQuantum\n        Software License Agreement (EULA). By downloading and using the packages,\n        you accept the terms and conditions of the NVIDIA cuQuantum EULA -\n        https://docs.nvidia.com/cuda/cuquantum/license.html\n      doc_url: https://docs.nvidia.com/cuda/custatevec/index.html\n      dev_url: https://github.com/NVIDIA/cuQuantum\n\n  - name: cutensornet\n    version: {{ cutn_version }}\n    build:\n      number: {{ cutn_build }}\n      string: \"{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ cutn_build }}\"\n      skip: true  # [not linux or cuda_compiler_version != \"11.2\"]\n      script:\n        - mkdir -p $PREFIX/include                                            # [linux]\n        - mv include/cutensornet* $PREFIX/include/                            # [linux]\n        - mkdir -p $PREFIX/lib                                                # [linux]\n        - mv lib/{{ cuda_major }}/libcutensornet.so* $PREFIX/lib/             # [linux]\n\n        # build the wrapper lib\n        - $GCC -shared -std=c11 -fPIC -I$CUDA_PATH/include -I$PREFIX/include distributed_interfaces/cutensornet_distributed_interface_mpi.c -L$PREFIX/lib -lmpi -o $PREFIX/lib/libcutensornet_distributed_interface_mpi.so  # [mpi != 'nompi']\n        # copy activate/deactivate scripts\n        - mkdir -p \"${PREFIX}/etc/conda/activate.d\"  # [mpi != 'nompi']\n        - cp \"${RECIPE_DIR}/cutn-activate.sh\" \"${PREFIX}/etc/conda/activate.d/cutn-activate.sh\"  # [mpi != 'nompi']\n        - mkdir -p \"${PREFIX}/etc/conda/deactivate.d\"  # [mpi != 'nompi']\n        - cp \"${RECIPE_DIR}/cutn-deactivate.sh\" \"${PREFIX}/etc/conda/deactivate.d/cutn-deactivate.sh\"  # [mpi != 'nompi']\n      run_exports:\n        - {{ pin_subpackage('cutensornet', max_pin='x') }} {{ mpi_prefix }}_*\n      ignore_run_exports_from:\n        - {{ compiler('cuda') }}\n      missing_dso_whitelist:\n        - '*/libcutensor.so*'\n        - '*/libcublas.so*'\n        - '*/libcublasLt.so*'\n        - '*/libcusolver.so*'\n        - '*/libcusparse.so*'\n      post-link: post-link  # this is supported by conda-build, but undocumented\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cuda') }}\n        - sysroot_linux-64 2.17  # [linux64]\n      host:\n        - {{ mpi }}  # [mpi != 'nompi']\n      run:\n        - cudatoolkit >=11.0,<12\n        - cutensor >=1.6.1,<2\n        # conda-forge mpich does not support CUDA...\n        - {{ mpi }} * external*  # [mpi == 'mpich']\n        - {{ mpi }}              # [mpi == 'openmpi']\n      run_constrained:\n        # if users also wanna install mpi, we need to ensure the nompi version is not\n        # picked by the solver, we do so by createing a conflict\n        - openmpi <0.a0          # [mpi == 'nompi']\n        - mpich <0.a0            # [mpi == 'nompi']\n        # https://github.com/conda-forge/cuda-version-feedstock/pull/3 is not merged yet,\n        # otherwise we should add cuda-version to run, not run_constrained\n        - cuda-version >=11.0,<12\n    # apparently conda-build supports full test section spec, the document is super outdated\n    test:\n      requires:\n        - git\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('cuda') }}\n        - sysroot_linux-64 2.17  # [linux64]\n        # make sure we pick up the version matching the docker,\n        # or the linker would complain\n        - cudatoolkit {{ cuda_compiler_version }}\n      files:\n        - test_load_elf.c\n        - cutn_run_test.sh\n      commands:\n        - ./cutn_run_test.sh {{ version }}\n        - echo $CUTENSORNET_COMM_LIB\n        - test -n $CUTENSORNET_COMM_LIB  # [mpi != 'nompi']\n        - test -f $CUTENSORNET_COMM_LIB  # [mpi != 'nompi']\n        - test -z $CUTENSORNET_COMM_LIB  # [mpi == 'nompi']\n    about:\n      home: https://developer.nvidia.com/cuquantum-sdk\n      license: LicenseRef-cuQuantum-Software-License-Agreement\n      license_url: https://docs.nvidia.com/cuda/cuquantum/license.html\n      license_file: LICENSE\n      summary: 'cuTensorNet: A High-Performance Library for Tensor Network Computations'\n      description: |\n        NVIDIA cuTensorNet is a high-performance GPU library for tensor network computations,\n        a component of the NVIDIA cuQuantum SDK.\n\n        The packages cuquantum, custatevec, and cutensornet are governed by the NVIDIA cuQuantum\n        Software License Agreement (EULA). By downloading and using the packages,\n        you accept the terms and conditions of the NVIDIA cuQuantum EULA -\n        https://docs.nvidia.com/cuda/cuquantum/license.html\n      doc_url: https://docs.nvidia.com/cuda/cutensornet/index.html\n      dev_url: https://github.com/NVIDIA/cuQuantum\n\n  - name: cuquantum-python\n    version: {{ \".\".join(version.split(\".\")[:3]) }}\n    build:\n      number: {{ build_num }}\n      skip: true  # [not linux or cuda_compiler_version != \"11.2\"]\n      script_env:\n        - CUQUANTUM_ROOT=$PREFIX\n        - CUTENSOR_ROOT=$PREFIX\n      script:\n        - cd python\n        # {{ PYTHON }} is not resolved properly in multi-output recipes...\n        - $PREFIX/bin/python -m pip install --no-deps --no-build-isolation -vv .\n      ignore_run_exports_from:\n        # let cuquantum handle the CUDA deps\n        - {{ compiler('cuda') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('cuda') }}\n        - sysroot_linux-64 2.17  # [linux64]\n      host:\n        - python\n        - pip\n        - cython\n        - custatevec ={{ cusv_version }}\n        - cutensornet ={{ cutn_version }}\n        - packaging\n      run:\n        - python\n        - numpy >=1.19\n        - cupy >=9.5\n        - {{ pin_subpackage('custatevec', max_pin='x') }}\n        - {{ pin_subpackage('cutensornet', max_pin='x') }}\n      run_constrained:\n        - pytorch >=1.10\n        - mpi4py >=3.1.0\n        # we don't have to pin Qiskit or Cirq here because their versions are fairly recent on conda-forge\n    test:\n      imports:\n        - cuquantum\n        - cuquantum.custatevec\n        - cuquantum.cutensornet\n      commands:\n        - python -m cuquantum --includes --libs --target custatevec --target cutensornet\n    about:\n      home: https://developer.nvidia.com/cuquantum-sdk\n      license: BSD-3-Clause\n      license_url: https://docs.nvidia.com/cuda/cuquantum/license.html#nvidia-cuquantum-python\n      license_file: LICENSE\n      summary: \"cuQuantum Python: Python APIs for NVIDIA cuQuantum SDK\"\n      description: |\n        NVIDIA cuQuantum Python provides Python bindings and high-level object-oriented\n        models for accessing the full functionalities of NVIDIA cuQuantum SDK from Python.\n      doc_url: https://docs.nvidia.com/cuda/cuquantum/python/index.html\n      dev_url: https://github.com/NVIDIA/cuQuantum\n\nabout:\n  home: https://developer.nvidia.com/cuquantum-sdk\n  license: LicenseRef-cuQuantum-Software-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/cuquantum/license.html\n  license_file: LICENSE\n  summary: 'cuQuantum SDK: A High-Performance Library for Accelerating Quantum Information Science'\n  description: |\n    NVIDIA cuQuantum is an SDK of optimized libraries and tools for accelerating quantum computing workflows.\n    Using NVIDIA GPU Tensor Core GPUs, developers can use cuQuantum to speed up quantum circuit simulations\n    based on state vector and tensor network methods by orders of magnitude. Two major components of the\n    SDK are\n\n      - cuStateVec: a high-performance library for state vector computations\n      - cuTensorNet: a high-performance library for tensor network computations\n\n    The packages cuquantum, custatevec, and cutensornet are governed by the NVIDIA cuQuantum\n    Software License Agreement (EULA). By downloading and using the packages,\n    you accept the terms and conditions of the NVIDIA cuQuantum EULA -\n    https://docs.nvidia.com/cuda/cuquantum/license.html\n  doc_url: https://docs.nvidia.com/cuda/cuquantum/index.html\n  dev_url: https://github.com/NVIDIA/cuQuantum\n\nextra:\n  recipe-maintainers:\n    - leofang\n    - JeremyWangNVDA\n    - mtjrider\n    - yangcal\n    - DmitryLyakh\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -4610,8 +4754,8 @@
   "host": {
    "__set__": true,
    "elements": [
-    "custatevec =1.2.0",
-    "cutensornet =2.0.0",
+    "custatevec =1.3.0",
+    "cutensornet =2.1.0",
     "cython",
     "openmpi",
     "packaging",
@@ -4644,8 +4788,8 @@
    ]
   }
  },
- "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-22.11.0.13-archive.tar.xz",
- "version": "22.11.0.13",
+ "url": "https://developer.download.nvidia.com/compute/cuquantum/redist/cuquantum/linux-x86_64/cuquantum-linux-x86_64-23.03.0.20-archive.tar.xz",
+ "version": "23.03.0.20",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cuquantum.json"
  }
