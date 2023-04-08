@@ -5,6 +5,9 @@
   "bot": {
    "automerge": true
   },
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  },
   "provider": {
    "win": "azure"
   }
@@ -20,7 +23,7 @@
    "summary": "Generate docs from Terraform modules"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
     "go install -v -ldflags \"-X main.version=0.16.0\" ."
    ]
@@ -81,15 +84,19 @@
    "summary": "Generate docs from Terraform modules"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
     "go install -v -ldflags \"-X main.version=0.16.0\" .",
     "go install -v -ldflags \"-X main.version=0.16.0\" .",
+    "go build -o \"None/bin/terraform-docs\" -v -ldflags \"-X main.version=0.16.0\" .",
     "go install -v -ldflags \"-X main.version=0.16.0\" ."
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "mxr-conda",
+    "andrew-mcgrath",
+    "pierrsc",
     "mxr-conda",
     "andrew-mcgrath",
     "pierrsc",
@@ -109,6 +116,7 @@
    "build": [
     "go_compiler_stub 1.16",
     "go_compiler_stub 1.16",
+    "go_compiler_stub 1.16",
     "go_compiler_stub 1.16"
    ]
   },
@@ -118,6 +126,8 @@
   },
   "test": {
    "commands": [
+    "which terraform-docs",
+    "terraform-docs --help",
     "which terraform-docs",
     "terraform-docs --help",
     "which terraform-docs",
@@ -137,7 +147,7 @@
    "summary": "Generate docs from Terraform modules"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
     "go install -v -ldflags \"-X main.version=0.16.0\" ."
    ]
@@ -189,6 +199,67 @@
    "elements": []
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/segmentio/terraform-docs",
+   "license": "MIT",
+   "license_family": "MIT",
+   "license_file": "LICENSE",
+   "summary": "Generate docs from Terraform modules"
+  },
+  "build": {
+   "number": "1",
+   "script": [
+    "go build -o \"None/bin/terraform-docs\" -v -ldflags \"-X main.version=0.16.0\" ."
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "mxr-conda",
+    "andrew-mcgrath",
+    "pierrsc"
+   ]
+  },
+  "package": {
+   "name": "go-terraform-docs",
+   "version": "0.16.0"
+  },
+  "requirements": {
+   "build": [
+    "go_compiler_stub 1.16"
+   ]
+  },
+  "source": {
+   "sha256": "e370fd106ca74caebc8632834cc28412a3a6a160952392da71f213515bba2085",
+   "url": "https://github.com/segmentio/terraform-docs/archive/v0.16.0.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "which terraform-docs",
+    "terraform-docs --help"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "go_compiler_stub"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -199,7 +270,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/go-terraform-docs.json"
  },
- "raw_meta_yaml": "{% set name = \"terraform-docs\" %}\n{% set version = \"0.16.0\" %}\n\npackage:\n  name: go-{{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/segmentio/{{ name }}/archive/v{{ version }}.tar.gz\n  sha256: e370fd106ca74caebc8632834cc28412a3a6a160952392da71f213515bba2085\n\nbuild:\n  number: 0\n  script:\n    - go install -v -ldflags \"-X main.version={{ version }}\" .\n\nrequirements:\n  build:\n    - {{ compiler(\"go\") }} 1.16\n\ntest:\n  commands:\n    - which terraform-docs  # [not win]\n    - where terraform-docs  # [win]\n    - terraform-docs --help\n\nabout:\n  home: https://github.com/segmentio/terraform-docs\n\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: Generate docs from Terraform modules\n\nextra:\n  recipe-maintainers:\n    - mxr-conda\n    - andrew-mcgrath\n    - pierrsc\n",
+ "raw_meta_yaml": "{% set name = \"terraform-docs\" %}\n{% set version = \"0.16.0\" %}\n\npackage:\n  name: go-{{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/segmentio/{{ name }}/archive/v{{ version }}.tar.gz\n  sha256: e370fd106ca74caebc8632834cc28412a3a6a160952392da71f213515bba2085\n\nbuild:\n  number: 1\n  script:\n    - go install -v -ldflags \"-X main.version={{ version }}\" .  # [not arm64]\n    # Call \"go build\" directly when cross-compiling because GOBIN cannot be set for \"go install\" when cross-compiling\n    # See https://github.com/golang/go/issues/57485\n    - go build -o \"{{ environ.get('PREFIX') }}/bin/terraform-docs\" -v -ldflags \"-X main.version={{ version }}\" .  # [arm64]\n\nrequirements:\n  build:\n    - {{ compiler(\"go\") }} 1.16\n\ntest:\n  commands:\n    - which terraform-docs  # [not win]\n    - where terraform-docs  # [win]\n    - terraform-docs --help\n\nabout:\n  home: https://github.com/segmentio/terraform-docs\n\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: Generate docs from Terraform modules\n\nextra:\n  recipe-maintainers:\n    - mxr-conda\n    - andrew-mcgrath\n    - pierrsc\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -261,7 +332,7 @@
    "summary": "Generate docs from Terraform modules"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
     "go install -v -ldflags \"-X main.version=0.16.0\" ."
    ]
