@@ -16,22 +16,8 @@
    "summary": "Sardana is a software suite for Supervision, Control and Data Acquisition in scientific installations."
   },
   "build": {
-   "entry_points": [
-    "MacroServer = sardana.tango.macroserver:main",
-    "Pool = sardana.tango.pool:main",
-    "Sardana = sardana.tango:main",
-    "sardanatestsuite = sardana.test.testsuite:main",
-    "spock = sardana.spock:main",
-    "diffractometeralignment = sardana.taurus.qt.qtgui.extra_hkl.diffractometeralignment:main",
-    "hklscan = sardana.taurus.qt.qtgui.extra_hkl.hklscan:main",
-    "macroexecutor = sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor:main",
-    "sequencer = sardana.taurus.qt.qtgui.extra_macroexecutor.sequenceeditor:main",
-    "ubmatrix = sardana.taurus.qt.qtgui.extra_hkl.ubmatrix:main",
-    "showscan = sardana.taurus.qt.qtgui.extra_sardana.showscanonline:main"
-   ],
    "noarch": "python",
-   "number": "0",
-   "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . -vv"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -40,9 +26,111 @@
     "reszelaz"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "sardana = sardana.cli:main",
+      "sardanacli = sardana.cli:main",
+      "MacroServer = sardana.tango.macroserver:main",
+      "Pool = sardana.tango.pool:main",
+      "Sardana = sardana.tango:main",
+      "spock = sardana.spock:main",
+      "diffractometeralignment = sardana.taurus.qt.qtgui.extra_hkl.diffractometeralignment:main",
+      "hklscan = sardana.taurus.qt.qtgui.extra_hkl.hklscan:main",
+      "macroexecutor = sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor:main",
+      "sequencer = sardana.taurus.qt.qtgui.extra_macroexecutor.sequenceeditor:main",
+      "ubmatrix = sardana.taurus.qt.qtgui.extra_hkl.ubmatrix:main",
+      "showscan = sardana.taurus.qt.qtgui.extra_sardana.showscanonline:main"
+     ],
+     "noarch": "python"
+    },
+    "name": "sardana-server",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.5"
+     ],
+     "run": [
+      "click",
+      "lxml >=2.3",
+      "pytango >=9.2.5",
+      "python >=3.5",
+      "taurus-core >=5.0.0"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "MacroServer --help",
+      "Pool --help",
+      "Sardana --help",
+      "sardana --help"
+     ],
+     "imports": [
+      "sardana",
+      "sardana.macroserver",
+      "sardana.pool"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "sardana-client",
+    "requirements": {
+     "host": [
+      "python >=3.5"
+     ],
+     "run": [
+      "sardana-server",
+      "taurus-qt >=5.0.0",
+      "itango >=0.1.6"
+     ]
+    },
+    "test": {
+     "commands": [
+      "sardana --help",
+      "sardana spock --help"
+     ],
+     "imports": [
+      "sardana.spock"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "sardana-config",
+    "requirements": {
+     "host": [
+      "python >=3.5"
+     ],
+     "run": [
+      "sardana-server",
+      "itango >=0.1.6",
+      "dsconfig >=1.6.7",
+      "pyyaml",
+      "ruamel.yaml",
+      "pydantic",
+      "jsonpatch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "sardana config --help"
+     ],
+     "imports": [
+      "sardana.config"
+     ]
+    }
+   }
+  ],
   "package": {
    "name": "sardana",
-   "version": "3.3.8"
+   "version": "3.4.0"
   },
   "requirements": {
    "host": [
@@ -50,28 +138,18 @@
     "python >=3.5"
    ],
    "run": [
-    "click",
-    "itango >=0.1.6",
-    "lxml >=2.3",
-    "pytango >=9.2.5",
-    "python >=3.5",
-    "taurus >=5.0.0"
+    "sardana-server",
+    "sardana-client"
    ]
   },
   "source": {
-   "sha256": "91f305eb2eb4952e42cfda3529bcfc18768b5c8f75f41ccbcfc35642f57983a3",
-   "url": "https://pypi.io/packages/source/s/sardana/sardana-3.3.8.tar.gz"
+   "sha256": "88b282f8fbaf87dd6182c5654dbd35e06b0a64968c671e3d61bd7171921b88ab",
+   "url": "https://pypi.io/packages/source/s/sardana/sardana-3.4.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "MacroServer --help",
-    "Pool --help",
-    "Sardana --help"
-   ],
-   "imports": [
-    "sardana",
-    "sardana.macroserver"
+    "sardana --help"
    ],
    "requires": [
     "pip"
@@ -94,11 +172,19 @@
    "__set__": true,
    "elements": [
     "click",
+    "dsconfig",
     "itango",
+    "jsonpatch",
     "lxml",
+    "pydantic",
     "pytango",
     "python",
-    "taurus"
+    "pyyaml",
+    "ruamel.yaml",
+    "sardana-client",
+    "sardana-server",
+    "taurus-core",
+    "taurus-qt"
    ]
   },
   "test": {
@@ -120,22 +206,8 @@
    "summary": "Sardana is a software suite for Supervision, Control and Data Acquisition in scientific installations."
   },
   "build": {
-   "entry_points": [
-    "MacroServer = sardana.tango.macroserver:main",
-    "Pool = sardana.tango.pool:main",
-    "Sardana = sardana.tango:main",
-    "sardanatestsuite = sardana.test.testsuite:main",
-    "spock = sardana.spock:main",
-    "diffractometeralignment = sardana.taurus.qt.qtgui.extra_hkl.diffractometeralignment:main",
-    "hklscan = sardana.taurus.qt.qtgui.extra_hkl.hklscan:main",
-    "macroexecutor = sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor:main",
-    "sequencer = sardana.taurus.qt.qtgui.extra_macroexecutor.sequenceeditor:main",
-    "ubmatrix = sardana.taurus.qt.qtgui.extra_hkl.ubmatrix:main",
-    "showscan = sardana.taurus.qt.qtgui.extra_sardana.showscanonline:main"
-   ],
    "noarch": "python",
-   "number": "0",
-   "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . -vv"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -144,9 +216,111 @@
     "reszelaz"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "sardana = sardana.cli:main",
+      "sardanacli = sardana.cli:main",
+      "MacroServer = sardana.tango.macroserver:main",
+      "Pool = sardana.tango.pool:main",
+      "Sardana = sardana.tango:main",
+      "spock = sardana.spock:main",
+      "diffractometeralignment = sardana.taurus.qt.qtgui.extra_hkl.diffractometeralignment:main",
+      "hklscan = sardana.taurus.qt.qtgui.extra_hkl.hklscan:main",
+      "macroexecutor = sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor:main",
+      "sequencer = sardana.taurus.qt.qtgui.extra_macroexecutor.sequenceeditor:main",
+      "ubmatrix = sardana.taurus.qt.qtgui.extra_hkl.ubmatrix:main",
+      "showscan = sardana.taurus.qt.qtgui.extra_sardana.showscanonline:main"
+     ],
+     "noarch": "python"
+    },
+    "name": "sardana-server",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.5"
+     ],
+     "run": [
+      "click",
+      "lxml >=2.3",
+      "pytango >=9.2.5",
+      "python >=3.5",
+      "taurus-core >=5.0.0"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "MacroServer --help",
+      "Pool --help",
+      "Sardana --help",
+      "sardana --help"
+     ],
+     "imports": [
+      "sardana",
+      "sardana.macroserver",
+      "sardana.pool"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "sardana-client",
+    "requirements": {
+     "host": [
+      "python >=3.5"
+     ],
+     "run": [
+      "sardana-server",
+      "taurus-qt >=5.0.0",
+      "itango >=0.1.6"
+     ]
+    },
+    "test": {
+     "commands": [
+      "sardana --help",
+      "sardana spock --help"
+     ],
+     "imports": [
+      "sardana.spock"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "sardana-config",
+    "requirements": {
+     "host": [
+      "python >=3.5"
+     ],
+     "run": [
+      "sardana-server",
+      "itango >=0.1.6",
+      "dsconfig >=1.6.7",
+      "pyyaml",
+      "ruamel.yaml",
+      "pydantic",
+      "jsonpatch"
+     ]
+    },
+    "test": {
+     "commands": [
+      "sardana config --help"
+     ],
+     "imports": [
+      "sardana.config"
+     ]
+    }
+   }
+  ],
   "package": {
    "name": "sardana",
-   "version": "3.3.8"
+   "version": "3.4.0"
   },
   "requirements": {
    "host": [
@@ -154,28 +328,18 @@
     "python >=3.5"
    ],
    "run": [
-    "click",
-    "itango >=0.1.6",
-    "lxml >=2.3",
-    "pytango >=9.2.5",
-    "python >=3.5",
-    "taurus >=5.0.0"
+    "sardana-server",
+    "sardana-client"
    ]
   },
   "source": {
-   "sha256": "91f305eb2eb4952e42cfda3529bcfc18768b5c8f75f41ccbcfc35642f57983a3",
-   "url": "https://pypi.io/packages/source/s/sardana/sardana-3.3.8.tar.gz"
+   "sha256": "88b282f8fbaf87dd6182c5654dbd35e06b0a64968c671e3d61bd7171921b88ab",
+   "url": "https://pypi.io/packages/source/s/sardana/sardana-3.4.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "MacroServer --help",
-    "Pool --help",
-    "Sardana --help"
-   ],
-   "imports": [
-    "sardana",
-    "sardana.macroserver"
+    "sardana --help"
    ],
    "requires": [
     "pip"
@@ -186,24 +350,35 @@
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "sardana"
+   "sardana",
+   "sardana-client",
+   "sardana-config",
+   "sardana-server"
   ]
  },
  "parsing_error": false,
  "pr_info": {
   "__lazy_json__": "pr_info/sardana.json"
  },
- "raw_meta_yaml": "{% set name = \"sardana\" %}\n{% set version = \"3.3.8\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 91f305eb2eb4952e42cfda3529bcfc18768b5c8f75f41ccbcfc35642f57983a3\n\nbuild:\n  number: 0\n  noarch: python\n  entry_points:\n    - MacroServer = sardana.tango.macroserver:main\n    - Pool = sardana.tango.pool:main\n    - Sardana = sardana.tango:main\n    - sardanatestsuite = sardana.test.testsuite:main\n    - spock = sardana.spock:main\n    - diffractometeralignment = sardana.taurus.qt.qtgui.extra_hkl.diffractometeralignment:main\n    - hklscan = sardana.taurus.qt.qtgui.extra_hkl.hklscan:main\n    - macroexecutor = sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor:main\n    - sequencer = sardana.taurus.qt.qtgui.extra_macroexecutor.sequenceeditor:main\n    - ubmatrix = sardana.taurus.qt.qtgui.extra_hkl.ubmatrix:main\n    - showscan = sardana.taurus.qt.qtgui.extra_sardana.showscanonline:main\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - pip\n    - python >=3.5\n  run:\n    - click\n    - itango >=0.1.6\n    - lxml >=2.3\n    - pytango >=9.2.5\n    - python >=3.5\n    - taurus >=5.0.0\n\ntest:\n  imports:\n    - sardana\n    - sardana.macroserver\n  commands:\n    - pip check\n    - MacroServer --help\n    - Pool --help\n    - Sardana --help\n  requires:\n    - pip\n\nabout:\n  home: http://www.sardana-controls.org\n  license: LGPL-3.0-or-later\n  license_family: LGPL\n  license_file: LICENSE\n  summary: Sardana is a software suite for Supervision, Control and Data Acquisition in scientific installations.\n  description: |\n    Sardana is a software suite for Supervision,\n    Control and Data Acquisition in scientific installations.\n    It aims to reduce cost and time of design, development and support of\n    the control and data acquisition systems.\n    Sardana development was started at the ALBA synchrotron and today is supported\n    by a larger community which includes several other laboratories and individuals\n    (ALBA, DESY, MaxIV, Solaris, ESRF).\n  doc_url: https://sardana-controls.org\n  dev_url: https://gitlab.com/sardana-org/sardana\n\nextra:\n  recipe-maintainers:\n    - beenje\n    - cpascual\n    - reszelaz\n",
+ "raw_meta_yaml": "{% set name = \"sardana\" %}\n{% set version = \"3.4.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 88b282f8fbaf87dd6182c5654dbd35e06b0a64968c671e3d61bd7171921b88ab\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - pip\n    - python >=3.5\n  run:\n    - {{ pin_subpackage('sardana-server', exact=True) }}\n    - {{ pin_subpackage('sardana-client', exact=True) }}\n\ntest:\n  commands:\n    - pip check\n    - sardana --help\n  requires:\n    - pip\n\noutputs:\n  - name: sardana-server\n    script: build_core.sh\n    build:\n      noarch: python\n      entry_points:\n        - sardana = sardana.cli:main\n        - sardanacli = sardana.cli:main\n        - MacroServer = sardana.tango.macroserver:main\n        - Pool = sardana.tango.pool:main\n        - Sardana = sardana.tango:main\n        - spock = sardana.spock:main\n        - diffractometeralignment = sardana.taurus.qt.qtgui.extra_hkl.diffractometeralignment:main\n        - hklscan = sardana.taurus.qt.qtgui.extra_hkl.hklscan:main\n        - macroexecutor = sardana.taurus.qt.qtgui.extra_macroexecutor.macroexecutor:main\n        - sequencer = sardana.taurus.qt.qtgui.extra_macroexecutor.sequenceeditor:main\n        - ubmatrix = sardana.taurus.qt.qtgui.extra_hkl.ubmatrix:main\n        - showscan = sardana.taurus.qt.qtgui.extra_sardana.showscanonline:main\n    requirements:\n      host:\n        - pip\n        - python >=3.5\n      run:\n        - click\n        - lxml >=2.3\n        - pytango >=9.2.5\n        - python >=3.5\n        - taurus-core >=5.0.0\n    test:\n      imports:\n        - sardana\n        - sardana.macroserver\n        - sardana.pool\n      commands:\n        - MacroServer --help\n        - Pool --help\n        - Sardana --help\n        - sardana --help\n\n  - name: sardana-client\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.5\n      run:\n        - {{ pin_subpackage('sardana-server', exact=True) }}\n        - taurus-qt >=5.0.0\n        - itango >=0.1.6\n    test:\n      imports:\n        - sardana.spock\n      commands:\n        - sardana --help\n        - sardana spock --help\n\n  - name: sardana-config\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.5\n      run:\n        - {{ pin_subpackage('sardana-server', exact=True) }}\n        # itango is needed here otherwise no subcommand can be added to \"sardana\"\n        # as it's part of the requirements\n        - itango >=0.1.6\n        - dsconfig >=1.6.7\n        - pyyaml\n        - ruamel.yaml\n        - pydantic\n        - jsonpatch\n    test:\n      imports:\n        - sardana.config\n      commands:\n        - sardana config --help\n\nabout:\n  home: http://www.sardana-controls.org\n  license: LGPL-3.0-or-later\n  license_family: LGPL\n  license_file: LICENSE\n  summary: Sardana is a software suite for Supervision, Control and Data Acquisition in scientific installations.\n  description: |\n    Sardana is a software suite for Supervision,\n    Control and Data Acquisition in scientific installations.\n    It aims to reduce cost and time of design, development and support of\n    the control and data acquisition systems.\n    Sardana development was started at the ALBA synchrotron and today is supported\n    by a larger community which includes several other laboratories and individuals\n    (ALBA, DESY, MaxIV, Solaris, ESRF).\n  doc_url: https://sardana-controls.org\n  dev_url: https://gitlab.com/sardana-org/sardana\n\nextra:\n  recipe-maintainers:\n    - beenje\n    - cpascual\n    - reszelaz\n",
  "req": {
   "__set__": true,
   "elements": [
    "click",
+   "dsconfig",
    "itango",
+   "jsonpatch",
    "lxml",
    "pip",
+   "pydantic",
    "pytango",
    "python",
-   "taurus"
+   "pyyaml",
+   "ruamel.yaml",
+   "sardana-client",
+   "sardana-server",
+   "taurus-core",
+   "taurus-qt"
   ]
  },
  "requirements": {
@@ -222,11 +397,19 @@
    "__set__": true,
    "elements": [
     "click",
+    "dsconfig",
     "itango",
+    "jsonpatch",
     "lxml",
+    "pydantic",
     "pytango",
     "python",
-    "taurus"
+    "pyyaml",
+    "ruamel.yaml",
+    "sardana-client",
+    "sardana-server",
+    "taurus-core",
+    "taurus-qt"
    ]
   },
   "test": {
@@ -253,11 +436,19 @@
    "__set__": true,
    "elements": [
     "click",
+    "dsconfig >=1.6.7",
     "itango >=0.1.6",
+    "jsonpatch",
     "lxml >=2.3",
+    "pydantic",
     "pytango >=9.2.5",
     "python >=3.5",
-    "taurus >=5.0.0"
+    "pyyaml",
+    "ruamel.yaml",
+    "sardana-client",
+    "sardana-server",
+    "taurus-core >=5.0.0",
+    "taurus-qt >=5.0.0"
    ]
   },
   "test": {
@@ -267,8 +458,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/s/sardana/sardana-3.3.8.tar.gz",
- "version": "3.3.8",
+ "url": "https://pypi.io/packages/source/s/sardana/sardana-3.4.0.tar.gz",
+ "version": "3.4.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/sardana.json"
  }
