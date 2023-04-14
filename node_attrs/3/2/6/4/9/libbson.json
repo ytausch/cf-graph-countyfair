@@ -5,6 +5,9 @@
   "bot": {
    "automerge": true
   },
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  },
   "provider": {
    "linux_aarch64": "default",
    "linux_ppc64le": "azure"
@@ -230,11 +233,13 @@
     "libbson",
     "libbson",
     "libbson",
+    "libbson",
     "libbson"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "Tobias-Fischer",
     "Tobias-Fischer",
     "Tobias-Fischer",
     "Tobias-Fischer",
@@ -267,6 +272,10 @@
     "cxx_compiler_stub",
     "c_compiler_stub",
     "cmake",
+    "ninja",
+    "cxx_compiler_stub",
+    "c_compiler_stub",
+    "cmake",
     "ninja"
    ],
    "host": [],
@@ -279,6 +288,9 @@
   },
   "test": {
    "commands": [
+    "test -f ${PREFIX}/include/libbson-1.0/bson/bson.h",
+    "test -f ${PREFIX}/lib/pkgconfig/libbson-1.0.pc",
+    "test -f ${PREFIX}/lib/libbson-1.0${SHLIB_EXT}",
     "test -f ${PREFIX}/include/libbson-1.0/bson/bson.h",
     "test -f ${PREFIX}/lib/pkgconfig/libbson-1.0.pc",
     "test -f ${PREFIX}/lib/libbson-1.0${SHLIB_EXT}",
@@ -346,6 +358,76 @@
   }
  },
  "osx_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/mongodb/mongo-c-driver",
+   "license": "Apache-2.0",
+   "license_file": "COPYING",
+   "summary": "A library providing useful routines related to building, parsing, and iterating BSON documents."
+  },
+  "build": {
+   "number": "0",
+   "run_exports": [
+    "libbson"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "Tobias-Fischer"
+   ]
+  },
+  "package": {
+   "name": "libbson",
+   "version": "1.23.2"
+  },
+  "requirements": {
+   "build": [
+    "cxx_compiler_stub",
+    "c_compiler_stub",
+    "cmake",
+    "ninja"
+   ],
+   "host": [],
+   "run": []
+  },
+  "source": {
+   "patches": [
+    "fix-malloc-osx.patch"
+   ],
+   "sha256": "123c358827eea07cd76a31c40281bb1c81b6744f6587c96d0cf217be8b1234e3",
+   "url": "https://github.com/mongodb/mongo-c-driver/releases/download/1.23.2/mongo-c-driver-1.23.2.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f ${PREFIX}/include/libbson-1.0/bson/bson.h",
+    "test -f ${PREFIX}/lib/pkgconfig/libbson-1.0.pc",
+    "test -f ${PREFIX}/lib/libbson-1.0${SHLIB_EXT}"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
   "build": {
    "__set__": true,
    "elements": [
