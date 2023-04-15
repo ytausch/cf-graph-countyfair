@@ -5,6 +5,9 @@
   "bot": {
    "automerge": true
   },
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  },
   "provider": {
    "linux_aarch64": "azure",
    "linux_ppc64le": "default"
@@ -248,11 +251,13 @@
     "libmongocxx",
     "libmongocxx",
     "libmongocxx",
+    "libmongocxx",
     "libmongocxx"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "Tobias-Fischer",
     "Tobias-Fischer",
     "Tobias-Fischer",
     "Tobias-Fischer",
@@ -266,6 +271,10 @@
   },
   "requirements": {
    "build": [
+    "cxx_compiler_stub",
+    "c_compiler_stub",
+    "cmake",
+    "ninja",
     "cxx_compiler_stub",
     "c_compiler_stub",
     "cmake",
@@ -302,6 +311,9 @@
     "libmongoc",
     "boost-cpp",
     "libbson",
+    "libmongoc",
+    "boost-cpp",
+    "libbson",
     "libmongoc"
    ]
   },
@@ -311,6 +323,9 @@
   },
   "test": {
    "commands": [
+    "test -f ${PREFIX}/include/mongocxx/v_noabi/mongocxx/client.hpp",
+    "test -f ${PREFIX}/lib/pkgconfig/libmongocxx.pc",
+    "test -f ${PREFIX}/lib/libmongocxx${SHLIB_EXT}",
     "test -f ${PREFIX}/include/mongocxx/v_noabi/mongocxx/client.hpp",
     "test -f ${PREFIX}/lib/pkgconfig/libmongocxx.pc",
     "test -f ${PREFIX}/lib/libmongocxx${SHLIB_EXT}",
@@ -378,6 +393,80 @@
   }
  },
  "osx_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "boost-cpp",
+    "libbson",
+    "libmongoc"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/mongodb/mongo-cxx-driver",
+   "license": "Apache-2.0",
+   "license_file": "LICENSE",
+   "summary": "The mongocxx is a ground-up rewrite of a C++ driver for MongoDB based on libmongoc."
+  },
+  "build": {
+   "number": "0",
+   "run_exports": [
+    "libmongocxx"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "Tobias-Fischer"
+   ]
+  },
+  "package": {
+   "name": "libmongocxx",
+   "version": "3.7.1"
+  },
+  "requirements": {
+   "build": [
+    "cxx_compiler_stub",
+    "c_compiler_stub",
+    "cmake",
+    "ninja"
+   ],
+   "host": [
+    "boost-cpp",
+    "libbson",
+    "libmongoc"
+   ]
+  },
+  "source": {
+   "sha256": "ff5ca5aa8966fef9174acab18cc221738500f26102d5e9c4bba508a2267f6214",
+   "url": "https://github.com/mongodb/mongo-cxx-driver/releases/download/r3.7.1/mongo-cxx-driver-r3.7.1.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f ${PREFIX}/include/mongocxx/v_noabi/mongocxx/client.hpp",
+    "test -f ${PREFIX}/lib/pkgconfig/libmongocxx.pc",
+    "test -f ${PREFIX}/lib/libmongocxx${SHLIB_EXT}"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
   "build": {
    "__set__": true,
    "elements": [
