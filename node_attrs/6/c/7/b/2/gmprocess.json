@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "bot": {
+   "inspection": "update-grayskull"
+  },
   "provider": {
    "win": "azure"
   }
@@ -40,16 +43,17 @@
   },
   "package": {
    "name": "gmprocess",
-   "version": "1.2.3"
+   "version": "1.2.4"
   },
   "requirements": {
-   "build": [
+   "host": [
     "python >=3.8,<3.11",
-    "pip",
-    "setuptools-scm >=6.3.2"
+    "setuptools >=42",
+    "setuptools-scm >=3.4",
+    "pip"
    ],
    "run": [
-    "python >=3.8",
+    "python >=3.8,<3.11",
     "beautifulsoup4 >=4.11",
     "configobj >=5.0.6",
     "esi-core >=1.0.1",
@@ -57,12 +61,14 @@
     "esi-utils-io >1.0",
     "esi-utils-rupture >1.0",
     "folium >=0.12",
+    "gmpacket >=0.1.0",
     "h5py >=2.8",
     "lxml >=4.6.1",
     "matplotlib-base >=3.1.0",
     "numpy >=1.21",
-    "obspy >=1.3.0",
+    "obspy >=1.4.0",
     "openpyxl >=3.0.8",
+    "openquake.engine >=3.14",
     "pandas >=1.0",
     "ps2ff >=1.5.2",
     "pyasdf >=0.7",
@@ -76,8 +82,8 @@
    ]
   },
   "source": {
-   "sha256": "9c9786aac6603db3c29d964a35d551b3f3cce384df7a8c9c9ad1e3d018af26b2",
-   "url": "https://pypi.io/packages/source/g/gmprocess/gmprocess-1.2.3.tar.gz"
+   "sha256": "08f93a7f923f4ad70229884a39bfba73ee7edd3ff7f44ff98fc824746d22879b",
+   "url": "https://pypi.io/packages/source/g/gmprocess/gmprocess-1.2.4.tar.gz"
   },
   "test": {
    "commands": [
@@ -91,15 +97,16 @@
  "linux_64_requirements": {
   "build": {
    "__set__": true,
-   "elements": [
-    "pip",
-    "python",
-    "setuptools-scm"
-   ]
+   "elements": []
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip",
+    "python",
+    "setuptools",
+    "setuptools-scm"
+   ]
   },
   "run": {
    "__set__": true,
@@ -111,12 +118,14 @@
     "esi-utils-io",
     "esi-utils-rupture",
     "folium",
+    "gmpacket",
     "h5py",
     "lxml",
     "matplotlib-base",
     "numpy",
     "obspy",
     "openpyxl",
+    "openquake.engine",
     "pandas",
     "ps2ff",
     "pyasdf",
@@ -167,16 +176,17 @@
   },
   "package": {
    "name": "gmprocess",
-   "version": "1.2.3"
+   "version": "1.2.4"
   },
   "requirements": {
-   "build": [
+   "host": [
     "python >=3.8,<3.11",
-    "pip",
-    "setuptools-scm >=6.3.2"
+    "setuptools >=42",
+    "setuptools-scm >=3.4",
+    "pip"
    ],
    "run": [
-    "python >=3.8",
+    "python >=3.8,<3.11",
     "beautifulsoup4 >=4.11",
     "configobj >=5.0.6",
     "esi-core >=1.0.1",
@@ -184,12 +194,14 @@
     "esi-utils-io >1.0",
     "esi-utils-rupture >1.0",
     "folium >=0.12",
+    "gmpacket >=0.1.0",
     "h5py >=2.8",
     "lxml >=4.6.1",
     "matplotlib-base >=3.1.0",
     "numpy >=1.21",
-    "obspy >=1.3.0",
+    "obspy >=1.4.0",
     "openpyxl >=3.0.8",
+    "openquake.engine >=3.14",
     "pandas >=1.0",
     "ps2ff >=1.5.2",
     "pyasdf >=0.7",
@@ -203,8 +215,8 @@
    ]
   },
   "source": {
-   "sha256": "9c9786aac6603db3c29d964a35d551b3f3cce384df7a8c9c9ad1e3d018af26b2",
-   "url": "https://pypi.io/packages/source/g/gmprocess/gmprocess-1.2.3.tar.gz"
+   "sha256": "08f93a7f923f4ad70229884a39bfba73ee7edd3ff7f44ff98fc824746d22879b",
+   "url": "https://pypi.io/packages/source/g/gmprocess/gmprocess-1.2.4.tar.gz"
   },
   "test": {
    "commands": [
@@ -226,7 +238,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/gmprocess.json"
  },
- "raw_meta_yaml": "{% set name = \"gmprocess\" %}\n{% set version = \"1.2.3\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/gmprocess-{{ version }}.tar.gz\n  sha256: 9c9786aac6603db3c29d964a35d551b3f3cce384df7a8c9c9ad1e3d018af26b2\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n  entry_points:\n    - gmconvert = gmprocess.bin.gmconvert:main\n    - gminfo = gmprocess.bin.gminfo:main\n    - gmrecords = gmprocess.bin.gmrecords:main\n    - gmworkspace = gmprocess.bin.gmworkspace:main\n    - list_metrics = gmprocess.bin.list_metrics:main\n    - cwb_gather = gmprocess.bin.cwb_gather:main\n\nrequirements:\n  build:\n    - python >=3.8,<3.11\n    - pip\n    - setuptools-scm >=6.3.2\n  run:\n    - python >=3.8\n    - beautifulsoup4 >=4.11\n    - configobj >=5.0.6\n    - esi-core >=1.0.1\n    - esi-utils-colors >1.0\n    - esi-utils-io >1.0\n    - esi-utils-rupture >1.0\n    - folium >=0.12\n    - h5py >=2.8\n    - lxml >=4.6.1\n    - matplotlib-base >=3.1.0\n    - numpy >=1.21\n    - obspy >=1.3.0\n    - openpyxl >=3.0.8\n    - pandas >=1.0\n    - ps2ff >=1.5.2\n    - pyasdf >=0.7\n    - requests >=2.23\n    - ruamel.yaml >=0.17.16\n    - schema >=0.7\n    - scipy >=1.7\n    - setuptools-scm >=6.3.2\n    - statsmodels >=0.12.2\n    - xlrd >=2.0\n\ntest:\n  imports:\n    - gmprocess\n  commands:\n    - gminfo --help\n\nabout:\n  home: https://code.usgs.gov/ghsc/esi/groundmotion-processing\n  license: LicenseRef-PublicDomain\n  summary: 'Parsing and processing ground motion data.'\n  license_family: Public Domain\n  license_file: LICENSE.md\n\nextra:\n  recipe-maintainers:\n    - ocefpaf\n    - mhearne-usgs\n    - cbworden\n    - emthompson-usgs\n    - gferragu\n",
+ "raw_meta_yaml": "{% set name = \"gmprocess\" %}\n{% set version = \"1.2.4\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/gmprocess-{{ version }}.tar.gz\n  sha256: 08f93a7f923f4ad70229884a39bfba73ee7edd3ff7f44ff98fc824746d22879b\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n  entry_points:\n    - gmconvert = gmprocess.bin.gmconvert:main\n    - gminfo = gmprocess.bin.gminfo:main\n    - gmrecords = gmprocess.bin.gmrecords:main\n    - gmworkspace = gmprocess.bin.gmworkspace:main\n    - list_metrics = gmprocess.bin.list_metrics:main\n    - cwb_gather = gmprocess.bin.cwb_gather:main\n\nrequirements:\n  host:\n    - python >=3.8,<3.11\n    - setuptools >=42\n    - setuptools-scm >=3.4\n    - pip\n  run:\n    - python >=3.8,<3.11\n    - beautifulsoup4 >=4.11\n    - configobj >=5.0.6\n    - esi-core >=1.0.1\n    - esi-utils-colors >1.0\n    - esi-utils-io >1.0\n    - esi-utils-rupture >1.0\n    - folium >=0.12\n    - gmpacket >=0.1.0\n    - h5py >=2.8\n    - lxml >=4.6.1\n    - matplotlib-base >=3.1.0\n    - numpy >=1.21\n    - obspy >=1.4.0\n    - openpyxl >=3.0.8\n    - openquake.engine >=3.14\n    - pandas >=1.0\n    - ps2ff >=1.5.2\n    - pyasdf >=0.7\n    - requests >=2.23\n    - ruamel.yaml >=0.17.16\n    - schema >=0.7\n    - scipy >=1.7\n    - setuptools-scm >=6.3.2\n    - statsmodels >=0.12.2\n    - xlrd >=2.0\n\ntest:\n  imports:\n    - gmprocess\n  commands:\n    - gminfo --help\n\nabout:\n  home: https://code.usgs.gov/ghsc/esi/groundmotion-processing\n  license: LicenseRef-PublicDomain\n  summary: Parsing and processing ground motion data.\n  license_family: Public Domain\n  license_file: LICENSE.md\n\nextra:\n  recipe-maintainers:\n    - ocefpaf\n    - mhearne-usgs\n    - cbworden\n    - emthompson-usgs\n    - gferragu\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -237,12 +249,14 @@
    "esi-utils-io",
    "esi-utils-rupture",
    "folium",
+   "gmpacket",
    "h5py",
    "lxml",
    "matplotlib-base",
    "numpy",
    "obspy",
    "openpyxl",
+   "openquake.engine",
    "pandas",
    "pip",
    "ps2ff",
@@ -252,6 +266,7 @@
    "ruamel.yaml",
    "schema",
    "scipy",
+   "setuptools",
    "setuptools-scm",
    "statsmodels",
    "xlrd"
@@ -260,15 +275,16 @@
  "requirements": {
   "build": {
    "__set__": true,
-   "elements": [
-    "pip",
-    "python",
-    "setuptools-scm"
-   ]
+   "elements": []
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip",
+    "python",
+    "setuptools",
+    "setuptools-scm"
+   ]
   },
   "run": {
    "__set__": true,
@@ -280,12 +296,14 @@
     "esi-utils-io",
     "esi-utils-rupture",
     "folium",
+    "gmpacket",
     "h5py",
     "lxml",
     "matplotlib-base",
     "numpy",
     "obspy",
     "openpyxl",
+    "openquake.engine",
     "pandas",
     "ps2ff",
     "pyasdf",
@@ -308,15 +326,16 @@
  "total_requirements": {
   "build": {
    "__set__": true,
-   "elements": [
-    "pip",
-    "python >=3.8,<3.11",
-    "setuptools-scm >=6.3.2"
-   ]
+   "elements": []
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip",
+    "python >=3.8,<3.11",
+    "setuptools >=42",
+    "setuptools-scm >=3.4"
+   ]
   },
   "run": {
    "__set__": true,
@@ -328,16 +347,18 @@
     "esi-utils-io >1.0",
     "esi-utils-rupture >1.0",
     "folium >=0.12",
+    "gmpacket >=0.1.0",
     "h5py >=2.8",
     "lxml >=4.6.1",
     "matplotlib-base >=3.1.0",
     "numpy >=1.21",
-    "obspy >=1.3.0",
+    "obspy >=1.4.0",
     "openpyxl >=3.0.8",
+    "openquake.engine >=3.14",
     "pandas >=1.0",
     "ps2ff >=1.5.2",
     "pyasdf >=0.7",
-    "python >=3.8",
+    "python >=3.8,<3.11",
     "requests >=2.23",
     "ruamel.yaml >=0.17.16",
     "schema >=0.7",
@@ -352,8 +373,8 @@
    "elements": []
   }
  },
- "url": "https://pypi.io/packages/source/g/gmprocess/gmprocess-1.2.3.tar.gz",
- "version": "1.2.3",
+ "url": "https://pypi.io/packages/source/g/gmprocess/gmprocess-1.2.4.tar.gz",
+ "version": "1.2.4",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/gmprocess.json"
  }
