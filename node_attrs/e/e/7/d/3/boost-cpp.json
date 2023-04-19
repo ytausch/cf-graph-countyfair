@@ -28,7 +28,7 @@
    "summary": "Free peer-reviewed portable C++ source libraries."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -191,7 +191,7 @@
    "summary": "Free peer-reviewed portable C++ source libraries."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -354,7 +354,7 @@
    "summary": "Free peer-reviewed portable C++ source libraries."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -517,7 +517,7 @@
    "summary": "Free peer-reviewed portable C++ source libraries."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1101,7 +1101,7 @@
    "summary": "Free peer-reviewed portable C++ source libraries."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1264,7 +1264,7 @@
    "summary": "Free peer-reviewed portable C++ source libraries."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1437,7 +1437,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/boost-cpp.json"
  },
- "raw_meta_yaml": "{% set version = \"1.81.0\" %}\n\npackage:\n  name: boost-cpp\n  version: {{ version }}\n\nsource:\n  url: https://boostorg.jfrog.io/artifactory/main/release/{{ version }}/source/boost_{{ version|replace(\".\", \"_\") }}.tar.bz2\n  sha256: 71feeed900fbccca04a3b4f2f84a7c217186f28a940ed8b7ed4725986baf99fa\n  patches:\n    - 5eff1ecc8413b0dc93a1ab047d7fed751e6cb40e.patch  # [not win]\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n\n  host:\n    - icu               # [unix]\n    - xz                # [unix]\n    - bzip2\n    - zlib\n    - zstd\n\n  run:\n    - icu               # [unix]\n    - xz                # [unix]\n    - bzip2\n    - zstd\n\n  run_constrained:\n    - libboost <0\n\ntest:\n  files:\n    - test\n  requires:\n    - {{ compiler('cxx') }}    # [build_platform == target_platform]\n  commands:\n    # Verify Python headers are removed.\n    - '! test -f $PREFIX/include/boost/python.hpp'                      # [unix]\n    - '! test -d $PREFIX/include/boost/python'                          # [unix]\n    - if exist %PREFIX%\\\\Library\\\\include\\\\boost\\\\python.hpp exit 1     # [win]\n    - if exist %PREFIX%\\\\Library\\\\include\\\\boost\\\\python exit 1         # [win]\n\n    # Verify static-only libraries.\n    - test -f $PREFIX/lib/libboost_exception.a                   # [unix]\n    - test -f $PREFIX/lib/libboost_test_exec_monitor.a           # [unix]\n\n    # Verify libraries.\n    {% set boost_libs = [\n            \"atomic\",\n            \"chrono\",\n            \"container\",\n            \"context\",\n            \"contract\",\n            \"coroutine\",\n            \"date_time\",\n            \"filesystem\",\n            \"graph\",\n            \"iostreams\",\n            \"locale\",\n            \"log\",\n            \"log_setup\",\n            \"math_c99\",\n            \"math_c99f\",\n            \"math_tr1\",\n            \"math_tr1f\",\n            \"prg_exec_monitor\",\n            \"program_options\",\n            \"random\",\n            \"regex\",\n            \"serialization\",\n            \"system\",\n            \"thread\",\n            \"timer\",\n            \"type_erasure\",\n            \"unit_test_framework\",\n            \"wave\",\n            \"wserialization\"\n    ] %}\n    {% set boost_libs = boost_libs + [\"math_c99l\", \"math_tr1l\"] %}  # [not ppc64le]\n    {% for each_boost_lib in boost_libs %}\n    - test ! -f $PREFIX/lib/libboost_{{ each_boost_lib }}.a                                                 # [unix]\n    - test -f $PREFIX/lib/libboost_{{ each_boost_lib }}.dylib                                             # [osx]\n    - test -f $PREFIX/lib/libboost_{{ each_boost_lib }}.so                                                # [linux]\n    - if not exist %PREFIX%\\\\Library\\\\bin\\\\boost_{{ each_boost_lib }}.dll exit 1                          # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\boost_{{ each_boost_lib }}.lib exit 1                          # [win]\n    - if exist %PREFIX%\\\\Library\\\\lib\\\\libboost_{{ each_boost_lib }}.lib exit 1                       # [win]\n    {% endfor %}\n\nabout:\n  home: http://www.boost.org/\n  license: BSL-1.0\n  license_file: LICENSE_1_0.txt\n  summary: Free peer-reviewed portable C++ source libraries.\n\nextra:\n  recipe-maintainers:\n    - ccordoba12\n    - jakirkham\n    - msarahan\n    - ocefpaf\n    - jschueller\n    - isuruf\n    - xhochy\n",
+ "raw_meta_yaml": "{% set version = \"1.81.0\" %}\n\npackage:\n  name: boost-cpp\n  version: {{ version }}\n\nsource:\n  url: https://boostorg.jfrog.io/artifactory/main/release/{{ version }}/source/boost_{{ version|replace(\".\", \"_\") }}.tar.bz2\n  sha256: 71feeed900fbccca04a3b4f2f84a7c217186f28a940ed8b7ed4725986baf99fa\n  patches:\n    - 5eff1ecc8413b0dc93a1ab047d7fed751e6cb40e.patch  # [not win]\n\nbuild:\n  number: 1\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n\n  host:\n    - icu               # [unix]\n    - xz                # [unix]\n    - bzip2\n    - zlib\n    - zstd\n\n  run:\n    - icu               # [unix]\n    - xz                # [unix]\n    - bzip2\n    - zstd\n\n  run_constrained:\n    - libboost <0\n\ntest:\n  files:\n    - test\n  requires:\n    - {{ compiler('cxx') }}    # [build_platform == target_platform]\n  commands:\n    # Verify Python headers are removed.\n    - '! test -f $PREFIX/include/boost/python.hpp'                      # [unix]\n    - '! test -d $PREFIX/include/boost/python'                          # [unix]\n    - if exist %PREFIX%\\\\Library\\\\include\\\\boost\\\\python.hpp exit 1     # [win]\n    - if exist %PREFIX%\\\\Library\\\\include\\\\boost\\\\python exit 1         # [win]\n\n    # Verify static-only libraries.\n    - test -f $PREFIX/lib/libboost_exception.a                   # [unix]\n    - test -f $PREFIX/lib/libboost_test_exec_monitor.a           # [unix]\n\n    # Verify libraries.\n    {% set boost_libs = [\n            \"atomic\",\n            \"chrono\",\n            \"container\",\n            \"context\",\n            \"contract\",\n            \"coroutine\",\n            \"date_time\",\n            \"filesystem\",\n            \"graph\",\n            \"iostreams\",\n            \"locale\",\n            \"log\",\n            \"log_setup\",\n            \"math_c99\",\n            \"math_c99f\",\n            \"math_tr1\",\n            \"math_tr1f\",\n            \"prg_exec_monitor\",\n            \"program_options\",\n            \"random\",\n            \"regex\",\n            \"serialization\",\n            \"system\",\n            \"thread\",\n            \"timer\",\n            \"type_erasure\",\n            \"unit_test_framework\",\n            \"wave\",\n            \"wserialization\"\n    ] %}\n    {% set boost_libs = boost_libs + [\"math_c99l\", \"math_tr1l\"] %}  # [not ppc64le]\n    {% for each_boost_lib in boost_libs %}\n    - test ! -f $PREFIX/lib/libboost_{{ each_boost_lib }}.a                                                 # [unix]\n    - test -f $PREFIX/lib/libboost_{{ each_boost_lib }}.dylib                                             # [osx]\n    - test -f $PREFIX/lib/libboost_{{ each_boost_lib }}.so                                                # [linux]\n    - if not exist %PREFIX%\\\\Library\\\\bin\\\\boost_{{ each_boost_lib }}.dll exit 1                          # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\boost_{{ each_boost_lib }}.lib exit 1                          # [win]\n    - if exist %PREFIX%\\\\Library\\\\lib\\\\libboost_{{ each_boost_lib }}.lib exit 1                       # [win]\n    {% endfor %}\n\nabout:\n  home: http://www.boost.org/\n  license: BSL-1.0\n  license_file: LICENSE_1_0.txt\n  summary: Free peer-reviewed portable C++ source libraries.\n\nextra:\n  recipe-maintainers:\n    - ccordoba12\n    - jakirkham\n    - msarahan\n    - ocefpaf\n    - jschueller\n    - isuruf\n    - xhochy\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1531,7 +1531,7 @@
    "summary": "Free peer-reviewed portable C++ source libraries."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
