@@ -30,9 +30,12 @@
    "summary": "Cross-Platform GUI Library"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "wxwidgets"
+   ],
+   "skip_compile_pyc": [
+    "*.py"
    ]
   },
   "extra": {
@@ -174,9 +177,12 @@
    "summary": "Cross-Platform GUI Library"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "wxwidgets"
+   ],
+   "skip_compile_pyc": [
+    "*.py"
    ]
   },
   "extra": {
@@ -318,9 +324,12 @@
    "summary": "Cross-Platform GUI Library"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "wxwidgets"
+   ],
+   "skip_compile_pyc": [
+    "*.py"
    ]
   },
   "extra": {
@@ -477,7 +486,7 @@
    "summary": "Cross-Platform GUI Library"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "wxwidgets",
     "wxwidgets",
@@ -485,6 +494,14 @@
     "wxwidgets",
     "wxwidgets",
     "wxwidgets"
+   ],
+   "skip_compile_pyc": [
+    "*.py",
+    "*.py",
+    "*.py",
+    "*.py",
+    "*.py",
+    "*.py"
    ]
   },
   "extra": {
@@ -726,9 +743,12 @@
    "summary": "Cross-Platform GUI Library"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "wxwidgets"
+   ],
+   "skip_compile_pyc": [
+    "*.py"
    ]
   },
   "extra": {
@@ -833,9 +853,12 @@
    "summary": "Cross-Platform GUI Library"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "wxwidgets"
+   ],
+   "skip_compile_pyc": [
+    "*.py"
    ]
   },
   "extra": {
@@ -938,7 +961,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/wxwidgets.json"
  },
- "raw_meta_yaml": "{% set version = \"3.2.2.1\" %}\n{% set major_minor_version = '.'.join(version.split('.')[:2]) %}\n{% set version_no_dot = version | replace(\".\", \"\") %}\n\npackage:\n  name: wxwidgets\n  version: {{ version }}\n\nsource:\n  url: https://github.com/wxWidgets/wxWidgets/releases/download/v{{ version }}/wxWidgets-{{ version }}.tar.bz2\n  sha256: dffcb6be71296fff4b7f8840eb1b510178f57aa2eb236b20da41182009242c02\n  patches:\n    # Without this patch, the cross compiled libraries get a host_suffix\n    # which we do not want for conda-forge packages\n    - 0001-Remove-host-prefix-suffix-when-cross-compiling.patch\n\nbuild:\n  number: 1\n  run_exports:\n    # ABI seems to be stable between minor versions\n    - {{ pin_subpackage('wxwidgets', max_pin='x.x') }}\n\nrequirements:\n  build:\n    # hmaarrfk\n    # I'm not sure why, without this, I get\n    #\n    # compiling .pyc files...\n    #    File \"/Users/runner/miniforge3/lib/python3.9/site-packages/conda_build/post.py\", line 296, in post_process\n    #      compile_missing_pyc(files, cwd=prefix, python_exe=python_exe,\n    #    File \"/Users/runner/miniforge3/lib/python3.9/site-packages/conda_build/post.py\", line 272, in compile_missing_pyc\n    #      call(args + group, cwd=cwd)\n    #    File \"/Users/runner/miniforge3/lib/python3.9/subprocess.py\", line 349, in call\n    #      with Popen(*popenargs, **kwargs) as p:\n    #    File \"/Users/runner/miniforge3/lib/python3.9/subprocess.py\", line 951, in __init__\n    #      self._execute_child(args, executable, preexec_fn, close_fds,\n    #    File \"/Users/runner/miniforge3/lib/python3.9/subprocess.py\", line 1821, in _execute_child\n    #      raise child_exception_type(errno_num, err_msg, err_filename)\n    # OSError: [Errno 86] Bad CPU type in executable: '/Users/runner/miniforge3/conda-bld/wxwidgets_1657415279542\n    # https://github.com/conda/conda-build/issues/686\n    # https://github.com/conda/conda-build/pull/1146\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake        # [win]\n    - ninja        # [win]\n    - make         # [unix]\n    - pkg-config   # [unix]\n\n    # Necessary CDTs\n    - {{ cdt('mesa-libgl-devel') }}      # [linux]\n    - {{ cdt('libxcursor-devel') }}      # [linux]\n    - {{ cdt('libxcomposite-devel') }}   # [linux]\n    - {{ cdt('libxtst-devel') }}         # [linux]\n    - {{ cdt('libxdamage-devel') }}      # [linux]\n    - {{ cdt('libxinerama-devel') }}     # [linux]\n    - {{ cdt('libxrandr-devel') }}       # [linux]\n    - {{ cdt('xorg-x11-proto-devel') }}  # [linux]\n    - {{ cdt('libxxf86vm-devel') }}      # [linux]\n\n  host:\n    - zlib\n    - libpng\n    - libtiff\n    - expat\n    # hmaarrfk 2020/05/25\n    # Even after we specify that we want to use sys libjpeg-turbo\n    # conda claims we are still overlinking on windows\n    # not too sure why\n    - libjpeg-turbo\n    - pcre2\n    - xz\n    - libiconv     # [unix]\n    - libcurl      # [unix]\n    - glib         # [linux]\n    - pango        # [linux]\n    - cairo        # [linux]\n    - fontconfig   # [linux]\n    - gdk-pixbuf   # [linux]\n    - gtk3         # [linux]\n    - libglu       # [linux]\n    - mesalib      # [unix]\n    - gst-plugins-base {{ gstreamer }}  # [linux]\n    - gstreamer    # [linux]\n    - xorg-libx11  # [linux]\n    - xorg-libsm   # [linux]\n    - xorg-libxi   # [linux]\n  run:\n    - xorg-libx11  # [linux]\n    - xorg-libsm   # [linux]\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n\ntest:\n  commands:\n    - test -f ${PREFIX}/lib/libwx_baseu-{{ major_minor_version }}${SHLIB_EXT}  # [linux]\n    # Not sure why OSX is adding these extra modifiers to SHLIB\n    # This is the reason why we aren't including the OSX package in conda-forge just yet.\n    # - test -f ${PREFIX}/lib/libwx_baseu-{{ version }}.0.0${SHLIB_EXT}          # [osx]\n    - test -f ${PREFIX}/include/wx-{{ major_minor_version }}/wx/wx.h           # [unix]\n    - wx-config --prefix  # [unix]\n    - wxrc --help  # [unix]\n    - where wxrc   # [win]\n    - if not exist %LIBRARY_BIN%\\\\wxrc.exe exit 1  # [win]\n    # - if not exist %LIBRARY_BIN%\\\\wxmsw{{ version_no_dot }}u_xrc_vc_x64_custom.dll exit 1  # [win]\n    # They keep changing the name of the dll, but I guess that is ok...\n    - if not exist %LIBRARY_BIN%\\\\wxmsw32u_core_vc.dll exit 1  # [win]\n\nabout:\n  home: https://www.wxwidgets.org/\n  license: LicenseRef-wxWindows\n  license_family: LGPL\n  license_file:\n    - docs/licence.txt\n    - docs/lgpl.txt\n    - docs/gpl.txt\n  summary: Cross-Platform GUI Library\n\n  description: |\n    wxWidgets is a C++ library that lets developers create applications for\n    Windows, macOS, Linux and other platforms with a single code base. It has\n    popular language bindings for Python, Perl, Ruby and many other languages,\n    and unlike other cross-platform toolkits, wxWidgets gives applications a\n    truly native look and feel because it uses the platform's native API rather\n    than emulating the GUI. It's also extensive, free, open-source and mature.\n  doc_url: https://docs.wxwidgets.org/\n  dev_url: https://github.com/wxWidgets/wxWidgets/\n\nextra:\n  recipe-maintainers:\n    - ryanvolz\n    - hmaarrfk\n",
+ "raw_meta_yaml": "{% set version = \"3.2.2.1\" %}\n{% set major_minor_version = '.'.join(version.split('.')[:2]) %}\n{% set version_no_dot = version | replace(\".\", \"\") %}\n\npackage:\n  name: wxwidgets\n  version: {{ version }}\n\nsource:\n  url: https://github.com/wxWidgets/wxWidgets/releases/download/v{{ version }}/wxWidgets-{{ version }}.tar.bz2\n  sha256: dffcb6be71296fff4b7f8840eb1b510178f57aa2eb236b20da41182009242c02\n  patches:\n    # Without this patch, the cross compiled libraries get a host_suffix\n    # which we do not want for conda-forge packages\n    - 0001-Remove-host-prefix-suffix-when-cross-compiling.patch\n\nbuild:\n  number: 2\n  run_exports:\n    # ABI seems to be stable between minor versions\n    - {{ pin_subpackage('wxwidgets', max_pin='x.x') }}\n  skip_compile_pyc:\n    - \"*.py\"\n\nrequirements:\n  build:\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake        # [win]\n    - ninja        # [win]\n    - make         # [unix]\n    - pkg-config   # [unix]\n\n    # Necessary CDTs\n    - {{ cdt('mesa-libgl-devel') }}      # [linux]\n    - {{ cdt('libxcursor-devel') }}      # [linux]\n    - {{ cdt('libxcomposite-devel') }}   # [linux]\n    - {{ cdt('libxtst-devel') }}         # [linux]\n    - {{ cdt('libxdamage-devel') }}      # [linux]\n    - {{ cdt('libxinerama-devel') }}     # [linux]\n    - {{ cdt('libxrandr-devel') }}       # [linux]\n    - {{ cdt('xorg-x11-proto-devel') }}  # [linux]\n    - {{ cdt('libxxf86vm-devel') }}      # [linux]\n\n  host:\n    - zlib\n    - libpng\n    - libtiff\n    - expat\n    # hmaarrfk 2020/05/25\n    # Even after we specify that we want to use sys libjpeg-turbo\n    # conda claims we are still overlinking on windows\n    # not too sure why\n    - libjpeg-turbo\n    - pcre2\n    - xz\n    - libiconv     # [unix]\n    - libcurl      # [unix]\n    - glib         # [linux]\n    - pango        # [linux]\n    - cairo        # [linux]\n    - fontconfig   # [linux]\n    - gdk-pixbuf   # [linux]\n    - gtk3         # [linux]\n    - libglu       # [linux]\n    - mesalib      # [unix]\n    - gst-plugins-base {{ gstreamer }}  # [linux]\n    - gstreamer    # [linux]\n    - xorg-libx11  # [linux]\n    - xorg-libsm   # [linux]\n    - xorg-libxi   # [linux]\n  run:\n    - xorg-libx11  # [linux]\n    - xorg-libsm   # [linux]\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n\ntest:\n  commands:\n    - test -f ${PREFIX}/lib/libwx_baseu-{{ major_minor_version }}${SHLIB_EXT}  # [linux]\n    # Not sure why OSX is adding these extra modifiers to SHLIB\n    # This is the reason why we aren't including the OSX package in conda-forge just yet.\n    # - test -f ${PREFIX}/lib/libwx_baseu-{{ version }}.0.0${SHLIB_EXT}          # [osx]\n    - test -f ${PREFIX}/include/wx-{{ major_minor_version }}/wx/wx.h           # [unix]\n    - wx-config --prefix  # [unix]\n    - wxrc --help  # [unix]\n    - where wxrc   # [win]\n    - if not exist %LIBRARY_BIN%\\\\wxrc.exe exit 1  # [win]\n    # - if not exist %LIBRARY_BIN%\\\\wxmsw{{ version_no_dot }}u_xrc_vc_x64_custom.dll exit 1  # [win]\n    # They keep changing the name of the dll, but I guess that is ok...\n    - if not exist %LIBRARY_BIN%\\\\wxmsw32u_core_vc.dll exit 1  # [win]\n\nabout:\n  home: https://www.wxwidgets.org/\n  license: LicenseRef-wxWindows\n  license_family: LGPL\n  license_file:\n    - docs/licence.txt\n    - docs/lgpl.txt\n    - docs/gpl.txt\n  summary: Cross-Platform GUI Library\n\n  description: |\n    wxWidgets is a C++ library that lets developers create applications for\n    Windows, macOS, Linux and other platforms with a single code base. It has\n    popular language bindings for Python, Perl, Ruby and many other languages,\n    and unlike other cross-platform toolkits, wxWidgets gives applications a\n    truly native look and feel because it uses the platform's native API rather\n    than emulating the GUI. It's also extensive, free, open-source and mature.\n  doc_url: https://docs.wxwidgets.org/\n  dev_url: https://github.com/wxWidgets/wxWidgets/\n\nextra:\n  recipe-maintainers:\n    - ryanvolz\n    - hmaarrfk\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1109,9 +1132,12 @@
    "summary": "Cross-Platform GUI Library"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "wxwidgets"
+   ],
+   "skip_compile_pyc": [
+    "*.py"
    ]
   },
   "extra": {
