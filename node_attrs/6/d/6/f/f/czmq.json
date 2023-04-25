@@ -24,7 +24,10 @@
    "summary": "High-level C binding for 0MQ"
   },
   "build": {
-   "number": "5"
+   "number": "6",
+   "run_exports": [
+    "czmq"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -117,7 +120,10 @@
    "summary": "High-level C binding for 0MQ"
   },
   "build": {
-   "number": "5"
+   "number": "6",
+   "run_exports": [
+    "czmq"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -210,7 +216,10 @@
    "summary": "High-level C binding for 0MQ"
   },
   "build": {
-   "number": "5"
+   "number": "6",
+   "run_exports": [
+    "czmq"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -303,7 +312,15 @@
    "summary": "High-level C binding for 0MQ"
   },
   "build": {
-   "number": "5"
+   "number": "6",
+   "run_exports": [
+    "czmq",
+    "czmq",
+    "czmq",
+    "czmq",
+    "czmq",
+    "czmq"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -451,7 +468,10 @@
    "summary": "High-level C binding for 0MQ"
   },
   "build": {
-   "number": "5"
+   "number": "6",
+   "run_exports": [
+    "czmq"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -544,7 +564,10 @@
    "summary": "High-level C binding for 0MQ"
   },
   "build": {
-   "number": "5"
+   "number": "6",
+   "run_exports": [
+    "czmq"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -644,7 +667,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/czmq.json"
  },
- "raw_meta_yaml": "{% set name = \"czmq\" %}\n{% set version = \"4.2.1\" %}\n{% set sha256 = \"83457cd32a2c2615b8d7ebcf91b198cb0d8df383a2072b96835ab250164d8a83\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/zeromq/{{ name }}/archive/v{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n  patches:\n    - 0001-cmake-libzmq-to-zeromq.patch\n    - 0002-stdint-missing-from-zeromq.patch  # [win and vc<14]\n    - 0003-bug-on-macos.patch\n\nbuild:\n  number: 5\n  skip: true  # [win and vc<14]\n\nrequirements:\n  build:\n    - cmake\n    - make  # [unix]\n    - ninja  # [win]\n    - autoconf  # [unix]\n    - automake  # [unix]\n    - libtool  # [unix]\n    - pkg-config  # [unix]\n    - gnuconfig   # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n  host:\n    - libuuid  # [unix]\n    - pcre\n    - zeromq\n  run:\n    - zeromq\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libczmq.a  # [unix]\n    - test -f $PREFIX/lib/libczmq$SHLIB_EXT  # [unix]\n    - test -f $PREFIX/include/czmq.h  # [unix]\n    - if not exist %LIBRARY_LIB%\\\\libczmq.lib exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\\\czmq.h exit 1  # [win]\n\nabout:\n  home: http://czmq.zeromq.org/\n  license: MPL-2.0\n  license_file: LICENSE\n  summary: High-level C binding for 0MQ\n\n  description: |\n    czmq is a high-level C binding for the ZeroMQ <http://zeromq.org/>\n    distributed messaging library.\n  doc_url: http://czmq.zeromq.org/\n  dev_url: https://github.com/zeromq/czmq\n\nextra:\n  recipe-maintainers:\n    - langmm\n",
+ "raw_meta_yaml": "{% set name = \"czmq\" %}\n{% set version = \"4.2.1\" %}\n{% set sha256 = \"83457cd32a2c2615b8d7ebcf91b198cb0d8df383a2072b96835ab250164d8a83\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/zeromq/{{ name }}/archive/v{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n  patches:\n    - 0001-cmake-libzmq-to-zeromq.patch\n    - 0002-stdint-missing-from-zeromq.patch  # [win and vc<14]\n    - 0003-bug-on-macos.patch\n\nbuild:\n  number: 6\n  skip: true  # [win and vc<14]\n  run_exports: \n    - {{ pin_subpackage('czmq', max_pin='x') }}\n\nrequirements:\n  build:\n    - cmake\n    - make  # [unix]\n    - ninja  # [win]\n    - autoconf  # [unix]\n    - automake  # [unix]\n    - libtool  # [unix]\n    - pkg-config  # [unix]\n    - gnuconfig   # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n  host:\n    - libuuid  # [unix]\n    - pcre\n    - zeromq\n  run:\n    - zeromq\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libczmq.a  # [unix]\n    - test -f $PREFIX/lib/libczmq$SHLIB_EXT  # [unix]\n    - test -f $PREFIX/include/czmq.h  # [unix]\n    - if not exist %LIBRARY_LIB%\\\\libczmq.lib exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\\\czmq.h exit 1  # [win]\n\nabout:\n  home: http://czmq.zeromq.org/\n  license: MPL-2.0\n  license_file: LICENSE\n  summary: High-level C binding for 0MQ\n\n  description: |\n    czmq is a high-level C binding for the ZeroMQ <http://zeromq.org/>\n    distributed messaging library.\n  doc_url: http://czmq.zeromq.org/\n  dev_url: https://github.com/zeromq/czmq\n\nextra:\n  recipe-maintainers:\n    - langmm\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -754,7 +777,10 @@
    "summary": "High-level C binding for 0MQ"
   },
   "build": {
-   "number": "5"
+   "number": "6",
+   "run_exports": [
+    "czmq"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
