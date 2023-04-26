@@ -25,7 +25,7 @@
    "always_include_files": [
     "lib/cmake/opentelemetry-cpp/"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -127,7 +127,7 @@
    "always_include_files": [
     "lib/cmake/opentelemetry-cpp/"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -229,7 +229,7 @@
    "always_include_files": [
     "lib/cmake/opentelemetry-cpp/"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -336,7 +336,7 @@
     "lib/cmake/opentelemetry-cpp/",
     "Library/lib/cmake/opentelemetry-cpp/"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -533,7 +533,7 @@
    "always_include_files": [
     "lib/cmake/opentelemetry-cpp/"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -635,7 +635,7 @@
    "always_include_files": [
     "lib/cmake/opentelemetry-cpp/"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -740,7 +740,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cpp-opentelemetry-sdk.json"
  },
- "raw_meta_yaml": "# code: language: jinja-yaml\n{% set name = \"cpp-opentelemetry-sdk\" %}\n{% set version = \"1.9.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/open-telemetry/opentelemetry-cpp/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: 0fdbefbdc2c154634728097e26de52a8210ed95cb032beb5f35da0a493cd5066\n    patches:\n      - cross_compile_grpc_cpp_plugin_path.patch  # [build_platform != target_platform]\n\nbuild:\n  number: 0\n  always_include_files:\n    # Must overwrite the ones installed by cpp-opentelemetry-api\n    - lib/cmake/opentelemetry-cpp/  # [unix]\n    - Library/lib/cmake/opentelemetry-cpp/  # [win]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake >=3.1\n    - ninja\n    - proto-opentelemetry-proto =0.19.0\n\n    # For cross-compiling\n    - curl                    # [build_platform != target_platform]\n    - libgrpc                 # [build_platform != target_platform]\n    - libprotobuf             # [build_platform != target_platform]\n    - nlohmann_json >=3.10.5  # [build_platform != target_platform]\n    - zlib                    # [build_platform != target_platform]\n    - prometheus-cpp          # [build_platform != target_platform] \n  host:\n    # -api and -sdk packages of different versions are not necessarily\n    # compatible.\n    - cpp-opentelemetry-api ={{ version }}\n    - curl\n    - libgrpc\n    - libprotobuf\n    - nlohmann_json >=3.10.5\n    - zlib\n    - prometheus-cpp\n  run:\n    - cpp-opentelemetry-api ={{ version }}\n    - curl\n    - nlohmann_json\n    - prometheus-cpp\n\ntest:\n  commands:\n    - test -d $PREFIX/include/opentelemetry/sdk/  # [unix]\n    - test -d $PREFIX/lib/cmake/opentelemetry-cpp/  # [unix]\n    - test -f $PREFIX/lib/cmake/opentelemetry-cpp/opentelemetry-cpp-config.cmake  # [unix]\n    - test -f $PREFIX/lib/libopentelemetry_common.a  # [unix]\n    - test -f $PREFIX/lib/libopentelemetry_exporter_otlp_grpc.a  # [unix]\n    - if not exist %LIBRARY_INC%\\opentelemetry\\sdk exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\opentelemetry-cpp exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\opentelemetry-cpp\\opentelemetry-cpp-config.cmake exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\opentelemetry_common.lib exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\opentelemetry_exporter_otlp_grpc.lib exit 1  # [win]\n\nabout:\n  home: https://github.com/open-telemetry/opentelemetry-cpp\n  license: Apache-2.0\n  license_family: APACHE\n  license_file: LICENSE\n  summary: The OpenTelemetry C++ Client\n  description: |\n    OpenTelemetry is a collection of tools, APIs, and SDKs. Use it to\n    instrument, generate, collect, and export telemetry data (metrics,\n    logs, and traces) to help you analyze your software\u2019s performance\n    and behavior.\n  doc_url: https://opentelemetry.io/docs/instrumentation/cpp/\n  dev_url: https://github.com/open-telemetry/opentelemetry-cpp\n\nextra:\n  recipe-maintainers:\n    - lidavidm\n",
+ "raw_meta_yaml": "# code: language: jinja-yaml\n{% set name = \"cpp-opentelemetry-sdk\" %}\n{% set version = \"1.9.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/open-telemetry/opentelemetry-cpp/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: 0fdbefbdc2c154634728097e26de52a8210ed95cb032beb5f35da0a493cd5066\n    patches:\n      - cross_compile_grpc_cpp_plugin_path.patch  # [build_platform != target_platform]\n\nbuild:\n  number: 1\n  always_include_files:\n    # Must overwrite the ones installed by cpp-opentelemetry-api\n    - lib/cmake/opentelemetry-cpp/  # [unix]\n    - Library/lib/cmake/opentelemetry-cpp/  # [win]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake >=3.1\n    - ninja\n    - proto-opentelemetry-proto =0.19.0\n\n    # For cross-compiling\n    - curl                    # [build_platform != target_platform]\n    - libgrpc                 # [build_platform != target_platform]\n    - libprotobuf             # [build_platform != target_platform]\n    - nlohmann_json >=3.10.5  # [build_platform != target_platform]\n    - zlib                    # [build_platform != target_platform]\n    - prometheus-cpp          # [build_platform != target_platform] \n  host:\n    # -api and -sdk packages of different versions are not necessarily\n    # compatible.\n    - cpp-opentelemetry-api ={{ version }}\n    - curl\n    - libgrpc\n    - libprotobuf\n    - nlohmann_json >=3.10.5\n    - zlib\n    - prometheus-cpp\n  run:\n    - cpp-opentelemetry-api ={{ version }}\n    - curl\n    - nlohmann_json\n    - prometheus-cpp\n\ntest:\n  commands:\n    - test -d $PREFIX/include/opentelemetry/sdk/  # [unix]\n    - test -d $PREFIX/lib/cmake/opentelemetry-cpp/  # [unix]\n    - test -f $PREFIX/lib/cmake/opentelemetry-cpp/opentelemetry-cpp-config.cmake  # [unix]\n    - test -f $PREFIX/lib/libopentelemetry_common.a  # [unix]\n    - test -f $PREFIX/lib/libopentelemetry_exporter_otlp_grpc.a  # [unix]\n    - if not exist %LIBRARY_INC%\\opentelemetry\\sdk exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\opentelemetry-cpp exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\opentelemetry-cpp\\opentelemetry-cpp-config.cmake exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\opentelemetry_common.lib exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\opentelemetry_exporter_otlp_grpc.lib exit 1  # [win]\n\nabout:\n  home: https://github.com/open-telemetry/opentelemetry-cpp\n  license: Apache-2.0\n  license_family: APACHE\n  license_file: LICENSE\n  summary: The OpenTelemetry C++ Client\n  description: |\n    OpenTelemetry is a collection of tools, APIs, and SDKs. Use it to\n    instrument, generate, collect, and export telemetry data (metrics,\n    logs, and traces) to help you analyze your software\u2019s performance\n    and behavior.\n  doc_url: https://opentelemetry.io/docs/instrumentation/cpp/\n  dev_url: https://github.com/open-telemetry/opentelemetry-cpp\n\nextra:\n  recipe-maintainers:\n    - lidavidm\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -852,7 +852,7 @@
    "always_include_files": [
     "Library/lib/cmake/opentelemetry-cpp/"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
