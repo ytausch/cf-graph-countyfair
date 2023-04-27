@@ -1,7 +1,11 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  }
+ },
  "feedstock_name": "calceph",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -28,6 +32,7 @@
   },
   "requirements": {
    "build": [
+    "gnuconfig",
     "c_compiler_stub",
     "make"
    ]
@@ -48,6 +53,7 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
@@ -76,11 +82,13 @@
    "run_exports": [
     "calceph",
     "calceph",
+    "calceph",
     "calceph"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "bluescarni",
     "bluescarni",
     "bluescarni",
     "bluescarni"
@@ -92,8 +100,13 @@
   },
   "requirements": {
    "build": [
+    "gnuconfig",
     "c_compiler_stub",
     "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "make",
+    "gnuconfig",
     "c_compiler_stub",
     "make",
     "c_compiler_stub"
@@ -105,6 +118,8 @@
   },
   "test": {
    "commands": [
+    "test -f $PREFIX/include/calceph.h",
+    "test -f $PREFIX/lib/libcalceph${SHLIB_EXT}",
     "test -f $PREFIX/include/calceph.h",
     "test -f $PREFIX/lib/libcalceph${SHLIB_EXT}",
     "test -f $PREFIX/include/calceph.h",
@@ -139,6 +154,7 @@
   },
   "requirements": {
    "build": [
+    "gnuconfig",
     "c_compiler_stub",
     "make"
    ]
@@ -159,6 +175,69 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "gnuconfig",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "home": "https://www.imcce.fr/inpop/calceph/",
+   "license": "CECILL-C OR CECILL-B OR CECILL-2.1",
+   "license_file": "COPYING_CECILL_C.LIB",
+   "summary": "A library to access the binary planetary ephemeris files, such INPOPxx, JPL DExxx and SPICE ephemeris files."
+  },
+  "build": {
+   "number": "0",
+   "run_exports": [
+    "calceph"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "bluescarni"
+   ]
+  },
+  "package": {
+   "name": "calceph",
+   "version": "3.5.2"
+  },
+  "requirements": {
+   "build": [
+    "gnuconfig",
+    "c_compiler_stub",
+    "make"
+   ]
+  },
+  "source": {
+   "sha256": "e43ab9b2750fda3598899602851bae182f11c415444c22d753409218a3a2d2e6",
+   "url": "https://www.imcce.fr/content/medias/recherche/equipes/asd/calceph/calceph-3.5.2.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f $PREFIX/include/calceph.h",
+    "test -f $PREFIX/lib/libcalceph${SHLIB_EXT}"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
@@ -183,6 +262,7 @@
  },
  "parsing_error": false,
  "platforms": [
+  "osx_arm64",
   "win_64",
   "osx_64",
   "linux_64"
@@ -190,11 +270,12 @@
  "pr_info": {
   "__lazy_json__": "pr_info/calceph.json"
  },
- "raw_meta_yaml": "{% set version = \"3.5.2\" %}\n\npackage:\n  name: calceph\n  version: {{ version }}\n\nsource:\n  url: https://www.imcce.fr/content/medias/recherche/equipes/asd/calceph/calceph-{{ version }}.tar.gz\n  sha256: e43ab9b2750fda3598899602851bae182f11c415444c22d753409218a3a2d2e6\n\nbuild:\n  number: 0\n  run_exports:\n    # SO name changes at minor rev bumps.\n    - {{ pin_subpackage('calceph', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - make                # [unix]\n\ntest:\n  commands:\n    - test -f $PREFIX/include/calceph.h                           # [unix]\n    - test -f $PREFIX/lib/libcalceph${SHLIB_EXT}                  # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\calceph.h exit 1   # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\libcalceph.lib exit 1  # [win]\n\nabout:\n  home: https://www.imcce.fr/inpop/calceph/\n  license: CECILL-C OR CECILL-B OR CECILL-2.1\n  license_file: COPYING_CECILL_C.LIB\n  summary: A library to access the binary planetary ephemeris files, such INPOPxx, JPL DExxx and SPICE ephemeris files.\n\nextra:\n  recipe-maintainers:\n    - bluescarni\n",
+ "raw_meta_yaml": "{% set version = \"3.5.2\" %}\n\npackage:\n  name: calceph\n  version: {{ version }}\n\nsource:\n  url: https://www.imcce.fr/content/medias/recherche/equipes/asd/calceph/calceph-{{ version }}.tar.gz\n  sha256: e43ab9b2750fda3598899602851bae182f11c415444c22d753409218a3a2d2e6\n\nbuild:\n  number: 0\n  run_exports:\n    # SO name changes at minor rev bumps.\n    - {{ pin_subpackage('calceph', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - make                # [unix]\n\ntest:\n  commands:\n    - test -f $PREFIX/include/calceph.h                           # [unix]\n    - test -f $PREFIX/lib/libcalceph${SHLIB_EXT}                  # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\calceph.h exit 1   # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\libcalceph.lib exit 1  # [win]\n\nabout:\n  home: https://www.imcce.fr/inpop/calceph/\n  license: CECILL-C OR CECILL-B OR CECILL-2.1\n  license_file: COPYING_CECILL_C.LIB\n  summary: A library to access the binary planetary ephemeris files, such INPOPxx, JPL DExxx and SPICE ephemeris files.\n\nextra:\n  recipe-maintainers:\n    - bluescarni\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
+   "gnuconfig",
    "make"
   ]
  },
@@ -203,6 +284,7 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
@@ -229,6 +311,7 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
