@@ -51,7 +51,7 @@
       "aiohttp >=3.7.1,<3.9.0",
       "requests >=2.26,<3",
       "requests-toolbelt >=0.9.1,<1",
-      "urllib3 >=1.26",
+      "urllib3 >=1.26,<2",
       "websockets >=10,<11",
       "botocore >=1.21,<2"
      ]
@@ -240,7 +240,7 @@
       "parse",
       "pip",
       "pytest",
-      "pytest-asyncio",
+      "pytest-asyncio >=0.16.0,<0.19.0",
       "pytest-console-scripts",
       "pytest-cov",
       "vcrpy"
@@ -253,7 +253,7 @@
   ],
   "package": {
    "name": "gql-split",
-   "version": "3.4.0"
+   "version": "3.4.1"
   },
   "requirements": {
    "host": [
@@ -265,8 +265,8 @@
    ]
   },
   "source": {
-   "sha256": "ca81aa8314fa88a8c57dd1ce34941278e0c352d762eb721edcba0387829ea7c0",
-   "url": "https://pypi.io/packages/source/g/gql/gql-3.4.0.tar.gz"
+   "sha256": "11dc5d8715a827f2c2899593439a4f36449db4f0eafa5b1ea63948f8a2f8c545",
+   "url": "https://pypi.io/packages/source/g/gql/gql-3.4.1.tar.gz"
   },
   "test": {
    "commands": [
@@ -368,7 +368,7 @@
       "aiohttp >=3.7.1,<3.9.0",
       "requests >=2.26,<3",
       "requests-toolbelt >=0.9.1,<1",
-      "urllib3 >=1.26",
+      "urllib3 >=1.26,<2",
       "websockets >=10,<11",
       "botocore >=1.21,<2"
      ]
@@ -557,7 +557,7 @@
       "parse",
       "pip",
       "pytest",
-      "pytest-asyncio",
+      "pytest-asyncio >=0.16.0,<0.19.0",
       "pytest-console-scripts",
       "pytest-cov",
       "vcrpy"
@@ -570,7 +570,7 @@
   ],
   "package": {
    "name": "gql-split",
-   "version": "3.4.0"
+   "version": "3.4.1"
   },
   "requirements": {
    "host": [
@@ -582,8 +582,8 @@
    ]
   },
   "source": {
-   "sha256": "ca81aa8314fa88a8c57dd1ce34941278e0c352d762eb721edcba0387829ea7c0",
-   "url": "https://pypi.io/packages/source/g/gql/gql-3.4.0.tar.gz"
+   "sha256": "11dc5d8715a827f2c2899593439a4f36449db4f0eafa5b1ea63948f8a2f8c545",
+   "url": "https://pypi.io/packages/source/g/gql/gql-3.4.1.tar.gz"
   },
   "test": {
    "commands": [
@@ -611,7 +611,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/gql.json"
  },
- "raw_meta_yaml": "{% set min_python = \"python >=3.6\" %}\n{% set version = \"3.4.0\" %}\n{% set min_python = \"python >=3.6\" %}\n\npackage:\n  name: gql-split\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/g/gql/gql-{{ version }}.tar.gz\n  sha256: ca81aa8314fa88a8c57dd1ce34941278e0c352d762eb721edcba0387829ea7c0\n\nbuild:\n  noarch: python\n  number: 0\n  entry_points:\n    - gql-cli=gql.cli:gql_cli\n\nrequirements:\n  host:\n    - {{ min_python }}\n    - pip\n  run:\n    - {{ min_python }}\n\ntest:\n  commands:\n    - echo \"tests in outputs\"\n\noutputs:\n  - name: gql\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . -vv --no-deps\n\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ min_python }}\n        - graphql-core >=3.2,<3.3\n        - yarl >=1.6,<2.0\n        - backoff >=1.11.1,<3.0\n      run_constrained:\n        # aiohttp\n        - aiohttp >=3.7.1,<3.9.0\n        # requests\n        - requests >=2.26,<3\n        - requests-toolbelt >=0.9.1,<1\n        - urllib3 >=1.26\n        # websockets\n        - websockets >=10,<11\n        # boto\n        - botocore >=1.21,<2\n    test:\n      imports:\n        - gql\n      requires:\n        - pip\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n\n  - name: gql-with-aiohttp\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ pin_subpackage('gql', exact=True) }}\n        - aiohttp\n        - {{ min_python }}\n    test:\n      imports:\n        - gql\n        - gql.transport.aiohttp\n      requires:\n        - pip\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n    about:\n      summary: GraphQL client for Python - aiohttp transport\n\n  - name: gql-with-requests\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ pin_subpackage('gql', exact=True) }}\n        - {{ min_python }}\n        - requests\n        - requests-toolbelt\n        - urllib3\n    test:\n      imports:\n        - gql\n        - gql.transport.requests\n      requires:\n        - pip\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n    about:\n      summary: GraphQL client for Python - requests transport\n\n  - name: gql-with-websockets\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ pin_subpackage('gql', exact=True) }}\n        - {{ min_python }}\n        - websockets\n    test:\n      imports:\n        - gql\n        - gql.transport.websockets\n      requires:\n        - pip\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n    about:\n      summary: GraphQL client for Python - websocket transport\n\n  - name: gql-with-botocore\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ pin_subpackage('gql', exact=True) }}\n        - botocore\n        - {{ min_python }}\n    test:\n      imports:\n        - gql\n        - gql.transport.appsync_auth\n      requires:\n        - pip\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n    about:\n      summary: GraphQL client for Python - boto transport\n\n  - name: gql-with-all\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ pin_subpackage('gql-with-aiohttp', exact=True) }}\n        - {{ pin_subpackage('gql-with-botocore', exact=True) }}\n        - {{ pin_subpackage('gql-with-requests', exact=True) }}\n        - {{ pin_subpackage('gql-with-websockets', exact=True) }}\n        - {{ pin_subpackage('gql', exact=True) }}\n        - {{ min_python }}\n    test:\n      source_files:\n        - tests\n      requires:\n        - aiofiles\n        - mock\n        - parse\n        - pip\n        - pytest\n        - pytest-asyncio\n        - pytest-console-scripts\n        - pytest-cov\n        - vcrpy\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n        - pytest tests -vv --no-cov-on-fail --cov gql --cov-report=term-missing:skip-covered --cov-fail-under=99\n\nabout:\n  home: https://github.com/graphql-python/gql\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: GraphQL client for Python\n  description: |-\n    This is a GraphQL client for Python. Plays nicely with graphene,\n    graphql-core, graphql-js and any other GraphQL implementation compatible\n    with the spec.\nextra:\n  feedstock-name: gql\n  recipe-maintainers:\n    - leszekhanusz\n    - ozagordi\n    - KingDarBoja\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"3.4.1\" %}\n{% set min_python = \"python >=3.6\" %}\n\npackage:\n  name: gql-split\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/g/gql/gql-{{ version }}.tar.gz\n  sha256: 11dc5d8715a827f2c2899593439a4f36449db4f0eafa5b1ea63948f8a2f8c545\n\nbuild:\n  noarch: python\n  number: 0\n  entry_points:\n    - gql-cli=gql.cli:gql_cli\n\nrequirements:\n  host:\n    - {{ min_python }}\n    - pip\n  run:\n    - {{ min_python }}\n\ntest:\n  commands:\n    - echo \"tests in outputs\"\n\noutputs:\n  - name: gql\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . -vv --no-deps\n\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ min_python }}\n        - graphql-core >=3.2,<3.3\n        - yarl >=1.6,<2.0\n        - backoff >=1.11.1,<3.0\n      run_constrained:\n        # aiohttp\n        - aiohttp >=3.7.1,<3.9.0\n        # requests\n        - requests >=2.26,<3\n        - requests-toolbelt >=0.9.1,<1\n        - urllib3 >=1.26,<2\n        # websockets\n        - websockets >=10,<11\n        # boto\n        - botocore >=1.21,<2\n    test:\n      imports:\n        - gql\n      requires:\n        - pip\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n\n  - name: gql-with-aiohttp\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ pin_subpackage('gql', exact=True) }}\n        - aiohttp\n        - {{ min_python }}\n    test:\n      imports:\n        - gql\n        - gql.transport.aiohttp\n      requires:\n        - pip\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n    about:\n      summary: GraphQL client for Python - aiohttp transport\n\n  - name: gql-with-requests\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ pin_subpackage('gql', exact=True) }}\n        - {{ min_python }}\n        - requests\n        - requests-toolbelt\n        - urllib3\n    test:\n      imports:\n        - gql\n        - gql.transport.requests\n      requires:\n        - pip\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n    about:\n      summary: GraphQL client for Python - requests transport\n\n  - name: gql-with-websockets\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ pin_subpackage('gql', exact=True) }}\n        - {{ min_python }}\n        - websockets\n    test:\n      imports:\n        - gql\n        - gql.transport.websockets\n      requires:\n        - pip\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n    about:\n      summary: GraphQL client for Python - websocket transport\n\n  - name: gql-with-botocore\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ pin_subpackage('gql', exact=True) }}\n        - botocore\n        - {{ min_python }}\n    test:\n      imports:\n        - gql\n        - gql.transport.appsync_auth\n      requires:\n        - pip\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n    about:\n      summary: GraphQL client for Python - boto transport\n\n  - name: gql-with-all\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n      run:\n        - {{ pin_subpackage('gql-with-aiohttp', exact=True) }}\n        - {{ pin_subpackage('gql-with-botocore', exact=True) }}\n        - {{ pin_subpackage('gql-with-requests', exact=True) }}\n        - {{ pin_subpackage('gql-with-websockets', exact=True) }}\n        - {{ pin_subpackage('gql', exact=True) }}\n        - {{ min_python }}\n    test:\n      source_files:\n        - tests\n      requires:\n        - aiofiles\n        - mock\n        - parse\n        - pip\n        - pytest\n        - pytest-asyncio >=0.16.0,<0.19.0\n        - pytest-console-scripts\n        - pytest-cov\n        - vcrpy\n      commands:\n        - pip check\n        - gql-cli --help\n        - gql-cli --version\n        - pytest tests -vv --no-cov-on-fail --cov gql --cov-report=term-missing:skip-covered --cov-fail-under=99\n\nabout:\n  home: https://github.com/graphql-python/gql\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: GraphQL client for Python\n  description: |-\n    This is a GraphQL client for Python. Plays nicely with graphene,\n    graphql-core, graphql-js and any other GraphQL implementation compatible\n    with the spec.\nextra:\n  feedstock-name: gql\n  recipe-maintainers:\n    - leszekhanusz\n    - ozagordi\n    - KingDarBoja\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -721,15 +721,15 @@
     "parse",
     "pip",
     "pytest",
-    "pytest-asyncio",
+    "pytest-asyncio >=0.16.0,<0.19.0",
     "pytest-console-scripts",
     "pytest-cov",
     "vcrpy"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/g/gql/gql-3.4.0.tar.gz",
- "version": "3.4.0",
+ "url": "https://pypi.io/packages/source/g/gql/gql-3.4.1.tar.gz",
+ "version": "3.4.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/gql.json"
  }
