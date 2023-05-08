@@ -23,7 +23,7 @@
    "summary": "The Fast Library for Approximate Nearest Neighbors"
   },
   "build": {
-   "number": "1011"
+   "number": "1012"
   },
   "extra": {
    "recipe-maintainers": [
@@ -41,7 +41,8 @@
    "build": [
     "cxx_compiler_stub",
     "cmake",
-    "make"
+    "make",
+    "libgomp"
    ],
    "host": [
     "hdf5"
@@ -72,6 +73,7 @@
    "elements": [
     "cmake",
     "cxx_compiler_stub",
+    "libgomp",
     "make"
    ]
   },
@@ -98,7 +100,7 @@
    "summary": "The Fast Library for Approximate Nearest Neighbors"
   },
   "build": {
-   "number": "1011"
+   "number": "1012"
   },
   "extra": {
    "recipe-maintainers": [
@@ -116,7 +118,8 @@
    "build": [
     "cxx_compiler_stub",
     "cmake",
-    "make"
+    "make",
+    "libgomp"
    ],
    "host": [
     "hdf5"
@@ -147,6 +150,7 @@
    "elements": [
     "cmake",
     "cxx_compiler_stub",
+    "libgomp",
     "make"
    ]
   },
@@ -173,7 +177,7 @@
    "summary": "The Fast Library for Approximate Nearest Neighbors"
   },
   "build": {
-   "number": "1011"
+   "number": "1012"
   },
   "extra": {
    "recipe-maintainers": [
@@ -191,7 +195,8 @@
    "build": [
     "cxx_compiler_stub",
     "cmake",
-    "make"
+    "make",
+    "libgomp"
    ],
    "host": [
     "hdf5"
@@ -222,6 +227,7 @@
    "elements": [
     "cmake",
     "cxx_compiler_stub",
+    "libgomp",
     "make"
    ]
   },
@@ -248,7 +254,7 @@
    "summary": "The Fast Library for Approximate Nearest Neighbors"
   },
   "build": {
-   "number": "1011"
+   "number": "1012"
   },
   "extra": {
    "recipe-maintainers": [
@@ -287,6 +293,15 @@
     "cxx_compiler_stub",
     "cmake",
     "make",
+    "libgomp",
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "libgomp",
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "libgomp",
     "cxx_compiler_stub",
     "cmake",
     "make",
@@ -294,12 +309,6 @@
     "cmake",
     "make",
     "cxx_compiler_stub",
-    "cmake",
-    "make",
-    "cxx_compiler_stub",
-    "cmake",
-    "make",
-    "vs2017_win-64",
     "cmake"
    ],
    "host": [
@@ -378,7 +387,7 @@
    "summary": "The Fast Library for Approximate Nearest Neighbors"
   },
   "build": {
-   "number": "1011"
+   "number": "1012"
   },
   "extra": {
    "recipe-maintainers": [
@@ -455,7 +464,7 @@
    "summary": "The Fast Library for Approximate Nearest Neighbors"
   },
   "build": {
-   "number": "1011"
+   "number": "1012"
   },
   "extra": {
    "recipe-maintainers": [
@@ -542,16 +551,16 @@
  "pr_info": {
   "__lazy_json__": "pr_info/flann.json"
  },
- "raw_meta_yaml": "{% set version = \"1.9.1\" %}\n\npackage:\n    name: flann\n    version: {{ version }}\n\nsource:\n    fn: flann-{{ version }}.tar.gz\n    url: https://github.com/mariusmuja/flann/archive/{{ version }}.tar.gz\n    sha256: b23b5f4e71139faa3bcb39e6bbcc76967fbaf308c4ee9d4f5bfbeceaa76cc5d3\n    patches:\n        # CMake 3.11 breaks FLANN's existing src/cpp/CMakeLists.txt. See\n        # https://github.com/mariusmuja/flann/issues/369 for more information.\n        - src-cpp-fix-cmake-3.11-build.patch\n        # This serializer workaround for VS 2013 doesn't work correctly in VC9.\n        - remove-serializer-workaround.patch\n\nbuild:\n    skip: True  # [win and vc<14]\n    number: 1011\n\nrequirements:\n    build:\n        - {{ compiler('cxx') }}  # [not win64]\n        - vs2017_win-64  # [win64]\n        - cmake\n        - make  # [unix]\n    host:\n        - hdf5\n        - llvm-openmp  # [osx]\n\ntest:\n    commands:\n        # Verify libraries exist\n        {% set flann_libs = [\n                \"flann_cpp\",\n                \"flann\"\n        ] %}\n        {% for each_flann_lib in flann_libs %}\n        - test -f $PREFIX/lib/lib{{ each_flann_lib }}_s.a                # [unix]\n        - test -f $PREFIX/lib/lib{{ each_flann_lib }}.dylib              # [osx]\n        - test -f $PREFIX/lib/lib{{ each_flann_lib }}.so                 # [linux]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ each_flann_lib }}.dll exit 1    # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ each_flann_lib }}.lib exit 1    # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ each_flann_lib }}_s.lib exit 1  # [win]\n        {% endfor %}\n        - test -d $PREFIX/include/flann                 # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\flann exit 1      # [win]\n\nabout:\n    home: http://www.cs.ubc.ca/research/flann/\n    license: BSD-3-Clause\n    license_file: COPYING\n    summary: \"The Fast Library for Approximate Nearest Neighbors\"\n\nextra:\n  recipe-maintainers:\n    - jakevdp\n    - jakirkham\n    - djsutherland\n    - seanyen\n",
+ "raw_meta_yaml": "{% set version = \"1.9.1\" %}\n\npackage:\n    name: flann\n    version: {{ version }}\n\nsource:\n    fn: flann-{{ version }}.tar.gz\n    url: https://github.com/mariusmuja/flann/archive/{{ version }}.tar.gz\n    sha256: b23b5f4e71139faa3bcb39e6bbcc76967fbaf308c4ee9d4f5bfbeceaa76cc5d3\n    patches:\n        # CMake 3.11 breaks FLANN's existing src/cpp/CMakeLists.txt. See\n        # https://github.com/mariusmuja/flann/issues/369 for more information.\n        - src-cpp-fix-cmake-3.11-build.patch\n        # This serializer workaround for VS 2013 doesn't work correctly in VC9.\n        - remove-serializer-workaround.patch\n\nbuild:\n    number: 1012\n\nrequirements:\n    build:\n        - {{ compiler('cxx') }}\n        - cmake\n        - make         # [unix]\n        - libgomp      # [linux]\n    host:\n        - hdf5\n        - llvm-openmp  # [osx]\n\ntest:\n    commands:\n        # Verify libraries exist\n        {% set flann_libs = [\n                \"flann_cpp\",\n                \"flann\"\n        ] %}\n        {% for each_flann_lib in flann_libs %}\n        - test -f $PREFIX/lib/lib{{ each_flann_lib }}_s.a                # [unix]\n        - test -f $PREFIX/lib/lib{{ each_flann_lib }}.dylib              # [osx]\n        - test -f $PREFIX/lib/lib{{ each_flann_lib }}.so                 # [linux]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ each_flann_lib }}.dll exit 1    # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ each_flann_lib }}.lib exit 1    # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ each_flann_lib }}_s.lib exit 1  # [win]\n        {% endfor %}\n        - test -d $PREFIX/include/flann                 # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\flann exit 1      # [win]\n\nabout:\n    home: http://www.cs.ubc.ca/research/flann/\n    license: BSD-3-Clause\n    license_file: COPYING\n    summary: \"The Fast Library for Approximate Nearest Neighbors\"\n\nextra:\n  recipe-maintainers:\n    - jakevdp\n    - jakirkham\n    - djsutherland\n    - seanyen\n",
  "req": {
   "__set__": true,
   "elements": [
    "cmake",
    "cxx_compiler_stub",
    "hdf5",
+   "libgomp",
    "llvm-openmp",
-   "make",
-   "vs2017_win-64"
+   "make"
   ]
  },
  "requirements": {
@@ -560,26 +569,26 @@
    "elements": [
     "cmake",
     "cxx_compiler_stub",
-    "make",
-    "vs2017_win-64"
+    "libgomp",
+    "make"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "ctng-compilers",
     "cxx_compiler_stub",
     "hdf5",
     "llvm-openmp",
-    "openmp",
-    "vc"
+    "openmp"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
+    "ctng-compilers",
     "cxx_compiler_stub",
-    "openmp",
-    "vc"
+    "openmp"
    ]
   },
   "test": {
@@ -594,8 +603,8 @@
    "elements": [
     "cmake",
     "cxx_compiler_stub",
-    "make",
-    "vs2017_win-64"
+    "libgomp",
+    "make"
    ]
   },
   "host": {
@@ -627,7 +636,7 @@
    "summary": "The Fast Library for Approximate Nearest Neighbors"
   },
   "build": {
-   "number": "1011"
+   "number": "1012"
   },
   "extra": {
    "recipe-maintainers": [
@@ -643,7 +652,7 @@
   },
   "requirements": {
    "build": [
-    "vs2017_win-64",
+    "cxx_compiler_stub",
     "cmake"
    ],
    "host": [
@@ -676,7 +685,7 @@
    "__set__": true,
    "elements": [
     "cmake",
-    "vs2017_win-64"
+    "cxx_compiler_stub"
    ]
   },
   "host": {
