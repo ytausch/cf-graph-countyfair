@@ -34,7 +34,7 @@
   "outputs": [
    {
     "build": {
-     "string": "cuda"
+     "string": "cpu"
     },
     "name": "faiss-proc",
     "test": {
@@ -48,15 +48,14 @@
     "build": {
      "run_exports": [
       "libfaiss_avx2 >=1.7.2,<2",
-      "libfaiss_avx2 =*=*_cuda"
+      "libfaiss_avx2 =*=*_cpu"
      ],
-     "string": "cuda110h1234567_3_cuda"
+     "string": "h1234567_3_cpu"
     },
     "name": "libfaiss-avx2",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
-      "cuda_compiler_stub",
       "cmake",
       "make",
       "libgomp"
@@ -66,8 +65,8 @@
       "liblapack"
      ],
      "run_constrained": [
-      "faiss-cpu ==9999999999",
-      "faiss-proc =*=cuda"
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
      ]
     },
     "script": "build-lib-avx2.sh",
@@ -159,89 +158,7 @@
       "test -f $PREFIX/include/faiss_avx2/utils/simdlib_emulated.h || (echo \"utils/simdlib_emulated.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss_avx2/utils/simdlib_neon.h || (echo \"utils/simdlib_neon.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss_avx2/utils/utils.h || (echo \"utils/utils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuAutoTune.h || (echo \"gpu/GpuAutoTune.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuCloner.h || (echo \"gpu/GpuCloner.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuClonerOptions.h || (echo \"gpu/GpuClonerOptions.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuDistance.h || (echo \"gpu/GpuDistance.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuFaissAssert.h || (echo \"gpu/GpuFaissAssert.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIcmEncoder.h || (echo \"gpu/GpuIcmEncoder.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndex.h || (echo \"gpu/GpuIndex.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexBinaryFlat.h || (echo \"gpu/GpuIndexBinaryFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexFlat.h || (echo \"gpu/GpuIndexFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVF.h || (echo \"gpu/GpuIndexIVF.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFFlat.h || (echo \"gpu/GpuIndexIVFFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFPQ.h || (echo \"gpu/GpuIndexIVFPQ.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFScalarQuantizer.h || (echo \"gpu/GpuIndexIVFScalarQuantizer.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndicesOptions.h || (echo \"gpu/GpuIndicesOptions.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuResources.h || (echo \"gpu/GpuResources.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/StandardGpuResources.h || (echo \"gpu/StandardGpuResources.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BinaryDistance.cuh || (echo \"gpu/impl/BinaryDistance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BinaryFlatIndex.cuh || (echo \"gpu/impl/BinaryFlatIndex.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BroadcastSum.cuh || (echo \"gpu/impl/BroadcastSum.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/Distance.cuh || (echo \"gpu/impl/Distance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/DistanceUtils.cuh || (echo \"gpu/impl/DistanceUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/FlatIndex.cuh || (echo \"gpu/impl/FlatIndex.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/GeneralDistance.cuh || (echo \"gpu/impl/GeneralDistance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/GpuScalarQuantizer.cuh || (echo \"gpu/impl/GpuScalarQuantizer.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFAppend.cuh || (echo \"gpu/impl/IVFAppend.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFBase.cuh || (echo \"gpu/impl/IVFBase.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFFlat.cuh || (echo \"gpu/impl/IVFFlat.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFFlatScan.cuh || (echo \"gpu/impl/IVFFlatScan.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFInterleaved.cuh || (echo \"gpu/impl/IVFInterleaved.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFPQ.cuh || (echo \"gpu/impl/IVFPQ.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFUtils.cuh || (echo \"gpu/impl/IVFUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IcmEncoder.cuh || (echo \"gpu/impl/IcmEncoder.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/InterleavedCodes.h || (echo \"gpu/impl/InterleavedCodes.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/L2Norm.cuh || (echo \"gpu/impl/L2Norm.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/L2Select.cuh || (echo \"gpu/impl/L2Select.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeDistances-inl.cuh || (echo \"gpu/impl/PQCodeDistances-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeDistances.cuh || (echo \"gpu/impl/PQCodeDistances.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeLoad.cuh || (echo \"gpu/impl/PQCodeLoad.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassNoPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassPrecomputed.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/RemapIndices.h || (echo \"gpu/impl/RemapIndices.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/VectorResidual.cuh || (echo \"gpu/impl/VectorResidual.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/scan/IVFInterleavedImpl.cuh || (echo \"gpu/impl/scan/IVFInterleavedImpl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/BlockSelectKernel.cuh || (echo \"gpu/utils/BlockSelectKernel.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Comparators.cuh || (echo \"gpu/utils/Comparators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ConversionOperators.cuh || (echo \"gpu/utils/ConversionOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/CopyUtils.cuh || (echo \"gpu/utils/CopyUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceDefs.cuh || (echo \"gpu/utils/DeviceDefs.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceTensor-inl.cuh || (echo \"gpu/utils/DeviceTensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceTensor.cuh || (echo \"gpu/utils/DeviceTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceUtils.h || (echo \"gpu/utils/DeviceUtils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceVector.cuh || (echo \"gpu/utils/DeviceVector.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Float16.cuh || (echo \"gpu/utils/Float16.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/HostTensor-inl.cuh || (echo \"gpu/utils/HostTensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/HostTensor.cuh || (echo \"gpu/utils/HostTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Limits.cuh || (echo \"gpu/utils/Limits.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/LoadStoreOperators.cuh || (echo \"gpu/utils/LoadStoreOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MathOperators.cuh || (echo \"gpu/utils/MathOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MatrixMult-inl.cuh || (echo \"gpu/utils/MatrixMult-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MatrixMult.cuh || (echo \"gpu/utils/MatrixMult.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkBlock.cuh || (echo \"gpu/utils/MergeNetworkBlock.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkUtils.cuh || (echo \"gpu/utils/MergeNetworkUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkWarp.cuh || (echo \"gpu/utils/MergeNetworkWarp.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/NoTypeTensor.cuh || (echo \"gpu/utils/NoTypeTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Pair.cuh || (echo \"gpu/utils/Pair.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/PtxUtils.cuh || (echo \"gpu/utils/PtxUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ReductionOperators.cuh || (echo \"gpu/utils/ReductionOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Reductions.cuh || (echo \"gpu/utils/Reductions.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Select.cuh || (echo \"gpu/utils/Select.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/StackDeviceMemory.h || (echo \"gpu/utils/StackDeviceMemory.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/StaticUtils.h || (echo \"gpu/utils/StaticUtils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Tensor-inl.cuh || (echo \"gpu/utils/Tensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Tensor.cuh || (echo \"gpu/utils/Tensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ThrustAllocator.cuh || (echo \"gpu/utils/ThrustAllocator.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Timer.h || (echo \"gpu/utils/Timer.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Transpose.cuh || (echo \"gpu/utils/Transpose.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpPackedBits.cuh || (echo \"gpu/utils/WarpPackedBits.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpSelectKernel.cuh || (echo \"gpu/utils/WarpSelectKernel.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpShuffles.cuh || (echo \"gpu/utils/WarpShuffles.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/blockselect/BlockSelectImpl.cuh || (echo \"gpu/utils/blockselect/BlockSelectImpl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/warpselect/WarpSelectImpl.cuh || (echo \"gpu/utils/warpselect/WarpSelectImpl.cuh not found\" && exit 1)"
+      "test -f $PREFIX/include/faiss_avx2/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)"
      ]
     }
    },
@@ -249,15 +166,14 @@
     "build": {
      "run_exports": [
       "libfaiss >=1.7.2,<2",
-      "libfaiss =*=*_cuda"
+      "libfaiss =*=*_cpu"
      ],
-     "string": "cuda110h1234567_3_cuda"
+     "string": "h1234567_3_cpu"
     },
     "name": "libfaiss",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
-      "cuda_compiler_stub",
       "cmake",
       "make",
       "libgomp"
@@ -267,8 +183,8 @@
       "liblapack"
      ],
      "run_constrained": [
-      "faiss-cpu ==9999999999",
-      "faiss-proc =*=cuda"
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
      ]
     },
     "script": "build-lib-generic.sh",
@@ -360,101 +276,18 @@
       "test -f $PREFIX/include/faiss/utils/simdlib_emulated.h || (echo \"utils/simdlib_emulated.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss/utils/simdlib_neon.h || (echo \"utils/simdlib_neon.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss/utils/utils.h || (echo \"utils/utils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuAutoTune.h || (echo \"gpu/GpuAutoTune.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuCloner.h || (echo \"gpu/GpuCloner.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuClonerOptions.h || (echo \"gpu/GpuClonerOptions.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuDistance.h || (echo \"gpu/GpuDistance.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuFaissAssert.h || (echo \"gpu/GpuFaissAssert.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIcmEncoder.h || (echo \"gpu/GpuIcmEncoder.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndex.h || (echo \"gpu/GpuIndex.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexBinaryFlat.h || (echo \"gpu/GpuIndexBinaryFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexFlat.h || (echo \"gpu/GpuIndexFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVF.h || (echo \"gpu/GpuIndexIVF.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFFlat.h || (echo \"gpu/GpuIndexIVFFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFPQ.h || (echo \"gpu/GpuIndexIVFPQ.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFScalarQuantizer.h || (echo \"gpu/GpuIndexIVFScalarQuantizer.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndicesOptions.h || (echo \"gpu/GpuIndicesOptions.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuResources.h || (echo \"gpu/GpuResources.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/StandardGpuResources.h || (echo \"gpu/StandardGpuResources.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/BinaryDistance.cuh || (echo \"gpu/impl/BinaryDistance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/BinaryFlatIndex.cuh || (echo \"gpu/impl/BinaryFlatIndex.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/BroadcastSum.cuh || (echo \"gpu/impl/BroadcastSum.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/Distance.cuh || (echo \"gpu/impl/Distance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/DistanceUtils.cuh || (echo \"gpu/impl/DistanceUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/FlatIndex.cuh || (echo \"gpu/impl/FlatIndex.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/GeneralDistance.cuh || (echo \"gpu/impl/GeneralDistance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/GpuScalarQuantizer.cuh || (echo \"gpu/impl/GpuScalarQuantizer.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFAppend.cuh || (echo \"gpu/impl/IVFAppend.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFBase.cuh || (echo \"gpu/impl/IVFBase.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFFlat.cuh || (echo \"gpu/impl/IVFFlat.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFFlatScan.cuh || (echo \"gpu/impl/IVFFlatScan.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFInterleaved.cuh || (echo \"gpu/impl/IVFInterleaved.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFPQ.cuh || (echo \"gpu/impl/IVFPQ.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFUtils.cuh || (echo \"gpu/impl/IVFUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IcmEncoder.cuh || (echo \"gpu/impl/IcmEncoder.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/InterleavedCodes.h || (echo \"gpu/impl/InterleavedCodes.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/L2Norm.cuh || (echo \"gpu/impl/L2Norm.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/L2Select.cuh || (echo \"gpu/impl/L2Select.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeDistances-inl.cuh || (echo \"gpu/impl/PQCodeDistances-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeDistances.cuh || (echo \"gpu/impl/PQCodeDistances.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeLoad.cuh || (echo \"gpu/impl/PQCodeLoad.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassNoPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassPrecomputed.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/RemapIndices.h || (echo \"gpu/impl/RemapIndices.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/VectorResidual.cuh || (echo \"gpu/impl/VectorResidual.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/scan/IVFInterleavedImpl.cuh || (echo \"gpu/impl/scan/IVFInterleavedImpl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/BlockSelectKernel.cuh || (echo \"gpu/utils/BlockSelectKernel.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Comparators.cuh || (echo \"gpu/utils/Comparators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/ConversionOperators.cuh || (echo \"gpu/utils/ConversionOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/CopyUtils.cuh || (echo \"gpu/utils/CopyUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/DeviceDefs.cuh || (echo \"gpu/utils/DeviceDefs.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/DeviceTensor-inl.cuh || (echo \"gpu/utils/DeviceTensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/DeviceTensor.cuh || (echo \"gpu/utils/DeviceTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/DeviceUtils.h || (echo \"gpu/utils/DeviceUtils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/DeviceVector.cuh || (echo \"gpu/utils/DeviceVector.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Float16.cuh || (echo \"gpu/utils/Float16.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/HostTensor-inl.cuh || (echo \"gpu/utils/HostTensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/HostTensor.cuh || (echo \"gpu/utils/HostTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Limits.cuh || (echo \"gpu/utils/Limits.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/LoadStoreOperators.cuh || (echo \"gpu/utils/LoadStoreOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MathOperators.cuh || (echo \"gpu/utils/MathOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MatrixMult-inl.cuh || (echo \"gpu/utils/MatrixMult-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MatrixMult.cuh || (echo \"gpu/utils/MatrixMult.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkBlock.cuh || (echo \"gpu/utils/MergeNetworkBlock.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkUtils.cuh || (echo \"gpu/utils/MergeNetworkUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkWarp.cuh || (echo \"gpu/utils/MergeNetworkWarp.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/NoTypeTensor.cuh || (echo \"gpu/utils/NoTypeTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Pair.cuh || (echo \"gpu/utils/Pair.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/PtxUtils.cuh || (echo \"gpu/utils/PtxUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/ReductionOperators.cuh || (echo \"gpu/utils/ReductionOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Reductions.cuh || (echo \"gpu/utils/Reductions.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Select.cuh || (echo \"gpu/utils/Select.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/StackDeviceMemory.h || (echo \"gpu/utils/StackDeviceMemory.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/StaticUtils.h || (echo \"gpu/utils/StaticUtils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Tensor-inl.cuh || (echo \"gpu/utils/Tensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Tensor.cuh || (echo \"gpu/utils/Tensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/ThrustAllocator.cuh || (echo \"gpu/utils/ThrustAllocator.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Timer.h || (echo \"gpu/utils/Timer.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Transpose.cuh || (echo \"gpu/utils/Transpose.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/WarpPackedBits.cuh || (echo \"gpu/utils/WarpPackedBits.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/WarpSelectKernel.cuh || (echo \"gpu/utils/WarpSelectKernel.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/WarpShuffles.cuh || (echo \"gpu/utils/WarpShuffles.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/blockselect/BlockSelectImpl.cuh || (echo \"gpu/utils/blockselect/BlockSelectImpl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/warpselect/WarpSelectImpl.cuh || (echo \"gpu/utils/warpselect/WarpSelectImpl.cuh not found\" && exit 1)"
+      "test -f $PREFIX/include/faiss/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)"
      ]
     }
    },
    {
     "build": {
-     "string": "py39cuda110h1234567_3_cuda"
+     "string": "py39h1234567_3_cpu"
     },
     "name": "faiss",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
-      "cuda_compiler_stub",
       "swig",
       "cmake",
       "make",
@@ -464,20 +297,20 @@
       "python",
       "pip",
       "numpy",
-      "libfaiss =1.7.2=*_cuda",
-      "libfaiss-avx2 =1.7.2=*_cuda",
+      "libfaiss =1.7.2=*_cpu",
+      "libfaiss-avx2 =1.7.2=*_cpu",
       "libblas",
       "liblapack"
      ],
      "run": [
       "python",
-      "libfaiss =1.7.2=*_cuda",
-      "libfaiss-avx2 =1.7.2=*_cuda",
+      "libfaiss =1.7.2=*_cpu",
+      "libfaiss-avx2 =1.7.2=*_cpu",
       "numpy"
      ],
      "run_constrained": [
-      "faiss-cpu ==9999999999",
-      "faiss-proc =*=cuda"
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
      ]
     },
     "script": "build-pkg.sh",
@@ -503,9 +336,7 @@
     }
    },
    {
-    "build": {
-     "skip": true
-    },
+    "build": null,
     "name": "faiss-cpu",
     "requirements": {
      "run": [
@@ -519,7 +350,9 @@
     }
    },
    {
-    "build": null,
+    "build": {
+     "skip": true
+    },
     "name": "faiss-gpu",
     "requirements": {
      "run": [
@@ -1534,7 +1367,7 @@
    },
    {
     "build": {
-     "string": "cpu"
+     "string": "cuda"
     },
     "name": "faiss-proc",
     "test": {
@@ -1548,14 +1381,15 @@
     "build": {
      "run_exports": [
       "libfaiss_avx2 >=1.7.2,<2",
-      "libfaiss_avx2 =*=*_cpu"
+      "libfaiss_avx2 =*=*_cuda"
      ],
-     "string": "h1234567_3_cpu"
+     "string": "cuda110h1234567_3_cuda"
     },
     "name": "libfaiss-avx2",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
+      "cuda_compiler_stub",
       "cmake",
       "make",
       "libgomp"
@@ -1565,8 +1399,8 @@
       "liblapack"
      ],
      "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
+      "faiss-cpu ==9999999999",
+      "faiss-proc =*=cuda"
      ]
     },
     "script": "build-lib-avx2.sh",
@@ -1658,7 +1492,89 @@
       "test -f $PREFIX/include/faiss_avx2/utils/simdlib_emulated.h || (echo \"utils/simdlib_emulated.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss_avx2/utils/simdlib_neon.h || (echo \"utils/simdlib_neon.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss_avx2/utils/utils.h || (echo \"utils/utils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)"
+      "test -f $PREFIX/include/faiss_avx2/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuAutoTune.h || (echo \"gpu/GpuAutoTune.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuCloner.h || (echo \"gpu/GpuCloner.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuClonerOptions.h || (echo \"gpu/GpuClonerOptions.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuDistance.h || (echo \"gpu/GpuDistance.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuFaissAssert.h || (echo \"gpu/GpuFaissAssert.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIcmEncoder.h || (echo \"gpu/GpuIcmEncoder.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndex.h || (echo \"gpu/GpuIndex.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexBinaryFlat.h || (echo \"gpu/GpuIndexBinaryFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexFlat.h || (echo \"gpu/GpuIndexFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVF.h || (echo \"gpu/GpuIndexIVF.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFFlat.h || (echo \"gpu/GpuIndexIVFFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFPQ.h || (echo \"gpu/GpuIndexIVFPQ.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFScalarQuantizer.h || (echo \"gpu/GpuIndexIVFScalarQuantizer.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndicesOptions.h || (echo \"gpu/GpuIndicesOptions.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuResources.h || (echo \"gpu/GpuResources.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/StandardGpuResources.h || (echo \"gpu/StandardGpuResources.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BinaryDistance.cuh || (echo \"gpu/impl/BinaryDistance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BinaryFlatIndex.cuh || (echo \"gpu/impl/BinaryFlatIndex.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BroadcastSum.cuh || (echo \"gpu/impl/BroadcastSum.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/Distance.cuh || (echo \"gpu/impl/Distance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/DistanceUtils.cuh || (echo \"gpu/impl/DistanceUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/FlatIndex.cuh || (echo \"gpu/impl/FlatIndex.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/GeneralDistance.cuh || (echo \"gpu/impl/GeneralDistance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/GpuScalarQuantizer.cuh || (echo \"gpu/impl/GpuScalarQuantizer.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFAppend.cuh || (echo \"gpu/impl/IVFAppend.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFBase.cuh || (echo \"gpu/impl/IVFBase.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFFlat.cuh || (echo \"gpu/impl/IVFFlat.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFFlatScan.cuh || (echo \"gpu/impl/IVFFlatScan.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFInterleaved.cuh || (echo \"gpu/impl/IVFInterleaved.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFPQ.cuh || (echo \"gpu/impl/IVFPQ.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFUtils.cuh || (echo \"gpu/impl/IVFUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IcmEncoder.cuh || (echo \"gpu/impl/IcmEncoder.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/InterleavedCodes.h || (echo \"gpu/impl/InterleavedCodes.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/L2Norm.cuh || (echo \"gpu/impl/L2Norm.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/L2Select.cuh || (echo \"gpu/impl/L2Select.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeDistances-inl.cuh || (echo \"gpu/impl/PQCodeDistances-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeDistances.cuh || (echo \"gpu/impl/PQCodeDistances.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeLoad.cuh || (echo \"gpu/impl/PQCodeLoad.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassNoPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassPrecomputed.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/RemapIndices.h || (echo \"gpu/impl/RemapIndices.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/VectorResidual.cuh || (echo \"gpu/impl/VectorResidual.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/scan/IVFInterleavedImpl.cuh || (echo \"gpu/impl/scan/IVFInterleavedImpl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/BlockSelectKernel.cuh || (echo \"gpu/utils/BlockSelectKernel.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Comparators.cuh || (echo \"gpu/utils/Comparators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ConversionOperators.cuh || (echo \"gpu/utils/ConversionOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/CopyUtils.cuh || (echo \"gpu/utils/CopyUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceDefs.cuh || (echo \"gpu/utils/DeviceDefs.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceTensor-inl.cuh || (echo \"gpu/utils/DeviceTensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceTensor.cuh || (echo \"gpu/utils/DeviceTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceUtils.h || (echo \"gpu/utils/DeviceUtils.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceVector.cuh || (echo \"gpu/utils/DeviceVector.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Float16.cuh || (echo \"gpu/utils/Float16.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/HostTensor-inl.cuh || (echo \"gpu/utils/HostTensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/HostTensor.cuh || (echo \"gpu/utils/HostTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Limits.cuh || (echo \"gpu/utils/Limits.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/LoadStoreOperators.cuh || (echo \"gpu/utils/LoadStoreOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MathOperators.cuh || (echo \"gpu/utils/MathOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MatrixMult-inl.cuh || (echo \"gpu/utils/MatrixMult-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MatrixMult.cuh || (echo \"gpu/utils/MatrixMult.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkBlock.cuh || (echo \"gpu/utils/MergeNetworkBlock.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkUtils.cuh || (echo \"gpu/utils/MergeNetworkUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkWarp.cuh || (echo \"gpu/utils/MergeNetworkWarp.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/NoTypeTensor.cuh || (echo \"gpu/utils/NoTypeTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Pair.cuh || (echo \"gpu/utils/Pair.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/PtxUtils.cuh || (echo \"gpu/utils/PtxUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ReductionOperators.cuh || (echo \"gpu/utils/ReductionOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Reductions.cuh || (echo \"gpu/utils/Reductions.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Select.cuh || (echo \"gpu/utils/Select.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/StackDeviceMemory.h || (echo \"gpu/utils/StackDeviceMemory.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/StaticUtils.h || (echo \"gpu/utils/StaticUtils.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Tensor-inl.cuh || (echo \"gpu/utils/Tensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Tensor.cuh || (echo \"gpu/utils/Tensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ThrustAllocator.cuh || (echo \"gpu/utils/ThrustAllocator.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Timer.h || (echo \"gpu/utils/Timer.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Transpose.cuh || (echo \"gpu/utils/Transpose.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpPackedBits.cuh || (echo \"gpu/utils/WarpPackedBits.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpSelectKernel.cuh || (echo \"gpu/utils/WarpSelectKernel.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpShuffles.cuh || (echo \"gpu/utils/WarpShuffles.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/blockselect/BlockSelectImpl.cuh || (echo \"gpu/utils/blockselect/BlockSelectImpl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/warpselect/WarpSelectImpl.cuh || (echo \"gpu/utils/warpselect/WarpSelectImpl.cuh not found\" && exit 1)"
      ]
     }
    },
@@ -1666,14 +1582,15 @@
     "build": {
      "run_exports": [
       "libfaiss >=1.7.2,<2",
-      "libfaiss =*=*_cpu"
+      "libfaiss =*=*_cuda"
      ],
-     "string": "h1234567_3_cpu"
+     "string": "cuda110h1234567_3_cuda"
     },
     "name": "libfaiss",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
+      "cuda_compiler_stub",
       "cmake",
       "make",
       "libgomp"
@@ -1683,8 +1600,8 @@
       "liblapack"
      ],
      "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
+      "faiss-cpu ==9999999999",
+      "faiss-proc =*=cuda"
      ]
     },
     "script": "build-lib-generic.sh",
@@ -1776,18 +1693,101 @@
       "test -f $PREFIX/include/faiss/utils/simdlib_emulated.h || (echo \"utils/simdlib_emulated.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss/utils/simdlib_neon.h || (echo \"utils/simdlib_neon.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss/utils/utils.h || (echo \"utils/utils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)"
+      "test -f $PREFIX/include/faiss/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuAutoTune.h || (echo \"gpu/GpuAutoTune.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuCloner.h || (echo \"gpu/GpuCloner.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuClonerOptions.h || (echo \"gpu/GpuClonerOptions.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuDistance.h || (echo \"gpu/GpuDistance.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuFaissAssert.h || (echo \"gpu/GpuFaissAssert.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIcmEncoder.h || (echo \"gpu/GpuIcmEncoder.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndex.h || (echo \"gpu/GpuIndex.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexBinaryFlat.h || (echo \"gpu/GpuIndexBinaryFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexFlat.h || (echo \"gpu/GpuIndexFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVF.h || (echo \"gpu/GpuIndexIVF.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFFlat.h || (echo \"gpu/GpuIndexIVFFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFPQ.h || (echo \"gpu/GpuIndexIVFPQ.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFScalarQuantizer.h || (echo \"gpu/GpuIndexIVFScalarQuantizer.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndicesOptions.h || (echo \"gpu/GpuIndicesOptions.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuResources.h || (echo \"gpu/GpuResources.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/StandardGpuResources.h || (echo \"gpu/StandardGpuResources.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/BinaryDistance.cuh || (echo \"gpu/impl/BinaryDistance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/BinaryFlatIndex.cuh || (echo \"gpu/impl/BinaryFlatIndex.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/BroadcastSum.cuh || (echo \"gpu/impl/BroadcastSum.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/Distance.cuh || (echo \"gpu/impl/Distance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/DistanceUtils.cuh || (echo \"gpu/impl/DistanceUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/FlatIndex.cuh || (echo \"gpu/impl/FlatIndex.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/GeneralDistance.cuh || (echo \"gpu/impl/GeneralDistance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/GpuScalarQuantizer.cuh || (echo \"gpu/impl/GpuScalarQuantizer.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFAppend.cuh || (echo \"gpu/impl/IVFAppend.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFBase.cuh || (echo \"gpu/impl/IVFBase.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFFlat.cuh || (echo \"gpu/impl/IVFFlat.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFFlatScan.cuh || (echo \"gpu/impl/IVFFlatScan.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFInterleaved.cuh || (echo \"gpu/impl/IVFInterleaved.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFPQ.cuh || (echo \"gpu/impl/IVFPQ.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFUtils.cuh || (echo \"gpu/impl/IVFUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IcmEncoder.cuh || (echo \"gpu/impl/IcmEncoder.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/InterleavedCodes.h || (echo \"gpu/impl/InterleavedCodes.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/L2Norm.cuh || (echo \"gpu/impl/L2Norm.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/L2Select.cuh || (echo \"gpu/impl/L2Select.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeDistances-inl.cuh || (echo \"gpu/impl/PQCodeDistances-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeDistances.cuh || (echo \"gpu/impl/PQCodeDistances.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeLoad.cuh || (echo \"gpu/impl/PQCodeLoad.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassNoPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassPrecomputed.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/RemapIndices.h || (echo \"gpu/impl/RemapIndices.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/VectorResidual.cuh || (echo \"gpu/impl/VectorResidual.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/scan/IVFInterleavedImpl.cuh || (echo \"gpu/impl/scan/IVFInterleavedImpl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/BlockSelectKernel.cuh || (echo \"gpu/utils/BlockSelectKernel.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Comparators.cuh || (echo \"gpu/utils/Comparators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/ConversionOperators.cuh || (echo \"gpu/utils/ConversionOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/CopyUtils.cuh || (echo \"gpu/utils/CopyUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/DeviceDefs.cuh || (echo \"gpu/utils/DeviceDefs.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/DeviceTensor-inl.cuh || (echo \"gpu/utils/DeviceTensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/DeviceTensor.cuh || (echo \"gpu/utils/DeviceTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/DeviceUtils.h || (echo \"gpu/utils/DeviceUtils.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/DeviceVector.cuh || (echo \"gpu/utils/DeviceVector.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Float16.cuh || (echo \"gpu/utils/Float16.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/HostTensor-inl.cuh || (echo \"gpu/utils/HostTensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/HostTensor.cuh || (echo \"gpu/utils/HostTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Limits.cuh || (echo \"gpu/utils/Limits.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/LoadStoreOperators.cuh || (echo \"gpu/utils/LoadStoreOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MathOperators.cuh || (echo \"gpu/utils/MathOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MatrixMult-inl.cuh || (echo \"gpu/utils/MatrixMult-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MatrixMult.cuh || (echo \"gpu/utils/MatrixMult.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkBlock.cuh || (echo \"gpu/utils/MergeNetworkBlock.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkUtils.cuh || (echo \"gpu/utils/MergeNetworkUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkWarp.cuh || (echo \"gpu/utils/MergeNetworkWarp.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/NoTypeTensor.cuh || (echo \"gpu/utils/NoTypeTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Pair.cuh || (echo \"gpu/utils/Pair.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/PtxUtils.cuh || (echo \"gpu/utils/PtxUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/ReductionOperators.cuh || (echo \"gpu/utils/ReductionOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Reductions.cuh || (echo \"gpu/utils/Reductions.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Select.cuh || (echo \"gpu/utils/Select.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/StackDeviceMemory.h || (echo \"gpu/utils/StackDeviceMemory.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/StaticUtils.h || (echo \"gpu/utils/StaticUtils.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Tensor-inl.cuh || (echo \"gpu/utils/Tensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Tensor.cuh || (echo \"gpu/utils/Tensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/ThrustAllocator.cuh || (echo \"gpu/utils/ThrustAllocator.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Timer.h || (echo \"gpu/utils/Timer.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Transpose.cuh || (echo \"gpu/utils/Transpose.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/WarpPackedBits.cuh || (echo \"gpu/utils/WarpPackedBits.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/WarpSelectKernel.cuh || (echo \"gpu/utils/WarpSelectKernel.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/WarpShuffles.cuh || (echo \"gpu/utils/WarpShuffles.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/blockselect/BlockSelectImpl.cuh || (echo \"gpu/utils/blockselect/BlockSelectImpl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/warpselect/WarpSelectImpl.cuh || (echo \"gpu/utils/warpselect/WarpSelectImpl.cuh not found\" && exit 1)"
      ]
     }
    },
    {
     "build": {
-     "string": "py39h1234567_3_cpu"
+     "string": "py39cuda110h1234567_3_cuda"
     },
     "name": "faiss",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
+      "cuda_compiler_stub",
       "swig",
       "cmake",
       "make",
@@ -1797,20 +1797,20 @@
       "python",
       "pip",
       "numpy",
-      "libfaiss =1.7.2=*_cpu",
-      "libfaiss-avx2 =1.7.2=*_cpu",
+      "libfaiss =1.7.2=*_cuda",
+      "libfaiss-avx2 =1.7.2=*_cuda",
       "libblas",
       "liblapack"
      ],
      "run": [
       "python",
-      "libfaiss =1.7.2=*_cpu",
-      "libfaiss-avx2 =1.7.2=*_cpu",
+      "libfaiss =1.7.2=*_cuda",
+      "libfaiss-avx2 =1.7.2=*_cuda",
       "numpy"
      ],
      "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
+      "faiss-cpu ==9999999999",
+      "faiss-proc =*=cuda"
      ]
     },
     "script": "build-pkg.sh",
@@ -1836,7 +1836,9 @@
     }
    },
    {
-    "build": null,
+    "build": {
+     "skip": true
+    },
     "name": "faiss-cpu",
     "requirements": {
      "run": [
@@ -1850,9 +1852,7 @@
     }
    },
    {
-    "build": {
-     "skip": true
-    },
+    "build": null,
     "name": "faiss-gpu",
     "requirements": {
      "run": [
@@ -2814,7 +2814,7 @@
   "outputs": [
    {
     "build": {
-     "string": "cuda"
+     "string": "cpu"
     },
     "name": "faiss-proc",
     "test": {
@@ -2828,15 +2828,14 @@
     "build": {
      "run_exports": [
       "libfaiss_avx2 >=1.7.2,<2",
-      "libfaiss_avx2 =*=*_cuda"
+      "libfaiss_avx2 =*=*_cpu"
      ],
-     "string": "cuda110h1234567_3_cuda"
+     "string": "h1234567_3_cpu"
     },
     "name": "libfaiss-avx2",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
-      "cuda_compiler_stub",
       "cmake",
       "make",
       "libgomp"
@@ -2846,8 +2845,8 @@
       "liblapack"
      ],
      "run_constrained": [
-      "faiss-cpu ==9999999999",
-      "faiss-proc =*=cuda"
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
      ]
     },
     "script": "build-lib-avx2.sh",
@@ -2939,89 +2938,7 @@
       "test -f $PREFIX/include/faiss_avx2/utils/simdlib_emulated.h || (echo \"utils/simdlib_emulated.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss_avx2/utils/simdlib_neon.h || (echo \"utils/simdlib_neon.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss_avx2/utils/utils.h || (echo \"utils/utils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuAutoTune.h || (echo \"gpu/GpuAutoTune.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuCloner.h || (echo \"gpu/GpuCloner.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuClonerOptions.h || (echo \"gpu/GpuClonerOptions.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuDistance.h || (echo \"gpu/GpuDistance.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuFaissAssert.h || (echo \"gpu/GpuFaissAssert.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIcmEncoder.h || (echo \"gpu/GpuIcmEncoder.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndex.h || (echo \"gpu/GpuIndex.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexBinaryFlat.h || (echo \"gpu/GpuIndexBinaryFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexFlat.h || (echo \"gpu/GpuIndexFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVF.h || (echo \"gpu/GpuIndexIVF.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFFlat.h || (echo \"gpu/GpuIndexIVFFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFPQ.h || (echo \"gpu/GpuIndexIVFPQ.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFScalarQuantizer.h || (echo \"gpu/GpuIndexIVFScalarQuantizer.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndicesOptions.h || (echo \"gpu/GpuIndicesOptions.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/GpuResources.h || (echo \"gpu/GpuResources.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/StandardGpuResources.h || (echo \"gpu/StandardGpuResources.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BinaryDistance.cuh || (echo \"gpu/impl/BinaryDistance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BinaryFlatIndex.cuh || (echo \"gpu/impl/BinaryFlatIndex.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BroadcastSum.cuh || (echo \"gpu/impl/BroadcastSum.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/Distance.cuh || (echo \"gpu/impl/Distance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/DistanceUtils.cuh || (echo \"gpu/impl/DistanceUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/FlatIndex.cuh || (echo \"gpu/impl/FlatIndex.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/GeneralDistance.cuh || (echo \"gpu/impl/GeneralDistance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/GpuScalarQuantizer.cuh || (echo \"gpu/impl/GpuScalarQuantizer.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFAppend.cuh || (echo \"gpu/impl/IVFAppend.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFBase.cuh || (echo \"gpu/impl/IVFBase.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFFlat.cuh || (echo \"gpu/impl/IVFFlat.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFFlatScan.cuh || (echo \"gpu/impl/IVFFlatScan.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFInterleaved.cuh || (echo \"gpu/impl/IVFInterleaved.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFPQ.cuh || (echo \"gpu/impl/IVFPQ.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFUtils.cuh || (echo \"gpu/impl/IVFUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IcmEncoder.cuh || (echo \"gpu/impl/IcmEncoder.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/InterleavedCodes.h || (echo \"gpu/impl/InterleavedCodes.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/L2Norm.cuh || (echo \"gpu/impl/L2Norm.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/L2Select.cuh || (echo \"gpu/impl/L2Select.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeDistances-inl.cuh || (echo \"gpu/impl/PQCodeDistances-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeDistances.cuh || (echo \"gpu/impl/PQCodeDistances.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeLoad.cuh || (echo \"gpu/impl/PQCodeLoad.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassNoPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassPrecomputed.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/RemapIndices.h || (echo \"gpu/impl/RemapIndices.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/VectorResidual.cuh || (echo \"gpu/impl/VectorResidual.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/impl/scan/IVFInterleavedImpl.cuh || (echo \"gpu/impl/scan/IVFInterleavedImpl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/BlockSelectKernel.cuh || (echo \"gpu/utils/BlockSelectKernel.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Comparators.cuh || (echo \"gpu/utils/Comparators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ConversionOperators.cuh || (echo \"gpu/utils/ConversionOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/CopyUtils.cuh || (echo \"gpu/utils/CopyUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceDefs.cuh || (echo \"gpu/utils/DeviceDefs.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceTensor-inl.cuh || (echo \"gpu/utils/DeviceTensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceTensor.cuh || (echo \"gpu/utils/DeviceTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceUtils.h || (echo \"gpu/utils/DeviceUtils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceVector.cuh || (echo \"gpu/utils/DeviceVector.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Float16.cuh || (echo \"gpu/utils/Float16.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/HostTensor-inl.cuh || (echo \"gpu/utils/HostTensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/HostTensor.cuh || (echo \"gpu/utils/HostTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Limits.cuh || (echo \"gpu/utils/Limits.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/LoadStoreOperators.cuh || (echo \"gpu/utils/LoadStoreOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MathOperators.cuh || (echo \"gpu/utils/MathOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MatrixMult-inl.cuh || (echo \"gpu/utils/MatrixMult-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MatrixMult.cuh || (echo \"gpu/utils/MatrixMult.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkBlock.cuh || (echo \"gpu/utils/MergeNetworkBlock.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkUtils.cuh || (echo \"gpu/utils/MergeNetworkUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkWarp.cuh || (echo \"gpu/utils/MergeNetworkWarp.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/NoTypeTensor.cuh || (echo \"gpu/utils/NoTypeTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Pair.cuh || (echo \"gpu/utils/Pair.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/PtxUtils.cuh || (echo \"gpu/utils/PtxUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ReductionOperators.cuh || (echo \"gpu/utils/ReductionOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Reductions.cuh || (echo \"gpu/utils/Reductions.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Select.cuh || (echo \"gpu/utils/Select.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/StackDeviceMemory.h || (echo \"gpu/utils/StackDeviceMemory.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/StaticUtils.h || (echo \"gpu/utils/StaticUtils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Tensor-inl.cuh || (echo \"gpu/utils/Tensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Tensor.cuh || (echo \"gpu/utils/Tensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ThrustAllocator.cuh || (echo \"gpu/utils/ThrustAllocator.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Timer.h || (echo \"gpu/utils/Timer.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Transpose.cuh || (echo \"gpu/utils/Transpose.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpPackedBits.cuh || (echo \"gpu/utils/WarpPackedBits.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpSelectKernel.cuh || (echo \"gpu/utils/WarpSelectKernel.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpShuffles.cuh || (echo \"gpu/utils/WarpShuffles.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/blockselect/BlockSelectImpl.cuh || (echo \"gpu/utils/blockselect/BlockSelectImpl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/gpu/utils/warpselect/WarpSelectImpl.cuh || (echo \"gpu/utils/warpselect/WarpSelectImpl.cuh not found\" && exit 1)"
+      "test -f $PREFIX/include/faiss_avx2/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)"
      ]
     }
    },
@@ -3029,15 +2946,14 @@
     "build": {
      "run_exports": [
       "libfaiss >=1.7.2,<2",
-      "libfaiss =*=*_cuda"
+      "libfaiss =*=*_cpu"
      ],
-     "string": "cuda110h1234567_3_cuda"
+     "string": "h1234567_3_cpu"
     },
     "name": "libfaiss",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
-      "cuda_compiler_stub",
       "cmake",
       "make",
       "libgomp"
@@ -3047,8 +2963,8 @@
       "liblapack"
      ],
      "run_constrained": [
-      "faiss-cpu ==9999999999",
-      "faiss-proc =*=cuda"
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
      ]
     },
     "script": "build-lib-generic.sh",
@@ -3140,101 +3056,18 @@
       "test -f $PREFIX/include/faiss/utils/simdlib_emulated.h || (echo \"utils/simdlib_emulated.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss/utils/simdlib_neon.h || (echo \"utils/simdlib_neon.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss/utils/utils.h || (echo \"utils/utils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuAutoTune.h || (echo \"gpu/GpuAutoTune.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuCloner.h || (echo \"gpu/GpuCloner.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuClonerOptions.h || (echo \"gpu/GpuClonerOptions.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuDistance.h || (echo \"gpu/GpuDistance.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuFaissAssert.h || (echo \"gpu/GpuFaissAssert.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIcmEncoder.h || (echo \"gpu/GpuIcmEncoder.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndex.h || (echo \"gpu/GpuIndex.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexBinaryFlat.h || (echo \"gpu/GpuIndexBinaryFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexFlat.h || (echo \"gpu/GpuIndexFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVF.h || (echo \"gpu/GpuIndexIVF.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFFlat.h || (echo \"gpu/GpuIndexIVFFlat.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFPQ.h || (echo \"gpu/GpuIndexIVFPQ.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFScalarQuantizer.h || (echo \"gpu/GpuIndexIVFScalarQuantizer.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuIndicesOptions.h || (echo \"gpu/GpuIndicesOptions.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/GpuResources.h || (echo \"gpu/GpuResources.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/StandardGpuResources.h || (echo \"gpu/StandardGpuResources.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/BinaryDistance.cuh || (echo \"gpu/impl/BinaryDistance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/BinaryFlatIndex.cuh || (echo \"gpu/impl/BinaryFlatIndex.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/BroadcastSum.cuh || (echo \"gpu/impl/BroadcastSum.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/Distance.cuh || (echo \"gpu/impl/Distance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/DistanceUtils.cuh || (echo \"gpu/impl/DistanceUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/FlatIndex.cuh || (echo \"gpu/impl/FlatIndex.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/GeneralDistance.cuh || (echo \"gpu/impl/GeneralDistance.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/GpuScalarQuantizer.cuh || (echo \"gpu/impl/GpuScalarQuantizer.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFAppend.cuh || (echo \"gpu/impl/IVFAppend.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFBase.cuh || (echo \"gpu/impl/IVFBase.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFFlat.cuh || (echo \"gpu/impl/IVFFlat.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFFlatScan.cuh || (echo \"gpu/impl/IVFFlatScan.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFInterleaved.cuh || (echo \"gpu/impl/IVFInterleaved.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFPQ.cuh || (echo \"gpu/impl/IVFPQ.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IVFUtils.cuh || (echo \"gpu/impl/IVFUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/IcmEncoder.cuh || (echo \"gpu/impl/IcmEncoder.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/InterleavedCodes.h || (echo \"gpu/impl/InterleavedCodes.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/L2Norm.cuh || (echo \"gpu/impl/L2Norm.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/L2Select.cuh || (echo \"gpu/impl/L2Select.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeDistances-inl.cuh || (echo \"gpu/impl/PQCodeDistances-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeDistances.cuh || (echo \"gpu/impl/PQCodeDistances.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeLoad.cuh || (echo \"gpu/impl/PQCodeLoad.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassNoPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassPrecomputed.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/RemapIndices.h || (echo \"gpu/impl/RemapIndices.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/VectorResidual.cuh || (echo \"gpu/impl/VectorResidual.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/impl/scan/IVFInterleavedImpl.cuh || (echo \"gpu/impl/scan/IVFInterleavedImpl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/BlockSelectKernel.cuh || (echo \"gpu/utils/BlockSelectKernel.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Comparators.cuh || (echo \"gpu/utils/Comparators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/ConversionOperators.cuh || (echo \"gpu/utils/ConversionOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/CopyUtils.cuh || (echo \"gpu/utils/CopyUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/DeviceDefs.cuh || (echo \"gpu/utils/DeviceDefs.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/DeviceTensor-inl.cuh || (echo \"gpu/utils/DeviceTensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/DeviceTensor.cuh || (echo \"gpu/utils/DeviceTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/DeviceUtils.h || (echo \"gpu/utils/DeviceUtils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/DeviceVector.cuh || (echo \"gpu/utils/DeviceVector.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Float16.cuh || (echo \"gpu/utils/Float16.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/HostTensor-inl.cuh || (echo \"gpu/utils/HostTensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/HostTensor.cuh || (echo \"gpu/utils/HostTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Limits.cuh || (echo \"gpu/utils/Limits.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/LoadStoreOperators.cuh || (echo \"gpu/utils/LoadStoreOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MathOperators.cuh || (echo \"gpu/utils/MathOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MatrixMult-inl.cuh || (echo \"gpu/utils/MatrixMult-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MatrixMult.cuh || (echo \"gpu/utils/MatrixMult.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkBlock.cuh || (echo \"gpu/utils/MergeNetworkBlock.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkUtils.cuh || (echo \"gpu/utils/MergeNetworkUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkWarp.cuh || (echo \"gpu/utils/MergeNetworkWarp.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/NoTypeTensor.cuh || (echo \"gpu/utils/NoTypeTensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Pair.cuh || (echo \"gpu/utils/Pair.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/PtxUtils.cuh || (echo \"gpu/utils/PtxUtils.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/ReductionOperators.cuh || (echo \"gpu/utils/ReductionOperators.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Reductions.cuh || (echo \"gpu/utils/Reductions.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Select.cuh || (echo \"gpu/utils/Select.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/StackDeviceMemory.h || (echo \"gpu/utils/StackDeviceMemory.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/StaticUtils.h || (echo \"gpu/utils/StaticUtils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Tensor-inl.cuh || (echo \"gpu/utils/Tensor-inl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Tensor.cuh || (echo \"gpu/utils/Tensor.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/ThrustAllocator.cuh || (echo \"gpu/utils/ThrustAllocator.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Timer.h || (echo \"gpu/utils/Timer.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/Transpose.cuh || (echo \"gpu/utils/Transpose.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/WarpPackedBits.cuh || (echo \"gpu/utils/WarpPackedBits.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/WarpSelectKernel.cuh || (echo \"gpu/utils/WarpSelectKernel.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/WarpShuffles.cuh || (echo \"gpu/utils/WarpShuffles.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/blockselect/BlockSelectImpl.cuh || (echo \"gpu/utils/blockselect/BlockSelectImpl.cuh not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/gpu/utils/warpselect/WarpSelectImpl.cuh || (echo \"gpu/utils/warpselect/WarpSelectImpl.cuh not found\" && exit 1)"
+      "test -f $PREFIX/include/faiss/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)"
      ]
     }
    },
    {
     "build": {
-     "string": "py39cuda110h1234567_3_cuda"
+     "string": "py39h1234567_3_cpu"
     },
     "name": "faiss",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
-      "cuda_compiler_stub",
       "swig",
       "cmake",
       "make",
@@ -3244,20 +3077,20 @@
       "python",
       "pip",
       "numpy",
-      "libfaiss =1.7.2=*_cuda",
-      "libfaiss-avx2 =1.7.2=*_cuda",
+      "libfaiss =1.7.2=*_cpu",
+      "libfaiss-avx2 =1.7.2=*_cpu",
       "libblas",
       "liblapack"
      ],
      "run": [
       "python",
-      "libfaiss =1.7.2=*_cuda",
-      "libfaiss-avx2 =1.7.2=*_cuda",
+      "libfaiss =1.7.2=*_cpu",
+      "libfaiss-avx2 =1.7.2=*_cpu",
       "numpy"
      ],
      "run_constrained": [
-      "faiss-cpu ==9999999999",
-      "faiss-proc =*=cuda"
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
      ]
     },
     "script": "build-pkg.sh",
@@ -3283,9 +3116,7 @@
     }
    },
    {
-    "build": {
-     "skip": true
-    },
+    "build": null,
     "name": "faiss-cpu",
     "requirements": {
      "run": [
@@ -3299,7 +3130,9 @@
     }
    },
    {
-    "build": null,
+    "build": {
+     "skip": true
+    },
     "name": "faiss-gpu",
     "requirements": {
      "run": [
@@ -4314,7 +4147,7 @@
    },
    {
     "build": {
-     "string": "cpu"
+     "string": "cuda"
     },
     "name": "faiss-proc",
     "test": {
@@ -4328,14 +4161,15 @@
     "build": {
      "run_exports": [
       "libfaiss_avx2 >=1.7.2,<2",
-      "libfaiss_avx2 =*=*_cpu"
+      "libfaiss_avx2 =*=*_cuda"
      ],
-     "string": "h1234567_3_cpu"
+     "string": "cuda110h1234567_3_cuda"
     },
     "name": "libfaiss-avx2",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
+      "cuda_compiler_stub",
       "cmake",
       "make",
       "libgomp"
@@ -4345,8 +4179,8 @@
       "liblapack"
      ],
      "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
+      "faiss-cpu ==9999999999",
+      "faiss-proc =*=cuda"
      ]
     },
     "script": "build-lib-avx2.sh",
@@ -4438,7 +4272,89 @@
       "test -f $PREFIX/include/faiss_avx2/utils/simdlib_emulated.h || (echo \"utils/simdlib_emulated.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss_avx2/utils/simdlib_neon.h || (echo \"utils/simdlib_neon.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss_avx2/utils/utils.h || (echo \"utils/utils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss_avx2/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)"
+      "test -f $PREFIX/include/faiss_avx2/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuAutoTune.h || (echo \"gpu/GpuAutoTune.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuCloner.h || (echo \"gpu/GpuCloner.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuClonerOptions.h || (echo \"gpu/GpuClonerOptions.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuDistance.h || (echo \"gpu/GpuDistance.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuFaissAssert.h || (echo \"gpu/GpuFaissAssert.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIcmEncoder.h || (echo \"gpu/GpuIcmEncoder.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndex.h || (echo \"gpu/GpuIndex.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexBinaryFlat.h || (echo \"gpu/GpuIndexBinaryFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexFlat.h || (echo \"gpu/GpuIndexFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVF.h || (echo \"gpu/GpuIndexIVF.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFFlat.h || (echo \"gpu/GpuIndexIVFFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFPQ.h || (echo \"gpu/GpuIndexIVFPQ.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndexIVFScalarQuantizer.h || (echo \"gpu/GpuIndexIVFScalarQuantizer.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuIndicesOptions.h || (echo \"gpu/GpuIndicesOptions.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/GpuResources.h || (echo \"gpu/GpuResources.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/StandardGpuResources.h || (echo \"gpu/StandardGpuResources.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BinaryDistance.cuh || (echo \"gpu/impl/BinaryDistance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BinaryFlatIndex.cuh || (echo \"gpu/impl/BinaryFlatIndex.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/BroadcastSum.cuh || (echo \"gpu/impl/BroadcastSum.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/Distance.cuh || (echo \"gpu/impl/Distance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/DistanceUtils.cuh || (echo \"gpu/impl/DistanceUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/FlatIndex.cuh || (echo \"gpu/impl/FlatIndex.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/GeneralDistance.cuh || (echo \"gpu/impl/GeneralDistance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/GpuScalarQuantizer.cuh || (echo \"gpu/impl/GpuScalarQuantizer.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFAppend.cuh || (echo \"gpu/impl/IVFAppend.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFBase.cuh || (echo \"gpu/impl/IVFBase.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFFlat.cuh || (echo \"gpu/impl/IVFFlat.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFFlatScan.cuh || (echo \"gpu/impl/IVFFlatScan.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFInterleaved.cuh || (echo \"gpu/impl/IVFInterleaved.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFPQ.cuh || (echo \"gpu/impl/IVFPQ.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IVFUtils.cuh || (echo \"gpu/impl/IVFUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/IcmEncoder.cuh || (echo \"gpu/impl/IcmEncoder.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/InterleavedCodes.h || (echo \"gpu/impl/InterleavedCodes.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/L2Norm.cuh || (echo \"gpu/impl/L2Norm.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/L2Select.cuh || (echo \"gpu/impl/L2Select.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeDistances-inl.cuh || (echo \"gpu/impl/PQCodeDistances-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeDistances.cuh || (echo \"gpu/impl/PQCodeDistances.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQCodeLoad.cuh || (echo \"gpu/impl/PQCodeLoad.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassNoPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/PQScanMultiPassPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassPrecomputed.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/RemapIndices.h || (echo \"gpu/impl/RemapIndices.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/VectorResidual.cuh || (echo \"gpu/impl/VectorResidual.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/impl/scan/IVFInterleavedImpl.cuh || (echo \"gpu/impl/scan/IVFInterleavedImpl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/BlockSelectKernel.cuh || (echo \"gpu/utils/BlockSelectKernel.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Comparators.cuh || (echo \"gpu/utils/Comparators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ConversionOperators.cuh || (echo \"gpu/utils/ConversionOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/CopyUtils.cuh || (echo \"gpu/utils/CopyUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceDefs.cuh || (echo \"gpu/utils/DeviceDefs.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceTensor-inl.cuh || (echo \"gpu/utils/DeviceTensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceTensor.cuh || (echo \"gpu/utils/DeviceTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceUtils.h || (echo \"gpu/utils/DeviceUtils.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/DeviceVector.cuh || (echo \"gpu/utils/DeviceVector.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Float16.cuh || (echo \"gpu/utils/Float16.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/HostTensor-inl.cuh || (echo \"gpu/utils/HostTensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/HostTensor.cuh || (echo \"gpu/utils/HostTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Limits.cuh || (echo \"gpu/utils/Limits.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/LoadStoreOperators.cuh || (echo \"gpu/utils/LoadStoreOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MathOperators.cuh || (echo \"gpu/utils/MathOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MatrixMult-inl.cuh || (echo \"gpu/utils/MatrixMult-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MatrixMult.cuh || (echo \"gpu/utils/MatrixMult.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkBlock.cuh || (echo \"gpu/utils/MergeNetworkBlock.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkUtils.cuh || (echo \"gpu/utils/MergeNetworkUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/MergeNetworkWarp.cuh || (echo \"gpu/utils/MergeNetworkWarp.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/NoTypeTensor.cuh || (echo \"gpu/utils/NoTypeTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Pair.cuh || (echo \"gpu/utils/Pair.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/PtxUtils.cuh || (echo \"gpu/utils/PtxUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ReductionOperators.cuh || (echo \"gpu/utils/ReductionOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Reductions.cuh || (echo \"gpu/utils/Reductions.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Select.cuh || (echo \"gpu/utils/Select.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/StackDeviceMemory.h || (echo \"gpu/utils/StackDeviceMemory.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/StaticUtils.h || (echo \"gpu/utils/StaticUtils.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Tensor-inl.cuh || (echo \"gpu/utils/Tensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Tensor.cuh || (echo \"gpu/utils/Tensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/ThrustAllocator.cuh || (echo \"gpu/utils/ThrustAllocator.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Timer.h || (echo \"gpu/utils/Timer.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/Transpose.cuh || (echo \"gpu/utils/Transpose.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpPackedBits.cuh || (echo \"gpu/utils/WarpPackedBits.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpSelectKernel.cuh || (echo \"gpu/utils/WarpSelectKernel.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/WarpShuffles.cuh || (echo \"gpu/utils/WarpShuffles.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/blockselect/BlockSelectImpl.cuh || (echo \"gpu/utils/blockselect/BlockSelectImpl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss_avx2/gpu/utils/warpselect/WarpSelectImpl.cuh || (echo \"gpu/utils/warpselect/WarpSelectImpl.cuh not found\" && exit 1)"
      ]
     }
    },
@@ -4446,14 +4362,15 @@
     "build": {
      "run_exports": [
       "libfaiss >=1.7.2,<2",
-      "libfaiss =*=*_cpu"
+      "libfaiss =*=*_cuda"
      ],
-     "string": "h1234567_3_cpu"
+     "string": "cuda110h1234567_3_cuda"
     },
     "name": "libfaiss",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
+      "cuda_compiler_stub",
       "cmake",
       "make",
       "libgomp"
@@ -4463,8 +4380,8 @@
       "liblapack"
      ],
      "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
+      "faiss-cpu ==9999999999",
+      "faiss-proc =*=cuda"
      ]
     },
     "script": "build-lib-generic.sh",
@@ -4556,18 +4473,101 @@
       "test -f $PREFIX/include/faiss/utils/simdlib_emulated.h || (echo \"utils/simdlib_emulated.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss/utils/simdlib_neon.h || (echo \"utils/simdlib_neon.h not found\" && exit 1)",
       "test -f $PREFIX/include/faiss/utils/utils.h || (echo \"utils/utils.h not found\" && exit 1)",
-      "test -f $PREFIX/include/faiss/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)"
+      "test -f $PREFIX/include/faiss/invlists/OnDiskInvertedLists.h || (echo \"invlists/OnDiskInvertedLists.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuAutoTune.h || (echo \"gpu/GpuAutoTune.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuCloner.h || (echo \"gpu/GpuCloner.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuClonerOptions.h || (echo \"gpu/GpuClonerOptions.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuDistance.h || (echo \"gpu/GpuDistance.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuFaissAssert.h || (echo \"gpu/GpuFaissAssert.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIcmEncoder.h || (echo \"gpu/GpuIcmEncoder.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndex.h || (echo \"gpu/GpuIndex.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexBinaryFlat.h || (echo \"gpu/GpuIndexBinaryFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexFlat.h || (echo \"gpu/GpuIndexFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVF.h || (echo \"gpu/GpuIndexIVF.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFFlat.h || (echo \"gpu/GpuIndexIVFFlat.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFPQ.h || (echo \"gpu/GpuIndexIVFPQ.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndexIVFScalarQuantizer.h || (echo \"gpu/GpuIndexIVFScalarQuantizer.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuIndicesOptions.h || (echo \"gpu/GpuIndicesOptions.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/GpuResources.h || (echo \"gpu/GpuResources.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/StandardGpuResources.h || (echo \"gpu/StandardGpuResources.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/BinaryDistance.cuh || (echo \"gpu/impl/BinaryDistance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/BinaryFlatIndex.cuh || (echo \"gpu/impl/BinaryFlatIndex.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/BroadcastSum.cuh || (echo \"gpu/impl/BroadcastSum.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/Distance.cuh || (echo \"gpu/impl/Distance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/DistanceUtils.cuh || (echo \"gpu/impl/DistanceUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/FlatIndex.cuh || (echo \"gpu/impl/FlatIndex.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/GeneralDistance.cuh || (echo \"gpu/impl/GeneralDistance.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/GpuScalarQuantizer.cuh || (echo \"gpu/impl/GpuScalarQuantizer.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFAppend.cuh || (echo \"gpu/impl/IVFAppend.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFBase.cuh || (echo \"gpu/impl/IVFBase.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFFlat.cuh || (echo \"gpu/impl/IVFFlat.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFFlatScan.cuh || (echo \"gpu/impl/IVFFlatScan.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFInterleaved.cuh || (echo \"gpu/impl/IVFInterleaved.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFPQ.cuh || (echo \"gpu/impl/IVFPQ.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IVFUtils.cuh || (echo \"gpu/impl/IVFUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/IcmEncoder.cuh || (echo \"gpu/impl/IcmEncoder.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/InterleavedCodes.h || (echo \"gpu/impl/InterleavedCodes.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/L2Norm.cuh || (echo \"gpu/impl/L2Norm.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/L2Select.cuh || (echo \"gpu/impl/L2Select.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeDistances-inl.cuh || (echo \"gpu/impl/PQCodeDistances-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeDistances.cuh || (echo \"gpu/impl/PQCodeDistances.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQCodeLoad.cuh || (echo \"gpu/impl/PQCodeLoad.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassNoPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassNoPrecomputed.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/PQScanMultiPassPrecomputed.cuh || (echo \"gpu/impl/PQScanMultiPassPrecomputed.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/RemapIndices.h || (echo \"gpu/impl/RemapIndices.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/VectorResidual.cuh || (echo \"gpu/impl/VectorResidual.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/impl/scan/IVFInterleavedImpl.cuh || (echo \"gpu/impl/scan/IVFInterleavedImpl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/BlockSelectKernel.cuh || (echo \"gpu/utils/BlockSelectKernel.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Comparators.cuh || (echo \"gpu/utils/Comparators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/ConversionOperators.cuh || (echo \"gpu/utils/ConversionOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/CopyUtils.cuh || (echo \"gpu/utils/CopyUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/DeviceDefs.cuh || (echo \"gpu/utils/DeviceDefs.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/DeviceTensor-inl.cuh || (echo \"gpu/utils/DeviceTensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/DeviceTensor.cuh || (echo \"gpu/utils/DeviceTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/DeviceUtils.h || (echo \"gpu/utils/DeviceUtils.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/DeviceVector.cuh || (echo \"gpu/utils/DeviceVector.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Float16.cuh || (echo \"gpu/utils/Float16.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/HostTensor-inl.cuh || (echo \"gpu/utils/HostTensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/HostTensor.cuh || (echo \"gpu/utils/HostTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Limits.cuh || (echo \"gpu/utils/Limits.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/LoadStoreOperators.cuh || (echo \"gpu/utils/LoadStoreOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MathOperators.cuh || (echo \"gpu/utils/MathOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MatrixMult-inl.cuh || (echo \"gpu/utils/MatrixMult-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MatrixMult.cuh || (echo \"gpu/utils/MatrixMult.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkBlock.cuh || (echo \"gpu/utils/MergeNetworkBlock.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkUtils.cuh || (echo \"gpu/utils/MergeNetworkUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/MergeNetworkWarp.cuh || (echo \"gpu/utils/MergeNetworkWarp.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/NoTypeTensor.cuh || (echo \"gpu/utils/NoTypeTensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Pair.cuh || (echo \"gpu/utils/Pair.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/PtxUtils.cuh || (echo \"gpu/utils/PtxUtils.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/ReductionOperators.cuh || (echo \"gpu/utils/ReductionOperators.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Reductions.cuh || (echo \"gpu/utils/Reductions.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Select.cuh || (echo \"gpu/utils/Select.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/StackDeviceMemory.h || (echo \"gpu/utils/StackDeviceMemory.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/StaticUtils.h || (echo \"gpu/utils/StaticUtils.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Tensor-inl.cuh || (echo \"gpu/utils/Tensor-inl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Tensor.cuh || (echo \"gpu/utils/Tensor.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/ThrustAllocator.cuh || (echo \"gpu/utils/ThrustAllocator.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Timer.h || (echo \"gpu/utils/Timer.h not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/Transpose.cuh || (echo \"gpu/utils/Transpose.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/WarpPackedBits.cuh || (echo \"gpu/utils/WarpPackedBits.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/WarpSelectKernel.cuh || (echo \"gpu/utils/WarpSelectKernel.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/WarpShuffles.cuh || (echo \"gpu/utils/WarpShuffles.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/blockselect/BlockSelectImpl.cuh || (echo \"gpu/utils/blockselect/BlockSelectImpl.cuh not found\" && exit 1)",
+      "test -f $PREFIX/include/faiss/gpu/utils/warpselect/WarpSelectImpl.cuh || (echo \"gpu/utils/warpselect/WarpSelectImpl.cuh not found\" && exit 1)"
      ]
     }
    },
    {
     "build": {
-     "string": "py39h1234567_3_cpu"
+     "string": "py39cuda110h1234567_3_cuda"
     },
     "name": "faiss",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
+      "cuda_compiler_stub",
       "swig",
       "cmake",
       "make",
@@ -4577,20 +4577,20 @@
       "python",
       "pip",
       "numpy",
-      "libfaiss =1.7.2=*_cpu",
-      "libfaiss-avx2 =1.7.2=*_cpu",
+      "libfaiss =1.7.2=*_cuda",
+      "libfaiss-avx2 =1.7.2=*_cuda",
       "libblas",
       "liblapack"
      ],
      "run": [
       "python",
-      "libfaiss =1.7.2=*_cpu",
-      "libfaiss-avx2 =1.7.2=*_cpu",
+      "libfaiss =1.7.2=*_cuda",
+      "libfaiss-avx2 =1.7.2=*_cuda",
       "numpy"
      ],
      "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
+      "faiss-cpu ==9999999999",
+      "faiss-proc =*=cuda"
      ]
     },
     "script": "build-pkg.sh",
@@ -4616,7 +4616,9 @@
     }
    },
    {
-    "build": null,
+    "build": {
+     "skip": true
+    },
     "name": "faiss-cpu",
     "requirements": {
      "run": [
@@ -4630,9 +4632,7 @@
     }
    },
    {
-    "build": {
-     "skip": true
-    },
+    "build": null,
     "name": "faiss-gpu",
     "requirements": {
      "run": [
@@ -5587,333 +5587,6 @@
     "test": {
      "commands": [
       "export HAS_AVX2=NO  && ./test-pkg.sh"
-     ],
-     "files": [
-      "test-pkg.bat",
-      "test-pkg.sh"
-     ],
-     "imports": [
-      "faiss"
-     ],
-     "requires": [
-      "libblas =*=*mkl",
-      "scipy",
-      "pytest"
-     ],
-     "source_files": [
-      "tests/"
-     ]
-    }
-   },
-   {
-    "build": null,
-    "name": "faiss-cpu",
-    "requirements": {
-     "run": [
-      "faiss =1.7.2=*_cpu"
-     ]
-    },
-    "test": {
-     "imports": [
-      "faiss"
-     ]
-    }
-   },
-   {
-    "build": {
-     "skip": true
-    },
-    "name": "faiss-gpu",
-    "requirements": {
-     "run": [
-      "faiss =1.7.2=*_cuda"
-     ]
-    },
-    "test": {
-     "imports": [
-      "faiss"
-     ]
-    }
-   },
-   {
-    "build": {
-     "string": "cpu"
-    },
-    "name": "faiss-proc",
-    "test": {
-     "commands": [
-      "exit 0"
-     ]
-    },
-    "version": "1.0.0"
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libfaiss_avx2 >=1.7.2,<2",
-      "libfaiss_avx2 =*=*_cpu"
-     ],
-     "string": "h1234567_3_cpu"
-    },
-    "name": "libfaiss-avx2",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cmake"
-     ],
-     "host": [
-      "libblas",
-      "liblapack"
-     ],
-     "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
-     ]
-    },
-    "script": "build-lib-avx2.bat",
-    "test": {
-     "commands": [
-      "if not exist %LIBRARY_BIN%\\faiss_avx2.dll exit 1",
-      "if not exist %LIBRARY_LIB%\\faiss_avx2.lib exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\AutoTune.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\Clustering.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IVFlib.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\Index.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\Index2Layer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexAdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinary.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryFromFloat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryHNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryHash.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryIVF.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexFlatCodes.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexHNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVF.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFAdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQ.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQFastScan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQR.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFSpectralHash.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexLSH.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexLattice.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexNNDescent.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexNSG.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPQ.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPQFastScan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPreTransform.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexRefine.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexReplicas.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexScalarQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexShards.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\MatrixStats.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\MetaIndexes.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\MetricType.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\VectorTransform.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\clone_index.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\index_factory.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\index_io.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\AdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\AuxIndexStructures.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\FaissAssert.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\FaissException.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\HNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\LocalSearchQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\NNDescent.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\NSG.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\PolysemousTraining.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ProductQuantizer-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ProductQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ResidualQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ResultHandler.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ScalarQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ThreadedIndex-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ThreadedIndex.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\io.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\io_macros.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\kmeans1d.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\lattice_Zn.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\platform_macros.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\pq4_fast_scan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\simd_result_handlers.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\BlockInvertedLists.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\DirectMap.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\InvertedLists.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\InvertedListsIOHook.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\AlignedTable.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\Heap.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\WorkerThread.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\distances.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\extra_distances-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\extra_distances.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\hamming-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\hamming.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\ordered_key_value.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\partitioning.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\quantize_lut.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\random.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_avx2.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_emulated.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_neon.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\utils.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\OnDiskInvertedLists.h exit 1"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libfaiss >=1.7.2,<2",
-      "libfaiss =*=*_cpu"
-     ],
-     "string": "h1234567_3_cpu"
-    },
-    "name": "libfaiss",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cmake"
-     ],
-     "host": [
-      "libblas",
-      "liblapack"
-     ],
-     "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
-     ]
-    },
-    "script": "build-lib-generic.bat",
-    "test": {
-     "commands": [
-      "if not exist %LIBRARY_BIN%\\faiss.dll exit 1",
-      "if not exist %LIBRARY_LIB%\\faiss.lib exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\AutoTune.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\Clustering.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IVFlib.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\Index.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\Index2Layer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexAdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinary.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryFromFloat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryHNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryHash.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryIVF.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexFlatCodes.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexHNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVF.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFAdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQ.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQFastScan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQR.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFSpectralHash.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexLSH.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexLattice.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexNNDescent.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexNSG.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexPQ.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexPQFastScan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexPreTransform.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexRefine.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexReplicas.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexScalarQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexShards.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\MatrixStats.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\MetaIndexes.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\MetricType.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\VectorTransform.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\clone_index.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\index_factory.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\index_io.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\AdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\AuxIndexStructures.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\FaissAssert.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\FaissException.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\HNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\LocalSearchQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\NNDescent.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\NSG.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\PolysemousTraining.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ProductQuantizer-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ProductQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ResidualQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ResultHandler.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ScalarQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ThreadedIndex-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ThreadedIndex.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\io.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\io_macros.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\kmeans1d.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\lattice_Zn.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\platform_macros.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\pq4_fast_scan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\simd_result_handlers.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\invlists\\BlockInvertedLists.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\invlists\\DirectMap.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\invlists\\InvertedLists.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\invlists\\InvertedListsIOHook.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\AlignedTable.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\Heap.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\WorkerThread.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\distances.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\extra_distances-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\extra_distances.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\hamming-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\hamming.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\ordered_key_value.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\partitioning.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\quantize_lut.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\random.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_avx2.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_emulated.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_neon.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\utils.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\invlists\\OnDiskInvertedLists.h exit 1"
-     ]
-    }
-   },
-   {
-    "build": {
-     "string": "py39h1234567_3_cpu"
-    },
-    "name": "faiss",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "swig",
-      "cmake"
-     ],
-     "host": [
-      "python",
-      "pip",
-      "numpy",
-      "libfaiss =1.7.2=*_cpu",
-      "libfaiss-avx2 =1.7.2=*_cpu",
-      "libblas",
-      "liblapack"
-     ],
-     "run": [
-      "python",
-      "libfaiss =1.7.2=*_cpu",
-      "libfaiss-avx2 =1.7.2=*_cpu",
-      "numpy"
-     ],
-     "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
-     ]
-    },
-    "script": "build-pkg.bat",
-    "test": {
-     "commands": [
-      "set \"HAS_AVX2=YES\"  && test-pkg.bat"
      ],
      "files": [
       "test-pkg.bat",
@@ -6947,6 +6620,333 @@
       "faiss"
      ]
     }
+   },
+   {
+    "build": {
+     "string": "cpu"
+    },
+    "name": "faiss-proc",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "1.0.0"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libfaiss_avx2 >=1.7.2,<2",
+      "libfaiss_avx2 =*=*_cpu"
+     ],
+     "string": "h1234567_3_cpu"
+    },
+    "name": "libfaiss-avx2",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake"
+     ],
+     "host": [
+      "libblas",
+      "liblapack"
+     ],
+     "run_constrained": [
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
+     ]
+    },
+    "script": "build-lib-avx2.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_BIN%\\faiss_avx2.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\faiss_avx2.lib exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\AutoTune.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\Clustering.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IVFlib.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\Index.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\Index2Layer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexAdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinary.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryFromFloat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryHNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryHash.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryIVF.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexFlatCodes.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexHNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVF.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFAdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQ.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQFastScan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQR.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFSpectralHash.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexLSH.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexLattice.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexNNDescent.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexNSG.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPQ.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPQFastScan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPreTransform.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexRefine.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexReplicas.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexScalarQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexShards.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\MatrixStats.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\MetaIndexes.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\MetricType.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\VectorTransform.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\clone_index.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\index_factory.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\index_io.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\AdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\AuxIndexStructures.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\FaissAssert.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\FaissException.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\HNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\LocalSearchQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\NNDescent.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\NSG.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\PolysemousTraining.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ProductQuantizer-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ProductQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ResidualQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ResultHandler.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ScalarQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ThreadedIndex-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ThreadedIndex.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\io.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\io_macros.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\kmeans1d.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\lattice_Zn.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\platform_macros.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\pq4_fast_scan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\simd_result_handlers.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\BlockInvertedLists.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\DirectMap.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\InvertedLists.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\InvertedListsIOHook.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\AlignedTable.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\Heap.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\WorkerThread.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\distances.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\extra_distances-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\extra_distances.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\hamming-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\hamming.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\ordered_key_value.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\partitioning.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\quantize_lut.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\random.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_avx2.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_emulated.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_neon.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\utils.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\OnDiskInvertedLists.h exit 1"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libfaiss >=1.7.2,<2",
+      "libfaiss =*=*_cpu"
+     ],
+     "string": "h1234567_3_cpu"
+    },
+    "name": "libfaiss",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake"
+     ],
+     "host": [
+      "libblas",
+      "liblapack"
+     ],
+     "run_constrained": [
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
+     ]
+    },
+    "script": "build-lib-generic.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_BIN%\\faiss.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\faiss.lib exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\AutoTune.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\Clustering.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IVFlib.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\Index.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\Index2Layer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexAdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinary.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryFromFloat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryHNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryHash.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryIVF.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexFlatCodes.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexHNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVF.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFAdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQ.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQFastScan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQR.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFSpectralHash.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexLSH.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexLattice.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexNNDescent.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexNSG.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexPQ.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexPQFastScan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexPreTransform.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexRefine.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexReplicas.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexScalarQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexShards.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\MatrixStats.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\MetaIndexes.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\MetricType.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\VectorTransform.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\clone_index.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\index_factory.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\index_io.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\AdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\AuxIndexStructures.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\FaissAssert.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\FaissException.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\HNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\LocalSearchQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\NNDescent.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\NSG.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\PolysemousTraining.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ProductQuantizer-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ProductQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ResidualQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ResultHandler.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ScalarQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ThreadedIndex-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ThreadedIndex.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\io.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\io_macros.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\kmeans1d.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\lattice_Zn.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\platform_macros.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\pq4_fast_scan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\simd_result_handlers.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\invlists\\BlockInvertedLists.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\invlists\\DirectMap.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\invlists\\InvertedLists.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\invlists\\InvertedListsIOHook.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\AlignedTable.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\Heap.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\WorkerThread.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\distances.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\extra_distances-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\extra_distances.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\hamming-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\hamming.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\ordered_key_value.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\partitioning.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\quantize_lut.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\random.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_avx2.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_emulated.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_neon.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\utils.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\invlists\\OnDiskInvertedLists.h exit 1"
+     ]
+    }
+   },
+   {
+    "build": {
+     "string": "py39h1234567_3_cpu"
+    },
+    "name": "faiss",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "swig",
+      "cmake"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "numpy",
+      "libfaiss =1.7.2=*_cpu",
+      "libfaiss-avx2 =1.7.2=*_cpu",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "libfaiss =1.7.2=*_cpu",
+      "libfaiss-avx2 =1.7.2=*_cpu",
+      "numpy"
+     ],
+     "run_constrained": [
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
+     ]
+    },
+    "script": "build-pkg.bat",
+    "test": {
+     "commands": [
+      "set \"HAS_AVX2=YES\"  && test-pkg.bat"
+     ],
+     "files": [
+      "test-pkg.bat",
+      "test-pkg.sh"
+     ],
+     "imports": [
+      "faiss"
+     ],
+     "requires": [
+      "libblas =*=*mkl",
+      "scipy",
+      "pytest"
+     ],
+     "source_files": [
+      "tests/"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "faiss-cpu",
+    "requirements": {
+     "run": [
+      "faiss =1.7.2=*_cpu"
+     ]
+    },
+    "test": {
+     "imports": [
+      "faiss"
+     ]
+    }
+   },
+   {
+    "build": {
+     "skip": true
+    },
+    "name": "faiss-gpu",
+    "requirements": {
+     "run": [
+      "faiss =1.7.2=*_cuda"
+     ]
+    },
+    "test": {
+     "imports": [
+      "faiss"
+     ]
+    }
    }
   ],
   "package": {
@@ -7019,13 +7019,13 @@
     "patches/0005-increase-tolerance-for-marginally-failing-test.patch",
     "patches/0006-add-bigobj-to-swigfaiss-compile-options-on-windows.patch",
     "patches/0001-use-c-17.patch",
+    "patches/0001-use-c-14.patch",
     "patches/0002-adapt-header-target-directory-to-outputname.patch",
     "patches/0003-skip-test_stress-for-GPU-on-windows.patch",
     "patches/0004-enable-building-libfaiss_avx2-without-libfaiss.patch",
     "patches/0005-increase-tolerance-for-marginally-failing-test.patch",
     "patches/0006-add-bigobj-to-swigfaiss-compile-options-on-windows.patch",
     "patches/0001-use-c-17.patch",
-    "patches/0001-use-c-14.patch",
     "patches/0002-adapt-header-target-directory-to-outputname.patch",
     "patches/0003-skip-test_stress-for-GPU-on-windows.patch",
     "patches/0004-enable-building-libfaiss_avx2-without-libfaiss.patch",
@@ -7471,10 +7471,10 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
-  "osx_64",
   "win_64",
   "linux_ppc64le",
-  "linux_aarch64"
+  "linux_aarch64",
+  "osx_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/faiss-split.json"
@@ -7629,333 +7629,6 @@
    ]
   },
   "outputs": [
-   {
-    "build": {
-     "string": "cpu"
-    },
-    "name": "faiss-proc",
-    "test": {
-     "commands": [
-      "exit 0"
-     ]
-    },
-    "version": "1.0.0"
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libfaiss_avx2 >=1.7.2,<2",
-      "libfaiss_avx2 =*=*_cpu"
-     ],
-     "string": "h1234567_3_cpu"
-    },
-    "name": "libfaiss-avx2",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cmake"
-     ],
-     "host": [
-      "libblas",
-      "liblapack"
-     ],
-     "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
-     ]
-    },
-    "script": "build-lib-avx2.bat",
-    "test": {
-     "commands": [
-      "if not exist %LIBRARY_BIN%\\faiss_avx2.dll exit 1",
-      "if not exist %LIBRARY_LIB%\\faiss_avx2.lib exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\AutoTune.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\Clustering.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IVFlib.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\Index.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\Index2Layer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexAdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinary.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryFromFloat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryHNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryHash.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryIVF.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexFlatCodes.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexHNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVF.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFAdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQ.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQFastScan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQR.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFSpectralHash.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexLSH.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexLattice.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexNNDescent.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexNSG.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPQ.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPQFastScan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPreTransform.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexRefine.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexReplicas.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexScalarQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexShards.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\MatrixStats.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\MetaIndexes.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\MetricType.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\VectorTransform.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\clone_index.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\index_factory.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\index_io.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\AdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\AuxIndexStructures.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\FaissAssert.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\FaissException.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\HNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\LocalSearchQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\NNDescent.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\NSG.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\PolysemousTraining.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ProductQuantizer-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ProductQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ResidualQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ResultHandler.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ScalarQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ThreadedIndex-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ThreadedIndex.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\io.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\io_macros.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\kmeans1d.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\lattice_Zn.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\platform_macros.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\pq4_fast_scan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\simd_result_handlers.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\BlockInvertedLists.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\DirectMap.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\InvertedLists.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\InvertedListsIOHook.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\AlignedTable.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\Heap.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\WorkerThread.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\distances.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\extra_distances-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\extra_distances.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\hamming-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\hamming.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\ordered_key_value.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\partitioning.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\quantize_lut.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\random.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_avx2.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_emulated.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_neon.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\utils.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\OnDiskInvertedLists.h exit 1"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libfaiss >=1.7.2,<2",
-      "libfaiss =*=*_cpu"
-     ],
-     "string": "h1234567_3_cpu"
-    },
-    "name": "libfaiss",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cmake"
-     ],
-     "host": [
-      "libblas",
-      "liblapack"
-     ],
-     "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
-     ]
-    },
-    "script": "build-lib-generic.bat",
-    "test": {
-     "commands": [
-      "if not exist %LIBRARY_BIN%\\faiss.dll exit 1",
-      "if not exist %LIBRARY_LIB%\\faiss.lib exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\AutoTune.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\Clustering.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IVFlib.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\Index.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\Index2Layer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexAdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinary.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryFromFloat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryHNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryHash.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryIVF.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexFlatCodes.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexHNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVF.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFAdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFFlat.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQ.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQFastScan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQR.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFSpectralHash.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexLSH.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexLattice.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexNNDescent.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexNSG.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexPQ.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexPQFastScan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexPreTransform.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexRefine.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexReplicas.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexScalarQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\IndexShards.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\MatrixStats.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\MetaIndexes.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\MetricType.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\VectorTransform.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\clone_index.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\index_factory.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\index_io.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\AdditiveQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\AuxIndexStructures.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\FaissAssert.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\FaissException.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\HNSW.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\LocalSearchQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\NNDescent.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\NSG.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\PolysemousTraining.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ProductQuantizer-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ProductQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ResidualQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ResultHandler.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ScalarQuantizer.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ThreadedIndex-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\ThreadedIndex.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\io.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\io_macros.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\kmeans1d.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\lattice_Zn.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\platform_macros.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\pq4_fast_scan.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\impl\\simd_result_handlers.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\invlists\\BlockInvertedLists.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\invlists\\DirectMap.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\invlists\\InvertedLists.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\invlists\\InvertedListsIOHook.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\AlignedTable.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\Heap.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\WorkerThread.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\distances.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\extra_distances-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\extra_distances.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\hamming-inl.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\hamming.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\ordered_key_value.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\partitioning.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\quantize_lut.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\random.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_avx2.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_emulated.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_neon.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\utils\\utils.h exit 1",
-      "if not exist %LIBRARY_INC%\\faiss\\invlists\\OnDiskInvertedLists.h exit 1"
-     ]
-    }
-   },
-   {
-    "build": {
-     "string": "py39h1234567_3_cpu"
-    },
-    "name": "faiss",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "swig",
-      "cmake"
-     ],
-     "host": [
-      "python",
-      "pip",
-      "numpy",
-      "libfaiss =1.7.2=*_cpu",
-      "libfaiss-avx2 =1.7.2=*_cpu",
-      "libblas",
-      "liblapack"
-     ],
-     "run": [
-      "python",
-      "libfaiss =1.7.2=*_cpu",
-      "libfaiss-avx2 =1.7.2=*_cpu",
-      "numpy"
-     ],
-     "run_constrained": [
-      "faiss-gpu ==9999999999",
-      "faiss-proc =*=cpu"
-     ]
-    },
-    "script": "build-pkg.bat",
-    "test": {
-     "commands": [
-      "set \"HAS_AVX2=YES\"  && test-pkg.bat"
-     ],
-     "files": [
-      "test-pkg.bat",
-      "test-pkg.sh"
-     ],
-     "imports": [
-      "faiss"
-     ],
-     "requires": [
-      "libblas =*=*mkl",
-      "scipy",
-      "pytest"
-     ],
-     "source_files": [
-      "tests/"
-     ]
-    }
-   },
-   {
-    "build": null,
-    "name": "faiss-cpu",
-    "requirements": {
-     "run": [
-      "faiss =1.7.2=*_cpu"
-     ]
-    },
-    "test": {
-     "imports": [
-      "faiss"
-     ]
-    }
-   },
-   {
-    "build": {
-     "skip": true
-    },
-    "name": "faiss-gpu",
-    "requirements": {
-     "run": [
-      "faiss =1.7.2=*_cuda"
-     ]
-    },
-    "test": {
-     "imports": [
-      "faiss"
-     ]
-    }
-   },
    {
     "build": {
      "string": "cuda"
@@ -8941,6 +8614,333 @@
       "faiss"
      ]
     }
+   },
+   {
+    "build": {
+     "string": "cpu"
+    },
+    "name": "faiss-proc",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "1.0.0"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libfaiss_avx2 >=1.7.2,<2",
+      "libfaiss_avx2 =*=*_cpu"
+     ],
+     "string": "h1234567_3_cpu"
+    },
+    "name": "libfaiss-avx2",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake"
+     ],
+     "host": [
+      "libblas",
+      "liblapack"
+     ],
+     "run_constrained": [
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
+     ]
+    },
+    "script": "build-lib-avx2.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_BIN%\\faiss_avx2.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\faiss_avx2.lib exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\AutoTune.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\Clustering.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IVFlib.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\Index.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\Index2Layer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexAdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinary.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryFromFloat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryHNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryHash.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexBinaryIVF.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexFlatCodes.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexHNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVF.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFAdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQ.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQFastScan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFPQR.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexIVFSpectralHash.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexLSH.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexLattice.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexNNDescent.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexNSG.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPQ.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPQFastScan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexPreTransform.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexRefine.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexReplicas.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexScalarQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\IndexShards.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\MatrixStats.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\MetaIndexes.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\MetricType.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\VectorTransform.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\clone_index.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\index_factory.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\index_io.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\AdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\AuxIndexStructures.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\FaissAssert.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\FaissException.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\HNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\LocalSearchQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\NNDescent.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\NSG.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\PolysemousTraining.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ProductQuantizer-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ProductQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ResidualQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ResultHandler.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ScalarQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ThreadedIndex-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\ThreadedIndex.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\io.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\io_macros.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\kmeans1d.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\lattice_Zn.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\platform_macros.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\pq4_fast_scan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\impl\\simd_result_handlers.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\BlockInvertedLists.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\DirectMap.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\InvertedLists.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\InvertedListsIOHook.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\AlignedTable.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\Heap.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\WorkerThread.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\distances.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\extra_distances-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\extra_distances.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\hamming-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\hamming.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\ordered_key_value.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\partitioning.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\quantize_lut.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\random.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_avx2.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_emulated.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\simdlib_neon.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\utils\\utils.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss_avx2\\invlists\\OnDiskInvertedLists.h exit 1"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libfaiss >=1.7.2,<2",
+      "libfaiss =*=*_cpu"
+     ],
+     "string": "h1234567_3_cpu"
+    },
+    "name": "libfaiss",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake"
+     ],
+     "host": [
+      "libblas",
+      "liblapack"
+     ],
+     "run_constrained": [
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
+     ]
+    },
+    "script": "build-lib-generic.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_BIN%\\faiss.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\faiss.lib exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\AutoTune.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\Clustering.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IVFlib.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\Index.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\Index2Layer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexAdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinary.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryFromFloat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryHNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryHash.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexBinaryIVF.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexFlatCodes.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexHNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVF.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFAdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFFlat.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQ.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQFastScan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFPQR.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexIVFSpectralHash.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexLSH.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexLattice.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexNNDescent.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexNSG.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexPQ.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexPQFastScan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexPreTransform.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexRefine.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexReplicas.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexScalarQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\IndexShards.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\MatrixStats.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\MetaIndexes.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\MetricType.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\VectorTransform.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\clone_index.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\index_factory.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\index_io.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\AdditiveQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\AuxIndexStructures.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\FaissAssert.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\FaissException.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\HNSW.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\LocalSearchQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\NNDescent.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\NSG.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\PolysemousTraining.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ProductQuantizer-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ProductQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ResidualQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ResultHandler.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ScalarQuantizer.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ThreadedIndex-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\ThreadedIndex.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\io.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\io_macros.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\kmeans1d.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\lattice_Zn.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\platform_macros.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\pq4_fast_scan.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\impl\\simd_result_handlers.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\invlists\\BlockInvertedLists.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\invlists\\DirectMap.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\invlists\\InvertedLists.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\invlists\\InvertedListsIOHook.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\AlignedTable.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\Heap.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\WorkerThread.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\distances.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\extra_distances-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\extra_distances.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\hamming-inl.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\hamming.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\ordered_key_value.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\partitioning.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\quantize_lut.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\random.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_avx2.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_emulated.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\simdlib_neon.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\utils\\utils.h exit 1",
+      "if not exist %LIBRARY_INC%\\faiss\\invlists\\OnDiskInvertedLists.h exit 1"
+     ]
+    }
+   },
+   {
+    "build": {
+     "string": "py39h1234567_3_cpu"
+    },
+    "name": "faiss",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "swig",
+      "cmake"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "numpy",
+      "libfaiss =1.7.2=*_cpu",
+      "libfaiss-avx2 =1.7.2=*_cpu",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "libfaiss =1.7.2=*_cpu",
+      "libfaiss-avx2 =1.7.2=*_cpu",
+      "numpy"
+     ],
+     "run_constrained": [
+      "faiss-gpu ==9999999999",
+      "faiss-proc =*=cpu"
+     ]
+    },
+    "script": "build-pkg.bat",
+    "test": {
+     "commands": [
+      "set \"HAS_AVX2=YES\"  && test-pkg.bat"
+     ],
+     "files": [
+      "test-pkg.bat",
+      "test-pkg.sh"
+     ],
+     "imports": [
+      "faiss"
+     ],
+     "requires": [
+      "libblas =*=*mkl",
+      "scipy",
+      "pytest"
+     ],
+     "source_files": [
+      "tests/"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "faiss-cpu",
+    "requirements": {
+     "run": [
+      "faiss =1.7.2=*_cpu"
+     ]
+    },
+    "test": {
+     "imports": [
+      "faiss"
+     ]
+    }
+   },
+   {
+    "build": {
+     "skip": true
+    },
+    "name": "faiss-gpu",
+    "requirements": {
+     "run": [
+      "faiss =1.7.2=*_cuda"
+     ]
+    },
+    "test": {
+     "imports": [
+      "faiss"
+     ]
+    }
    }
   ],
   "package": {
@@ -8957,13 +8957,13 @@
   "source": {
    "patches": [
     "patches/0001-use-c-17.patch",
+    "patches/0001-use-c-14.patch",
     "patches/0002-adapt-header-target-directory-to-outputname.patch",
     "patches/0003-skip-test_stress-for-GPU-on-windows.patch",
     "patches/0004-enable-building-libfaiss_avx2-without-libfaiss.patch",
     "patches/0005-increase-tolerance-for-marginally-failing-test.patch",
     "patches/0006-add-bigobj-to-swigfaiss-compile-options-on-windows.patch",
     "patches/0001-use-c-17.patch",
-    "patches/0001-use-c-14.patch",
     "patches/0002-adapt-header-target-directory-to-outputname.patch",
     "patches/0003-skip-test_stress-for-GPU-on-windows.patch",
     "patches/0004-enable-building-libfaiss_avx2-without-libfaiss.patch",
