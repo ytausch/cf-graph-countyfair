@@ -144,8 +144,217 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation-*/"
+    ],
+    "name": "python-lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp",
+      "python"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "astropy",
+      "gwpy",
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "numpy",
+      "python",
+      "python-lal >=7.3.0",
+      "scipy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -m pytest -ra -v test/python"
+     ],
+     "imports": [
+      "lalsimulation",
+      "lalsimulation.nrfits",
+      "lalsimulation.tilts_at_infinity",
+      "lalsimulation.gwsignal"
+     ],
+     "requires": [
+      "pytest >=4.0.0a0"
+     ],
+     "source_files": [
+      "test/python"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "python"
+     ]
+    },
+    "files": [
+     "bin/lalsim*",
+     "etc/lalsimulation-user-env.*",
+     "man/man*/lalsim*"
+    ],
+    "name": "lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "python",
+      "python-lalsimulation"
+     ]
+    },
+    "test": {
+     "commands": [
+      "lalsimulation_version --verbose",
+      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
+      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
+      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
+      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
+      "lalsim-detector-noise -C -t 1 -r 10",
+      "lalsim-detector-strain --help",
+      "lalsim-inject --help",
+      "lalsim-inspiral > /dev/null",
+      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
+      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
+      "lalsim-ns-params -n ALF1",
+      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
+      "lalsim-unicorn --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library data files"
+    },
+    "files": [
+     "etc/conda/*activate.d/*activate-lalsimulation.*",
+     "share/lalsimulation/"
+    ],
+    "name": "lalsimulation-data",
+    "requirements": {
+     "run_constrained": [
+      "liblalsimulation >=3.1.2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library shared object libraries"
+    },
+    "build": {
+     "run_exports": [
+      "liblalsimulation"
+     ]
+    },
+    "files": [
+     "include/lal/*LALSim*.h",
+     "include/lal/swiglalsimulation.i",
+     "include/lal/SWIGLALSim*.i",
+     "lib/liblalsimulation.*",
+     "lib/pkgconfig/lalsimulation.pc"
+    ],
+    "name": "liblalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp"
+     ],
+     "host": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run_constrained": [
+      "lalsimulation >=2.5.0",
+      "python-lalsimulation >=2.5.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
+      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "liblalsimulation",
+      "numpy",
+      "python"
+     ]
+    },
+    "files": [
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -562,217 +771,8 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation-*/"
-    ],
-    "name": "python-lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp",
-      "python"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "astropy",
-      "gwpy",
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "numpy",
-      "python",
-      "python-lal >=7.3.0",
-      "scipy"
-     ]
-    },
-    "test": {
-     "commands": [
-      "python -m pytest -ra -v test/python"
-     ],
-     "imports": [
-      "lalsimulation",
-      "lalsimulation.nrfits",
-      "lalsimulation.tilts_at_infinity",
-      "lalsimulation.gwsignal"
-     ],
-     "requires": [
-      "pytest >=4.0.0a0"
-     ],
-     "source_files": [
-      "test/python"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "python"
-     ]
-    },
-    "files": [
-     "bin/lalsim*",
-     "etc/lalsimulation-user-env.*",
-     "man/man*/lalsim*"
-    ],
-    "name": "lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "python",
-      "python-lalsimulation"
-     ]
-    },
-    "test": {
-     "commands": [
-      "lalsimulation_version --verbose",
-      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
-      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
-      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
-      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
-      "lalsim-detector-noise -C -t 1 -r 10",
-      "lalsim-detector-strain --help",
-      "lalsim-inject --help",
-      "lalsim-inspiral > /dev/null",
-      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
-      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
-      "lalsim-ns-params -n ALF1",
-      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
-      "lalsim-unicorn --help"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library data files"
-    },
-    "files": [
-     "etc/conda/*activate.d/*activate-lalsimulation.*",
-     "share/lalsimulation/"
-    ],
-    "name": "lalsimulation-data",
-    "requirements": {
-     "run_constrained": [
-      "liblalsimulation >=3.1.2"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library shared object libraries"
-    },
-    "build": {
-     "run_exports": [
-      "liblalsimulation"
-     ]
-    },
-    "files": [
-     "include/lal/*LALSim*.h",
-     "include/lal/swiglalsimulation.i",
-     "include/lal/SWIGLALSim*.i",
-     "lib/liblalsimulation.*",
-     "lib/pkgconfig/lalsimulation.pc"
-    ],
-    "name": "liblalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp"
-     ],
-     "host": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run_constrained": [
-      "lalsimulation >=2.5.0",
-      "python-lalsimulation >=2.5.0"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
-      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
-     ],
-     "requires": [
-      "pkg-config"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "liblalsimulation",
-      "numpy",
-      "python"
-     ]
-    },
-    "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -1134,424 +1134,6 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
-    ],
-    "name": "python-lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp",
-      "python"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "astropy",
-      "gwpy",
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "numpy",
-      "python",
-      "python-lal >=7.3.0",
-      "scipy"
-     ]
-    },
-    "test": {
-     "commands": [
-      "python -m pytest -ra -v test/python"
-     ],
-     "imports": [
-      "lalsimulation",
-      "lalsimulation.nrfits",
-      "lalsimulation.tilts_at_infinity",
-      "lalsimulation.gwsignal"
-     ],
-     "requires": [
-      "pytest >=4.0.0a0"
-     ],
-     "source_files": [
-      "test/python"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "python"
-     ]
-    },
-    "files": [
-     "bin/lalsim*",
-     "etc/lalsimulation-user-env.*",
-     "man/man*/lalsim*"
-    ],
-    "name": "lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "python",
-      "python-lalsimulation"
-     ]
-    },
-    "test": {
-     "commands": [
-      "lalsimulation_version --verbose",
-      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
-      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
-      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
-      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
-      "lalsim-detector-noise -C -t 1 -r 10",
-      "lalsim-detector-strain --help",
-      "lalsim-inject --help",
-      "lalsim-inspiral > /dev/null",
-      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
-      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
-      "lalsim-ns-params -n ALF1",
-      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
-      "lalsim-unicorn --help"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library data files"
-    },
-    "files": [
-     "etc/conda/*activate.d/*activate-lalsimulation.*",
-     "share/lalsimulation/"
-    ],
-    "name": "lalsimulation-data",
-    "requirements": {
-     "run_constrained": [
-      "liblalsimulation >=3.1.2"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library shared object libraries"
-    },
-    "build": {
-     "run_exports": [
-      "liblalsimulation"
-     ]
-    },
-    "files": [
-     "include/lal/*LALSim*.h",
-     "include/lal/swiglalsimulation.i",
-     "include/lal/SWIGLALSim*.i",
-     "lib/liblalsimulation.*",
-     "lib/pkgconfig/lalsimulation.pc"
-    ],
-    "name": "liblalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp"
-     ],
-     "host": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run_constrained": [
-      "lalsimulation >=2.5.0",
-      "python-lalsimulation >=2.5.0"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
-      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
-     ],
-     "requires": [
-      "pkg-config"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "liblalsimulation",
-      "numpy",
-      "python"
-     ]
-    },
-    "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
-    ],
-    "name": "python-lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp",
-      "python"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "astropy",
-      "gwpy",
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "numpy",
-      "python",
-      "python-lal >=7.3.0",
-      "scipy"
-     ]
-    },
-    "test": {
-     "commands": [
-      "python -m pytest -ra -v test/python"
-     ],
-     "imports": [
-      "lalsimulation",
-      "lalsimulation.nrfits",
-      "lalsimulation.tilts_at_infinity",
-      "lalsimulation.gwsignal"
-     ],
-     "requires": [
-      "pytest >=4.0.0a0"
-     ],
-     "source_files": [
-      "test/python"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "python"
-     ]
-    },
-    "files": [
-     "bin/lalsim*",
-     "etc/lalsimulation-user-env.*",
-     "man/man*/lalsim*"
-    ],
-    "name": "lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "python",
-      "python-lalsimulation"
-     ]
-    },
-    "test": {
-     "commands": [
-      "lalsimulation_version --verbose",
-      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
-      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
-      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
-      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
-      "lalsim-detector-noise -C -t 1 -r 10",
-      "lalsim-detector-strain --help",
-      "lalsim-inject --help",
-      "lalsim-inspiral > /dev/null",
-      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
-      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
-      "lalsim-ns-params -n ALF1",
-      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
-      "lalsim-unicorn --help"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library data files"
-    },
-    "files": [
-     "etc/conda/*activate.d/*activate-lalsimulation.*",
-     "share/lalsimulation/"
-    ],
-    "name": "lalsimulation-data",
-    "requirements": {
-     "run_constrained": [
-      "liblalsimulation >=3.1.2"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library shared object libraries"
-    },
-    "build": {
-     "run_exports": [
-      "liblalsimulation"
-     ]
-    },
-    "files": [
-     "include/lal/*LALSim*.h",
-     "include/lal/swiglalsimulation.i",
-     "include/lal/SWIGLALSim*.i",
-     "lib/liblalsimulation.*",
-     "lib/pkgconfig/lalsimulation.pc"
-    ],
-    "name": "liblalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp"
-     ],
-     "host": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run_constrained": [
-      "lalsimulation >=2.5.0",
-      "python-lalsimulation >=2.5.0"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
-      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
-     ],
-     "requires": [
-      "pkg-config"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "liblalsimulation",
-      "numpy",
-      "python"
-     ]
-    },
-    "files": [
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
     ],
@@ -1763,6 +1345,424 @@
     "files": [
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation/",
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation-*/"
+    ],
+    "name": "python-lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp",
+      "python"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "astropy",
+      "gwpy",
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "numpy",
+      "python",
+      "python-lal >=7.3.0",
+      "scipy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -m pytest -ra -v test/python"
+     ],
+     "imports": [
+      "lalsimulation",
+      "lalsimulation.nrfits",
+      "lalsimulation.tilts_at_infinity",
+      "lalsimulation.gwsignal"
+     ],
+     "requires": [
+      "pytest >=4.0.0a0"
+     ],
+     "source_files": [
+      "test/python"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "python"
+     ]
+    },
+    "files": [
+     "bin/lalsim*",
+     "etc/lalsimulation-user-env.*",
+     "man/man*/lalsim*"
+    ],
+    "name": "lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "python",
+      "python-lalsimulation"
+     ]
+    },
+    "test": {
+     "commands": [
+      "lalsimulation_version --verbose",
+      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
+      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
+      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
+      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
+      "lalsim-detector-noise -C -t 1 -r 10",
+      "lalsim-detector-strain --help",
+      "lalsim-inject --help",
+      "lalsim-inspiral > /dev/null",
+      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
+      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
+      "lalsim-ns-params -n ALF1",
+      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
+      "lalsim-unicorn --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library data files"
+    },
+    "files": [
+     "etc/conda/*activate.d/*activate-lalsimulation.*",
+     "share/lalsimulation/"
+    ],
+    "name": "lalsimulation-data",
+    "requirements": {
+     "run_constrained": [
+      "liblalsimulation >=3.1.2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library shared object libraries"
+    },
+    "build": {
+     "run_exports": [
+      "liblalsimulation"
+     ]
+    },
+    "files": [
+     "include/lal/*LALSim*.h",
+     "include/lal/swiglalsimulation.i",
+     "include/lal/SWIGLALSim*.i",
+     "lib/liblalsimulation.*",
+     "lib/pkgconfig/lalsimulation.pc"
+    ],
+    "name": "liblalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp"
+     ],
+     "host": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run_constrained": [
+      "lalsimulation >=2.5.0",
+      "python-lalsimulation >=2.5.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
+      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "liblalsimulation",
+      "numpy",
+      "python"
+     ]
+    },
+    "files": [
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
+    ],
+    "name": "python-lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp",
+      "python"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "astropy",
+      "gwpy",
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "numpy",
+      "python",
+      "python-lal >=7.3.0",
+      "scipy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -m pytest -ra -v test/python"
+     ],
+     "imports": [
+      "lalsimulation",
+      "lalsimulation.nrfits",
+      "lalsimulation.tilts_at_infinity",
+      "lalsimulation.gwsignal"
+     ],
+     "requires": [
+      "pytest >=4.0.0a0"
+     ],
+     "source_files": [
+      "test/python"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "python"
+     ]
+    },
+    "files": [
+     "bin/lalsim*",
+     "etc/lalsimulation-user-env.*",
+     "man/man*/lalsim*"
+    ],
+    "name": "lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "python",
+      "python-lalsimulation"
+     ]
+    },
+    "test": {
+     "commands": [
+      "lalsimulation_version --verbose",
+      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
+      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
+      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
+      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
+      "lalsim-detector-noise -C -t 1 -r 10",
+      "lalsim-detector-strain --help",
+      "lalsim-inject --help",
+      "lalsim-inspiral > /dev/null",
+      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
+      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
+      "lalsim-ns-params -n ALF1",
+      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
+      "lalsim-unicorn --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library data files"
+    },
+    "files": [
+     "etc/conda/*activate.d/*activate-lalsimulation.*",
+     "share/lalsimulation/"
+    ],
+    "name": "lalsimulation-data",
+    "requirements": {
+     "run_constrained": [
+      "liblalsimulation >=3.1.2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library shared object libraries"
+    },
+    "build": {
+     "run_exports": [
+      "liblalsimulation"
+     ]
+    },
+    "files": [
+     "include/lal/*LALSim*.h",
+     "include/lal/swiglalsimulation.i",
+     "include/lal/SWIGLALSim*.i",
+     "lib/liblalsimulation.*",
+     "lib/pkgconfig/lalsimulation.pc"
+    ],
+    "name": "liblalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp"
+     ],
+     "host": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run_constrained": [
+      "lalsimulation >=2.5.0",
+      "python-lalsimulation >=2.5.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
+      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "liblalsimulation",
+      "numpy",
+      "python"
+     ]
+    },
+    "files": [
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -2333,6 +2333,215 @@
      ]
     },
     "files": [
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
+    ],
+    "name": "python-lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp",
+      "python"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "astropy",
+      "gwpy",
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "numpy",
+      "python",
+      "python-lal >=7.3.0",
+      "scipy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -m pytest -ra -v test/python"
+     ],
+     "imports": [
+      "lalsimulation",
+      "lalsimulation.nrfits",
+      "lalsimulation.tilts_at_infinity",
+      "lalsimulation.gwsignal"
+     ],
+     "requires": [
+      "pytest >=4.0.0a0"
+     ],
+     "source_files": [
+      "test/python"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "python"
+     ]
+    },
+    "files": [
+     "bin/lalsim*",
+     "etc/lalsimulation-user-env.*",
+     "man/man*/lalsim*"
+    ],
+    "name": "lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "python",
+      "python-lalsimulation"
+     ]
+    },
+    "test": {
+     "commands": [
+      "lalsimulation_version --verbose",
+      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
+      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
+      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
+      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
+      "lalsim-detector-noise -C -t 1 -r 10",
+      "lalsim-detector-strain --help",
+      "lalsim-inject --help",
+      "lalsim-inspiral > /dev/null",
+      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
+      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
+      "lalsim-ns-params -n ALF1",
+      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
+      "lalsim-unicorn --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library data files"
+    },
+    "files": [
+     "etc/conda/*activate.d/*activate-lalsimulation.*",
+     "share/lalsimulation/"
+    ],
+    "name": "lalsimulation-data",
+    "requirements": {
+     "run_constrained": [
+      "liblalsimulation >=3.1.2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library shared object libraries"
+    },
+    "build": {
+     "run_exports": [
+      "liblalsimulation"
+     ]
+    },
+    "files": [
+     "include/lal/*LALSim*.h",
+     "include/lal/swiglalsimulation.i",
+     "include/lal/SWIGLALSim*.i",
+     "lib/liblalsimulation.*",
+     "lib/pkgconfig/lalsimulation.pc"
+    ],
+    "name": "liblalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp"
+     ],
+     "host": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run_constrained": [
+      "lalsimulation >=2.5.0",
+      "python-lalsimulation >=2.5.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
+      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "liblalsimulation",
+      "numpy",
+      "python"
+     ]
+    },
+    "files": [
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation/",
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation-*/"
     ],
@@ -2544,215 +2753,6 @@
     "files": [
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
-    ],
-    "name": "python-lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp",
-      "python"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "astropy",
-      "gwpy",
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "numpy",
-      "python",
-      "python-lal >=7.3.0",
-      "scipy"
-     ]
-    },
-    "test": {
-     "commands": [
-      "python -m pytest -ra -v test/python"
-     ],
-     "imports": [
-      "lalsimulation",
-      "lalsimulation.nrfits",
-      "lalsimulation.tilts_at_infinity",
-      "lalsimulation.gwsignal"
-     ],
-     "requires": [
-      "pytest >=4.0.0a0"
-     ],
-     "source_files": [
-      "test/python"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "python"
-     ]
-    },
-    "files": [
-     "bin/lalsim*",
-     "etc/lalsimulation-user-env.*",
-     "man/man*/lalsim*"
-    ],
-    "name": "lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "python",
-      "python-lalsimulation"
-     ]
-    },
-    "test": {
-     "commands": [
-      "lalsimulation_version --verbose",
-      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
-      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
-      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
-      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
-      "lalsim-detector-noise -C -t 1 -r 10",
-      "lalsim-detector-strain --help",
-      "lalsim-inject --help",
-      "lalsim-inspiral > /dev/null",
-      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
-      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
-      "lalsim-ns-params -n ALF1",
-      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
-      "lalsim-unicorn --help"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library data files"
-    },
-    "files": [
-     "etc/conda/*activate.d/*activate-lalsimulation.*",
-     "share/lalsimulation/"
-    ],
-    "name": "lalsimulation-data",
-    "requirements": {
-     "run_constrained": [
-      "liblalsimulation >=3.1.2"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library shared object libraries"
-    },
-    "build": {
-     "run_exports": [
-      "liblalsimulation"
-     ]
-    },
-    "files": [
-     "include/lal/*LALSim*.h",
-     "include/lal/swiglalsimulation.i",
-     "include/lal/SWIGLALSim*.i",
-     "lib/liblalsimulation.*",
-     "lib/pkgconfig/lalsimulation.pc"
-    ],
-    "name": "liblalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp"
-     ],
-     "host": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run_constrained": [
-      "lalsimulation >=2.5.0",
-      "python-lalsimulation >=2.5.0"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
-      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
-     ],
-     "requires": [
-      "pkg-config"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "liblalsimulation",
-      "numpy",
-      "python"
-     ]
-    },
-    "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -3146,424 +3146,6 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
-    ],
-    "name": "python-lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp",
-      "python"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "astropy",
-      "gwpy",
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "numpy",
-      "python",
-      "python-lal >=7.3.0",
-      "scipy"
-     ]
-    },
-    "test": {
-     "commands": [
-      "python -m pytest -ra -v test/python"
-     ],
-     "imports": [
-      "lalsimulation",
-      "lalsimulation.nrfits",
-      "lalsimulation.tilts_at_infinity",
-      "lalsimulation.gwsignal"
-     ],
-     "requires": [
-      "pytest >=4.0.0a0"
-     ],
-     "source_files": [
-      "test/python"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "python"
-     ]
-    },
-    "files": [
-     "bin/lalsim*",
-     "etc/lalsimulation-user-env.*",
-     "man/man*/lalsim*"
-    ],
-    "name": "lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "python",
-      "python-lalsimulation"
-     ]
-    },
-    "test": {
-     "commands": [
-      "lalsimulation_version --verbose",
-      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
-      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
-      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
-      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
-      "lalsim-detector-noise -C -t 1 -r 10",
-      "lalsim-detector-strain --help",
-      "lalsim-inject --help",
-      "lalsim-inspiral > /dev/null",
-      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
-      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
-      "lalsim-ns-params -n ALF1",
-      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
-      "lalsim-unicorn --help"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library data files"
-    },
-    "files": [
-     "etc/conda/*activate.d/*activate-lalsimulation.*",
-     "share/lalsimulation/"
-    ],
-    "name": "lalsimulation-data",
-    "requirements": {
-     "run_constrained": [
-      "liblalsimulation >=3.1.2"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library shared object libraries"
-    },
-    "build": {
-     "run_exports": [
-      "liblalsimulation"
-     ]
-    },
-    "files": [
-     "include/lal/*LALSim*.h",
-     "include/lal/swiglalsimulation.i",
-     "include/lal/SWIGLALSim*.i",
-     "lib/liblalsimulation.*",
-     "lib/pkgconfig/lalsimulation.pc"
-    ],
-    "name": "liblalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp"
-     ],
-     "host": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run_constrained": [
-      "lalsimulation >=2.5.0",
-      "python-lalsimulation >=2.5.0"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
-      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
-     ],
-     "requires": [
-      "pkg-config"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "liblalsimulation",
-      "numpy",
-      "python"
-     ]
-    },
-    "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
-    ],
-    "name": "python-lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp",
-      "python"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "astropy",
-      "gwpy",
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "numpy",
-      "python",
-      "python-lal >=7.3.0",
-      "scipy"
-     ]
-    },
-    "test": {
-     "commands": [
-      "python -m pytest -ra -v test/python"
-     ],
-     "imports": [
-      "lalsimulation",
-      "lalsimulation.nrfits",
-      "lalsimulation.tilts_at_infinity",
-      "lalsimulation.gwsignal"
-     ],
-     "requires": [
-      "pytest >=4.0.0a0"
-     ],
-     "source_files": [
-      "test/python"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "python"
-     ]
-    },
-    "files": [
-     "bin/lalsim*",
-     "etc/lalsimulation-user-env.*",
-     "man/man*/lalsim*"
-    ],
-    "name": "lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "python",
-      "python-lalsimulation"
-     ]
-    },
-    "test": {
-     "commands": [
-      "lalsimulation_version --verbose",
-      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
-      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
-      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
-      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
-      "lalsim-detector-noise -C -t 1 -r 10",
-      "lalsim-detector-strain --help",
-      "lalsim-inject --help",
-      "lalsim-inspiral > /dev/null",
-      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
-      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
-      "lalsim-ns-params -n ALF1",
-      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
-      "lalsim-unicorn --help"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library data files"
-    },
-    "files": [
-     "etc/conda/*activate.d/*activate-lalsimulation.*",
-     "share/lalsimulation/"
-    ],
-    "name": "lalsimulation-data",
-    "requirements": {
-     "run_constrained": [
-      "liblalsimulation >=3.1.2"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library shared object libraries"
-    },
-    "build": {
-     "run_exports": [
-      "liblalsimulation"
-     ]
-    },
-    "files": [
-     "include/lal/*LALSim*.h",
-     "include/lal/swiglalsimulation.i",
-     "include/lal/SWIGLALSim*.i",
-     "lib/liblalsimulation.*",
-     "lib/pkgconfig/lalsimulation.pc"
-    ],
-    "name": "liblalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "libgomp"
-     ],
-     "host": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run_constrained": [
-      "lalsimulation >=2.5.0",
-      "python-lalsimulation >=2.5.0"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
-      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
-     ],
-     "requires": [
-      "pkg-config"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "liblalsimulation",
-      "numpy",
-      "python"
-     ]
-    },
-    "files": [
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation/",
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation-*/"
     ],
@@ -3982,8 +3564,8 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -4191,8 +3773,8 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -4818,8 +4400,635 @@
      ]
     },
     "files": [
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
+    ],
+    "name": "python-lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp",
+      "python"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "astropy",
+      "gwpy",
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "numpy",
+      "python",
+      "python-lal >=7.3.0",
+      "scipy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -m pytest -ra -v test/python"
+     ],
+     "imports": [
+      "lalsimulation",
+      "lalsimulation.nrfits",
+      "lalsimulation.tilts_at_infinity",
+      "lalsimulation.gwsignal"
+     ],
+     "requires": [
+      "pytest >=4.0.0a0"
+     ],
+     "source_files": [
+      "test/python"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "python"
+     ]
+    },
+    "files": [
+     "bin/lalsim*",
+     "etc/lalsimulation-user-env.*",
+     "man/man*/lalsim*"
+    ],
+    "name": "lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "python",
+      "python-lalsimulation"
+     ]
+    },
+    "test": {
+     "commands": [
+      "lalsimulation_version --verbose",
+      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
+      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
+      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
+      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
+      "lalsim-detector-noise -C -t 1 -r 10",
+      "lalsim-detector-strain --help",
+      "lalsim-inject --help",
+      "lalsim-inspiral > /dev/null",
+      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
+      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
+      "lalsim-ns-params -n ALF1",
+      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
+      "lalsim-unicorn --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library data files"
+    },
+    "files": [
+     "etc/conda/*activate.d/*activate-lalsimulation.*",
+     "share/lalsimulation/"
+    ],
+    "name": "lalsimulation-data",
+    "requirements": {
+     "run_constrained": [
+      "liblalsimulation >=3.1.2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library shared object libraries"
+    },
+    "build": {
+     "run_exports": [
+      "liblalsimulation"
+     ]
+    },
+    "files": [
+     "include/lal/*LALSim*.h",
+     "include/lal/swiglalsimulation.i",
+     "include/lal/SWIGLALSim*.i",
+     "lib/liblalsimulation.*",
+     "lib/pkgconfig/lalsimulation.pc"
+    ],
+    "name": "liblalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp"
+     ],
+     "host": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run_constrained": [
+      "lalsimulation >=2.5.0",
+      "python-lalsimulation >=2.5.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
+      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "liblalsimulation",
+      "numpy",
+      "python"
+     ]
+    },
+    "files": [
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
+    ],
+    "name": "python-lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp",
+      "python"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "astropy",
+      "gwpy",
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "numpy",
+      "python",
+      "python-lal >=7.3.0",
+      "scipy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -m pytest -ra -v test/python"
+     ],
+     "imports": [
+      "lalsimulation",
+      "lalsimulation.nrfits",
+      "lalsimulation.tilts_at_infinity",
+      "lalsimulation.gwsignal"
+     ],
+     "requires": [
+      "pytest >=4.0.0a0"
+     ],
+     "source_files": [
+      "test/python"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "python"
+     ]
+    },
+    "files": [
+     "bin/lalsim*",
+     "etc/lalsimulation-user-env.*",
+     "man/man*/lalsim*"
+    ],
+    "name": "lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "python",
+      "python-lalsimulation"
+     ]
+    },
+    "test": {
+     "commands": [
+      "lalsimulation_version --verbose",
+      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
+      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
+      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
+      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
+      "lalsim-detector-noise -C -t 1 -r 10",
+      "lalsim-detector-strain --help",
+      "lalsim-inject --help",
+      "lalsim-inspiral > /dev/null",
+      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
+      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
+      "lalsim-ns-params -n ALF1",
+      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
+      "lalsim-unicorn --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library data files"
+    },
+    "files": [
+     "etc/conda/*activate.d/*activate-lalsimulation.*",
+     "share/lalsimulation/"
+    ],
+    "name": "lalsimulation-data",
+    "requirements": {
+     "run_constrained": [
+      "liblalsimulation >=3.1.2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library shared object libraries"
+    },
+    "build": {
+     "run_exports": [
+      "liblalsimulation"
+     ]
+    },
+    "files": [
+     "include/lal/*LALSim*.h",
+     "include/lal/swiglalsimulation.i",
+     "include/lal/SWIGLALSim*.i",
+     "lib/liblalsimulation.*",
+     "lib/pkgconfig/lalsimulation.pc"
+    ],
+    "name": "liblalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp"
+     ],
+     "host": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run_constrained": [
+      "lalsimulation >=2.5.0",
+      "python-lalsimulation >=2.5.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
+      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "liblalsimulation",
+      "numpy",
+      "python"
+     ]
+    },
+    "files": [
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
+    ],
+    "name": "python-lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp",
+      "python"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "astropy",
+      "gwpy",
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "numpy",
+      "python",
+      "python-lal >=7.3.0",
+      "scipy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -m pytest -ra -v test/python"
+     ],
+     "imports": [
+      "lalsimulation",
+      "lalsimulation.nrfits",
+      "lalsimulation.tilts_at_infinity",
+      "lalsimulation.gwsignal"
+     ],
+     "requires": [
+      "pytest >=4.0.0a0"
+     ],
+     "source_files": [
+      "test/python"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "python"
+     ]
+    },
+    "files": [
+     "bin/lalsim*",
+     "etc/lalsimulation-user-env.*",
+     "man/man*/lalsim*"
+    ],
+    "name": "lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "python",
+      "python-lalsimulation"
+     ]
+    },
+    "test": {
+     "commands": [
+      "lalsimulation_version --verbose",
+      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
+      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
+      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
+      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
+      "lalsim-detector-noise -C -t 1 -r 10",
+      "lalsim-detector-strain --help",
+      "lalsim-inject --help",
+      "lalsim-inspiral > /dev/null",
+      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
+      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
+      "lalsim-ns-params -n ALF1",
+      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
+      "lalsim-unicorn --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library data files"
+    },
+    "files": [
+     "etc/conda/*activate.d/*activate-lalsimulation.*",
+     "share/lalsimulation/"
+    ],
+    "name": "lalsimulation-data",
+    "requirements": {
+     "run_constrained": [
+      "liblalsimulation >=3.1.2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library shared object libraries"
+    },
+    "build": {
+     "run_exports": [
+      "liblalsimulation"
+     ]
+    },
+    "files": [
+     "include/lal/*LALSim*.h",
+     "include/lal/swiglalsimulation.i",
+     "include/lal/SWIGLALSim*.i",
+     "lib/liblalsimulation.*",
+     "lib/pkgconfig/lalsimulation.pc"
+    ],
+    "name": "liblalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "libgomp"
+     ],
+     "host": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run_constrained": [
+      "lalsimulation >=2.5.0",
+      "python-lalsimulation >=2.5.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
+      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "liblalsimulation",
+      "numpy",
+      "python"
+     ]
+    },
+    "files": [
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -5397,7 +5606,7 @@
     "requirements": {
      "build": [
       "c_compiler_stub",
-      "libgomp"
+      "llvm-openmp"
      ],
      "host": [
       "gsl",
@@ -5445,14 +5654,14 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
      "build": [
       "c_compiler_stub",
-      "libgomp",
+      "llvm-openmp",
       "python"
      ],
      "host": [
@@ -6072,215 +6281,6 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
-    ],
-    "name": "python-lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "llvm-openmp",
-      "python"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "astropy",
-      "gwpy",
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "numpy",
-      "python",
-      "python-lal >=7.3.0",
-      "scipy"
-     ]
-    },
-    "test": {
-     "commands": [
-      "python -m pytest -ra -v test/python"
-     ],
-     "imports": [
-      "lalsimulation",
-      "lalsimulation.nrfits",
-      "lalsimulation.tilts_at_infinity",
-      "lalsimulation.gwsignal"
-     ],
-     "requires": [
-      "pytest >=4.0.0a0"
-     ],
-     "source_files": [
-      "test/python"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "python"
-     ]
-    },
-    "files": [
-     "bin/lalsim*",
-     "etc/lalsimulation-user-env.*",
-     "man/man*/lalsim*"
-    ],
-    "name": "lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "python",
-      "python-lalsimulation"
-     ]
-    },
-    "test": {
-     "commands": [
-      "lalsimulation_version --verbose",
-      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
-      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
-      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
-      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
-      "lalsim-detector-noise -C -t 1 -r 10",
-      "lalsim-detector-strain --help",
-      "lalsim-inject --help",
-      "lalsim-inspiral > /dev/null",
-      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
-      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
-      "lalsim-ns-params -n ALF1",
-      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
-      "lalsim-unicorn --help"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library data files"
-    },
-    "files": [
-     "etc/conda/*activate.d/*activate-lalsimulation.*",
-     "share/lalsimulation/"
-    ],
-    "name": "lalsimulation-data",
-    "requirements": {
-     "run_constrained": [
-      "liblalsimulation >=3.1.2"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library shared object libraries"
-    },
-    "build": {
-     "run_exports": [
-      "liblalsimulation"
-     ]
-    },
-    "files": [
-     "include/lal/*LALSim*.h",
-     "include/lal/swiglalsimulation.i",
-     "include/lal/SWIGLALSim*.i",
-     "lib/liblalsimulation.*",
-     "lib/pkgconfig/lalsimulation.pc"
-    ],
-    "name": "liblalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "llvm-openmp"
-     ],
-     "host": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run_constrained": [
-      "lalsimulation >=2.5.0",
-      "python-lalsimulation >=2.5.0"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
-      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
-     ],
-     "requires": [
-      "pkg-config"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "liblalsimulation",
-      "numpy",
-      "python"
-     ]
-    },
-    "files": [
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation/",
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation-*/"
     ],
@@ -6490,217 +6490,8 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
-    ],
-    "name": "python-lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "llvm-openmp",
-      "python"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "astropy",
-      "gwpy",
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "numpy",
-      "python",
-      "python-lal >=7.3.0",
-      "scipy"
-     ]
-    },
-    "test": {
-     "commands": [
-      "python -m pytest -ra -v test/python"
-     ],
-     "imports": [
-      "lalsimulation",
-      "lalsimulation.nrfits",
-      "lalsimulation.tilts_at_infinity",
-      "lalsimulation.gwsignal"
-     ],
-     "requires": [
-      "pytest >=4.0.0a0"
-     ],
-     "source_files": [
-      "test/python"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "python"
-     ]
-    },
-    "files": [
-     "bin/lalsim*",
-     "etc/lalsimulation-user-env.*",
-     "man/man*/lalsim*"
-    ],
-    "name": "lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "python",
-      "python-lalsimulation"
-     ]
-    },
-    "test": {
-     "commands": [
-      "lalsimulation_version --verbose",
-      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
-      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
-      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
-      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
-      "lalsim-detector-noise -C -t 1 -r 10",
-      "lalsim-detector-strain --help",
-      "lalsim-inject --help",
-      "lalsim-inspiral > /dev/null",
-      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
-      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
-      "lalsim-ns-params -n ALF1",
-      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
-      "lalsim-unicorn --help"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library data files"
-    },
-    "files": [
-     "etc/conda/*activate.d/*activate-lalsimulation.*",
-     "share/lalsimulation/"
-    ],
-    "name": "lalsimulation-data",
-    "requirements": {
-     "run_constrained": [
-      "liblalsimulation >=3.1.2"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library shared object libraries"
-    },
-    "build": {
-     "run_exports": [
-      "liblalsimulation"
-     ]
-    },
-    "files": [
-     "include/lal/*LALSim*.h",
-     "include/lal/swiglalsimulation.i",
-     "include/lal/SWIGLALSim*.i",
-     "lib/liblalsimulation.*",
-     "lib/pkgconfig/lalsimulation.pc"
-    ],
-    "name": "liblalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "llvm-openmp"
-     ],
-     "host": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run_constrained": [
-      "lalsimulation >=2.5.0",
-      "python-lalsimulation >=2.5.0"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
-      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
-     ],
-     "requires": [
-      "pkg-config"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "liblalsimulation",
-      "numpy",
-      "python"
-     ]
-    },
-    "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation-*/"
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -7117,8 +6908,217 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation-*/"
+    ],
+    "name": "python-lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "llvm-openmp",
+      "python"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "astropy",
+      "gwpy",
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "numpy",
+      "python",
+      "python-lal >=7.3.0",
+      "scipy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -m pytest -ra -v test/python"
+     ],
+     "imports": [
+      "lalsimulation",
+      "lalsimulation.nrfits",
+      "lalsimulation.tilts_at_infinity",
+      "lalsimulation.gwsignal"
+     ],
+     "requires": [
+      "pytest >=4.0.0a0"
+     ],
+     "source_files": [
+      "test/python"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "python"
+     ]
+    },
+    "files": [
+     "bin/lalsim*",
+     "etc/lalsimulation-user-env.*",
+     "man/man*/lalsim*"
+    ],
+    "name": "lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "python",
+      "python-lalsimulation"
+     ]
+    },
+    "test": {
+     "commands": [
+      "lalsimulation_version --verbose",
+      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
+      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
+      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
+      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
+      "lalsim-detector-noise -C -t 1 -r 10",
+      "lalsim-detector-strain --help",
+      "lalsim-inject --help",
+      "lalsim-inspiral > /dev/null",
+      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
+      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
+      "lalsim-ns-params -n ALF1",
+      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
+      "lalsim-unicorn --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library data files"
+    },
+    "files": [
+     "etc/conda/*activate.d/*activate-lalsimulation.*",
+     "share/lalsimulation/"
+    ],
+    "name": "lalsimulation-data",
+    "requirements": {
+     "run_constrained": [
+      "liblalsimulation >=3.1.2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library shared object libraries"
+    },
+    "build": {
+     "run_exports": [
+      "liblalsimulation"
+     ]
+    },
+    "files": [
+     "include/lal/*LALSim*.h",
+     "include/lal/swiglalsimulation.i",
+     "include/lal/SWIGLALSim*.i",
+     "lib/liblalsimulation.*",
+     "lib/pkgconfig/lalsimulation.pc"
+    ],
+    "name": "liblalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "llvm-openmp"
+     ],
+     "host": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run_constrained": [
+      "lalsimulation >=2.5.0",
+      "python-lalsimulation >=2.5.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
+      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "liblalsimulation",
+      "numpy",
+      "python"
+     ]
+    },
+    "files": [
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -7653,6 +7653,215 @@
      ]
     },
     "files": [
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
+    ],
+    "name": "python-lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "llvm-openmp",
+      "python"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "astropy",
+      "gwpy",
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "numpy",
+      "python",
+      "python-lal >=7.3.0",
+      "scipy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -m pytest -ra -v test/python"
+     ],
+     "imports": [
+      "lalsimulation",
+      "lalsimulation.nrfits",
+      "lalsimulation.tilts_at_infinity",
+      "lalsimulation.gwsignal"
+     ],
+     "requires": [
+      "pytest >=4.0.0a0"
+     ],
+     "source_files": [
+      "test/python"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "python"
+     ]
+    },
+    "files": [
+     "bin/lalsim*",
+     "etc/lalsimulation-user-env.*",
+     "man/man*/lalsim*"
+    ],
+    "name": "lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "python",
+      "python-lalsimulation"
+     ]
+    },
+    "test": {
+     "commands": [
+      "lalsimulation_version --verbose",
+      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
+      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
+      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
+      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
+      "lalsim-detector-noise -C -t 1 -r 10",
+      "lalsim-detector-strain --help",
+      "lalsim-inject --help",
+      "lalsim-inspiral > /dev/null",
+      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
+      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
+      "lalsim-ns-params -n ALF1",
+      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
+      "lalsim-unicorn --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library data files"
+    },
+    "files": [
+     "etc/conda/*activate.d/*activate-lalsimulation.*",
+     "share/lalsimulation/"
+    ],
+    "name": "lalsimulation-data",
+    "requirements": {
+     "run_constrained": [
+      "liblalsimulation >=3.1.2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library shared object libraries"
+    },
+    "build": {
+     "run_exports": [
+      "liblalsimulation"
+     ]
+    },
+    "files": [
+     "include/lal/*LALSim*.h",
+     "include/lal/swiglalsimulation.i",
+     "include/lal/SWIGLALSim*.i",
+     "lib/liblalsimulation.*",
+     "lib/pkgconfig/lalsimulation.pc"
+    ],
+    "name": "liblalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "llvm-openmp"
+     ],
+     "host": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run_constrained": [
+      "lalsimulation >=2.5.0",
+      "python-lalsimulation >=2.5.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
+      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "liblalsimulation",
+      "numpy",
+      "python"
+     ]
+    },
+    "files": [
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
     ],
@@ -7864,215 +8073,6 @@
     "files": [
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation/",
      "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.10/site-packages/lalsimulation-*/"
-    ],
-    "name": "python-lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "llvm-openmp",
-      "python"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "astropy",
-      "gwpy",
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "numpy",
-      "python",
-      "python-lal >=7.3.0",
-      "scipy"
-     ]
-    },
-    "test": {
-     "commands": [
-      "python -m pytest -ra -v test/python"
-     ],
-     "imports": [
-      "lalsimulation",
-      "lalsimulation.nrfits",
-      "lalsimulation.tilts_at_infinity",
-      "lalsimulation.gwsignal"
-     ],
-     "requires": [
-      "pytest >=4.0.0a0"
-     ],
-     "source_files": [
-      "test/python"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "python"
-     ]
-    },
-    "files": [
-     "bin/lalsim*",
-     "etc/lalsimulation-user-env.*",
-     "man/man*/lalsim*"
-    ],
-    "name": "lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "python",
-      "python-lalsimulation"
-     ]
-    },
-    "test": {
-     "commands": [
-      "lalsimulation_version --verbose",
-      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
-      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
-      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
-      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
-      "lalsim-detector-noise -C -t 1 -r 10",
-      "lalsim-detector-strain --help",
-      "lalsim-inject --help",
-      "lalsim-inspiral > /dev/null",
-      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
-      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
-      "lalsim-ns-params -n ALF1",
-      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
-      "lalsim-unicorn --help"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library data files"
-    },
-    "files": [
-     "etc/conda/*activate.d/*activate-lalsimulation.*",
-     "share/lalsimulation/"
-    ],
-    "name": "lalsimulation-data",
-    "requirements": {
-     "run_constrained": [
-      "liblalsimulation >=3.1.2"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library shared object libraries"
-    },
-    "build": {
-     "run_exports": [
-      "liblalsimulation"
-     ]
-    },
-    "files": [
-     "include/lal/*LALSim*.h",
-     "include/lal/swiglalsimulation.i",
-     "include/lal/SWIGLALSim*.i",
-     "lib/liblalsimulation.*",
-     "lib/pkgconfig/lalsimulation.pc"
-    ],
-    "name": "liblalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "llvm-openmp"
-     ],
-     "host": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run_constrained": [
-      "lalsimulation >=2.5.0",
-      "python-lalsimulation >=2.5.0"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
-      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
-     ],
-     "requires": [
-      "pkg-config"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "liblalsimulation",
-      "numpy",
-      "python"
-     ]
-    },
-    "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -8643,217 +8643,8 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
-    ],
-    "name": "python-lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "llvm-openmp",
-      "python"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "astropy",
-      "gwpy",
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "numpy",
-      "python",
-      "python-lal >=7.3.0",
-      "scipy"
-     ]
-    },
-    "test": {
-     "commands": [
-      "python -m pytest -ra -v test/python"
-     ],
-     "imports": [
-      "lalsimulation",
-      "lalsimulation.nrfits",
-      "lalsimulation.tilts_at_infinity",
-      "lalsimulation.gwsignal"
-     ],
-     "requires": [
-      "pytest >=4.0.0a0"
-     ],
-     "source_files": [
-      "test/python"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "python"
-     ]
-    },
-    "files": [
-     "bin/lalsim*",
-     "etc/lalsimulation-user-env.*",
-     "man/man*/lalsim*"
-    ],
-    "name": "lalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub"
-     ],
-     "host": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "liblal >=7.3.0",
-      "liblalsimulation",
-      "mpmath >=1.0.0",
-      "python",
-      "python-lalsimulation"
-     ]
-    },
-    "test": {
-     "commands": [
-      "lalsimulation_version --verbose",
-      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
-      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
-      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
-      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
-      "lalsim-detector-noise -C -t 1 -r 10",
-      "lalsim-detector-strain --help",
-      "lalsim-inject --help",
-      "lalsim-inspiral > /dev/null",
-      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
-      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
-      "lalsim-ns-params -n ALF1",
-      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
-      "lalsim-unicorn --help"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library data files"
-    },
-    "files": [
-     "etc/conda/*activate.d/*activate-lalsimulation.*",
-     "share/lalsimulation/"
-    ],
-    "name": "lalsimulation-data",
-    "requirements": {
-     "run_constrained": [
-      "liblalsimulation >=3.1.2"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library shared object libraries"
-    },
-    "build": {
-     "run_exports": [
-      "liblalsimulation"
-     ]
-    },
-    "files": [
-     "include/lal/*LALSim*.h",
-     "include/lal/swiglalsimulation.i",
-     "include/lal/SWIGLALSim*.i",
-     "lib/liblalsimulation.*",
-     "lib/pkgconfig/lalsimulation.pc"
-    ],
-    "name": "liblalsimulation",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "llvm-openmp"
-     ],
-     "host": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run": [
-      "gsl",
-      "lalsimulation-data",
-      "liblal >=7.3.0",
-      "python"
-     ],
-     "run_constrained": [
-      "lalsimulation >=2.5.0",
-      "python-lalsimulation >=2.5.0"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
-      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
-     ],
-     "requires": [
-      "pkg-config"
-     ]
-    }
-   },
-   {
-    "about": {
-     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
-     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
-     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
-     "home": "https://wiki.ligo.org/Computing/LALSuite",
-     "license": "GPL-2.0-or-later",
-     "license_family": "GPL",
-     "license_file": "COPYING",
-     "summary": "LSC Algorithm Simulation Library"
-    },
-    "build": {
-     "ignore_run_exports": [
-      "liblalsimulation",
-      "numpy",
-      "python"
-     ]
-    },
-    "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation-*/"
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -9270,8 +9061,217 @@
      ]
     },
     "files": [
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation/",
-     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.8/site-packages/lalsimulation-*/"
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.11/site-packages/lalsimulation-*/"
+    ],
+    "name": "python-lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "llvm-openmp",
+      "python"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "astropy",
+      "gwpy",
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "numpy",
+      "python",
+      "python-lal >=7.3.0",
+      "scipy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -m pytest -ra -v test/python"
+     ],
+     "imports": [
+      "lalsimulation",
+      "lalsimulation.nrfits",
+      "lalsimulation.tilts_at_infinity",
+      "lalsimulation.gwsignal"
+     ],
+     "requires": [
+      "pytest >=4.0.0a0"
+     ],
+     "source_files": [
+      "test/python"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://docs.ligo.org/lscsoft/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "python"
+     ]
+    },
+    "files": [
+     "bin/lalsim*",
+     "etc/lalsimulation-user-env.*",
+     "man/man*/lalsim*"
+    ],
+    "name": "lalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "liblal >=7.3.0",
+      "liblalsimulation",
+      "mpmath >=1.0.0",
+      "python",
+      "python-lalsimulation"
+     ]
+    },
+    "test": {
+     "commands": [
+      "lalsimulation_version --verbose",
+      "lalsim-bh-qnmode -l 0 -m 0 -s 0",
+      "lalsim-bh-ringdown -M 10 -a 0 -r 100 -e 0.001 -i 0 -l 2 -m 2",
+      "lalsim-bh-sphwf -a 0 -l 2 -m 2 -s 0",
+      "lalsim-burst -w SineGaussian -q 10 -f 100 -H 1e-21 1> /dev/null",
+      "lalsim-detector-noise -C -t 1 -r 10",
+      "lalsim-detector-strain --help",
+      "lalsim-inject --help",
+      "lalsim-inspiral > /dev/null",
+      "lalsim-ns-eos-table -n ALF1 1> /dev/null",
+      "lalsim-ns-mass-radius -n ALF1 1> /dev/null",
+      "lalsim-ns-params -n ALF1",
+      "lalsim-sgwb --geo -t 1 -r 100 -W 1 1> /dev/null",
+      "lalsim-unicorn --help"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the data files needed to run various applications\nand routines that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite.git",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library data files"
+    },
+    "files": [
+     "etc/conda/*activate.d/*activate-lalsimulation.*",
+     "share/lalsimulation/"
+    ],
+    "name": "lalsimulation-data",
+    "requirements": {
+     "run_constrained": [
+      "liblalsimulation >=3.1.2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${LALSIMULATION_DATADIR}/LIGO-P1200087-v18-AdV_DESIGN.txt"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data\nanalysis.\nThis package contains the shared-object libraries needed to run\napplications that use the LAL Simulation library.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library shared object libraries"
+    },
+    "build": {
+     "run_exports": [
+      "liblalsimulation"
+     ]
+    },
+    "files": [
+     "include/lal/*LALSim*.h",
+     "include/lal/swiglalsimulation.i",
+     "include/lal/SWIGLALSim*.i",
+     "lib/liblalsimulation.*",
+     "lib/pkgconfig/lalsimulation.pc"
+    ],
+    "name": "liblalsimulation",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "llvm-openmp"
+     ],
+     "host": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run": [
+      "gsl",
+      "lalsimulation-data",
+      "liblal >=7.3.0",
+      "python"
+     ],
+     "run_constrained": [
+      "lalsimulation >=2.5.0",
+      "python-lalsimulation >=2.5.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/liblalsimulation${SHLIB_EXT}",
+      "pkg-config --print-errors --exact-version \"${PKG_VERSION}\" lalsimulation"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "The LSC Algorithm Simulation Library for gravitational wave data analysis.\nThis package contains the Python bindings of the LALSimulation C libraries\nand additional Python modules.\n\nNote: this package only provides the importable Python libraries.\nAll command-line interfaces, scripts, and executables are\npart of the `lalsimulation` package.\n",
+     "dev_url": "https://git.ligo.org/lscsoft/lalsuite/",
+     "doc_url": "https://lscsoft.docs.ligo.org/lalsuite/lalsimulation/",
+     "home": "https://wiki.ligo.org/Computing/LALSuite",
+     "license": "GPL-2.0-or-later",
+     "license_family": "GPL",
+     "license_file": "COPYING",
+     "summary": "LSC Algorithm Simulation Library"
+    },
+    "build": {
+     "ignore_run_exports": [
+      "liblalsimulation",
+      "numpy",
+      "python"
+     ]
+    },
+    "files": [
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation/",
+     "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/lib/python3.9/site-packages/lalsimulation-*/"
     ],
     "name": "python-lalsimulation",
     "requirements": {
@@ -9513,10 +9513,10 @@
  "parsing_error": false,
  "platforms": [
   "linux_aarch64",
-  "linux_64",
-  "osx_64",
+  "linux_ppc64le",
   "osx_arm64",
-  "linux_ppc64le"
+  "osx_64",
+  "linux_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/lalsimulation.json"
