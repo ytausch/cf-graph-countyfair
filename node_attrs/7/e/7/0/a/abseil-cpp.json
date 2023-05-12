@@ -22,7 +22,7 @@
    "summary": "Abseil Common Libraries (C++)"
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "abseil-cpp",
@@ -37,9 +37,9 @@
    {
     "build": {
      "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+      "libabseil =20230125.2=cxx17*"
      ],
-     "string": "cxx17_h1234567_1"
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -50,8 +50,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.sh",
@@ -177,6 +177,8 @@
       "test -f $PREFIX/lib/libabsl_time_zone${SHLIB_EXT}",
       "test ! -f $PREFIX/lib/libabsl_time_zone.a",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
       "cd cmake_test",
       "export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"",
       "cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD=17 .",
@@ -193,11 +195,45 @@
       "pkg-config"
      ]
     }
+   },
+   {
+    "build": {
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": null
+    },
+    "script": "build-abseil.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
    }
   ],
   "package": {
    "name": "abseil-split",
-   "version": "20230125.0"
+   "version": "20230125.2"
   },
   "source": {
    "patches": [
@@ -206,10 +242,14 @@
     "patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch",
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
-    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch"
+    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch"
    ],
-   "sha256": "3ea49a7d97421b88a8c48a0de16c16048e17725c7ec0f1d3ea2683a2a75adc21",
-   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.0.tar.gz"
+   "sha256": "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
+   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.2.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -224,11 +264,17 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "test": {
    "__set__": true,
@@ -252,7 +298,7 @@
    "summary": "Abseil Common Libraries (C++)"
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "abseil-cpp",
@@ -267,9 +313,9 @@
    {
     "build": {
      "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+      "libabseil =20230125.2=cxx17*"
      ],
-     "string": "cxx17_h1234567_1"
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -280,8 +326,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.sh",
@@ -407,6 +453,8 @@
       "test -f $PREFIX/lib/libabsl_time_zone${SHLIB_EXT}",
       "test ! -f $PREFIX/lib/libabsl_time_zone.a",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
       "cd cmake_test",
       "export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"",
       "cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD=17 .",
@@ -423,11 +471,45 @@
       "pkg-config"
      ]
     }
+   },
+   {
+    "build": {
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": null
+    },
+    "script": "build-abseil.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
    }
   ],
   "package": {
    "name": "abseil-split",
-   "version": "20230125.0"
+   "version": "20230125.2"
   },
   "source": {
    "patches": [
@@ -436,10 +518,14 @@
     "patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch",
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
-    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch"
+    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch"
    ],
-   "sha256": "3ea49a7d97421b88a8c48a0de16c16048e17725c7ec0f1d3ea2683a2a75adc21",
-   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.0.tar.gz"
+   "sha256": "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
+   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.2.tar.gz"
   }
  },
  "linux_aarch64_requirements": {
@@ -454,11 +540,17 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "test": {
    "__set__": true,
@@ -482,7 +574,7 @@
    "summary": "Abseil Common Libraries (C++)"
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "abseil-cpp",
@@ -497,9 +589,9 @@
    {
     "build": {
      "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+      "libabseil =20230125.2=cxx17*"
      ],
-     "string": "cxx17_h1234567_1"
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -510,8 +602,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.sh",
@@ -637,6 +729,8 @@
       "test -f $PREFIX/lib/libabsl_time_zone${SHLIB_EXT}",
       "test ! -f $PREFIX/lib/libabsl_time_zone.a",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
       "cd cmake_test",
       "export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"",
       "cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD=17 .",
@@ -653,11 +747,45 @@
       "pkg-config"
      ]
     }
+   },
+   {
+    "build": {
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": null
+    },
+    "script": "build-abseil.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
    }
   ],
   "package": {
    "name": "abseil-split",
-   "version": "20230125.0"
+   "version": "20230125.2"
   },
   "source": {
    "patches": [
@@ -666,10 +794,14 @@
     "patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch",
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
-    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch"
+    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch"
    ],
-   "sha256": "3ea49a7d97421b88a8c48a0de16c16048e17725c7ec0f1d3ea2683a2a75adc21",
-   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.0.tar.gz"
+   "sha256": "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
+   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.2.tar.gz"
   }
  },
  "linux_ppc64le_requirements": {
@@ -684,11 +816,17 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "test": {
    "__set__": true,
@@ -712,7 +850,7 @@
    "summary": "Abseil Common Libraries (C++)"
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "abseil-cpp",
@@ -747,9 +885,9 @@
    {
     "build": {
      "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+      "libabseil =20230125.2=cxx17*"
      ],
-     "string": "cxx17_h1234567_1"
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -760,8 +898,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.sh",
@@ -887,6 +1025,8 @@
       "test -f $PREFIX/lib/libabsl_time_zone${SHLIB_EXT}",
       "test ! -f $PREFIX/lib/libabsl_time_zone.a",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
       "cd cmake_test",
       "export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"",
       "cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD=17 .",
@@ -906,10 +1046,44 @@
    },
    {
     "build": {
-     "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
      ],
-     "string": "cxx17_h1234567_1"
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": null
+    },
+    "script": "build-abseil.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libabseil =20230125.2=cxx17*"
+     ],
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -920,8 +1094,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.sh",
@@ -1047,6 +1221,8 @@
       "test -f $PREFIX/lib/libabsl_time_zone${SHLIB_EXT}",
       "test ! -f $PREFIX/lib/libabsl_time_zone.a",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
       "cd cmake_test",
       "export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"",
       "cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD=17 .",
@@ -1066,10 +1242,44 @@
    },
    {
     "build": {
-     "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
      ],
-     "string": "cxx17_h1234567_1"
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": null
+    },
+    "script": "build-abseil.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libabseil =20230125.2=cxx17*"
+     ],
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -1080,8 +1290,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.sh",
@@ -1207,6 +1417,8 @@
       "test -f $PREFIX/lib/libabsl_time_zone${SHLIB_EXT}",
       "test ! -f $PREFIX/lib/libabsl_time_zone.a",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
       "cd cmake_test",
       "export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"",
       "cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD=17 .",
@@ -1226,10 +1438,44 @@
    },
    {
     "build": {
-     "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
      ],
-     "string": "cxx17_h1234567_1"
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": null
+    },
+    "script": "build-abseil.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libabseil =20230125.2=cxx17*"
+     ],
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -1240,8 +1486,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.sh",
@@ -1367,6 +1613,8 @@
       "test -f $PREFIX/lib/libabsl_time_zone${SHLIB_EXT}",
       "test ! -f $PREFIX/lib/libabsl_time_zone.a",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
       "cd cmake_test",
       "export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"",
       "cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD=17 .",
@@ -1386,10 +1634,46 @@
    },
    {
     "build": {
-     "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
      ],
-     "string": "cxx17_h1234567_1"
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": [
+      "__osx >=10.13"
+     ]
+    },
+    "script": "build-abseil.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libabseil =20230125.2=cxx17*"
+     ],
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -1400,8 +1684,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.sh",
@@ -1527,6 +1811,8 @@
       "test -f $PREFIX/lib/libabsl_time_zone${SHLIB_EXT}",
       "test ! -f $PREFIX/lib/libabsl_time_zone.a",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
       "cd cmake_test",
       "export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"",
       "cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD=17 .",
@@ -1546,10 +1832,44 @@
    },
    {
     "build": {
-     "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
      ],
-     "string": "cxx17_h1234567_1"
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": null
+    },
+    "script": "build-abseil.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libabseil =20230125.2=cxx17*"
+     ],
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -1560,8 +1880,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.bat",
@@ -1569,6 +1889,8 @@
      "commands": [
       "if not exist %LIBRARY_BIN%\\\\abseil_dll.dll exit 1",
       "if not exist %LIBRARY_LIB%\\\\abseil_dll.lib exit 1",
+      "if exist %LIBRARY_BIN%\\\\abseil_test_dll.dll exit 1",
+      "if exist %LIBRARY_LIB%\\\\abseil_test_dll.lib exit 1",
       "if not exist %LIBRARY_LIB%\\\\absl_flags.lib exit 1",
       "pkg-config --print-errors --exact-version \"20230125\" absl_flags",
       "if not exist %LIBRARY_LIB%\\\\absl_flags_commandlineflag.lib exit 1",
@@ -1649,6 +1971,7 @@
       "pkg-config --print-errors --exact-version \"20230125\" absl_time",
       "if exist %LIBRARY_LIB%\\\\absl_time_zone.lib exit 1",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "if exist %LIBRARY_LIB%\\\\absl_scoped_mock_log.lib exit 1",
       "pkg-config --print-errors --exact-version \"20230125\" abseil_dll",
       "cd cmake_test",
       "set \"CMAKE_ARGS=%CMAKE_ARGS% -GNinja -DCMAKE_BUILD_TYPE=Release\"",
@@ -1666,11 +1989,46 @@
       "pkg-config"
      ]
     }
+   },
+   {
+    "build": {
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": null
+    },
+    "script": "build-abseil.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_BIN%\\\\abseil_test_dll.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\\\abseil_test_dll.lib exit 1",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log",
+      "pkg-config --print-errors --exact-version \"20230125\" abseil_test_dll"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
    }
   ],
   "package": {
    "name": "abseil-split",
-   "version": "20230125.0"
+   "version": "20230125.2"
   },
   "source": {
    "patches": [
@@ -1680,40 +2038,64 @@
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
     "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch",
     "patches/0001-patch-out-the-build-issue-on-clang4-osx.patch",
     "patches/0002-fix-for-linking-to-the-CoreFoundation-framework-on-O.patch",
     "patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch",
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
     "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch",
     "patches/0001-patch-out-the-build-issue-on-clang4-osx.patch",
     "patches/0002-fix-for-linking-to-the-CoreFoundation-framework-on-O.patch",
     "patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch",
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
     "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch",
     "patches/0001-patch-out-the-build-issue-on-clang4-osx.patch",
     "patches/0002-fix-for-linking-to-the-CoreFoundation-framework-on-O.patch",
     "patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch",
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
     "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch",
     "patches/0001-patch-out-the-build-issue-on-clang4-osx.patch",
     "patches/0002-fix-for-linking-to-the-CoreFoundation-framework-on-O.patch",
     "patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch",
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
     "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch",
     "patches/0001-patch-out-the-build-issue-on-clang4-osx.patch",
     "patches/0002-fix-for-linking-to-the-CoreFoundation-framework-on-O.patch",
     "patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch",
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
     "patches/0006-default-dll-import-for-windows.patch",
-    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch"
+    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch"
    ],
-   "sha256": "3ea49a7d97421b88a8c48a0de16c16048e17725c7ec0f1d3ea2683a2a75adc21",
-   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.0.tar.gz"
+   "sha256": "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
+   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.2.tar.gz"
   }
  },
  "name": "abseil-split",
@@ -1729,7 +2111,7 @@
    "summary": "Abseil Common Libraries (C++)"
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "abseil-cpp",
@@ -1744,9 +2126,9 @@
    {
     "build": {
      "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+      "libabseil =20230125.2=cxx17*"
      ],
-     "string": "cxx17_h1234567_1"
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -1757,8 +2139,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.sh",
@@ -1884,6 +2266,8 @@
       "test -f $PREFIX/lib/libabsl_time_zone${SHLIB_EXT}",
       "test ! -f $PREFIX/lib/libabsl_time_zone.a",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
       "cd cmake_test",
       "export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"",
       "cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD=17 .",
@@ -1900,11 +2284,47 @@
       "pkg-config"
      ]
     }
+   },
+   {
+    "build": {
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": [
+      "__osx >=10.13"
+     ]
+    },
+    "script": "build-abseil.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
    }
   ],
   "package": {
    "name": "abseil-split",
-   "version": "20230125.0"
+   "version": "20230125.2"
   },
   "source": {
    "patches": [
@@ -1913,10 +2333,14 @@
     "patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch",
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
-    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch"
+    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch"
    ],
-   "sha256": "3ea49a7d97421b88a8c48a0de16c16048e17725c7ec0f1d3ea2683a2a75adc21",
-   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.0.tar.gz"
+   "sha256": "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
+   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.2.tar.gz"
   }
  },
  "osx_64_requirements": {
@@ -1931,11 +2355,17 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "test": {
    "__set__": true,
@@ -1959,7 +2389,7 @@
    "summary": "Abseil Common Libraries (C++)"
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "abseil-cpp",
@@ -1974,9 +2404,9 @@
    {
     "build": {
      "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+      "libabseil =20230125.2=cxx17*"
      ],
-     "string": "cxx17_h1234567_1"
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -1987,8 +2417,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.sh",
@@ -2114,6 +2544,8 @@
       "test -f $PREFIX/lib/libabsl_time_zone${SHLIB_EXT}",
       "test ! -f $PREFIX/lib/libabsl_time_zone.a",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
       "cd cmake_test",
       "export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"",
       "cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD=17 .",
@@ -2130,11 +2562,45 @@
       "pkg-config"
      ]
     }
+   },
+   {
+    "build": {
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": null
+    },
+    "script": "build-abseil.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libabsl_scoped_mock_log${SHLIB_EXT}",
+      "test ! -f $PREFIX/lib/libabsl_scoped_mock_log.a",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
    }
   ],
   "package": {
    "name": "abseil-split",
-   "version": "20230125.0"
+   "version": "20230125.2"
   },
   "source": {
    "patches": [
@@ -2143,10 +2609,14 @@
     "patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch",
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
-    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch"
+    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch"
    ],
-   "sha256": "3ea49a7d97421b88a8c48a0de16c16048e17725c7ec0f1d3ea2683a2a75adc21",
-   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.0.tar.gz"
+   "sha256": "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
+   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.2.tar.gz"
   }
  },
  "osx_arm64_requirements": {
@@ -2161,11 +2631,17 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "test": {
    "__set__": true,
@@ -2180,7 +2656,8 @@
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "libabseil"
+   "libabseil",
+   "libabseil-tests"
   ]
  },
  "parsing_error": false,
@@ -2195,13 +2672,15 @@
  "pr_info": {
   "__lazy_json__": "pr_info/abseil-cpp.json"
  },
- "raw_meta_yaml": "{% set version = \"20230125.0\" %}\n{% set v_major = version.split(\".\")[0] %}\n# needs to match across all dependent packages; using C++20\n# is potentially problematic in some cases, see #45\n{% set cxx_standard = 17 %}\n\n# shared builds for flags_* libraries are not supported on windows, see\n# https://github.com/abseil/abseil-cpp/pull/1115\n{% set absl_libs_always_static_on_win = [\n    \"flags\", \"flags_commandlineflag\", \"flags_config\", \"flags_marshalling\", \"flags_parse\",\n    \"flags_private_handle_accessor\", \"flags_program_name\", \"flags_reflection\", \"flags_usage\"\n] %}\n\n{% set absl_libs = absl_libs_always_static_on_win + [\n    \"base\", \"civil_time\", \"cord\", \"cordz_functions\", \"cordz_handle\", \"cordz_info\",\n    \"cordz_sample_token\", \"examine_stack\", \"exponential_biased\", \"failure_signal_handler\",\n    \"hash\", \"hashtablez_sampler\", \"int128\", \"log_severity\", \"low_level_hash\", \"periodic_sampler\",\n    \"random_distributions\", \"random_seed_gen_exception\", \"random_seed_sequences\", \"raw_hash_set\",\n    \"scoped_set_env\", \"spinlock_wait\", \"stacktrace\", \"status\", \"statusor\", \"strerror\", \"strings\",\n    \"symbolize\", \"synchronization\", \"time\", \"time_zone\"\n] %}\n\npackage:\n  name: abseil-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/abseil/abseil-cpp/archive/refs/tags/{{ version }}.tar.gz\n  sha256: 3ea49a7d97421b88a8c48a0de16c16048e17725c7ec0f1d3ea2683a2a75adc21\n  patches:\n    - patches/0001-patch-out-the-build-issue-on-clang4-osx.patch\n    - patches/0002-fix-for-linking-to-the-CoreFoundation-framework-on-O.patch\n    - patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch\n    - patches/0004-add-missing-osx-workaround.patch\n    # backport of https://github.com/abseil/abseil-cpp/pull/1115\n    - patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch\n    # Helps downstream packages import the dll without an extra define\n    # https://github.com/conda-forge/abseil-cpp-feedstock/issues/43#issuecomment-1242969515\n    - patches/0006-default-dll-import-for-windows.patch  # [win]\n    - patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch\n\nbuild:\n  number: 1\n\noutputs:\n  # default behaviour is shared; however note that upstream does not support\n  # fully shared builds on windows, and some static libs will remain, see above\n  - name: libabseil\n    script: build-abseil.sh   # [unix]\n    script: build-abseil.bat  # [win]\n    build:\n      string: cxx{{ cxx_standard }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}\n      run_exports:\n        - libabseil ={{ version }}=cxx{{ cxx_standard }}*\n\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      run_constrained:\n        - libabseil-static ={{ version }}=cxx{{ cxx_standard }}*\n        # make sure we don't co-install with old version of old package name\n        - abseil-cpp ={{ version }}\n\n    test:\n      requires:\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n        - pkg-config\n      files:\n        - cmake_test/\n      commands:\n        # windows-only (almost-)all-in-one DLL + import library\n        - if not exist %LIBRARY_BIN%\\\\abseil_dll.dll exit 1           # [win]\n        - if not exist %LIBRARY_LIB%\\\\abseil_dll.lib exit 1           # [win]\n\n        # absl_* libraries\n      {% for each_lib in absl_libs %}\n        # presence of shared libs\n        - test -f $PREFIX/lib/libabsl_{{ each_lib }}${SHLIB_EXT}      # [unix]\n        # absence of static libs\n        - test ! -f $PREFIX/lib/libabsl_{{ each_lib }}.a              # [unix]\n\n        # some static libs remain on windows even for shared builds, see above\n        {% if each_lib in absl_libs_always_static_on_win %}\n        - if not exist %LIBRARY_LIB%\\\\absl_{{ each_lib }}.lib exit 1  # [win]\n        {% else %}\n        - if exist %LIBRARY_LIB%\\\\absl_{{ each_lib }}.lib exit 1      # [win]\n        {% endif %}\n\n        # pkg-config (should point to abseil_dll on shared windows builds)\n        - pkg-config --print-errors --exact-version \"{{ v_major }}\" absl_{{ each_lib }}\n      {% endfor %}\n\n        # pkg-config (abseil_dll)\n        - pkg-config --print-errors --exact-version \"{{ v_major }}\" abseil_dll  # [win]\n\n        # CMake integration\n        - cd cmake_test\n        - export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"  # [unix]\n        - set \"CMAKE_ARGS=%CMAKE_ARGS% -GNinja -DCMAKE_BUILD_TYPE=Release\"    # [win]\n        - cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD={{ cxx_standard }} .        # [unix]\n        - cmake %CMAKE_ARGS% -DCMAKE_CXX_STANDARD={{ cxx_standard }} .        # [win]\n        - cmake --build .\n        - ./flags_example    # [unix]\n        - flags_example.exe  # [win]\n\nabout:\n  home: https://github.com/abseil/abseil-cpp\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Abseil Common Libraries (C++)\n  description: |\n    Abseil is an open-source collection of C++ code (compliant to C++11)\n    designed to augment the C++ standard library.\n  doc_url: https://github.com/abseil/abseil-cpp\n  dev_url: https://github.com/abseil/abseil-cpp\n\nextra:\n  recipe-maintainers:\n    - njzjz\n    - bluescarni\n    - xhochy\n    - h-vetinari\n  feedstock-name: abseil-cpp\n",
+ "raw_meta_yaml": "{% set version = \"20230125.2\" %}\n{% set v_major = version.split(\".\")[0] %}\n# needs to match across all dependent packages; using C++20\n# is potentially problematic in some cases, see #45\n{% set cxx_standard = 17 %}\n\n# shared builds for flags_* libraries are not supported on windows, see\n# https://github.com/abseil/abseil-cpp/pull/1115\n{% set absl_libs_always_static_on_win = [\n    \"flags\", \"flags_commandlineflag\", \"flags_config\", \"flags_marshalling\", \"flags_parse\",\n    \"flags_private_handle_accessor\", \"flags_program_name\", \"flags_reflection\", \"flags_usage\"\n] %}\n\n{% set absl_libs = absl_libs_always_static_on_win + [\n    \"base\", \"civil_time\", \"cord\", \"cordz_functions\", \"cordz_handle\", \"cordz_info\",\n    \"cordz_sample_token\", \"examine_stack\", \"exponential_biased\", \"failure_signal_handler\",\n    \"hash\", \"hashtablez_sampler\", \"int128\", \"log_severity\", \"low_level_hash\", \"periodic_sampler\",\n    \"random_distributions\", \"random_seed_gen_exception\", \"random_seed_sequences\", \"raw_hash_set\",\n    \"scoped_set_env\", \"spinlock_wait\", \"stacktrace\", \"status\", \"statusor\", \"strerror\", \"strings\",\n    \"symbolize\", \"synchronization\", \"time\", \"time_zone\"\n] %}\n# test helper targets (but used e.g. by protobuf)\n{% set absl_test_libs = [\"scoped_mock_log\"] %}\n\npackage:\n  name: abseil-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/abseil/abseil-cpp/archive/refs/tags/{{ version }}.tar.gz\n  sha256: 9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906\n  patches:\n    - patches/0001-patch-out-the-build-issue-on-clang4-osx.patch\n    - patches/0002-fix-for-linking-to-the-CoreFoundation-framework-on-O.patch\n    - patches/0003-remove-ignore-4221-from-ABSL_MSVC_LINKOPTS.patch\n    - patches/0004-add-missing-osx-workaround.patch\n    # backport of https://github.com/abseil/abseil-cpp/pull/1115\n    - patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch\n    # Helps downstream packages import the dll without an extra define\n    # https://github.com/conda-forge/abseil-cpp-feedstock/issues/43#issuecomment-1242969515\n    - patches/0006-default-dll-import-for-windows.patch  # [win]\n    - patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch\n    # backport https://github.com/abseil/abseil-cpp/commit/807763a7f57dcf0ba4af7c3b218013e8f525e811\n    # to be able to install TESTONLY libraries\n    - patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch\n    # backport abseil/abseil-cpp#1445 for shared builds including test targets on win\n    - patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch\n    - patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch\n    - patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch\n\nbuild:\n  number: 0\n\noutputs:\n  # default behaviour is shared; however note that upstream does not support\n  # fully shared builds on windows, and some static libs will remain, see above\n  - name: libabseil\n    script: build-abseil.sh   # [unix]\n    script: build-abseil.bat  # [win]\n    build:\n      string: cxx{{ cxx_standard }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}\n      run_exports:\n        - libabseil ={{ version }}=cxx{{ cxx_standard }}*\n\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      run_constrained:\n        - libabseil-static ={{ version }}=cxx{{ cxx_standard }}*\n        # make sure we don't co-install with old version of old package name\n        - abseil-cpp ={{ version }}\n\n    test:\n      requires:\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n        - pkg-config\n      files:\n        - cmake_test/\n      commands:\n        # windows-only (almost-)all-in-one DLL + import library\n        - if not exist %LIBRARY_BIN%\\\\abseil_dll.dll exit 1           # [win]\n        - if not exist %LIBRARY_LIB%\\\\abseil_dll.lib exit 1           # [win]\n        # absence of test targets in regular abseil output\n        - if exist %LIBRARY_BIN%\\\\abseil_test_dll.dll exit 1          # [win]\n        - if exist %LIBRARY_LIB%\\\\abseil_test_dll.lib exit 1          # [win]\n\n        # absl_* libraries\n      {% for each_lib in absl_libs %}\n        # presence of shared libs\n        - test -f $PREFIX/lib/libabsl_{{ each_lib }}${SHLIB_EXT}      # [unix]\n        # absence of static libs\n        - test ! -f $PREFIX/lib/libabsl_{{ each_lib }}.a              # [unix]\n\n        # some static libs remain on windows even for shared builds, see above\n        {% if each_lib in absl_libs_always_static_on_win %}\n        - if not exist %LIBRARY_LIB%\\\\absl_{{ each_lib }}.lib exit 1  # [win]\n        {% else %}\n        - if exist %LIBRARY_LIB%\\\\absl_{{ each_lib }}.lib exit 1      # [win]\n        {% endif %}\n\n        # pkg-config (should point to abseil_dll on shared windows builds)\n        - pkg-config --print-errors --exact-version \"{{ v_major }}\" absl_{{ each_lib }}\n      {% endfor %}\n\n        # absence of test targets in regular abseil output\n      {% for each_lib in absl_test_libs %}\n        # absence of all libs\n        - test ! -f $PREFIX/lib/libabsl_{{ each_lib }}${SHLIB_EXT}    # [unix]\n        - test ! -f $PREFIX/lib/libabsl_{{ each_lib }}.a              # [unix]\n        - if exist %LIBRARY_LIB%\\\\absl_{{ each_lib }}.lib exit 1      # [win]\n      {% endfor %}\n\n        # pkg-config (abseil_dll)\n        - pkg-config --print-errors --exact-version \"{{ v_major }}\" abseil_dll  # [win]\n\n        # CMake integration\n        - cd cmake_test\n        - export CMAKE_ARGS=\"$CMAKE_ARGS -GNinja -DCMAKE_BUILD_TYPE=Release\"  # [unix]\n        - set \"CMAKE_ARGS=%CMAKE_ARGS% -GNinja -DCMAKE_BUILD_TYPE=Release\"    # [win]\n        - cmake $CMAKE_ARGS  -DCMAKE_CXX_STANDARD={{ cxx_standard }} .        # [unix]\n        - cmake %CMAKE_ARGS% -DCMAKE_CXX_STANDARD={{ cxx_standard }} .        # [win]\n        - cmake --build .\n        - ./flags_example    # [unix]\n        - flags_example.exe  # [win]\n\n  # tests & test-helpers\n  - name: libabseil-tests\n    script: build-abseil.sh   # [unix]\n    script: build-abseil.bat  # [win]\n    build:\n      string: cxx{{ cxx_standard }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}\n\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      host:\n        - gtest\n        - {{ pin_subpackage(\"libabseil\", exact=True) }}\n      run:\n        - gtest\n        - {{ pin_subpackage(\"libabseil\", exact=True) }}\n      run_constrained:\n        # only for libabseil-tests, see build-abseil.sh\n        - __osx >=10.13  # [osx and x86_64]\n\n    test:\n      requires:\n        - pkg-config\n      commands:\n        # windows-only (almost-)all-in-one DLL + import library\n        - if not exist %LIBRARY_BIN%\\\\abseil_test_dll.dll exit 1      # [win]\n        - if not exist %LIBRARY_LIB%\\\\abseil_test_dll.lib exit 1      # [win]\n\n        # absl_* libraries\n      {% for each_lib in absl_test_libs %}\n        # presence of shared libs\n        - test -f $PREFIX/lib/libabsl_{{ each_lib }}${SHLIB_EXT}      # [unix]\n        # absence of static libs\n        - test ! -f $PREFIX/lib/libabsl_{{ each_lib }}.a              # [unix]\n\n        # pkg-config (should point to abseil_test_dll on shared windows builds)\n        - pkg-config --print-errors --exact-version \"{{ v_major }}\" absl_{{ each_lib }}\n      {% endfor %}\n\n        # pkg-config abseil_test_dll\n        - pkg-config --print-errors --exact-version \"{{ v_major }}\" abseil_test_dll  # [win]\n\nabout:\n  home: https://github.com/abseil/abseil-cpp\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Abseil Common Libraries (C++)\n  description: |\n    Abseil is an open-source collection of C++ code (compliant to C++11)\n    designed to augment the C++ standard library.\n  doc_url: https://github.com/abseil/abseil-cpp\n  dev_url: https://github.com/abseil/abseil-cpp\n\nextra:\n  recipe-maintainers:\n    - njzjz\n    - bluescarni\n    - xhochy\n    - h-vetinari\n  feedstock-name: abseil-cpp\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
    "cmake",
    "cxx_compiler_stub",
+   "gtest",
+   "libabseil",
    "ninja"
   ]
  },
@@ -2219,14 +2698,18 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "gtest",
+    "libabseil"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "gtest",
+    "libabseil"
    ]
   },
   "test": {
@@ -2252,11 +2735,17 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "test": {
    "__set__": true,
@@ -2268,8 +2757,8 @@
    ]
   }
  },
- "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.0.tar.gz",
- "version": "20230125.0",
+ "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.2.tar.gz",
+ "version": "20230125.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/abseil-cpp.json"
  },
@@ -2285,7 +2774,7 @@
    "summary": "Abseil Common Libraries (C++)"
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "abseil-cpp",
@@ -2300,9 +2789,9 @@
    {
     "build": {
      "run_exports": [
-      "libabseil =20230125.0=cxx17*"
+      "libabseil =20230125.2=cxx17*"
      ],
-     "string": "cxx17_h1234567_1"
+     "string": "cxx17_h1234567_0"
     },
     "name": "libabseil",
     "requirements": {
@@ -2313,8 +2802,8 @@
       "ninja"
      ],
      "run_constrained": [
-      "libabseil-static =20230125.0=cxx17*",
-      "abseil-cpp =20230125.0"
+      "libabseil-static =20230125.2=cxx17*",
+      "abseil-cpp =20230125.2"
      ]
     },
     "script": "build-abseil.bat",
@@ -2322,6 +2811,8 @@
      "commands": [
       "if not exist %LIBRARY_BIN%\\\\abseil_dll.dll exit 1",
       "if not exist %LIBRARY_LIB%\\\\abseil_dll.lib exit 1",
+      "if exist %LIBRARY_BIN%\\\\abseil_test_dll.dll exit 1",
+      "if exist %LIBRARY_LIB%\\\\abseil_test_dll.lib exit 1",
       "if not exist %LIBRARY_LIB%\\\\absl_flags.lib exit 1",
       "pkg-config --print-errors --exact-version \"20230125\" absl_flags",
       "if not exist %LIBRARY_LIB%\\\\absl_flags_commandlineflag.lib exit 1",
@@ -2402,6 +2893,7 @@
       "pkg-config --print-errors --exact-version \"20230125\" absl_time",
       "if exist %LIBRARY_LIB%\\\\absl_time_zone.lib exit 1",
       "pkg-config --print-errors --exact-version \"20230125\" absl_time_zone",
+      "if exist %LIBRARY_LIB%\\\\absl_scoped_mock_log.lib exit 1",
       "pkg-config --print-errors --exact-version \"20230125\" abseil_dll",
       "cd cmake_test",
       "set \"CMAKE_ARGS=%CMAKE_ARGS% -GNinja -DCMAKE_BUILD_TYPE=Release\"",
@@ -2419,11 +2911,46 @@
       "pkg-config"
      ]
     }
+   },
+   {
+    "build": {
+     "string": "cxx17_h1234567_0"
+    },
+    "name": "libabseil-tests",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "gtest",
+      "libabseil"
+     ],
+     "run": [
+      "gtest",
+      "libabseil"
+     ],
+     "run_constrained": null
+    },
+    "script": "build-abseil.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_BIN%\\\\abseil_test_dll.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\\\abseil_test_dll.lib exit 1",
+      "pkg-config --print-errors --exact-version \"20230125\" absl_scoped_mock_log",
+      "pkg-config --print-errors --exact-version \"20230125\" abseil_test_dll"
+     ],
+     "requires": [
+      "pkg-config"
+     ]
+    }
    }
   ],
   "package": {
    "name": "abseil-split",
-   "version": "20230125.0"
+   "version": "20230125.2"
   },
   "source": {
    "patches": [
@@ -2433,10 +2960,14 @@
     "patches/0004-add-missing-osx-workaround.patch",
     "patches/0005-fix-some-missing-ABSL_INTERNAL_DLL_TARGETS-for-share.patch",
     "patches/0006-default-dll-import-for-windows.patch",
-    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch"
+    "patches/0007-Fix-ABSL_PROPAGATE_CXX_STD-cmake-option.patch",
+    "patches/0008-CMake-Install-TESTONLY-libraries-and-their-dependenc.patch",
+    "patches/0009-add-some-necessary-source-files-to-ABSL_INTERNAL_TES.patch",
+    "patches/0010-update-ABSL_CC_TEST_LINKOPTS-when-using-shared-build.patch",
+    "patches/0011-make-CordzHandle-and-relevant-internal-state-use-ABS.patch"
    ],
-   "sha256": "3ea49a7d97421b88a8c48a0de16c16048e17725c7ec0f1d3ea2683a2a75adc21",
-   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.0.tar.gz"
+   "sha256": "9a2b5752d7bfade0bdeee2701de17c9480620f8b237e1964c1b9967c75374906",
+   "url": "https://github.com/abseil/abseil-cpp/archive/refs/tags/20230125.2.tar.gz"
   }
  },
  "win_64_requirements": {
@@ -2451,11 +2982,17 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "gtest",
+    "libabseil"
+   ]
   },
   "test": {
    "__set__": true,
