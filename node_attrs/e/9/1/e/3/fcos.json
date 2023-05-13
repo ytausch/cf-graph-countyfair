@@ -16,7 +16,7 @@
    "summary": "FCOS is a detector for efficiently predicting objects in images"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -78,6 +78,7 @@
     "python",
     "torchvision",
     "yacs",
+    "setuptools",
     "acrv_datasets",
     "numpy",
     "py-opencv",
@@ -85,13 +86,15 @@
     "python",
     "torchvision",
     "yacs",
+    "setuptools",
     "acrv_datasets",
     "numpy",
     "py-opencv",
     "pycocotools",
     "python",
     "torchvision",
-    "yacs"
+    "yacs",
+    "setuptools"
    ],
    "run_constrained": [
     "pytorch *=cuda*",
@@ -144,6 +147,7 @@
     "py-opencv",
     "pycocotools",
     "python",
+    "setuptools",
     "torchvision",
     "yacs"
    ]
@@ -165,7 +169,7 @@
    "summary": "FCOS is a detector for efficiently predicting objects in images"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -227,6 +231,7 @@
     "python",
     "torchvision",
     "yacs",
+    "setuptools",
     "acrv_datasets",
     "numpy",
     "py-opencv",
@@ -234,13 +239,15 @@
     "python",
     "torchvision",
     "yacs",
+    "setuptools",
     "acrv_datasets",
     "numpy",
     "py-opencv",
     "pycocotools",
     "python",
     "torchvision",
-    "yacs"
+    "yacs",
+    "setuptools"
    ],
    "run_constrained": [
     "pytorch *=cuda*",
@@ -279,7 +286,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/fcos.json"
  },
- "raw_meta_yaml": "{% set version = \"0.9.8\" %}\n\npackage:\n  name: fcos\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/f/fcos/fcos-{{ version }}.tar.gz\n  sha256: 1fe061baf2efcd77f78ac7ce8731deace99d6dad5a592387b2b8dab930a95d3a\n  patches:\n    - patches/0001-fix-renamed-import-from-torch.hub.patch\n\nbuild:\n  number: 2\n  skip: true  # [not linux]\n  # as of pytorch 1.13, conda-forge only builds for CUDA 11.2+, see\n  # https://github.com/conda-forge/conda-forge-pinning-feedstock/issues/3491\n  skip: true  # [cuda_compiler_version != \"11.2\"]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - sysroot_linux-64 ==2.17\n    - ninja\n  host:\n    - pip\n    - python\n    - pytorch\n    - pytorch *=cuda*\n    - numpy\n    - ninja\n  run:\n    - acrv_datasets\n    - {{ pin_compatible('numpy') }}\n    - py-opencv\n    - pycocotools\n    - python\n    - torchvision\n    - yacs\n  run_constrained:\n    - pytorch *=cuda*\n\ntest:\n  imports:\n    - fcos\n\nabout:\n  home: https://github.com/best-of-acrv/fcos\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.txt\n  summary: FCOS is a detector for efficiently predicting objects in images\n  description: |\n    Fully convolutional one-stage object detection (FCOS) is a framework for\n    per-pixel prediction of objects in images. FCOS doesn't rely on expensive\n    anchor box calculations and their hyper-parameters, which is in contrast to\n    state-of-the-art object detectors like RetinaNet, YOLOv3, and Faster R-CNN.\n    It includes a Python API, & scripts for command line usage.\n  doc_url: https://github.com/best-of-acrv/fcos\n  dev_url: https://github.com/best-of-acrv/fcos\n\nextra:\n  recipe-maintainers:\n    - btalb\n    - mikemhenry\n    - h-vetinari\n",
+ "raw_meta_yaml": "{% set version = \"0.9.8\" %}\n\npackage:\n  name: fcos\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/f/fcos/fcos-{{ version }}.tar.gz\n  sha256: 1fe061baf2efcd77f78ac7ce8731deace99d6dad5a592387b2b8dab930a95d3a\n  patches:\n    - patches/0001-fix-renamed-import-from-torch.hub.patch\n\nbuild:\n  number: 3\n  skip: true  # [not linux]\n  # as of pytorch 1.13, conda-forge only builds for CUDA 11.2+, see\n  # https://github.com/conda-forge/conda-forge-pinning-feedstock/issues/3491\n  skip: true  # [cuda_compiler_version != \"11.2\"]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - sysroot_linux-64 ==2.17\n    - ninja\n  host:\n    - pip\n    - python\n    - pytorch\n    - pytorch *=cuda*\n    - numpy\n    - ninja\n  run:\n    - acrv_datasets\n    - {{ pin_compatible('numpy') }}\n    - py-opencv\n    - pycocotools\n    - python\n    - torchvision\n    - yacs\n    # actually a run-dep of acrv_datasets\n    - setuptools\n  run_constrained:\n    - pytorch *=cuda*\n\ntest:\n  imports:\n    - fcos\n\nabout:\n  home: https://github.com/best-of-acrv/fcos\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.txt\n  summary: FCOS is a detector for efficiently predicting objects in images\n  description: |\n    Fully convolutional one-stage object detection (FCOS) is a framework for\n    per-pixel prediction of objects in images. FCOS doesn't rely on expensive\n    anchor box calculations and their hyper-parameters, which is in contrast to\n    state-of-the-art object detectors like RetinaNet, YOLOv3, and Faster R-CNN.\n    It includes a Python API, & scripts for command line usage.\n  doc_url: https://github.com/best-of-acrv/fcos\n  dev_url: https://github.com/best-of-acrv/fcos\n\nextra:\n  recipe-maintainers:\n    - btalb\n    - mikemhenry\n    - h-vetinari\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -293,6 +300,7 @@
    "pycocotools",
    "python",
    "pytorch",
+   "setuptools",
    "sysroot_linux-64",
    "torchvision",
    "yacs"
@@ -330,6 +338,7 @@
     "py-opencv",
     "pycocotools",
     "python",
+    "setuptools",
     "torchvision",
     "yacs"
    ]
@@ -369,6 +378,7 @@
     "py-opencv",
     "pycocotools",
     "python",
+    "setuptools",
     "torchvision",
     "yacs"
    ]
