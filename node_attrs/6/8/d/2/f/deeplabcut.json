@@ -16,7 +16,7 @@
   "build": {
    "entry_points": [
     "dlc = deeplabcut.cli:main",
-    "deeplabcut = deeplabcut:launch_dlc"
+    "deeplabcut = deeplabcut.gui.launch_script:launch_dlc"
    ],
    "noarch": "python",
    "number": "0",
@@ -29,7 +29,7 @@
   },
   "package": {
    "name": "deeplabcut",
-   "version": "2.2.3"
+   "version": "2.3.4"
   },
   "requirements": {
    "host": [
@@ -38,6 +38,7 @@
    ],
    "run": [
     "python >=3.8",
+    "dlclibrary",
     "filterpy >=1.4.4",
     "ruamel.yaml >=0.15.0",
     "imgaug >=0.4.0",
@@ -52,22 +53,30 @@
     "scipy >=1.4",
     "statsmodels >=0.11",
     "pytables >=3.7.0",
-    "tensorflow >=2.0",
     "tensorpack >=0.11",
     "tf_slim >=1.1.0",
     "tqdm",
     "pyyaml",
-    "pillow >=7.1"
+    "pillow >=7.1",
+    "imageio-ffmpeg"
    ]
   },
   "source": {
    "patches": [
     "patches/0001-Do-not-install-download-script.patch",
-    "patches/0002-Silence-warnigns-about-tensorflow-lite.patch",
-    "patches/0003-Do-not-modify-tensorflow-warnings.patch"
+    "patches/0002-Silence-warnings-about-DLC-lite-mode.patch",
+    "patches/0003-Do-not-modify-tensorflow-warnings.patch",
+    "patches/0004-Silence-warnings-about-missing-pytorch.patch",
+    "patches/0005-Use-qtpy-instead-of-PySide6.patch",
+    "patches/0006-Remove-hard-dependency-on-torch.patch",
+    "patches/0007-Lazy-Import-pyqt-and-default-to-PySide6.patch",
+    "patches/0008-Use-QFrame.Shpe.StyledPanel-instead-of-QFrame.Styled.patch",
+    "patches/0009-Use-QRegularExpression.patch",
+    "patches/0010-Use-native-dialogs-when-selecting-videos.patch",
+    "patches/0011-add-outputs-for-multi-animal-model-export.patch"
    ],
-   "sha256": "13c1df41c24015a302425cde4b0d3d9fa97fc0fe7e0b45efc82ae66398b29cbf",
-   "url": "https://pypi.io/packages/source/d/deeplabcut/deeplabcut-2.2.3.tar.gz"
+   "sha256": "166f0cfd81a76fdcf3e880b6e862de3b3e7961d4f5fef5f3d9cbad180e9f7dae",
+   "url": "https://pypi.io/packages/source/d/deeplabcut/deeplabcut-2.3.4.tar.gz"
   },
   "test": {
    "commands": [
@@ -96,7 +105,9 @@
   "run": {
    "__set__": true,
    "elements": [
+    "dlclibrary",
     "filterpy",
+    "imageio-ffmpeg",
     "imgaug",
     "matplotlib-base",
     "networkx",
@@ -113,7 +124,6 @@
     "scikit-learn",
     "scipy",
     "statsmodels",
-    "tensorflow",
     "tensorpack",
     "tf_slim",
     "tqdm"
@@ -138,7 +148,7 @@
   "build": {
    "entry_points": [
     "dlc = deeplabcut.cli:main",
-    "deeplabcut = deeplabcut:launch_dlc"
+    "deeplabcut = deeplabcut.gui.launch_script:launch_dlc"
    ],
    "noarch": "python",
    "number": "0",
@@ -151,7 +161,7 @@
   },
   "package": {
    "name": "deeplabcut",
-   "version": "2.2.3"
+   "version": "2.3.4"
   },
   "requirements": {
    "host": [
@@ -160,6 +170,7 @@
    ],
    "run": [
     "python >=3.8",
+    "dlclibrary",
     "filterpy >=1.4.4",
     "ruamel.yaml >=0.15.0",
     "imgaug >=0.4.0",
@@ -174,22 +185,30 @@
     "scipy >=1.4",
     "statsmodels >=0.11",
     "pytables >=3.7.0",
-    "tensorflow >=2.0",
     "tensorpack >=0.11",
     "tf_slim >=1.1.0",
     "tqdm",
     "pyyaml",
-    "pillow >=7.1"
+    "pillow >=7.1",
+    "imageio-ffmpeg"
    ]
   },
   "source": {
    "patches": [
     "patches/0001-Do-not-install-download-script.patch",
-    "patches/0002-Silence-warnigns-about-tensorflow-lite.patch",
-    "patches/0003-Do-not-modify-tensorflow-warnings.patch"
+    "patches/0002-Silence-warnings-about-DLC-lite-mode.patch",
+    "patches/0003-Do-not-modify-tensorflow-warnings.patch",
+    "patches/0004-Silence-warnings-about-missing-pytorch.patch",
+    "patches/0005-Use-qtpy-instead-of-PySide6.patch",
+    "patches/0006-Remove-hard-dependency-on-torch.patch",
+    "patches/0007-Lazy-Import-pyqt-and-default-to-PySide6.patch",
+    "patches/0008-Use-QFrame.Shpe.StyledPanel-instead-of-QFrame.Styled.patch",
+    "patches/0009-Use-QRegularExpression.patch",
+    "patches/0010-Use-native-dialogs-when-selecting-videos.patch",
+    "patches/0011-add-outputs-for-multi-animal-model-export.patch"
    ],
-   "sha256": "13c1df41c24015a302425cde4b0d3d9fa97fc0fe7e0b45efc82ae66398b29cbf",
-   "url": "https://pypi.io/packages/source/d/deeplabcut/deeplabcut-2.2.3.tar.gz"
+   "sha256": "166f0cfd81a76fdcf3e880b6e862de3b3e7961d4f5fef5f3d9cbad180e9f7dae",
+   "url": "https://pypi.io/packages/source/d/deeplabcut/deeplabcut-2.3.4.tar.gz"
   },
   "test": {
    "commands": [
@@ -217,11 +236,13 @@
  "pr_info": {
   "__lazy_json__": "pr_info/deeplabcut.json"
  },
- "raw_meta_yaml": "{% set version = \"2.2.3\" %}\n\npackage:\n  name: deeplabcut\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/d/deeplabcut/deeplabcut-{{ version }}.tar.gz\n  sha256: 13c1df41c24015a302425cde4b0d3d9fa97fc0fe7e0b45efc82ae66398b29cbf\n  patches:\n    - patches/0001-Do-not-install-download-script.patch\n    - patches/0002-Silence-warnigns-about-tensorflow-lite.patch\n    - patches/0003-Do-not-modify-tensorflow-warnings.patch\n\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps\n  # Confirm with upstream before making this entry point\n  # https://github.com/DeepLabCut/DeepLabCut/pull/1547\n  entry_points:\n    - dlc = deeplabcut.cli:main\n    - deeplabcut = deeplabcut:launch_dlc\n\nrequirements:\n  host:\n    - python >=3.8\n    - pip\n  run:\n    - python >=3.8\n    - filterpy >=1.4.4\n    - ruamel.yaml >=0.15.0\n    - imgaug >=0.4.0\n    - numba >=0.54\n    - matplotlib-base >=3.3\n    - networkx >=2.6\n    - numpy >=1.18.5\n    - opencv\n    - pandas >=1.0.1,!=1.5.0\n    - scikit-image >=0.17\n    - scikit-learn >=1.0\n    - scipy >=1.4\n    - statsmodels >=0.11\n    - pytables >=3.7.0\n    - tensorflow >=2.0\n    - tensorpack >=0.11\n    - tf_slim >=1.1.0\n    - tqdm\n    - pyyaml\n    - pillow >=7.1\n\ntest:\n  requires:\n    - pip\n  commands:\n    - pip check\n  imports:\n    - deeplabcut\n  # Confirm with upstream before making this entry point\n  # https://github.com/DeepLabCut/DeepLabCut/pull/1547\n  # commands:\n  #   - dlc --help\n\nabout:\n  home: www.deeplabcut.org\n  license: LGPL-3.0-only\n  license_family: LGPL\n  license_file: LICENSE\n  summary: DeepLabCut is a toolbox for markerless pose estimation of animals performing various tasks.\n  dev_url: https://github.com/DeepLabCut/DeepLabCut\n\nextra:\n  recipe-maintainers:\n    - hmaarrfk\n",
+ "raw_meta_yaml": "{% set version = \"2.3.4\" %}\n\npackage:\n  name: deeplabcut\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/d/deeplabcut/deeplabcut-{{ version }}.tar.gz\n  sha256: 166f0cfd81a76fdcf3e880b6e862de3b3e7961d4f5fef5f3d9cbad180e9f7dae\n  patches:\n    - patches/0001-Do-not-install-download-script.patch\n    - patches/0002-Silence-warnings-about-DLC-lite-mode.patch\n    - patches/0003-Do-not-modify-tensorflow-warnings.patch\n    - patches/0004-Silence-warnings-about-missing-pytorch.patch\n    - patches/0005-Use-qtpy-instead-of-PySide6.patch\n    - patches/0006-Remove-hard-dependency-on-torch.patch\n    - patches/0007-Lazy-Import-pyqt-and-default-to-PySide6.patch\n    # https://github.com/DeepLabCut/DeepLabCut/pull/2243\n    - patches/0008-Use-QFrame.Shpe.StyledPanel-instead-of-QFrame.Styled.patch\n    # https://github.com/DeepLabCut/DeepLabCut/pull/2244\n    - patches/0009-Use-QRegularExpression.patch\n    # https://github.com/DeepLabCut/DeepLabCut/issues/2245\n    - patches/0010-Use-native-dialogs-when-selecting-videos.patch\n    - patches/0011-add-outputs-for-multi-animal-model-export.patch\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps\n  # Confirm with upstream before making this entry point\n  # https://github.com/DeepLabCut/DeepLabCut/pull/1547\n  entry_points:\n    - dlc = deeplabcut.cli:main\n    - deeplabcut = deeplabcut.gui.launch_script:launch_dlc\n\nrequirements:\n  host:\n    - python >=3.8\n    - pip\n  run:\n    - python >=3.8\n    - dlclibrary\n    - filterpy >=1.4.4\n    - ruamel.yaml >=0.15.0\n    - imgaug >=0.4.0\n    - numba >=0.54\n    - matplotlib-base >=3.3\n    - networkx >=2.6\n    - numpy >=1.18.5\n    - opencv\n    - pandas >=1.0.1,!=1.5.0\n    - scikit-image >=0.17\n    - scikit-learn >=1.0\n    - scipy >=1.4\n    - statsmodels >=0.11\n    - pytables >=3.7.0\n    - tensorpack >=0.11\n    - tf_slim >=1.1.0\n    - tqdm\n    - pyyaml\n    - pillow >=7.1\n    - imageio-ffmpeg\n\ntest:\n  requires:\n    - pip\n  commands:\n    - pip check\n  imports:\n    - deeplabcut\n  # Confirm with upstream before making this entry point\n  # https://github.com/DeepLabCut/DeepLabCut/pull/1547\n  # commands:\n  #   - dlc --help\n\nabout:\n  home: www.deeplabcut.org\n  license: LGPL-3.0-only\n  license_family: LGPL\n  license_file: LICENSE\n  summary: DeepLabCut is a toolbox for markerless pose estimation of animals performing various tasks.\n  dev_url: https://github.com/DeepLabCut/DeepLabCut\n\nextra:\n  recipe-maintainers:\n    - hmaarrfk\n",
  "req": {
   "__set__": true,
   "elements": [
+   "dlclibrary",
    "filterpy",
+   "imageio-ffmpeg",
    "imgaug",
    "matplotlib-base",
    "networkx",
@@ -239,7 +260,6 @@
    "scikit-learn",
    "scipy",
    "statsmodels",
-   "tensorflow",
    "tensorpack",
    "tf_slim",
    "tqdm"
@@ -260,7 +280,9 @@
   "run": {
    "__set__": true,
    "elements": [
+    "dlclibrary",
     "filterpy",
+    "imageio-ffmpeg",
     "imgaug",
     "matplotlib-base",
     "networkx",
@@ -277,7 +299,6 @@
     "scikit-learn",
     "scipy",
     "statsmodels",
-    "tensorflow",
     "tensorpack",
     "tf_slim",
     "tqdm"
@@ -306,7 +327,9 @@
   "run": {
    "__set__": true,
    "elements": [
+    "dlclibrary",
     "filterpy >=1.4.4",
+    "imageio-ffmpeg",
     "imgaug >=0.4.0",
     "matplotlib-base >=3.3",
     "networkx >=2.6",
@@ -323,7 +346,6 @@
     "scikit-learn >=1.0",
     "scipy >=1.4",
     "statsmodels >=0.11",
-    "tensorflow >=2.0",
     "tensorpack >=0.11",
     "tf_slim >=1.1.0",
     "tqdm"
@@ -336,8 +358,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/d/deeplabcut/deeplabcut-2.2.3.tar.gz",
- "version": "2.2.3",
+ "url": "https://pypi.io/packages/source/d/deeplabcut/deeplabcut-2.3.4.tar.gz",
+ "version": "2.3.4",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/deeplabcut.json"
  }
