@@ -17,8 +17,9 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "0",
+   "number": "1",
    "run_exports": [
+    "mfront",
     "mfront",
     "mfront",
     "mfront"
@@ -26,6 +27,7 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "ldallolio",
     "ldallolio",
     "ldallolio",
     "ldallolio"
@@ -37,6 +39,11 @@
   },
   "requirements": {
    "build": [
+    "gcc 8",
+    "gxx 8",
+    "gfortran 8",
+    "libgomp",
+    "sysroot_linux-64 =2.17",
     "gcc 8",
     "gxx 8",
     "gfortran 8",
@@ -68,9 +75,18 @@
     "make",
     "boost",
     "python",
+    "zlib",
+    "cmake",
+    "make",
+    "boost",
+    "python",
     "zlib"
    ],
    "run": [
+    "python",
+    "boost",
+    "libstdcxx-ng",
+    "libgcc-ng",
     "python",
     "boost",
     "libstdcxx-ng",
@@ -127,9 +143,24 @@
     "test -f $PREFIX/lib/libTFELConfig.so",
     "test -f $PREFIX/lib/libTFELPhysicalConstants.so",
     "test -f $PREFIX/lib/libTFELException.so",
+    "test -f $PREFIX/lib/libTFELUtilities.so",
+    "tfel-config --version",
+    "tfel-doc --version",
+    "tfel-check --version",
+    "mtest --version",
+    "mfront --list-stress-criteria",
+    "mfront-doc --version",
+    "mfront-query --version",
+    "mfm --version",
+    "test -f $PREFIX/lib/libTFELConfig.so",
+    "test -f $PREFIX/lib/libTFELPhysicalConstants.so",
+    "test -f $PREFIX/lib/libTFELException.so",
     "test -f $PREFIX/lib/libTFELUtilities.so"
    ],
    "imports": [
+    "tfel",
+    "tfel.math",
+    "tfel.material",
     "tfel",
     "tfel.math",
     "tfel.material",
@@ -190,8 +221,9 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "0",
+   "number": "1",
    "run_exports": [
+    "mfront",
     "mfront",
     "mfront",
     "mfront"
@@ -199,6 +231,7 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "ldallolio",
     "ldallolio",
     "ldallolio",
     "ldallolio"
@@ -210,6 +243,11 @@
   },
   "requirements": {
    "build": [
+    "gcc 8",
+    "gxx 8",
+    "gfortran 8",
+    "libgomp",
+    "sysroot_linux-64 =2.17",
     "gcc 8",
     "gxx 8",
     "gfortran 8",
@@ -241,9 +279,18 @@
     "make",
     "boost",
     "python",
+    "zlib",
+    "cmake",
+    "make",
+    "boost",
+    "python",
     "zlib"
    ],
    "run": [
+    "python",
+    "boost",
+    "libstdcxx-ng",
+    "libgcc-ng",
     "python",
     "boost",
     "libstdcxx-ng",
@@ -300,9 +347,24 @@
     "test -f $PREFIX/lib/libTFELConfig.so",
     "test -f $PREFIX/lib/libTFELPhysicalConstants.so",
     "test -f $PREFIX/lib/libTFELException.so",
+    "test -f $PREFIX/lib/libTFELUtilities.so",
+    "tfel-config --version",
+    "tfel-doc --version",
+    "tfel-check --version",
+    "mtest --version",
+    "mfront --list-stress-criteria",
+    "mfront-doc --version",
+    "mfront-query --version",
+    "mfm --version",
+    "test -f $PREFIX/lib/libTFELConfig.so",
+    "test -f $PREFIX/lib/libTFELPhysicalConstants.so",
+    "test -f $PREFIX/lib/libTFELException.so",
     "test -f $PREFIX/lib/libTFELUtilities.so"
    ],
    "imports": [
+    "tfel",
+    "tfel.math",
+    "tfel.material",
     "tfel",
     "tfel.math",
     "tfel.material",
@@ -329,7 +391,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/mfront.json"
  },
- "raw_meta_yaml": "{% set name = \"mfront\" %}\n{% set version = \"3.3.2\" %}\n{% set sha256 = \"17127ffdf92367c10041258f70a88ac3dcb0a7d89c1766a6aa1ebaeb4d03d55d\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}_{{ version }}.tar.gz\n  url: https://github.com/thelfer/tfel/archive/refs/tags/TFEL-{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\nbuild:\n  number: 0\n  skip: true  # [py2k or osx or win or (python_impl == 'pypy')]\n  detect_binary_files_with_prefix: true\n  run_exports:\n    - {{ pin_subpackage('mfront', max_pin='x.x.x') }}\n\nrequirements:\n  build:\n    - gcc 8  # [linux]\n    - gxx 8  # [linux]\n    - gfortran 8  # [linux]\n    - libgomp  # [linux]\n    - llvm-openmp  # [osx]    \n    - sysroot_linux-64 =2.17  # [linux64]\n  host:\n    - cmake\n    - make  # [not win]\n    - ninja  # [win]\n    - boost\n    - python\n    - zlib  # [linux]\n  run:\n    - python\n    - {{ pin_compatible('boost', max_pin='x.x') }}\n    - libstdcxx-ng  # [linux]\n    - libgcc-ng  # [linux]\n\ntest:\n  commands:\n    - tfel-config --version\n    - tfel-doc --version\n    - tfel-check --version\n    - mtest --version\n    - mfront --list-stress-criteria\n    - mfront-doc --version\n    - mfront-query --version\n    - mfm --version\n    - test -f $PREFIX/lib/libTFELConfig.so  # [linux]\n    - test -f $PREFIX/lib/libTFELPhysicalConstants.so  # [linux]\n    - test -f $PREFIX/lib/libTFELException.so  # [linux]\n    - test -f $PREFIX/lib/libTFELUtilities.so  # [linux]\n\n  imports:\n    - tfel\n    - tfel.math\n    - tfel.material\n\nabout:\n  home: http://tfel.sourceforge.net\n  license: GPL-3.0-only\n  license_family: GPL\n  license_file: LICENCE-GNU-GPL\n  summary: MFront, a code generation tool dedicated to material knowledge\n  description: |\n    MFront is a code generator which translates a set of closely related domain specific languages into plain C++ on top of the TFEL library. Those languages cover three kinds of material knowledge:\n    material properties (for instance the Young modulus, the thermal conductivity, etc.)\n    mechanical behaviours. Numerical performances of generated mechanical behaviours were given a particular attention. Various benchmarks show that MFront implementations are competitive with native implementations available in the Cast3M, Code-Aster, Abaqus Standard and Cyrano3 solvers.\n    simple point-wise models, such as material swelling used in fuel performance codes.\n  doc_url: http://tfel.sourceforge.net/documentations.html\n  dev_url: http://tfel.sourceforge.net/devel.html\n\nextra:\n  recipe-maintainers:\n    - ldallolio\n",
+ "raw_meta_yaml": "{% set name = \"mfront\" %}\n{% set version = \"3.3.2\" %}\n{% set sha256 = \"17127ffdf92367c10041258f70a88ac3dcb0a7d89c1766a6aa1ebaeb4d03d55d\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}_{{ version }}.tar.gz\n  url: https://github.com/thelfer/tfel/archive/refs/tags/TFEL-{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\nbuild:\n  number: 1\n  skip: true  # [py2k or osx or win or (python_impl == 'pypy')]\n  detect_binary_files_with_prefix: true\n  run_exports:\n    - {{ pin_subpackage('mfront', max_pin='x.x.x') }}\n\nrequirements:\n  build:\n    - gcc 8  # [linux]\n    - gxx 8  # [linux]\n    - gfortran 8  # [linux]\n    - libgomp  # [linux]\n    - llvm-openmp  # [osx]    \n    - sysroot_linux-64 =2.17  # [linux64]\n  host:\n    - cmake\n    - make  # [not win]\n    - ninja  # [win]\n    - boost\n    - python\n    - zlib  # [linux]\n  run:\n    - python\n    - {{ pin_compatible('boost', max_pin='x.x') }}\n    - libstdcxx-ng  # [linux]\n    - libgcc-ng  # [linux]\n\ntest:\n  commands:\n    - tfel-config --version\n    - tfel-doc --version\n    - tfel-check --version\n    - mtest --version\n    - mfront --list-stress-criteria\n    - mfront-doc --version\n    - mfront-query --version\n    - mfm --version\n    - test -f $PREFIX/lib/libTFELConfig.so  # [linux]\n    - test -f $PREFIX/lib/libTFELPhysicalConstants.so  # [linux]\n    - test -f $PREFIX/lib/libTFELException.so  # [linux]\n    - test -f $PREFIX/lib/libTFELUtilities.so  # [linux]\n\n  imports:\n    - tfel\n    - tfel.math\n    - tfel.material\n\nabout:\n  home: http://tfel.sourceforge.net\n  license: GPL-3.0-only\n  license_family: GPL\n  license_file: LICENCE-GNU-GPL\n  summary: MFront, a code generation tool dedicated to material knowledge\n  description: |\n    MFront is a code generator which translates a set of closely related domain specific languages into plain C++ on top of the TFEL library. Those languages cover three kinds of material knowledge:\n    material properties (for instance the Young modulus, the thermal conductivity, etc.)\n    mechanical behaviours. Numerical performances of generated mechanical behaviours were given a particular attention. Various benchmarks show that MFront implementations are competitive with native implementations available in the Cast3M, Code-Aster, Abaqus Standard and Cyrano3 solvers.\n    simple point-wise models, such as material swelling used in fuel performance codes.\n  doc_url: http://tfel.sourceforge.net/documentations.html\n  dev_url: http://tfel.sourceforge.net/devel.html\n\nextra:\n  recipe-maintainers:\n    - ldallolio\n",
  "req": {
   "__set__": true,
   "elements": [
