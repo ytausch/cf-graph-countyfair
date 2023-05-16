@@ -28,7 +28,7 @@
   },
   "package": {
    "name": "pyinfra",
-   "version": "2.6.2"
+   "version": "2.7"
   },
   "requirements": {
    "host": [
@@ -51,20 +51,27 @@
    ]
   },
   "source": {
-   "sha256": "16a91358db837586a10615e853279da11bd7425f1dfed7804903c88ed1b95cb4",
-   "url": "https://pypi.io/packages/source/p/pyinfra/pyinfra-2.6.2.tar.gz"
+   "sha256": "727fc45d0abd8cf3759b93706620ea6eb06f1517f7727210aa7b0d7131eb8914",
+   "url": "https://pypi.io/packages/source/p/pyinfra/pyinfra-2.7.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "pyinfra --help"
+    "pyinfra --help",
+    "rm tests/test_facts.py",
+    "rm tests/test_operations.py",
+    "pytest -vvv --capture=tee-sys -k \"not test_user_op and not test_ansible and not test_get_fact and not deploy\" tests"
    ],
    "imports": [
     "pyinfra",
     "pyinfra_cli"
    ],
    "requires": [
-    "pip"
+    "pip",
+    "pytest"
+   ],
+   "source_files": [
+    "tests"
    ]
   }
  },
@@ -100,7 +107,8 @@
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "pip",
+    "pytest"
    ]
   }
  },
@@ -128,7 +136,7 @@
   },
   "package": {
    "name": "pyinfra",
-   "version": "2.6.2"
+   "version": "2.7"
   },
   "requirements": {
    "host": [
@@ -151,20 +159,27 @@
    ]
   },
   "source": {
-   "sha256": "16a91358db837586a10615e853279da11bd7425f1dfed7804903c88ed1b95cb4",
-   "url": "https://pypi.io/packages/source/p/pyinfra/pyinfra-2.6.2.tar.gz"
+   "sha256": "727fc45d0abd8cf3759b93706620ea6eb06f1517f7727210aa7b0d7131eb8914",
+   "url": "https://pypi.io/packages/source/p/pyinfra/pyinfra-2.7.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "pyinfra --help"
+    "pyinfra --help",
+    "rm tests/test_facts.py",
+    "rm tests/test_operations.py",
+    "pytest -vvv --capture=tee-sys -k \"not test_user_op and not test_ansible and not test_get_fact and not deploy\" tests"
    ],
    "imports": [
     "pyinfra",
     "pyinfra_cli"
    ],
    "requires": [
-    "pip"
+    "pip",
+    "pytest"
+   ],
+   "source_files": [
+    "tests"
    ]
   }
  },
@@ -182,7 +197,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pyinfra.json"
  },
- "raw_meta_yaml": "{% set name = \"pyinfra\" %}\n{% set version = \"2.6.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyinfra-{{ version }}.tar.gz\n  sha256: 16a91358db837586a10615e853279da11bd7425f1dfed7804903c88ed1b95cb4\n\nbuild:\n  noarch: python\n  entry_points:\n    - pyinfra=pyinfra_cli.__main__:execute_pyinfra\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - pip\n    - python >=3.6\n  run:\n    - click >2\n    - colorama <1\n    - configparser\n    - distro >=1.6,<2\n    - gevent >=1.5\n    - graphlib-backport\n    - jinja2 >2,<4\n    - paramiko >=2.7,<3\n    - python >=3.6\n    - python-dateutil >2,<3\n    - pywinrm\n    - setuptools\n\ntest:\n  imports:\n    - pyinfra\n    - pyinfra_cli\n  commands:\n    - pip check\n    - pyinfra --help\n  requires:\n    - pip\n\nabout:\n  home: https://pyinfra.com\n  doc_url: https://docs.pyinfra.com/\n  dev_url: https://github.com/Fizzadar/pyinfra\n  summary: pyinfra automates/provisions/manages/deploys infrastructure.\n  license: MIT\n  license_file: LICENSE.md\n\nextra:\n  recipe-maintainers:\n    - thewchan\n",
+ "raw_meta_yaml": "{% set name = \"pyinfra\" %}\n{% set version = \"2.7\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pyinfra-{{ version }}.tar.gz\n  sha256: 727fc45d0abd8cf3759b93706620ea6eb06f1517f7727210aa7b0d7131eb8914\n\nbuild:\n  noarch: python\n  entry_points:\n    - pyinfra=pyinfra_cli.__main__:execute_pyinfra\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - pip\n    - python >=3.6\n  run:\n    - click >2\n    - colorama <1\n    - configparser\n    - distro >=1.6,<2\n    - gevent >=1.5\n    - graphlib-backport\n    - jinja2 >2,<4\n    - paramiko >=2.7,<3\n    - python >=3.6\n    - python-dateutil >2,<3\n    - pywinrm\n    - setuptools\n\ntest:\n  source_files:\n    - tests\n  imports:\n    - pyinfra\n    - pyinfra_cli\n  commands:\n    - pip check\n    - pyinfra --help\n    \n    # Skip these ones, missing test resoruce files from sdist\n    - rm tests/test_facts.py\n    - rm tests/test_operations.py\n    \n    - pytest -vvv --capture=tee-sys -k \"not test_user_op and not test_ansible and not test_get_fact and not deploy\" tests\n  requires:\n    - pip\n    - pytest\n\nabout:\n  home: https://pyinfra.com\n  doc_url: https://docs.pyinfra.com/\n  dev_url: https://github.com/Fizzadar/pyinfra\n  summary: pyinfra automates/provisions/manages/deploys infrastructure.\n  license: MIT\n  license_file: LICENSE.md\n\nextra:\n  recipe-maintainers:\n    - thewchan\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -233,7 +248,8 @@
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "pip",
+    "pytest"
    ]
   }
  },
@@ -270,12 +286,13 @@
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "pip",
+    "pytest"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/p/pyinfra/pyinfra-2.6.2.tar.gz",
- "version": "2.6.2",
+ "url": "https://pypi.io/packages/source/p/pyinfra/pyinfra-2.7.tar.gz",
+ "version": "2.7",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/pyinfra.json"
  }
