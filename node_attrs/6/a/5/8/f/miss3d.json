@@ -16,7 +16,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -94,10 +94,11 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
+    "ldallolio",
     "ldallolio",
     "ldallolio"
    ]
@@ -109,6 +110,7 @@
   "requirements": {
    "build": [
     "fortran_compiler_stub",
+    "fortran_compiler_stub",
     "fortran_compiler_stub"
    ],
    "host": [
@@ -117,9 +119,14 @@
     "libblas",
     "make",
     "liblapack",
+    "libblas",
+    "ninja",
+    "liblapack",
     "libblas"
    ],
    "run": [
+    "liblapack",
+    "libblas",
     "liblapack",
     "libblas",
     "liblapack",
@@ -131,16 +138,15 @@
     "Makefile_conda.patch",
     "Makefile.inc.gnu64_conda.patch",
     "Makefile_conda.patch",
+    "Makefile.inc.gnu64_conda.patch",
+    "Makefile_conda.patch",
     "Makefile.inc.gnu64_conda.patch"
    ],
    "sha256": "518a9072af34df49015b976345e15251c62820900a2bf2a3088e323bfbab6a61",
    "url": "https://downloads.sourceforge.net/project/prereq/miss3d-6.7_aster4.tar.gz"
   },
   "test": {
-   "commands": [
-    "$PREFIX/bin/run_miss3d || true",
-    "$PREFIX/bin/run_miss3d || true"
-   ]
+   "commands": null
   }
  },
  "name": "miss3d",
@@ -156,7 +162,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -231,19 +237,21 @@
  "parsing_error": false,
  "platforms": [
   "osx_64",
-  "linux_64"
+  "linux_64",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/miss3d.json"
  },
- "raw_meta_yaml": "{% set name = \"miss3d\" %}\n{% set version = \"6.7\" %}\n{% set sha256 = \"518a9072af34df49015b976345e15251c62820900a2bf2a3088e323bfbab6a61\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://downloads.sourceforge.net/project/prereq/miss3d-{{ version }}_aster4.tar.gz\n  sha256: {{ sha256 }}\n  patches:\n    - Makefile_conda.patch\n    - Makefile.inc.gnu64_conda.patch\n\nbuild:\n  number: 2\n  skip: true  # [win]\n  detect_binary_files_with_prefix: True   \n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}\n  host:\n    - make  # [not win]\n    - ninja  # [win]\n    - liblapack\n    - libblas\n  run:\n    - liblapack\n    - libblas\ntest:\n  commands:\n    - $PREFIX/bin/run_miss3d || true  # [unix]\n\nabout:\n  home: https://www.code-aster.org/spip.php?article98\n  license: CECILL-C\n  license_family: GPL\n  license_file: ./LICENSE.txt\n  summary: 'MISS, un outil performant en g\u00E9nie parasismique, dynamique des structures et g\u00E9ophysique'\n  description: |\n    Soil-Structure Interactions (ISS) and Sol-Fluid-Structure (ISFS) involved in buildings dynamics or in arch dams, \n    can be resolved with frequency coupling in Code_Aster.\n    MISS3D (called via the Code_Aster command CALC_MISS) \n    is a code with integral equations (Green functions) and sub-structuring from ECP / LMSSMat .  \n  doc_url: https://www.code-aster.org/IMG/UPLOAD/DOC/Telechargement/notice_util_miss3d_v6.4.pdf\n\nextra:\n  recipe-maintainers:\n    - ldallolio\n",
+ "raw_meta_yaml": "{% set name = \"miss3d\" %}\n{% set version = \"6.7\" %}\n{% set sha256 = \"518a9072af34df49015b976345e15251c62820900a2bf2a3088e323bfbab6a61\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://downloads.sourceforge.net/project/prereq/miss3d-{{ version }}_aster4.tar.gz\n  sha256: {{ sha256 }}\n  patches:\n    - Makefile_conda.patch\n    - Makefile.inc.gnu64_conda.patch\n\nbuild:\n  number: 3\n  detect_binary_files_with_prefix: True   \n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}\n  host:\n    - make  # [not win]\n    - ninja  # [win]\n    - liblapack\n    - libblas\n  run:\n    - liblapack\n    - libblas\ntest:\n  commands:\n    - $PREFIX/bin/run_miss3d || true  # [unix]\n\nabout:\n  home: https://www.code-aster.org/spip.php?article98\n  license: CECILL-C\n  license_family: GPL\n  license_file: ./LICENSE.txt\n  summary: 'MISS, un outil performant en g\u00E9nie parasismique, dynamique des structures et g\u00E9ophysique'\n  description: |\n    Soil-Structure Interactions (ISS) and Sol-Fluid-Structure (ISFS) involved in buildings dynamics or in arch dams, \n    can be resolved with frequency coupling in Code_Aster.\n    MISS3D (called via the Code_Aster command CALC_MISS) \n    is a code with integral equations (Green functions) and sub-structuring from ECP / LMSSMat .  \n  doc_url: https://www.code-aster.org/IMG/UPLOAD/DOC/Telechargement/notice_util_miss3d_v6.4.pdf\n\nextra:\n  recipe-maintainers:\n    - ldallolio\n",
  "req": {
   "__set__": true,
   "elements": [
    "fortran_compiler_stub",
    "libblas",
    "liblapack",
-   "make"
+   "make",
+   "ninja"
   ]
  },
  "requirements": {
@@ -259,7 +267,8 @@
     "fortran_compiler_stub",
     "libblas",
     "liblapack",
-    "make"
+    "make",
+    "ninja"
    ]
   },
   "run": {
@@ -288,7 +297,8 @@
    "elements": [
     "libblas",
     "liblapack",
-    "make"
+    "make",
+    "ninja"
    ]
   },
   "run": {
@@ -307,5 +317,81 @@
  "version": "6.7",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/miss3d.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "description": "Soil-Structure Interactions (ISS) and Sol-Fluid-Structure (ISFS) involved in buildings dynamics or in arch dams,\ncan be resolved with frequency coupling in Code_Aster.\nMISS3D (called via the Code_Aster command CALC_MISS)\nis a code with integral equations (Green functions) and sub-structuring from ECP / LMSSMat .\n",
+   "doc_url": "https://www.code-aster.org/IMG/UPLOAD/DOC/Telechargement/notice_util_miss3d_v6.4.pdf",
+   "home": "https://www.code-aster.org/spip.php?article98",
+   "license": "CECILL-C",
+   "license_family": "GPL",
+   "license_file": "./LICENSE.txt",
+   "summary": "MISS, un outil performant en g\u00E9nie parasismique, dynamique des structures et g\u00E9ophysique"
+  },
+  "build": {
+   "detect_binary_files_with_prefix": true,
+   "number": "3"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "ldallolio"
+   ]
+  },
+  "package": {
+   "name": "miss3d",
+   "version": "6.7"
+  },
+  "requirements": {
+   "build": [
+    "fortran_compiler_stub"
+   ],
+   "host": [
+    "ninja",
+    "liblapack",
+    "libblas"
+   ],
+   "run": [
+    "liblapack",
+    "libblas"
+   ]
+  },
+  "source": {
+   "patches": [
+    "Makefile_conda.patch",
+    "Makefile.inc.gnu64_conda.patch"
+   ],
+   "sha256": "518a9072af34df49015b976345e15251c62820900a2bf2a3088e323bfbab6a61",
+   "url": "https://downloads.sourceforge.net/project/prereq/miss3d-6.7_aster4.tar.gz"
+  },
+  "test": {
+   "commands": null
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "fortran_compiler_stub"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "libblas",
+    "liblapack",
+    "ninja"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libblas",
+    "liblapack"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
  }
 }
