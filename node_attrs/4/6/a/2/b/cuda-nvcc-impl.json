@@ -1,7 +1,12 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "provider": {
+   "linux_aarch64": "default",
+   "linux_ppc64le": "default"
+  }
+ },
  "feedstock_name": "cuda-nvcc-impl",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -232,6 +237,468 @@
    ]
   }
  },
+ "linux_aarch64_meta_yaml": {
+  "about": {
+   "description": "Compiler for CUDA applications.\n",
+   "doc_url": "https://docs.nvidia.com/cuda/index.html",
+   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+   "license_file": "LICENSE",
+   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "summary": "Compiler for CUDA applications."
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "feedstock-name": "cuda-nvcc-impl",
+   "recipe-maintainers": [
+    "adibbley"
+   ]
+  },
+  "outputs": [
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Architecture independent part of CUDA NVCC compiler."
+    },
+    "files": [
+     "bin",
+     "nvvm/bin",
+     "nvvm/libdevice"
+    ],
+    "name": "cuda-nvcc-tools",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "sysroot_linux-aarch64 2.17"
+     ],
+     "host": [
+      "arm-variant * sbsa",
+      "cuda-version 12.0"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-aarch64 >=6,<13",
+      "arm-variant * sbsa"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/bin/nvcc",
+      "test -f $PREFIX/bin/ptxas",
+      "test -d $PREFIX/nvvm",
+      "test -f $PREFIX/nvvm/bin/cicc"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Target architecture dependent parts of CUDA NVCC compiler."
+    },
+    "build": {
+     "noarch": "generic"
+    },
+    "files": [
+     "targets/x64/bin",
+     "targets/x64/nvvm",
+     "targets/x64/include",
+     "targets/x64/lib"
+    ],
+    "name": "cuda-nvcc-dev_linux-aarch64",
+    "requirements": {
+     "build": [],
+     "host": [
+      "arm-variant * sbsa",
+      "cuda-version 12.0",
+      "cuda-nvcc-tools 12.0"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-aarch64 >=6,<13",
+      "arm-variant * sbsa"
+     ]
+    },
+    "run_exports": {
+     "strong": [
+      "cuda-version >=12.0,<13"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/targets/x64/bin/nvcc",
+      "test -L $PREFIX/targets/x64/nvvm",
+      "test -f $PREFIX/targets/x64/lib/libnvptxcompiler_static.a",
+      "test -f $PREFIX/targets/x64/include/nvPTXCompiler.h"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Compiler for CUDA applications."
+    },
+    "build": {
+     "binary_relocation": false
+    },
+    "files": [
+     "lib/libnvptxcompiler_static.a",
+     "nvvm/include",
+     "nvvm/lib64"
+    ],
+    "name": "cuda-nvcc-impl",
+    "requirements": {
+     "build": [
+      "sysroot_linux-aarch64 2.17"
+     ],
+     "host": [
+      "arm-variant * sbsa",
+      "cuda-version 12.0",
+      "cuda-cudart-dev"
+     ],
+     "run": [
+      "cuda-nvcc-tools",
+      "cuda-nvcc-dev_linux-aarch64",
+      "cuda-version",
+      "cuda-cudart-dev"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-aarch64 >=6,<13",
+      "arm-variant * sbsa"
+     ]
+    },
+    "run_exports": {
+     "strong": [
+      "cuda-version >=12.0,<13"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libnvptxcompiler_static.a",
+      "nvcc --version",
+      "nvcc --verbose test.cu",
+      "cmake -S . -B ./build -G=Ninja && cmake --build ./build -v",
+      "bash ./run_cmake_cuda_tests.sh"
+     ],
+     "files": [
+      "test.cu",
+      "CMakeLists.txt",
+      "run_cmake_cuda_tests.sh"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "gxx",
+      "gcc",
+      "cmake",
+      "cuda-driver-dev",
+      "git",
+      "ninja"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "cuda-nvcc-impl-split",
+   "version": "12.0.76"
+  },
+  "source": {
+   "patches": [
+    "nvcc.profile.patch"
+   ],
+   "sha256": "85c8c643ea2cfa398e1b5ffcd597f5bb3b738526c9e3fb8e39dd909c55345f36",
+   "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/windows-x86_64/cuda_nvcc-windows-x86_64-12.0.76-archive.zip"
+  }
+ },
+ "linux_aarch64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "sysroot_linux-aarch64"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "arm-variant",
+    "cuda-cudart-dev",
+    "cuda-nvcc-tools",
+    "cuda-version"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "cuda-cudart-dev",
+    "cuda-nvcc-dev_linux-aarch64",
+    "cuda-nvcc-tools",
+    "cuda-version"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda-driver-dev",
+    "cxx_compiler_stub",
+    "gcc",
+    "git",
+    "gxx",
+    "ninja"
+   ]
+  }
+ },
+ "linux_ppc64le_meta_yaml": {
+  "about": {
+   "description": "Compiler for CUDA applications.\n",
+   "doc_url": "https://docs.nvidia.com/cuda/index.html",
+   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+   "license_file": "LICENSE",
+   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "summary": "Compiler for CUDA applications."
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "feedstock-name": "cuda-nvcc-impl",
+   "recipe-maintainers": [
+    "adibbley"
+   ]
+  },
+  "outputs": [
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Architecture independent part of CUDA NVCC compiler."
+    },
+    "files": [
+     "bin",
+     "nvvm/bin",
+     "nvvm/libdevice"
+    ],
+    "name": "cuda-nvcc-tools",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "sysroot_linux-ppc64le 2.17"
+     ],
+     "host": [
+      "cuda-version 12.0"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-ppc64le >=6,<13"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/bin/nvcc",
+      "test -f $PREFIX/bin/ptxas",
+      "test -d $PREFIX/nvvm",
+      "test -f $PREFIX/nvvm/bin/cicc"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Target architecture dependent parts of CUDA NVCC compiler."
+    },
+    "build": {
+     "noarch": "generic"
+    },
+    "files": [
+     "targets/x64/bin",
+     "targets/x64/nvvm",
+     "targets/x64/include",
+     "targets/x64/lib"
+    ],
+    "name": "cuda-nvcc-dev_linux-ppc64le",
+    "requirements": {
+     "build": [],
+     "host": [
+      "cuda-version 12.0",
+      "cuda-nvcc-tools 12.0"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-ppc64le >=6,<13"
+     ]
+    },
+    "run_exports": {
+     "strong": [
+      "cuda-version >=12.0,<13"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/targets/x64/bin/nvcc",
+      "test -L $PREFIX/targets/x64/nvvm",
+      "test -f $PREFIX/targets/x64/lib/libnvptxcompiler_static.a",
+      "test -f $PREFIX/targets/x64/include/nvPTXCompiler.h"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Compiler for CUDA applications."
+    },
+    "build": {
+     "binary_relocation": false
+    },
+    "files": [
+     "lib/libnvptxcompiler_static.a",
+     "nvvm/include",
+     "nvvm/lib64"
+    ],
+    "name": "cuda-nvcc-impl",
+    "requirements": {
+     "build": [
+      "sysroot_linux-ppc64le 2.17"
+     ],
+     "host": [
+      "cuda-version 12.0",
+      "cuda-cudart-dev"
+     ],
+     "run": [
+      "cuda-nvcc-tools",
+      "cuda-nvcc-dev_linux-ppc64le",
+      "cuda-version",
+      "cuda-cudart-dev"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-ppc64le >=6,<13"
+     ]
+    },
+    "run_exports": {
+     "strong": [
+      "cuda-version >=12.0,<13"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libnvptxcompiler_static.a",
+      "nvcc --version",
+      "nvcc --verbose test.cu",
+      "cmake -S . -B ./build -G=Ninja && cmake --build ./build -v"
+     ],
+     "files": [
+      "test.cu",
+      "CMakeLists.txt",
+      "run_cmake_cuda_tests.sh"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "gxx",
+      "gcc",
+      "cmake",
+      "cuda-driver-dev",
+      "git",
+      "ninja"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "cuda-nvcc-impl-split",
+   "version": "12.0.76"
+  },
+  "source": {
+   "patches": [
+    "nvcc.profile.patch"
+   ],
+   "sha256": "dc5bd7eac57b32a9645c0c23c6a1ba8a9533e846eeec31414e1aa4230afee2f8",
+   "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/windows-x86_64/cuda_nvcc-windows-x86_64-12.0.76-archive.zip"
+  }
+ },
+ "linux_ppc64le_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "sysroot_linux-ppc64le"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "cuda-cudart-dev",
+    "cuda-nvcc-tools",
+    "cuda-version"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "cuda-cudart-dev",
+    "cuda-nvcc-dev_linux-ppc64le",
+    "cuda-nvcc-tools",
+    "cuda-version"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda-driver-dev",
+    "cxx_compiler_stub",
+    "gcc",
+    "git",
+    "gxx",
+    "ninja"
+   ]
+  }
+ },
  "meta_yaml": {
   "about": {
    "description": "Compiler for CUDA applications.\n",
@@ -248,6 +715,8 @@
   "extra": {
    "feedstock-name": "cuda-nvcc-impl",
    "recipe-maintainers": [
+    "adibbley",
+    "adibbley",
     "adibbley"
    ]
   },
@@ -406,6 +875,321 @@
       "ninja"
      ]
     }
+   },
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Architecture independent part of CUDA NVCC compiler."
+    },
+    "files": [
+     "bin",
+     "nvvm/bin",
+     "nvvm/libdevice"
+    ],
+    "name": "cuda-nvcc-tools",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "sysroot_linux-aarch64 2.17"
+     ],
+     "host": [
+      "arm-variant * sbsa",
+      "cuda-version 12.0"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-aarch64 >=6,<13",
+      "arm-variant * sbsa"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/bin/nvcc",
+      "test -f $PREFIX/bin/ptxas",
+      "test -d $PREFIX/nvvm",
+      "test -f $PREFIX/nvvm/bin/cicc"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Target architecture dependent parts of CUDA NVCC compiler."
+    },
+    "build": {
+     "noarch": "generic"
+    },
+    "files": [
+     "targets/x64/bin",
+     "targets/x64/nvvm",
+     "targets/x64/include",
+     "targets/x64/lib"
+    ],
+    "name": "cuda-nvcc-dev_linux-aarch64",
+    "requirements": {
+     "build": [],
+     "host": [
+      "arm-variant * sbsa",
+      "cuda-version 12.0",
+      "cuda-nvcc-tools 12.0"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-aarch64 >=6,<13",
+      "arm-variant * sbsa"
+     ]
+    },
+    "run_exports": {
+     "strong": [
+      "cuda-version >=12.0,<13"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/targets/x64/bin/nvcc",
+      "test -L $PREFIX/targets/x64/nvvm",
+      "test -f $PREFIX/targets/x64/lib/libnvptxcompiler_static.a",
+      "test -f $PREFIX/targets/x64/include/nvPTXCompiler.h"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Compiler for CUDA applications."
+    },
+    "build": {
+     "binary_relocation": false
+    },
+    "files": [
+     "lib/libnvptxcompiler_static.a",
+     "nvvm/include",
+     "nvvm/lib64"
+    ],
+    "name": "cuda-nvcc-impl",
+    "requirements": {
+     "build": [
+      "sysroot_linux-aarch64 2.17"
+     ],
+     "host": [
+      "arm-variant * sbsa",
+      "cuda-version 12.0",
+      "cuda-cudart-dev"
+     ],
+     "run": [
+      "cuda-nvcc-tools",
+      "cuda-nvcc-dev_linux-aarch64",
+      "cuda-version",
+      "cuda-cudart-dev"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-aarch64 >=6,<13",
+      "arm-variant * sbsa"
+     ]
+    },
+    "run_exports": {
+     "strong": [
+      "cuda-version >=12.0,<13"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libnvptxcompiler_static.a",
+      "nvcc --version",
+      "nvcc --verbose test.cu",
+      "cmake -S . -B ./build -G=Ninja && cmake --build ./build -v",
+      "bash ./run_cmake_cuda_tests.sh"
+     ],
+     "files": [
+      "test.cu",
+      "CMakeLists.txt",
+      "run_cmake_cuda_tests.sh"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "gxx",
+      "gcc",
+      "cmake",
+      "cuda-driver-dev",
+      "git",
+      "ninja"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Architecture independent part of CUDA NVCC compiler."
+    },
+    "files": [
+     "bin",
+     "nvvm/bin",
+     "nvvm/libdevice"
+    ],
+    "name": "cuda-nvcc-tools",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "sysroot_linux-ppc64le 2.17"
+     ],
+     "host": [
+      "cuda-version 12.0"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-ppc64le >=6,<13"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/bin/nvcc",
+      "test -f $PREFIX/bin/ptxas",
+      "test -d $PREFIX/nvvm",
+      "test -f $PREFIX/nvvm/bin/cicc"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Target architecture dependent parts of CUDA NVCC compiler."
+    },
+    "build": {
+     "noarch": "generic"
+    },
+    "files": [
+     "targets/x64/bin",
+     "targets/x64/nvvm",
+     "targets/x64/include",
+     "targets/x64/lib"
+    ],
+    "name": "cuda-nvcc-dev_linux-ppc64le",
+    "requirements": {
+     "build": [],
+     "host": [
+      "cuda-version 12.0",
+      "cuda-nvcc-tools 12.0"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-ppc64le >=6,<13"
+     ]
+    },
+    "run_exports": {
+     "strong": [
+      "cuda-version >=12.0,<13"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/targets/x64/bin/nvcc",
+      "test -L $PREFIX/targets/x64/nvvm",
+      "test -f $PREFIX/targets/x64/lib/libnvptxcompiler_static.a",
+      "test -f $PREFIX/targets/x64/include/nvPTXCompiler.h"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "Compiler for CUDA applications.\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "Compiler for CUDA applications."
+    },
+    "build": {
+     "binary_relocation": false
+    },
+    "files": [
+     "lib/libnvptxcompiler_static.a",
+     "nvvm/include",
+     "nvvm/lib64"
+    ],
+    "name": "cuda-nvcc-impl",
+    "requirements": {
+     "build": [
+      "sysroot_linux-ppc64le 2.17"
+     ],
+     "host": [
+      "cuda-version 12.0",
+      "cuda-cudart-dev"
+     ],
+     "run": [
+      "cuda-nvcc-tools",
+      "cuda-nvcc-dev_linux-ppc64le",
+      "cuda-version",
+      "cuda-cudart-dev"
+     ],
+     "run_constrained": [
+      "gcc_impl_linux-ppc64le >=6,<13"
+     ]
+    },
+    "run_exports": {
+     "strong": [
+      "cuda-version >=12.0,<13"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libnvptxcompiler_static.a",
+      "nvcc --version",
+      "nvcc --verbose test.cu",
+      "cmake -S . -B ./build -G=Ninja && cmake --build ./build -v"
+     ],
+     "files": [
+      "test.cu",
+      "CMakeLists.txt",
+      "run_cmake_cuda_tests.sh"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "gxx",
+      "gcc",
+      "cmake",
+      "cuda-driver-dev",
+      "git",
+      "ninja"
+     ]
+    }
    }
   ],
   "package": {
@@ -414,9 +1198,11 @@
   },
   "source": {
    "patches": [
+    "nvcc.profile.patch",
+    "nvcc.profile.patch",
     "nvcc.profile.patch"
    ],
-   "sha256": "160ca9f8828f53daa4b2066c5361aacb45fa2575885f70c223cda1d11df53d6f",
+   "sha256": "dc5bd7eac57b32a9645c0c23c6a1ba8a9533e846eeec31414e1aa4230afee2f8",
    "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvcc/windows-x86_64/cuda_nvcc-windows-x86_64-12.0.76-archive.zip"
   }
  },
@@ -425,13 +1211,17 @@
   "__set__": true,
   "elements": [
    "cuda-nvcc-dev_linux-64",
+   "cuda-nvcc-dev_linux-aarch64",
+   "cuda-nvcc-dev_linux-ppc64le",
    "cuda-nvcc-impl",
    "cuda-nvcc-tools"
   ]
  },
  "parsing_error": false,
  "platforms": [
-  "linux_64"
+  "linux_ppc64le",
+  "linux_64",
+  "linux_aarch64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/cuda-nvcc-impl.json"
@@ -440,13 +1230,18 @@
  "req": {
   "__set__": true,
   "elements": [
+   "arm-variant",
    "c_compiler_stub",
    "cuda-cudart-dev",
    "cuda-nvcc-dev_linux-64",
+   "cuda-nvcc-dev_linux-aarch64",
+   "cuda-nvcc-dev_linux-ppc64le",
    "cuda-nvcc-tools",
    "cuda-version",
    "cxx_compiler_stub",
-   "sysroot_linux-64"
+   "sysroot_linux-64",
+   "sysroot_linux-aarch64",
+   "sysroot_linux-ppc64le"
   ]
  },
  "requirements": {
@@ -455,12 +1250,15 @@
    "elements": [
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "sysroot_linux-64"
+    "sysroot_linux-64",
+    "sysroot_linux-aarch64",
+    "sysroot_linux-ppc64le"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "arm-variant",
     "c_compiler_stub",
     "cuda-cudart-dev",
     "cuda-nvcc-tools",
@@ -474,6 +1272,8 @@
     "c_compiler_stub",
     "cuda-cudart-dev",
     "cuda-nvcc-dev_linux-64",
+    "cuda-nvcc-dev_linux-aarch64",
+    "cuda-nvcc-dev_linux-ppc64le",
     "cuda-nvcc-tools",
     "cuda-version",
     "cxx_compiler_stub"
@@ -500,12 +1300,15 @@
    "elements": [
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "sysroot_linux-64 2.17"
+    "sysroot_linux-64 2.17",
+    "sysroot_linux-aarch64 2.17",
+    "sysroot_linux-ppc64le 2.17"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "arm-variant * sbsa",
     "cuda-cudart-dev",
     "cuda-nvcc-tools 12.0",
     "cuda-version 12.0"
@@ -516,6 +1319,8 @@
    "elements": [
     "cuda-cudart-dev",
     "cuda-nvcc-dev_linux-64",
+    "cuda-nvcc-dev_linux-aarch64",
+    "cuda-nvcc-dev_linux-ppc64le",
     "cuda-nvcc-tools",
     "cuda-version"
    ]
