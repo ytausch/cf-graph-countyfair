@@ -10,16 +10,28 @@
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
   "about": {
-   "description": "MMCV is a foundational library for computer vision research and supports many research projects.\n",
    "dev_url": "https://github.com/open-mmlab/mmcv",
+   "doc_url": "https://mmcv.readthedocs.io",
    "home": "https://github.com/open-mmlab/mmcv",
-   "license": "Apache-2.0",
-   "license_family": "Apache",
-   "license_file": "LICENSE",
-   "summary": "Foundational library for computer vision research"
+   "license": "Apache-2.0 AND LicenseRef-NVIDIA-License",
+   "license_file": [
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md"
+   ],
+   "summary": "OpenMMLab Computer Vision Foundation"
   },
   "build": {
-   "number": "202"
+   "number": "200"
   },
   "extra": {
    "feedstock-name": "mmcv",
@@ -41,49 +53,28 @@
   "outputs": [
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cuda112py39h1234567_202"
+     "string": "cuda112py39h1234567_200"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cuda_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cuda*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cuda*"
      ],
      "run": [
       "__cuda",
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -98,73 +89,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py39h1234567_2"
+     "string": "cpu_py38h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -179,73 +148,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py38h1234567_2"
+     "string": "cpu_py39h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -260,75 +207,112 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cuda112py38h1234567_202"
+     "string": "cpu_py310h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "host": [
+      "numpy",
+      "pip",
+      "python",
+      "pytorch",
+      "pytorch =1.13=cpu*"
+     ],
+     "run": [
+      "addict",
+      "mmengine>=0.2.0",
+      "numpy",
+      "packaging",
+      "Pillow",
+      "pyyaml",
+      "typing_extensions",
+      "yapf"
+     ],
+     "run_constrained": [
+      "pytorch =*=cpu*"
+     ]
+    },
+    "script": "build_mmcv.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
+     ],
+     "imports": [
+      "mmcv"
+     ],
+     "requires": [
+      "onnx",
+      "pip",
+      "pytest",
+      "pyturbojpeg",
+      "py-opencv",
+      "tifffile",
+      "torchvision"
+     ],
+     "source_files": [
+      ".dev_scripts/check_installation.py",
+      "tests"
+     ]
+    }
+   },
+   {
+    "build": {
+     "string": "cuda112py310h1234567_200"
+    },
+    "name": "mmcv",
+    "requirements": {
+     "build": [
+      "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cuda_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cuda*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cuda*"
      ],
      "run": [
       "__cuda",
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -343,156 +327,53 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
-      "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
-      "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
-      "tifffile",
-      "python-dateutil",
-      "torchvision"
-     ],
-     "source_files": [
-      "tests"
-     ]
-    }
-   },
-   {
-    "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py310h1234567_2"
-    },
-    "name": "mmcv-full",
-    "requirements": {
-     "build": [
-      "ninja",
-      "c_compiler_stub",
-      "cxx_compiler_stub"
-     ],
-     "host": [
-      "future",
-      "numpy",
+      "onnx",
       "pip",
-      "pkg-config",
-      "py-opencv",
-      "python",
-      "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
-     ],
-     "run": [
-      "addict",
-      "numpy",
-      "packaging",
-      "Pillow",
-      "pyyaml",
-      "typing_extensions",
-      "yapf"
-     ],
-     "run_constrained": [
-      "pytorch =*=cpu*"
-     ]
-    },
-    "script": "build_mmcv.sh",
-    "test": {
-     "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
-     ],
-     "imports": [
-      "mmcv"
-     ],
-     "requires": [
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cuda112py310h1234567_202"
+     "string": "cuda112py38h1234567_200"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cuda_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cuda*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cuda*"
      ],
      "run": [
       "__cuda",
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -507,26 +388,25 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
@@ -534,11 +414,11 @@
   ],
   "package": {
    "name": "mmcv-recipe",
-   "version": "1.7.1"
+   "version": "2.0.0"
   },
   "source": {
-   "sha256": "8a2a16ee99b436d9506fe393d09ab17f0209ba8d27d785f3c94c4c3f97e97123",
-   "url": "https://github.com/open-mmlab/mmcv/archive/refs/tags/v1.7.1.tar.gz"
+   "sha256": "826344c72f0d2c17b0499acd712b06459223de319365c23702dcd6d0e309b81d",
+   "url": "https://github.com/open-mmlab/mmcv/archive/refs/tags/v2.0.0.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -548,25 +428,17 @@
     "c_compiler_stub",
     "cuda_compiler_stub",
     "cxx_compiler_stub",
-    "ninja"
+    "ninja",
+    "psutil"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
-    "future",
     "numpy",
     "pip",
-    "pkg-config",
-    "py-opencv",
     "python",
-    "pytorch",
-    "requests",
-    "setuptools",
-    "six",
-    "torchvision",
-    "typing",
-    "typing_extensions"
+    "pytorch"
    ]
   },
   "run": {
@@ -574,6 +446,7 @@
    "elements": [
     "__cuda",
     "addict",
+    "mmengine",
     "numpy",
     "packaging",
     "pillow",
@@ -585,15 +458,11 @@
   "test": {
    "__set__": true,
    "elements": [
-    "libiconv",
-    "libopencv",
-    "opencv",
+    "onnx",
+    "pip",
     "py-opencv",
     "pytest",
-    "python-dateutil",
-    "python-lmdb",
-    "requests",
-    "scipy",
+    "pyturbojpeg",
     "tifffile",
     "torchvision"
    ]
@@ -601,16 +470,40 @@
  },
  "meta_yaml": {
   "about": {
-   "description": "MMCV is a foundational library for computer vision research and supports many research projects.\n",
    "dev_url": "https://github.com/open-mmlab/mmcv",
+   "doc_url": "https://mmcv.readthedocs.io",
    "home": "https://github.com/open-mmlab/mmcv",
-   "license": "Apache-2.0",
-   "license_family": "Apache",
-   "license_file": "LICENSE",
-   "summary": "Foundational library for computer vision research"
+   "license": "Apache-2.0 AND LicenseRef-NVIDIA-License",
+   "license_file": [
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md"
+   ],
+   "summary": "OpenMMLab Computer Vision Foundation"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "mmcv",
@@ -644,49 +537,28 @@
   "outputs": [
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cuda112py39h1234567_202"
+     "string": "cuda112py39h1234567_200"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cuda_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cuda*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cuda*"
      ],
      "run": [
       "__cuda",
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -701,73 +573,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py39h1234567_2"
+     "string": "cpu_py38h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -782,73 +632,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py38h1234567_2"
+     "string": "cpu_py39h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -863,75 +691,112 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cuda112py38h1234567_202"
+     "string": "cpu_py310h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "host": [
+      "numpy",
+      "pip",
+      "python",
+      "pytorch",
+      "pytorch =1.13=cpu*"
+     ],
+     "run": [
+      "addict",
+      "mmengine>=0.2.0",
+      "numpy",
+      "packaging",
+      "Pillow",
+      "pyyaml",
+      "typing_extensions",
+      "yapf"
+     ],
+     "run_constrained": [
+      "pytorch =*=cpu*"
+     ]
+    },
+    "script": "build_mmcv.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
+     ],
+     "imports": [
+      "mmcv"
+     ],
+     "requires": [
+      "onnx",
+      "pip",
+      "pytest",
+      "pyturbojpeg",
+      "py-opencv",
+      "tifffile",
+      "torchvision"
+     ],
+     "source_files": [
+      ".dev_scripts/check_installation.py",
+      "tests"
+     ]
+    }
+   },
+   {
+    "build": {
+     "string": "cuda112py310h1234567_200"
+    },
+    "name": "mmcv",
+    "requirements": {
+     "build": [
+      "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cuda_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cuda*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cuda*"
      ],
      "run": [
       "__cuda",
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -946,156 +811,53 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
-      "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
-      "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
-      "tifffile",
-      "python-dateutil",
-      "torchvision"
-     ],
-     "source_files": [
-      "tests"
-     ]
-    }
-   },
-   {
-    "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py310h1234567_2"
-    },
-    "name": "mmcv-full",
-    "requirements": {
-     "build": [
-      "ninja",
-      "c_compiler_stub",
-      "cxx_compiler_stub"
-     ],
-     "host": [
-      "future",
-      "numpy",
+      "onnx",
       "pip",
-      "pkg-config",
-      "py-opencv",
-      "python",
-      "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
-     ],
-     "run": [
-      "addict",
-      "numpy",
-      "packaging",
-      "Pillow",
-      "pyyaml",
-      "typing_extensions",
-      "yapf"
-     ],
-     "run_constrained": [
-      "pytorch =*=cpu*"
-     ]
-    },
-    "script": "build_mmcv.sh",
-    "test": {
-     "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
-     ],
-     "imports": [
-      "mmcv"
-     ],
-     "requires": [
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cuda112py310h1234567_202"
+     "string": "cuda112py38h1234567_200"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cuda_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cuda*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cuda*"
      ],
      "run": [
       "__cuda",
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -1110,73 +872,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py38h1234567_2"
+     "string": "cpu_py39h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -1191,73 +931,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py310h1234567_2"
+     "string": "cpu_py38h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -1272,73 +990,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py39h1234567_2"
+     "string": "cpu_py310h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -1353,73 +1049,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py39h1234567_2"
+     "string": "cpu_py38h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -1434,73 +1108,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py38h1234567_2"
+     "string": "cpu_py310h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -1515,73 +1167,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py310h1234567_2"
+     "string": "cpu_py39h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -1596,26 +1226,25 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
@@ -1623,26 +1252,32 @@
   ],
   "package": {
    "name": "mmcv-recipe",
-   "version": "1.7.1"
+   "version": "2.0.0"
   },
   "source": {
-   "sha256": "8a2a16ee99b436d9506fe393d09ab17f0209ba8d27d785f3c94c4c3f97e97123",
-   "url": "https://github.com/open-mmlab/mmcv/archive/refs/tags/v1.7.1.tar.gz"
+   "sha256": "826344c72f0d2c17b0499acd712b06459223de319365c23702dcd6d0e309b81d",
+   "url": "https://github.com/open-mmlab/mmcv/archive/refs/tags/v2.0.0.tar.gz"
   }
  },
  "name": "mmcv-recipe",
  "osx_64_meta_yaml": {
   "about": {
-   "description": "MMCV is a foundational library for computer vision research and supports many research projects.\n",
    "dev_url": "https://github.com/open-mmlab/mmcv",
+   "doc_url": "https://mmcv.readthedocs.io",
    "home": "https://github.com/open-mmlab/mmcv",
-   "license": "Apache-2.0",
-   "license_family": "Apache",
-   "license_file": "LICENSE",
-   "summary": "Foundational library for computer vision research"
+   "license": "Apache-2.0 AND LicenseRef-NVIDIA-License",
+   "license_file": [
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md"
+   ],
+   "summary": "OpenMMLab Computer Vision Foundation"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "mmcv",
@@ -1658,47 +1293,26 @@
   "outputs": [
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py38h1234567_2"
+     "string": "cpu_py39h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -1713,73 +1327,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py310h1234567_2"
+     "string": "cpu_py38h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -1794,73 +1386,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py39h1234567_2"
+     "string": "cpu_py310h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -1875,26 +1445,25 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
@@ -1902,11 +1471,11 @@
   ],
   "package": {
    "name": "mmcv-recipe",
-   "version": "1.7.1"
+   "version": "2.0.0"
   },
   "source": {
-   "sha256": "8a2a16ee99b436d9506fe393d09ab17f0209ba8d27d785f3c94c4c3f97e97123",
-   "url": "https://github.com/open-mmlab/mmcv/archive/refs/tags/v1.7.1.tar.gz"
+   "sha256": "826344c72f0d2c17b0499acd712b06459223de319365c23702dcd6d0e309b81d",
+   "url": "https://github.com/open-mmlab/mmcv/archive/refs/tags/v2.0.0.tar.gz"
   }
  },
  "osx_64_requirements": {
@@ -1915,31 +1484,24 @@
    "elements": [
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "ninja"
+    "ninja",
+    "psutil"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
-    "future",
     "numpy",
     "pip",
-    "pkg-config",
-    "py-opencv",
     "python",
-    "pytorch",
-    "requests",
-    "setuptools",
-    "six",
-    "torchvision",
-    "typing",
-    "typing_extensions"
+    "pytorch"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "addict",
+    "mmengine",
     "numpy",
     "packaging",
     "pillow",
@@ -1951,15 +1513,11 @@
   "test": {
    "__set__": true,
    "elements": [
-    "libiconv",
-    "libopencv",
-    "opencv",
+    "onnx",
+    "pip",
     "py-opencv",
     "pytest",
-    "python-dateutil",
-    "python-lmdb",
-    "requests",
-    "scipy",
+    "pyturbojpeg",
     "tifffile",
     "torchvision"
    ]
@@ -1967,16 +1525,22 @@
  },
  "osx_arm64_meta_yaml": {
   "about": {
-   "description": "MMCV is a foundational library for computer vision research and supports many research projects.\n",
    "dev_url": "https://github.com/open-mmlab/mmcv",
+   "doc_url": "https://mmcv.readthedocs.io",
    "home": "https://github.com/open-mmlab/mmcv",
-   "license": "Apache-2.0",
-   "license_family": "Apache",
-   "license_file": "LICENSE",
-   "summary": "Foundational library for computer vision research"
+   "license": "Apache-2.0 AND LicenseRef-NVIDIA-License",
+   "license_file": [
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md",
+    "LICENSE",
+    "LICENSES.md"
+   ],
+   "summary": "OpenMMLab Computer Vision Foundation"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "mmcv",
@@ -1992,47 +1556,26 @@
   "outputs": [
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py39h1234567_2"
+     "string": "cpu_py38h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -2047,73 +1590,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py38h1234567_2"
+     "string": "cpu_py310h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -2128,73 +1649,51 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
    },
    {
     "build": {
-     "detect_binary_files_with_prefix": false,
-     "missing_dso_whitelist": [
-      "$RPATH/libc10_cuda.so",
-      "$RPATH/libtorch_python.so",
-      "$RPATH/libtorch_cpu.so",
-      "$RPATH/libc10.so",
-      "$RPATH/libc10_cuda.dylib",
-      "$RPATH/libtorch_python.dylib",
-      "$RPATH/libtorch_cpu.dylib",
-      "$RPATH/libc10.dylib"
-     ],
-     "run_exports": [
-      "mmcv-full"
-     ],
-     "string": "cpu_py310h1234567_2"
+     "string": "cpu_py39h1234567_0"
     },
-    "name": "mmcv-full",
+    "name": "mmcv",
     "requirements": {
      "build": [
       "ninja",
+      "psutil",
       "c_compiler_stub",
       "cxx_compiler_stub"
      ],
      "host": [
-      "future",
       "numpy",
       "pip",
-      "pkg-config",
-      "py-opencv",
       "python",
       "pytorch",
-      "pytorch =1.13=cpu*",
-      "requests",
-      "setuptools",
-      "six",
-      "torchvision",
-      "typing",
-      "typing_extensions"
+      "pytorch =1.13=cpu*"
      ],
      "run": [
       "addict",
+      "mmengine>=0.2.0",
       "numpy",
       "packaging",
       "Pillow",
@@ -2209,26 +1708,25 @@
     "script": "build_mmcv.sh",
     "test": {
      "commands": [
-      "python3 -m pytest ./tests/ -k \"not (test_digit_version or test_imcrop or test_tensor2imgs or test_imwrite or test_imfrombytes or test_imread or test_eval_hook or test_start_param or test_flat_cosine_runner_hook or test_momentum_runner_hook or test_step_runner_hook or test_adjust_sharpness or test_adjust_contrast or test_adjust_brightness or test_gradient_cumulative_optimizer_hook or test_auto_contrast)\" --ignore=./tests/test_ops/test_onnx.py --ignore=./tests/test_ops/test_tensorrt.py --ignore=./tests/test_ops/test_tensorrt_preprocess.py --ignore=./tests/test_utils/test_timer.py --ignore=./tests/test_utils/test_progressbar.py",
-      "python3 -c \"import mmcv; print(mmcv.__version__)\""
+      "pip check",
+      "python ./.dev_scripts/check_installation.py",
+      "python -m pytest ./tests/",
+      "python -c \"import mmcv; print(mmcv.__version__)\""
      ],
      "imports": [
       "mmcv"
      ],
      "requires": [
+      "onnx",
+      "pip",
       "pytest",
-      "requests",
-      "scipy",
-      "libopencv",
+      "pyturbojpeg",
       "py-opencv",
-      "opencv",
-      "python-lmdb",
-      "libiconv",
       "tifffile",
-      "python-dateutil",
       "torchvision"
      ],
      "source_files": [
+      ".dev_scripts/check_installation.py",
       "tests"
      ]
     }
@@ -2236,11 +1734,11 @@
   ],
   "package": {
    "name": "mmcv-recipe",
-   "version": "1.7.1"
+   "version": "2.0.0"
   },
   "source": {
-   "sha256": "8a2a16ee99b436d9506fe393d09ab17f0209ba8d27d785f3c94c4c3f97e97123",
-   "url": "https://github.com/open-mmlab/mmcv/archive/refs/tags/v1.7.1.tar.gz"
+   "sha256": "826344c72f0d2c17b0499acd712b06459223de319365c23702dcd6d0e309b81d",
+   "url": "https://github.com/open-mmlab/mmcv/archive/refs/tags/v2.0.0.tar.gz"
   }
  },
  "osx_arm64_requirements": {
@@ -2249,31 +1747,24 @@
    "elements": [
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "ninja"
+    "ninja",
+    "psutil"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
-    "future",
     "numpy",
     "pip",
-    "pkg-config",
-    "py-opencv",
     "python",
-    "pytorch",
-    "requests",
-    "setuptools",
-    "six",
-    "torchvision",
-    "typing",
-    "typing_extensions"
+    "pytorch"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "addict",
+    "mmengine",
     "numpy",
     "packaging",
     "pillow",
@@ -2285,15 +1776,11 @@
   "test": {
    "__set__": true,
    "elements": [
-    "libiconv",
-    "libopencv",
-    "opencv",
+    "onnx",
+    "pip",
     "py-opencv",
     "pytest",
-    "python-dateutil",
-    "python-lmdb",
-    "requests",
-    "scipy",
+    "pyturbojpeg",
     "tifffile",
     "torchvision"
    ]
@@ -2302,19 +1789,19 @@
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "mmcv-full"
+   "mmcv"
   ]
  },
  "parsing_error": false,
  "platforms": [
-  "osx_64",
   "linux_64",
+  "osx_64",
   "osx_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/mmcv-recipe.json"
  },
- "raw_meta_yaml": "{% set version = \"1.7.1\" %}\n{% set number = 2 %}\n# see github.com/conda-forge/conda-forge.github.io/issues/1059 for naming discussion\n{% set torch_proc_type = \"cuda\" if cuda_compiler_version != \"None\" else \"cpu\" %}\n{% if cuda_compiler_version != \"None\" %}\n{% set number = number + 200 %}\n{% endif %}\n\npackage:\n  name: mmcv-recipe\n  version: {{ version }}\n\nsource:\n  url: https://github.com/open-mmlab/mmcv/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 8a2a16ee99b436d9506fe393d09ab17f0209ba8d27d785f3c94c4c3f97e97123\nbuild:\n  number: {{ number }}\n  skip: true  # [win]\n  # as of pytorch 1.13, conda-forge only builds for CUDA 11.2+, see\n  # https://github.com/conda-forge/conda-forge-pinning-feedstock/issues/3491\n  skip: true  # [cuda_compiler_version in (\"10.2\", \"11.0\", \"11.1\")]\n\noutputs:\n  - name: mmcv-full\n    build:\n      string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == \"None\"]\n      detect_binary_files_with_prefix: false\n      run_exports:\n        - {{ pin_subpackage('mmcv-full', max_pin='x.x') }}\n      missing_dso_whitelist:\n        # conda-forge::pytorch provides these libs\n        - $RPATH/libc10_cuda.so\n        - $RPATH/libtorch_python.so\n        - $RPATH/libtorch_cpu.so\n        - $RPATH/libc10.so\n        - $RPATH/libc10_cuda.dylib\n        - $RPATH/libtorch_python.dylib\n        - $RPATH/libtorch_cpu.dylib\n        - $RPATH/libc10.dylib\n    script: build_mmcv.sh  # [not win]\n    requirements:\n      build:\n        - cross-python_{{ target_platform }}                   # [build_platform != target_platform]\n        - ninja\n        - numpy                                                # [build_platform != target_platform]\n        - python                                               # [build_platform != target_platform]\n        - pytorch                                              # [build_platform != target_platform]\n        - pytorch ={{ pytorch }}={{ torch_proc_type }}*        # [build_platform != target_platform]\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        # this adds matching cuda requirement to run deps using __cuda package\n        - {{ compiler('cuda') }}    # [cuda_compiler_version != \"None\"]\n      host:\n        - future\n        - numpy\n        - pip\n        - pkg-config  # [unix]\n        - py-opencv\n        - python\n        - pytorch\n        - pytorch ={{ pytorch }}={{ torch_proc_type }}*\n        - requests\n        - setuptools\n        - six\n        - torchvision\n        - typing\n        - typing_extensions\n      run:\n        # intentionally skipping opencv and pytorch (following upstream vendor)\n        - __cuda  # [cuda_compiler_version != \"None\"]\n        - addict\n        - {{ pin_compatible('numpy') }}\n        - packaging\n        - Pillow\n        - pyyaml\n        - typing_extensions\n        - yapf\n      run_constrained:\n        # additional run constraint to the one from the (version-only) run_export;\n        # constraining the CPU builds to CPU pytorch isn't 100% necessary, but cleaner\n        - pytorch =*={{ torch_proc_type }}*\n\n    test:\n      requires:\n        - pytest\n        - requests\n        - scipy\n        - libopencv\n        - py-opencv\n        - opencv\n        - python-lmdb\n        - libiconv\n        - tifffile\n        - python-dateutil\n        - torchvision\n      imports:\n        - mmcv\n      source_files:\n        - tests\n      commands:\n        {% set failing_tests = [\"test_digit_version\",\n                                \"test_imcrop\",\n                                \"test_tensor2imgs\",\n                                \"test_imwrite\",\n                                \"test_imfrombytes\",\n                                \"test_imread\"] %}\n        {% set slow_tests = [\"test_eval_hook\",\n                             \"test_start_param\",\n                             \"test_flat_cosine_runner_hook\",\n                             \"test_momentum_runner_hook\",\n                             \"test_step_runner_hook\",\n                             \"test_adjust_sharpness\",\n                             \"test_adjust_contrast\",\n                             \"test_adjust_brightness\",\n                             \"test_gradient_cumulative_optimizer_hook\",\n                             \"test_auto_contrast\"] %}\n        {% set ignored_files = [\"./tests/test_ops/test_onnx.py\",\n                                \"./tests/test_ops/test_tensorrt.py\",\n                                \"./tests/test_ops/test_tensorrt_preprocess.py\",\n                                \"./tests/test_utils/test_timer.py\",\n                                \"./tests/test_utils/test_progressbar.py\"] %}\n        # ignored tests:\n        # test_onnx.py,test_tensorrt.py,test_tensorrt_preprocess.py - mccv currently compiled without onnx runtime\n        # test_geometric.py:test_imcrop - depending on what backend opencv uses it produces diff results (lipjpeg vs libturbojpeg)\n        # test_io.py - tries to import libturbojpeg that we don't install (conflicts with opencv that uses libjpeg)\n        # test_progressbar.py, test_timer.py - on OSX sleep(1) takes 1.1sec, so all related tests fail\n        # test_image_misc.py::test_tensor2imgs - need to investigate 2/75 mismatch\n        - python3 -m pytest ./tests/ -k \"not ({{ (failing_tests + slow_tests)|join(' or ') }})\" --ignore={{ ignored_files|join(' --ignore=') }}\n        - python3 -c \"import mmcv; print(mmcv.__version__)\"\n\n\nabout:\n  home: https://github.com/open-mmlab/mmcv\n  summary: Foundational library for computer vision research\n  description: |\n    MMCV is a foundational library for computer vision research and supports many research projects.\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  dev_url: https://github.com/open-mmlab/mmcv\n\nextra:\n  recipe-maintainers:\n    - weiji14\n    - apatsekin\n  feedstock-name: mmcv\n",
+ "raw_meta_yaml": "{% set version = \"2.0.0\" %}\n{% set number = 0 %}  # build number\n# see https://github.com/conda-forge/conda-forge.github.io/issues/1059 for naming discussion\n{% set torch_proc_type = \"cuda\" if cuda_compiler_version != \"None\" else \"cpu\" %}\n{% if cuda_compiler_version != \"None\" %}\n{% set number = number + 200 %}\n{% endif %}\n\npackage:\n  name: mmcv-recipe\n  version: {{ version }}\n\nsource:\n  url: https://github.com/open-mmlab/mmcv/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 826344c72f0d2c17b0499acd712b06459223de319365c23702dcd6d0e309b81d\nbuild:\n  number: {{ number }}\n  skip: true  # [win]\n  # as of pytorch 1.13, conda-forge only builds for CUDA 11.2+, see\n  # https://github.com/conda-forge/conda-forge-pinning-feedstock/issues/3491\n  skip: true  # [cuda_compiler_version in (\"10.2\", \"11.0\", \"11.1\")]\n\noutputs:\n  - name: mmcv\n    build:\n      string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n      string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == \"None\"]\n    script: build_mmcv.sh  # [not win]\n    requirements:\n      build:\n        - cross-python_{{ target_platform }}             # [build_platform != target_platform]\n        - ninja\n        - numpy                                          # [build_platform != target_platform]\n        - psutil\n        - python                                         # [build_platform != target_platform]\n        - pytorch                                        # [build_platform != target_platform]\n        - pytorch ={{ pytorch }}={{ torch_proc_type }}*  # [build_platform != target_platform]\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        # this adds matching cuda requirement to run deps using __cuda package\n        - {{ compiler('cuda') }}                         # [cuda_compiler_version != \"None\"]\n      host:\n        - numpy\n        - pip\n        - python\n        - pytorch\n        - pytorch ={{ pytorch }}={{ torch_proc_type }}*\n      run:\n        # intentionally skipping opencv and pytorch (following upstream vendor)\n        - __cuda  # [cuda_compiler_version != \"None\"]\n        - addict\n        - mmengine>=0.2.0\n        - {{ pin_compatible('numpy') }}\n        - packaging\n        - Pillow\n        - pyyaml\n        - typing_extensions\n        - yapf\n      run_constrained:\n        # additional run constraint to the one from the (version-only) run_export;\n        # constraining the CPU builds to CPU pytorch isn't 100% necessary, but cleaner\n        - pytorch =*={{ torch_proc_type }}*\n    test:\n      requires:\n        - onnx\n        - pip\n        - pytest\n        - pyturbojpeg\n        - py-opencv\n        - tifffile\n        - torchvision\n      imports:\n        - mmcv\n      source_files:\n        - .dev_scripts/check_installation.py\n        - tests\n      commands:\n        - pip check\n        - python ./.dev_scripts/check_installation.py\n        - python -m pytest ./tests/\n        - python -c \"import mmcv; print(mmcv.__version__)\"\n\nabout:\n  home: https://github.com/open-mmlab/mmcv\n  summary: OpenMMLab Computer Vision Foundation\n  license: Apache-2.0 AND LicenseRef-NVIDIA-License\n  license_file:\n    - LICENSE\n    - LICENSES.md\n  doc_url: https://mmcv.readthedocs.io\n  dev_url: https://github.com/open-mmlab/mmcv\n\nextra:\n  recipe-maintainers:\n    - weiji14\n    - apatsekin\n  feedstock-name: mmcv\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -2323,22 +1810,16 @@
    "c_compiler_stub",
    "cuda_compiler_stub",
    "cxx_compiler_stub",
-   "future",
+   "mmengine",
    "ninja",
    "numpy",
    "packaging",
    "pillow",
    "pip",
-   "pkg-config",
-   "py-opencv",
+   "psutil",
    "python",
    "pytorch",
    "pyyaml",
-   "requests",
-   "setuptools",
-   "six",
-   "torchvision",
-   "typing",
    "typing_extensions",
    "yapf"
   ]
@@ -2350,7 +1831,8 @@
     "c_compiler_stub",
     "cuda_compiler_stub",
     "cxx_compiler_stub",
-    "ninja"
+    "ninja",
+    "psutil"
    ]
   },
   "host": {
@@ -2359,19 +1841,10 @@
     "c_compiler_stub",
     "cuda_compiler_stub",
     "cxx_compiler_stub",
-    "future",
     "numpy",
     "pip",
-    "pkg-config",
-    "py-opencv",
     "python",
-    "pytorch",
-    "requests",
-    "setuptools",
-    "six",
-    "torchvision",
-    "typing",
-    "typing_extensions"
+    "pytorch"
    ]
   },
   "run": {
@@ -2382,6 +1855,7 @@
     "c_compiler_stub",
     "cuda_compiler_stub",
     "cxx_compiler_stub",
+    "mmengine",
     "numpy",
     "packaging",
     "pillow",
@@ -2393,15 +1867,11 @@
   "test": {
    "__set__": true,
    "elements": [
-    "libiconv",
-    "libopencv",
-    "opencv",
+    "onnx",
+    "pip",
     "py-opencv",
     "pytest",
-    "python-dateutil",
-    "python-lmdb",
-    "requests",
-    "scipy",
+    "pyturbojpeg",
     "tifffile",
     "torchvision"
    ]
@@ -2415,27 +1885,19 @@
     "c_compiler_stub",
     "cuda_compiler_stub",
     "cxx_compiler_stub",
-    "ninja"
+    "ninja",
+    "psutil"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
-    "future",
     "numpy",
     "pip",
-    "pkg-config",
-    "py-opencv",
     "python",
     "pytorch",
     "pytorch =1.13=cpu*",
-    "pytorch =1.13=cuda*",
-    "requests",
-    "setuptools",
-    "six",
-    "torchvision",
-    "typing",
-    "typing_extensions"
+    "pytorch =1.13=cuda*"
    ]
   },
   "run": {
@@ -2444,6 +1906,7 @@
     "Pillow",
     "__cuda",
     "addict",
+    "mmengine>=0.2.0",
     "numpy",
     "packaging",
     "pyyaml",
@@ -2454,22 +1917,18 @@
   "test": {
    "__set__": true,
    "elements": [
-    "libiconv",
-    "libopencv",
-    "opencv",
+    "onnx",
+    "pip",
     "py-opencv",
     "pytest",
-    "python-dateutil",
-    "python-lmdb",
-    "requests",
-    "scipy",
+    "pyturbojpeg",
     "tifffile",
     "torchvision"
    ]
   }
  },
- "url": "https://github.com/open-mmlab/mmcv/archive/refs/tags/v1.7.1.tar.gz",
- "version": "1.7.1",
+ "url": "https://github.com/open-mmlab/mmcv/archive/refs/tags/v2.0.0.tar.gz",
+ "version": "2.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/mmcv-recipe.json"
  }
