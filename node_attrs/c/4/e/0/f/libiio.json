@@ -6,6 +6,8 @@
    "automerge": true
   },
   "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
    "osx_arm64": "osx_64"
   },
   "provider": {
@@ -30,7 +32,7 @@
    "summary": "Library for interfacing with Linux IIO devices"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "libiio",
@@ -83,7 +85,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
@@ -195,7 +197,7 @@
    "summary": "Library for interfacing with Linux IIO devices"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "libiio",
@@ -247,7 +249,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
@@ -358,7 +360,7 @@
    "summary": "Library for interfacing with Linux IIO devices"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "libiio",
@@ -410,7 +412,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
@@ -533,7 +535,7 @@
    "summary": "Library for interfacing with Linux IIO devices"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "libiio",
@@ -591,7 +593,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
@@ -682,7 +684,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
@@ -773,7 +775,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
@@ -863,7 +865,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
@@ -951,7 +953,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
@@ -1040,7 +1042,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
@@ -1114,7 +1116,7 @@
    "summary": "Library for interfacing with Linux IIO devices"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "libiio",
@@ -1165,7 +1167,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
@@ -1273,7 +1275,7 @@
    "summary": "Library for interfacing with Linux IIO devices"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "libiio",
@@ -1322,7 +1324,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
@@ -1435,7 +1437,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/libiio.json"
  },
- "raw_meta_yaml": "{% set version = \"0.24\" %}\n{% set build = 0 %}\n\npackage:\n  name: libiio-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/analogdevicesinc/libiio/archive/v{{ version }}.tar.gz\n  sha256: a2b5d848531ea64fd9f95327dfd5a588bd227d9577281ec375e822702c6a52d5\n\nbuild:\n  number: {{ build }}\n\noutputs:\n  - name: libiio-c\n    script: install_libiio.bat  # [win]\n    script: install_libiio.sh  # [not win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('libiio-c', max_pin='x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - cmake\n        - make  # [not win]\n        - ninja  # [win]\n        - pkg-config\n        - sysroot_linux-64 2.17  # [linux64]\n      host:\n        - bison  # [linux]\n        - flex  # [linux]\n        - libaio  # [linux]\n        - libusb >=1\n        - libxml2\n        - zstd\n      run_constrained:\n        # require the MACOSX_DEPLOYMENT_TARGET set in conda_build_config.yaml\n        # (10.11 to be able to compile bonjour support)\n        # (10.12 to have clock_gettime)\n        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n    test:\n      commands:\n        # verify that executables can be run\n        {% set cmds = [\"iio_attr\", \"iio_genxml\", \"iio_info\", \"iio_readdev\"] %}\n        {% set cmds = cmds + [\"iio_reg\", \"iio_writedev\"] %}\n        {% set cmds = cmds + [\"iio_adi_xflow_check\"] %}  # [not win]\n        {% set cmds = cmds + [\"iiod\"] %}  # [linux]\n        {% for each_cmd in cmds %}\n        - {{ each_cmd }} --help\n        {% endfor %}\n\n        # verify that headers get installed\n        - test -f $PREFIX/include/iio.h  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\iio.h exit 1  # [win]\n\n        # verify that libraries get installed\n        - test -f $PREFIX/lib/libiio${SHLIB_EXT}  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\libiio.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\libiio.lib exit 1  # [win]\n\n  - name: pylibiio\n    script: install_pylibiio.bat  # [win]\n    script: install_pylibiio.sh  # [not win]\n    build:\n      string: py_{{ build }}\n      noarch: python\n    requirements:\n      build:\n        - cmake\n        - make  # [not win]\n        - ninja  # [win]\n        # cross-compilation dependencies\n        - python >=3.6                        # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n      host:\n        - {{ pin_subpackage('libiio-c', exact=True) }}\n        - pip\n        - python >=3.6\n        - setuptools\n      run:\n        - {{ pin_subpackage('libiio-c', max_pin='x') }}\n        - python\n    test:\n      imports:\n        - iio\n\n  - name: libiio\n    build:\n      run_exports:\n        - {{ pin_subpackage('libiio-c', max_pin='x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage('libiio-c', exact=True) }}\n        - {{ pin_subpackage('pylibiio', exact=True) }}\n    test:\n      commands:\n        - iio_info --help\n      imports:\n        - iio\n\nabout:\n  home: https://github.com/analogdevicesinc/libiio\n  license: LGPL-2.1-or-later AND GPL-3.0-or-later\n  license: LGPL-2.1-or-later AND GPL-3.0-or-later AND Unlicense AND ISC AND BSD-2-Clause  # [win]\n  license_family: LGPL\n  license_file:\n    - COPYING.txt\n    - COPYING_GPL.txt\n    - deps/mdns/LICENSE  # [win]\n    - deps/wingetopt/LICENSE  # [win]\n  summary: Library for interfacing with Linux IIO devices\n  description: |\n    libiio is used to interface to the Linux Industrial Input/Output (IIO) Subsystem.\n    The Linux IIO subsystem is intended to provide support for devices that in some\n    sense are analog to digital or digital to analog converters (ADCs, DACs). This\n    includes, but is not limited to ADCs, Accelerometers, Gyros, IMUs, Capacitance to\n    Digital Converters (CDCs), Pressure Sensors, Color, Light and Proximity Sensors,\n    Temperature Sensors, Magnetometers, DACs, DDS (Direct Digital Synthesis), PLLs\n    (Phase Locked Loops), Variable/Programmable Gain Amplifiers (VGA, PGA), and RF\n    transceivers. You can use libiio natively on an embedded Linux target (local mode),\n    or use libiio to communicate remotely to that same target from a host Linux,\n    Windows or MAC over USB or Ethernet or Serial.\n  doc_url: https://analogdevicesinc.github.io/libiio/\n  dev_url: https://github.com/analogdevicesinc/libiio\n\nextra:\n  feedstock-name: libiio\n  recipe-maintainers:\n    - ryanvolz\n",
+ "raw_meta_yaml": "{% set version = \"0.24\" %}\n{% set build = 1 %}\n\npackage:\n  name: libiio-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/analogdevicesinc/libiio/archive/v{{ version }}.tar.gz\n  sha256: a2b5d848531ea64fd9f95327dfd5a588bd227d9577281ec375e822702c6a52d5\n\nbuild:\n  number: {{ build }}\n\noutputs:\n  - name: libiio-c\n    script: install_libiio.bat  # [win]\n    script: install_libiio.sh  # [not win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('libiio-c', max_pin='x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - cmake\n        - make  # [not win]\n        - ninja  # [win]\n        - pkg-config\n        - sysroot_linux-64 2.17  # [linux64]\n      host:\n        - bison  # [linux]\n        - flex  # [linux]\n        - libaio  # [linux]\n        - libusb >=1\n        - libxml2\n        - zstd\n      run_constrained:\n        # require the MACOSX_DEPLOYMENT_TARGET set in conda_build_config.yaml\n        # (10.11 to be able to compile bonjour support)\n        # (10.12 to have clock_gettime)\n        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n    test:\n      commands:\n        # verify that executables can be run\n        {% set cmds = [\"iio_attr\", \"iio_genxml\", \"iio_info\", \"iio_readdev\"] %}\n        {% set cmds = cmds + [\"iio_reg\", \"iio_writedev\"] %}\n        {% set cmds = cmds + [\"iio_adi_xflow_check\"] %}  # [not win]\n        {% set cmds = cmds + [\"iiod\"] %}  # [linux]\n        {% for each_cmd in cmds %}\n        - {{ each_cmd }} --help\n        {% endfor %}\n\n        # verify that headers get installed\n        - test -f $PREFIX/include/iio.h  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\iio.h exit 1  # [win]\n\n        # verify that libraries get installed\n        - test -f $PREFIX/lib/libiio${SHLIB_EXT}  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\libiio.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\libiio.lib exit 1  # [win]\n\n  - name: pylibiio\n    script: install_pylibiio.bat  # [win]\n    script: install_pylibiio.sh  # [not win]\n    build:\n      string: py_{{ build }}\n      noarch: python\n    requirements:\n      build:\n        - cmake\n        - make  # [not win]\n        - ninja  # [win]\n        # cross-compilation dependencies\n        - python >=3.6                        # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n      host:\n        - {{ pin_subpackage('libiio-c', exact=True) }}\n        - pip\n        - python >=3.6\n        - setuptools\n      run:\n        - {{ pin_subpackage('libiio-c', max_pin='x') }}\n        - python\n    test:\n      imports:\n        - iio\n\n  - name: libiio\n    build:\n      run_exports:\n        - {{ pin_subpackage('libiio-c', max_pin='x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage('libiio-c', exact=True) }}\n        - {{ pin_subpackage('pylibiio', exact=True) }}\n    test:\n      commands:\n        - iio_info --help\n      imports:\n        - iio\n\nabout:\n  home: https://github.com/analogdevicesinc/libiio\n  license: LGPL-2.1-or-later AND GPL-3.0-or-later\n  license: LGPL-2.1-or-later AND GPL-3.0-or-later AND Unlicense AND ISC AND BSD-2-Clause  # [win]\n  license_family: LGPL\n  license_file:\n    - COPYING.txt\n    - COPYING_GPL.txt\n    - deps/mdns/LICENSE  # [win]\n    - deps/wingetopt/LICENSE  # [win]\n  summary: Library for interfacing with Linux IIO devices\n  description: |\n    libiio is used to interface to the Linux Industrial Input/Output (IIO) Subsystem.\n    The Linux IIO subsystem is intended to provide support for devices that in some\n    sense are analog to digital or digital to analog converters (ADCs, DACs). This\n    includes, but is not limited to ADCs, Accelerometers, Gyros, IMUs, Capacitance to\n    Digital Converters (CDCs), Pressure Sensors, Color, Light and Proximity Sensors,\n    Temperature Sensors, Magnetometers, DACs, DDS (Direct Digital Synthesis), PLLs\n    (Phase Locked Loops), Variable/Programmable Gain Amplifiers (VGA, PGA), and RF\n    transceivers. You can use libiio natively on an embedded Linux target (local mode),\n    or use libiio to communicate remotely to that same target from a host Linux,\n    Windows or MAC over USB or Ethernet or Serial.\n  doc_url: https://analogdevicesinc.github.io/libiio/\n  dev_url: https://github.com/analogdevicesinc/libiio\n\nextra:\n  feedstock-name: libiio\n  recipe-maintainers:\n    - ryanvolz\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1563,7 +1565,7 @@
    "summary": "Library for interfacing with Linux IIO devices"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "libiio",
@@ -1613,7 +1615,7 @@
    {
     "build": {
      "noarch": "python",
-     "string": "py_0"
+     "string": "py_1"
     },
     "name": "pylibiio",
     "requirements": {
