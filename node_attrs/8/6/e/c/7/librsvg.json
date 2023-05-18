@@ -20,7 +20,7 @@
    "summary": "librsvg is a library to render SVG files using cairo."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "librsvg"
    ]
@@ -130,7 +130,7 @@
    "summary": "librsvg is a library to render SVG files using cairo."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "librsvg"
    ]
@@ -240,7 +240,7 @@
    "summary": "librsvg is a library to render SVG files using cairo."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "librsvg"
    ]
@@ -350,7 +350,7 @@
    "summary": "librsvg is a library to render SVG files using cairo."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "librsvg",
     "librsvg",
@@ -573,7 +573,7 @@
    "summary": "librsvg is a library to render SVG files using cairo."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "librsvg"
    ]
@@ -683,7 +683,7 @@
    "summary": "librsvg is a library to render SVG files using cairo."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "librsvg"
    ]
@@ -803,7 +803,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/librsvg.json"
  },
- "raw_meta_yaml": "{% set name = \"librsvg\" %}\n{% set version = \"2.56.0\" %}\n{% set abi_version = \"2.0\" %}\n{% set version_majmin = version.rsplit('.', 1)[0] %}\n{% set sha256 = \"194b5097d9cd107495f49c291cf0da65ec2b4bb55e5628369751a3f44ba222b3\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.xz\n  url: https://download.gnome.org/sources/{{ name }}/{{ version_majmin }}/{{ name }}-{{ version }}.tar.xz\n  sha256: {{ sha256 }}\n  patches:\n    - add_rust_lto.patch\n\nbuild:\n  number: 0\n  run_exports:\n    # Looks good but no new info after 2.43 so keeping it x.x for safety.\n    # https://abi-laboratory.pro/?view=timeline&l=librsvg\n    - {{ pin_subpackage('librsvg', max_pin='x') }}\n\nrequirements:\n  build:\n    - cmake  # [win]\n    - make  # [unix]\n    - docutils\n    - gi-docgen\n    - gobject-introspection\n    - pkg-config\n    - {{ compiler('rust') }}\n    - {{ compiler('c') }}\n    - gnuconfig  # [unix]\n    - glib        # [build_platform != target_platform]\n    - libxml2     # [build_platform != target_platform]\n    - cairo       # [build_platform != target_platform]\n    - gdk-pixbuf  # [build_platform != target_platform]\n    - pango       # [build_platform != target_platform]\n  host:\n    - glib\n    - gettext\n    - libiconv  # [win]\n    - libxml2\n    - cairo\n    - gdk-pixbuf\n    - pango\n  run:\n    - pango\n\ntest:\n  requires:\n    - pkg-config\n  commands:\n    - rsvg-convert --version\n\n    {% set name_abi = name + \"-\" + abi_version %}\n    {% set lib = name + \"-\" + abi_version.split('.', 1)[0] %}  # [unix]\n    {% set lib = \"rsvg-\" + abi_version %}  # [win]\n    {% set vs_major = dict(vs2015=\"14\", vs2017=\"15\", vs2019=\"16\")[c_compiler] %}  # [win]\n\n    # verify that libs get installed and can be located through pkg-config\n    - test -f $PREFIX/lib/{{ lib }}${SHLIB_EXT}  # [unix]\n    - test ! -f $PREFIX/lib/{{ lib }}.a  # [unix]\n    - test -f `pkg-config --variable=libdir --dont-define-prefix {{ name_abi }}`/{{ lib }}${SHLIB_EXT}  # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ lib }}-vs{{ vs_major }}.dll exit 1  # [win]\n    - for /f \"usebackq tokens=*\" %%a in (`pkg-config --variable=exec_prefix --dont-define-prefix {{ name_abi }}`) do if not exist \"%%a/bin/{{ lib }}-vs{{ vs_major }}.dll\" exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ lib }}.lib exit 1  # [win]\n    - for /f \"usebackq tokens=*\" %%a in (`pkg-config --variable=libdir --dont-define-prefix {{ name_abi }}`) do if not exist \"%%a/{{ lib }}.lib\" exit 1  # [win]\n\n    # verify that gdk-pixbuf loader library gets installed\n    - test -f $PREFIX/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.so  # [unix]\n    - test ! -f $PREFIX/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.a  # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\gdk-pixbuf-2.0\\\\2.10.0\\\\loaders\\\\libpixbufloader-svg.dll exit 1  # [win]\n\n    # verify that headers get installed\n    - test -f $PREFIX/include/{{ name_abi }}/{{ name }}/rsvg-features.h  # [unix]\n    - test -f $PREFIX/include/{{ name_abi }}/{{ name }}/rsvg-cairo.h  # [unix]\n    - test -f $PREFIX/include/{{ name_abi }}/{{ name }}/rsvg.h  # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\{{ name_abi }}\\\\{{ name }}\\\\rsvg-features.h exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\{{ name_abi }}\\\\{{ name }}\\\\rsvg-cairo.h exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\{{ name_abi }}\\\\{{ name }}\\\\rsvg.h exit 1  # [win]\n\n    # test for gobject-introspection files\n    - test -f $PREFIX/lib/girepository-1.0/Rsvg-2.0.typelib  # [unix]\n    - if not exist %LIBRARY_LIB%\\\\girepository-1.0\\\\Rsvg-2.0.typelib exit 1  # [win]\n\nabout:\n  home: https://wiki.gnome.org/Projects/LibRsvg\n  license: LGPL-2.1-or-later\n  license_file: COPYING.LIB\n  summary: librsvg is a library to render SVG files using cairo.\n\nextra:\n  recipe-maintainers:\n    - pkgw\n    - tschoonj\n",
+ "raw_meta_yaml": "{% set name = \"librsvg\" %}\n{% set version = \"2.56.0\" %}\n{% set abi_version = \"2.0\" %}\n{% set version_majmin = version.rsplit('.', 1)[0] %}\n{% set sha256 = \"194b5097d9cd107495f49c291cf0da65ec2b4bb55e5628369751a3f44ba222b3\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.xz\n  url: https://download.gnome.org/sources/{{ name }}/{{ version_majmin }}/{{ name }}-{{ version }}.tar.xz\n  sha256: {{ sha256 }}\n  patches:\n    - add_rust_lto.patch\n\nbuild:\n  number: 1\n  run_exports:\n    # Looks good but no new info after 2.43 so keeping it x.x for safety.\n    # https://abi-laboratory.pro/?view=timeline&l=librsvg\n    - {{ pin_subpackage('librsvg', max_pin='x') }}\n\nrequirements:\n  build:\n    - cmake  # [win]\n    - make  # [unix]\n    - docutils\n    - gi-docgen\n    - gobject-introspection\n    - pkg-config\n    - {{ compiler('rust') }}\n    - {{ compiler('c') }}\n    - gnuconfig  # [unix]\n    - glib        # [build_platform != target_platform]\n    - libxml2     # [build_platform != target_platform]\n    - cairo       # [build_platform != target_platform]\n    - gdk-pixbuf  # [build_platform != target_platform]\n    - pango       # [build_platform != target_platform]\n  host:\n    - glib\n    - gettext\n    - libiconv  # [win]\n    - libxml2\n    - cairo\n    - gdk-pixbuf\n    - pango\n  run:\n    - pango\n\ntest:\n  requires:\n    - pkg-config\n  commands:\n    - rsvg-convert --version\n\n    {% set name_abi = name + \"-\" + abi_version %}\n    {% set lib = name + \"-\" + abi_version.split('.', 1)[0] %}  # [unix]\n    {% set lib = \"rsvg-\" + abi_version %}  # [win]\n    {% set vs_major = dict(vs2015=\"14\", vs2017=\"15\", vs2019=\"16\")[c_compiler] %}  # [win]\n\n    # verify that libs get installed and can be located through pkg-config\n    - test -f $PREFIX/lib/{{ lib }}${SHLIB_EXT}  # [unix]\n    - test ! -f $PREFIX/lib/{{ lib }}.a  # [unix]\n    - test -f `pkg-config --variable=libdir --dont-define-prefix {{ name_abi }}`/{{ lib }}${SHLIB_EXT}  # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ lib }}-vs{{ vs_major }}.dll exit 1  # [win]\n    - for /f \"usebackq tokens=*\" %%a in (`pkg-config --variable=exec_prefix --dont-define-prefix {{ name_abi }}`) do if not exist \"%%a/bin/{{ lib }}-vs{{ vs_major }}.dll\" exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ lib }}.lib exit 1  # [win]\n    - for /f \"usebackq tokens=*\" %%a in (`pkg-config --variable=libdir --dont-define-prefix {{ name_abi }}`) do if not exist \"%%a/{{ lib }}.lib\" exit 1  # [win]\n\n    # verify that gdk-pixbuf loader library gets installed\n    - test -f $PREFIX/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.so  # [unix]\n    - test ! -f $PREFIX/lib/gdk-pixbuf-2.0/2.10.0/loaders/libpixbufloader-svg.a  # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\gdk-pixbuf-2.0\\\\2.10.0\\\\loaders\\\\libpixbufloader-svg.dll exit 1  # [win]\n\n    # verify that headers get installed\n    - test -f $PREFIX/include/{{ name_abi }}/{{ name }}/rsvg-features.h  # [unix]\n    - test -f $PREFIX/include/{{ name_abi }}/{{ name }}/rsvg-cairo.h  # [unix]\n    - test -f $PREFIX/include/{{ name_abi }}/{{ name }}/rsvg.h  # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\{{ name_abi }}\\\\{{ name }}\\\\rsvg-features.h exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\{{ name_abi }}\\\\{{ name }}\\\\rsvg-cairo.h exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\{{ name_abi }}\\\\{{ name }}\\\\rsvg.h exit 1  # [win]\n\n    # test for gobject-introspection files\n    - test -f $PREFIX/lib/girepository-1.0/Rsvg-2.0.typelib  # [unix]\n    - if not exist %LIBRARY_LIB%\\\\girepository-1.0\\\\Rsvg-2.0.typelib exit 1  # [win]\n\nabout:\n  home: https://wiki.gnome.org/Projects/LibRsvg\n  license: LGPL-2.1-or-later\n  license_file: COPYING.LIB\n  summary: librsvg is a library to render SVG files using cairo.\n\nextra:\n  recipe-maintainers:\n    - pkgw\n    - tschoonj\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -921,7 +921,7 @@
    "summary": "librsvg is a library to render SVG files using cairo."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "librsvg"
    ]
