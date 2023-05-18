@@ -15,7 +15,7 @@
    "summary": "A configuration editing tool and API"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -85,6 +85,9 @@
    "version": "1.12.0"
   },
   "source": {
+   "patches": [
+    "patches/1482843aa880018213c1d1832c91de962754028b.patch"
+   ],
    "sha256": "321942c9cc32185e2e9cb72d0a70eea106635b50269075aca6714e3ec282cb87",
    "url": "http://download.augeas.net/augeas-1.12.0.tar.gz"
   }
@@ -130,7 +133,7 @@
    "summary": "A configuration editing tool and API"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -257,6 +260,10 @@
    "version": "1.12.0"
   },
   "source": {
+   "patches": [
+    "patches/1482843aa880018213c1d1832c91de962754028b.patch",
+    "patches/1482843aa880018213c1d1832c91de962754028b.patch"
+   ],
    "sha256": "321942c9cc32185e2e9cb72d0a70eea106635b50269075aca6714e3ec282cb87",
    "url": "http://download.augeas.net/augeas-1.12.0.tar.gz"
   }
@@ -273,7 +280,7 @@
    "summary": "A configuration editing tool and API"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -343,6 +350,9 @@
    "version": "1.12.0"
   },
   "source": {
+   "patches": [
+    "patches/1482843aa880018213c1d1832c91de962754028b.patch"
+   ],
    "sha256": "321942c9cc32185e2e9cb72d0a70eea106635b50269075aca6714e3ec282cb87",
    "url": "http://download.augeas.net/augeas-1.12.0.tar.gz"
   }
@@ -392,7 +402,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/libaugeas-split.json"
  },
- "raw_meta_yaml": "{% set name = \"libaugeas\" %}\n{% set version = \"1.12.0\" %}\n\npackage:\n  name: {{ name }}-split\n  version: {{ version }}\n\nsource:\n  url: http://download.augeas.net/augeas-{{ version }}.tar.gz\n  sha256: 321942c9cc32185e2e9cb72d0a70eea106635b50269075aca6714e3ec282cb87\n\nbuild:\n  number: 0\n\noutputs:\n  - name: libaugeas\n    script: install.sh\n    build:\n      # https://github.com/hercules-team/augeas/issues/612\n      skip: True  # [win]\n      run_exports:\n        # https://abi-laboratory.pro/index.php?view=timeline&l=augeas\n        - {{ pin_subpackage('libaugeas', max_pin='x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - make\n        - pkg-config\n      host:\n        - readline\n        - libxml2\n    test:\n      requires:\n        - pkg-config\n      commands:\n        - test -f $PREFIX/lib/libaugeas${SHLIB_EXT}\n        - test -f $PREFIX/include/augeas.h\n        - test ! -f $PREFIX/lib/libaugeas.a\n        - export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig\n        - test -f $PREFIX/lib/pkgconfig/augeas.pc\n        - pkg-config --cflags augeas\n\n  - name: libaugeas-static\n    script: install.sh\n    build:\n      # https://github.com/hercules-team/augeas/issues/612\n      skip: True  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - make\n        - pkg-config\n      host:\n        - {{ pin_subpackage('libaugeas', exact=True) }}\n      run:\n        - {{ pin_subpackage('libaugeas', exact=True) }}\n    test:\n      commands:\n        - test -f ${PREFIX}/lib/libaugeas.a\n\nabout:\n  home: http://augeas.net/\n  license: LGPL-2.1-only\n  license_family: GPL\n  license_file: COPYING\n  summary: 'A configuration editing tool and API'\n  doc_url: http://augeas.net/docs/index.html\n  dev_url: https://github.com/hercules-team/augeas\n\nextra:\n  recipe-maintainers:\n    - nehaljwani\n",
+ "raw_meta_yaml": "{% set name = \"libaugeas\" %}\n{% set version = \"1.12.0\" %}\n\npackage:\n  name: {{ name }}-split\n  version: {{ version }}\n\nsource:\n  url: http://download.augeas.net/augeas-{{ version }}.tar.gz\n  sha256: 321942c9cc32185e2e9cb72d0a70eea106635b50269075aca6714e3ec282cb87\n  patches:\n    # xref: https://github.com/hercules-team/augeas/pull/791\n    - patches/1482843aa880018213c1d1832c91de962754028b.patch\n\nbuild:\n  number: 1\n\noutputs:\n  - name: libaugeas\n    script: install.sh\n    build:\n      # https://github.com/hercules-team/augeas/issues/612\n      skip: True  # [win]\n      run_exports:\n        # https://abi-laboratory.pro/index.php?view=timeline&l=augeas\n        - {{ pin_subpackage('libaugeas', max_pin='x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - make\n        - pkg-config\n      host:\n        - readline\n        - libxml2\n    test:\n      requires:\n        - pkg-config\n      commands:\n        - test -f $PREFIX/lib/libaugeas${SHLIB_EXT}\n        - test -f $PREFIX/include/augeas.h\n        - test ! -f $PREFIX/lib/libaugeas.a\n        - export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig\n        - test -f $PREFIX/lib/pkgconfig/augeas.pc\n        - pkg-config --cflags augeas\n\n  - name: libaugeas-static\n    script: install.sh\n    build:\n      # https://github.com/hercules-team/augeas/issues/612\n      skip: True  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - make\n        - pkg-config\n      host:\n        - {{ pin_subpackage('libaugeas', exact=True) }}\n      run:\n        - {{ pin_subpackage('libaugeas', exact=True) }}\n    test:\n      commands:\n        - test -f ${PREFIX}/lib/libaugeas.a\n\nabout:\n  home: http://augeas.net/\n  license: LGPL-2.1-only\n  license_family: GPL\n  license_file: COPYING\n  summary: 'A configuration editing tool and API'\n  doc_url: http://augeas.net/docs/index.html\n  dev_url: https://github.com/hercules-team/augeas\n\nextra:\n  recipe-maintainers:\n    - nehaljwani\n",
  "req": {
   "__set__": true,
   "elements": [
