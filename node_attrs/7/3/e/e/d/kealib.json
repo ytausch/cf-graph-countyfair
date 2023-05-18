@@ -26,7 +26,7 @@
    "summary": "The KEA format provides an implementation of the GDAL specification within the the HDF5 file format."
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -160,7 +160,7 @@
    "summary": "The KEA format provides an implementation of the GDAL specification within the the HDF5 file format."
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -294,7 +294,7 @@
    "summary": "The KEA format provides an implementation of the GDAL specification within the the HDF5 file format."
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -428,7 +428,7 @@
    "summary": "The KEA format provides an implementation of the GDAL specification within the the HDF5 file format."
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -824,7 +824,7 @@
    "summary": "The KEA format provides an implementation of the GDAL specification within the the HDF5 file format."
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -958,7 +958,7 @@
    "summary": "The KEA format provides an implementation of the GDAL specification within the the HDF5 file format."
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1101,7 +1101,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/kealib.json"
  },
- "raw_meta_yaml": "{% set version = \"1.5.1\" %}\n\npackage:\n  name: kealib-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/ubarsc/kealib/releases/download/kealib-{{ version }}/kealib-{{ version }}.tar.gz\n  sha256: 06cd547b1e40394b9539beaf6982bd249e8ee93d6150295e9cd9161d00829657\n  patches:\n    - python_cross_compile.patch\n\nbuild:\n  number: 2\n  skip: true  # [win and vc<14]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make  # [unix]\n  host:\n    - hdf5\n  run:\n    - hdf5\n    \noutputs:\n  - name: kealib\n    script: install_lib.sh  # [unix]\n    script: install_lib.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('kealib', max_pin='x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n      host:\n        - hdf5\n      run:\n        - hdf5\n        \n  - name: pykealib\n    script: build_python.sh  # [unix]\n    script: bld_python.bat  # [win]\n    entry_points:\n      - kea_build_neighbours = kealib.build_neighbours:main\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n        # don't install cross compile etc as this breaks the cmake/python stuff\n      host:\n        - python\n        - numpy\n        - pybind11\n        - awkward\n        - {{ pin_subpackage('kealib', exact=True) }}\n      run:\n        - python\n        - awkward\n        - {{ pin_compatible('numpy') }}\n        - {{ pin_subpackage('kealib', exact=True) }}\n    # skip for now - neither GDAL nor fakegdal installed at this point\n    # Adding dependency on GDAL ends up being circular.\n    # Maybe should install fakegdal ?\n    #test:\n    #  imports:\n    #    - kealib.extrat\n    #  commands:\n    #    - kea_build_neighbours -h\n\n#test:\n#  requires:\n#    - libgdal\n#  commands:\n#    # check we haven't broken GDAL\n#    - gdal_translate --formats\n\nabout:\n  home: http://kealib.org/\n  license: MIT\n  license_file: LICENSE.txt\n  summary: The KEA format provides an implementation of the GDAL specification within the the HDF5 file format.\n  description: |\n    \"KEA is an image file format, named after the New Zealand bird, that provides a full implementation \n    of the GDAL data model and is implemented within a HDF5 file. A software library, libkea, is used \n    to access the file format. The format has comparable performance with existing formats while \n    producing smaller file sizes and is already within active use for a number of projects \n    within Landcare Research, New Zealand, and the wider community.\"\n  doc_url: https://gdal.org/drivers/raster/kea.html\n  dev_url: https://github.com/ubarsc/kealib\n\nextra:\n  recipe-maintainers:\n    - gillins\n    - danclewley\n",
+ "raw_meta_yaml": "{% set version = \"1.5.1\" %}\n\npackage:\n  name: kealib-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/ubarsc/kealib/releases/download/kealib-{{ version }}/kealib-{{ version }}.tar.gz\n  sha256: 06cd547b1e40394b9539beaf6982bd249e8ee93d6150295e9cd9161d00829657\n  patches:\n    - python_cross_compile.patch\n\nbuild:\n  number: 3\n  skip: true  # [win and vc<14]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make  # [unix]\n  host:\n    - hdf5\n  run:\n    - hdf5\n    \noutputs:\n  - name: kealib\n    script: install_lib.sh  # [unix]\n    script: install_lib.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('kealib', max_pin='x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n      host:\n        - hdf5\n      run:\n        - hdf5\n        \n  - name: pykealib\n    script: build_python.sh  # [unix]\n    script: bld_python.bat  # [win]\n    entry_points:\n      - kea_build_neighbours = kealib.build_neighbours:main\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n        # don't install cross compile etc as this breaks the cmake/python stuff on Linux\n        # but appears to be needed on OSX\n        - python                                 # [osx and build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [osx and build_platform != target_platform]\n      host:\n        - python\n        - numpy\n        - pybind11\n        - awkward\n        - {{ pin_subpackage('kealib', exact=True) }}\n      run:\n        - python\n        - awkward\n        - {{ pin_compatible('numpy') }}\n        - {{ pin_subpackage('kealib', exact=True) }}\n    # skip for now - neither GDAL nor fakegdal installed at this point\n    # Adding dependency on GDAL ends up being circular.\n    # Maybe should install fakegdal ?\n    #test:\n    #  imports:\n    #    - kealib.extrat\n    #  commands:\n    #    - kea_build_neighbours -h\n\n#test:\n#  requires:\n#    - libgdal\n#  commands:\n#    # check we haven't broken GDAL\n#    - gdal_translate --formats\n\nabout:\n  home: http://kealib.org/\n  license: MIT\n  license_file: LICENSE.txt\n  summary: The KEA format provides an implementation of the GDAL specification within the the HDF5 file format.\n  description: |\n    \"KEA is an image file format, named after the New Zealand bird, that provides a full implementation \n    of the GDAL data model and is implemented within a HDF5 file. A software library, libkea, is used \n    to access the file format. The format has comparable performance with existing formats while \n    producing smaller file sizes and is already within active use for a number of projects \n    within Landcare Research, New Zealand, and the wider community.\"\n  doc_url: https://gdal.org/drivers/raster/kea.html\n  dev_url: https://github.com/ubarsc/kealib\n\nextra:\n  recipe-maintainers:\n    - gillins\n    - danclewley\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1210,7 +1210,7 @@
    "summary": "The KEA format provides an implementation of the GDAL specification within the the HDF5 file format."
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
