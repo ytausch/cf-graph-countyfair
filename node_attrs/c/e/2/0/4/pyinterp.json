@@ -41,9 +41,9 @@
     "mkl",
     "gsl"
    ],
-   "number": "0",
+   "number": "1",
    "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . -vv --global-option=build_ext --global-option=\"--mkl=yes\" --global-option=\"--conda-forge\"",
-   "string": "mkl_py38h1234567_0"
+   "string": "mkl_py311h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -352,10 +352,10 @@
     "mkl",
     "mkl"
    ],
-   "number": "0",
-   "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/python.exe -m pip install . -vv --global-option=build_ext --global-option=\"--mkl=yes\" --global-option=\"--conda-forge\"",
+   "number": "1",
+   "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/python.exe -m pip install . -vv --global-option=build_ext --global-option=\"--mkl=yes\" --global-option=\"--conda-forge\" --global-option=\"--generator=Visual Studio 17 2022\"",
    "skip": true,
-   "string": "mkl_py310h1234567_0"
+   "string": "mkl_py310h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1011,9 +1011,9 @@
     "mkl",
     "gsl"
    ],
-   "number": "0",
+   "number": "1",
    "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . -vv --global-option=build_ext --global-option=\"--mkl=yes\" --global-option=\"--conda-forge\"",
-   "string": "mkl_py38h1234567_0"
+   "string": "mkl_py310h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1273,10 +1273,10 @@
     "mkl",
     "gsl"
    ],
-   "number": "0",
+   "number": "1",
    "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/bin/python -m pip install . -vv --global-option=build_ext --global-option=\"--mkl=yes\" --global-option=\"--conda-forge\"",
    "skip": true,
-   "string": "mkl_py39h1234567_0"
+   "string": "mkl_py39h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1439,14 +1439,14 @@
  "parsing_error": false,
  "platforms": [
   "osx_64",
-  "linux_64",
   "win_64",
+  "linux_64",
   "osx_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/pyinterp.json"
  },
- "raw_meta_yaml": "{% set name = \"pyinterp\" %}\n{% set version = \"2023.2.1\" %}\n{% set build = 0 %}\n\n# recipe-lint fails if blas is undefined\n{% set blas = blas or \"openblas\" %}\n{% if blas == \"openblas\" %}\n# prioritize openblas via build number\n{% set build = build + 100 %}\n{% endif %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/CNES/pangeo-{{ name }}/releases/download/{{ version }}/{{ name }}-{{ version }}.tar.gz\n  sha256: bfaaf0a963627ed516d5db08c3516299736b88e0b70c20d9406d0673d18cccda\n\nbuild:\n  {% if blas == \"openblas\" %}\n  {% set mkl_option = \"no\" %}\n  {% else %}\n  {% set mkl_option = \"yes\" %}\n  {% endif %}\n  number: {{ build }}\n  script: {{ PYTHON }} -m pip install . -vv --global-option=build_ext --global-option=\"--mkl={{ mkl_option }}\" --global-option=\"--conda-forge\"\n  skip: true  # [linux32 or win32 or py<36 or (arm64 and blas != \"openblas\")]\n\n  {% if blas == \"openblas\" %}\n  {% set blas_prefix = \"openblas\" %}\n  {% else %}\n  {% set blas_prefix = \"mkl\" %}\n  {% endif %}\n  string: {{ blas_prefix }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build }}\n\n  ignore_run_exports:\n    - mkl                                 # [blas == \"mkl\"]\n    - openblas                            # [blas == \"openblas\"]\n    - gsl                                 # [linux or osx]\n\nrequirements:\n  build:\n    - python                              # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n    - setuptools                          # [build_platform != target_platform]\n    - {{ compiler('cxx') }}               # [linux or osx]\n    - vs2017_win-64                       # [win]\n    - cmake\n    - make                                # [linux]\n  host:\n    - dask\n    - eigen\n    - gsl >=2.7\n    - boost-cpp >=1.79.0\n    - mkl-devel                           # [blas == \"mkl\"]\n    - openblas                            # [blas == \"openblas\"]\n    - numpy\n    - pip\n    - pytest\n    - python\n    - setuptools\n    - xarray\n  run:\n    - {{ pin_compatible('numpy') }}\n    - dask\n    - mkl *                               # [blas == \"mkl\"]\n    - openblas *                          # [blas == \"openblas\"]\n    - python\n    - xarray\n\ntest:\n  requires:\n    - pytest\n  commands:\n    - pytest --pyargs pyinterp\n\nabout:\n  home: https://github.com/CNES/pangeo-pyinterp\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Python library for optimized geo-referenced interpolation\n\n  description: |\n    Tools for interpolating geo-referenced data used in the field of\n    geosciences. There are other libraries that cover this problem, but written\n    entirely in Python, the performance of these projects was not quite\n    sufficient for our needs. That is why this project was created.\n  doc_url: https://pangeo-pyinterp.readthedocs.io/\n  dev_url: https://github.com/CNES/pangeo-pyinterp\n\nextra:\n  recipe-maintainers:\n    - fbriol\n",
+ "raw_meta_yaml": "{% set name = \"pyinterp\" %}\n{% set version = \"2023.2.1\" %}\n{% set build = 1 %}\n\n# recipe-lint fails if blas is undefined\n{% set blas = blas or \"openblas\" %}\n{% if blas == \"openblas\" %}\n# prioritize openblas via build number\n{% set build = build + 100 %}\n{% endif %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/CNES/pangeo-{{ name }}/releases/download/{{ version }}/{{ name }}-{{ version }}.tar.gz\n  sha256: bfaaf0a963627ed516d5db08c3516299736b88e0b70c20d9406d0673d18cccda\n\nbuild:\n  {% if blas == \"openblas\" %}\n  {% set mkl_option = \"no\" %}\n  {% else %}\n  {% set mkl_option = \"yes\" %}\n  {% endif %}\n  number: {{ build }}\n  {% if target_platform == \"win-64\" %}\n  script: {{ PYTHON }} -m pip install . -vv --global-option=build_ext --global-option=\"--mkl={{ mkl_option }}\" --global-option=\"--conda-forge\" --global-option=\"--generator=Visual Studio 17 2022\"\n  {% else %}\n  script: {{ PYTHON }} -m pip install . -vv --global-option=build_ext --global-option=\"--mkl={{ mkl_option }}\" --global-option=\"--conda-forge\"\n  {% endif %}\n  skip: true  # [linux32 or win32 or py<36 or (arm64 and blas != \"openblas\")]\n\n  {% if blas == \"openblas\" %}\n  {% set blas_prefix = \"openblas\" %}\n  {% else %}\n  {% set blas_prefix = \"mkl\" %}\n  {% endif %}\n  string: {{ blas_prefix }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build }}\n\n  ignore_run_exports:\n    - mkl                                 # [blas == \"mkl\"]\n    - openblas                            # [blas == \"openblas\"]\n    - gsl                                 # [linux or osx]\n\nrequirements:\n  build:\n    - python                              # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n    - setuptools                          # [build_platform != target_platform]\n    - {{ compiler('cxx') }}               # [linux or osx]\n    - vs2017_win-64                       # [win]\n    - cmake\n    - make                                # [linux]\n  host:\n    - dask\n    - eigen\n    - gsl >=2.7\n    - boost-cpp >=1.79.0\n    - mkl-devel                           # [blas == \"mkl\"]\n    - openblas                            # [blas == \"openblas\"]\n    - numpy\n    - pip\n    - pytest\n    - python\n    - setuptools\n    - xarray\n  run:\n    - {{ pin_compatible('numpy') }}\n    - dask\n    - mkl *                               # [blas == \"mkl\"]\n    - openblas *                          # [blas == \"openblas\"]\n    - python\n    - xarray\n\ntest:\n  requires:\n    - pytest\n  commands:\n    - pytest --pyargs pyinterp\n\nabout:\n  home: https://github.com/CNES/pangeo-pyinterp\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Python library for optimized geo-referenced interpolation\n\n  description: |\n    Tools for interpolating geo-referenced data used in the field of\n    geosciences. There are other libraries that cover this problem, but written\n    entirely in Python, the performance of these projects was not quite\n    sufficient for our needs. That is why this project was created.\n  doc_url: https://pangeo-pyinterp.readthedocs.io/\n  dev_url: https://github.com/CNES/pangeo-pyinterp\n\nextra:\n  recipe-maintainers:\n    - fbriol\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1586,9 +1586,9 @@
     "mkl",
     "mkl"
    ],
-   "number": "0",
-   "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/python.exe -m pip install . -vv --global-option=build_ext --global-option=\"--mkl=yes\" --global-option=\"--conda-forge\"",
-   "string": "mkl_py310h1234567_0"
+   "number": "1",
+   "script": "/usr/share/miniconda3/envs/cf-scripts/conda-bld/_h_env_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_placehold_/python.exe -m pip install . -vv --global-option=build_ext --global-option=\"--mkl=yes\" --global-option=\"--conda-forge\" --global-option=\"--generator=Visual Studio 17 2022\"",
+   "string": "mkl_py310h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
