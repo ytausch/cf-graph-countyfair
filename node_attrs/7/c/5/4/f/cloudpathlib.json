@@ -15,7 +15,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "cloudpathlib",
@@ -37,7 +37,8 @@
      ],
      "run": [
       "python >=3.7",
-      "importlib-metadata"
+      "importlib-metadata",
+      "typing_extensions"
      ]
     },
     "test": {
@@ -174,7 +175,7 @@
   ],
   "package": {
    "name": "cloudpathlib-meta",
-   "version": "0.13.0"
+   "version": "0.14.0"
   },
   "requirements": {
    "host": [
@@ -183,8 +184,8 @@
    ]
   },
   "source": {
-   "sha256": "7135f975b28917348f3ca8feb85f83277c89ac9acf331d1b87d945ecdbe2dffb",
-   "url": "https://pypi.io/packages/source/c/cloudpathlib/cloudpathlib-0.13.0.tar.gz"
+   "sha256": "9c2c6716c5a6bd525b020d50c562e5456c332e2cb25d85360a1952a1a3d4151b",
+   "url": "https://pypi.io/packages/source/c/cloudpathlib/cloudpathlib-0.14.0.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -210,7 +211,8 @@
     "cloudpathlib-s3",
     "google-cloud-storage",
     "importlib-metadata",
-    "python"
+    "python",
+    "typing_extensions"
    ]
   },
   "test": {
@@ -231,7 +233,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "cloudpathlib",
@@ -253,7 +255,8 @@
      ],
      "run": [
       "python >=3.7",
-      "importlib-metadata"
+      "importlib-metadata",
+      "typing_extensions"
      ]
     },
     "test": {
@@ -390,7 +393,7 @@
   ],
   "package": {
    "name": "cloudpathlib-meta",
-   "version": "0.13.0"
+   "version": "0.14.0"
   },
   "requirements": {
    "host": [
@@ -399,8 +402,8 @@
    ]
   },
   "source": {
-   "sha256": "7135f975b28917348f3ca8feb85f83277c89ac9acf331d1b87d945ecdbe2dffb",
-   "url": "https://pypi.io/packages/source/c/cloudpathlib/cloudpathlib-0.13.0.tar.gz"
+   "sha256": "9c2c6716c5a6bd525b020d50c562e5456c332e2cb25d85360a1952a1a3d4151b",
+   "url": "https://pypi.io/packages/source/c/cloudpathlib/cloudpathlib-0.14.0.tar.gz"
   }
  },
  "name": "cloudpathlib-meta",
@@ -421,7 +424,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cloudpathlib.json"
  },
- "raw_meta_yaml": "{% set name = \"cloudpathlib\" %}\n{% set version = \"0.13.0\" %}\n\n\npackage:\n  name: cloudpathlib-meta\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 7135f975b28917348f3ca8feb85f83277c89ac9acf331d1b87d945ecdbe2dffb\n\nbuild:\n  number: 2\n  noarch: python\n\nrequirements:\n  host:\n    - pip\n    - python >=3.7\n\n\noutputs:\n  - name: cloudpathlib\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . -vv\n    requirements:\n      host: &host\n        - pip\n        - python >=3.7\n      run:\n        - python >=3.7\n        - importlib-metadata\n    test:\n      imports:\n        - cloudpathlib\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: cloudpathlib-azure\n    build:\n      noarch: python\n    requirements:\n      host: *host\n      run:\n        - python >=3.7\n        - {{ pin_subpackage('cloudpathlib', exact=True) }}\n        - azure-storage-blob >=12\n    test:\n      imports:\n        - cloudpathlib\n      commands:\n        - pip check\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['azure'].validate_completeness()\"\n      requires:\n        - pip\n\n  - name: cloudpathlib-gs\n    build:\n      noarch: python\n    requirements:\n      host: *host\n      run:\n        - python >=3.7\n        - {{ pin_subpackage('cloudpathlib', exact=True) }}\n        - google-cloud-storage\n    test:\n      imports:\n        - cloudpathlib\n      commands:\n        - pip check\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['gs'].validate_completeness()\"\n      requires:\n        - pip\n\n  - name: cloudpathlib-s3\n    build:\n      noarch: python\n    requirements:\n      host: *host\n      run:\n        - python >=3.7\n        - {{ pin_subpackage('cloudpathlib', exact=True) }}\n        - boto3\n    test:\n      imports:\n        - cloudpathlib\n      commands:\n        - pip check\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['s3'].validate_completeness()\"\n      requires:\n        - pip\n\n  - name: cloudpathlib-all\n    build:\n      noarch: python\n    requirements:\n      host: *host\n      run:\n        - python >=3.7\n        - {{ pin_subpackage('cloudpathlib-azure', exact=True) }}\n        - {{ pin_subpackage('cloudpathlib-gs', exact=True) }}\n        - {{ pin_subpackage('cloudpathlib-s3', exact=True) }}\n    test:\n      imports:\n        - cloudpathlib\n      commands:\n        - pip check\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['azure'].validate_completeness()\"\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['gs'].validate_completeness()\"\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['s3'].validate_completeness()\"\n      requires:\n        - pip\n\n\nabout:\n  home: https://github.com/drivendataorg/cloudpathlib\n  summary: pathlib.Path-style classes for interacting with files in different cloud storage services.\n  license: MIT\n  license_file: LICENSE\n  doc_url: https://cloudpathlib.drivendata.org/\n  dev_url: https://github.com/drivendataorg/cloudpathlib\n\nextra:\n  feedstock-name: cloudpathlib\n  recipe-maintainers:\n    - jayqi\n",
+ "raw_meta_yaml": "{% set name = \"cloudpathlib\" %}\n{% set version = \"0.14.0\" %}\n\n\npackage:\n  name: cloudpathlib-meta\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 9c2c6716c5a6bd525b020d50c562e5456c332e2cb25d85360a1952a1a3d4151b\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - pip\n    - python >=3.7\n\n\noutputs:\n  - name: cloudpathlib\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . -vv\n    requirements:\n      host: &host\n        - pip\n        - python >=3.7\n      run:\n        - python >=3.7\n        - importlib-metadata\n        - typing_extensions\n    test:\n      imports:\n        - cloudpathlib\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: cloudpathlib-azure\n    build:\n      noarch: python\n    requirements:\n      host: *host\n      run:\n        - python >=3.7\n        - {{ pin_subpackage('cloudpathlib', exact=True) }}\n        - azure-storage-blob >=12\n    test:\n      imports:\n        - cloudpathlib\n      commands:\n        - pip check\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['azure'].validate_completeness()\"\n      requires:\n        - pip\n\n  - name: cloudpathlib-gs\n    build:\n      noarch: python\n    requirements:\n      host: *host\n      run:\n        - python >=3.7\n        - {{ pin_subpackage('cloudpathlib', exact=True) }}\n        - google-cloud-storage\n    test:\n      imports:\n        - cloudpathlib\n      commands:\n        - pip check\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['gs'].validate_completeness()\"\n      requires:\n        - pip\n\n  - name: cloudpathlib-s3\n    build:\n      noarch: python\n    requirements:\n      host: *host\n      run:\n        - python >=3.7\n        - {{ pin_subpackage('cloudpathlib', exact=True) }}\n        - boto3\n    test:\n      imports:\n        - cloudpathlib\n      commands:\n        - pip check\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['s3'].validate_completeness()\"\n      requires:\n        - pip\n\n  - name: cloudpathlib-all\n    build:\n      noarch: python\n    requirements:\n      host: *host\n      run:\n        - python >=3.7\n        - {{ pin_subpackage('cloudpathlib-azure', exact=True) }}\n        - {{ pin_subpackage('cloudpathlib-gs', exact=True) }}\n        - {{ pin_subpackage('cloudpathlib-s3', exact=True) }}\n    test:\n      imports:\n        - cloudpathlib\n      commands:\n        - pip check\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['azure'].validate_completeness()\"\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['gs'].validate_completeness()\"\n        - python -c \"from cloudpathlib.cloudpath import implementation_registry; implementation_registry['s3'].validate_completeness()\"\n      requires:\n        - pip\n\n\nabout:\n  home: https://github.com/drivendataorg/cloudpathlib\n  summary: pathlib.Path-style classes for interacting with files in different cloud storage services.\n  license: MIT\n  license_file: LICENSE\n  doc_url: https://cloudpathlib.drivendata.org/\n  dev_url: https://github.com/drivendataorg/cloudpathlib\n\nextra:\n  feedstock-name: cloudpathlib\n  recipe-maintainers:\n    - jayqi\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -434,7 +437,8 @@
    "google-cloud-storage",
    "importlib-metadata",
    "pip",
-   "python"
+   "python",
+   "typing_extensions"
   ]
  },
  "requirements": {
@@ -460,7 +464,8 @@
     "cloudpathlib-s3",
     "google-cloud-storage",
     "importlib-metadata",
-    "python"
+    "python",
+    "typing_extensions"
    ]
   },
   "test": {
@@ -494,7 +499,8 @@
     "cloudpathlib-s3",
     "google-cloud-storage",
     "importlib-metadata",
-    "python >=3.7"
+    "python >=3.7",
+    "typing_extensions"
    ]
   },
   "test": {
@@ -504,8 +510,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/c/cloudpathlib/cloudpathlib-0.13.0.tar.gz",
- "version": "0.13.0",
+ "url": "https://pypi.io/packages/source/c/cloudpathlib/cloudpathlib-0.14.0.tar.gz",
+ "version": "0.14.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cloudpathlib.json"
  }
