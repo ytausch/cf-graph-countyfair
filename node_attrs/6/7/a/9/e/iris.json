@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  },
   "provider": {
    "win": "azure"
   }
@@ -36,6 +39,7 @@
    {
     "name": "iris",
     "requirements": {
+     "build": [],
      "host": [
       "python >=3.9",
       "pip",
@@ -156,6 +160,7 @@
    {
     "name": "iris",
     "requirements": {
+     "build": [],
      "host": [
       "python >=3.9",
       "pip",
@@ -225,7 +230,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/iris.json"
  },
- "raw_meta_yaml": "{% set version = \"3.6.0\" %}\n\npackage:\n  name: iris\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/s/scitools-iris/scitools-iris-{{ version }}.tar.gz\n  sha256: f245617e4f2992edbf2e395d988b9d6f6d1c2bff1c823ad27ef8046d951a2123\n\nbuild:\n  noarch: python\n  script: python -m pip install --no-deps --ignore-installed .\n  number: 0\n\noutputs:\n  - name: iris\n    requirements:\n      host:\n        - python >=3.9\n        - pip\n        - setuptools >=64\n        - setuptools-scm >=7\n      run:\n        - python >=3.9\n        - cartopy >=0.21\n        - cf-units >=3.1\n        - cftime >=1.5\n        - dask-core >=2022.9.0\n        - libnetcdf !=4.9.1\n        - matplotlib-base >=3.5\n        - netcdf4\n        - numpy >=1.21,!=1.24.3\n        - pyproj\n        - scipy\n        - shapely !=1.8.3\n        - python-xxhash\n\n    test:\n      imports:\n        - iris\n\n  - name: scitools-iris\n    build:\n      noarch: generic\n    requirements:\n      run:\n        - {{ pin_subpackage('iris', max_pin=\"x.x.x\") }}\n    test:\n      imports:\n        - iris\nabout:\n  home: https://scitools-iris.readthedocs.io/en/stable/\n  license: LGPL-3.0-or-later\n  license_family: GPL\n  license_file: COPYING.LESSER\n  summary: Analyse and visualise meteorological and oceanographic data sets.\n\nextra:\n  recipe-maintainers:\n    - ocefpaf\n    - bjlittle\n    - lbdreyer\n    - pp-mo\n    - stephenworsley\n    - trexfeathers\n    - ESadek-MO\n",
+ "raw_meta_yaml": "{% set version = \"3.6.0\" %}\n\npackage:\n  name: iris\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/s/scitools-iris/scitools-iris-{{ version }}.tar.gz\n  sha256: f245617e4f2992edbf2e395d988b9d6f6d1c2bff1c823ad27ef8046d951a2123\n\nbuild:\n  noarch: python\n  script: python -m pip install --no-deps --ignore-installed .\n  number: 0\n\noutputs:\n  - name: iris\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - python >=3.9\n        - pip\n        - setuptools >=64\n        - setuptools-scm >=7\n      run:\n        - python >=3.9\n        - cartopy >=0.21\n        - cf-units >=3.1\n        - cftime >=1.5\n        - dask-core >=2022.9.0\n        - libnetcdf !=4.9.1\n        - matplotlib-base >=3.5\n        - netcdf4\n        - numpy >=1.21,!=1.24.3\n        - pyproj\n        - scipy\n        - shapely !=1.8.3\n        - python-xxhash\n\n    test:\n      imports:\n        - iris\n\n  - name: scitools-iris\n    build:\n      noarch: generic\n    requirements:\n      run:\n        - {{ pin_subpackage('iris', max_pin=\"x.x.x\") }}\n    test:\n      imports:\n        - iris\nabout:\n  home: https://scitools-iris.readthedocs.io/en/stable/\n  license: LGPL-3.0-or-later\n  license_family: GPL\n  license_file: COPYING.LESSER\n  summary: Analyse and visualise meteorological and oceanographic data sets.\n\nextra:\n  recipe-maintainers:\n    - ocefpaf\n    - bjlittle\n    - lbdreyer\n    - pp-mo\n    - stephenworsley\n    - trexfeathers\n    - ESadek-MO\n",
  "req": {
   "__set__": true,
   "elements": [
