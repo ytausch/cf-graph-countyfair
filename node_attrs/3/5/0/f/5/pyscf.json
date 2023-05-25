@@ -27,9 +27,13 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "maxscheurer",
     "BastianZim",
+    "maxscheurer",
     "BastianZim",
+    "maxscheurer",
     "BastianZim",
+    "maxscheurer",
     "BastianZim"
    ]
   },
@@ -257,9 +261,13 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "maxscheurer",
     "BastianZim",
+    "maxscheurer",
     "BastianZim",
+    "maxscheurer",
     "BastianZim",
+    "maxscheurer",
     "BastianZim"
    ]
   },
@@ -436,7 +444,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pyscf.json"
  },
- "raw_meta_yaml": "{% set name = \"pyscf\" %}\n{% set version = \"2.0.1\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/pyscf/pyscf/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 6a152860787351aae52dc1ef2399bd9564fa314dca070312cfc0f2c3fc7412cf\n  patches:\n    - upstream-osx.patch\n    # https://github.com/pyscf/pyscf/pull/1101\n    - upstream-test.patch\n    # https://github.com/pyscf/pyscf/pull/1142\n    - upstream-linux.patch\n    # https://github.com/pyscf/pyscf/pull/1185\n    - upstream-test-flaky.patch\n    # https://github.com/pyscf/pyscf/pull/990/commits/e09e02e16e9385c2ff96eab2d2d1cf981f1528bb\n\nbuild:\n  number: 2\n  skip: True  # [not linux]\n  # OSX is skipped because of https://github.com/pyscf/pyscf/issues/1146\n  script:\n    - export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake >=3.10\n  host:\n    - libblas\n    - libcint 4.4.6\n    - libxc 5.1.7\n    - llvm-openmp\n    - make\n    - pip\n    - python\n    - xcfun 2.1.1\n  run:\n    - h5py >=2.7\n    - numpy >=1.13,!=1.16,!=1.17\n    - python\n    - scipy >=0.19,!=1.5.0,!=1.5\n  run_constrained:\n    - pyberny >=0.6.2\n    - geometric >=0.9.7.2\n\ntest:\n  imports:\n    - pyscf\n    - pyscf.dft\n    # Tests LIBXC and XCFUN\n  commands:\n    - pip check\n    - .github/workflows/run_tests.sh\n  requires:\n    - nose\n    - nose-cov\n    - nose-exclude\n    - nose-timer\n    - pip\n  source_files:\n    - .github/workflows/run_tests.sh\n    - pyscf\n\nabout:\n  home: https://pyscf.org\n  summary: 'PySCF: Python-based Simulations of Chemistry Framework'\n  license: Apache-2.0\n  license_file: LICENSE\n  dev_url: https://github.com/pyscf/pyscf\n\nextra:\n  recipe-maintainers:\n    - BastianZim\n",
+ "raw_meta_yaml": "{% set name = \"pyscf\" %}\n{% set version = \"2.0.1\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/pyscf/pyscf/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 6a152860787351aae52dc1ef2399bd9564fa314dca070312cfc0f2c3fc7412cf\n  patches:\n    - upstream-osx.patch\n    # https://github.com/pyscf/pyscf/pull/1101\n    - upstream-test.patch\n    # https://github.com/pyscf/pyscf/pull/1142\n    - upstream-linux.patch\n    # https://github.com/pyscf/pyscf/pull/1185\n    - upstream-test-flaky.patch\n    # https://github.com/pyscf/pyscf/pull/990/commits/e09e02e16e9385c2ff96eab2d2d1cf981f1528bb\n\nbuild:\n  number: 2\n  skip: True  # [not linux]\n  # OSX is skipped because of https://github.com/pyscf/pyscf/issues/1146\n  script:\n    - export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake >=3.10\n  host:\n    - libblas\n    - libcint 4.4.6\n    - libxc 5.1.7\n    - llvm-openmp\n    - make\n    - pip\n    - python\n    - xcfun 2.1.1\n  run:\n    - h5py >=2.7\n    - numpy >=1.13,!=1.16,!=1.17\n    - python\n    - scipy >=0.19,!=1.5.0,!=1.5\n  run_constrained:\n    - pyberny >=0.6.2\n    - geometric >=0.9.7.2\n\ntest:\n  imports:\n    - pyscf\n    - pyscf.dft\n    # Tests LIBXC and XCFUN\n  commands:\n    - pip check\n    - .github/workflows/run_tests.sh\n  requires:\n    - nose\n    - nose-cov\n    - nose-exclude\n    - nose-timer\n    - pip\n  source_files:\n    - .github/workflows/run_tests.sh\n    - pyscf\n\nabout:\n  home: https://pyscf.org\n  summary: 'PySCF: Python-based Simulations of Chemistry Framework'\n  license: Apache-2.0\n  license_file: LICENSE\n  dev_url: https://github.com/pyscf/pyscf\n\nextra:\n  recipe-maintainers:\n    - maxscheurer\n    - BastianZim\n",
  "req": {
   "__set__": true,
   "elements": [
