@@ -79,7 +79,7 @@
   ],
   "package": {
    "name": "mrcpp",
-   "version": "1.4.2"
+   "version": "1.5.0"
   },
   "requirements": {
    "build": [
@@ -111,8 +111,8 @@
    ]
   },
   "source": {
-   "sha256": "cc7a4200eb0383967d984e770a95e621e76c88b79c5e7443433f5e642aee035b",
-   "url": "https://github.com/MRChemSoft/mrcpp/archive/v1.4.2.tar.gz"
+   "sha256": "ae3f66b25809751a17abe1695a7be74a52c51e3ba5b698800d456b397e1437b9",
+   "url": "https://github.com/MRChemSoft/mrcpp/archive/v1.5.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -317,7 +317,7 @@
   ],
   "package": {
    "name": "mrcpp",
-   "version": "1.4.2"
+   "version": "1.5.0"
   },
   "requirements": {
    "build": [
@@ -391,8 +391,8 @@
    ]
   },
   "source": {
-   "sha256": "cc7a4200eb0383967d984e770a95e621e76c88b79c5e7443433f5e642aee035b",
-   "url": "https://github.com/MRChemSoft/mrcpp/archive/v1.4.2.tar.gz"
+   "sha256": "ae3f66b25809751a17abe1695a7be74a52c51e3ba5b698800d456b397e1437b9",
+   "url": "https://github.com/MRChemSoft/mrcpp/archive/v1.5.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -498,7 +498,7 @@
   ],
   "package": {
    "name": "mrcpp",
-   "version": "1.4.2"
+   "version": "1.5.0"
   },
   "requirements": {
    "build": [
@@ -530,8 +530,8 @@
    ]
   },
   "source": {
-   "sha256": "cc7a4200eb0383967d984e770a95e621e76c88b79c5e7443433f5e642aee035b",
-   "url": "https://github.com/MRChemSoft/mrcpp/archive/v1.4.2.tar.gz"
+   "sha256": "ae3f66b25809751a17abe1695a7be74a52c51e3ba5b698800d456b397e1437b9",
+   "url": "https://github.com/MRChemSoft/mrcpp/archive/v1.5.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -646,7 +646,7 @@
   ],
   "package": {
    "name": "mrcpp",
-   "version": "1.4.2"
+   "version": "1.5.0"
   },
   "requirements": {
    "build": [
@@ -678,8 +678,8 @@
    ]
   },
   "source": {
-   "sha256": "cc7a4200eb0383967d984e770a95e621e76c88b79c5e7443433f5e642aee035b",
-   "url": "https://github.com/MRChemSoft/mrcpp/archive/v1.4.2.tar.gz"
+   "sha256": "ae3f66b25809751a17abe1695a7be74a52c51e3ba5b698800d456b397e1437b9",
+   "url": "https://github.com/MRChemSoft/mrcpp/archive/v1.5.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -738,7 +738,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/mrcpp.json"
  },
- "raw_meta_yaml": "{% set name = \"mrcpp\" %}\n{% set version = \"1.4.2\" %}\n{% set sha256 = \"cc7a4200eb0383967d984e770a95e621e76c88b79c5e7443433f5e642aee035b\" %}\n{% set build = 0 %}\n\n# recipe-lint fails if mpi is undefined\n{% set mpi = mpi or 'nompi' %}\n{% if mpi == \"nompi\" %}\n# prioritize shared-memory variant via build number\n{% set build = build + 100 %}\n{% endif %}\n# NOTE This means that the OpenMP build will be highest priority\n\n{% if mpi != \"nompi\" %}\n{% set mpi_prefix = \"mpi_\" + mpi %}\n{% else %}\n{% set mpi_prefix = \"nompi\" %}\n{% endif %}\n# add build string so packages can depend on\n# mpi or nompi variants dependencies:\n# `mrcpp * mpi_mpich_*` for mpich\n# `mrcpp * mpi_*` for any mpi\n# `mrcpp * nompi_*` for no mpi\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/MRChemSoft/mrcpp/archive/v{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\nbuild:\n  number: {{ build }}\n  skip: true  # [win]\n  string: {{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}\n  run_exports:\n    - {{ pin_subpackage('mrcpp', max_pin='x.x') }}\n    - {{ name }} * {{ mpi_prefix }}_*\n\nrequirements:\n  build:\n    - cmake >=3.14\n    - {{ compiler('cxx') }}\n    - ninja\n    - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]\n  host:\n    - {{ pin_compatible('eigen', max_pin='x.x') }}\n    - llvm-openmp  # [osx]\n    - libgomp  # [linux]\n    - {{ mpi }}  # [mpi != 'nompi']\n  run:\n    - eigen\n\ntest:\n  commands:\n    # Verify library\n    - test -f $PREFIX/lib/libmrcpp$SHLIB_EXT  # [not win]\n    - test -L $PREFIX/lib/libmrcpp$SHLIB_EXT  # [not win]\n    # Inspect linkage\n    - ldd -v $PREFIX/lib/libmrcpp$SHLIB_EXT  # [linux]\n    - otool -L $PREFIX/lib/libmrcpp$SHLIB_EXT  # [osx]\n\noutputs:\n  - name: mrcpp\n    files:\n      - bin/mrcpp-tests  # [not win]\n      - include/MRCPP  # [not win]\n      - lib/libmrcpp*  # [not win]\n      - share/cmake/MRCPP  # [not win]\n      - share/MRCPP/mwfilters  # [not win]\n\nabout:\n  home: https://github.com/MRChemSoft/mrcpp\n  dev_url: https://github.com/MRChemSoft/mrcpp\n  doc_url: https://mrcpp.readthedocs.io/en/latest/\n  doc_source_url: https://github.com/MRChemSoft/mrcpp/blob/master/doc/index.rst\n  license: LGPL-3.0-or-later\n  license_url: https://opensource.org/licenses/LGPL-3.0\n  license_file: LICENSE\n  license_family: LGPL\n  summary: MultiResolution Computational Program Package\n\nextra:\n  recipe-maintainers:\n    - robertodr\n    - bjorgve\n    - stigrj\n",
+ "raw_meta_yaml": "{% set name = \"mrcpp\" %}\n{% set version = \"1.5.0\" %}\n{% set sha256 = \"ae3f66b25809751a17abe1695a7be74a52c51e3ba5b698800d456b397e1437b9\" %}\n{% set build = 0 %}\n\n# recipe-lint fails if mpi is undefined\n{% set mpi = mpi or 'nompi' %}\n{% if mpi == \"nompi\" %}\n# prioritize shared-memory variant via build number\n{% set build = build + 100 %}\n{% endif %}\n# NOTE This means that the OpenMP build will be highest priority\n\n{% if mpi != \"nompi\" %}\n{% set mpi_prefix = \"mpi_\" + mpi %}\n{% else %}\n{% set mpi_prefix = \"nompi\" %}\n{% endif %}\n# add build string so packages can depend on\n# mpi or nompi variants dependencies:\n# `mrcpp * mpi_mpich_*` for mpich\n# `mrcpp * mpi_*` for any mpi\n# `mrcpp * nompi_*` for no mpi\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/MRChemSoft/mrcpp/archive/v{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\nbuild:\n  number: {{ build }}\n  skip: true  # [win]\n  string: {{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}\n  run_exports:\n    - {{ pin_subpackage('mrcpp', max_pin='x.x') }}\n    - {{ name }} * {{ mpi_prefix }}_*\n\nrequirements:\n  build:\n    - cmake >=3.14\n    - {{ compiler('cxx') }}\n    - ninja\n    - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]\n  host:\n    - {{ pin_compatible('eigen', max_pin='x.x') }}\n    - llvm-openmp  # [osx]\n    - libgomp  # [linux]\n    - {{ mpi }}  # [mpi != 'nompi']\n  run:\n    - eigen\n\ntest:\n  commands:\n    # Verify library\n    - test -f $PREFIX/lib/libmrcpp$SHLIB_EXT  # [not win]\n    - test -L $PREFIX/lib/libmrcpp$SHLIB_EXT  # [not win]\n    # Inspect linkage\n    - ldd -v $PREFIX/lib/libmrcpp$SHLIB_EXT  # [linux]\n    - otool -L $PREFIX/lib/libmrcpp$SHLIB_EXT  # [osx]\n\noutputs:\n  - name: mrcpp\n    files:\n      - bin/mrcpp-tests  # [not win]\n      - include/MRCPP  # [not win]\n      - lib/libmrcpp*  # [not win]\n      - share/cmake/MRCPP  # [not win]\n      - share/MRCPP/mwfilters  # [not win]\n\nabout:\n  home: https://github.com/MRChemSoft/mrcpp\n  dev_url: https://github.com/MRChemSoft/mrcpp\n  doc_url: https://mrcpp.readthedocs.io/en/latest/\n  doc_source_url: https://github.com/MRChemSoft/mrcpp/blob/master/doc/index.rst\n  license: LGPL-3.0-or-later\n  license_url: https://opensource.org/licenses/LGPL-3.0\n  license_file: LICENSE\n  license_family: LGPL\n  summary: MultiResolution Computational Program Package\n\nextra:\n  recipe-maintainers:\n    - robertodr\n    - bjorgve\n    - stigrj\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -816,8 +816,8 @@
    "elements": []
   }
  },
- "url": "https://github.com/MRChemSoft/mrcpp/archive/v1.4.2.tar.gz",
- "version": "1.4.2",
+ "url": "https://github.com/MRChemSoft/mrcpp/archive/v1.5.0.tar.gz",
+ "version": "1.5.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/mrcpp.json"
  }
