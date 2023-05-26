@@ -29,7 +29,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "nodejs"
    ]
@@ -138,7 +138,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "nodejs"
    ]
@@ -245,7 +245,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "nodejs",
     "nodejs",
@@ -404,7 +404,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "nodejs"
    ]
@@ -511,7 +511,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "nodejs"
    ]
@@ -624,7 +624,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/nodejs.json"
  },
- "raw_meta_yaml": "{% set version = \"18.15.0\" %}\n\n# NODE_MODULE_VERSION set in src/node_version.h\n{% set NODE_MODULE_VERSION = 108 %}\n\npackage:\n  name: nodejs\n  version: {{ version }}\n\nsource:\n  # checksums from https://nodejs.org/dist/vX.Y.Z/SHASUMS256.txt.asc\n  url: https://nodejs.org/dist/v{{ version }}/node-v{{ version }}.tar.gz  # [unix]\n  sha256: d65c4c3ef3c8815bccda9502081a29458c7c80797db0763f8752f270a824ac2b  # [unix]\n  url: https://nodejs.org/dist/v{{ version }}/node-v{{ version }}-win-x64.zip  # [win]\n  sha256: 118fbcae58bc8c53cbe97a10c019734ed90685da8dda98aa0b0f4aeead42a647  # [win]\n  patches:\n    - linux-librt.patch  # [not win]\n    - cinttypes.patch  # [linux]\n    - less-shared-intermediate.patch  # [not win]\n    - 0001-Forward-ceilf-floorf.patch  # [not win]\n    - 0001-Disable-unsupported-branch-protection.patch  # [not win]\n\nbuild:\n  number: 0\n  # Prefix replacement breaks in the binary embedded configurations.\n  detect_binary_files_with_prefix: false\n  run_exports:\n    - {{ pin_subpackage('nodejs', max_pin='x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}  # [not win]\n    - {{ compiler('cxx') }}  # [not win]\n    - sysroot_linux-64 2.17  # [linux64]\n    - python 3.8  # [not win]\n    - git  # [linux]\n    - ninja  # [not win]\n    - pkg-config  # [not win]\n\n    # need host builds of several lib dependencies\n    # when cross-compiling\n    - icu  # [build_platform != target_platform]\n    - libuv  # [build_platform != target_platform]\n    - openssl  # [build_platform != target_platform]\n    - zlib  # [build_platform != target_platform]\n  host:\n    - icu  # [not win]\n    - libuv  # [not win]\n    - openssl  # [not win]\n    - zlib  # [not win]\n  run:\n    - icu  # [not win]\n    - libuv  # [not win]\n    - openssl  # [not win]\n    - zlib  # [not win]\n  run_constrained:   # [osx]\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n\ntest:\n  commands:\n    - node -h\n    - node -v\n    - npm version\n    - npm install -h\n    - npm config get prefix -g\n    - test $(echo \"console.log(1 + 3)\" | node) == 4  # [not win]\n    - test -f $PREFIX/lib/libnode.{{ NODE_MODULE_VERSION }}.dylib  # [osx]\n    - test -f $PREFIX/lib/libnode.so.{{ NODE_MODULE_VERSION }}  # [linux]\n\nabout:\n  home: https://nodejs.org/\n  license: MIT\n  license_file: LICENSE\n  summary: a platform for easily building fast, scalable network applications\n\nextra:\n  recipe-maintainers:\n    - minrk\n    - msarahan\n    - pelson\n    - blink1073\n    - xhochy\n",
+ "raw_meta_yaml": "{% set version = \"18.15.0\" %}\n\n# NODE_MODULE_VERSION set in src/node_version.h\n{% set NODE_MODULE_VERSION = 108 %}\n\npackage:\n  name: nodejs\n  version: {{ version }}\n\nsource:\n  # checksums from https://nodejs.org/dist/vX.Y.Z/SHASUMS256.txt.asc\n  url: https://nodejs.org/dist/v{{ version }}/node-v{{ version }}.tar.gz  # [unix]\n  sha256: d65c4c3ef3c8815bccda9502081a29458c7c80797db0763f8752f270a824ac2b  # [unix]\n  url: https://nodejs.org/dist/v{{ version }}/node-v{{ version }}-win-x64.zip  # [win]\n  sha256: 118fbcae58bc8c53cbe97a10c019734ed90685da8dda98aa0b0f4aeead42a647  # [win]\n  patches:\n    - linux-librt.patch  # [not win]\n    - cinttypes.patch  # [linux]\n    - less-shared-intermediate.patch  # [not win]\n    - 0001-Forward-ceilf-floorf.patch  # [not win]\n    - 0001-Disable-unsupported-branch-protection.patch  # [not win]\n\nbuild:\n  number: 1\n  # Prefix replacement breaks in the binary embedded configurations.\n  detect_binary_files_with_prefix: false\n  run_exports:\n    - {{ pin_subpackage('nodejs', max_pin='x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}  # [not win]\n    - {{ compiler('cxx') }}  # [not win]\n    - sysroot_linux-64 2.17  # [linux64]\n    - python 3.8  # [not win]\n    - git  # [linux]\n    - ninja  # [not win]\n    - pkg-config  # [not win]\n\n    # need host builds of several lib dependencies\n    # when cross-compiling\n    - icu  # [build_platform != target_platform]\n    - libuv  # [build_platform != target_platform]\n    - openssl  # [build_platform != target_platform]\n    - zlib  # [build_platform != target_platform]\n  host:\n    - icu  # [not win]\n    - libuv  # [not win]\n    - openssl  # [not win]\n    - zlib  # [not win]\n  run:\n    - icu  # [not win]\n    - libuv  # [not win]\n    - openssl  # [not win]\n    - zlib  # [not win]\n  run_constrained:   # [osx]\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n\ntest:\n  commands:\n    - node -h\n    - node -v\n    - npm version\n    - npm install -h\n    - npm config get prefix -g\n    - test $(echo \"console.log(1 + 3)\" | node) == 4  # [not win]\n    - test -f $PREFIX/lib/libnode.{{ NODE_MODULE_VERSION }}.dylib  # [osx]\n    - test -f $PREFIX/lib/libnode.so.{{ NODE_MODULE_VERSION }}  # [linux]\n\nabout:\n  home: https://nodejs.org/\n  license: MIT\n  license_file: LICENSE\n  summary: a platform for easily building fast, scalable network applications\n\nextra:\n  recipe-maintainers:\n    - minrk\n    - msarahan\n    - pelson\n    - blink1073\n    - xhochy\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -732,7 +732,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "nodejs"
    ]
