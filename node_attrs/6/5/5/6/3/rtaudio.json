@@ -24,7 +24,7 @@
    "summary": "Cross-platform C++ API for realtime audio input/output"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "rtaudio",
@@ -157,7 +157,7 @@
    "summary": "Cross-platform C++ API for realtime audio input/output"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "rtaudio",
@@ -290,7 +290,7 @@
    "summary": "Cross-platform C++ API for realtime audio input/output"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "rtaudio",
@@ -423,7 +423,7 @@
    "summary": "Cross-platform C++ API for realtime audio input/output"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "rtaudio",
@@ -831,7 +831,7 @@
    "summary": "Cross-platform C++ API for realtime audio input/output"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "rtaudio",
@@ -950,7 +950,7 @@
    "summary": "Cross-platform C++ API for realtime audio input/output"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "rtaudio",
@@ -1077,7 +1077,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/rtaudio.json"
  },
- "raw_meta_yaml": "{% set version = \"5.2.0\" %}\n{% set libversion = \"6\" %}\n{% set library = \"Library/\" if win else \"\" %}\n\npackage:\n  name: rtaudio-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/thestk/rtaudio/archive/{{ version }}.tar.gz\n  sha256: a8d9c738addffd485c3f0bab14cbba72600267e3113f274398c67829bbb49332\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - meson\n    - ninja\n    - pkg-config\n  host:\n    - alsa-lib  # [linux]\n    - jack  # [linux]\n    - pulseaudio  # [linux]\n\noutputs:\n  - name: librtaudio{{ libversion }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n      host:\n        - alsa-lib  # [linux]\n        - jack  # [linux]\n        - pulseaudio  # [linux]\n    files:\n      - lib/librtaudio.so.{{ libversion }}*  # [linux]\n      - lib/librtaudio.{{ libversion }}*.dylib  # [osx]\n      - Library/bin/rtaudio-{{ libversion }}*.dll  # [win]\n    test:\n      commands:\n        # verify that libraries get installed\n        - test -f $PREFIX/lib/librtaudio.so.{{ libversion }}  # [linux]\n        - test -f $PREFIX/lib/librtaudio.{{ libversion }}.dylib  # [osx]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\rtaudio-{{ libversion }}.dll exit 1  # [win]\n\n  - name: rtaudio\n    build:\n      run_exports:\n        - {{ pin_subpackage('librtaudio' + libversion, max_pin=False) }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n      host:\n        - alsa-lib  # [linux]\n        - jack  # [linux]\n        - {{ pin_subpackage('librtaudio' + libversion, exact=True) }}\n        - pulseaudio  # [linux]\n      run:\n        - {{ pin_subpackage('librtaudio' + libversion, exact=True) }}\n    files:\n      - {{ library }}include/rtaudio\n      - lib/librtaudio.so  # [linux]\n      - lib/librtaudio.dylib  # [osx]\n      - Library/lib/rtaudio.lib  # [win]\n      - {{ library }}lib/pkgconfig/rtaudio.pc\n    test:\n      commands:\n        # verify that headers get installed\n        - test -f $PREFIX/include/rtaudio/RtAudio.h  # [not win]\n        - test -f $PREFIX/include/rtaudio/rtaudio_c.h  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\rtaudio\\\\RtAudio.h exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\rtaudio\\\\rtaudio_c.h exit 1  # [win]\n\n        # verify that import libraries get installed\n        - test -f $PREFIX/lib/librtaudio${SHLIB_EXT}  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\rtaudio.lib exit 1  # [win]\n\n        # verify that pkgconfig files get installed\n        - test -f $PREFIX/lib/pkgconfig/rtaudio.pc  # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\pkgconfig\\\\rtaudio.pc exit 1  # [win]\n\nabout:\n  home: https://www.music.mcgill.ca/~gary/rtaudio/\n  license: MIT\n  license_file: LICENSE\n  summary: 'Cross-platform C++ API for realtime audio input/output'\n  description: >\n    RtAudio is a set of C++ classes that provides a common API (Application\n    Programming Interface) for realtime audio input/output across Linux (native\n    ALSA, JACK, PulseAudio and OSS), Macintosh OS X and Windows (DirectSound,\n    ASIO and WASAPI) operating systems. RtAudio significantly simplifies the\n    process of interacting with computer audio hardware. It was designed with\n    the following objectives:\n\n        - object-oriented C++ design\n        - simple, common API across all supported platforms\n        - only one source and one header file for easy inclusion in programming\n            projects\n        - allow simultaneous multi-api support\n        - support dynamic connection of devices\n        - provide extensive audio device parameter control\n        - allow audio device capability probing\n        - automatic internal conversion for data format, channel number\n            compensation, (de)interleaving, and byte-swapping\n\n    RtAudio incorporates the concept of audio streams, which represent audio\n    output (playback) and/or input (recording). Available audio devices and\n    their capabilities can be enumerated and then specified when opening a\n    stream. Where applicable, multiple API support can be compiled and a\n    particular API specified when creating an RtAudio instance.\n  doc_url: https://www.music.mcgill.ca/~gary/rtaudio/index.html\n  dev_url: https://github.com/thestk/rtaudio\n\nextra:\n  feedstock-name: rtaudio\n  recipe-maintainers:\n    - ryanvolz\n",
+ "raw_meta_yaml": "{% set version = \"5.2.0\" %}\n{% set libversion = \"6\" %}\n{% set library = \"Library/\" if win else \"\" %}\n\npackage:\n  name: rtaudio-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/thestk/rtaudio/archive/{{ version }}.tar.gz\n  sha256: a8d9c738addffd485c3f0bab14cbba72600267e3113f274398c67829bbb49332\n\nbuild:\n  number: 1\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - meson\n    - ninja\n    - pkg-config\n  host:\n    - alsa-lib  # [linux]\n    - jack  # [linux]\n    - pulseaudio  # [linux]\n\noutputs:\n  - name: librtaudio{{ libversion }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n      host:\n        - alsa-lib  # [linux]\n        - jack  # [linux]\n        - pulseaudio  # [linux]\n    files:\n      - lib/librtaudio.so.{{ libversion }}*  # [linux]\n      - lib/librtaudio.{{ libversion }}*.dylib  # [osx]\n      - Library/bin/rtaudio-{{ libversion }}*.dll  # [win]\n    test:\n      commands:\n        # verify that libraries get installed\n        - test -f $PREFIX/lib/librtaudio.so.{{ libversion }}  # [linux]\n        - test -f $PREFIX/lib/librtaudio.{{ libversion }}.dylib  # [osx]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\rtaudio-{{ libversion }}.dll exit 1  # [win]\n\n  - name: rtaudio\n    build:\n      run_exports:\n        - {{ pin_subpackage('librtaudio' + libversion, max_pin=False) }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n      host:\n        - alsa-lib  # [linux]\n        - jack  # [linux]\n        - {{ pin_subpackage('librtaudio' + libversion, exact=True) }}\n        - pulseaudio  # [linux]\n      run:\n        - {{ pin_subpackage('librtaudio' + libversion, exact=True) }}\n    files:\n      - {{ library }}include/rtaudio\n      - lib/librtaudio.so  # [linux]\n      - lib/librtaudio.dylib  # [osx]\n      - Library/lib/rtaudio.lib  # [win]\n      - {{ library }}lib/pkgconfig/rtaudio.pc\n    test:\n      commands:\n        # verify that headers get installed\n        - test -f $PREFIX/include/rtaudio/RtAudio.h  # [not win]\n        - test -f $PREFIX/include/rtaudio/rtaudio_c.h  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\rtaudio\\\\RtAudio.h exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\rtaudio\\\\rtaudio_c.h exit 1  # [win]\n\n        # verify that import libraries get installed\n        - test -f $PREFIX/lib/librtaudio${SHLIB_EXT}  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\rtaudio.lib exit 1  # [win]\n\n        # verify that pkgconfig files get installed\n        - test -f $PREFIX/lib/pkgconfig/rtaudio.pc  # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\pkgconfig\\\\rtaudio.pc exit 1  # [win]\n\nabout:\n  home: https://www.music.mcgill.ca/~gary/rtaudio/\n  license: MIT\n  license_file: LICENSE\n  summary: 'Cross-platform C++ API for realtime audio input/output'\n  description: >\n    RtAudio is a set of C++ classes that provides a common API (Application\n    Programming Interface) for realtime audio input/output across Linux (native\n    ALSA, JACK, PulseAudio and OSS), Macintosh OS X and Windows (DirectSound,\n    ASIO and WASAPI) operating systems. RtAudio significantly simplifies the\n    process of interacting with computer audio hardware. It was designed with\n    the following objectives:\n\n        - object-oriented C++ design\n        - simple, common API across all supported platforms\n        - only one source and one header file for easy inclusion in programming\n            projects\n        - allow simultaneous multi-api support\n        - support dynamic connection of devices\n        - provide extensive audio device parameter control\n        - allow audio device capability probing\n        - automatic internal conversion for data format, channel number\n            compensation, (de)interleaving, and byte-swapping\n\n    RtAudio incorporates the concept of audio streams, which represent audio\n    output (playback) and/or input (recording). Available audio devices and\n    their capabilities can be enumerated and then specified when opening a\n    stream. Where applicable, multiple API support can be compiled and a\n    particular API specified when creating an RtAudio instance.\n  doc_url: https://www.music.mcgill.ca/~gary/rtaudio/index.html\n  dev_url: https://github.com/thestk/rtaudio\n\nextra:\n  feedstock-name: rtaudio\n  recipe-maintainers:\n    - ryanvolz\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1175,7 +1175,7 @@
    "summary": "Cross-platform C++ API for realtime audio input/output"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "rtaudio",
