@@ -13,10 +13,8 @@
    "summary": "PySCF: Python-based Simulations of Chemistry Framework"
   },
   "build": {
-   "number": "2",
+   "number": "0",
    "script": [
-    "export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"",
-    "PYTHON -m pip install . -vv",
     "export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"",
     "PYTHON -m pip install . -vv",
     "export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"",
@@ -27,25 +25,23 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "awvwgk",
     "maxscheurer",
     "BastianZim",
+    "awvwgk",
     "maxscheurer",
     "BastianZim",
-    "maxscheurer",
-    "BastianZim",
+    "awvwgk",
     "maxscheurer",
     "BastianZim"
    ]
   },
   "package": {
    "name": "pyscf",
-   "version": "2.0.1"
+   "version": "2.1.1"
   },
   "requirements": {
    "build": [
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "cmake >=3.10",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake >=3.10",
@@ -58,7 +54,7 @@
    ],
    "host": [
     "libblas",
-    "libcint 4.4.6",
+    "libcint",
     "libxc 5.1.7",
     "llvm-openmp",
     "make",
@@ -66,7 +62,7 @@
     "python",
     "xcfun 2.1.1",
     "libblas",
-    "libcint 4.4.6",
+    "libcint",
     "libxc 5.1.7",
     "llvm-openmp",
     "make",
@@ -74,15 +70,7 @@
     "python",
     "xcfun 2.1.1",
     "libblas",
-    "libcint 4.4.6",
-    "libxc 5.1.7",
-    "llvm-openmp",
-    "make",
-    "pip",
-    "python",
-    "xcfun 2.1.1",
-    "libblas",
-    "libcint 4.4.6",
+    "libcint",
     "libxc 5.1.7",
     "llvm-openmp",
     "make",
@@ -102,15 +90,9 @@
     "h5py >=2.7",
     "numpy >=1.13,!=1.16,!=1.17",
     "python",
-    "scipy >=0.19,!=1.5.0,!=1.5",
-    "h5py >=2.7",
-    "numpy >=1.13,!=1.16,!=1.17",
-    "python",
     "scipy >=0.19,!=1.5.0,!=1.5"
    ],
    "run_constrained": [
-    "pyberny >=0.6.2",
-    "geometric >=0.9.7.2",
     "pyberny >=0.6.2",
     "geometric >=0.9.7.2",
     "pyberny >=0.6.2",
@@ -121,40 +103,26 @@
   },
   "source": {
    "patches": [
-    "upstream-osx.patch",
-    "upstream-test.patch",
-    "upstream-linux.patch",
-    "upstream-test-flaky.patch",
-    "upstream-osx.patch",
-    "upstream-test.patch",
-    "upstream-linux.patch",
-    "upstream-test-flaky.patch",
-    "upstream-osx.patch",
-    "upstream-test.patch",
-    "upstream-linux.patch",
-    "upstream-test-flaky.patch",
-    "upstream-osx.patch",
-    "upstream-test.patch",
-    "upstream-linux.patch",
-    "upstream-test-flaky.patch"
+    "numpy-int.patch",
+    "numpy-int.patch",
+    "numpy-int.patch"
    ],
-   "sha256": "6a152860787351aae52dc1ef2399bd9564fa314dca070312cfc0f2c3fc7412cf",
-   "url": "https://github.com/pyscf/pyscf/archive/refs/tags/v2.0.1.tar.gz"
+   "sha256": "814240aa73f57ba96aee8264e3914c09f96ebdce1e42784da4b5e9a474ecb280",
+   "url": "https://github.com/pyscf/pyscf/archive/refs/tags/v2.1.1.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    ".github/workflows/run_tests.sh",
+    "cp RECIPE_DIR/pyscf_conf.py .pyscf_conf.py",
+    "pytest pyscf/lib -s -c setup.cfg --cov-report xml --cov-report term --cov-config .coveragerc --cov pyscf\n",
     "pip check",
-    ".github/workflows/run_tests.sh",
+    "cp RECIPE_DIR/pyscf_conf.py .pyscf_conf.py",
+    "pytest pyscf/lib -s -c setup.cfg --cov-report xml --cov-report term --cov-config .coveragerc --cov pyscf\n",
     "pip check",
-    ".github/workflows/run_tests.sh",
-    "pip check",
-    ".github/workflows/run_tests.sh"
+    "cp RECIPE_DIR/pyscf_conf.py .pyscf_conf.py",
+    "pytest pyscf/lib -s -c setup.cfg --cov-report xml --cov-report term --cov-config .coveragerc --cov pyscf\n"
    ],
    "imports": [
-    "pyscf",
-    "pyscf.dft",
     "pyscf",
     "pyscf.dft",
     "pyscf",
@@ -163,36 +131,26 @@
     "pyscf.dft"
    ],
    "requires": [
-    "nose",
-    "nose-cov",
-    "nose-exclude",
-    "nose-timer",
     "pip",
-    "nose",
-    "nose-cov",
-    "nose-exclude",
-    "nose-timer",
+    "pytest",
+    "pytest-cov",
     "pip",
-    "nose",
-    "nose-cov",
-    "nose-exclude",
-    "nose-timer",
+    "pytest",
+    "pytest-cov",
     "pip",
-    "nose",
-    "nose-cov",
-    "nose-exclude",
-    "nose-timer",
-    "pip"
+    "pytest",
+    "pytest-cov"
    ],
    "source_files": [
-    ".github/workflows/run_tests.sh",
+    ".coveragerc",
     "pyscf",
-    ".github/workflows/run_tests.sh",
+    "setup.cfg",
+    ".coveragerc",
     "pyscf",
-    ".github/workflows/run_tests.sh",
+    "setup.cfg",
+    ".coveragerc",
     "pyscf",
-    ".github/workflows/run_tests.sh",
-    "pyscf"
+    "setup.cfg"
    ]
   }
  },
@@ -230,11 +188,9 @@
   "test": {
    "__set__": true,
    "elements": [
-    "nose",
-    "nose-cov",
-    "nose-exclude",
-    "nose-timer",
-    "pip"
+    "pip",
+    "pytest",
+    "pytest-cov"
    ]
   }
  },
@@ -247,10 +203,8 @@
    "summary": "PySCF: Python-based Simulations of Chemistry Framework"
   },
   "build": {
-   "number": "2",
+   "number": "0",
    "script": [
-    "export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"",
-    "PYTHON -m pip install . -vv",
     "export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"",
     "PYTHON -m pip install . -vv",
     "export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"",
@@ -261,25 +215,23 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "awvwgk",
     "maxscheurer",
     "BastianZim",
+    "awvwgk",
     "maxscheurer",
     "BastianZim",
-    "maxscheurer",
-    "BastianZim",
+    "awvwgk",
     "maxscheurer",
     "BastianZim"
    ]
   },
   "package": {
    "name": "pyscf",
-   "version": "2.0.1"
+   "version": "2.1.1"
   },
   "requirements": {
    "build": [
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "cmake >=3.10",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake >=3.10",
@@ -292,7 +244,7 @@
    ],
    "host": [
     "libblas",
-    "libcint 4.4.6",
+    "libcint",
     "libxc 5.1.7",
     "llvm-openmp",
     "make",
@@ -300,7 +252,7 @@
     "python",
     "xcfun 2.1.1",
     "libblas",
-    "libcint 4.4.6",
+    "libcint",
     "libxc 5.1.7",
     "llvm-openmp",
     "make",
@@ -308,15 +260,7 @@
     "python",
     "xcfun 2.1.1",
     "libblas",
-    "libcint 4.4.6",
-    "libxc 5.1.7",
-    "llvm-openmp",
-    "make",
-    "pip",
-    "python",
-    "xcfun 2.1.1",
-    "libblas",
-    "libcint 4.4.6",
+    "libcint",
     "libxc 5.1.7",
     "llvm-openmp",
     "make",
@@ -336,15 +280,9 @@
     "h5py >=2.7",
     "numpy >=1.13,!=1.16,!=1.17",
     "python",
-    "scipy >=0.19,!=1.5.0,!=1.5",
-    "h5py >=2.7",
-    "numpy >=1.13,!=1.16,!=1.17",
-    "python",
     "scipy >=0.19,!=1.5.0,!=1.5"
    ],
    "run_constrained": [
-    "pyberny >=0.6.2",
-    "geometric >=0.9.7.2",
     "pyberny >=0.6.2",
     "geometric >=0.9.7.2",
     "pyberny >=0.6.2",
@@ -355,40 +293,26 @@
   },
   "source": {
    "patches": [
-    "upstream-osx.patch",
-    "upstream-test.patch",
-    "upstream-linux.patch",
-    "upstream-test-flaky.patch",
-    "upstream-osx.patch",
-    "upstream-test.patch",
-    "upstream-linux.patch",
-    "upstream-test-flaky.patch",
-    "upstream-osx.patch",
-    "upstream-test.patch",
-    "upstream-linux.patch",
-    "upstream-test-flaky.patch",
-    "upstream-osx.patch",
-    "upstream-test.patch",
-    "upstream-linux.patch",
-    "upstream-test-flaky.patch"
+    "numpy-int.patch",
+    "numpy-int.patch",
+    "numpy-int.patch"
    ],
-   "sha256": "6a152860787351aae52dc1ef2399bd9564fa314dca070312cfc0f2c3fc7412cf",
-   "url": "https://github.com/pyscf/pyscf/archive/refs/tags/v2.0.1.tar.gz"
+   "sha256": "814240aa73f57ba96aee8264e3914c09f96ebdce1e42784da4b5e9a474ecb280",
+   "url": "https://github.com/pyscf/pyscf/archive/refs/tags/v2.1.1.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    ".github/workflows/run_tests.sh",
+    "cp RECIPE_DIR/pyscf_conf.py .pyscf_conf.py",
+    "pytest pyscf/lib -s -c setup.cfg --cov-report xml --cov-report term --cov-config .coveragerc --cov pyscf\n",
     "pip check",
-    ".github/workflows/run_tests.sh",
+    "cp RECIPE_DIR/pyscf_conf.py .pyscf_conf.py",
+    "pytest pyscf/lib -s -c setup.cfg --cov-report xml --cov-report term --cov-config .coveragerc --cov pyscf\n",
     "pip check",
-    ".github/workflows/run_tests.sh",
-    "pip check",
-    ".github/workflows/run_tests.sh"
+    "cp RECIPE_DIR/pyscf_conf.py .pyscf_conf.py",
+    "pytest pyscf/lib -s -c setup.cfg --cov-report xml --cov-report term --cov-config .coveragerc --cov pyscf\n"
    ],
    "imports": [
-    "pyscf",
-    "pyscf.dft",
     "pyscf",
     "pyscf.dft",
     "pyscf",
@@ -397,36 +321,26 @@
     "pyscf.dft"
    ],
    "requires": [
-    "nose",
-    "nose-cov",
-    "nose-exclude",
-    "nose-timer",
     "pip",
-    "nose",
-    "nose-cov",
-    "nose-exclude",
-    "nose-timer",
+    "pytest",
+    "pytest-cov",
     "pip",
-    "nose",
-    "nose-cov",
-    "nose-exclude",
-    "nose-timer",
+    "pytest",
+    "pytest-cov",
     "pip",
-    "nose",
-    "nose-cov",
-    "nose-exclude",
-    "nose-timer",
-    "pip"
+    "pytest",
+    "pytest-cov"
    ],
    "source_files": [
-    ".github/workflows/run_tests.sh",
+    ".coveragerc",
     "pyscf",
-    ".github/workflows/run_tests.sh",
+    "setup.cfg",
+    ".coveragerc",
     "pyscf",
-    ".github/workflows/run_tests.sh",
+    "setup.cfg",
+    ".coveragerc",
     "pyscf",
-    ".github/workflows/run_tests.sh",
-    "pyscf"
+    "setup.cfg"
    ]
   }
  },
@@ -444,7 +358,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pyscf.json"
  },
- "raw_meta_yaml": "{% set name = \"pyscf\" %}\n{% set version = \"2.0.1\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/pyscf/pyscf/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 6a152860787351aae52dc1ef2399bd9564fa314dca070312cfc0f2c3fc7412cf\n  patches:\n    - upstream-osx.patch\n    # https://github.com/pyscf/pyscf/pull/1101\n    - upstream-test.patch\n    # https://github.com/pyscf/pyscf/pull/1142\n    - upstream-linux.patch\n    # https://github.com/pyscf/pyscf/pull/1185\n    - upstream-test-flaky.patch\n    # https://github.com/pyscf/pyscf/pull/990/commits/e09e02e16e9385c2ff96eab2d2d1cf981f1528bb\n\nbuild:\n  number: 2\n  skip: True  # [not linux]\n  # OSX is skipped because of https://github.com/pyscf/pyscf/issues/1146\n  script:\n    - export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake >=3.10\n  host:\n    - libblas\n    - libcint 4.4.6\n    - libxc 5.1.7\n    - llvm-openmp\n    - make\n    - pip\n    - python\n    - xcfun 2.1.1\n  run:\n    - h5py >=2.7\n    - numpy >=1.13,!=1.16,!=1.17\n    - python\n    - scipy >=0.19,!=1.5.0,!=1.5\n  run_constrained:\n    - pyberny >=0.6.2\n    - geometric >=0.9.7.2\n\ntest:\n  imports:\n    - pyscf\n    - pyscf.dft\n    # Tests LIBXC and XCFUN\n  commands:\n    - pip check\n    - .github/workflows/run_tests.sh\n  requires:\n    - nose\n    - nose-cov\n    - nose-exclude\n    - nose-timer\n    - pip\n  source_files:\n    - .github/workflows/run_tests.sh\n    - pyscf\n\nabout:\n  home: https://pyscf.org\n  summary: 'PySCF: Python-based Simulations of Chemistry Framework'\n  license: Apache-2.0\n  license_file: LICENSE\n  dev_url: https://github.com/pyscf/pyscf\n\nextra:\n  recipe-maintainers:\n    - maxscheurer\n    - BastianZim\n",
+ "raw_meta_yaml": "{% set name = \"pyscf\" %}\n{% set version = \"2.1.1\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/pyscf/pyscf/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 814240aa73f57ba96aee8264e3914c09f96ebdce1e42784da4b5e9a474ecb280\n  patches:\n    - numpy-int.patch\n\nbuild:\n  number: 0\n  skip: true  # [not linux]\n  # OSX is skipped because of https://github.com/pyscf/pyscf/issues/1146\n  script:\n    - export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake >=3.10\n  host:\n    - libblas\n    - libcint\n    - libxc 5.1.7\n    - llvm-openmp\n    - make\n    - pip\n    - python\n    - xcfun 2.1.1\n  run:\n    - h5py >=2.7\n    - numpy >=1.13,!=1.16,!=1.17\n    - python\n    - scipy >=0.19,!=1.5.0,!=1.5\n  run_constrained:\n    - pyberny >=0.6.2\n    - geometric >=0.9.7.2\n\ntest:\n  imports:\n    - pyscf\n    - pyscf.dft\n    # Tests LIBXC and XCFUN\n  commands:\n    - pip check\n    - cp {{ RECIPE_DIR }}/pyscf_conf.py .pyscf_conf.py\n    - >\n      pytest pyscf/lib\n      -s -c setup.cfg\n      --cov-report xml\n      --cov-report term\n      --cov-config .coveragerc\n      --cov pyscf\n  requires:\n    - pip\n    - pytest\n    - pytest-cov\n  source_files:\n    - .coveragerc\n    - pyscf\n    - setup.cfg\n\nabout:\n  home: https://pyscf.org\n  summary: 'PySCF: Python-based Simulations of Chemistry Framework'\n  license: Apache-2.0\n  license_file: LICENSE\n  dev_url: https://github.com/pyscf/pyscf\n\nextra:\n  recipe-maintainers:\n    - awvwgk\n    - maxscheurer\n    - BastianZim\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -504,11 +418,9 @@
   "test": {
    "__set__": true,
    "elements": [
-    "nose",
-    "nose-cov",
-    "nose-exclude",
-    "nose-timer",
-    "pip"
+    "pip",
+    "pytest",
+    "pytest-cov"
    ]
   }
  },
@@ -526,7 +438,7 @@
    "__set__": true,
    "elements": [
     "libblas",
-    "libcint 4.4.6",
+    "libcint",
     "libxc 5.1.7",
     "llvm-openmp",
     "make",
@@ -547,16 +459,14 @@
   "test": {
    "__set__": true,
    "elements": [
-    "nose",
-    "nose-cov",
-    "nose-exclude",
-    "nose-timer",
-    "pip"
+    "pip",
+    "pytest",
+    "pytest-cov"
    ]
   }
  },
- "url": "https://github.com/pyscf/pyscf/archive/refs/tags/v2.0.1.tar.gz",
- "version": "2.0.1",
+ "url": "https://github.com/pyscf/pyscf/archive/refs/tags/v2.1.1.tar.gz",
+ "version": "2.1.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/pyscf.json"
  }
