@@ -16,10 +16,12 @@
    "summary": "Tkwant can simulate time-dependent quantum dynamics of mesoscopic systems."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "thkloss",
+    "basnijholt",
     "thkloss",
     "basnijholt",
     "thkloss",
@@ -42,9 +44,20 @@
     "cxx_compiler_stub",
     "fortran_compiler_stub",
     "c_compiler_stub",
+    "cxx_compiler_stub",
+    "fortran_compiler_stub",
+    "c_compiler_stub",
     "cxx_compiler_stub"
    ],
    "host": [
+    "setuptools",
+    "libblas",
+    "libcblas",
+    "cython",
+    "python",
+    "numpy",
+    "scipy",
+    "pytest-runner",
     "setuptools",
     "libblas",
     "libcblas",
@@ -106,11 +119,24 @@
     "matplotlib-base",
     "kwant",
     "kwantspectrum",
+    "mpi4py",
+    "python",
+    "numpy",
+    "cython",
+    "scipy",
+    "pytest",
+    "sympy",
+    "tinyarray",
+    "mpmath",
+    "matplotlib-base",
+    "kwant",
+    "kwantspectrum",
     "mpi4py"
    ]
   },
   "source": {
    "patches": [
+    "requirement_patch.diff",
     "requirement_patch.diff",
     "requirement_patch.diff",
     "requirement_patch.diff"
@@ -122,14 +148,17 @@
    "commands": [
     "pip check",
     "pip check",
+    "pip check",
     "pip check"
    ],
    "imports": [
     "tkwant",
     "tkwant",
+    "tkwant",
     "tkwant"
    ],
    "requires": [
+    "pip",
     "pip",
     "pip",
     "pip"
@@ -194,7 +223,7 @@
    "summary": "Tkwant can simulate time-dependent quantum dynamics of mesoscopic systems."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "skip": true
   },
   "extra": {
@@ -502,15 +531,11 @@
    "summary": "Tkwant can simulate time-dependent quantum dynamics of mesoscopic systems."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "skip": true
   },
   "extra": {
    "recipe-maintainers": [
-    "thkloss",
-    "basnijholt",
-    "thkloss",
-    "basnijholt",
     "thkloss",
     "basnijholt"
    ]
@@ -523,31 +548,9 @@
    "build": [
     "fortran_compiler_stub",
     "c_compiler_stub",
-    "cxx_compiler_stub",
-    "fortran_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "fortran_compiler_stub",
-    "c_compiler_stub",
     "cxx_compiler_stub"
    ],
    "host": [
-    "setuptools",
-    "libblas",
-    "libcblas",
-    "cython",
-    "python",
-    "numpy",
-    "scipy",
-    "pytest-runner",
-    "setuptools",
-    "libblas",
-    "libcblas",
-    "cython",
-    "python",
-    "numpy",
-    "scipy",
-    "pytest-runner",
     "setuptools",
     "libblas",
     "libcblas",
@@ -569,37 +572,11 @@
     "matplotlib-base",
     "kwant",
     "kwantspectrum",
-    "mpi4py",
-    "python",
-    "numpy",
-    "cython",
-    "scipy",
-    "pytest",
-    "sympy",
-    "tinyarray",
-    "mpmath",
-    "matplotlib-base",
-    "kwant",
-    "kwantspectrum",
-    "mpi4py",
-    "python",
-    "numpy",
-    "cython",
-    "scipy",
-    "pytest",
-    "sympy",
-    "tinyarray",
-    "mpmath",
-    "matplotlib-base",
-    "kwant",
-    "kwantspectrum",
     "mpi4py"
    ]
   },
   "source": {
    "patches": [
-    "requirement_patch.diff",
-    "requirement_patch.diff",
     "requirement_patch.diff"
    ],
    "sha256": "6c869c022ddff6828f227c488bba9eda6ac92eb73176a02e9289461a63178be9",
@@ -607,18 +584,12 @@
   },
   "test": {
    "commands": [
-    "pip check",
-    "pip check",
     "pip check"
    ],
    "imports": [
-    "tkwant",
-    "tkwant",
     "tkwant"
    ],
    "requires": [
-    "pip",
-    "pip",
     "pip"
    ]
   }
@@ -677,14 +648,14 @@
  },
  "parsing_error": false,
  "platforms": [
-  "win_64",
+  "linux_64",
   "osx_64",
-  "linux_64"
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/tkwant.json"
  },
- "raw_meta_yaml": "{% set name = \"tkwant\" %}\n{% set version = \"1.1.0rc2\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://gitlab.kwant-project.org/kwant/{{ name }}/-/archive/v{{ version }}/{{ name }}-v{{ version }}.tar.gz\n  sha256: 6c869c022ddff6828f227c488bba9eda6ac92eb73176a02e9289461a63178be9\n  patches:\n    - requirement_patch.diff\n\nbuild:\n  number: 0\n  skip: true  # [osx and py>38]\n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n  host:\n    - setuptools\n    - libblas\n    - libcblas\n    - cython\n    - python\n    - numpy\n    - scipy\n    - pytest-runner\n  run:\n    - python\n    - {{ pin_compatible('numpy') }}\n    - cython\n    - scipy\n    - pytest\n    - sympy\n    - tinyarray\n    - mpmath\n    - matplotlib-base\n    - kwant\n    - kwantspectrum\n    - mpi4py\n\ntest:\n  imports:\n    - tkwant\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://tkwant.kwant-project.org/\n  license: BSD-2-Clause\n  license_file: LICENSE.rst\n  license_family: BSD\n  summary: Tkwant can simulate time-dependent quantum dynamics of mesoscopic systems.\n  description: |\n    Tkwant is a python package to simulate time-dependent quantum dynamics of\n    mesoscopic systems. It is the time-dependent generalization of the\n    Kwant package and distributed under 2-clause BSD license.\n  doc_url: https://tkwant.kwant-project.org/doc/stable/\n  dev_url: https://gitlab.kwant-project.org/kwant/tkwant/\n\nextra:\n  recipe-maintainers:\n    - thkloss\n    - basnijholt\n",
+ "raw_meta_yaml": "{% set name = \"tkwant\" %}\n{% set version = \"1.1.0rc2\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://gitlab.kwant-project.org/kwant/{{ name }}/-/archive/v{{ version }}/{{ name }}-v{{ version }}.tar.gz\n  sha256: 6c869c022ddff6828f227c488bba9eda6ac92eb73176a02e9289461a63178be9\n  patches:\n    - requirement_patch.diff\n\nbuild:\n  number: 1\n  skip: true  # [osx and py>38]\n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n  host:\n    - setuptools\n    - libblas\n    - libcblas\n    - cython\n    - python\n    - numpy\n    - scipy\n    - pytest-runner\n  run:\n    - python\n    - {{ pin_compatible('numpy') }}\n    - cython\n    - scipy\n    - pytest\n    - sympy\n    - tinyarray\n    - mpmath\n    - matplotlib-base\n    - kwant\n    - kwantspectrum\n    - mpi4py\n\ntest:\n  imports:\n    - tkwant\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://tkwant.kwant-project.org/\n  license: BSD-2-Clause\n  license_file: LICENSE.rst\n  license_family: BSD\n  summary: Tkwant can simulate time-dependent quantum dynamics of mesoscopic systems.\n  description: |\n    Tkwant is a python package to simulate time-dependent quantum dynamics of\n    mesoscopic systems. It is the time-dependent generalization of the\n    Kwant package and distributed under 2-clause BSD license.\n  doc_url: https://tkwant.kwant-project.org/doc/stable/\n  dev_url: https://gitlab.kwant-project.org/kwant/tkwant/\n\nextra:\n  recipe-maintainers:\n    - thkloss\n    - basnijholt\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -825,10 +796,12 @@
    "summary": "Tkwant can simulate time-dependent quantum dynamics of mesoscopic systems."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "thkloss",
+    "basnijholt",
     "thkloss",
     "basnijholt",
     "thkloss",
@@ -851,9 +824,20 @@
     "cxx_compiler_stub",
     "fortran_compiler_stub",
     "c_compiler_stub",
+    "cxx_compiler_stub",
+    "fortran_compiler_stub",
+    "c_compiler_stub",
     "cxx_compiler_stub"
    ],
    "host": [
+    "setuptools",
+    "libblas",
+    "libcblas",
+    "cython",
+    "python",
+    "numpy",
+    "scipy",
+    "pytest-runner",
     "setuptools",
     "libblas",
     "libcblas",
@@ -915,11 +899,24 @@
     "matplotlib-base",
     "kwant",
     "kwantspectrum",
+    "mpi4py",
+    "python",
+    "numpy",
+    "cython",
+    "scipy",
+    "pytest",
+    "sympy",
+    "tinyarray",
+    "mpmath",
+    "matplotlib-base",
+    "kwant",
+    "kwantspectrum",
     "mpi4py"
    ]
   },
   "source": {
    "patches": [
+    "requirement_patch.diff",
     "requirement_patch.diff",
     "requirement_patch.diff",
     "requirement_patch.diff"
@@ -931,14 +928,17 @@
    "commands": [
     "pip check",
     "pip check",
+    "pip check",
     "pip check"
    ],
    "imports": [
     "tkwant",
     "tkwant",
+    "tkwant",
     "tkwant"
    ],
    "requires": [
+    "pip",
     "pip",
     "pip",
     "pip"
