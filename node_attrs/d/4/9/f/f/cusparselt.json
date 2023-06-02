@@ -22,13 +22,19 @@
   },
   "build": {
    "missing_dso_whitelist": [
+    "*/libgomp.*",
     "*/libgomp.*"
    ],
-   "number": "1",
+   "number": "2",
    "run_exports": [
+    "cusparselt",
     "cusparselt"
    ],
    "script": [
+    "mkdir -p $PREFIX/include",
+    "cp -r include/* $PREFIX/include/",
+    "mkdir -p $PREFIX/lib",
+    "mv lib/libcusparseLt.so* $PREFIX/lib/",
     "mkdir -p $PREFIX/include",
     "cp -r include/* $PREFIX/include/",
     "mkdir -p $PREFIX/lib",
@@ -37,6 +43,8 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "mnicely",
+    "leofang",
     "mnicely",
     "leofang"
    ]
@@ -50,10 +58,19 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cuda_compiler_stub",
+    "sysroot_linux-64 2.17",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
     "sysroot_linux-64 2.17"
+   ],
+   "host": [
+    "patchelf !=0.18",
+    "patchelf !=0.18"
    ],
    "run": [],
    "run_constrained": [
+    "__glibc >=2.17",
     "__glibc >=2.17"
    ]
   },
@@ -63,6 +80,7 @@
   },
   "test": {
    "files": [
+    "test_load_elf.c",
     "test_load_elf.c"
    ],
    "requires": [
@@ -71,7 +89,12 @@
     "cxx_compiler_stub",
     "cuda_compiler_stub",
     "sysroot_linux-64 2.17",
-    "cudatoolkit 11.2"
+    "git",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "sysroot_linux-64 2.17",
+    "cudatoolkit 11.2|11.2.*"
    ]
   }
  },
@@ -87,7 +110,9 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "patchelf"
+   ]
   },
   "run": {
    "__set__": true,
@@ -120,7 +145,7 @@
    "missing_dso_whitelist": [
     "*/libgomp.*"
    ],
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "cusparselt"
    ],
@@ -147,6 +172,9 @@
     "cxx_compiler_stub",
     "cuda_compiler_stub"
    ],
+   "host": [
+    "patchelf !=0.18"
+   ],
    "run": [],
    "run_constrained": [
     "__glibc >=2.17"
@@ -165,7 +193,7 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cuda_compiler_stub",
-    "cudatoolkit 11.2"
+    "cudatoolkit 11.2|11.2.*"
    ]
   }
  },
@@ -180,7 +208,9 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "patchelf"
+   ]
   },
   "run": {
    "__set__": true,
@@ -210,13 +240,18 @@
   },
   "build": {
    "missing_dso_whitelist": null,
-   "number": "1",
+   "number": "2",
    "run_exports": [
+    "cusparselt",
     "cusparselt",
     "cusparselt",
     "cusparselt"
    ],
    "script": [
+    "mkdir -p $PREFIX/include",
+    "cp -r include/* $PREFIX/include/",
+    "mkdir -p $PREFIX/lib",
+    "mv lib/libcusparseLt.so* $PREFIX/lib/",
     "mkdir -p $PREFIX/include",
     "cp -r include/* $PREFIX/include/",
     "mkdir -p $PREFIX/lib",
@@ -232,6 +267,8 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "mnicely",
+    "leofang",
     "mnicely",
     "leofang",
     "mnicely",
@@ -253,9 +290,18 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cuda_compiler_stub",
+    "sysroot_linux-64 2.17",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cuda_compiler_stub"
+   ],
+   "host": [
+    "patchelf !=0.18",
+    "patchelf !=0.18",
+    "patchelf !=0.18"
    ],
    "run": [],
    "run_constrained": null
@@ -272,17 +318,22 @@
     "cxx_compiler_stub",
     "cuda_compiler_stub",
     "sysroot_linux-64 2.17",
-    "cudatoolkit 11.2",
     "git",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cuda_compiler_stub",
-    "cudatoolkit 11.2",
+    "sysroot_linux-64 2.17",
+    "cudatoolkit 11.2|11.2.*",
     "git",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cuda_compiler_stub",
-    "cudatoolkit 11.2"
+    "cudatoolkit 11.2|11.2.*",
+    "git",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cudatoolkit 11.2|11.2.*"
    ]
   }
  },
@@ -296,19 +347,20 @@
  "parsing_error": false,
  "platforms": [
   "win_64",
-  "linux_aarch64",
-  "linux_64"
+  "linux_64",
+  "linux_aarch64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/cusparselt.json"
  },
- "raw_meta_yaml": "{% set version = \"0.4.0.7\" %}\n\npackage:\n  name: cusparselt\n  version: {{ version }}\n\nsource:\n  url: https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse_lt/linux-x86_64/libcusparse_lt-linux-x86_64-{{ version }}-archive.tar.xz   # [linux64]\n  url: https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse_lt/linux-sbsa/libcusparse_lt-linux-sbsa-{{ version }}-archive.tar.xz       # [aarch64]\n  url: https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse_lt/windows-x86_64/libcusparse_lt-windows-x86_64-{{ version }}-archive.zip  # [win64]\n  sha256: 15fc65cddcc76dceec41985a0737bc055c3944eadd02589ec8883f1196911f78  # [linux64]\n  sha256: 866ee6cefb17d8041f099c6b43a731278721aa0ab682ddaa08886667a85495d6  # [aarch64]\n  sha256: 09dc2e7b95da72f315cdd75a815e84b6c9bb9d01677f2837013fe6d57af616fd  # [win64]\n\nbuild:\n  number: 1\n  skip: true  # [ppc64le or (cuda_compiler_version != \"11.2\")]\n  script:\n    - mkdir -p $PREFIX/include                                                # [unix]\n    - cp -r include/* $PREFIX/include/                                        # [unix]\n    - mkdir -p $PREFIX/lib                                                    # [unix]\n    - mv lib/libcusparseLt.so* $PREFIX/lib/                                   # [unix]\n\n    - copy include\\\\cusparseLt.h %LIBRARY_INC%\\\\                           # [win64]\n    - copy lib\\\\cusparseLt.dll %LIBRARY_BIN%\\\\                             # [win64]\n    - copy lib\\\\cusparseLt.lib %LIBRARY_LIB%\\\\                             # [win64]\n  run_exports:\n    - {{ pin_subpackage('cusparselt', exact=True) }}\n  missing_dso_whitelist:\n    - '*/libgomp.*'  # [linux]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - sysroot_linux-64 2.17  # [linux64]\n  run:\n  run_constrained:\n    # Only GLIBC_2.17 or older symbols present\n    - __glibc >=2.17      # [linux]\n\ntest:\n  requires:\n    - git\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - sysroot_linux-64 2.17  # [linux64]\n    # make sure we pick up the version matching the docker,\n    # or the linker would complain\n    - cudatoolkit 11.2\n  files:\n    - test_load_elf.c        # [linux]\n\nabout:\n  home: https://developer.nvidia.com/cusparse\n  license: LicenseRef-cuSPARSELt-Software-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/cusparselt/license.html\n  license_file: LICENSE\n  summary: \"Basic Linear Algebra for Sparse Matrices on NVIDIA GPUs\"\n  description: |\n    NVIDIA cuSPARSELt is a high-performance CUDA library dedicated to general\n    matrix-matrix operations in which at least one operand is a sparse matrix.\n    The cuSPARSELt APIs allow flexibility in the algorithm/operation selection,\n    epilogue, and matrix characteristics, including memory layout,\n    alignment, and data types.\n    License Agreements:- The packages are governed by the NVIDIA cuSPARSELt\n    Software License Agreement (EULA). By downloading and using the packages,\n    you accept the terms and conditions of the NVIDIA cuSPARSELt EULA -\n    https://docs.nvidia.com/cuda/cusparselt/license.html\n  doc_url: https://docs.nvidia.com/cuda/cusparselt/index.html\n  dev_url: https://developer.nvidia.com/cusparselt/downloads\n\nextra:\n  recipe-maintainers:\n    - mnicely\n    - leofang\n",
+ "raw_meta_yaml": "{% set version = \"0.4.0.7\" %}\n\npackage:\n  name: cusparselt\n  version: {{ version }}\n\nsource:\n  url: https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse_lt/linux-x86_64/libcusparse_lt-linux-x86_64-{{ version }}-archive.tar.xz   # [linux64]\n  url: https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse_lt/linux-sbsa/libcusparse_lt-linux-sbsa-{{ version }}-archive.tar.xz       # [aarch64]\n  url: https://developer.download.nvidia.com/compute/cusparselt/redist/libcusparse_lt/windows-x86_64/libcusparse_lt-windows-x86_64-{{ version }}-archive.zip  # [win64]\n  sha256: 15fc65cddcc76dceec41985a0737bc055c3944eadd02589ec8883f1196911f78  # [linux64]\n  sha256: 866ee6cefb17d8041f099c6b43a731278721aa0ab682ddaa08886667a85495d6  # [aarch64]\n  sha256: 09dc2e7b95da72f315cdd75a815e84b6c9bb9d01677f2837013fe6d57af616fd  # [win64]\n\nbuild:\n  number: 2\n  skip: true  # [ppc64le or cuda_compiler_version not in (\"11.2\", \"12.0\")]\n  script:\n    # According to the cuSPARSE team, the same binary works for both CUDA 11 & 12\n    - mkdir -p $PREFIX/include                                                # [unix]\n    - cp -r include/* $PREFIX/include/                                        # [unix]\n    - mkdir -p $PREFIX/lib                                                    # [unix]\n    - mv lib/libcusparseLt.so* $PREFIX/lib/                                   # [unix]\n\n    - copy include\\\\cusparseLt.h %LIBRARY_INC%\\\\                           # [win64]\n    - copy lib\\\\cusparseLt.dll %LIBRARY_BIN%\\\\                             # [win64]\n    - copy lib\\\\cusparseLt.lib %LIBRARY_LIB%\\\\                             # [win64]\n  run_exports:\n    - {{ pin_subpackage('cusparselt', exact=True) }}\n  missing_dso_whitelist:\n    - '*/libgomp.*'  # [linux]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - sysroot_linux-64 2.17  # [linux64]\n  host:\n    # https://github.com/NixOS/patchelf/issues/492\n    - patchelf !=0.18     # [linux]\n  run:\n  run_constrained:\n    # Only GLIBC_2.17 or older symbols present\n    - __glibc >=2.17      # [linux]\n\ntest:\n  requires:\n    - git\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - sysroot_linux-64 2.17  # [linux64]\n    # make sure we pick up the version matching the docker,\n    # or the linker would complain\n    - cudatoolkit 11.2|11.2.*       # [cuda_compiler_version == \"11.2\"]\n  files:\n    - test_load_elf.c        # [linux]\n\nabout:\n  home: https://developer.nvidia.com/cusparse\n  license: LicenseRef-cuSPARSELt-Software-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/cusparselt/license.html\n  license_file: LICENSE\n  summary: \"Basic Linear Algebra for Sparse Matrices on NVIDIA GPUs\"\n  description: |\n    NVIDIA cuSPARSELt is a high-performance CUDA library dedicated to general\n    matrix-matrix operations in which at least one operand is a sparse matrix.\n    The cuSPARSELt APIs allow flexibility in the algorithm/operation selection,\n    epilogue, and matrix characteristics, including memory layout,\n    alignment, and data types.\n    License Agreements:- The packages are governed by the NVIDIA cuSPARSELt\n    Software License Agreement (EULA). By downloading and using the packages,\n    you accept the terms and conditions of the NVIDIA cuSPARSELt EULA -\n    https://docs.nvidia.com/cuda/cusparselt/license.html\n  doc_url: https://docs.nvidia.com/cuda/cusparselt/index.html\n  dev_url: https://developer.nvidia.com/cusparselt/downloads\n\nextra:\n  recipe-maintainers:\n    - mnicely\n    - leofang\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
    "cuda_compiler_stub",
    "cxx_compiler_stub",
+   "patchelf",
    "sysroot_linux-64"
   ]
  },
@@ -327,7 +379,8 @@
    "elements": [
     "c_compiler_stub",
     "cuda_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "patchelf"
    ]
   },
   "run": {
@@ -363,7 +416,9 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "patchelf !=0.18"
+   ]
   },
   "run": {
    "__set__": true,
@@ -374,7 +429,7 @@
    "elements": [
     "c_compiler_stub",
     "cuda_compiler_stub",
-    "cudatoolkit 11.2",
+    "cudatoolkit 11.2|11.2.*",
     "cxx_compiler_stub",
     "git",
     "sysroot_linux-64 2.17"
@@ -399,7 +454,7 @@
   },
   "build": {
    "missing_dso_whitelist": null,
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "cusparselt"
    ],
@@ -425,6 +480,7 @@
     "cxx_compiler_stub",
     "cuda_compiler_stub"
    ],
+   "host": [],
    "run": [],
    "run_constrained": null
   },
@@ -439,7 +495,7 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cuda_compiler_stub",
-    "cudatoolkit 11.2"
+    "cudatoolkit 11.2|11.2.*"
    ]
   }
  },
