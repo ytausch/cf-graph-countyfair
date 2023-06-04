@@ -16,7 +16,7 @@
    "summary": "Lightweight C++ and Python interface for datasets in zarr and N5 format."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -209,10 +209,12 @@
    "summary": "Lightweight C++ and Python interface for datasets in zarr and N5 format."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "constantinpape",
+    "SylvainCorlay",
     "constantinpape",
     "SylvainCorlay",
     "constantinpape",
@@ -298,6 +300,10 @@
     "cmake",
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "make",
+    "cmake",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
     "ninja",
     "cmake",
     "c_compiler_stub",
@@ -313,6 +319,17 @@
     "ninja"
    ],
    "host": [
+    "python",
+    "boost-cpp >=1.63",
+    "numpy",
+    "xtensor >=0.24,<0.25",
+    "xtensor-python >=0.26,<0.27",
+    "xsimd >=8,<9",
+    "blosc",
+    "bzip2",
+    "xz",
+    "zlib",
+    "nlohmann_json",
     "python",
     "boost-cpp >=1.63",
     "numpy",
@@ -569,6 +586,12 @@
     "blosc",
     "bzip2",
     "xz",
+    "zlib",
+    "python",
+    "numpy",
+    "blosc",
+    "bzip2",
+    "xz",
     "zlib"
    ]
   },
@@ -578,6 +601,7 @@
   },
   "test": {
    "commands": [
+    "python -m unittest discover -s src/python/test -v",
     "python -m unittest discover -s src/python/test -v",
     "python -m unittest discover -s src/python/test -v",
     "python -m unittest discover -s src/python/test -v",
@@ -609,9 +633,11 @@
     "z5py",
     "z5py",
     "z5py",
+    "z5py",
     "z5py"
    ],
    "requires": [
+    "zarr",
     "zarr",
     "zarr",
     "zarr",
@@ -643,6 +669,7 @@
     "src/python/test/*.py",
     "src/python/test/*.py",
     "src/python/test/*.py",
+    "src/python/test/*.py",
     "src/python/test/*.py"
    ]
   }
@@ -656,7 +683,7 @@
    "summary": "Lightweight C++ and Python interface for datasets in zarr and N5 format."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -849,10 +876,12 @@
    "summary": "Lightweight C++ and Python interface for datasets in zarr and N5 format."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "constantinpape",
+    "SylvainCorlay",
     "constantinpape",
     "SylvainCorlay",
     "constantinpape",
@@ -878,9 +907,24 @@
     "cmake",
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "make",
+    "cmake",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
     "make"
    ],
    "host": [
+    "python",
+    "boost-cpp >=1.63",
+    "numpy",
+    "xtensor >=0.24,<0.25",
+    "xtensor-python >=0.26,<0.27",
+    "xsimd >=8,<9",
+    "blosc",
+    "bzip2",
+    "xz",
+    "zlib",
+    "nlohmann_json",
     "python",
     "boost-cpp >=1.63",
     "numpy",
@@ -933,6 +977,12 @@
     "blosc",
     "bzip2",
     "xz",
+    "zlib",
+    "python",
+    "numpy",
+    "blosc",
+    "bzip2",
+    "xz",
     "zlib"
    ]
   },
@@ -944,9 +994,11 @@
    "commands": [
     "python -m unittest discover -s src/python/test -v",
     "python -m unittest discover -s src/python/test -v",
+    "python -m unittest discover -s src/python/test -v",
     "python -m unittest discover -s src/python/test -v"
    ],
    "imports": [
+    "z5py",
     "z5py",
     "z5py",
     "z5py"
@@ -954,9 +1006,11 @@
    "requires": [
     "zarr",
     "zarr",
+    "zarr",
     "zarr"
    ],
    "source_files": [
+    "src/python/test/*.py",
     "src/python/test/*.py",
     "src/python/test/*.py",
     "src/python/test/*.py"
@@ -1015,15 +1069,15 @@
  },
  "parsing_error": false,
  "platforms": [
-  "linux_64",
-  "win_64",
   "osx_64",
-  "osx_arm64"
+  "osx_arm64",
+  "win_64",
+  "linux_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/z5py.json"
  },
- "raw_meta_yaml": "{% set version = \"2.0.16\" %}\n{% set checksum = \"86ec403b370a3f55ac416e8db910f3d880efd8c83c43acc67996df0fe4b938e4\" %}\n\npackage:\n  name: z5py\n  version: {{ version }}\n\nsource:\n  url: https://github.com/constantinpape/z5/archive/{{ version }}.tar.gz\n  sha256: {{ checksum }}\n\nbuild:\n  number: 0\n  skip: true  # [win and vc<14]\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n    - cmake\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - ninja  # [win]\n    - make  # [not win]\n  host:\n    - python\n    - boost-cpp >=1.63\n    - numpy\n    - xtensor >=0.24,<0.25\n    - xtensor-python >=0.26,<0.27\n    - xsimd >=8,<9\n    - blosc\n    - bzip2\n    - xz\n    - zlib\n    - nlohmann_json\n    # lz4 builds on conda are broken\n    # - lz4-c\n  run:\n    - python\n    - {{ pin_compatible('numpy') }}\n    - blosc\n    - bzip2\n    - xz\n    - zlib\n    # lz4 builds on conda are broken\n    # - lz4-c\n\ntest:\n  imports:\n    - z5py\n  requires:\n    - zarr\n  source_files:\n    - src/python/test/*.py\n  commands:\n    - python -m unittest discover -s src/python/test -v\n\nabout:\n  home: https://github.com/constantinpape/z5\n  license: MIT\n  license_file: LICENSE\n  summary: Lightweight C++ and Python interface for datasets in zarr and N5 format.\n\nextra:\n  recipe-maintainers:\n    - constantinpape\n    - SylvainCorlay\n",
+ "raw_meta_yaml": "{% set version = \"2.0.16\" %}\n{% set checksum = \"86ec403b370a3f55ac416e8db910f3d880efd8c83c43acc67996df0fe4b938e4\" %}\n\npackage:\n  name: z5py\n  version: {{ version }}\n\nsource:\n  url: https://github.com/constantinpape/z5/archive/{{ version }}.tar.gz\n  sha256: {{ checksum }}\n\nbuild:\n  number: 1\n  skip: true  # [win and vc<14]\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n    - cmake\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - ninja  # [win]\n    - make  # [not win]\n  host:\n    - python\n    - boost-cpp >=1.63\n    - numpy\n    - xtensor >=0.24,<0.25\n    - xtensor-python >=0.26,<0.27\n    - xsimd >=8,<9\n    - blosc\n    - bzip2\n    - xz\n    - zlib\n    - nlohmann_json\n    # lz4 builds on conda are broken\n    # - lz4-c\n  run:\n    - python\n    - {{ pin_compatible('numpy') }}\n    - blosc\n    - bzip2\n    - xz\n    - zlib\n    # lz4 builds on conda are broken\n    # - lz4-c\n\ntest:\n  imports:\n    - z5py\n  requires:\n    - zarr\n  source_files:\n    - src/python/test/*.py\n  commands:\n    - python -m unittest discover -s src/python/test -v\n\nabout:\n  home: https://github.com/constantinpape/z5\n  license: MIT\n  license_file: LICENSE\n  summary: Lightweight C++ and Python interface for datasets in zarr and N5 format.\n\nextra:\n  recipe-maintainers:\n    - constantinpape\n    - SylvainCorlay\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1153,7 +1207,7 @@
    "summary": "Lightweight C++ and Python interface for datasets in zarr and N5 format."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
