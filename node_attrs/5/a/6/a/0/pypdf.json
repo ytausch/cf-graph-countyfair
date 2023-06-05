@@ -178,7 +178,7 @@
   ],
   "package": {
    "name": "pypdf-split",
-   "version": "3.9.0"
+   "version": "3.9.1"
   },
   "requirements": {
    "host": [
@@ -191,13 +191,13 @@
   "source": [
    {
     "folder": "dist",
-    "sha256": "06136b9ed99525159482a1397a49f3fc0fd55ffd700d1ad4393e3f42d192a035",
-    "url": "https://pypi.io/packages/source/p/pypdf/pypdf-3.9.0.tar.gz"
+    "sha256": "c2b7fcfe25fbd04e8da600cb2700267ecee7e8781dc798cce3a4f567143a4df1",
+    "url": "https://pypi.io/packages/source/p/pypdf/pypdf-3.9.1.tar.gz"
    },
    {
     "folder": "src",
-    "sha256": "123ea6e05a10bfc577c17b3edd8a240298ce52245964d7027910236400391137",
-    "url": "https://github.com/py-pdf/pypdf/archive/refs/tags/3.9.0.tar.gz"
+    "sha256": "ed6dad40f8ec88c8ea642c059837d8e441a177407425d93b8faac09a9cf1eb2a",
+    "url": "https://github.com/py-pdf/pypdf/archive/refs/tags/3.9.1.tar.gz"
    }
   ]
  },
@@ -412,7 +412,7 @@
   ],
   "package": {
    "name": "pypdf-split",
-   "version": "3.9.0"
+   "version": "3.9.1"
   },
   "requirements": {
    "host": [
@@ -425,13 +425,13 @@
   "source": [
    {
     "folder": "dist",
-    "sha256": "06136b9ed99525159482a1397a49f3fc0fd55ffd700d1ad4393e3f42d192a035",
-    "url": "https://pypi.io/packages/source/p/pypdf/pypdf-3.9.0.tar.gz"
+    "sha256": "c2b7fcfe25fbd04e8da600cb2700267ecee7e8781dc798cce3a4f567143a4df1",
+    "url": "https://pypi.io/packages/source/p/pypdf/pypdf-3.9.1.tar.gz"
    },
    {
     "folder": "src",
-    "sha256": "123ea6e05a10bfc577c17b3edd8a240298ce52245964d7027910236400391137",
-    "url": "https://github.com/py-pdf/pypdf/archive/refs/tags/3.9.0.tar.gz"
+    "sha256": "ed6dad40f8ec88c8ea642c059837d8e441a177407425d93b8faac09a9cf1eb2a",
+    "url": "https://github.com/py-pdf/pypdf/archive/refs/tags/3.9.1.tar.gz"
    }
   ]
  },
@@ -454,7 +454,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pypdf.json"
  },
- "raw_meta_yaml": "{% set version = \"3.9.0\" %}\n{% set pytest_args = '-m \"not (external or samples)\" -k \"not (multi_language or old_habibi or pdfa)\" --cov-fail-under=82' %}\n\npackage:\n  name: pypdf-split\n  version: {{ version }}\n\nsource:\n  - folder: dist\n    url: https://pypi.io/packages/source/p/pypdf/pypdf-{{ version }}.tar.gz\n    sha256: 06136b9ed99525159482a1397a49f3fc0fd55ffd700d1ad4393e3f42d192a035\n  - folder: src\n    url: https://github.com/py-pdf/pypdf/archive/refs/tags/{{ version }}.tar.gz\n    sha256: 123ea6e05a10bfc577c17b3edd8a240298ce52245964d7027910236400391137\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - python >=3.6\n  run:\n    - python >=3.6\n\noutputs:\n\n  - name: pypdf\n    build:\n      script: cd dist && {{ PYTHON }} -m pip install . -vv --no-deps\n      noarch: python\n    requirements:\n      host:\n        - flit-core >=3.2,<4\n        - pip\n        - python >=3.6\n      run:\n        - dataclasses\n        - python >=3.6\n        - typing_extensions >=3.10.0.0\n    test: &simple-test\n      imports:\n        - pypdf\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: pypdf-with-crypto\n    build: &noarch-python\n      noarch: python\n    requirements:\n      host:\n        - python >=3.6\n      run:\n        - {{ pin_subpackage(\"pypdf\", max_pin=\"x.x.x\") }}\n        - pycryptodome\n        - python >=3.6\n    test: *simple-test\n\n  - name: pypdf-with-image\n    build: *noarch-python\n    requirements:\n      host:\n        - python >=3.6\n      run:\n        - {{ pin_subpackage(\"pypdf\", max_pin=\"x.x.x\") }}\n        - pillow\n        - python >=3.6\n    test: *simple-test\n\n  - name: pypdf-with-full\n    build: *noarch-python\n    requirements:\n      host:\n        - python >=3.6\n      run:\n        - {{ pin_subpackage(\"pypdf-with-crypto\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"pypdf-with-image\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"pypdf\", max_pin=\"x.x.x\") }}\n        - python >=3.6\n    test: *simple-test\n\n  - name: _pypdf-with-full-tests\n    build: *noarch-python\n    requirements:\n      host:\n        - python >=3.6\n      run:\n        - {{ pin_subpackage(\"pypdf-with-crypto\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"pypdf-with-full\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"pypdf-with-image\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"pypdf\", max_pin=\"x.x.x\") }}\n        - python >=3.6\n    test:\n      source_files:\n        - src/pyproject.toml\n        - src/tests\n        - src/resources\n      imports:\n        - pypdf\n      commands:\n        - pip check\n        - cd src && pytest -vv --cov=pypdf --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail {{ pytest_args }}\n      requires:\n        - pip\n        - pytest-cov\n        - pytest-socket\n        - pytest-timeout\n\nabout:\n  home: https://pypi.org/project/pypdf\n  summary: A pure-python PDF library capable of splitting, merging, cropping, and transforming PDF files\n  dev_url: https://github.com/py-pdf/pypdf\n  license: BSD-3-Clause\n  license_file: dist/LICENSE\n  doc_url: https://pypdf.readthedocs.io\n\nextra:\n  feedstock-name: pypdf\n  recipe-maintainers:\n    - MartinThoma\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set pytest_args = \"-m \\\"not (external or samples)\\\" -k \\\"not (multi_language or old_habibi or pdfa)\\\" --cov-fail-under=82\" %}\n{% set version = \"3.9.1\" %}\n{% set pytest_args = '-m \"not (external or samples)\" -k \"not (multi_language or old_habibi or pdfa)\" --cov-fail-under=82' %}\n\npackage:\n  name: pypdf-split\n  version: {{ version }}\n\nsource:\n  - folder: dist\n    url: https://pypi.io/packages/source/p/pypdf/pypdf-{{ version }}.tar.gz\n    sha256: c2b7fcfe25fbd04e8da600cb2700267ecee7e8781dc798cce3a4f567143a4df1\n  - folder: src\n    url: https://github.com/py-pdf/pypdf/archive/refs/tags/{{ version }}.tar.gz\n    sha256: ed6dad40f8ec88c8ea642c059837d8e441a177407425d93b8faac09a9cf1eb2a\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - python >=3.6\n  run:\n    - python >=3.6\n\noutputs:\n\n  - name: pypdf\n    build:\n      script: cd dist && {{ PYTHON }} -m pip install . -vv --no-deps\n      noarch: python\n    requirements:\n      host:\n        - flit-core >=3.2,<4\n        - pip\n        - python >=3.6\n      run:\n        - dataclasses\n        - python >=3.6\n        - typing_extensions >=3.10.0.0\n    test: &simple-test\n      imports:\n        - pypdf\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: pypdf-with-crypto\n    build: &noarch-python\n      noarch: python\n    requirements:\n      host:\n        - python >=3.6\n      run:\n        - {{ pin_subpackage(\"pypdf\", max_pin=\"x.x.x\") }}\n        - pycryptodome\n        - python >=3.6\n    test: *simple-test\n\n  - name: pypdf-with-image\n    build: *noarch-python\n    requirements:\n      host:\n        - python >=3.6\n      run:\n        - {{ pin_subpackage(\"pypdf\", max_pin=\"x.x.x\") }}\n        - pillow\n        - python >=3.6\n    test: *simple-test\n\n  - name: pypdf-with-full\n    build: *noarch-python\n    requirements:\n      host:\n        - python >=3.6\n      run:\n        - {{ pin_subpackage(\"pypdf-with-crypto\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"pypdf-with-image\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"pypdf\", max_pin=\"x.x.x\") }}\n        - python >=3.6\n    test: *simple-test\n\n  - name: _pypdf-with-full-tests\n    build: *noarch-python\n    requirements:\n      host:\n        - python >=3.6\n      run:\n        - {{ pin_subpackage(\"pypdf-with-crypto\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"pypdf-with-full\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"pypdf-with-image\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"pypdf\", max_pin=\"x.x.x\") }}\n        - python >=3.6\n    test:\n      source_files:\n        - src/pyproject.toml\n        - src/tests\n        - src/resources\n      imports:\n        - pypdf\n      commands:\n        - pip check\n        - cd src && pytest -vv --cov=pypdf --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail {{ pytest_args }}\n      requires:\n        - pip\n        - pytest-cov\n        - pytest-socket\n        - pytest-timeout\n\nabout:\n  home: https://pypi.org/project/pypdf\n  summary: A pure-python PDF library capable of splitting, merging, cropping, and transforming PDF files\n  dev_url: https://github.com/py-pdf/pypdf\n  license: BSD-3-Clause\n  license_file: dist/LICENSE\n  doc_url: https://pypdf.readthedocs.io\n\nextra:\n  feedstock-name: pypdf\n  recipe-maintainers:\n    - MartinThoma\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -546,8 +546,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/p/pypdf/pypdf-3.9.0.tar.gz",
- "version": "3.9.0",
+ "url": "https://pypi.io/packages/source/p/pypdf/pypdf-3.9.1.tar.gz",
+ "version": "3.9.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/pypdf.json"
  }
