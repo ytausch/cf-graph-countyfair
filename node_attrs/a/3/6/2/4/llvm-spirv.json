@@ -19,15 +19,168 @@
    "summary": "A tool and a library for bi-directional translation between SPIR-V and LLVM IR"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
+   "feedstock-name": "llvm-spirv",
    "recipe-maintainers": [
     "isuruf"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so.16"
+    ],
+    "name": "libllvmspirv16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*",
+      "llvm-spirv 16.0.0.* *_1"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib.so.16"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "libllvmspirv16"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so",
+     "lib/pkgconfig/LLVMSPIRVLib.pc",
+     "include/LLVMSPIRVLib/"
+    ],
+    "name": "libllvmspirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv-16"
+    ],
+    "name": "llvm-spirv-16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv-16 -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv"
+    ],
+    "name": "llvm-spirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "llvm-spirv-16"
+     ],
+     "run": [
+      "llvm-spirv-16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv -help",
+      "llvm-spirv -help"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "llvm-spirv",
+   "name": "llvm-spirv-split",
    "version": "16.0.0"
   },
   "requirements": {
@@ -40,10 +193,8 @@
    "host": [
     "llvmdev  16.0.*",
     "llvm  16.0.*",
+    "spirv-headers",
     "zlib"
-   ],
-   "run_constrained": [
-    "llvmdev  16.0.*"
    ]
   },
   "source": {
@@ -52,11 +203,6 @@
    ],
    "sha256": "305fac5bb8efdad9054f0d27b5b765aca8b3349a500e2ba0c927763e42badc2b",
    "url": "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/v16.0.0.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "llvm-spirv -help"
-   ]
   }
  },
  "linux_64_requirements": {
@@ -72,14 +218,20 @@
   "host": {
    "__set__": true,
    "elements": [
+    "libllvmspirv16",
     "llvm",
+    "llvm-spirv-16",
     "llvmdev",
+    "spirv-headers",
     "zlib"
    ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "libllvmspirv16",
+    "llvm-spirv-16"
+   ]
   },
   "test": {
    "__set__": true,
@@ -95,15 +247,168 @@
    "summary": "A tool and a library for bi-directional translation between SPIR-V and LLVM IR"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
+   "feedstock-name": "llvm-spirv",
    "recipe-maintainers": [
     "isuruf"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so.16"
+    ],
+    "name": "libllvmspirv16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*",
+      "llvm-spirv 16.0.0.* *_1"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib.so.16"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "libllvmspirv16"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so",
+     "lib/pkgconfig/LLVMSPIRVLib.pc",
+     "include/LLVMSPIRVLib/"
+    ],
+    "name": "libllvmspirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv-16"
+    ],
+    "name": "llvm-spirv-16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv-16 -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv"
+    ],
+    "name": "llvm-spirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "llvm-spirv-16"
+     ],
+     "run": [
+      "llvm-spirv-16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv -help",
+      "llvm-spirv -help"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "llvm-spirv",
+   "name": "llvm-spirv-split",
    "version": "16.0.0"
   },
   "requirements": {
@@ -116,10 +421,8 @@
    "host": [
     "llvmdev  16.0.*",
     "llvm  16.0.*",
+    "spirv-headers",
     "zlib"
-   ],
-   "run_constrained": [
-    "llvmdev  16.0.*"
    ]
   },
   "source": {
@@ -128,11 +431,6 @@
    ],
    "sha256": "305fac5bb8efdad9054f0d27b5b765aca8b3349a500e2ba0c927763e42badc2b",
    "url": "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/v16.0.0.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "llvm-spirv -help"
-   ]
   }
  },
  "linux_aarch64_requirements": {
@@ -148,14 +446,20 @@
   "host": {
    "__set__": true,
    "elements": [
+    "libllvmspirv16",
     "llvm",
+    "llvm-spirv-16",
     "llvmdev",
+    "spirv-headers",
     "zlib"
    ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "libllvmspirv16",
+    "llvm-spirv-16"
+   ]
   },
   "test": {
    "__set__": true,
@@ -171,15 +475,168 @@
    "summary": "A tool and a library for bi-directional translation between SPIR-V and LLVM IR"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
+   "feedstock-name": "llvm-spirv",
    "recipe-maintainers": [
     "isuruf"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so.16"
+    ],
+    "name": "libllvmspirv16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*",
+      "llvm-spirv 16.0.0.* *_1"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib.so.16"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "libllvmspirv16"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so",
+     "lib/pkgconfig/LLVMSPIRVLib.pc",
+     "include/LLVMSPIRVLib/"
+    ],
+    "name": "libllvmspirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv-16"
+    ],
+    "name": "llvm-spirv-16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv-16 -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv"
+    ],
+    "name": "llvm-spirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "llvm-spirv-16"
+     ],
+     "run": [
+      "llvm-spirv-16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv -help",
+      "llvm-spirv -help"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "llvm-spirv",
+   "name": "llvm-spirv-split",
    "version": "16.0.0"
   },
   "requirements": {
@@ -192,10 +649,8 @@
    "host": [
     "llvmdev  16.0.*",
     "llvm  16.0.*",
+    "spirv-headers",
     "zlib"
-   ],
-   "run_constrained": [
-    "llvmdev  16.0.*"
    ]
   },
   "source": {
@@ -204,11 +659,6 @@
    ],
    "sha256": "305fac5bb8efdad9054f0d27b5b765aca8b3349a500e2ba0c927763e42badc2b",
    "url": "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/v16.0.0.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "llvm-spirv -help"
-   ]
   }
  },
  "linux_ppc64le_requirements": {
@@ -224,14 +674,20 @@
   "host": {
    "__set__": true,
    "elements": [
+    "libllvmspirv16",
     "llvm",
+    "llvm-spirv-16",
     "llvmdev",
+    "spirv-headers",
     "zlib"
    ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "libllvmspirv16",
+    "llvm-spirv-16"
+   ]
   },
   "test": {
    "__set__": true,
@@ -247,9 +703,10 @@
    "summary": "A tool and a library for bi-directional translation between SPIR-V and LLVM IR"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
+   "feedstock-name": "llvm-spirv",
    "recipe-maintainers": [
     "isuruf",
     "isuruf",
@@ -258,8 +715,760 @@
     "isuruf"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so.16"
+    ],
+    "name": "libllvmspirv16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*",
+      "llvm-spirv 16.0.0.* *_1"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib.so.16"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "libllvmspirv16"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so",
+     "lib/pkgconfig/LLVMSPIRVLib.pc",
+     "include/LLVMSPIRVLib/"
+    ],
+    "name": "libllvmspirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv-16"
+    ],
+    "name": "llvm-spirv-16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv-16 -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv"
+    ],
+    "name": "llvm-spirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "llvm-spirv-16"
+     ],
+     "run": [
+      "llvm-spirv-16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv -help",
+      "llvm-spirv -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so.16"
+    ],
+    "name": "libllvmspirv16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*",
+      "llvm-spirv 16.0.0.* *_1"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib.so.16"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "libllvmspirv16"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so",
+     "lib/pkgconfig/LLVMSPIRVLib.pc",
+     "include/LLVMSPIRVLib/"
+    ],
+    "name": "libllvmspirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv-16"
+    ],
+    "name": "llvm-spirv-16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv-16 -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv"
+    ],
+    "name": "llvm-spirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "llvm-spirv-16"
+     ],
+     "run": [
+      "llvm-spirv-16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv -help",
+      "llvm-spirv -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so.16"
+    ],
+    "name": "libllvmspirv16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*",
+      "llvm-spirv 16.0.0.* *_1"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib.so.16"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "libllvmspirv16"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.so",
+     "lib/pkgconfig/LLVMSPIRVLib.pc",
+     "include/LLVMSPIRVLib/"
+    ],
+    "name": "libllvmspirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv-16"
+    ],
+    "name": "llvm-spirv-16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv-16 -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv"
+    ],
+    "name": "llvm-spirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "llvm-spirv-16"
+     ],
+     "run": [
+      "llvm-spirv-16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv -help",
+      "llvm-spirv -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.16.dylib"
+    ],
+    "name": "libllvmspirv16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*",
+      "llvm-spirv 16.0.0.* *_1"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib.16.dylib"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "libllvmspirv16"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.dylib",
+     "lib/pkgconfig/LLVMSPIRVLib.pc",
+     "include/LLVMSPIRVLib/"
+    ],
+    "name": "libllvmspirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv-16"
+    ],
+    "name": "llvm-spirv-16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv-16 -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv"
+    ],
+    "name": "llvm-spirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "llvm-spirv-16"
+     ],
+     "run": [
+      "llvm-spirv-16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv -help",
+      "llvm-spirv -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.16.dylib"
+    ],
+    "name": "libllvmspirv16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*",
+      "llvm-spirv 16.0.0.* *_1"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib.16.dylib"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "libllvmspirv16"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.dylib",
+     "lib/pkgconfig/LLVMSPIRVLib.pc",
+     "include/LLVMSPIRVLib/"
+    ],
+    "name": "libllvmspirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv-16"
+    ],
+    "name": "llvm-spirv-16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv-16 -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv"
+    ],
+    "name": "llvm-spirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "llvm-spirv-16"
+     ],
+     "run": [
+      "llvm-spirv-16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv -help",
+      "llvm-spirv -help"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "llvm-spirv",
+   "name": "llvm-spirv-split",
    "version": "16.0.0"
   },
   "requirements": {
@@ -288,26 +1497,24 @@
    "host": [
     "llvmdev  16.0.*",
     "llvm  16.0.*",
+    "spirv-headers",
     "zlib",
     "llvmdev  16.0.*",
     "llvm  16.0.*",
+    "spirv-headers",
     "zlib",
     "llvmdev  16.0.*",
     "llvm  16.0.*",
+    "spirv-headers",
     "zlib",
     "llvmdev  16.0.*",
     "llvm  16.0.*",
+    "spirv-headers",
     "zlib",
     "llvmdev  16.0.*",
     "llvm  16.0.*",
+    "spirv-headers",
     "zlib"
-   ],
-   "run_constrained": [
-    "llvmdev  16.0.*",
-    "llvmdev  16.0.*",
-    "llvmdev  16.0.*",
-    "llvmdev  16.0.*",
-    "llvmdev  16.0.*"
    ]
   },
   "source": {
@@ -320,18 +1527,9 @@
    ],
    "sha256": "305fac5bb8efdad9054f0d27b5b765aca8b3349a500e2ba0c927763e42badc2b",
    "url": "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/v16.0.0.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "llvm-spirv -help",
-    "llvm-spirv -help",
-    "llvm-spirv -help",
-    "llvm-spirv -help",
-    "llvm-spirv -help"
-   ]
   }
  },
- "name": "llvm-spirv",
+ "name": "llvm-spirv-split",
  "osx_64_meta_yaml": {
   "about": {
    "home": "https://github.com/KhronosGroup/SPIRV-LLVM-Translator",
@@ -341,15 +1539,168 @@
    "summary": "A tool and a library for bi-directional translation between SPIR-V and LLVM IR"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
+   "feedstock-name": "llvm-spirv",
    "recipe-maintainers": [
     "isuruf"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.16.dylib"
+    ],
+    "name": "libllvmspirv16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*",
+      "llvm-spirv 16.0.0.* *_1"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib.16.dylib"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "libllvmspirv16"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.dylib",
+     "lib/pkgconfig/LLVMSPIRVLib.pc",
+     "include/LLVMSPIRVLib/"
+    ],
+    "name": "libllvmspirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv-16"
+    ],
+    "name": "llvm-spirv-16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv-16 -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv"
+    ],
+    "name": "llvm-spirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "llvm-spirv-16"
+     ],
+     "run": [
+      "llvm-spirv-16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv -help",
+      "llvm-spirv -help"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "llvm-spirv",
+   "name": "llvm-spirv-split",
    "version": "16.0.0"
   },
   "requirements": {
@@ -362,10 +1713,8 @@
    "host": [
     "llvmdev  16.0.*",
     "llvm  16.0.*",
+    "spirv-headers",
     "zlib"
-   ],
-   "run_constrained": [
-    "llvmdev  16.0.*"
    ]
   },
   "source": {
@@ -374,11 +1723,6 @@
    ],
    "sha256": "305fac5bb8efdad9054f0d27b5b765aca8b3349a500e2ba0c927763e42badc2b",
    "url": "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/v16.0.0.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "llvm-spirv -help"
-   ]
   }
  },
  "osx_64_requirements": {
@@ -394,14 +1738,20 @@
   "host": {
    "__set__": true,
    "elements": [
+    "libllvmspirv16",
     "llvm",
+    "llvm-spirv-16",
     "llvmdev",
+    "spirv-headers",
     "zlib"
    ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "libllvmspirv16",
+    "llvm-spirv-16"
+   ]
   },
   "test": {
    "__set__": true,
@@ -417,15 +1767,168 @@
    "summary": "A tool and a library for bi-directional translation between SPIR-V and LLVM IR"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
+   "feedstock-name": "llvm-spirv",
    "recipe-maintainers": [
     "isuruf"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.16.dylib"
+    ],
+    "name": "libllvmspirv16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*",
+      "llvm-spirv 16.0.0.* *_1"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib.16.dylib"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ],
+     "run_exports": [
+      "libllvmspirv16"
+     ]
+    },
+    "files": [
+     "lib/libLLVMSPIRVLib.dylib",
+     "lib/pkgconfig/LLVMSPIRVLib.pc",
+     "include/LLVMSPIRVLib/"
+    ],
+    "name": "libllvmspirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ],
+     "run_constrained": [
+      "llvmdev  16.0.*"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv-16"
+    ],
+    "name": "llvm-spirv-16",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "libllvmspirv16"
+     ],
+     "run": [
+      "libllvmspirv16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv-16 -help"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "zlib"
+     ]
+    },
+    "files": [
+     "bin/llvm-spirv"
+    ],
+    "name": "llvm-spirv",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cmake",
+      "make",
+      "pkg-config"
+     ],
+     "host": [
+      "llvmdev  16.0.*",
+      "llvm  16.0.*",
+      "zlib",
+      "spirv-headers",
+      "llvm-spirv-16"
+     ],
+     "run": [
+      "llvm-spirv-16"
+     ]
+    },
+    "script": "install.sh",
+    "test": {
+     "commands": [
+      "${PREFIX}/bin/llvm-spirv -help",
+      "llvm-spirv -help"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "llvm-spirv",
+   "name": "llvm-spirv-split",
    "version": "16.0.0"
   },
   "requirements": {
@@ -438,10 +1941,8 @@
    "host": [
     "llvmdev  16.0.*",
     "llvm  16.0.*",
+    "spirv-headers",
     "zlib"
-   ],
-   "run_constrained": [
-    "llvmdev  16.0.*"
    ]
   },
   "source": {
@@ -450,11 +1951,6 @@
    ],
    "sha256": "305fac5bb8efdad9054f0d27b5b765aca8b3349a500e2ba0c927763e42badc2b",
    "url": "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/v16.0.0.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "llvm-spirv -help"
-   ]
   }
  },
  "osx_arm64_requirements": {
@@ -470,14 +1966,20 @@
   "host": {
    "__set__": true,
    "elements": [
+    "libllvmspirv16",
     "llvm",
+    "llvm-spirv-16",
     "llvmdev",
+    "spirv-headers",
     "zlib"
    ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "libllvmspirv16",
+    "llvm-spirv-16"
+   ]
   },
   "test": {
    "__set__": true,
@@ -487,7 +1989,10 @@
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "llvm-spirv"
+   "libllvmspirv",
+   "libllvmspirv16",
+   "llvm-spirv",
+   "llvm-spirv-16"
   ]
  },
  "parsing_error": false,
@@ -501,16 +2006,19 @@
  "pr_info": {
   "__lazy_json__": "pr_info/llvm-spirv.json"
  },
- "raw_meta_yaml": "{% set name = \"llvm-spirv\" %}\n{% set version = \"16.0.0\" %}\n{% set llvm_version = \".\".join(version.split(\".\")[:2]) %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/v{{ version }}.tar.gz\n  sha256: 305fac5bb8efdad9054f0d27b5b765aca8b3349a500e2ba0c927763e42badc2b\n  patches:\n    - patches/gh1889.patch\n\nbuild:\n  number: 0\n  skip: true  # [not unix]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - make\n    - pkg-config\n  host:\n    - llvmdev  {{ llvm_version }}.*\n    - llvm  {{ llvm_version }}.*\n    - zlib\n  run_constrained:\n    - llvmdev  {{ llvm_version }}.*\n\ntest:\n  commands:\n    - llvm-spirv -help\n\nabout:\n  home: https://github.com/KhronosGroup/SPIRV-LLVM-Translator\n  license: NCSA\n  license_file: LICENSE.TXT\n  license_family: BSD\n  summary: A tool and a library for bi-directional translation between SPIR-V and LLVM IR\n\nextra:\n  recipe-maintainers:\n    - isuruf\n",
+ "raw_meta_yaml": "{% set name = \"llvm-spirv\" %}\n{% set version = \"16.0.0\" %}\n{% set llvm_version = \".\".join(version.split(\".\")[:2]) %}\n{% set major = version.split('.')[0] %}\n\npackage:\n  name: llvm-spirv-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/v{{ version.replace(\"_\", \"-\") }}.tar.gz\n  sha256: 305fac5bb8efdad9054f0d27b5b765aca8b3349a500e2ba0c927763e42badc2b\n  patches:\n    - patches/gh1889.patch\n\nbuild:\n  number: 1\n  skip: true  # [not unix]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - make\n    - pkg-config\n  host:\n    - llvmdev  {{ llvm_version }}.*\n    - llvm  {{ llvm_version }}.*\n    - spirv-headers\n    - zlib\n\noutputs:\n  - name: libllvmspirv{{ major }}\n    script: install.sh\n    build:\n      ignore_run_exports_from:\n        - zlib\n    files:\n      - lib/libLLVMSPIRVLib.{{ major }}.dylib  # [osx]\n      - lib/libLLVMSPIRVLib.so.{{ major }}     # [linux]\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - cmake\n        - make\n        - pkg-config\n      host:\n        - llvmdev  {{ llvm_version }}.*\n        - llvm  {{ llvm_version }}.*\n        - zlib\n        - spirv-headers\n      run_constrained:\n        - llvmdev  {{ llvm_version }}.*\n        - llvm-spirv {{ version }}.* *_{{ PKG_BUILDNUM }}\n    test:\n      commands:\n        - test ! -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}\n        - test -f ${PREFIX}/lib/libLLVMSPIRVLib.{{ major }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/libLLVMSPIRVLib.so.{{ major }}     # [linux]\n\n  - name: libllvmspirv\n    script: install.sh\n    build:\n      run_exports: \n        - {{ pin_subpackage(\"libllvmspirv\" ~ major) }}\n      ignore_run_exports_from:\n        - zlib\n    files:\n      - lib/libLLVMSPIRVLib.dylib       # [osx]\n      - lib/libLLVMSPIRVLib.so          # [linux]\n      - lib/pkgconfig/LLVMSPIRVLib.pc\n      - include/LLVMSPIRVLib/\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - cmake\n        - make\n        - pkg-config\n      host:\n        - llvmdev  {{ llvm_version }}.*\n        - llvm  {{ llvm_version }}.*\n        - zlib\n        - spirv-headers\n        - {{ pin_subpackage(\"libllvmspirv\" ~ major, exact=True) }}\n      run:\n        - {{ pin_subpackage(\"libllvmspirv\" ~ major, exact=True) }}\n      run_constrained:\n        - llvmdev  {{ llvm_version }}.*\n    test:\n      commands:\n        - test -f ${PREFIX}/lib/libLLVMSPIRVLib${SHLIB_EXT}\n\n  - name: llvm-spirv-{{ major }}\n    script: install.sh\n    build:\n      ignore_run_exports_from:\n        - zlib\n    files:\n      - bin/llvm-spirv-{{ major }}\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - cmake\n        - make\n        - pkg-config\n      host:\n        - llvmdev  {{ llvm_version }}.*\n        - llvm  {{ llvm_version }}.*\n        - zlib\n        - spirv-headers\n        - {{ pin_subpackage(\"libllvmspirv\" ~ major, exact=True) }}\n      run:\n        - {{ pin_subpackage(\"libllvmspirv\" ~ major, exact=True) }}\n    test:\n      commands:\n        - ${PREFIX}/bin/llvm-spirv-{{ major }} -help\n\n  - name: llvm-spirv\n    script: install.sh\n    build:\n      ignore_run_exports_from:\n        - zlib\n    files:\n      - bin/llvm-spirv\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - cmake\n        - make\n        - pkg-config\n      host:\n        - llvmdev  {{ llvm_version }}.*\n        - llvm  {{ llvm_version }}.*\n        - zlib\n        - spirv-headers\n        - {{ pin_subpackage(\"llvm-spirv-\" ~ major, exact=True) }}\n      run:\n        - {{ pin_subpackage(\"llvm-spirv-\" ~ major, exact=True) }}\n    test:\n      commands:\n        - ${PREFIX}/bin/llvm-spirv -help\n        - llvm-spirv -help\n\nabout:\n  home: https://github.com/KhronosGroup/SPIRV-LLVM-Translator\n  license: NCSA\n  license_file: LICENSE.TXT\n  license_family: BSD\n  summary: A tool and a library for bi-directional translation between SPIR-V and LLVM IR\n\nextra:\n  feedstock-name: llvm-spirv\n  recipe-maintainers:\n    - isuruf\n",
  "req": {
   "__set__": true,
   "elements": [
    "cmake",
    "cxx_compiler_stub",
+   "libllvmspirv16",
    "llvm",
+   "llvm-spirv-16",
    "llvmdev",
    "make",
    "pkg-config",
+   "spirv-headers",
    "zlib"
   ]
  },
@@ -528,15 +2036,20 @@
    "__set__": true,
    "elements": [
     "cxx_compiler_stub",
+    "libllvmspirv16",
     "llvm",
+    "llvm-spirv-16",
     "llvmdev",
+    "spirv-headers",
     "zlib"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "libllvmspirv16",
+    "llvm-spirv-16"
    ]
   },
   "test": {
@@ -558,14 +2071,20 @@
   "host": {
    "__set__": true,
    "elements": [
+    "libllvmspirv16",
     "llvm  16.0.*",
+    "llvm-spirv-16",
     "llvmdev  16.0.*",
+    "spirv-headers",
     "zlib"
    ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "libllvmspirv16",
+    "llvm-spirv-16"
+   ]
   },
   "test": {
    "__set__": true,
