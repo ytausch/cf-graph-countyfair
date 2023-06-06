@@ -172,6 +172,256 @@
    {
     "build": {
      "run_exports": [
+      "libxc-c cuda_*"
+     ],
+     "string": "cuda_h1234567_1"
+    },
+    "files": [
+     "bin/xc-info",
+     "include/*.h",
+     "lib/libxc.so*",
+     "lib/cmake/Libxc/LibxcConfig*",
+     "lib/cmake/Libxc/LibxcTargets-C*",
+     "lib/pkgconfig/libxc.pc"
+    ],
+    "name": "libxc-c",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake",
+      "ninja",
+      "perl"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $PREFIX/lib",
+      "ls -l $PREFIX/lib/cmake/Libxc",
+      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxc.a",
+      "test ! -f $PREFIX/lib/libxcf90$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxcf03$SHLIB_EXT",
+      "test -e $PREFIX/include/xc.h",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
+      "test ! -f $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
+      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
+      "test ! -f $PREFIX/lib/pkgconfig/libxcf90.pc",
+      "test ! -f $PREFIX/lib/pkgconfig/libxcf03.pc",
+      "xc-info 100",
+      "ldd -v $PREFIX/lib/libxc$SHLIB_EXT",
+      "ldd -v $PREFIX/bin/xc-info"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libxc cuda_*"
+     ],
+     "string": "cuda_h1234567_1"
+    },
+    "files": [
+     "include/*.mod",
+     "lib/libxcf*.so*",
+     "lib/cmake/Libxc/LibxcTargets-Fortran*",
+     "lib/pkgconfig/libxcf*.pc"
+    ],
+    "name": "libxc",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "fortran_compiler_stub"
+     ],
+     "host": [
+      "libxc-c"
+     ],
+     "run": [
+      "libxc-c"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxc.a",
+      "test -L $PREFIX/lib/libxcf90$SHLIB_EXT",
+      "test -L $PREFIX/lib/libxcf03$SHLIB_EXT",
+      "test -e $PREFIX/include/xc.h",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
+      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
+      "test -e $PREFIX/lib/pkgconfig/libxcf90.pc",
+      "test -e $PREFIX/lib/pkgconfig/libxcf03.pc",
+      "ldd -v $PREFIX/lib/libxcf03$SHLIB_EXT"
+     ]
+    }
+   },
+   {
+    "build": {
+     "string": "cuda_py39h1234567_1"
+    },
+    "name": "pylibxc",
+    "requirements": {
+     "build": [
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libxc-c",
+      "python"
+     ],
+     "run": [
+      "libxc-c",
+      "python",
+      "numpy"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "ls -l $SP_DIR/pylibxc",
+      "test -f $SP_DIR/pylibxc/__init__.py",
+      "python test_pylibxc.py"
+     ],
+     "files": [
+      "test_pylibxc.py"
+     ],
+     "imports": [
+      "pylibxc"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libxc-c cuda_*"
+     ],
+     "string": "cuda_h1234567_1"
+    },
+    "files": [
+     "bin/xc-info",
+     "include/*.h",
+     "lib/libxc.so*",
+     "lib/cmake/Libxc/LibxcConfig*",
+     "lib/cmake/Libxc/LibxcTargets-C*",
+     "lib/pkgconfig/libxc.pc"
+    ],
+    "name": "libxc-c",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake",
+      "ninja",
+      "perl"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $PREFIX/lib",
+      "ls -l $PREFIX/lib/cmake/Libxc",
+      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxc.a",
+      "test ! -f $PREFIX/lib/libxcf90$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxcf03$SHLIB_EXT",
+      "test -e $PREFIX/include/xc.h",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
+      "test ! -f $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
+      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
+      "test ! -f $PREFIX/lib/pkgconfig/libxcf90.pc",
+      "test ! -f $PREFIX/lib/pkgconfig/libxcf03.pc",
+      "xc-info 100",
+      "ldd -v $PREFIX/lib/libxc$SHLIB_EXT",
+      "ldd -v $PREFIX/bin/xc-info"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libxc cuda_*"
+     ],
+     "string": "cuda_h1234567_1"
+    },
+    "files": [
+     "include/*.mod",
+     "lib/libxcf*.so*",
+     "lib/cmake/Libxc/LibxcTargets-Fortran*",
+     "lib/pkgconfig/libxcf*.pc"
+    ],
+    "name": "libxc",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "fortran_compiler_stub"
+     ],
+     "host": [
+      "libxc-c"
+     ],
+     "run": [
+      "libxc-c"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxc.a",
+      "test -L $PREFIX/lib/libxcf90$SHLIB_EXT",
+      "test -L $PREFIX/lib/libxcf03$SHLIB_EXT",
+      "test -e $PREFIX/include/xc.h",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
+      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
+      "test -e $PREFIX/lib/pkgconfig/libxcf90.pc",
+      "test -e $PREFIX/lib/pkgconfig/libxcf03.pc",
+      "ldd -v $PREFIX/lib/libxcf03$SHLIB_EXT"
+     ]
+    }
+   },
+   {
+    "build": {
+     "string": "cuda_py39h1234567_1"
+    },
+    "name": "pylibxc",
+    "requirements": {
+     "build": [
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libxc-c",
+      "python"
+     ],
+     "run": [
+      "libxc-c",
+      "python",
+      "numpy"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "ls -l $SP_DIR/pylibxc",
+      "test -f $SP_DIR/pylibxc/__init__.py",
+      "python test_pylibxc.py"
+     ],
+     "files": [
+      "test_pylibxc.py"
+     ],
+     "imports": [
+      "pylibxc"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
       "libxc-c cpu_*"
      ],
      "string": "cpu_h1234567_1"
@@ -416,256 +666,6 @@
       "pylibxc"
      ]
     }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libxc-c cuda_*"
-     ],
-     "string": "cuda_h1234567_1"
-    },
-    "files": [
-     "bin/xc-info",
-     "include/*.h",
-     "lib/libxc.so*",
-     "lib/cmake/Libxc/LibxcConfig*",
-     "lib/cmake/Libxc/LibxcTargets-C*",
-     "lib/pkgconfig/libxc.pc"
-    ],
-    "name": "libxc-c",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "cmake",
-      "ninja",
-      "perl"
-     ]
-    },
-    "test": {
-     "commands": [
-      "ls -l $PREFIX/lib",
-      "ls -l $PREFIX/lib/cmake/Libxc",
-      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxc.a",
-      "test ! -f $PREFIX/lib/libxcf90$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxcf03$SHLIB_EXT",
-      "test -e $PREFIX/include/xc.h",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
-      "test ! -f $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
-      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
-      "test ! -f $PREFIX/lib/pkgconfig/libxcf90.pc",
-      "test ! -f $PREFIX/lib/pkgconfig/libxcf03.pc",
-      "xc-info 100",
-      "ldd -v $PREFIX/lib/libxc$SHLIB_EXT",
-      "ldd -v $PREFIX/bin/xc-info"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libxc cuda_*"
-     ],
-     "string": "cuda_h1234567_1"
-    },
-    "files": [
-     "include/*.mod",
-     "lib/libxcf*.so*",
-     "lib/cmake/Libxc/LibxcTargets-Fortran*",
-     "lib/pkgconfig/libxcf*.pc"
-    ],
-    "name": "libxc",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "fortran_compiler_stub"
-     ],
-     "host": [
-      "libxc-c"
-     ],
-     "run": [
-      "libxc-c"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxc.a",
-      "test -L $PREFIX/lib/libxcf90$SHLIB_EXT",
-      "test -L $PREFIX/lib/libxcf03$SHLIB_EXT",
-      "test -e $PREFIX/include/xc.h",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
-      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
-      "test -e $PREFIX/lib/pkgconfig/libxcf90.pc",
-      "test -e $PREFIX/lib/pkgconfig/libxcf03.pc",
-      "ldd -v $PREFIX/lib/libxcf03$SHLIB_EXT"
-     ]
-    }
-   },
-   {
-    "build": {
-     "string": "cuda_py39h1234567_1"
-    },
-    "name": "pylibxc",
-    "requirements": {
-     "build": [
-      "cmake",
-      "ninja"
-     ],
-     "host": [
-      "libxc-c",
-      "python"
-     ],
-     "run": [
-      "libxc-c",
-      "python",
-      "numpy"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "ls -l $SP_DIR/pylibxc",
-      "test -f $SP_DIR/pylibxc/__init__.py",
-      "python test_pylibxc.py"
-     ],
-     "files": [
-      "test_pylibxc.py"
-     ],
-     "imports": [
-      "pylibxc"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libxc-c cuda_*"
-     ],
-     "string": "cuda_h1234567_1"
-    },
-    "files": [
-     "bin/xc-info",
-     "include/*.h",
-     "lib/libxc.so*",
-     "lib/cmake/Libxc/LibxcConfig*",
-     "lib/cmake/Libxc/LibxcTargets-C*",
-     "lib/pkgconfig/libxc.pc"
-    ],
-    "name": "libxc-c",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "cmake",
-      "ninja",
-      "perl"
-     ]
-    },
-    "test": {
-     "commands": [
-      "ls -l $PREFIX/lib",
-      "ls -l $PREFIX/lib/cmake/Libxc",
-      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxc.a",
-      "test ! -f $PREFIX/lib/libxcf90$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxcf03$SHLIB_EXT",
-      "test -e $PREFIX/include/xc.h",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
-      "test ! -f $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
-      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
-      "test ! -f $PREFIX/lib/pkgconfig/libxcf90.pc",
-      "test ! -f $PREFIX/lib/pkgconfig/libxcf03.pc",
-      "xc-info 100",
-      "ldd -v $PREFIX/lib/libxc$SHLIB_EXT",
-      "ldd -v $PREFIX/bin/xc-info"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libxc cuda_*"
-     ],
-     "string": "cuda_h1234567_1"
-    },
-    "files": [
-     "include/*.mod",
-     "lib/libxcf*.so*",
-     "lib/cmake/Libxc/LibxcTargets-Fortran*",
-     "lib/pkgconfig/libxcf*.pc"
-    ],
-    "name": "libxc",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "fortran_compiler_stub"
-     ],
-     "host": [
-      "libxc-c"
-     ],
-     "run": [
-      "libxc-c"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxc.a",
-      "test -L $PREFIX/lib/libxcf90$SHLIB_EXT",
-      "test -L $PREFIX/lib/libxcf03$SHLIB_EXT",
-      "test -e $PREFIX/include/xc.h",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
-      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
-      "test -e $PREFIX/lib/pkgconfig/libxcf90.pc",
-      "test -e $PREFIX/lib/pkgconfig/libxcf03.pc",
-      "ldd -v $PREFIX/lib/libxcf03$SHLIB_EXT"
-     ]
-    }
-   },
-   {
-    "build": {
-     "string": "cuda_py39h1234567_1"
-    },
-    "name": "pylibxc",
-    "requirements": {
-     "build": [
-      "cmake",
-      "ninja"
-     ],
-     "host": [
-      "libxc-c",
-      "python"
-     ],
-     "run": [
-      "libxc-c",
-      "python",
-      "numpy"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "ls -l $SP_DIR/pylibxc",
-      "test -f $SP_DIR/pylibxc/__init__.py",
-      "python test_pylibxc.py"
-     ],
-     "files": [
-      "test_pylibxc.py"
-     ],
-     "imports": [
-      "pylibxc"
-     ]
-    }
    }
   ],
   "package": {
@@ -680,19 +680,19 @@
     "cmake >=3.1",
     "ninja",
     "perl",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "fortran_compiler_stub",
+    "cmake >=3.1",
+    "ninja",
+    "perl",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "fortran_compiler_stub",
+    "cmake >=3.1",
+    "ninja",
+    "perl",
     "c_compiler_stub",
-    "fortran_compiler_stub",
-    "cmake >=3.1",
-    "ninja",
-    "perl",
-    "cxx_compiler_stub",
-    "cuda_compiler_stub",
-    "fortran_compiler_stub",
-    "cmake >=3.1",
-    "ninja",
-    "perl",
-    "cxx_compiler_stub",
-    "cuda_compiler_stub",
     "fortran_compiler_stub",
     "cmake >=3.1",
     "ninja",
@@ -1337,6 +1337,256 @@
    {
     "build": {
      "run_exports": [
+      "libxc-c cuda_*"
+     ],
+     "string": "cuda_h1234567_1"
+    },
+    "files": [
+     "bin/xc-info",
+     "include/*.h",
+     "lib/libxc.so*",
+     "lib/cmake/Libxc/LibxcConfig*",
+     "lib/cmake/Libxc/LibxcTargets-C*",
+     "lib/pkgconfig/libxc.pc"
+    ],
+    "name": "libxc-c",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake",
+      "ninja",
+      "perl"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $PREFIX/lib",
+      "ls -l $PREFIX/lib/cmake/Libxc",
+      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxc.a",
+      "test ! -f $PREFIX/lib/libxcf90$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxcf03$SHLIB_EXT",
+      "test -e $PREFIX/include/xc.h",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
+      "test ! -f $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
+      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
+      "test ! -f $PREFIX/lib/pkgconfig/libxcf90.pc",
+      "test ! -f $PREFIX/lib/pkgconfig/libxcf03.pc",
+      "xc-info 100",
+      "ldd -v $PREFIX/lib/libxc$SHLIB_EXT",
+      "ldd -v $PREFIX/bin/xc-info"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libxc cuda_*"
+     ],
+     "string": "cuda_h1234567_1"
+    },
+    "files": [
+     "include/*.mod",
+     "lib/libxcf*.so*",
+     "lib/cmake/Libxc/LibxcTargets-Fortran*",
+     "lib/pkgconfig/libxcf*.pc"
+    ],
+    "name": "libxc",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "fortran_compiler_stub"
+     ],
+     "host": [
+      "libxc-c"
+     ],
+     "run": [
+      "libxc-c"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxc.a",
+      "test -L $PREFIX/lib/libxcf90$SHLIB_EXT",
+      "test -L $PREFIX/lib/libxcf03$SHLIB_EXT",
+      "test -e $PREFIX/include/xc.h",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
+      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
+      "test -e $PREFIX/lib/pkgconfig/libxcf90.pc",
+      "test -e $PREFIX/lib/pkgconfig/libxcf03.pc",
+      "ldd -v $PREFIX/lib/libxcf03$SHLIB_EXT"
+     ]
+    }
+   },
+   {
+    "build": {
+     "string": "cuda_py39h1234567_1"
+    },
+    "name": "pylibxc",
+    "requirements": {
+     "build": [
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libxc-c",
+      "python"
+     ],
+     "run": [
+      "libxc-c",
+      "python",
+      "numpy"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "ls -l $SP_DIR/pylibxc",
+      "test -f $SP_DIR/pylibxc/__init__.py",
+      "python test_pylibxc.py"
+     ],
+     "files": [
+      "test_pylibxc.py"
+     ],
+     "imports": [
+      "pylibxc"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libxc-c cuda_*"
+     ],
+     "string": "cuda_h1234567_1"
+    },
+    "files": [
+     "bin/xc-info",
+     "include/*.h",
+     "lib/libxc.so*",
+     "lib/cmake/Libxc/LibxcConfig*",
+     "lib/cmake/Libxc/LibxcTargets-C*",
+     "lib/pkgconfig/libxc.pc"
+    ],
+    "name": "libxc-c",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake",
+      "ninja",
+      "perl"
+     ]
+    },
+    "test": {
+     "commands": [
+      "ls -l $PREFIX/lib",
+      "ls -l $PREFIX/lib/cmake/Libxc",
+      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxc.a",
+      "test ! -f $PREFIX/lib/libxcf90$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxcf03$SHLIB_EXT",
+      "test -e $PREFIX/include/xc.h",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
+      "test ! -f $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
+      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
+      "test ! -f $PREFIX/lib/pkgconfig/libxcf90.pc",
+      "test ! -f $PREFIX/lib/pkgconfig/libxcf03.pc",
+      "xc-info 100",
+      "ldd -v $PREFIX/lib/libxc$SHLIB_EXT",
+      "ldd -v $PREFIX/bin/xc-info"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libxc cuda_*"
+     ],
+     "string": "cuda_h1234567_1"
+    },
+    "files": [
+     "include/*.mod",
+     "lib/libxcf*.so*",
+     "lib/cmake/Libxc/LibxcTargets-Fortran*",
+     "lib/pkgconfig/libxcf*.pc"
+    ],
+    "name": "libxc",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "fortran_compiler_stub"
+     ],
+     "host": [
+      "libxc-c"
+     ],
+     "run": [
+      "libxc-c"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
+      "test ! -f $PREFIX/lib/libxc.a",
+      "test -L $PREFIX/lib/libxcf90$SHLIB_EXT",
+      "test -L $PREFIX/lib/libxcf03$SHLIB_EXT",
+      "test -e $PREFIX/include/xc.h",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
+      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
+      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
+      "test -e $PREFIX/lib/pkgconfig/libxcf90.pc",
+      "test -e $PREFIX/lib/pkgconfig/libxcf03.pc",
+      "ldd -v $PREFIX/lib/libxcf03$SHLIB_EXT"
+     ]
+    }
+   },
+   {
+    "build": {
+     "string": "cuda_py39h1234567_1"
+    },
+    "name": "pylibxc",
+    "requirements": {
+     "build": [
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libxc-c",
+      "python"
+     ],
+     "run": [
+      "libxc-c",
+      "python",
+      "numpy"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "ls -l $SP_DIR/pylibxc",
+      "test -f $SP_DIR/pylibxc/__init__.py",
+      "python test_pylibxc.py"
+     ],
+     "files": [
+      "test_pylibxc.py"
+     ],
+     "imports": [
+      "pylibxc"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
       "libxc-c cpu_*"
      ],
      "string": "cpu_h1234567_1"
@@ -1425,256 +1675,6 @@
    {
     "build": {
      "string": "cpu_py39h1234567_1"
-    },
-    "name": "pylibxc",
-    "requirements": {
-     "build": [
-      "cmake",
-      "ninja"
-     ],
-     "host": [
-      "libxc-c",
-      "python"
-     ],
-     "run": [
-      "libxc-c",
-      "python",
-      "numpy"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "ls -l $SP_DIR/pylibxc",
-      "test -f $SP_DIR/pylibxc/__init__.py",
-      "python test_pylibxc.py"
-     ],
-     "files": [
-      "test_pylibxc.py"
-     ],
-     "imports": [
-      "pylibxc"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libxc-c cuda_*"
-     ],
-     "string": "cuda_h1234567_1"
-    },
-    "files": [
-     "bin/xc-info",
-     "include/*.h",
-     "lib/libxc.so*",
-     "lib/cmake/Libxc/LibxcConfig*",
-     "lib/cmake/Libxc/LibxcTargets-C*",
-     "lib/pkgconfig/libxc.pc"
-    ],
-    "name": "libxc-c",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "cmake",
-      "ninja",
-      "perl"
-     ]
-    },
-    "test": {
-     "commands": [
-      "ls -l $PREFIX/lib",
-      "ls -l $PREFIX/lib/cmake/Libxc",
-      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxc.a",
-      "test ! -f $PREFIX/lib/libxcf90$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxcf03$SHLIB_EXT",
-      "test -e $PREFIX/include/xc.h",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
-      "test ! -f $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
-      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
-      "test ! -f $PREFIX/lib/pkgconfig/libxcf90.pc",
-      "test ! -f $PREFIX/lib/pkgconfig/libxcf03.pc",
-      "xc-info 100",
-      "ldd -v $PREFIX/lib/libxc$SHLIB_EXT",
-      "ldd -v $PREFIX/bin/xc-info"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libxc cuda_*"
-     ],
-     "string": "cuda_h1234567_1"
-    },
-    "files": [
-     "include/*.mod",
-     "lib/libxcf*.so*",
-     "lib/cmake/Libxc/LibxcTargets-Fortran*",
-     "lib/pkgconfig/libxcf*.pc"
-    ],
-    "name": "libxc",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "fortran_compiler_stub"
-     ],
-     "host": [
-      "libxc-c"
-     ],
-     "run": [
-      "libxc-c"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxc.a",
-      "test -L $PREFIX/lib/libxcf90$SHLIB_EXT",
-      "test -L $PREFIX/lib/libxcf03$SHLIB_EXT",
-      "test -e $PREFIX/include/xc.h",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
-      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
-      "test -e $PREFIX/lib/pkgconfig/libxcf90.pc",
-      "test -e $PREFIX/lib/pkgconfig/libxcf03.pc",
-      "ldd -v $PREFIX/lib/libxcf03$SHLIB_EXT"
-     ]
-    }
-   },
-   {
-    "build": {
-     "string": "cuda_py39h1234567_1"
-    },
-    "name": "pylibxc",
-    "requirements": {
-     "build": [
-      "cmake",
-      "ninja"
-     ],
-     "host": [
-      "libxc-c",
-      "python"
-     ],
-     "run": [
-      "libxc-c",
-      "python",
-      "numpy"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "ls -l $SP_DIR/pylibxc",
-      "test -f $SP_DIR/pylibxc/__init__.py",
-      "python test_pylibxc.py"
-     ],
-     "files": [
-      "test_pylibxc.py"
-     ],
-     "imports": [
-      "pylibxc"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libxc-c cuda_*"
-     ],
-     "string": "cuda_h1234567_1"
-    },
-    "files": [
-     "bin/xc-info",
-     "include/*.h",
-     "lib/libxc.so*",
-     "lib/cmake/Libxc/LibxcConfig*",
-     "lib/cmake/Libxc/LibxcTargets-C*",
-     "lib/pkgconfig/libxc.pc"
-    ],
-    "name": "libxc-c",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "cmake",
-      "ninja",
-      "perl"
-     ]
-    },
-    "test": {
-     "commands": [
-      "ls -l $PREFIX/lib",
-      "ls -l $PREFIX/lib/cmake/Libxc",
-      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxc.a",
-      "test ! -f $PREFIX/lib/libxcf90$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxcf03$SHLIB_EXT",
-      "test -e $PREFIX/include/xc.h",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
-      "test ! -f $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
-      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
-      "test ! -f $PREFIX/lib/pkgconfig/libxcf90.pc",
-      "test ! -f $PREFIX/lib/pkgconfig/libxcf03.pc",
-      "xc-info 100",
-      "ldd -v $PREFIX/lib/libxc$SHLIB_EXT",
-      "ldd -v $PREFIX/bin/xc-info"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libxc cuda_*"
-     ],
-     "string": "cuda_h1234567_1"
-    },
-    "files": [
-     "include/*.mod",
-     "lib/libxcf*.so*",
-     "lib/cmake/Libxc/LibxcTargets-Fortran*",
-     "lib/pkgconfig/libxcf*.pc"
-    ],
-    "name": "libxc",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "fortran_compiler_stub"
-     ],
-     "host": [
-      "libxc-c"
-     ],
-     "run": [
-      "libxc-c"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -L $PREFIX/lib/libxc$SHLIB_EXT",
-      "test ! -f $PREFIX/lib/libxc.a",
-      "test -L $PREFIX/lib/libxcf90$SHLIB_EXT",
-      "test -L $PREFIX/lib/libxcf03$SHLIB_EXT",
-      "test -e $PREFIX/include/xc.h",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcConfig.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-C.cmake",
-      "test -e $PREFIX/lib/cmake/Libxc/LibxcTargets-Fortran.cmake",
-      "test -e $PREFIX/lib/pkgconfig/libxc.pc",
-      "test -e $PREFIX/lib/pkgconfig/libxcf90.pc",
-      "test -e $PREFIX/lib/pkgconfig/libxcf03.pc",
-      "ldd -v $PREFIX/lib/libxcf03$SHLIB_EXT"
-     ]
-    }
-   },
-   {
-    "build": {
-     "string": "cuda_py39h1234567_1"
     },
     "name": "pylibxc",
     "requirements": {
@@ -2434,19 +2434,19 @@
     "cmake >=3.1",
     "ninja",
     "perl",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "fortran_compiler_stub",
+    "cmake >=3.1",
+    "ninja",
+    "perl",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "fortran_compiler_stub",
+    "cmake >=3.1",
+    "ninja",
+    "perl",
     "c_compiler_stub",
-    "fortran_compiler_stub",
-    "cmake >=3.1",
-    "ninja",
-    "perl",
-    "cxx_compiler_stub",
-    "cuda_compiler_stub",
-    "fortran_compiler_stub",
-    "cmake >=3.1",
-    "ninja",
-    "perl",
-    "cxx_compiler_stub",
-    "cuda_compiler_stub",
     "fortran_compiler_stub",
     "cmake >=3.1",
     "ninja",
@@ -2938,11 +2938,11 @@
  },
  "parsing_error": false,
  "platforms": [
-  "osx_arm64",
   "linux_64",
+  "osx_64",
+  "osx_arm64",
   "win_64",
   "linux_aarch64",
-  "osx_64",
   "linux_ppc64le"
  ],
  "pr_info": {
