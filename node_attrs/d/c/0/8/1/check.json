@@ -5,6 +5,9 @@
   "bot": {
    "automerge": true
   },
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  },
   "provider": {
    "linux_aarch64": "azure",
    "linux_ppc64le": "azure"
@@ -39,6 +42,7 @@
     "make",
     "libtool",
     "pkg-config",
+    "gnuconfig",
     "c_compiler_stub"
    ],
    "host": [
@@ -64,6 +68,7 @@
    "elements": [
     "automake",
     "c_compiler_stub",
+    "gnuconfig",
     "libtool",
     "make",
     "pkg-config"
@@ -111,6 +116,7 @@
     "make",
     "libtool",
     "pkg-config",
+    "gnuconfig",
     "c_compiler_stub"
    ],
    "host": [
@@ -136,6 +142,7 @@
    "elements": [
     "automake",
     "c_compiler_stub",
+    "gnuconfig",
     "libtool",
     "make",
     "pkg-config"
@@ -183,6 +190,7 @@
     "make",
     "libtool",
     "pkg-config",
+    "gnuconfig",
     "c_compiler_stub"
    ],
    "host": [
@@ -208,6 +216,7 @@
    "elements": [
     "automake",
     "c_compiler_stub",
+    "gnuconfig",
     "libtool",
     "make",
     "pkg-config"
@@ -251,6 +260,9 @@
     "ocefpaf",
     "pelson",
     "rhattersley",
+    "ocefpaf",
+    "pelson",
+    "rhattersley",
     "ocefpaf"
    ]
   },
@@ -264,24 +276,35 @@
     "make",
     "libtool",
     "pkg-config",
+    "gnuconfig",
     "c_compiler_stub",
     "automake",
     "make",
     "libtool",
     "pkg-config",
+    "gnuconfig",
     "c_compiler_stub",
     "automake",
     "make",
     "libtool",
     "pkg-config",
+    "gnuconfig",
     "c_compiler_stub",
     "automake",
     "make",
     "libtool",
     "pkg-config",
+    "gnuconfig",
+    "c_compiler_stub",
+    "automake",
+    "make",
+    "libtool",
+    "pkg-config",
+    "gnuconfig",
     "c_compiler_stub"
    ],
    "host": [
+    "texinfo",
     "texinfo",
     "texinfo",
     "texinfo",
@@ -293,6 +316,7 @@
     "322-ppc64le_test_tolerance.patch",
     "322-ppc64le_test_tolerance.patch",
     "322-ppc64le_test_tolerance.patch",
+    "322-ppc64le_test_tolerance.patch",
     "322-ppc64le_test_tolerance.patch"
    ],
    "sha256": "a8de4e0bacfb4d76dd1c618ded263523b53b85d92a146d8835eb1a52932fa20a",
@@ -300,6 +324,7 @@
   },
   "test": {
    "commands": [
+    "checkmk --version",
     "checkmk --version",
     "checkmk --version",
     "checkmk --version",
@@ -335,6 +360,7 @@
     "make",
     "libtool",
     "pkg-config",
+    "gnuconfig",
     "c_compiler_stub"
    ],
    "host": [
@@ -360,6 +386,81 @@
    "elements": [
     "automake",
     "c_compiler_stub",
+    "gnuconfig",
+    "libtool",
+    "make",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "texinfo"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "home": "http://libcheck.github.io/check/",
+   "license": "LGPL-2.1",
+   "license_file": "COPYING.LESSER",
+   "summary": "Unit testing framework for C"
+  },
+  "build": {
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "pelson",
+    "rhattersley",
+    "ocefpaf"
+   ]
+  },
+  "package": {
+   "name": "check",
+   "version": "0.15.2"
+  },
+  "requirements": {
+   "build": [
+    "automake",
+    "make",
+    "libtool",
+    "pkg-config",
+    "gnuconfig",
+    "c_compiler_stub"
+   ],
+   "host": [
+    "texinfo"
+   ]
+  },
+  "source": {
+   "patches": [
+    "322-ppc64le_test_tolerance.patch"
+   ],
+   "sha256": "a8de4e0bacfb4d76dd1c618ded263523b53b85d92a146d8835eb1a52932fa20a",
+   "url": "https://github.com/libcheck/check/releases/download/0.15.2/check-0.15.2.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "checkmk --version"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "automake",
+    "c_compiler_stub",
+    "gnuconfig",
     "libtool",
     "make",
     "pkg-config"
@@ -391,17 +492,19 @@
   "linux_64",
   "linux_aarch64",
   "osx_64",
+  "osx_arm64",
   "linux_ppc64le"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/check.json"
  },
- "raw_meta_yaml": "{% set version = \"0.15.2\" %}\n\npackage:\n  name: check\n  version: {{ version }}\n\nsource:\n  url: https://github.com/libcheck/check/releases/download/{{ version }}/check-{{ version }}.tar.gz\n  sha256: a8de4e0bacfb4d76dd1c618ded263523b53b85d92a146d8835eb1a52932fa20a\n  patches:\n    # Has been merged tomaster, only affects the precision of the tests\n    # Necessary to move ppc64le forward\n    # https://github.com/libcheck/check/issues/333\n    # https://github.com/libcheck/check/pull/322\n    - 322-ppc64le_test_tolerance.patch\n\nbuild:\n  number: 1\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - automake\n    - make\n    - libtool\n    - pkg-config\n    - {{ compiler('c') }}\n  host:\n    - texinfo\n\ntest:\n  commands:\n    - checkmk --version\n\nabout:\n  home: http://libcheck.github.io/check/\n  license: LGPL-2.1\n  license_file: COPYING.LESSER\n  summary: Unit testing framework for C\n\nextra:\n  recipe-maintainers:\n    - pelson\n    - rhattersley\n    - ocefpaf\n",
+ "raw_meta_yaml": "{% set version = \"0.15.2\" %}\n\npackage:\n  name: check\n  version: {{ version }}\n\nsource:\n  url: https://github.com/libcheck/check/releases/download/{{ version }}/check-{{ version }}.tar.gz\n  sha256: a8de4e0bacfb4d76dd1c618ded263523b53b85d92a146d8835eb1a52932fa20a\n  patches:\n    # Has been merged tomaster, only affects the precision of the tests\n    # Necessary to move ppc64le forward\n    # https://github.com/libcheck/check/issues/333\n    # https://github.com/libcheck/check/pull/322\n    - 322-ppc64le_test_tolerance.patch\n\nbuild:\n  number: 1\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - automake\n    - make\n    - libtool\n    - pkg-config\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n  host:\n    - texinfo\n\ntest:\n  commands:\n    - checkmk --version\n\nabout:\n  home: http://libcheck.github.io/check/\n  license: LGPL-2.1\n  license_file: COPYING.LESSER\n  summary: Unit testing framework for C\n\nextra:\n  recipe-maintainers:\n    - pelson\n    - rhattersley\n    - ocefpaf\n",
  "req": {
   "__set__": true,
   "elements": [
    "automake",
    "c_compiler_stub",
+   "gnuconfig",
    "libtool",
    "make",
    "pkg-config",
@@ -414,6 +517,7 @@
    "elements": [
     "automake",
     "c_compiler_stub",
+    "gnuconfig",
     "libtool",
     "make",
     "pkg-config"
@@ -444,6 +548,7 @@
    "elements": [
     "automake",
     "c_compiler_stub",
+    "gnuconfig",
     "libtool",
     "make",
     "pkg-config"
