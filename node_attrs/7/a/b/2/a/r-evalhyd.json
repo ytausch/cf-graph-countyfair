@@ -37,7 +37,9 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "fbourgin",
     "ThibHlln",
+    "fbourgin",
     "ThibHlln"
    ]
   },
@@ -177,10 +179,15 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "fbourgin",
     "ThibHlln",
+    "fbourgin",
     "ThibHlln",
+    "fbourgin",
     "ThibHlln",
+    "fbourgin",
     "ThibHlln",
+    "fbourgin",
     "ThibHlln"
    ]
   },
@@ -313,7 +320,9 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "fbourgin",
     "ThibHlln",
+    "fbourgin",
     "ThibHlln"
    ]
   },
@@ -414,7 +423,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/r-evalhyd.json"
  },
- "raw_meta_yaml": "{% set version = \"0.1.0.0\" %}\n\n{% set posix = 'm2-' if win else '' %}\n{% set native = 'm2w64-' if win else '' %}\n\npackage:\n  name: r-evalhyd\n  version: {{ version }}\n\nsource:\n  url: https://gitlab.irstea.fr/HYCAR-Hydro/evalhyd/evalhyd-r/-/archive/v{{ version }}/evalhyd-r-v{{ version }}.tar.gz\n  sha256: dc4eda2655182bf9c7189e969f398aca053c46128997c8fd2fe730691e1eaa65\n\nbuild:\n  number: 0\n  merge_build_host: True          # [win]\n  script_env:\n    - EVALHYD_R_VENDOR_XTL=FALSE\n    - EVALHYD_R_VENDOR_XTENSOR=FALSE\n    - EVALHYD_R_VENDOR_XTENSOR_R=FALSE\n    - EVALHYD_R_VENDOR_EVALHYD_CPP=FALSE\n  rpaths:\n    - lib/R/lib/\n    - lib/\n  missing_dso_whitelist:\n    # ignore missing DLL message because it is in a non-standard directory and\n    # not in PATH (see e.g. https://github.com/conda/conda-build/pull/4786)\n    - '*/R.dll'                   # [win]\n\nrequirements:\n  build:\n    - cross-r-base {{ r_base }}   # [build_platform != target_platform]\n    - {{ compiler('cxx') }}       # [unix]\n    - {{ compiler('r_clang') }}   # [win]\n    - {{ posix }}filesystem       # [win]\n    - {{ posix }}make\n    - {{ posix }}sed              # [win]\n    - {{ posix }}coreutils        # [win]\n    - {{ posix }}zip              # [win]\n  host:\n    - r-base\n    - r-matrix >=1.1_0\n    - r-rcpp >=0.11.0\n    - xtl >=0.7.5\n    - xtensor >=0.24.6\n    - xtensor-r >=0.14.2\n    - libevalhyd ==0.1.0\n  run:\n    - r-base\n    - {{ pin_compatible('xtensor-r', max_pin='x.x') }}\n    - r-rcpp >=0.11.0\n\ntest:\n  commands:\n    - \"$R -e \\\"library('evalhyd')\\\"\"                                                                                          # [unix]\n    - \"$R -q -e \\\"library('evalhyd');stopifnot(all.equal(evalhyd::evald(c(1,2,3),c(1,2,3),c('NSE'))[[1]][1,1,1], 1))\\\"\"       # [unix]\n    - \"\\\"%R%\\\" -e \\\"library('evalhyd')\\\"\"                                                                                     # [win]\n    - \"\\\"%R%\\\" -q -e \\\"library('evalhyd');stopifnot(all.equal(evalhyd::evald(c(1,2,3),c(1,2,3),c('NSE'))[[1]][1,1,1], 1))\\\"\"  # [win]\n\nabout:\n  home: https://hydrogr.github.io/evalhyd\n  license: GPL-3.0-or-later\n  license_family: GPL\n  license_file: LICENCE.rst\n  summary: R bindings for evalhyd, a C++ library to evaluate streamflow predictions\n  description: |\n    An R package to evaluate deterministic and probabilistic \n    streamflow predictions\n  doc_url: https://hydrogr.github.io/evalhyd/r\n  dev_url: https://gitlab.irstea.fr/HYCAR-Hydro/evalhyd/evalhyd-r\n\nextra:\n  recipe-maintainers:\n    - ThibHlln\n",
+ "raw_meta_yaml": "{% set version = \"0.1.0.0\" %}\n\n{% set posix = 'm2-' if win else '' %}\n{% set native = 'm2w64-' if win else '' %}\n\npackage:\n  name: r-evalhyd\n  version: {{ version }}\n\nsource:\n  url: https://gitlab.irstea.fr/HYCAR-Hydro/evalhyd/evalhyd-r/-/archive/v{{ version }}/evalhyd-r-v{{ version }}.tar.gz\n  sha256: dc4eda2655182bf9c7189e969f398aca053c46128997c8fd2fe730691e1eaa65\n\nbuild:\n  number: 0\n  merge_build_host: True          # [win]\n  script_env:\n    - EVALHYD_R_VENDOR_XTL=FALSE\n    - EVALHYD_R_VENDOR_XTENSOR=FALSE\n    - EVALHYD_R_VENDOR_XTENSOR_R=FALSE\n    - EVALHYD_R_VENDOR_EVALHYD_CPP=FALSE\n  rpaths:\n    - lib/R/lib/\n    - lib/\n  missing_dso_whitelist:\n    # ignore missing DLL message because it is in a non-standard directory and\n    # not in PATH (see e.g. https://github.com/conda/conda-build/pull/4786)\n    - '*/R.dll'                   # [win]\n\nrequirements:\n  build:\n    - cross-r-base {{ r_base }}   # [build_platform != target_platform]\n    - {{ compiler('cxx') }}       # [unix]\n    - {{ compiler('r_clang') }}   # [win]\n    - {{ posix }}filesystem       # [win]\n    - {{ posix }}make\n    - {{ posix }}sed              # [win]\n    - {{ posix }}coreutils        # [win]\n    - {{ posix }}zip              # [win]\n  host:\n    - r-base\n    - r-matrix >=1.1_0\n    - r-rcpp >=0.11.0\n    - xtl >=0.7.5\n    - xtensor >=0.24.6\n    - xtensor-r >=0.14.2\n    - libevalhyd ==0.1.0\n  run:\n    - r-base\n    - {{ pin_compatible('xtensor-r', max_pin='x.x') }}\n    - r-rcpp >=0.11.0\n\ntest:\n  commands:\n    - \"$R -e \\\"library('evalhyd')\\\"\"                                                                                          # [unix]\n    - \"$R -q -e \\\"library('evalhyd');stopifnot(all.equal(evalhyd::evald(c(1,2,3),c(1,2,3),c('NSE'))[[1]][1,1,1], 1))\\\"\"       # [unix]\n    - \"\\\"%R%\\\" -e \\\"library('evalhyd')\\\"\"                                                                                     # [win]\n    - \"\\\"%R%\\\" -q -e \\\"library('evalhyd');stopifnot(all.equal(evalhyd::evald(c(1,2,3),c(1,2,3),c('NSE'))[[1]][1,1,1], 1))\\\"\"  # [win]\n\nabout:\n  home: https://hydrogr.github.io/evalhyd\n  license: GPL-3.0-or-later\n  license_family: GPL\n  license_file: LICENCE.rst\n  summary: R bindings for evalhyd, a C++ library to evaluate streamflow predictions\n  description: |\n    An R package to evaluate deterministic and probabilistic \n    streamflow predictions\n  doc_url: https://hydrogr.github.io/evalhyd/r\n  dev_url: https://gitlab.irstea.fr/HYCAR-Hydro/evalhyd/evalhyd-r\n\nextra:\n  recipe-maintainers:\n    - fbourgin\n    - ThibHlln\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -548,6 +557,7 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "fbourgin",
     "ThibHlln"
    ]
   },
