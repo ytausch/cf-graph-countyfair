@@ -19,7 +19,7 @@
    "summary": "Single C file, Realtime CPU/GPU Profiler with Remote Web Viewer"
   },
   "build": {
-   "number": "4"
+   "number": "5"
   },
   "extra": {
    "recipe-maintainers": [
@@ -129,7 +129,7 @@
    "summary": "Single C file, Realtime CPU/GPU Profiler with Remote Web Viewer"
   },
   "build": {
-   "number": "4"
+   "number": "5"
   },
   "extra": {
    "recipe-maintainers": [
@@ -324,10 +324,12 @@
     "test": {
      "commands": [
       "if not exist %LIBRARY_INC%\\remotery\\Remotery.h (exit 1)",
+      "if not exist %LIBRARY_BIN%\\remotery.dll (exit 1)",
+      "if not exist %LIBRARY_LIB%\\remotery.lib (exit 1)",
       "if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfig.cmake (exit 1)",
       "if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfigVersion.cmake (exit 1)",
-      "if not exist %LIBRARY_BIN%\\remotery.dll (exit 1)",
-      "if not exist %LIBRARY_LIB%\\remotery.lib (exit 1)"
+      "if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryTargets.cmake (exit 1)",
+      "if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryTargets-release.cmake (exit 1)"
      ]
     },
     "version": "1.2.1"
@@ -380,7 +382,7 @@
    "summary": "Single C file, Realtime CPU/GPU Profiler with Remote Web Viewer"
   },
   "build": {
-   "number": "4"
+   "number": "5"
   },
   "extra": {
    "recipe-maintainers": [
@@ -490,7 +492,7 @@
    "summary": "Single C file, Realtime CPU/GPU Profiler with Remote Web Viewer"
   },
   "build": {
-   "number": "4"
+   "number": "5"
   },
   "extra": {
    "recipe-maintainers": [
@@ -606,7 +608,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/remotery-split.json"
  },
- "raw_meta_yaml": "{% set name = \"Remotery\" %}\n{% set organization = \"Celtoys\" %}\n{% set version = \"1.2.1\" %}\n{% set sha256 = \"5740532229fe4da8d8ab8e310cc6a38d3f198f59314f5ecf1a072aca25f91709\" %}\n\npackage:\n  name: {{ name|lower }}-split\n\nsource:\n  url: https://github.com/{{ organization }}/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n  patches:\n    - 0001-Version-project.patch\n\nbuild:\n  number: 4\n\noutputs:\n  - name: {{ name|lower }}\n    version: {{ version }}\n    script: build_remotery.sh  # [unix]\n    script: build_remotery.bat  # [win]\n\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n        - ninja  # [win]\n\n    test:\n      commands:\n        # Unix installation tests\n        - test -d ${PREFIX}/include/remotery  # [unix]\n        - test -f ${PREFIX}/include/remotery/Remotery.h  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryConfig.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryConfigVersion.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryTargets.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryTargets-release.cmake  # [unix]\n        - test -e ${PREFIX}/lib/libremotery${SHLIB_EXT}  # [unix]\n\n        # API Version tests\n        {% set version_split = version.split('.') %}\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_MAJOR {{ version_split[0] }}\"  # [unix]\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_MINOR {{ version_split[1] }}\"  # [unix]\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_PATCH {{ version_split[2] }}\"  # [unix]\n\n        # Windows installation tests\n        - if not exist %LIBRARY_INC%\\remotery\\Remotery.h (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfig.cmake (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfigVersion.cmake (exit 1)  # [win]\n        - if not exist %LIBRARY_BIN%\\remotery.dll (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\remotery.lib (exit 1)  # [win]\n\n  - name: {{ name|lower }}-static\n    version: {{ version }}\n    script: build_remotery.sh  # [unix]\n    script: build_remotery.bat  # [win]\n\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n        - ninja  # [win]\n\n    test:\n      commands:\n        # Unix installation tests\n        - test -d ${PREFIX}/include/remotery  # [unix]\n        - test -f ${PREFIX}/include/remotery/Remotery.h  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryConfig.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryConfigVersion.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryTargets.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryTargets-release.cmake  # [unix]\n        - test -e ${PREFIX}/lib/libremotery.a  # [unix]\n\n        # API Version tests\n        {% set version_split = version.split('.') %}\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_MAJOR {{ version_split[0] }}\"  # [unix]\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_MINOR {{ version_split[1] }}\"  # [unix]\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_PATCH {{ version_split[2] }}\"  # [unix]\n\n        # Windows installation tests\n        - if not exist %LIBRARY_INC%\\remotery\\Remotery.h (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfig.cmake (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfigVersion.cmake (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\remotery_static.lib (exit 1)  # [win]\n\nabout:\n  home: https://github.com/{{ organization }}/{{ name }}/\n  summary: Single C file, Realtime CPU/GPU Profiler with Remote Web Viewer\n  description: |\n    A realtime CPU/GPU profiler hosted in a single C file with a viewer that runs in a web browser.\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  dev_url: https://github.com/{{ organization }}/{{ name }}/\n\nextra:\n  recipe-maintainers:\n    - jjerphan\n    - DerThorsten\n    - JohanMabille\n",
+ "raw_meta_yaml": "{% set name = \"Remotery\" %}\n{% set organization = \"Celtoys\" %}\n{% set version = \"1.2.1\" %}\n{% set sha256 = \"5740532229fe4da8d8ab8e310cc6a38d3f198f59314f5ecf1a072aca25f91709\" %}\n\npackage:\n  name: {{ name|lower }}-split\n\nsource:\n  url: https://github.com/{{ organization }}/{{ name }}/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n  patches:\n    - 0001-Version-project.patch\n\nbuild:\n  number: 5\n\noutputs:\n  - name: {{ name|lower }}\n    version: {{ version }}\n    script: build_remotery.sh  # [unix]\n    script: build_remotery.bat  # [win]\n\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n        - ninja  # [win]\n\n    test:\n      commands:\n        # Unix installation tests\n        - test -d ${PREFIX}/include/remotery  # [unix]\n        - test -f ${PREFIX}/include/remotery/Remotery.h  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryConfig.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryConfigVersion.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryTargets.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryTargets-release.cmake  # [unix]\n        - test -e ${PREFIX}/lib/libremotery${SHLIB_EXT}  # [unix]\n\n        # API Version tests\n        {% set version_split = version.split('.') %}\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_MAJOR {{ version_split[0] }}\"  # [unix]\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_MINOR {{ version_split[1] }}\"  # [unix]\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_PATCH {{ version_split[2] }}\"  # [unix]\n\n        # Windows installation tests\n        - if not exist %LIBRARY_INC%\\remotery\\Remotery.h (exit 1)  # [win]\n        - if not exist %LIBRARY_BIN%\\remotery.dll (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\remotery.lib (exit 1)  # [win]\n\n        # Installation of CMake setup on Windows\n        - if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfig.cmake (exit 1)           # [win]\n        - if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfigVersion.cmake (exit 1)    # [win]\n        - if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryTargets.cmake (exit 1)          # [win]\n        - if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryTargets-release.cmake (exit 1)  # [win]\n\n  - name: {{ name|lower }}-static\n    version: {{ version }}\n    script: build_remotery.sh  # [unix]\n    script: build_remotery.bat  # [win]\n\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n        - ninja  # [win]\n\n    test:\n      commands:\n        # Unix installation tests\n        - test -d ${PREFIX}/include/remotery  # [unix]\n        - test -f ${PREFIX}/include/remotery/Remotery.h  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryConfig.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryConfigVersion.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryTargets.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/remotery/remoteryTargets-release.cmake  # [unix]\n        - test -e ${PREFIX}/lib/libremotery.a  # [unix]\n\n        # API Version tests\n        {% set version_split = version.split('.') %}\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_MAJOR {{ version_split[0] }}\"  # [unix]\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_MINOR {{ version_split[1] }}\"  # [unix]\n        - cat $PREFIX/include/remotery/Remotery.h | grep \"RMT_VERSION_PATCH {{ version_split[2] }}\"  # [unix]\n\n        # Windows installation tests\n        - if not exist %LIBRARY_INC%\\remotery\\Remotery.h (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfig.cmake (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfigVersion.cmake (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\remotery_static.lib (exit 1)  # [win]\n\nabout:\n  home: https://github.com/{{ organization }}/{{ name }}/\n  summary: Single C file, Realtime CPU/GPU Profiler with Remote Web Viewer\n  description: |\n    A realtime CPU/GPU profiler hosted in a single C file with a viewer that runs in a web browser.\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  dev_url: https://github.com/{{ organization }}/{{ name }}/\n\nextra:\n  recipe-maintainers:\n    - jjerphan\n    - DerThorsten\n    - JohanMabille\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -687,7 +689,7 @@
    "summary": "Single C file, Realtime CPU/GPU Profiler with Remote Web Viewer"
   },
   "build": {
-   "number": "4"
+   "number": "5"
   },
   "extra": {
    "recipe-maintainers": [
@@ -711,10 +713,12 @@
     "test": {
      "commands": [
       "if not exist %LIBRARY_INC%\\remotery\\Remotery.h (exit 1)",
+      "if not exist %LIBRARY_BIN%\\remotery.dll (exit 1)",
+      "if not exist %LIBRARY_LIB%\\remotery.lib (exit 1)",
       "if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfig.cmake (exit 1)",
       "if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryConfigVersion.cmake (exit 1)",
-      "if not exist %LIBRARY_BIN%\\remotery.dll (exit 1)",
-      "if not exist %LIBRARY_LIB%\\remotery.lib (exit 1)"
+      "if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryTargets.cmake (exit 1)",
+      "if not exist %LIBRARY_LIB%\\cmake\\remotery\\remoteryTargets-release.cmake (exit 1)"
      ]
     },
     "version": "1.2.1"
