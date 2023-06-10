@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "bot": {
+   "inspection": "hint-all"
+  },
   "provider": {
    "linux_aarch64": "default"
   }
@@ -45,7 +48,7 @@
   },
   "package": {
    "name": "pcsclite",
-   "version": "1.9.9"
+   "version": "2.0.0"
   },
   "requirements": {
    "build": [
@@ -65,8 +68,8 @@
    "run": []
   },
   "source": {
-   "sha256": "cbcc3b34c61f53291cecc0d831423c94d437b188eb2b97b7febc08de1c914e8a",
-   "url": "https://pcsclite.apdu.fr/files/pcsc-lite-1.9.9.tar.bz2"
+   "sha256": "d6c3e2b64510e5ed6fcd3323febf2cc2a8e5fda5a6588c7671f2d77f9f189356",
+   "url": "https://pcsclite.apdu.fr/files/pcsc-lite-2.0.0.tar.bz2"
   },
   "test": {
    "commands": [
@@ -144,7 +147,7 @@
   },
   "package": {
    "name": "pcsclite",
-   "version": "1.9.9"
+   "version": "2.0.0"
   },
   "requirements": {
    "build": [
@@ -163,8 +166,8 @@
    "run": []
   },
   "source": {
-   "sha256": "cbcc3b34c61f53291cecc0d831423c94d437b188eb2b97b7febc08de1c914e8a",
-   "url": "https://pcsclite.apdu.fr/files/pcsc-lite-1.9.9.tar.bz2"
+   "sha256": "d6c3e2b64510e5ed6fcd3323febf2cc2a8e5fda5a6588c7671f2d77f9f189356",
+   "url": "https://pcsclite.apdu.fr/files/pcsc-lite-2.0.0.tar.bz2"
   },
   "test": {
    "commands": [
@@ -256,7 +259,7 @@
   },
   "package": {
    "name": "pcsclite",
-   "version": "1.9.9"
+   "version": "2.0.0"
   },
   "requirements": {
    "build": [
@@ -285,8 +288,8 @@
    "run": []
   },
   "source": {
-   "sha256": "cbcc3b34c61f53291cecc0d831423c94d437b188eb2b97b7febc08de1c914e8a",
-   "url": "https://pcsclite.apdu.fr/files/pcsc-lite-1.9.9.tar.bz2"
+   "sha256": "d6c3e2b64510e5ed6fcd3323febf2cc2a8e5fda5a6588c7671f2d77f9f189356",
+   "url": "https://pcsclite.apdu.fr/files/pcsc-lite-2.0.0.tar.bz2"
   },
   "test": {
    "commands": [
@@ -316,7 +319,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pcsclite.json"
  },
- "raw_meta_yaml": "{% set name = \"pcsclite\" %}\n{% set version = \"1.9.9\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pcsclite.apdu.fr/files/pcsc-lite-{{ version }}.tar.bz2\n  sha256: cbcc3b34c61f53291cecc0d831423c94d437b188eb2b97b7febc08de1c914e8a\n\nbuild:\n  skip: True  # [not linux]\n  script:\n    - set -e\n    - set -x\n    - if test -f Makefile; then make distclean; fi\n    - rm -rf *.cache *.m4 config.guess config.log config.status config.sub depcomp ltmain.sh\n    - autoreconf --verbose --install --force\n    - ./configure --prefix=$PREFIX --sbindir=$PREFIX/bin\n    - make install\n    - make distcheck\n    - rm $PREFIX/bin/pcsc-spy\n    - rm $PREFIX/lib/libpcscspy.so*\n  number: 0\n  run_exports:\n    - {{ pin_subpackage('pcsclite', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ cdt('systemd-devel') }}\n    - autoconf-archive\n    - automake\n    - flex\n    - libtool\n    - make\n    - pkg-config \n    - sysroot_linux-64 2.17  # [linux64]\n  host:\n    - libudev\n  run:\n\ntest:\n  commands:\n    - pcscd --version\n    - test -f $PREFIX/include/PCSC/pcsclite.h\n    # Test specific SO versions to prevent future package ABI breaks\n    - test -f $PREFIX/lib/libpcsclite.so.1\n    - test -f $PREFIX/lib/pkgconfig/libpcsclite.pc\n\n\nabout:\n  home: https://pcsclite.apdu.fr/\n  dev_url: https://salsa.debian.org/rousseau/PCSC\n  summary: Middleware to access a smart card using SCard API (PC/SC).\n  license: BSD-3-Clause and GPL-3.0-or-later and BSD-2-Clause and MIT\n  license_file:\n    - COPYING\n    - GPL-3.0.txt\n\nextra:\n  recipe-maintainers:\n    - leofang\n    - thewchan\n",
+ "raw_meta_yaml": "{% set name = \"pcsclite\" %}\n{% set version = \"2.0.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pcsclite.apdu.fr/files/pcsc-lite-{{ version }}.tar.bz2\n  sha256: d6c3e2b64510e5ed6fcd3323febf2cc2a8e5fda5a6588c7671f2d77f9f189356\n\nbuild:\n  skip: true  # [not linux]\n  script:\n    - set -e\n    - set -x\n    - if test -f Makefile; then make distclean; fi\n    - rm -rf *.cache *.m4 config.guess config.log config.status config.sub depcomp ltmain.sh\n    - autoreconf --verbose --install --force\n    - ./configure --prefix=$PREFIX --sbindir=$PREFIX/bin\n    - make install\n    - make distcheck\n    - rm $PREFIX/bin/pcsc-spy\n    - rm $PREFIX/lib/libpcscspy.so*\n  number: 0\n  run_exports:\n    - {{ pin_subpackage('pcsclite', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ cdt('systemd-devel') }}\n    - autoconf-archive\n    - automake\n    - flex\n    - libtool\n    - make\n    - pkg-config\n    - sysroot_linux-64 2.17  # [linux64]\n  host:\n    - libudev\n  run:\n\ntest:\n  commands:\n    - pcscd --version\n    - test -f $PREFIX/include/PCSC/pcsclite.h\n    # Test specific SO versions to prevent future package ABI breaks\n    - test -f $PREFIX/lib/libpcsclite.so.1\n    - test -f $PREFIX/lib/pkgconfig/libpcsclite.pc\n\n\nabout:\n  home: https://pcsclite.apdu.fr/\n  dev_url: https://salsa.debian.org/rousseau/PCSC\n  summary: Middleware to access a smart card using SCard API (PC/SC).\n  license: BSD-3-Clause and GPL-3.0-or-later and BSD-2-Clause and MIT\n  license_file:\n    - COPYING\n    - GPL-3.0.txt\n\nextra:\n  recipe-maintainers:\n    - leofang\n    - thewchan\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -396,8 +399,8 @@
    "elements": []
   }
  },
- "url": "https://pcsclite.apdu.fr/files/pcsc-lite-1.9.9.tar.bz2",
- "version": "1.9.9",
+ "url": "https://pcsclite.apdu.fr/files/pcsc-lite-2.0.0.tar.bz2",
+ "version": "2.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/pcsclite.json"
  }
