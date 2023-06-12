@@ -1,7 +1,13 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
+   "osx_arm64": "osx_64"
+  }
+ },
  "feedstock_name": "unicorn",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -20,38 +26,59 @@
    "summary": "Unicorn CPU emulator framework (ARM, AArch64, M68K, Mips, Sparc, X86)"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "unicorn"
    ]
   },
   "extra": {
+   "feedstock-name": "unicorn",
    "recipe-maintainers": [
-    "chrisburr"
+    "chrisburr",
+    "pavelzw",
+    "0xbe7a"
    ]
   },
   "outputs": [
    {
-    "name": "unicorn"
+    "build": {
+     "script": [
+      "cmake --install source/build"
+     ]
+    },
+    "name": "unicorn",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "pkg-config",
+      "cmake",
+      "make"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
+     ]
+    }
    },
    {
     "build": {
-     "noarch": "python",
      "script": [
-      "export LIBUNICORN_PATH=\"${PREFIX}\"",
-      "mkdir source/bindings/python/src",
-      "cp source/pkgconfig.mk source/bindings/python/src",
-      "${PYTHON} -m pip install source/bindings/python/ -vv"
+      "export LIBUNICORN_PATH=\"${PREFIX}/lib\"",
+      "cd source/bindings/python",
+      "${PYTHON} -m pip install . -vv"
      ]
     },
     "name": "python-unicorn",
     "requirements": {
+     "build": [],
      "host": [
+      "unicorn",
       "pip",
-      "python >=2.7"
+      "python"
      ],
      "run": [
-      "python >=2.7",
+      "python",
       "unicorn"
      ]
     },
@@ -69,12 +96,13 @@
    }
   ],
   "package": {
-   "name": "unicorn",
-   "version": "1.0.3"
+   "name": "unicorn-split",
+   "version": "2.0.1.post1"
   },
   "requirements": {
    "build": [
     "c_compiler_stub",
+    "pkg-config",
     "cmake",
     "make"
    ],
@@ -82,13 +110,8 @@
   },
   "source": {
    "folder": "source",
-   "sha256": "64fba177dec64baf3f11c046fbb70e91483e029793ec6a3e43b028ef14dc0d65",
-   "url": "https://github.com/unicorn-engine/unicorn/archive/1.0.3.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
-   ]
+   "sha256": "6b276c857c69ee5ec3e292c3401c8c972bae292e0e4cb306bb9e5466c0f14737",
+   "url": "https://github.com/unicorn-engine/unicorn/archive/2.0.1.post1.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -97,14 +120,288 @@
    "elements": [
     "c_compiler_stub",
     "cmake",
-    "make"
+    "make",
+    "pkg-config"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "pip",
-    "python"
+    "python",
+    "unicorn"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "python",
+    "unicorn"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "pip"
+   ]
+  }
+ },
+ "linux_aarch64_meta_yaml": {
+  "about": {
+   "description": "Unicorn is a lightweight, multi-platform, multi-architecture CPU emulator framework\nbased on [QEMU](http://qemu.org).\n\nUnicorn offers some unparalleled features:\n\n- Multi-architecture: ARM, ARM64 (ARMv8), M68K, MIPS, SPARC, and X86 (16, 32, 64-bit)\n- Clean/simple/lightweight/intuitive architecture-neutral API\n- Implemented in pure C language, with bindings for Crystal, Clojure, Visual Basic, Perl,\n  Rust, Ruby, Python, Java, .NET, Go, Delphi/Free Pascal, Haskell, Pharo, and Lua.\n- Native support for Windows & *nix (with Mac OSX, Linux, *BSD & Solaris confirmed)\n- High performance via Just-In-Time compilation\n- Support for fine-grained instrumentation at various levels\n- Thread-safety by design\n- Distributed under free software license GPLv2\n",
+   "dev_url": "https://github.com/unicorn-engine/unicorn",
+   "doc_url": "https://www.unicorn-engine.org/docs/",
+   "home": "https://www.unicorn-engine.org/",
+   "license": "LGPL-2.0-only AND GPL-2.0-only AND GPL-2.0-or-later",
+   "license_file": [
+    "source/COPYING",
+    "source/COPYING_GLIB",
+    "source/COPYING.LGPL2",
+    "source/qemu/LICENSE"
+   ],
+   "summary": "Unicorn CPU emulator framework (ARM, AArch64, M68K, Mips, Sparc, X86)"
+  },
+  "build": {
+   "number": "2",
+   "run_exports": [
+    "unicorn"
+   ]
+  },
+  "extra": {
+   "feedstock-name": "unicorn",
+   "recipe-maintainers": [
+    "chrisburr",
+    "pavelzw",
+    "0xbe7a"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "script": [
+      "cmake --install source/build"
+     ]
+    },
+    "name": "unicorn",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "pkg-config",
+      "cmake",
+      "make"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
+     ]
+    }
+   },
+   {
+    "build": {
+     "script": [
+      "export LIBUNICORN_PATH=\"${PREFIX}/lib\"",
+      "cd source/bindings/python",
+      "${PYTHON} -m pip install . -vv"
+     ]
+    },
+    "name": "python-unicorn",
+    "requirements": {
+     "build": [],
+     "host": [
+      "unicorn",
+      "pip",
+      "python"
+     ],
+     "run": [
+      "python",
+      "unicorn"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "unicorn"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "unicorn-split",
+   "version": "2.0.1.post1"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "pkg-config",
+    "cmake",
+    "make"
+   ],
+   "host": []
+  },
+  "source": {
+   "folder": "source",
+   "sha256": "6b276c857c69ee5ec3e292c3401c8c972bae292e0e4cb306bb9e5466c0f14737",
+   "url": "https://github.com/unicorn-engine/unicorn/archive/2.0.1.post1.tar.gz"
+  }
+ },
+ "linux_aarch64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "make",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "pip",
+    "python",
+    "unicorn"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "python",
+    "unicorn"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "pip"
+   ]
+  }
+ },
+ "linux_ppc64le_meta_yaml": {
+  "about": {
+   "description": "Unicorn is a lightweight, multi-platform, multi-architecture CPU emulator framework\nbased on [QEMU](http://qemu.org).\n\nUnicorn offers some unparalleled features:\n\n- Multi-architecture: ARM, ARM64 (ARMv8), M68K, MIPS, SPARC, and X86 (16, 32, 64-bit)\n- Clean/simple/lightweight/intuitive architecture-neutral API\n- Implemented in pure C language, with bindings for Crystal, Clojure, Visual Basic, Perl,\n  Rust, Ruby, Python, Java, .NET, Go, Delphi/Free Pascal, Haskell, Pharo, and Lua.\n- Native support for Windows & *nix (with Mac OSX, Linux, *BSD & Solaris confirmed)\n- High performance via Just-In-Time compilation\n- Support for fine-grained instrumentation at various levels\n- Thread-safety by design\n- Distributed under free software license GPLv2\n",
+   "dev_url": "https://github.com/unicorn-engine/unicorn",
+   "doc_url": "https://www.unicorn-engine.org/docs/",
+   "home": "https://www.unicorn-engine.org/",
+   "license": "LGPL-2.0-only AND GPL-2.0-only AND GPL-2.0-or-later",
+   "license_file": [
+    "source/COPYING",
+    "source/COPYING_GLIB",
+    "source/COPYING.LGPL2",
+    "source/qemu/LICENSE"
+   ],
+   "summary": "Unicorn CPU emulator framework (ARM, AArch64, M68K, Mips, Sparc, X86)"
+  },
+  "build": {
+   "number": "2",
+   "run_exports": [
+    "unicorn"
+   ]
+  },
+  "extra": {
+   "feedstock-name": "unicorn",
+   "recipe-maintainers": [
+    "chrisburr",
+    "pavelzw",
+    "0xbe7a"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "script": [
+      "cmake --install source/build"
+     ]
+    },
+    "name": "unicorn",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "pkg-config",
+      "cmake",
+      "make"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
+     ]
+    }
+   },
+   {
+    "build": {
+     "script": [
+      "export LIBUNICORN_PATH=\"${PREFIX}/lib\"",
+      "cd source/bindings/python",
+      "${PYTHON} -m pip install . -vv"
+     ]
+    },
+    "name": "python-unicorn",
+    "requirements": {
+     "build": [],
+     "host": [
+      "unicorn",
+      "pip",
+      "python"
+     ],
+     "run": [
+      "python",
+      "unicorn"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "unicorn"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "unicorn-split",
+   "version": "2.0.1.post1"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "pkg-config",
+    "cmake",
+    "make"
+   ],
+   "host": []
+  },
+  "source": {
+   "folder": "source",
+   "sha256": "6b276c857c69ee5ec3e292c3401c8c972bae292e0e4cb306bb9e5466c0f14737",
+   "url": "https://github.com/unicorn-engine/unicorn/archive/2.0.1.post1.tar.gz"
+  }
+ },
+ "linux_ppc64le_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "make",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "pip",
+    "python",
+    "unicorn"
    ]
   },
   "run": {
@@ -136,45 +433,92 @@
     "source/COPYING",
     "source/COPYING_GLIB",
     "source/COPYING.LGPL2",
+    "source/qemu/LICENSE",
+    "source/COPYING",
+    "source/COPYING_GLIB",
+    "source/COPYING.LGPL2",
+    "source/qemu/LICENSE",
+    "source/COPYING",
+    "source/COPYING_GLIB",
+    "source/COPYING.LGPL2",
+    "source/qemu/LICENSE",
+    "source/COPYING",
+    "source/COPYING_GLIB",
+    "source/COPYING.LGPL2",
     "source/qemu/LICENSE"
    ],
    "summary": "Unicorn CPU emulator framework (ARM, AArch64, M68K, Mips, Sparc, X86)"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "run_exports": [
+    "unicorn",
+    "unicorn",
+    "unicorn",
     "unicorn",
     "unicorn"
    ]
   },
   "extra": {
+   "feedstock-name": "unicorn",
    "recipe-maintainers": [
     "chrisburr",
-    "chrisburr"
+    "pavelzw",
+    "0xbe7a",
+    "chrisburr",
+    "pavelzw",
+    "0xbe7a",
+    "chrisburr",
+    "pavelzw",
+    "0xbe7a",
+    "chrisburr",
+    "pavelzw",
+    "0xbe7a",
+    "chrisburr",
+    "pavelzw",
+    "0xbe7a"
    ]
   },
   "outputs": [
    {
-    "name": "unicorn"
+    "build": {
+     "script": [
+      "cmake --install source/build"
+     ]
+    },
+    "name": "unicorn",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "pkg-config",
+      "cmake",
+      "make"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
+     ]
+    }
    },
    {
     "build": {
-     "noarch": "python",
      "script": [
-      "export LIBUNICORN_PATH=\"${PREFIX}\"",
-      "mkdir source/bindings/python/src",
-      "cp source/pkgconfig.mk source/bindings/python/src",
-      "${PYTHON} -m pip install source/bindings/python/ -vv"
+      "export LIBUNICORN_PATH=\"${PREFIX}/lib\"",
+      "cd source/bindings/python",
+      "${PYTHON} -m pip install . -vv"
      ]
     },
     "name": "python-unicorn",
     "requirements": {
+     "build": [],
      "host": [
+      "unicorn",
       "pip",
-      "python >=2.7"
+      "python"
      ],
      "run": [
-      "python >=2.7",
+      "python",
       "unicorn"
      ]
     },
@@ -191,26 +535,206 @@
     }
    },
    {
-    "name": "unicorn"
+    "build": {
+     "script": [
+      "cmake --install source/build"
+     ]
+    },
+    "name": "unicorn",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "pkg-config",
+      "cmake",
+      "make"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
+     ]
+    }
    },
    {
     "build": {
-     "noarch": "python",
      "script": [
-      "export LIBUNICORN_PATH=\"${PREFIX}\"",
-      "mkdir source/bindings/python/src",
-      "cp source/pkgconfig.mk source/bindings/python/src",
-      "${PYTHON} -m pip install source/bindings/python/ -vv"
+      "export LIBUNICORN_PATH=\"${PREFIX}/lib\"",
+      "cd source/bindings/python",
+      "${PYTHON} -m pip install . -vv"
      ]
     },
     "name": "python-unicorn",
     "requirements": {
+     "build": [],
      "host": [
+      "unicorn",
       "pip",
-      "python >=2.7"
+      "python"
      ],
      "run": [
-      "python >=2.7",
+      "python",
+      "unicorn"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "unicorn"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "script": [
+      "cmake --install source/build"
+     ]
+    },
+    "name": "unicorn",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "pkg-config",
+      "cmake",
+      "make"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
+     ]
+    }
+   },
+   {
+    "build": {
+     "script": [
+      "export LIBUNICORN_PATH=\"${PREFIX}/lib\"",
+      "cd source/bindings/python",
+      "${PYTHON} -m pip install . -vv"
+     ]
+    },
+    "name": "python-unicorn",
+    "requirements": {
+     "build": [],
+     "host": [
+      "unicorn",
+      "pip",
+      "python"
+     ],
+     "run": [
+      "python",
+      "unicorn"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "unicorn"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "script": [
+      "cmake --install source/build"
+     ]
+    },
+    "name": "unicorn",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "pkg-config",
+      "cmake",
+      "make"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
+     ]
+    }
+   },
+   {
+    "build": {
+     "script": [
+      "export LIBUNICORN_PATH=\"${PREFIX}/lib\"",
+      "cd source/bindings/python",
+      "${PYTHON} -m pip install . -vv"
+     ]
+    },
+    "name": "python-unicorn",
+    "requirements": {
+     "build": [],
+     "host": [
+      "unicorn",
+      "pip",
+      "python"
+     ],
+     "run": [
+      "python",
+      "unicorn"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "unicorn"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "script": [
+      "cmake --install source/build"
+     ]
+    },
+    "name": "unicorn",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "pkg-config",
+      "cmake",
+      "make"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
+     ]
+    }
+   },
+   {
+    "build": {
+     "script": [
+      "export LIBUNICORN_PATH=\"${PREFIX}/lib\"",
+      "cd source/bindings/python",
+      "${PYTHON} -m pip install . -vv"
+     ]
+    },
+    "name": "python-unicorn",
+    "requirements": {
+     "build": [],
+     "host": [
+      "unicorn",
+      "pip",
+      "python"
+     ],
+     "run": [
+      "python",
       "unicorn"
      ]
     },
@@ -228,15 +752,29 @@
    }
   ],
   "package": {
-   "name": "unicorn",
-   "version": "1.0.3"
+   "name": "unicorn-split",
+   "version": "2.0.1.post1"
   },
   "requirements": {
    "build": [
     "c_compiler_stub",
+    "pkg-config",
     "cmake",
     "make",
     "c_compiler_stub",
+    "pkg-config",
+    "cmake",
+    "make",
+    "c_compiler_stub",
+    "pkg-config",
+    "cmake",
+    "make",
+    "c_compiler_stub",
+    "pkg-config",
+    "cmake",
+    "make",
+    "c_compiler_stub",
+    "pkg-config",
     "cmake",
     "make"
    ],
@@ -244,17 +782,11 @@
   },
   "source": {
    "folder": "source",
-   "sha256": "64fba177dec64baf3f11c046fbb70e91483e029793ec6a3e43b028ef14dc0d65",
-   "url": "https://github.com/unicorn-engine/unicorn/archive/1.0.3.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "test -f $PREFIX/lib/libunicorn$SHLIB_EXT",
-    "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
-   ]
+   "sha256": "6b276c857c69ee5ec3e292c3401c8c972bae292e0e4cb306bb9e5466c0f14737",
+   "url": "https://github.com/unicorn-engine/unicorn/archive/2.0.1.post1.tar.gz"
   }
  },
- "name": "unicorn",
+ "name": "unicorn-split",
  "osx_64_meta_yaml": {
   "about": {
    "description": "Unicorn is a lightweight, multi-platform, multi-architecture CPU emulator framework\nbased on [QEMU](http://qemu.org).\n\nUnicorn offers some unparalleled features:\n\n- Multi-architecture: ARM, ARM64 (ARMv8), M68K, MIPS, SPARC, and X86 (16, 32, 64-bit)\n- Clean/simple/lightweight/intuitive architecture-neutral API\n- Implemented in pure C language, with bindings for Crystal, Clojure, Visual Basic, Perl,\n  Rust, Ruby, Python, Java, .NET, Go, Delphi/Free Pascal, Haskell, Pharo, and Lua.\n- Native support for Windows & *nix (with Mac OSX, Linux, *BSD & Solaris confirmed)\n- High performance via Just-In-Time compilation\n- Support for fine-grained instrumentation at various levels\n- Thread-safety by design\n- Distributed under free software license GPLv2\n",
@@ -271,38 +803,59 @@
    "summary": "Unicorn CPU emulator framework (ARM, AArch64, M68K, Mips, Sparc, X86)"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "unicorn"
    ]
   },
   "extra": {
+   "feedstock-name": "unicorn",
    "recipe-maintainers": [
-    "chrisburr"
+    "chrisburr",
+    "pavelzw",
+    "0xbe7a"
    ]
   },
   "outputs": [
    {
-    "name": "unicorn"
+    "build": {
+     "script": [
+      "cmake --install source/build"
+     ]
+    },
+    "name": "unicorn",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "pkg-config",
+      "cmake",
+      "make"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
+     ]
+    }
    },
    {
     "build": {
-     "noarch": "python",
      "script": [
-      "export LIBUNICORN_PATH=\"${PREFIX}\"",
-      "mkdir source/bindings/python/src",
-      "cp source/pkgconfig.mk source/bindings/python/src",
-      "${PYTHON} -m pip install source/bindings/python/ -vv"
+      "export LIBUNICORN_PATH=\"${PREFIX}/lib\"",
+      "cd source/bindings/python",
+      "${PYTHON} -m pip install . -vv"
      ]
     },
     "name": "python-unicorn",
     "requirements": {
+     "build": [],
      "host": [
+      "unicorn",
       "pip",
-      "python >=2.7"
+      "python"
      ],
      "run": [
-      "python >=2.7",
+      "python",
       "unicorn"
      ]
     },
@@ -320,12 +873,13 @@
    }
   ],
   "package": {
-   "name": "unicorn",
-   "version": "1.0.3"
+   "name": "unicorn-split",
+   "version": "2.0.1.post1"
   },
   "requirements": {
    "build": [
     "c_compiler_stub",
+    "pkg-config",
     "cmake",
     "make"
    ],
@@ -333,13 +887,8 @@
   },
   "source": {
    "folder": "source",
-   "sha256": "64fba177dec64baf3f11c046fbb70e91483e029793ec6a3e43b028ef14dc0d65",
-   "url": "https://github.com/unicorn-engine/unicorn/archive/1.0.3.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
-   ]
+   "sha256": "6b276c857c69ee5ec3e292c3401c8c972bae292e0e4cb306bb9e5466c0f14737",
+   "url": "https://github.com/unicorn-engine/unicorn/archive/2.0.1.post1.tar.gz"
   }
  },
  "osx_64_requirements": {
@@ -348,14 +897,152 @@
    "elements": [
     "c_compiler_stub",
     "cmake",
-    "make"
+    "make",
+    "pkg-config"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "pip",
-    "python"
+    "python",
+    "unicorn"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "python",
+    "unicorn"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "pip"
+   ]
+  }
+ },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "Unicorn is a lightweight, multi-platform, multi-architecture CPU emulator framework\nbased on [QEMU](http://qemu.org).\n\nUnicorn offers some unparalleled features:\n\n- Multi-architecture: ARM, ARM64 (ARMv8), M68K, MIPS, SPARC, and X86 (16, 32, 64-bit)\n- Clean/simple/lightweight/intuitive architecture-neutral API\n- Implemented in pure C language, with bindings for Crystal, Clojure, Visual Basic, Perl,\n  Rust, Ruby, Python, Java, .NET, Go, Delphi/Free Pascal, Haskell, Pharo, and Lua.\n- Native support for Windows & *nix (with Mac OSX, Linux, *BSD & Solaris confirmed)\n- High performance via Just-In-Time compilation\n- Support for fine-grained instrumentation at various levels\n- Thread-safety by design\n- Distributed under free software license GPLv2\n",
+   "dev_url": "https://github.com/unicorn-engine/unicorn",
+   "doc_url": "https://www.unicorn-engine.org/docs/",
+   "home": "https://www.unicorn-engine.org/",
+   "license": "LGPL-2.0-only AND GPL-2.0-only AND GPL-2.0-or-later",
+   "license_file": [
+    "source/COPYING",
+    "source/COPYING_GLIB",
+    "source/COPYING.LGPL2",
+    "source/qemu/LICENSE"
+   ],
+   "summary": "Unicorn CPU emulator framework (ARM, AArch64, M68K, Mips, Sparc, X86)"
+  },
+  "build": {
+   "number": "2",
+   "run_exports": [
+    "unicorn"
+   ]
+  },
+  "extra": {
+   "feedstock-name": "unicorn",
+   "recipe-maintainers": [
+    "chrisburr",
+    "pavelzw",
+    "0xbe7a"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "script": [
+      "cmake --install source/build"
+     ]
+    },
+    "name": "unicorn",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "pkg-config",
+      "cmake",
+      "make"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libunicorn$SHLIB_EXT"
+     ]
+    }
+   },
+   {
+    "build": {
+     "script": [
+      "export LIBUNICORN_PATH=\"${PREFIX}/lib\"",
+      "cd source/bindings/python",
+      "${PYTHON} -m pip install . -vv"
+     ]
+    },
+    "name": "python-unicorn",
+    "requirements": {
+     "build": [],
+     "host": [
+      "unicorn",
+      "pip",
+      "python"
+     ],
+     "run": [
+      "python",
+      "unicorn"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "unicorn"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "unicorn-split",
+   "version": "2.0.1.post1"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "pkg-config",
+    "cmake",
+    "make"
+   ],
+   "host": []
+  },
+  "source": {
+   "folder": "source",
+   "sha256": "6b276c857c69ee5ec3e292c3401c8c972bae292e0e4cb306bb9e5466c0f14737",
+   "url": "https://github.com/unicorn-engine/unicorn/archive/2.0.1.post1.tar.gz"
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "make",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "pip",
+    "python",
+    "unicorn"
    ]
   },
   "run": {
@@ -382,12 +1069,15 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
-  "osx_64"
+  "linux_aarch64",
+  "linux_ppc64le",
+  "osx_64",
+  "osx_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/unicorn.json"
  },
- "raw_meta_yaml": "{% set name = \"unicorn\" %}\n{% set version = \"1.0.3\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/unicorn-engine/unicorn/archive/{{ version.replace(\"rc\", \"-rc\") }}.tar.gz\n  sha256: 64fba177dec64baf3f11c046fbb70e91483e029793ec6a3e43b028ef14dc0d65\n  folder: source\n\nbuild:\n  number: 1\n  skip: true  # [win]\n  run_exports:\n    - {{ pin_subpackage('unicorn', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - cmake\n    - make  # [unix]\n    - ninja  # [win]\n  host:\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libunicorn$SHLIB_EXT  # [unix]\n    - if not exist %LIBRARY_BIN%\\\\unicorn.dll exit 1  # [win]\n\noutputs:\n  - name: unicorn\n\n  - name: python-unicorn\n    build:\n      skip: true  # [win]\n      noarch: python\n      script:\n        - export LIBUNICORN_PATH=\"${PREFIX}\"\n        - mkdir source/bindings/python/src\n        - cp source/pkgconfig.mk source/bindings/python/src\n        - ${PYTHON} -m pip install source/bindings/python/ -vv\n    requirements:\n      host:\n        - pip\n        - python >=2.7\n      run:\n        - python >=2.7\n        - {{ pin_subpackage(\"unicorn\", max_pin=\"x.x.x\") }}\n    test:\n      imports:\n        - unicorn\n      commands:\n        - pip check\n      requires:\n        - pip\n\nabout:\n  home: https://www.unicorn-engine.org/\n  license: LGPL-2.0-only AND GPL-2.0-only AND GPL-2.0-or-later\n  license_file:\n    - source/COPYING\n    - source/COPYING_GLIB\n    - source/COPYING.LGPL2\n    - source/qemu/LICENSE\n  summary: Unicorn CPU emulator framework (ARM, AArch64, M68K, Mips, Sparc, X86)\n  description: |\n    Unicorn is a lightweight, multi-platform, multi-architecture CPU emulator framework\n    based on [QEMU](http://qemu.org).\n\n    Unicorn offers some unparalleled features:\n\n    - Multi-architecture: ARM, ARM64 (ARMv8), M68K, MIPS, SPARC, and X86 (16, 32, 64-bit)\n    - Clean/simple/lightweight/intuitive architecture-neutral API\n    - Implemented in pure C language, with bindings for Crystal, Clojure, Visual Basic, Perl,\n      Rust, Ruby, Python, Java, .NET, Go, Delphi/Free Pascal, Haskell, Pharo, and Lua.\n    - Native support for Windows & *nix (with Mac OSX, Linux, *BSD & Solaris confirmed)\n    - High performance via Just-In-Time compilation\n    - Support for fine-grained instrumentation at various levels\n    - Thread-safety by design\n    - Distributed under free software license GPLv2\n  doc_url: https://www.unicorn-engine.org/docs/\n  dev_url: https://github.com/unicorn-engine/unicorn\n\nextra:\n  recipe-maintainers:\n    - chrisburr\n",
+ "raw_meta_yaml": "{% set name = \"unicorn\" %}\n{% set version = \"2.0.1.post1\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/unicorn-engine/unicorn/archive/{{ version.replace(\"rc\", \"-rc\") }}.tar.gz\n  sha256: 6b276c857c69ee5ec3e292c3401c8c972bae292e0e4cb306bb9e5466c0f14737\n  folder: source\n\nbuild:\n  number: 2\n  skip: true  # [win]\n  run_exports:\n    - {{ pin_subpackage('unicorn', max_pin='x.x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - pkg-config\n    - cmake\n    - make  # [unix]\n    - ninja  # [win]\n  host:\n\noutputs:\n  - name: unicorn\n    build:\n      script:\n        - cmake --install source/build\n    test:\n      commands:\n        - test -f $PREFIX/lib/libunicorn$SHLIB_EXT  # [unix]\n        - if not exist %LIBRARY_BIN%\\\\unicorn.dll exit 1  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - pkg-config\n        - cmake\n        - make  # [unix]\n        - ninja  # [win]\n\n  - name: python-unicorn\n    build:\n      skip: true  # [win]\n      script:\n        - export LIBUNICORN_PATH=\"${PREFIX}/lib\"\n        - cd source/bindings/python\n        - ${PYTHON} -m pip install . -vv\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - {{ pin_subpackage(\"unicorn\", exact=True) }}\n        - pip\n        - python\n      run:\n        - python\n        - {{ pin_subpackage(\"unicorn\", exact=True) }}\n    test:\n      imports:\n        - unicorn\n      commands:\n        - pip check\n      requires:\n        - pip\n\nabout:\n  home: https://www.unicorn-engine.org/\n  license: LGPL-2.0-only AND GPL-2.0-only AND GPL-2.0-or-later\n  license_file:\n    - source/COPYING\n    - source/COPYING_GLIB\n    - source/COPYING.LGPL2\n    - source/qemu/LICENSE\n  summary: Unicorn CPU emulator framework (ARM, AArch64, M68K, Mips, Sparc, X86)\n  description: |\n    Unicorn is a lightweight, multi-platform, multi-architecture CPU emulator framework\n    based on [QEMU](http://qemu.org).\n\n    Unicorn offers some unparalleled features:\n\n    - Multi-architecture: ARM, ARM64 (ARMv8), M68K, MIPS, SPARC, and X86 (16, 32, 64-bit)\n    - Clean/simple/lightweight/intuitive architecture-neutral API\n    - Implemented in pure C language, with bindings for Crystal, Clojure, Visual Basic, Perl,\n      Rust, Ruby, Python, Java, .NET, Go, Delphi/Free Pascal, Haskell, Pharo, and Lua.\n    - Native support for Windows & *nix (with Mac OSX, Linux, *BSD & Solaris confirmed)\n    - High performance via Just-In-Time compilation\n    - Support for fine-grained instrumentation at various levels\n    - Thread-safety by design\n    - Distributed under free software license GPLv2\n  doc_url: https://www.unicorn-engine.org/docs/\n  dev_url: https://github.com/unicorn-engine/unicorn\n\nextra:\n  feedstock-name: unicorn\n  recipe-maintainers:\n    - chrisburr\n    - pavelzw\n    - '0xbe7a'\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -395,6 +1085,7 @@
    "cmake",
    "make",
    "pip",
+   "pkg-config",
    "python",
    "unicorn"
   ]
@@ -405,7 +1096,8 @@
    "elements": [
     "c_compiler_stub",
     "cmake",
-    "make"
+    "make",
+    "pkg-config"
    ]
   },
   "host": {
@@ -413,7 +1105,8 @@
    "elements": [
     "c_compiler_stub",
     "pip",
-    "python"
+    "python",
+    "unicorn"
    ]
   },
   "run": {
@@ -438,20 +1131,22 @@
    "elements": [
     "c_compiler_stub",
     "cmake",
-    "make"
+    "make",
+    "pkg-config"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "pip",
-    "python >=2.7"
+    "python",
+    "unicorn"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "python >=2.7",
+    "python",
     "unicorn"
    ]
   },
@@ -462,8 +1157,8 @@
    ]
   }
  },
- "url": "https://github.com/unicorn-engine/unicorn/archive/1.0.3.tar.gz",
- "version": "1.0.3",
+ "url": "https://github.com/unicorn-engine/unicorn/archive/2.0.1.post1.tar.gz",
+ "version": "2.0.1.post1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/unicorn.json"
  }
