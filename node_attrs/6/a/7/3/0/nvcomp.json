@@ -12,8 +12,8 @@
    "home": "https://developer.nvidia.com/nvcomp",
    "license": "LicenseRef-nvCOMP-Software-License-Agreement AND LicenseRef-NVIDIA-End-User-License-Agreement",
    "license_file": [
-    "LICENSE",
-    "cudart_LICENSE"
+    "LICENSE.txt",
+    "cudart_LICENSE.txt"
    ],
    "license_url": "https://developer.download.nvidia.com/compute/nvcomp/2.3/LICENSE.txt",
    "summary": "High Speed Data Compression Using NVIDIA GPUs"
@@ -22,11 +22,12 @@
    "ignore_run_exports_from": [
     "cuda_compiler_stub"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "nvcomp"
    ],
    "script": [
+    "mv -v $SRC_DIR/LICENSE $SRC_DIR/LICENSE.txt",
     "mkdir -pv $PREFIX/include",
     "mv -v include/* $PREFIX/include",
     "mkdir -pv $PREFIX/lib",
@@ -64,7 +65,7 @@
     "url": "https://developer.download.nvidia.com/compute/nvcomp/2.6.1/local_installers/nvcomp_2.6.1_windows_11.x.zip"
    },
    {
-    "fn": "cudart_LICENSE",
+    "fn": "cudart_LICENSE.txt",
     "sha256": "5db25d4fd138013b563f9a3d1d87f7de7df1dac014fd4cccdfbb3435a5cff761",
     "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/LICENSE.txt"
    }
@@ -125,10 +126,10 @@
    "home": "https://developer.nvidia.com/nvcomp",
    "license": "LicenseRef-nvCOMP-Software-License-Agreement AND LicenseRef-NVIDIA-End-User-License-Agreement",
    "license_file": [
-    "LICENSE",
-    "cudart_LICENSE",
-    "LICENSE",
-    "cudart_LICENSE"
+    "LICENSE.txt",
+    "cudart_LICENSE.txt",
+    "LICENSE.txt",
+    "cudart_LICENSE.txt"
    ],
    "license_url": "https://developer.download.nvidia.com/compute/nvcomp/2.3/LICENSE.txt",
    "summary": "High Speed Data Compression Using NVIDIA GPUs"
@@ -138,12 +139,13 @@
     "cuda_compiler_stub",
     "cuda_compiler_stub"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "nvcomp",
     "nvcomp"
    ],
    "script": [
+    "mv -v $SRC_DIR/LICENSE $SRC_DIR/LICENSE.txt",
     "mkdir -pv $PREFIX/include",
     "mv -v include/* $PREFIX/include",
     "mkdir -pv $PREFIX/lib",
@@ -195,7 +197,7 @@
     "url": "https://developer.download.nvidia.com/compute/nvcomp/2.6.1/local_installers/nvcomp_2.6.1_windows_11.x.zip"
    },
    {
-    "fn": "cudart_LICENSE",
+    "fn": "cudart_LICENSE.txt",
     "sha256": "5db25d4fd138013b563f9a3d1d87f7de7df1dac014fd4cccdfbb3435a5cff761",
     "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/LICENSE.txt"
    },
@@ -203,7 +205,7 @@
     "url": "https://developer.download.nvidia.com/compute/nvcomp/2.6.1/local_installers/nvcomp_2.6.1_windows_11.x.zip"
    },
    {
-    "fn": "cudart_LICENSE",
+    "fn": "cudart_LICENSE.txt",
     "sha256": "5db25d4fd138013b563f9a3d1d87f7de7df1dac014fd4cccdfbb3435a5cff761",
     "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/LICENSE.txt"
    }
@@ -246,7 +248,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/nvcomp.json"
  },
- "raw_meta_yaml": "{% set version = \"2.6.1\" %}\n{% set cuda_major = (cuda_compiler_version|default(\"12.0.0\")).split(\".\")[0] %}\n{% set platform = \"x86_64\" %}  # [linux64]\n{% set platform = \"SBSA\" %}  # [aarch64]\n{% set platform = \"windows\" %}  # [win]\n{% set extension = \"tgz\" %}  # [not win]\n{% set extension = \"zip\" %}  # [win]\n\npackage:\n  name: nvcomp\n  version: {{ version }}\n\nsource:\n  - url: https://developer.download.nvidia.com/compute/nvcomp/{{ version }}/local_installers/nvcomp_{{ version }}_{{ platform }}_{{ cuda_major }}.x.{{ extension }}\n    sha256: 62046476076d1b455fb13fb78b38d3496bacafbfdbb0494fb3392240a04466ea  # [linux64 and cuda_major == \"11\"]\n    sha256: a0792b666caaf593a9dd4130979578fd3a78230f4407645c295700ef8e7aaaf2  # [linux64 and cuda_major == \"12\"]\n    sha256: a019f2c8a300991d94d718a3524377d978efadaa62349858741f17ef859a9e55  # [aarch64 and cuda_major == \"11\"]\n    sha256: fc668519a8344e9d05335bad4bc5d23a504cdc7579aea41f12d6aa0f3079e709  # [aarch64 and cuda_major == \"12\"]\n    sha256: 4f0105a51ac6ea947154e252c8b220baf3345803f55644b5aad84e22ae4f8986  # [win and cuda_major == \"11\"]\n    sha256: e362e1fbf6b101ad71aa5314f21d00a4353b90efbe5cdedc5fcfb0f3b68cd791  # [win and cuda_major == \"12\"]\n  # Include cudart license because it is statically linked.\n  - url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/LICENSE.txt\n    fn: cudart_LICENSE\n    sha256: 5db25d4fd138013b563f9a3d1d87f7de7df1dac014fd4cccdfbb3435a5cff761\n\nbuild:\n  number: 0\n  # TODO: Enable aarch64 builds\n  # TODO: Enable Windows with CUDA 12 when it is supported\n  skip: True  # [win32 or osx or aarch64 or ppc64le or cuda_compiler_version not in (\"11.2\", \"12.0\") or (win and cuda_major == \"12\")]\n  script:\n    - mkdir -pv $PREFIX/include              # [linux]\n    - mv -v include/* $PREFIX/include        # [linux]\n    - mkdir -pv $PREFIX/lib                  # [linux]\n    - mv -v lib/* $PREFIX/lib/               # [linux]\n    - mkdir %LIBRARY_INC%                                   # [win]\n    - copy %SRC_DIR%\\\\include\\\\* %LIBRARY_INC%\\\\            # [win]\n    - mkdir %LIBRARY_LIB%                                   # [win]\n    - copy %SRC_DIR%\\\\lib\\\\nvcomp*.lib %LIBRARY_LIB%\\\\      # [win]\n    - mkdir %LIBRARY_BIN%                                   # [win]\n    - copy %SRC_DIR%\\\\lib\\\\nvcomp*.dll %LIBRARY_BIN%\\\\      # [win]\n  ignore_run_exports_from:\n    - {{ compiler('cuda') }}\n  run_exports:\n    - {{ pin_subpackage(\"nvcomp\") }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n    - sysroot_{{ target_platform }} 2.17  # [linux]\n  host:\n    - cuda-version {{ cuda_major }}\n  run:\n    - {{ pin_compatible(\"cuda-version\", min_pin=\"x\", max_pin=\"x\") }}\n  run_constrained:\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n\ntest:\n  requires:\n    - {{ compiler('c') }}  # [linux]\n  files:\n    - test_load_elf.c      # [linux]\n  commands:\n    - test -f $PREFIX/include/nvcomp.h                                 # [linux]\n    - test -f $PREFIX/include/nvcomp.hpp                               # [linux]\n    - test -f $PREFIX/lib/libnvcomp.so                                 # [linux]\n    - test -f $PREFIX/lib/libnvcomp_bitcomp.so                         # [linux]\n    - test -f $PREFIX/lib/libnvcomp_gdeflate.so                        # [linux]\n    - test -f $PREFIX/lib/libnvcomp_gdeflate_cpu.so                    # [linux]\n    - ${GCC} test_load_elf.c -std=c99 -Werror -ldl -o test_load_elf    # [linux]\n    - for f in $PREFIX/lib/libnvcomp*.so; do ./test_load_elf $f; done  # [linux]\n    - if not exist %LIBRARY_INC%/nvcomp.h exit 1                       # [win]\n    - if not exist %LIBRARY_INC%/nvcomp.hpp exit 1                     # [win]\n    - if not exist %LIBRARY_LIB%/nvcomp.lib exit 1                     # [win]\n    - if not exist %LIBRARY_LIB%/nvcomp_bitcomp.lib exit 1             # [win]\n    - if not exist %LIBRARY_LIB%/nvcomp_gdeflate.lib exit 1            # [win]\n    - if not exist %LIBRARY_BIN%/nvcomp.dll exit 1                     # [win]\n    - if not exist %LIBRARY_BIN%/nvcomp_bitcomp.dll exit 1             # [win]\n    - if not exist %LIBRARY_BIN%/nvcomp_gdeflate.dll exit 1            # [win]\n\nabout:\n  home: https://developer.nvidia.com/nvcomp\n  license:\n    LicenseRef-nvCOMP-Software-License-Agreement AND LicenseRef-NVIDIA-End-User-License-Agreement\n  license_file:\n    - LICENSE\n    - cudart_LICENSE\n  license_url: https://developer.download.nvidia.com/compute/nvcomp/2.3/LICENSE.txt\n  summary: \"High Speed Data Compression Using NVIDIA GPUs\"\n  description: |\n    The nvCOMP library provides fast lossless data compression and\n    decompression using a GPU. It features generic compression interfaces to\n    enable developers to use high-performance GPU compressors in their\n    applications.\n\n    License Agreements:- The packages are governed by the standard NVIDIA\n    Software License Agreement (EULA). By downloading and using the packages,\n    you accept the terms and conditions of the NVIDIA nvCOMP EULA -\n    https://developer.download.nvidia.com/compute/nvcomp/2.3/LICENSE.txt\n  doc_url: https://github.com/NVIDIA/nvcomp/blob/main/README.md\n  dev_url: https://developer.nvidia.com/nvcomp\n\nextra:\n  recipe-maintainers:\n    - adibbley\n    - bdice\n    - jakirkham\n",
+ "raw_meta_yaml": "{% set version = \"2.6.1\" %}\n{% set cuda_major = (cuda_compiler_version|default(\"12.0.0\")).split(\".\")[0] %}\n{% set platform = \"x86_64\" %}  # [linux64]\n{% set platform = \"SBSA\" %}  # [aarch64]\n{% set platform = \"windows\" %}  # [win]\n{% set extension = \"tgz\" %}  # [not win]\n{% set extension = \"zip\" %}  # [win]\n\npackage:\n  name: nvcomp\n  version: {{ version }}\n\nsource:\n  - url: https://developer.download.nvidia.com/compute/nvcomp/{{ version }}/local_installers/nvcomp_{{ version }}_{{ platform }}_{{ cuda_major }}.x.{{ extension }}\n    sha256: 62046476076d1b455fb13fb78b38d3496bacafbfdbb0494fb3392240a04466ea  # [linux64 and cuda_major == \"11\"]\n    sha256: a0792b666caaf593a9dd4130979578fd3a78230f4407645c295700ef8e7aaaf2  # [linux64 and cuda_major == \"12\"]\n    sha256: a019f2c8a300991d94d718a3524377d978efadaa62349858741f17ef859a9e55  # [aarch64 and cuda_major == \"11\"]\n    sha256: fc668519a8344e9d05335bad4bc5d23a504cdc7579aea41f12d6aa0f3079e709  # [aarch64 and cuda_major == \"12\"]\n    sha256: 4f0105a51ac6ea947154e252c8b220baf3345803f55644b5aad84e22ae4f8986  # [win and cuda_major == \"11\"]\n    sha256: e362e1fbf6b101ad71aa5314f21d00a4353b90efbe5cdedc5fcfb0f3b68cd791  # [win and cuda_major == \"12\"]\n  # Include cudart license because it is statically linked.\n  - url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/LICENSE.txt\n    fn: cudart_LICENSE.txt\n    sha256: 5db25d4fd138013b563f9a3d1d87f7de7df1dac014fd4cccdfbb3435a5cff761\n\nbuild:\n  number: 1\n  # TODO: Enable aarch64 builds\n  # TODO: Enable Windows with CUDA 12 when it is supported\n  skip: True  # [win32 or osx or aarch64 or ppc64le or cuda_compiler_version not in (\"11.2\", \"12.0\") or (win and cuda_major == \"12\")]\n  script:\n    - mv -v $SRC_DIR/LICENSE $SRC_DIR/LICENSE.txt  # [linux]\n    - mkdir -pv $PREFIX/include                    # [linux]\n    - mv -v include/* $PREFIX/include              # [linux]\n    - mkdir -pv $PREFIX/lib                        # [linux]\n    - mv -v lib/* $PREFIX/lib/                     # [linux]\n    - mkdir %LIBRARY_INC%                                   # [win]\n    - copy %SRC_DIR%\\\\include\\\\* %LIBRARY_INC%\\\\            # [win]\n    - mkdir %LIBRARY_LIB%                                   # [win]\n    - copy %SRC_DIR%\\\\lib\\\\nvcomp*.lib %LIBRARY_LIB%\\\\      # [win]\n    - mkdir %LIBRARY_BIN%                                   # [win]\n    - copy %SRC_DIR%\\\\lib\\\\nvcomp*.dll %LIBRARY_BIN%\\\\      # [win]\n  ignore_run_exports_from:\n    - {{ compiler('cuda') }}\n  run_exports:\n    - {{ pin_subpackage(\"nvcomp\") }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n    - sysroot_{{ target_platform }} 2.17  # [linux]\n  host:\n    - cuda-version {{ cuda_major }}\n  run:\n    - {{ pin_compatible(\"cuda-version\", min_pin=\"x\", max_pin=\"x\") }}\n  run_constrained:\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n\ntest:\n  requires:\n    - {{ compiler('c') }}  # [linux]\n  files:\n    - test_load_elf.c      # [linux]\n  commands:\n    - test -f $PREFIX/include/nvcomp.h                                 # [linux]\n    - test -f $PREFIX/include/nvcomp.hpp                               # [linux]\n    - test -f $PREFIX/lib/libnvcomp.so                                 # [linux]\n    - test -f $PREFIX/lib/libnvcomp_bitcomp.so                         # [linux]\n    - test -f $PREFIX/lib/libnvcomp_gdeflate.so                        # [linux]\n    - test -f $PREFIX/lib/libnvcomp_gdeflate_cpu.so                    # [linux]\n    - ${GCC} test_load_elf.c -std=c99 -Werror -ldl -o test_load_elf    # [linux]\n    - for f in $PREFIX/lib/libnvcomp*.so; do ./test_load_elf $f; done  # [linux]\n    - if not exist %LIBRARY_INC%/nvcomp.h exit 1                       # [win]\n    - if not exist %LIBRARY_INC%/nvcomp.hpp exit 1                     # [win]\n    - if not exist %LIBRARY_LIB%/nvcomp.lib exit 1                     # [win]\n    - if not exist %LIBRARY_LIB%/nvcomp_bitcomp.lib exit 1             # [win]\n    - if not exist %LIBRARY_LIB%/nvcomp_gdeflate.lib exit 1            # [win]\n    - if not exist %LIBRARY_BIN%/nvcomp.dll exit 1                     # [win]\n    - if not exist %LIBRARY_BIN%/nvcomp_bitcomp.dll exit 1             # [win]\n    - if not exist %LIBRARY_BIN%/nvcomp_gdeflate.dll exit 1            # [win]\n\nabout:\n  home: https://developer.nvidia.com/nvcomp\n  license:\n    LicenseRef-nvCOMP-Software-License-Agreement AND LicenseRef-NVIDIA-End-User-License-Agreement\n  license_file:\n    - LICENSE.txt\n    - cudart_LICENSE.txt\n  license_url: https://developer.download.nvidia.com/compute/nvcomp/2.3/LICENSE.txt\n  summary: \"High Speed Data Compression Using NVIDIA GPUs\"\n  description: |\n    The nvCOMP library provides fast lossless data compression and\n    decompression using a GPU. It features generic compression interfaces to\n    enable developers to use high-performance GPU compressors in their\n    applications.\n\n    License Agreements:- The packages are governed by the standard NVIDIA\n    Software License Agreement (EULA). By downloading and using the packages,\n    you accept the terms and conditions of the NVIDIA nvCOMP EULA -\n    https://developer.download.nvidia.com/compute/nvcomp/2.3/LICENSE.txt\n  doc_url: https://github.com/NVIDIA/nvcomp/blob/main/README.md\n  dev_url: https://developer.nvidia.com/nvcomp\n\nextra:\n  recipe-maintainers:\n    - adibbley\n    - bdice\n    - jakirkham\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -331,8 +333,8 @@
    "home": "https://developer.nvidia.com/nvcomp",
    "license": "LicenseRef-nvCOMP-Software-License-Agreement AND LicenseRef-NVIDIA-End-User-License-Agreement",
    "license_file": [
-    "LICENSE",
-    "cudart_LICENSE"
+    "LICENSE.txt",
+    "cudart_LICENSE.txt"
    ],
    "license_url": "https://developer.download.nvidia.com/compute/nvcomp/2.3/LICENSE.txt",
    "summary": "High Speed Data Compression Using NVIDIA GPUs"
@@ -341,7 +343,7 @@
    "ignore_run_exports_from": [
     "cuda_compiler_stub"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "nvcomp"
    ],
@@ -384,7 +386,7 @@
     "url": "https://developer.download.nvidia.com/compute/nvcomp/2.6.1/local_installers/nvcomp_2.6.1_windows_11.x.zip"
    },
    {
-    "fn": "cudart_LICENSE",
+    "fn": "cudart_LICENSE.txt",
     "sha256": "5db25d4fd138013b563f9a3d1d87f7de7df1dac014fd4cccdfbb3435a5cff761",
     "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_cudart/LICENSE.txt"
    }
