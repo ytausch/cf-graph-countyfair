@@ -3,6 +3,8 @@
  "branch": "main",
  "conda-forge.yml": {
   "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
    "osx_arm64": "osx_64"
   }
  },
@@ -53,7 +55,8 @@
   "source": [
    {
     "patches": [
-     "test-no-unitests.patch"
+     "test-no-unitests.patch",
+     "0001-Allow-non-clang-snapshot-toolchain.patch"
     ],
     "sha256": "8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107",
     "url": "https://github.com/v8/v8/archive/8.9.83.tar.gz"
@@ -62,7 +65,8 @@
     "folder": "build",
     "patches": [
      "find_mac_sdk_from_sysroot.patch",
-     "no-icf.patch"
+     "no-icf.patch",
+     "0001-Add-arm64-toolchain.patch"
     ],
     "url": "https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz"
    },
@@ -133,6 +137,260 @@
    "elements": []
   }
  },
+ "linux_aarch64_meta_yaml": {
+  "about": {
+   "dev_url": "https://chromium.googlesource.com/v8/v8.git",
+   "home": "https://v8.dev/",
+   "license": "BSD-3-Clause",
+   "license_family": "BSD",
+   "license_file": "LICENSE",
+   "summary": "V8 is Google\u2019s open source high-performance JavaScript and WebAssembly engine, written in C++."
+  },
+  "build": {
+   "number": "3",
+   "run_exports": [
+    "libv8"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "xhochy"
+   ]
+  },
+  "package": {
+   "name": "libv8",
+   "version": "8.9.83"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "gn 0.0.20200909083119",
+    "python 3.8",
+    "setuptools",
+    "ninja",
+    "pkg-config",
+    "findutils",
+    "sed"
+   ],
+   "host": [
+    "glib",
+    "icu",
+    "zlib"
+   ]
+  },
+  "source": [
+   {
+    "patches": [
+     "test-no-unitests.patch",
+     "0001-Allow-non-clang-snapshot-toolchain.patch"
+    ],
+    "sha256": "8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107",
+    "url": "https://github.com/v8/v8/archive/8.9.83.tar.gz"
+   },
+   {
+    "folder": "build",
+    "patches": [
+     "find_mac_sdk_from_sysroot.patch",
+     "no-icf.patch",
+     "0001-Add-arm64-toolchain.patch"
+    ],
+    "url": "https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz"
+   },
+   {
+    "folder": "third_party/jinja2",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/jinja2.git/+archive/a82a4944a7f2496639f34a89c9923be5908b80aa.tar.gz"
+   },
+   {
+    "folder": "third_party/markupsafe",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/markupsafe.git/+archive/0944e71f4b2cb9a871bcbe353f95e889b64a611a.tar.gz"
+   },
+   {
+    "folder": "third_party/googletest/src",
+    "url": "https://chromium.googlesource.com/external/github.com/google/googletest.git/+archive/4fe018038f87675c083d0cfb6a6b57c274fb1753.tar.gz"
+   },
+   {
+    "folder": "base/trace_event/common",
+    "url": "https://chromium.googlesource.com/chromium/src/base/trace_event/common.git/+archive/eb94f1c7aa96207f469008f29989a43feb2718f8.tar.gz"
+   },
+   {
+    "folder": "third_party/zlib",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/zlib.git/+archive/9893e506b3a7ea4ec68e1fcd9a374e849945f405.tar.gz"
+   },
+   {
+    "folder": "third_party/icu",
+    "patches": [
+     "icu-build.patch",
+     "icu-config.patch"
+    ],
+    "url": "https://chromium.googlesource.com/chromium/deps/icu.git/+archive/6a33b647c0647c3eb97eae5432153ef2dfca7baa.tar.gz"
+   }
+  ],
+  "test": {
+   "commands": [
+    "test -f $PREFIX/lib/libv8${SHLIB_EXT}"
+   ]
+  }
+ },
+ "linux_aarch64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "findutils",
+    "gn",
+    "ninja",
+    "pkg-config",
+    "python",
+    "sed",
+    "setuptools"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "glib",
+    "icu",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "linux_ppc64le_meta_yaml": {
+  "about": {
+   "dev_url": "https://chromium.googlesource.com/v8/v8.git",
+   "home": "https://v8.dev/",
+   "license": "BSD-3-Clause",
+   "license_family": "BSD",
+   "license_file": "LICENSE",
+   "summary": "V8 is Google\u2019s open source high-performance JavaScript and WebAssembly engine, written in C++."
+  },
+  "build": {
+   "number": "3",
+   "run_exports": [
+    "libv8"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "xhochy"
+   ]
+  },
+  "package": {
+   "name": "libv8",
+   "version": "8.9.83"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "gn 0.0.20200909083119",
+    "python 3.8",
+    "setuptools",
+    "ninja",
+    "pkg-config",
+    "findutils",
+    "sed"
+   ],
+   "host": [
+    "glib",
+    "icu",
+    "zlib"
+   ]
+  },
+  "source": [
+   {
+    "patches": [
+     "test-no-unitests.patch",
+     "0001-Allow-non-clang-snapshot-toolchain.patch"
+    ],
+    "sha256": "8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107",
+    "url": "https://github.com/v8/v8/archive/8.9.83.tar.gz"
+   },
+   {
+    "folder": "build",
+    "patches": [
+     "find_mac_sdk_from_sysroot.patch",
+     "no-icf.patch",
+     "0001-Add-arm64-toolchain.patch"
+    ],
+    "url": "https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz"
+   },
+   {
+    "folder": "third_party/jinja2",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/jinja2.git/+archive/a82a4944a7f2496639f34a89c9923be5908b80aa.tar.gz"
+   },
+   {
+    "folder": "third_party/markupsafe",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/markupsafe.git/+archive/0944e71f4b2cb9a871bcbe353f95e889b64a611a.tar.gz"
+   },
+   {
+    "folder": "third_party/googletest/src",
+    "url": "https://chromium.googlesource.com/external/github.com/google/googletest.git/+archive/4fe018038f87675c083d0cfb6a6b57c274fb1753.tar.gz"
+   },
+   {
+    "folder": "base/trace_event/common",
+    "url": "https://chromium.googlesource.com/chromium/src/base/trace_event/common.git/+archive/eb94f1c7aa96207f469008f29989a43feb2718f8.tar.gz"
+   },
+   {
+    "folder": "third_party/zlib",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/zlib.git/+archive/9893e506b3a7ea4ec68e1fcd9a374e849945f405.tar.gz"
+   },
+   {
+    "folder": "third_party/icu",
+    "patches": [
+     "icu-build.patch",
+     "icu-config.patch"
+    ],
+    "url": "https://chromium.googlesource.com/chromium/deps/icu.git/+archive/6a33b647c0647c3eb97eae5432153ef2dfca7baa.tar.gz"
+   }
+  ],
+  "test": {
+   "commands": [
+    "test -f $PREFIX/lib/libv8${SHLIB_EXT}"
+   ]
+  }
+ },
+ "linux_ppc64le_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "findutils",
+    "gn",
+    "ninja",
+    "pkg-config",
+    "python",
+    "sed",
+    "setuptools"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "glib",
+    "icu",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "meta_yaml": {
   "about": {
    "dev_url": "https://chromium.googlesource.com/v8/v8.git",
@@ -147,11 +405,15 @@
    "run_exports": [
     "libv8",
     "libv8",
+    "libv8",
+    "libv8",
     "libv8"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "xhochy",
+    "xhochy",
     "xhochy",
     "xhochy",
     "xhochy"
@@ -189,9 +451,33 @@
     "ninja",
     "pkg-config",
     "findutils",
+    "sed",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "gn 0.0.20200909083119",
+    "python 3.8",
+    "setuptools",
+    "ninja",
+    "pkg-config",
+    "findutils",
+    "sed",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "gn 0.0.20200909083119",
+    "python 3.8",
+    "setuptools",
+    "ninja",
+    "pkg-config",
+    "findutils",
     "sed"
    ],
    "host": [
+    "glib",
+    "icu",
+    "zlib",
+    "glib",
+    "icu",
+    "zlib",
     "glib",
     "icu",
     "zlib",
@@ -206,7 +492,8 @@
   "source": [
    {
     "patches": [
-     "test-no-unitests.patch"
+     "test-no-unitests.patch",
+     "0001-Allow-non-clang-snapshot-toolchain.patch"
     ],
     "sha256": "8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107",
     "url": "https://github.com/v8/v8/archive/8.9.83.tar.gz"
@@ -215,7 +502,8 @@
     "folder": "build",
     "patches": [
      "find_mac_sdk_from_sysroot.patch",
-     "no-icf.patch"
+     "no-icf.patch",
+     "0001-Add-arm64-toolchain.patch"
     ],
     "url": "https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz"
    },
@@ -249,7 +537,8 @@
    },
    {
     "patches": [
-     "test-no-unitests.patch"
+     "test-no-unitests.patch",
+     "0001-Allow-non-clang-snapshot-toolchain.patch"
     ],
     "sha256": "8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107",
     "url": "https://github.com/v8/v8/archive/8.9.83.tar.gz"
@@ -257,9 +546,9 @@
    {
     "folder": "build",
     "patches": [
-     "build_prefix_rpath.patch",
      "find_mac_sdk_from_sysroot.patch",
-     "no-icf.patch"
+     "no-icf.patch",
+     "0001-Add-arm64-toolchain.patch"
     ],
     "url": "https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz"
    },
@@ -293,7 +582,53 @@
    },
    {
     "patches": [
-     "test-no-unitests.patch"
+     "test-no-unitests.patch",
+     "0001-Allow-non-clang-snapshot-toolchain.patch"
+    ],
+    "sha256": "8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107",
+    "url": "https://github.com/v8/v8/archive/8.9.83.tar.gz"
+   },
+   {
+    "folder": "build",
+    "patches": [
+     "find_mac_sdk_from_sysroot.patch",
+     "no-icf.patch",
+     "0001-Add-arm64-toolchain.patch"
+    ],
+    "url": "https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz"
+   },
+   {
+    "folder": "third_party/jinja2",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/jinja2.git/+archive/a82a4944a7f2496639f34a89c9923be5908b80aa.tar.gz"
+   },
+   {
+    "folder": "third_party/markupsafe",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/markupsafe.git/+archive/0944e71f4b2cb9a871bcbe353f95e889b64a611a.tar.gz"
+   },
+   {
+    "folder": "third_party/googletest/src",
+    "url": "https://chromium.googlesource.com/external/github.com/google/googletest.git/+archive/4fe018038f87675c083d0cfb6a6b57c274fb1753.tar.gz"
+   },
+   {
+    "folder": "base/trace_event/common",
+    "url": "https://chromium.googlesource.com/chromium/src/base/trace_event/common.git/+archive/eb94f1c7aa96207f469008f29989a43feb2718f8.tar.gz"
+   },
+   {
+    "folder": "third_party/zlib",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/zlib.git/+archive/9893e506b3a7ea4ec68e1fcd9a374e849945f405.tar.gz"
+   },
+   {
+    "folder": "third_party/icu",
+    "patches": [
+     "icu-build.patch",
+     "icu-config.patch"
+    ],
+    "url": "https://chromium.googlesource.com/chromium/deps/icu.git/+archive/6a33b647c0647c3eb97eae5432153ef2dfca7baa.tar.gz"
+   },
+   {
+    "patches": [
+     "test-no-unitests.patch",
+     "0001-Allow-non-clang-snapshot-toolchain.patch"
     ],
     "sha256": "8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107",
     "url": "https://github.com/v8/v8/archive/8.9.83.tar.gz"
@@ -303,7 +638,54 @@
     "patches": [
      "build_prefix_rpath.patch",
      "find_mac_sdk_from_sysroot.patch",
-     "no-icf.patch"
+     "no-icf.patch",
+     "0001-Add-arm64-toolchain.patch"
+    ],
+    "url": "https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz"
+   },
+   {
+    "folder": "third_party/jinja2",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/jinja2.git/+archive/a82a4944a7f2496639f34a89c9923be5908b80aa.tar.gz"
+   },
+   {
+    "folder": "third_party/markupsafe",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/markupsafe.git/+archive/0944e71f4b2cb9a871bcbe353f95e889b64a611a.tar.gz"
+   },
+   {
+    "folder": "third_party/googletest/src",
+    "url": "https://chromium.googlesource.com/external/github.com/google/googletest.git/+archive/4fe018038f87675c083d0cfb6a6b57c274fb1753.tar.gz"
+   },
+   {
+    "folder": "base/trace_event/common",
+    "url": "https://chromium.googlesource.com/chromium/src/base/trace_event/common.git/+archive/eb94f1c7aa96207f469008f29989a43feb2718f8.tar.gz"
+   },
+   {
+    "folder": "third_party/zlib",
+    "url": "https://chromium.googlesource.com/chromium/src/third_party/zlib.git/+archive/9893e506b3a7ea4ec68e1fcd9a374e849945f405.tar.gz"
+   },
+   {
+    "folder": "third_party/icu",
+    "patches": [
+     "icu-build.patch",
+     "icu-config.patch"
+    ],
+    "url": "https://chromium.googlesource.com/chromium/deps/icu.git/+archive/6a33b647c0647c3eb97eae5432153ef2dfca7baa.tar.gz"
+   },
+   {
+    "patches": [
+     "test-no-unitests.patch",
+     "0001-Allow-non-clang-snapshot-toolchain.patch"
+    ],
+    "sha256": "8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107",
+    "url": "https://github.com/v8/v8/archive/8.9.83.tar.gz"
+   },
+   {
+    "folder": "build",
+    "patches": [
+     "build_prefix_rpath.patch",
+     "find_mac_sdk_from_sysroot.patch",
+     "no-icf.patch",
+     "0001-Add-arm64-toolchain.patch"
     ],
     "url": "https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz"
    },
@@ -338,6 +720,8 @@
   ],
   "test": {
    "commands": [
+    "test -f $PREFIX/lib/libv8${SHLIB_EXT}",
+    "test -f $PREFIX/lib/libv8${SHLIB_EXT}",
     "test -f $PREFIX/lib/libv8${SHLIB_EXT}",
     "test -f $PREFIX/lib/libv8${SHLIB_EXT}",
     "test -f $PREFIX/lib/libv8${SHLIB_EXT}"
@@ -390,7 +774,8 @@
   "source": [
    {
     "patches": [
-     "test-no-unitests.patch"
+     "test-no-unitests.patch",
+     "0001-Allow-non-clang-snapshot-toolchain.patch"
     ],
     "sha256": "8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107",
     "url": "https://github.com/v8/v8/archive/8.9.83.tar.gz"
@@ -400,7 +785,8 @@
     "patches": [
      "build_prefix_rpath.patch",
      "find_mac_sdk_from_sysroot.patch",
-     "no-icf.patch"
+     "no-icf.patch",
+     "0001-Add-arm64-toolchain.patch"
     ],
     "url": "https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz"
    },
@@ -516,7 +902,8 @@
   "source": [
    {
     "patches": [
-     "test-no-unitests.patch"
+     "test-no-unitests.patch",
+     "0001-Allow-non-clang-snapshot-toolchain.patch"
     ],
     "sha256": "8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107",
     "url": "https://github.com/v8/v8/archive/8.9.83.tar.gz"
@@ -526,7 +913,8 @@
     "patches": [
      "build_prefix_rpath.patch",
      "find_mac_sdk_from_sysroot.patch",
-     "no-icf.patch"
+     "no-icf.patch",
+     "0001-Add-arm64-toolchain.patch"
     ],
     "url": "https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz"
    },
@@ -606,13 +994,15 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
+  "linux_aarch64",
+  "linux_ppc64le",
   "osx_64",
   "osx_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/libv8.json"
  },
- "raw_meta_yaml": "{% set name = \"libv8\" %}\n{% set version = \"8.9.83\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/v8/v8/archive/{{ version }}.tar.gz\n    sha256: 8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107\n    patches:\n      - test-no-unitests.patch\n  # We tarballs but don't add sha256s as they are different on every download.\n  # Sychronized hashes from https://github.com/v8/v8/blob/{{ version }}/DEPS\n  - url: https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz\n    folder: build\n    patches:\n      - build_prefix_rpath.patch  # [osx]\n      - find_mac_sdk_from_sysroot.patch\n      - no-icf.patch\n  - url: https://chromium.googlesource.com/chromium/src/third_party/jinja2.git/+archive/a82a4944a7f2496639f34a89c9923be5908b80aa.tar.gz\n    folder: third_party/jinja2\n  - url: https://chromium.googlesource.com/chromium/src/third_party/markupsafe.git/+archive/0944e71f4b2cb9a871bcbe353f95e889b64a611a.tar.gz\n    folder: third_party/markupsafe\n  - url: https://chromium.googlesource.com/external/github.com/google/googletest.git/+archive/4fe018038f87675c083d0cfb6a6b57c274fb1753.tar.gz\n    folder: third_party/googletest/src\n  - url: https://chromium.googlesource.com/chromium/src/base/trace_event/common.git/+archive/eb94f1c7aa96207f469008f29989a43feb2718f8.tar.gz\n    folder: base/trace_event/common\n  - url: https://chromium.googlesource.com/chromium/src/third_party/zlib.git/+archive/9893e506b3a7ea4ec68e1fcd9a374e849945f405.tar.gz\n    folder: third_party/zlib\n  - url: https://chromium.googlesource.com/chromium/deps/icu.git/+archive/6a33b647c0647c3eb97eae5432153ef2dfca7baa.tar.gz\n    folder: third_party/icu\n    patches:\n      - icu-build.patch\n      - icu-config.patch\n\nbuild:\n  number: 3\n  skip: true  # [win]\n  run_exports:\n    - {{ pin_subpackage('libv8', max_pin=\"x.x.x\") }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - gn 0.0.20200909083119\n    - python 3.8\n    - setuptools\n    - ninja\n    - pkg-config\n    - findutils\n    - sed\n  host:\n    - glib\n    - icu\n    - zlib\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libv8${SHLIB_EXT}\n\nabout:\n  home: https://v8.dev/\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: V8 is Google\u2019s open source high-performance JavaScript and WebAssembly engine, written in C++.\n  dev_url: https://chromium.googlesource.com/v8/v8.git\n\nextra:\n  recipe-maintainers:\n    - xhochy\n",
+ "raw_meta_yaml": "{% set name = \"libv8\" %}\n{% set version = \"8.9.83\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/v8/v8/archive/{{ version }}.tar.gz\n    sha256: 8101bb87021212706cb0056deaad04bce8faaca54e5b5aa30397d23cc56cc107\n    patches:\n      - test-no-unitests.patch\n      - 0001-Allow-non-clang-snapshot-toolchain.patch\n  # We tarballs but don't add sha256s as they are different on every download.\n  # Sychronized hashes from https://github.com/v8/v8/blob/{{ version }}/DEPS\n  - url: https://chromium.googlesource.com/chromium/src/build.git/+archive/6ca160d19873bc07a7e76f9d4bae4177bdef1c26.tar.gz\n    folder: build\n    patches:\n      - build_prefix_rpath.patch  # [osx]\n      - find_mac_sdk_from_sysroot.patch\n      - no-icf.patch\n      - 0001-Add-arm64-toolchain.patch\n  - url: https://chromium.googlesource.com/chromium/src/third_party/jinja2.git/+archive/a82a4944a7f2496639f34a89c9923be5908b80aa.tar.gz\n    folder: third_party/jinja2\n  - url: https://chromium.googlesource.com/chromium/src/third_party/markupsafe.git/+archive/0944e71f4b2cb9a871bcbe353f95e889b64a611a.tar.gz\n    folder: third_party/markupsafe\n  - url: https://chromium.googlesource.com/external/github.com/google/googletest.git/+archive/4fe018038f87675c083d0cfb6a6b57c274fb1753.tar.gz\n    folder: third_party/googletest/src\n  - url: https://chromium.googlesource.com/chromium/src/base/trace_event/common.git/+archive/eb94f1c7aa96207f469008f29989a43feb2718f8.tar.gz\n    folder: base/trace_event/common\n  - url: https://chromium.googlesource.com/chromium/src/third_party/zlib.git/+archive/9893e506b3a7ea4ec68e1fcd9a374e849945f405.tar.gz\n    folder: third_party/zlib\n  - url: https://chromium.googlesource.com/chromium/deps/icu.git/+archive/6a33b647c0647c3eb97eae5432153ef2dfca7baa.tar.gz\n    folder: third_party/icu\n    patches:\n      - icu-build.patch\n      - icu-config.patch\n\nbuild:\n  number: 3\n  skip: true  # [win]\n  run_exports:\n    - {{ pin_subpackage('libv8', max_pin=\"x.x.x\") }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - gn 0.0.20200909083119\n    - python 3.8\n    - setuptools\n    - ninja\n    - pkg-config\n    - findutils\n    - sed\n  host:\n    - glib\n    - icu\n    - zlib\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libv8${SHLIB_EXT}\n\nabout:\n  home: https://v8.dev/\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: V8 is Google\u2019s open source high-performance JavaScript and WebAssembly engine, written in C++.\n  dev_url: https://chromium.googlesource.com/v8/v8.git\n\nextra:\n  recipe-maintainers:\n    - xhochy\n",
  "req": {
   "__set__": true,
   "elements": [
