@@ -21,12 +21,13 @@
    "noarch": "python",
    "number": "0",
    "script": [
-    "PYTHON setup.py install",
+    "$PYTHON -m build --no-isolation",
+    "$PYTHON -m pip install dist/$PKG_NAME-$PKG_VERSION.tar.gz --no-deps --ignore-installed -v --no-build-isolation",
     "scons man html",
-    "PYTHON package_documentation.py"
+    "$PYTHON package_documentation.py"
    ],
    "script_env": [
-    "SETUPTOOLS_SCM_PRETEND_VERSION=0.6.18"
+    "SETUPTOOLS_SCM_PRETEND_VERSION=0.6.19"
    ]
   },
   "extra": {
@@ -37,13 +38,11 @@
   },
   "package": {
    "name": "waves",
-   "version": "0.6.18"
+   "version": "0.6.19"
   },
   "requirements": {
    "build": [
     "scons >=4",
-    "setuptools >=45",
-    "setuptools_scm[toml] >=6.2",
     "sphinx >=5.1",
     "sphinx-argparse",
     "sphinx-copybutton >=0.5.1",
@@ -52,6 +51,8 @@
    ],
    "host": [
     "python",
+    "build",
+    "pip",
     "setuptools >=45",
     "setuptools_scm[toml] >=6.2"
    ],
@@ -70,8 +71,8 @@
    ]
   },
   "source": {
-   "sha256": "4059e89a8e0b5ee6ce6196600810b4d4b50f6ce16efd3858ad2d10d0c65f308c",
-   "url": "https://github.com/lanl/waves/archive/refs/tags/0.6.18.tar.gz"
+   "sha256": "e3eaa1fedcd20f83d1e71ea905ce369cb309a85b3aa4e0462aba11f5d9632f44",
+   "url": "https://github.com/lanl/waves/archive/refs/tags/0.6.19.tar.gz"
   },
   "test": {
    "imports": [
@@ -88,8 +89,6 @@
    "__set__": true,
    "elements": [
     "scons",
-    "setuptools",
-    "setuptools_scm",
     "sphinx",
     "sphinx-argparse",
     "sphinx-copybutton",
@@ -100,6 +99,8 @@
   "host": {
    "__set__": true,
    "elements": [
+    "build",
+    "pip",
     "python",
     "setuptools",
     "setuptools_scm"
@@ -146,12 +147,13 @@
    "noarch": "python",
    "number": "0",
    "script": [
-    "PYTHON setup.py install",
+    "$PYTHON -m build --no-isolation",
+    "$PYTHON -m pip install dist/$PKG_NAME-$PKG_VERSION.tar.gz --no-deps --ignore-installed -v --no-build-isolation",
     "scons man html",
-    "PYTHON package_documentation.py"
+    "$PYTHON package_documentation.py"
    ],
    "script_env": [
-    "SETUPTOOLS_SCM_PRETEND_VERSION=0.6.18"
+    "SETUPTOOLS_SCM_PRETEND_VERSION=0.6.19"
    ]
   },
   "extra": {
@@ -162,13 +164,11 @@
   },
   "package": {
    "name": "waves",
-   "version": "0.6.18"
+   "version": "0.6.19"
   },
   "requirements": {
    "build": [
     "scons >=4",
-    "setuptools >=45",
-    "setuptools_scm[toml] >=6.2",
     "sphinx >=5.1",
     "sphinx-argparse",
     "sphinx-copybutton >=0.5.1",
@@ -177,6 +177,8 @@
    ],
    "host": [
     "python",
+    "build",
+    "pip",
     "setuptools >=45",
     "setuptools_scm[toml] >=6.2"
    ],
@@ -195,8 +197,8 @@
    ]
   },
   "source": {
-   "sha256": "4059e89a8e0b5ee6ce6196600810b4d4b50f6ce16efd3858ad2d10d0c65f308c",
-   "url": "https://github.com/lanl/waves/archive/refs/tags/0.6.18.tar.gz"
+   "sha256": "e3eaa1fedcd20f83d1e71ea905ce369cb309a85b3aa4e0462aba11f5d9632f44",
+   "url": "https://github.com/lanl/waves/archive/refs/tags/0.6.19.tar.gz"
   },
   "test": {
    "imports": [
@@ -222,15 +224,17 @@
  "pr_info": {
   "__lazy_json__": "pr_info/waves.json"
  },
- "raw_meta_yaml": "{% set name = \"waves\" %}\n{% set version = \"0.6.18\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/lanl/waves/archive/refs/tags/{{ version }}.tar.gz\n  sha256: 4059e89a8e0b5ee6ce6196600810b4d4b50f6ce16efd3858ad2d10d0c65f308c\n\nbuild:\n  noarch: python\n  number: 0\n  script_env:\n    - SETUPTOOLS_SCM_PRETEND_VERSION={{ version }}\n  script:\n    - {{ PYTHON }} setup.py install\n    - scons man html\n    - {{ PYTHON }} package_documentation.py\n  ignore_run_exports:\n    - python_abi\n\nrequirements:\n  build:\n    - scons >=4\n    - setuptools >=45\n    - setuptools_scm[toml] >=6.2\n    - sphinx >=5.1\n    - sphinx-argparse\n    - sphinx-copybutton >=0.5.1\n    - sphinx_rtd_theme >=1\n    - sphinxcontrib-bibtex\n  host:\n    - python\n    - setuptools >=45\n    - setuptools_scm[toml] >=6.2\n  run:\n    - python >=3.8\n    - h5netcdf\n    - h5py\n    - matplotlib\n    - networkx\n    - numpy\n    - pyyaml\n    - salib >=1\n    - scipy >=1.7\n    - scons\n    - xarray\n\ntest:\n  requires:\n    - pytest\n    - pytest-xdist\n  imports:\n    - waves\n\nabout:\n  home: https://github.com/lanl/waves\n  license: BSD-3-Clause\n  license_file: LICENSE.txt\n  summary: Parameteric study computational engineering workflow tool\n  description: |\n    WAVES (LANL code C23004) is a computational engineering workflow tool that integrates parametric studies with\n    traditional software build systems.\n  doc_url: https://lanl.github.io/waves/index.html\n  dev_url: https://github.com/lanl/waves\n\nextra:\n  recipe-maintainers:\n    - Prabhu-LANL\n    - kbrindley\n",
+ "raw_meta_yaml": "{% set name = \"waves\" %}\n{% set version = \"0.6.19\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/lanl/waves/archive/refs/tags/{{ version }}.tar.gz\n  sha256: e3eaa1fedcd20f83d1e71ea905ce369cb309a85b3aa4e0462aba11f5d9632f44\n\nbuild:\n  noarch: python\n  number: 0\n  script_env:\n    - SETUPTOOLS_SCM_PRETEND_VERSION={{ version }}\n  script:\n    - $PYTHON -m build --no-isolation\n    - $PYTHON -m pip install dist/$PKG_NAME-$PKG_VERSION.tar.gz --no-deps --ignore-installed -v --no-build-isolation\n    - scons man html\n    - $PYTHON package_documentation.py\n  ignore_run_exports:\n    - python_abi\n\nrequirements:\n  build:\n    - scons >=4\n    - sphinx >=5.1\n    - sphinx-argparse\n    - sphinx-copybutton >=0.5.1\n    - sphinx_rtd_theme >=1\n    - sphinxcontrib-bibtex\n  host:\n    - python\n    - build\n    - pip\n    - setuptools >=45\n    - setuptools_scm[toml] >=6.2\n  run:\n    - python >=3.8\n    - h5netcdf\n    - h5py\n    - matplotlib\n    - networkx\n    - numpy\n    - pyyaml\n    - salib >=1\n    - scipy >=1.7\n    - scons\n    - xarray\n\ntest:\n  requires:\n    - pytest\n    - pytest-xdist\n  imports:\n    - waves\n\nabout:\n  home: https://github.com/lanl/waves\n  license: BSD-3-Clause\n  license_file: LICENSE.txt\n  summary: Parameteric study computational engineering workflow tool\n  description: |\n    WAVES (LANL code C23004) is a computational engineering workflow tool that integrates parametric studies with\n    traditional software build systems.\n  doc_url: https://lanl.github.io/waves/index.html\n  dev_url: https://github.com/lanl/waves\n\nextra:\n  recipe-maintainers:\n    - Prabhu-LANL\n    - kbrindley\n",
  "req": {
   "__set__": true,
   "elements": [
+   "build",
    "h5netcdf",
    "h5py",
    "matplotlib",
    "networkx",
    "numpy",
+   "pip",
    "python",
    "pyyaml",
    "salib",
@@ -251,8 +255,6 @@
    "__set__": true,
    "elements": [
     "scons",
-    "setuptools",
-    "setuptools_scm",
     "sphinx",
     "sphinx-argparse",
     "sphinx-copybutton",
@@ -263,6 +265,8 @@
   "host": {
    "__set__": true,
    "elements": [
+    "build",
+    "pip",
     "python",
     "setuptools",
     "setuptools_scm"
@@ -298,8 +302,6 @@
    "__set__": true,
    "elements": [
     "scons >=4",
-    "setuptools >=45",
-    "setuptools_scm[toml] >=6.2",
     "sphinx >=5.1",
     "sphinx-argparse",
     "sphinx-copybutton >=0.5.1",
@@ -310,6 +312,8 @@
   "host": {
    "__set__": true,
    "elements": [
+    "build",
+    "pip",
     "python",
     "setuptools >=45",
     "setuptools_scm[toml] >=6.2"
@@ -339,8 +343,8 @@
    ]
   }
  },
- "url": "https://github.com/lanl/waves/archive/refs/tags/0.6.18.tar.gz",
- "version": "0.6.18",
+ "url": "https://github.com/lanl/waves/archive/refs/tags/0.6.19.tar.gz",
+ "version": "0.6.19",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/waves.json"
  }
