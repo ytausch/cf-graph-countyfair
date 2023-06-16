@@ -21,7 +21,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -47,17 +47,18 @@
     "scipy >=1.3.1",
     "lammps",
     "mpi4py",
-    "cython",
     "pyyaml",
     "scikit-learn",
     "sympy",
     "tabulate",
-    "pytorch",
-    "virtualenv"
+    "pytorch"
    ]
   },
   "source": {
-   "sha256": "0b867eea8de475c3a5fe66474aba4d188a5094892b60a7f0490e87c886980e36",
+   "patches": [
+    "pyproject_toml.patch"
+   ],
+   "sha256": "80f08cbc24ca99eec05e117971e5284b8535c6e0d03a603668581b7efa025e7b",
    "url": "https://pypi.io/packages/source/f/fitsnap3/fitsnap3-3.1.0.4.tar.gz"
   },
   "test": {
@@ -90,7 +91,6 @@
   "run": {
    "__set__": true,
    "elements": [
-    "cython",
     "lammps",
     "mpi4py",
     "numpy",
@@ -102,8 +102,7 @@
     "scikit-learn",
     "scipy",
     "sympy",
-    "tabulate",
-    "virtualenv"
+    "tabulate"
    ]
   },
   "test": {
@@ -126,7 +125,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -152,17 +151,18 @@
     "scipy >=1.3.1",
     "lammps",
     "mpi4py",
-    "cython",
     "pyyaml",
     "scikit-learn",
     "sympy",
     "tabulate",
-    "pytorch",
-    "virtualenv"
+    "pytorch"
    ]
   },
   "source": {
-   "sha256": "0b867eea8de475c3a5fe66474aba4d188a5094892b60a7f0490e87c886980e36",
+   "patches": [
+    "pyproject_toml.patch"
+   ],
+   "sha256": "80f08cbc24ca99eec05e117971e5284b8535c6e0d03a603668581b7efa025e7b",
    "url": "https://pypi.io/packages/source/f/fitsnap3/fitsnap3-3.1.0.4.tar.gz"
   },
   "test": {
@@ -194,11 +194,10 @@
  "pr_info": {
   "__lazy_json__": "pr_info/fitsnap3.json"
  },
- "raw_meta_yaml": "{% set name = \"fitsnap3\" %}\n{% set version = \"3.1.0.4\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/fitsnap3-{{ version }}.tar.gz\n  sha256: 0b867eea8de475c3a5fe66474aba4d188a5094892b60a7f0490e87c886980e36\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - pip\n    - python >=3.9\n  run:\n    - numpy >=1.17.2\n    - pandas >=0.25.1\n    - psutil >=5.6.3\n    - python >=3.9\n    - scipy >=1.3.1\n    - lammps\n    - mpi4py\n    - cython\n    - pyyaml\n    - scikit-learn\n    - sympy\n    - tabulate\n    - pytorch\n    - virtualenv\n\ntest:\n  imports: \n    - fitsnap3lib\n  commands:\n    - export OMPI_MCA_plm=isolated\n    - export OMPI_MCA_rmaps_base_oversubscribe=yes\n    - export OMPI_MCA_btl_vader_single_copy_mechanism=none\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/FitSNAP/FitSNAP\n  license: GPL-2.0-only\n  license_family: GPL\n  license_file: LICENSE\n  summary: Software for generating SNAP machine-learning interatomic potentials\n  description: |\n    A Python Package For Training SNAP Interatomic Potentials for use in\n    the LAMMPS molecular dynamics package\n  doc_url: https://github.com/FitSNAP/FitSNAP\n  dev_url: https://github.com/FitSNAP/FitSNAP\n\nextra:\n  recipe-maintainers:\n    - rohskopf\n    - jan-janssen\n",
+ "raw_meta_yaml": "{% set name = \"fitsnap3\" %}\n{% set version = \"3.1.0.4\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/fitsnap3-{{ version }}.tar.gz\n  sha256: 80f08cbc24ca99eec05e117971e5284b8535c6e0d03a603668581b7efa025e7b\n  patches:\n    - pyproject_toml.patch\n\nbuild:\n  number: 1\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - pip\n    - python >=3.9\n  run:\n    - numpy >=1.17.2\n    - pandas >=0.25.1\n    - psutil >=5.6.3\n    - python >=3.9\n    - scipy >=1.3.1\n    - lammps\n    - mpi4py\n    - pyyaml\n    - scikit-learn\n    - sympy\n    - tabulate\n    - pytorch\n\ntest:\n  imports: \n    - fitsnap3lib\n  commands:\n    - export OMPI_MCA_plm=isolated\n    - export OMPI_MCA_rmaps_base_oversubscribe=yes\n    - export OMPI_MCA_btl_vader_single_copy_mechanism=none\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/FitSNAP/FitSNAP\n  license: GPL-2.0-only\n  license_family: GPL\n  license_file: LICENSE\n  summary: Software for generating SNAP machine-learning interatomic potentials\n  description: |\n    A Python Package For Training SNAP Interatomic Potentials for use in\n    the LAMMPS molecular dynamics package\n  doc_url: https://github.com/FitSNAP/FitSNAP\n  dev_url: https://github.com/FitSNAP/FitSNAP\n\nextra:\n  recipe-maintainers:\n    - rohskopf\n    - jan-janssen\n",
  "req": {
   "__set__": true,
   "elements": [
-   "cython",
    "lammps",
    "mpi4py",
    "numpy",
@@ -211,8 +210,7 @@
    "scikit-learn",
    "scipy",
    "sympy",
-   "tabulate",
-   "virtualenv"
+   "tabulate"
   ]
  },
  "requirements": {
@@ -230,7 +228,6 @@
   "run": {
    "__set__": true,
    "elements": [
-    "cython",
     "lammps",
     "mpi4py",
     "numpy",
@@ -242,8 +239,7 @@
     "scikit-learn",
     "scipy",
     "sympy",
-    "tabulate",
-    "virtualenv"
+    "tabulate"
    ]
   },
   "test": {
@@ -269,7 +265,6 @@
   "run": {
    "__set__": true,
    "elements": [
-    "cython",
     "lammps",
     "mpi4py",
     "numpy >=1.17.2",
@@ -281,8 +276,7 @@
     "scikit-learn",
     "scipy >=1.3.1",
     "sympy",
-    "tabulate",
-    "virtualenv"
+    "tabulate"
    ]
   },
   "test": {
