@@ -1,7 +1,11 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  }
+ },
  "feedstock_name": "fmilib",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -31,6 +35,7 @@
    "build": [
     "cmake",
     "make",
+    "gnuconfig",
     "c_compiler_stub",
     "cxx_compiler_stub"
    ]
@@ -56,6 +61,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
@@ -85,11 +91,13 @@
    "run_exports": [
     "fmilib",
     "fmilib",
+    "fmilib",
     "fmilib"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "jschueller",
     "jschueller",
     "jschueller",
     "jschueller"
@@ -103,10 +111,17 @@
    "build": [
     "cmake",
     "make",
+    "gnuconfig",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
     "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "gnuconfig",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
@@ -118,6 +133,7 @@
    "patches": [
     "undef_gnu_source.patch",
     "undef_gnu_source.patch",
+    "undef_gnu_source.patch",
     "undef_gnu_source.patch"
    ],
    "sha256": "8199d3e9423494b714b9c4e42f055248457a7c9162df3d4652000aa9a10b8316",
@@ -125,6 +141,8 @@
   },
   "test": {
    "commands": [
+    "test -f $PREFIX/include/fmilib.h",
+    "test -f $PREFIX/lib/libfmilib.a",
     "test -f $PREFIX/include/fmilib.h",
     "test -f $PREFIX/lib/libfmilib.a",
     "test -f $PREFIX/include/fmilib.h",
@@ -162,6 +180,7 @@
    "build": [
     "cmake",
     "make",
+    "gnuconfig",
     "c_compiler_stub",
     "cxx_compiler_stub"
    ]
@@ -187,6 +206,77 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
+    "gnuconfig",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "home": "http://www.jmodelica.org/FMILibrary",
+   "license": "BSD-3-Clause",
+   "license_family": "BSD",
+   "license_file": "LICENSE.md",
+   "summary": "Package written in C that enables integration of Functional Mock-up Units"
+  },
+  "build": {
+   "number": "0",
+   "run_exports": [
+    "fmilib"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "jschueller"
+   ]
+  },
+  "package": {
+   "name": "fmilib",
+   "version": "2.4.1"
+  },
+  "requirements": {
+   "build": [
+    "cmake",
+    "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub"
+   ]
+  },
+  "source": {
+   "patches": [
+    "undef_gnu_source.patch"
+   ],
+   "sha256": "8199d3e9423494b714b9c4e42f055248457a7c9162df3d4652000aa9a10b8316",
+   "url": "https://github.com/modelon-community/fmi-library/archive/2.4.1.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f $PREFIX/include/fmilib.h",
+    "test -f $PREFIX/lib/libfmilib.a"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
@@ -213,18 +303,20 @@
  "platforms": [
   "linux_64",
   "osx_64",
+  "osx_arm64",
   "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/fmilib.json"
  },
- "raw_meta_yaml": "{% set version = \"2.4.1\" %}\n\npackage:\n  name: fmilib\n  version: {{ version }}\n\nsource:\n  url: https://github.com/modelon-community/fmi-library/archive/{{ version }}.tar.gz\n  sha256: 8199d3e9423494b714b9c4e42f055248457a7c9162df3d4652000aa9a10b8316\n  patches:\n    # https://github.com/conda/conda-build/issues/3165\n    - undef_gnu_source.patch\n\nbuild:\n  number: 0\n  run_exports:\n    - {{ pin_subpackage('fmilib', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - cmake\n    - make  # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n\ntest:\n  commands:\n    - test -f $PREFIX/include/fmilib.h                                # [unix]\n    - test -f $PREFIX/lib/libfmilib.a                                 # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\fmilib.lib exit 1          # [win]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\fmilib.h exit 1        # [win]\n\nabout:\n  home: http://www.jmodelica.org/FMILibrary\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.md\n  summary: Package written in C that enables integration of Functional Mock-up Units\n\nextra:\n  recipe-maintainers:\n    - jschueller\n",
+ "raw_meta_yaml": "{% set version = \"2.4.1\" %}\n\npackage:\n  name: fmilib\n  version: {{ version }}\n\nsource:\n  url: https://github.com/modelon-community/fmi-library/archive/{{ version }}.tar.gz\n  sha256: 8199d3e9423494b714b9c4e42f055248457a7c9162df3d4652000aa9a10b8316\n  patches:\n    # https://github.com/conda/conda-build/issues/3165\n    - undef_gnu_source.patch\n\nbuild:\n  number: 0\n  run_exports:\n    - {{ pin_subpackage('fmilib', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - cmake\n    - make  # [unix]\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n\ntest:\n  commands:\n    - test -f $PREFIX/include/fmilib.h                                # [unix]\n    - test -f $PREFIX/lib/libfmilib.a                                 # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\fmilib.lib exit 1          # [win]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\fmilib.h exit 1        # [win]\n\nabout:\n  home: http://www.jmodelica.org/FMILibrary\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.md\n  summary: Package written in C that enables integration of Functional Mock-up Units\n\nextra:\n  recipe-maintainers:\n    - jschueller\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
    "cmake",
    "cxx_compiler_stub",
+   "gnuconfig",
    "make"
   ]
  },
@@ -235,6 +327,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
@@ -265,6 +358,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
