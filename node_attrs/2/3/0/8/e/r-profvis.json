@@ -6,6 +6,8 @@
    "automerge": true
   },
   "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
    "osx_arm64": "osx_64"
   },
   "provider": {
@@ -31,7 +33,7 @@
    "summary": "Interactive visualizations for profiling R code."
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "rpaths": [
     "lib/R/lib/",
     "lib/",
@@ -153,7 +155,7 @@
    "summary": "Interactive visualizations for profiling R code."
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "rpaths": [
     "lib/R/lib/",
     "lib/",
@@ -290,7 +292,7 @@
   },
   "build": {
    "merge_build_host": true,
-   "number": "1",
+   "number": "2",
    "rpaths": [
     "lib/R/lib/",
     "lib/",
@@ -530,7 +532,7 @@
    "summary": "Interactive visualizations for profiling R code."
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "rpaths": [
     "lib/R/lib/",
     "lib/",
@@ -652,7 +654,7 @@
    "summary": "Interactive visualizations for profiling R code."
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "rpaths": [
     "lib/R/lib/",
     "lib/",
@@ -776,7 +778,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/r-profvis.json"
  },
- "raw_meta_yaml": "{% set version = \"0.3.8\" %}\n{% set posix = 'm2-' if win else '' %}\n{% set native = 'm2w64-' if win else '' %}\n\npackage:\n  name: r-profvis\n  version: {{ version|replace(\"-\", \"_\") }}\n\nsource:\n  url:\n    - {{ cran_mirror }}/src/contrib/profvis_{{ version }}.tar.gz\n    - {{ cran_mirror }}/src/contrib/Archive/profvis/profvis_{{ version }}.tar.gz\n  sha256: ec02c75bc9907a73564e691adfa8e06651ca0bd73b7915412960231cd265b4b2\n\nbuild:\n  merge_build_host: true  # [win]\n  skip: true              # [ppc64le]\n  number: 1\n  rpaths:\n    - lib/R/lib/\n    - lib/\n\nrequirements:\n  build:\n    - cross-r-base {{ r_base }}  # [build_platform != target_platform]\n    - r-htmlwidgets >=0.3.2      # [build_platform != target_platform]\n    - r-purrr                    # [build_platform != target_platform]\n    - r-rlang >=0.4.9            # [build_platform != target_platform]\n    - r-stringr                  # [build_platform != target_platform]\n    - r-vctrs                    # [build_platform != target_platform]\n    - {{ compiler('c') }}        # [not win]\n    - {{ compiler('m2w64_c') }}  # [win]\n    - {{ posix }}filesystem      # [win]\n    - {{ posix }}make\n    - {{ posix }}sed             # [win]\n    - {{ posix }}coreutils       # [win]\n    - {{ posix }}zip             # [win]\n  host:\n    - r-base\n    - r-htmlwidgets >=0.3.2\n    - r-purrr\n    - r-rlang >=0.4.9\n    - r-stringr\n    - r-vctrs\n  run:\n    - r-base\n    - {{ native }}gcc-libs       # [win]\n    - r-htmlwidgets >=0.3.2\n    - r-purrr\n    - r-rlang >=0.4.9\n    - r-stringr\n    - r-vctrs\n\ntest:\n  commands:\n    - $R -e \"library('profvis')\"           # [not win]\n    - \"\\\"%R%\\\" -e \\\"library('profvis')\\\"\"  # [win]\n\nabout:\n  home: https://rstudio.github.io/profvis/\n  dev_url: https://github.com/rstudio/profvis\n  license: GPL-3.0-only\n  summary: Interactive visualizations for profiling R code.\n  license_family: GPL3\n  license_file:\n    - {{ environ[\"PREFIX\"] }}/lib/R/share/licenses/GPL-3\n    - LICENSE\n\nextra:\n  recipe-maintainers:\n    - conda-forge/r\n    - halldc\n",
+ "raw_meta_yaml": "{% set version = \"0.3.8\" %}\n{% set posix = 'm2-' if win else '' %}\n{% set native = 'm2w64-' if win else '' %}\n\npackage:\n  name: r-profvis\n  version: {{ version|replace(\"-\", \"_\") }}\n\nsource:\n  url:\n    - {{ cran_mirror }}/src/contrib/profvis_{{ version }}.tar.gz\n    - {{ cran_mirror }}/src/contrib/Archive/profvis/profvis_{{ version }}.tar.gz\n  sha256: ec02c75bc9907a73564e691adfa8e06651ca0bd73b7915412960231cd265b4b2\n\nbuild:\n  merge_build_host: true  # [win]\n  skip: true              # [ppc64le]\n  number: 2\n  rpaths:\n    - lib/R/lib/\n    - lib/\n\nrequirements:\n  build:\n    - cross-r-base {{ r_base }}  # [build_platform != target_platform]\n    - r-htmlwidgets >=0.3.2      # [build_platform != target_platform]\n    - r-purrr                    # [build_platform != target_platform]\n    - r-rlang >=0.4.9            # [build_platform != target_platform]\n    - r-stringr                  # [build_platform != target_platform]\n    - r-vctrs                    # [build_platform != target_platform]\n    - {{ compiler('c') }}        # [not win]\n    - {{ compiler('m2w64_c') }}  # [win]\n    - {{ posix }}filesystem      # [win]\n    - {{ posix }}make\n    - {{ posix }}sed             # [win]\n    - {{ posix }}coreutils       # [win]\n    - {{ posix }}zip             # [win]\n  host:\n    - r-base\n    - r-htmlwidgets >=0.3.2\n    - r-purrr\n    - r-rlang >=0.4.9\n    - r-stringr\n    - r-vctrs\n  run:\n    - r-base\n    - {{ native }}gcc-libs       # [win]\n    - r-htmlwidgets >=0.3.2\n    - r-purrr\n    - r-rlang >=0.4.9\n    - r-stringr\n    - r-vctrs\n\ntest:\n  commands:\n    - $R -e \"library('profvis')\"           # [not win]\n    - \"\\\"%R%\\\" -e \\\"library('profvis')\\\"\"  # [win]\n\nabout:\n  home: https://rstudio.github.io/profvis/\n  dev_url: https://github.com/rstudio/profvis\n  license: GPL-3.0-only\n  summary: Interactive visualizations for profiling R code.\n  license_family: GPL3\n  license_file:\n    - {{ environ[\"PREFIX\"] }}/lib/R/share/licenses/GPL-3\n    - LICENSE\n\nextra:\n  recipe-maintainers:\n    - conda-forge/r\n    - halldc\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -919,7 +921,7 @@
   },
   "build": {
    "merge_build_host": true,
-   "number": "1",
+   "number": "2",
    "rpaths": [
     "lib/R/lib/",
     "lib/"
