@@ -3,12 +3,9 @@
  "branch": "main",
  "conda-forge.yml": {
   "build_platform": {
-   "linux_aarch64": "linux_aarch64",
-   "linux_ppc64le": "linux_ppc64le"
-  },
-  "provider": {
-   "linux_aarch64": "azure",
-   "linux_ppc64le": "azure"
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
+   "osx_arm64": "osx_64"
   }
  },
  "feedstock_name": "shaderc",
@@ -276,11 +273,13 @@
     "shaderc",
     "shaderc",
     "shaderc",
+    "shaderc",
     "shaderc"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "hmaarrfk",
     "hmaarrfk",
     "hmaarrfk",
     "hmaarrfk",
@@ -311,9 +310,16 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
+    "make",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
     "make"
    ],
    "host": [
+    "spirv-tools",
+    "spirv-headers",
+    "glslang",
     "spirv-tools",
     "spirv-headers",
     "glslang",
@@ -349,6 +355,11 @@
     "patches/0002-Update-the-location-of-SPRV-headers.patch",
     "patches/0003-Update-thirdparty-dependency-resolution.patch",
     "patches/0004-Remove-OSDependent-and-add-rt-for-linux.patch",
+    "patches/0005-only-install-shared-libraries.patch",
+    "patches/0001-Update-build-version-generation.patch",
+    "patches/0002-Update-the-location-of-SPRV-headers.patch",
+    "patches/0003-Update-thirdparty-dependency-resolution.patch",
+    "patches/0004-Remove-OSDependent-and-add-rt-for-linux.patch",
     "patches/0005-only-install-shared-libraries.patch"
    ],
    "sha256": "671c5750638ff5e42e0e0e5325b758a1ab85e6fd0fe934d369a8631c4292f12f",
@@ -356,6 +367,8 @@
   },
   "test": {
    "commands": [
+    "test -f ${PREFIX}/lib/libshaderc${SHLIB_EXT}",
+    "glslc --help",
     "test -f ${PREFIX}/lib/libshaderc${SHLIB_EXT}",
     "glslc --help",
     "test -f ${PREFIX}/lib/libshaderc${SHLIB_EXT}",
@@ -449,18 +462,100 @@
    "elements": []
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/google/shaderc",
+   "license": "Apache-2.0",
+   "license_family": "Apache",
+   "license_file": "LICENSE",
+   "summary": "A collection of tools, libraries and tests for shader compilation"
+  },
+  "build": {
+   "number": "0",
+   "run_exports": [
+    "shaderc"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "hmaarrfk"
+   ]
+  },
+  "package": {
+   "name": "shaderc",
+   "version": "2023.4"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "make"
+   ],
+   "host": [
+    "spirv-tools",
+    "spirv-headers",
+    "glslang"
+   ]
+  },
+  "source": {
+   "patches": [
+    "patches/0001-Update-build-version-generation.patch",
+    "patches/0002-Update-the-location-of-SPRV-headers.patch",
+    "patches/0003-Update-thirdparty-dependency-resolution.patch",
+    "patches/0004-Remove-OSDependent-and-add-rt-for-linux.patch",
+    "patches/0005-only-install-shared-libraries.patch"
+   ],
+   "sha256": "671c5750638ff5e42e0e0e5325b758a1ab85e6fd0fe934d369a8631c4292f12f",
+   "url": "https://github.com/google/shaderc/archive/v2023.4.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f ${PREFIX}/lib/libshaderc${SHLIB_EXT}",
+    "glslc --help"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "glslang",
+    "spirv-headers",
+    "spirv-tools"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
    "shaderc"
   ]
  },
- "parsing_error": "make_graph: 429",
+ "parsing_error": false,
  "platforms": [
   "linux_64",
   "linux_aarch64",
   "linux_ppc64le",
-  "osx_64"
+  "osx_64",
+  "osx_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/shaderc.json"
