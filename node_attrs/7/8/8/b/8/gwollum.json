@@ -25,7 +25,7 @@
   "build": {
    "error_overdepending": true,
    "error_overlinking": true,
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "gwollum"
    ]
@@ -130,7 +130,7 @@
   "build": {
    "error_overdepending": true,
    "error_overlinking": true,
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "gwollum"
    ]
@@ -233,7 +233,7 @@
   "build": {
    "error_overdepending": true,
    "error_overlinking": true,
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "gwollum",
     "gwollum",
@@ -365,7 +365,7 @@
   "build": {
    "error_overdepending": true,
    "error_overlinking": true,
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "gwollum"
    ]
@@ -470,7 +470,7 @@
   "build": {
    "error_overdepending": true,
    "error_overlinking": true,
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "gwollum"
    ]
@@ -579,7 +579,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/gwollum.json"
  },
- "raw_meta_yaml": "{% set name = \"gwollum\" %}\n{% set version = \"4.0.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://git.ligo.org/virgo/virgoapp/{{ name }}/-/archive/{{ version }}/{{ name }}-{{ version }}.tar.gz\n  sha256: c8536c5e82b9f282ba58c9a2611e3ec64056336dd20b12b918eb2f44084794d5\n  patches:\n    # fix rootcling when cross-compiling\n    - rootcling-cross.patch  # [osx and arm64]\n\nbuild:\n  error_overdepending: true\n  error_overlinking: true\n  number: 1\n  skip: true  # [win]\n  run_exports:\n    - {{ pin_subpackage(\"gwollum\", max_pin=\"x\") }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake >=3.12.0\n    - make  # [unix]\n    - pkg-config  # [unix]\n    - sysroot_linux-64 2.17  # [linux64]\n    # when cross-compiling, need rootcling from build_platform\n    - root_base  # [osx and arm64]\n  host:\n    - fftw\n    - hdf5\n    - libframel >=8.42\n    - root_base\n  run:\n    - fftw\n    - hdf5\n    - libframel\n    - root_base\n  run_constrained:\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n\ntest:\n  requires:\n    - pkg-config\n  commands:\n    # check variables\n    - test -f ${GWOLLUM_DATA}/V1-hrec-vsr2.gwf  # [unix]\n    - test -f ${GWOLLUM_PIX}/gwollum.gif  # [unix]\n    # check pkg-config\n    - pkg-config --print-errors --exact-version {{ version }} {{ name }}\n\nabout:\n  home: https://virgo.docs.ligo.org/virgoapp/{{ name }}/\n  doc_url: https://virgo.docs.ligo.org/virgoapp/{{ name }}/\n  dev_url: https://git.ligo.org/virgo/virgoapp/{{ name }}.git\n  license: GPL-3.0-or-later\n  license_family: GPL\n  license_file: LICENSE\n  summary: Tools for gravitational-wave analyses\n  description: |\n    The GWOLLUM package contains a set of software tools designed to perform\n    GW analyses.  Most of the code source is written with the C++ language\n    and it also heavily relies on the CERN ROOT libraries (also C++).\n\nextra:\n  recipe-maintainers:\n    - duncanmmacleod\n    - rhyspoulton\n",
+ "raw_meta_yaml": "{% set name = \"gwollum\" %}\n{% set version = \"4.0.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://git.ligo.org/virgo/virgoapp/{{ name }}/-/archive/{{ version }}/{{ name }}-{{ version }}.tar.gz\n  sha256: c8536c5e82b9f282ba58c9a2611e3ec64056336dd20b12b918eb2f44084794d5\n  patches:\n    # fix rootcling when cross-compiling\n    - rootcling-cross.patch  # [osx and arm64]\n\nbuild:\n  error_overdepending: true\n  error_overlinking: true\n  number: 2\n  skip: true  # [win]\n  run_exports:\n    - {{ pin_subpackage(\"gwollum\", max_pin=\"x\") }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake >=3.12.0\n    - make  # [unix]\n    - pkg-config  # [unix]\n    - sysroot_linux-64 2.17  # [linux64]\n    # when cross-compiling, need rootcling from build_platform\n    - root_base  # [osx and arm64]\n  host:\n    - fftw\n    - hdf5\n    - libframel >=8.42\n    - root_base\n  run:\n    - fftw\n    - hdf5\n    - libframel\n    - root_base\n  run_constrained:\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n\ntest:\n  requires:\n    - pkg-config\n  commands:\n    # check variables\n    - test -f ${GWOLLUM_DATA}/V1-hrec-vsr2.gwf  # [unix]\n    - test -f ${GWOLLUM_PIX}/gwollum.gif  # [unix]\n    # check pkg-config\n    - pkg-config --print-errors --exact-version {{ version }} {{ name }}\n\nabout:\n  home: https://virgo.docs.ligo.org/virgoapp/{{ name }}/\n  doc_url: https://virgo.docs.ligo.org/virgoapp/{{ name }}/\n  dev_url: https://git.ligo.org/virgo/virgoapp/{{ name }}.git\n  license: GPL-3.0-or-later\n  license_family: GPL\n  license_file: LICENSE\n  summary: Tools for gravitational-wave analyses\n  description: |\n    The GWOLLUM package contains a set of software tools designed to perform\n    GW analyses.  Most of the code source is written with the C++ language\n    and it also heavily relies on the CERN ROOT libraries (also C++).\n\nextra:\n  recipe-maintainers:\n    - duncanmmacleod\n    - rhyspoulton\n",
  "req": {
   "__set__": true,
   "elements": [
