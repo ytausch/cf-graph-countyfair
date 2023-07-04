@@ -1,7 +1,11 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  }
+ },
  "feedstock_name": "libusockets",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -100,11 +104,13 @@
    "run_exports": [
     "libusockets",
     "libusockets",
+    "libusockets",
     "libusockets"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "traversaro",
     "traversaro",
     "traversaro",
     "traversaro"
@@ -130,9 +136,16 @@
     "cxx_compiler_stub",
     "cmake",
     "pkg-config",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "pkg-config",
     "ninja"
    ],
    "host": [
+    "openssl",
+    "libuv",
     "openssl",
     "libuv",
     "openssl",
@@ -144,6 +157,7 @@
     "libuv",
     "libuv",
     "__osx >=10.9",
+    "libuv",
     "libuv"
    ]
   },
@@ -171,10 +185,20 @@
     ],
     "sha256": "16eba133dd33eade2f5f8dd87612c04b5dd711066e0471c60d641a2f6a988f16",
     "url": "https://github.com/uNetworking/uSockets/archive/refs/tags/v0.8.6.tar.gz"
+   },
+   {
+    "patches": [
+     "use_libuv.patch",
+     "disable_ssl_tests.patch"
+    ],
+    "sha256": "16eba133dd33eade2f5f8dd87612c04b5dd711066e0471c60d641a2f6a988f16",
+    "url": "https://github.com/uNetworking/uSockets/archive/refs/tags/v0.8.6.tar.gz"
    }
   ],
   "test": {
    "commands": [
+    "test -f $PREFIX/include/libusockets.h",
+    "test -f $PREFIX/lib/libuSockets${SHLIB_EXT}",
     "test -f $PREFIX/include/libusockets.h",
     "test -f $PREFIX/lib/libuSockets${SHLIB_EXT}",
     "test -f $PREFIX/include/libusockets.h",
@@ -272,6 +296,90 @@
    "elements": []
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/uNetworking/uSockets",
+   "license": "Apache-2.0",
+   "license_file": "LICENSE",
+   "summary": "Miniscule cross-platform eventing, networking & crypto for async applications."
+  },
+  "build": {
+   "number": "0",
+   "run_exports": [
+    "libusockets"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "traversaro"
+   ]
+  },
+  "package": {
+   "name": "libusockets",
+   "version": "0.8.6"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "pkg-config",
+    "ninja"
+   ],
+   "host": [
+    "openssl",
+    "libuv"
+   ],
+   "run": [
+    "libuv"
+   ]
+  },
+  "source": [
+   {
+    "patches": [
+     "use_libuv.patch",
+     "disable_ssl_tests.patch"
+    ],
+    "sha256": "16eba133dd33eade2f5f8dd87612c04b5dd711066e0471c60d641a2f6a988f16",
+    "url": "https://github.com/uNetworking/uSockets/archive/refs/tags/v0.8.6.tar.gz"
+   }
+  ],
+  "test": {
+   "commands": [
+    "test -f $PREFIX/include/libusockets.h",
+    "test -f $PREFIX/lib/libuSockets${SHLIB_EXT}"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "libuv",
+    "openssl"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libuv"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -282,6 +390,7 @@
  "platforms": [
   "linux_64",
   "osx_64",
+  "osx_arm64",
   "win_64"
  ],
  "pr_info": {
