@@ -21,7 +21,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -39,6 +39,7 @@
     "pkg-config",
     "gnuconfig",
     "c_compiler_stub",
+    "sysroot_linux-64 2.17",
     "autoconf",
     "automake",
     "m4",
@@ -130,7 +131,8 @@
     "gnuconfig",
     "m4",
     "make",
-    "pkg-config"
+    "pkg-config",
+    "sysroot_linux-64"
    ]
   },
   "host": {
@@ -210,7 +212,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -234,6 +236,7 @@
     "pkg-config",
     "gnuconfig",
     "c_compiler_stub",
+    "sysroot_linux-64 2.17",
     "autoconf",
     "automake",
     "m4",
@@ -402,7 +405,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -535,7 +538,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -672,7 +675,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/emacs.json"
  },
- "raw_meta_yaml": "# Note: This recipe currently only works on OS X and Linux.\n\n{% set version = \"28.2\" %}\n\npackage:\n  name: emacs\n  version: {{ version }}\n\nsource:\n  fn: emacs-{{ version }}.tar.xz\n  url: http://ftp.gnu.org/gnu/emacs/emacs-{{ version }}.tar.xz\n  sha256: ee21182233ef3232dc97b486af2d86e14042dbb65bbc535df562c3a858232488\n  patches:\n    - 0002-apple-silicon-resign-binary.patch  # [osx]\n    - 0003-macos-cross-compile-configure.patch  # [osx and build_platform != target_platform]\n    - 0004-macos-cross-compile-makefile.patch  # [osx and build_platform != target_platform]\n    - 0005-macos-cross-compile-nextstep-makefile.patch  # [osx and build_platform != target_platform]\n    - 0006-macos-cross-compile-post-install-pdump-path.patch  # [osx and build_platform != target_platform]\n\nbuild:\n  number: 2\n  skip: true  # [win]\n  detect_binary_files_with_prefix: true\n\nrequirements:\n  build:\n    - pkg-config\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - autoconf  # [unix]\n    - automake  # [unix]\n    - m4  # [unix]\n    - make  # [unix]\n    - gtk3  # [build_platform != target_platform]\n    - harfbuzz  # [build_platform != target_platform]\n    - libxml2  # [build_platform != target_platform]\n    - ncurses  # [build_platform != target_platform]\n    - dbus  # [build_platform != target_platform]\n    - libjpeg-turbo   # [build_platform != target_platform]\n    - libpng  # [build_platform != target_platform]\n    - libtiff  # [build_platform != target_platform]\n    - librsvg  # [build_platform != target_platform]\n    - giflib  # [build_platform != target_platform]\n    - gnutls  # [build_platform != target_platform]\n    - gmp  # [build_platform != target_platform]\n    - glib  # [build_platform != target_platform]\n    - zlib  # [build_platform != target_platform]\n  host:\n    - libxml2\n    - ncurses\n    - dbus  # [osx]\n    - libjpeg-turbo\n    - libpng\n    - libtiff\n    - librsvg\n    - giflib\n    - gnutls\n    - gmp\n    - glib\n    - freetype  # [linux]\n    - cairo  # [linux]\n    - gtk3  # [linux]\n    - harfbuzz  # [linux]\n    - xorg-libxaw  # [linux]\n    - xorg-libxpm  # [linux]\n    - xorg-libxfixes  # [linux]\n    - xorg-libxft  # [linux]\n    - xorg-libxi  # [linux]\n    - xorg-libxrandr  # [linux]\n    - xorg-libxcursor  # [linux]\n    - xorg-libxcomposite  # [linux]\n    - xorg-libxdamage  # [linux]\n    - xorg-libxinerama  # [linux]\n    - xorg-xineramaproto  # [linux]\n    - xorg-libxtst  # [linux]\n    - zlib\n\n  run:\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n    - libxml2\n    - ncurses\n    - dbus  # [osx]\n    - libjpeg-turbo\n    - libpng\n    - libtiff\n    - giflib\n    - gnutls\n    - gmp\n    - glib\n    - freetype  # [linux]\n    - cairo  # [linux]\n    - gtk3  # [linux]\n    - harfbuzz  # [linux]\n    - xorg-libxaw  # [linux]\n    - xorg-libxpm  # [linux]\n    - xorg-libxfixes  # [linux]\n    - xorg-libxft  # [linux]\n    - xorg-libxi  # [linux]\n    - xorg-libxrandr  # [linux]\n    - xorg-libxcursor  # [linux]\n    - xorg-libxcomposite  # [linux]\n    - xorg-libxdamage  # [linux]\n    - xorg-libxinerama  # [linux]\n    - xorg-xineramaproto  # [linux]\n    - xorg-libxtst  # [linux]\n    - zlib\n\ntest:\n  commands:\n    - $PREFIX/bin/emacs --help\n    - $PREFIX/bin/emacsclient --help\n    - $PREFIX/bin/ctags --help\n    - $PREFIX/bin/ebrowse --help\n    - $PREFIX/bin/etags --help\n    - $PREFIX/bin/emacs -nw -Q --kill --batch\n    - $PREFIX/bin/emacs -Q --kill --batch\n\nabout:\n  home: http://www.gnu.org/software/emacs/\n  license: GPL-3.0-only\n  summary: GNU Emacs is an extensible, customizable text editor.\n  license_file: COPYING\n\nextra:\n  recipe-maintainers:\n    - asmeurer\n    - msarahan\n    - notestaff\n",
+ "raw_meta_yaml": "# Note: This recipe currently only works on OS X and Linux.\n\n{% set version = \"28.2\" %}\n\npackage:\n  name: emacs\n  version: {{ version }}\n\nsource:\n  fn: emacs-{{ version }}.tar.xz\n  url: http://ftp.gnu.org/gnu/emacs/emacs-{{ version }}.tar.xz\n  sha256: ee21182233ef3232dc97b486af2d86e14042dbb65bbc535df562c3a858232488\n  patches:\n    - 0002-apple-silicon-resign-binary.patch  # [osx]\n    - 0003-macos-cross-compile-configure.patch  # [osx and build_platform != target_platform]\n    - 0004-macos-cross-compile-makefile.patch  # [osx and build_platform != target_platform]\n    - 0005-macos-cross-compile-nextstep-makefile.patch  # [osx and build_platform != target_platform]\n    - 0006-macos-cross-compile-post-install-pdump-path.patch  # [osx and build_platform != target_platform]\n\nbuild:\n  number: 3\n  skip: true  # [win]\n  detect_binary_files_with_prefix: true\n\nrequirements:\n  build:\n    - pkg-config\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - sysroot_linux-64 2.17  # [linux64]\n    - autoconf  # [unix]\n    - automake  # [unix]\n    - m4  # [unix]\n    - make  # [unix]\n    - gtk3  # [build_platform != target_platform]\n    - harfbuzz  # [build_platform != target_platform]\n    - libxml2  # [build_platform != target_platform]\n    - ncurses  # [build_platform != target_platform]\n    - dbus  # [build_platform != target_platform]\n    - libjpeg-turbo   # [build_platform != target_platform]\n    - libpng  # [build_platform != target_platform]\n    - libtiff  # [build_platform != target_platform]\n    - librsvg  # [build_platform != target_platform]\n    - giflib  # [build_platform != target_platform]\n    - gnutls  # [build_platform != target_platform]\n    - gmp  # [build_platform != target_platform]\n    - glib  # [build_platform != target_platform]\n    - zlib  # [build_platform != target_platform]\n  host:\n    - libxml2\n    - ncurses\n    - dbus  # [osx]\n    - libjpeg-turbo\n    - libpng\n    - libtiff\n    - librsvg\n    - giflib\n    - gnutls\n    - gmp\n    - glib\n    - freetype  # [linux]\n    - cairo  # [linux]\n    - gtk3  # [linux]\n    - harfbuzz  # [linux]\n    - xorg-libxaw  # [linux]\n    - xorg-libxpm  # [linux]\n    - xorg-libxfixes  # [linux]\n    - xorg-libxft  # [linux]\n    - xorg-libxi  # [linux]\n    - xorg-libxrandr  # [linux]\n    - xorg-libxcursor  # [linux]\n    - xorg-libxcomposite  # [linux]\n    - xorg-libxdamage  # [linux]\n    - xorg-libxinerama  # [linux]\n    - xorg-xineramaproto  # [linux]\n    - xorg-libxtst  # [linux]\n    - zlib\n\n  run:\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.9\") }}  # [osx and x86_64]\n    - libxml2\n    - ncurses\n    - dbus  # [osx]\n    - libjpeg-turbo\n    - libpng\n    - libtiff\n    - giflib\n    - gnutls\n    - gmp\n    - glib\n    - freetype  # [linux]\n    - cairo  # [linux]\n    - gtk3  # [linux]\n    - harfbuzz  # [linux]\n    - xorg-libxaw  # [linux]\n    - xorg-libxpm  # [linux]\n    - xorg-libxfixes  # [linux]\n    - xorg-libxft  # [linux]\n    - xorg-libxi  # [linux]\n    - xorg-libxrandr  # [linux]\n    - xorg-libxcursor  # [linux]\n    - xorg-libxcomposite  # [linux]\n    - xorg-libxdamage  # [linux]\n    - xorg-libxinerama  # [linux]\n    - xorg-xineramaproto  # [linux]\n    - xorg-libxtst  # [linux]\n    - zlib\n\ntest:\n  commands:\n    - $PREFIX/bin/emacs --help\n    - $PREFIX/bin/emacsclient --help\n    - $PREFIX/bin/ctags --help\n    - $PREFIX/bin/ebrowse --help\n    - $PREFIX/bin/etags --help\n    - $PREFIX/bin/emacs -nw -Q --kill --batch\n    - $PREFIX/bin/emacs -Q --kill --batch\n\nabout:\n  home: http://www.gnu.org/software/emacs/\n  license: GPL-3.0-only\n  summary: GNU Emacs is an extensible, customizable text editor.\n  license_file: COPYING\n\nextra:\n  recipe-maintainers:\n    - asmeurer\n    - msarahan\n    - notestaff\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -699,6 +702,7 @@
    "make",
    "ncurses",
    "pkg-config",
+   "sysroot_linux-64",
    "xorg-libxaw",
    "xorg-libxcomposite",
    "xorg-libxcursor",
@@ -724,7 +728,8 @@
     "gnuconfig",
     "m4",
     "make",
-    "pkg-config"
+    "pkg-config",
+    "sysroot_linux-64"
    ]
   },
   "host": {
@@ -811,7 +816,8 @@
     "gnuconfig",
     "m4",
     "make",
-    "pkg-config"
+    "pkg-config",
+    "sysroot_linux-64 2.17"
    ]
   },
   "host": {
