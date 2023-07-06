@@ -1,7 +1,11 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "bot": {
+   "inspection": "hint-all"
+  }
+ },
  "feedstock_name": "cookiecutter",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -20,7 +24,10 @@
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+   "script": [
+    "PYTHON -c \"p = __import__('pathlib').Path('cookiecutter/__init__.py'); p.write_text(p.read_text(encoding='utf-8').replace('2.1.2.dev0', '2.2.0'), encoding='utf-8')\"",
+    "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -32,7 +39,7 @@
   },
   "package": {
    "name": "cookiecutter",
-   "version": "2.1.1"
+   "version": "2.2.0"
   },
   "requirements": {
    "host": [
@@ -40,10 +47,10 @@
     "python >=3.7"
    ],
    "run": [
+    "arrow",
     "binaryornot >=0.4.4",
     "click >=7.0,<9",
     "jinja2 >=2.7,<4.0.0",
-    "jinja2-time >=0.2.0",
     "python >=3.7",
     "python-slugify >=4.0.0",
     "pyyaml >=5.3.1",
@@ -51,13 +58,16 @@
    ]
   },
   "source": {
-   "sha256": "f3982be8d9c53dac1261864013fdec7f83afd2e42ede6f6dd069c5e149c540d5",
-   "url": "https://pypi.io/packages/source/c/cookiecutter/cookiecutter-2.1.1.tar.gz"
+   "sha256": "b3437f49d04d359a200b03b63fb9e51be9eb0e751372c318a712a868d72c4f82",
+   "url": "https://pypi.io/packages/source/c/cookiecutter/cookiecutter-2.2.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
     "cookiecutter --version",
+    "cookiecutter --version | grep -iE \"Cookiecutter 2\\.2\\.0\"",
+    "pip list",
+    "pip list | grep -iE \"cookiecutter\\s+2\\.2\\.0\"",
     "cookiecutter --help",
     "pytest tests -vv --cov=cookiecutter --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=100"
    ],
@@ -91,10 +101,10 @@
   "run": {
    "__set__": true,
    "elements": [
+    "arrow",
     "binaryornot",
     "click",
     "jinja2",
-    "jinja2-time",
     "python",
     "python-slugify",
     "pyyaml",
@@ -131,7 +141,10 @@
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+   "script": [
+    "PYTHON -c \"p = __import__('pathlib').Path('cookiecutter/__init__.py'); p.write_text(p.read_text(encoding='utf-8').replace('2.1.2.dev0', '2.2.0'), encoding='utf-8')\"",
+    "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -143,7 +156,7 @@
   },
   "package": {
    "name": "cookiecutter",
-   "version": "2.1.1"
+   "version": "2.2.0"
   },
   "requirements": {
    "host": [
@@ -151,10 +164,10 @@
     "python >=3.7"
    ],
    "run": [
+    "arrow",
     "binaryornot >=0.4.4",
     "click >=7.0,<9",
     "jinja2 >=2.7,<4.0.0",
-    "jinja2-time >=0.2.0",
     "python >=3.7",
     "python-slugify >=4.0.0",
     "pyyaml >=5.3.1",
@@ -162,13 +175,16 @@
    ]
   },
   "source": {
-   "sha256": "f3982be8d9c53dac1261864013fdec7f83afd2e42ede6f6dd069c5e149c540d5",
-   "url": "https://pypi.io/packages/source/c/cookiecutter/cookiecutter-2.1.1.tar.gz"
+   "sha256": "b3437f49d04d359a200b03b63fb9e51be9eb0e751372c318a712a868d72c4f82",
+   "url": "https://pypi.io/packages/source/c/cookiecutter/cookiecutter-2.2.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
     "cookiecutter --version",
+    "cookiecutter --version | grep -iE \"Cookiecutter 2\\.2\\.0\"",
+    "pip list",
+    "pip list | grep -iE \"cookiecutter\\s+2\\.2\\.0\"",
     "cookiecutter --help",
     "pytest tests -vv --cov=cookiecutter --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=100"
    ],
@@ -201,14 +217,14 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cookiecutter.json"
  },
- "raw_meta_yaml": "{% set version = \"2.1.1\" %}\n\npackage:\n  name: cookiecutter\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/c/cookiecutter/cookiecutter-{{ version }}.tar.gz\n  sha256: f3982be8d9c53dac1261864013fdec7f83afd2e42ede6f6dd069c5e149c540d5\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv\n  entry_points:\n    - cookiecutter = cookiecutter.__main__:main\n\nrequirements:\n  host:\n    - pip\n    - python >=3.7\n  run:\n    - binaryornot >=0.4.4\n    - click >=7.0,<9\n    - jinja2 >=2.7,<4.0.0\n    - jinja2-time >=0.2.0\n    - python >=3.7\n    - python-slugify >=4.0.0\n    - pyyaml >=5.3.1\n    - requests >=2.23.0\n\ntest:\n  requires:\n    - freezegun\n    - git\n    - mercurial  # [not (win and py3k)]\n    - pip\n    - pytest\n    - pytest-cov\n    - pytest-mock\n    - python\n  source_files:\n    - tests\n  commands:\n    - pip check\n    - cookiecutter --version\n    - cookiecutter --help\n    - pytest tests -vv --cov=cookiecutter --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=100\n\nabout:\n  home: https://github.com/cookiecutter/cookiecutter\n  license_family: BSD\n  license_file: LICENSE\n  license: BSD-3-Clause\n  doc_url: https://cookiecutter.readthedocs.io\n  doc_source_url: https://github.com/cookiecutter/cookiecutter/tree/master/docs\n  summary: |-\n    A command-line utility that creates projects from project templates, e.g.\n    creating a Python package project from a Python package project template.\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n    - cadair\n    - jakirkham\n    - pydanny\n",
+ "raw_meta_yaml": "{% set version = \"2.2.0\" %}\n\npackage:\n  name: cookiecutter\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/c/cookiecutter/cookiecutter-{{ version }}.tar.gz\n  sha256: b3437f49d04d359a200b03b63fb9e51be9eb0e751372c318a712a868d72c4f82\n\nbuild:\n  noarch: python\n  number: 0\n  script: \n    # TODO: remove after fixed upstream https://github.com/cookiecutter/cookiecutter/issues/1886\n    - {{ PYTHON }} -c \"p = __import__('pathlib').Path('cookiecutter/__init__.py'); p.write_text(p.read_text(encoding='utf-8').replace('2.1.2.dev0', '2.2.0'), encoding='utf-8')\"\n    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n  entry_points:\n    - cookiecutter = cookiecutter.__main__:main\n\nrequirements:\n  host:\n    - pip\n    - python >=3.7\n  run:\n    - arrow\n    - binaryornot >=0.4.4\n    - click >=7.0,<9\n    - jinja2 >=2.7,<4.0.0\n    - python >=3.7\n    - python-slugify >=4.0.0\n    - pyyaml >=5.3.1\n    - requests >=2.23.0\n\ntest:\n  requires:\n    - freezegun\n    - git\n    - m2-grep  # [win]\n    - mercurial  # [not (win and py3k)]\n    - pip\n    - pytest\n    - pytest-cov\n    - pytest-mock\n    - python\n  source_files:\n    - tests\n  commands:\n    - pip check\n    - cookiecutter --version\n    - cookiecutter --version | grep -iE \"Cookiecutter {{ version.replace(\".\", \"\\\\.\") }}\"\n    - pip list\n    - pip list | grep -iE \"cookiecutter\\s+{{ version.replace(\".\", \"\\\\.\") }}\"\n    - cookiecutter --help\n    - pytest tests -vv --cov=cookiecutter --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=100\n\nabout:\n  home: https://github.com/cookiecutter/cookiecutter\n  license_family: BSD\n  license_file: LICENSE\n  license: BSD-3-Clause\n  doc_url: https://cookiecutter.readthedocs.io\n  doc_source_url: https://github.com/cookiecutter/cookiecutter/tree/master/docs\n  summary: |-\n    A command-line utility that creates projects from project templates, e.g.\n    creating a Python package project from a Python package project template.\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n    - cadair\n    - jakirkham\n    - pydanny\n",
  "req": {
   "__set__": true,
   "elements": [
+   "arrow",
    "binaryornot",
    "click",
    "jinja2",
-   "jinja2-time",
    "pip",
    "python",
    "python-slugify",
@@ -231,10 +247,10 @@
   "run": {
    "__set__": true,
    "elements": [
+    "arrow",
     "binaryornot",
     "click",
     "jinja2",
-    "jinja2-time",
     "python",
     "python-slugify",
     "pyyaml",
@@ -271,10 +287,10 @@
   "run": {
    "__set__": true,
    "elements": [
+    "arrow",
     "binaryornot >=0.4.4",
     "click >=7.0,<9",
     "jinja2 >=2.7,<4.0.0",
-    "jinja2-time >=0.2.0",
     "python >=3.7",
     "python-slugify >=4.0.0",
     "pyyaml >=5.3.1",
@@ -295,8 +311,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/c/cookiecutter/cookiecutter-2.1.1.tar.gz",
- "version": "2.1.1",
+ "url": "https://pypi.io/packages/source/c/cookiecutter/cookiecutter-2.2.0.tar.gz",
+ "version": "2.2.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cookiecutter.json"
  }
