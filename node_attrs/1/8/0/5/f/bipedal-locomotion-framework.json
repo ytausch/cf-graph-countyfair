@@ -1,7 +1,11 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  }
+ },
  "feedstock_name": "bipedal-locomotion-framework",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -255,6 +259,7 @@
    "license_file": [
     "LICENSE",
     "LICENSE",
+    "LICENSE",
     "LICENSE"
    ],
    "summary": "Suite of libraries for achieving bipedal locomotion on humanoid robots."
@@ -264,6 +269,8 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "traversaro",
+    "GiulioRomualdi",
     "traversaro",
     "GiulioRomualdi",
     "traversaro",
@@ -369,6 +376,134 @@
       "fmt",
       "spdlog",
       "xorg-libxfixes",
+      "icub-models",
+      "scipy",
+      "pytest",
+      "manifpy"
+     ],
+     "run": [
+      "libbipedal-locomotion-framework",
+      "python",
+      "numpy",
+      "manifpy",
+      "idyntree"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "test $(pip list | grep bipedal_locomotion_framework | tr -s \" \" | grep $PKG_VERSION | wc -l) -eq 1",
+      "pip check"
+     ],
+     "imports": [
+      "bipedal_locomotion_framework"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libbipedal-locomotion-framework"
+     ]
+    },
+    "name": "bipedal-locomotion-framework",
+    "requirements": {
+     "run": [
+      "libbipedal-locomotion-framework",
+      "bipedal-locomotion-framework-python"
+     ]
+    },
+    "test": {
+     "imports": [
+      "bipedal_locomotion_framework"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libbipedal-locomotion-framework"
+     ]
+    },
+    "name": "libbipedal-locomotion-framework",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "pkg-config",
+      "ninja"
+     ],
+     "host": [
+      "eigen",
+      "idyntree",
+      "manif",
+      "yarp-cxx",
+      "tomlplusplus",
+      "librobometry",
+      "fmt",
+      "spdlog",
+      "cppad",
+      "manif",
+      "nlohmann_json",
+      "libosqp",
+      "osqp-eigen",
+      "libmatio-cpp",
+      "tomlplusplus",
+      "casadi",
+      "qhull",
+      "libopencv",
+      "liblie-group-controllers",
+      "libunicycle-footstep-planner",
+      "librealsense"
+     ],
+     "run": [
+      "manif",
+      "eigen",
+      "liblie-group-controllers",
+      "tomlplusplus"
+     ]
+    },
+    "script": "build_cxx.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/BipedalLocomotion/System/Advanceable.h",
+      "test -f ${PREFIX}/lib/libBipedalLocomotionFrameworkSystem${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/BipedalLocomotionFramework/BipedalLocomotionFrameworkConfig.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "icub-models"
+     ]
+    },
+    "name": "bipedal-locomotion-framework-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "pybind11",
+      "pybind11-abi",
+      "ninja",
+      "cmake"
+     ],
+     "host": [
+      "libbipedal-locomotion-framework",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "liblie-group-controllers",
+      "yarp-cxx",
+      "tomlplusplus",
+      "idyntree",
+      "fmt",
+      "spdlog",
       "icub-models",
       "scipy",
       "pytest",
@@ -679,6 +814,7 @@
    "patches": [
     "698.patch",
     "698.patch",
+    "698.patch",
     "698.patch"
    ],
    "sha256": "c1e0b5d3df8b24aaaf5ede3bed26919ebaf9726a4b59bd7276fecf856847367d",
@@ -914,6 +1050,234 @@
    ]
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/ami-iit/bipedal-locomotion-framework",
+   "license": "BSD-3-Clause",
+   "license_file": [
+    "LICENSE"
+   ],
+   "summary": "Suite of libraries for achieving bipedal locomotion on humanoid robots."
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "traversaro",
+    "GiulioRomualdi"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "run_exports": [
+      "libbipedal-locomotion-framework"
+     ]
+    },
+    "name": "libbipedal-locomotion-framework",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "pkg-config",
+      "ninja"
+     ],
+     "host": [
+      "eigen",
+      "idyntree",
+      "manif",
+      "yarp-cxx",
+      "tomlplusplus",
+      "librobometry",
+      "fmt",
+      "spdlog",
+      "cppad",
+      "manif",
+      "nlohmann_json",
+      "libosqp",
+      "osqp-eigen",
+      "libmatio-cpp",
+      "tomlplusplus",
+      "casadi",
+      "qhull",
+      "libopencv",
+      "liblie-group-controllers",
+      "libunicycle-footstep-planner",
+      "librealsense"
+     ],
+     "run": [
+      "manif",
+      "eigen",
+      "liblie-group-controllers",
+      "tomlplusplus"
+     ]
+    },
+    "script": "build_cxx.sh",
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/BipedalLocomotion/System/Advanceable.h",
+      "test -f ${PREFIX}/lib/libBipedalLocomotionFrameworkSystem${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/BipedalLocomotionFramework/BipedalLocomotionFrameworkConfig.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "icub-models"
+     ]
+    },
+    "name": "bipedal-locomotion-framework-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "pybind11",
+      "pybind11-abi",
+      "ninja",
+      "cmake"
+     ],
+     "host": [
+      "libbipedal-locomotion-framework",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "liblie-group-controllers",
+      "yarp-cxx",
+      "tomlplusplus",
+      "idyntree",
+      "fmt",
+      "spdlog",
+      "icub-models",
+      "scipy",
+      "pytest",
+      "manifpy"
+     ],
+     "run": [
+      "libbipedal-locomotion-framework",
+      "python",
+      "numpy",
+      "manifpy",
+      "idyntree"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "test $(pip list | grep bipedal_locomotion_framework | tr -s \" \" | grep $PKG_VERSION | wc -l) -eq 1",
+      "pip check"
+     ],
+     "imports": [
+      "bipedal_locomotion_framework"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libbipedal-locomotion-framework"
+     ]
+    },
+    "name": "bipedal-locomotion-framework",
+    "requirements": {
+     "run": [
+      "libbipedal-locomotion-framework",
+      "bipedal-locomotion-framework-python"
+     ]
+    },
+    "test": {
+     "imports": [
+      "bipedal_locomotion_framework"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "bipedal-locomotion-framework",
+   "version": "0.14.0"
+  },
+  "source": {
+   "patches": [
+    "698.patch"
+   ],
+   "sha256": "c1e0b5d3df8b24aaaf5ede3bed26919ebaf9726a4b59bd7276fecf856847367d",
+   "url": "https://github.com/ami-iit/bipedal-locomotion-framework/archive/refs/tags/v0.14.0.tar.gz"
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja",
+    "pkg-config",
+    "pybind11",
+    "pybind11-abi"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "casadi",
+    "cppad",
+    "eigen",
+    "fmt",
+    "icub-models",
+    "idyntree",
+    "libbipedal-locomotion-framework",
+    "liblie-group-controllers",
+    "libmatio-cpp",
+    "libopencv",
+    "libosqp",
+    "librealsense",
+    "librobometry",
+    "libunicycle-footstep-planner",
+    "manif",
+    "manifpy",
+    "nlohmann_json",
+    "osqp-eigen",
+    "pip",
+    "pybind11",
+    "pybind11-abi",
+    "pytest",
+    "python",
+    "qhull",
+    "scipy",
+    "spdlog",
+    "tomlplusplus",
+    "yarp-cxx"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "bipedal-locomotion-framework-python",
+    "eigen",
+    "idyntree",
+    "libbipedal-locomotion-framework",
+    "liblie-group-controllers",
+    "manif",
+    "manifpy",
+    "numpy",
+    "python",
+    "tomlplusplus"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "pip"
+   ]
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -926,12 +1290,13 @@
  "platforms": [
   "linux_64",
   "osx_64",
+  "osx_arm64",
   "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/bipedal-locomotion-framework.json"
  },
- "raw_meta_yaml": "{% set name = \"bipedal-locomotion-framework\" %}\n{% set namecxx = \"libbipedal-locomotion-framework\" %}\n{% set namepython = \"bipedal-locomotion-framework-python\" %}\n{% set version = \"0.14.0\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/ami-iit/bipedal-locomotion-framework/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: c1e0b5d3df8b24aaaf5ede3bed26919ebaf9726a4b59bd7276fecf856847367d\n  patches:\n    - 698.patch\n\nbuild:\n  number: 0\n\noutputs:\n  - name: {{ namecxx }}\n    script: build_cxx.sh  # [unix]\n    script: bld_cxx.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(namecxx, max_pin='x.x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - pkg-config\n        - ninja\n        - {{ cdt('mesa-libgl-devel') }}  # [linux]\n        - {{ cdt('mesa-dri-drivers') }}  # [linux]\n        - {{ cdt('libselinux') }}  # [linux]\n        - {{ cdt('libxdamage') }}  # [linux]\n        - {{ cdt('libxxf86vm') }}  # [linux]\n        - {{ cdt('libxext') }}     # [linux]\n      host:\n        - eigen\n        - idyntree\n        - manif\n        - yarp-cxx\n        - tomlplusplus\n        - librobometry\n        - fmt\n        - spdlog\n        - cppad\n        - manif\n        - nlohmann_json\n        - libosqp\n        - osqp-eigen\n        - libmatio-cpp\n        - tomlplusplus\n        - casadi\n        - qhull\n        - libopencv\n        # Workaround for https://github.com/conda-forge/bipedal-locomotion-framework-feedstock/pull/21#issuecomment-1460345952\n        # - pcl >1.12\n        - liblie-group-controllers\n        - libunicycle-footstep-planner\n        - librealsense  # [not win]\n        - xorg-libxfixes  # [linux]\n      run:\n        # manif and eigen are mentioned in the headers so needed when building\n        # against libbipedal-locomotion-framework\n        - manif\n        - eigen\n        - liblie-group-controllers\n        - tomlplusplus\n\n    test:\n      commands:\n        - test -f ${PREFIX}/include/BipedalLocomotion/System/Advanceable.h  # [unix]\n        - test -f ${PREFIX}/lib/libBipedalLocomotionFrameworkSystem${SHLIB_EXT}  # [unix]\n        - test -f ${PREFIX}/lib/cmake/BipedalLocomotionFramework/BipedalLocomotionFrameworkConfig.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\BipedalLocomotion\\\\System\\\\Advanceable.h exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\BipedalLocomotionFrameworkSystem.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\BipedalLocomotionFrameworkSystem.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\CMake\\\\BipedalLocomotionFrameworkConfig.cmake exit 1  # [win]\n\n  - name: {{ namepython }}\n    script: build_py.sh  # [unix]\n    script: bld_py.bat  # [win]\n    build:\n      # icub-models is used just for tests, we do not actually link the C++ library\n      ignore_run_exports:\n        - icub-models\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - pybind11\n        - pybind11-abi\n        - ninja\n        - cmake\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - pybind11                               # [build_platform != target_platform]\n        - pybind11-abi                           # [build_platform != target_platform]\n        - {{ cdt('mesa-libgl-devel') }}  # [linux]\n        - {{ cdt('mesa-dri-drivers') }}  # [linux]\n        - {{ cdt('libselinux') }}  # [linux]\n        - {{ cdt('libxdamage') }}  # [linux]\n        - {{ cdt('libxxf86vm') }}  # [linux]\n        - {{ cdt('libxext') }}     # [linux]\n      host:\n        - {{ pin_subpackage(namecxx, exact=True) }}\n        - python\n        - pip\n        - pybind11\n        - pybind11-abi\n        - liblie-group-controllers\n        - yarp-cxx\n        - tomlplusplus\n        - idyntree\n        - fmt\n        - spdlog\n        - xorg-libxfixes  # [linux]\n        - icub-models # Requested just for tests\n        - scipy # Requested just for tests\n        - pytest # Requested just for tests\n        - manifpy # Requested just for tests\n      run:\n        - {{ pin_subpackage(namecxx, exact=True) }}\n        - python\n        - numpy\n        - manifpy\n        - idyntree\n    test:\n      commands:\n        - test $(pip list | grep bipedal_locomotion_framework | tr -s \" \" | grep $PKG_VERSION | wc -l) -eq 1  # [unix]\n        - pip check\n      requires:\n        - pip\n      imports:\n        - bipedal_locomotion_framework\n\n  - name: {{ name }}\n    build:\n      run_exports:\n        - {{ pin_subpackage(namecxx, max_pin='x.x.x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage(namecxx, exact=True) }}\n        - {{ pin_subpackage(namepython, max_pin='x.x.x') }}\n    test:\n      imports:\n        - bipedal_locomotion_framework\n\nabout:\n  home: https://github.com/ami-iit/bipedal-locomotion-framework\n  license: BSD-3-Clause\n  license_file:\n    - LICENSE\n  summary: Suite of libraries for achieving bipedal locomotion on humanoid robots.\n\n\nextra:\n  recipe-maintainers:\n    - traversaro\n    - GiulioRomualdi\n",
+ "raw_meta_yaml": "{% set name = \"bipedal-locomotion-framework\" %}\n{% set namecxx = \"libbipedal-locomotion-framework\" %}\n{% set namepython = \"bipedal-locomotion-framework-python\" %}\n{% set version = \"0.14.0\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/ami-iit/bipedal-locomotion-framework/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: c1e0b5d3df8b24aaaf5ede3bed26919ebaf9726a4b59bd7276fecf856847367d\n  patches:\n    - 698.patch\n\nbuild:\n  number: 0\n\noutputs:\n  - name: {{ namecxx }}\n    script: build_cxx.sh  # [unix]\n    script: bld_cxx.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(namecxx, max_pin='x.x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - pkg-config\n        - ninja\n        - {{ cdt('mesa-libgl-devel') }}  # [linux]\n        - {{ cdt('mesa-dri-drivers') }}  # [linux]\n        - {{ cdt('libselinux') }}  # [linux]\n        - {{ cdt('libxdamage') }}  # [linux]\n        - {{ cdt('libxxf86vm') }}  # [linux]\n        - {{ cdt('libxext') }}     # [linux]\n        # YARP idl tools are used in this recipe\n        - yarp-cxx  # [build_platform != target_platform]\n      host:\n        - eigen\n        - idyntree\n        - manif\n        - yarp-cxx\n        - tomlplusplus\n        - librobometry\n        - fmt\n        - spdlog\n        - cppad\n        - manif\n        - nlohmann_json\n        - libosqp\n        - osqp-eigen\n        - libmatio-cpp\n        - tomlplusplus\n        - casadi\n        - qhull\n        - libopencv\n        # Workaround for https://github.com/conda-forge/bipedal-locomotion-framework-feedstock/pull/21#issuecomment-1460345952\n        # - pcl >1.12\n        - liblie-group-controllers\n        - libunicycle-footstep-planner\n        - librealsense  # [not win]\n        - xorg-libxfixes  # [linux]\n      run:\n        # manif and eigen are mentioned in the headers so needed when building\n        # against libbipedal-locomotion-framework\n        - manif\n        - eigen\n        - liblie-group-controllers\n        - tomlplusplus\n\n    test:\n      commands:\n        - test -f ${PREFIX}/include/BipedalLocomotion/System/Advanceable.h  # [unix]\n        - test -f ${PREFIX}/lib/libBipedalLocomotionFrameworkSystem${SHLIB_EXT}  # [unix]\n        - test -f ${PREFIX}/lib/cmake/BipedalLocomotionFramework/BipedalLocomotionFrameworkConfig.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\BipedalLocomotion\\\\System\\\\Advanceable.h exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\BipedalLocomotionFrameworkSystem.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\BipedalLocomotionFrameworkSystem.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\CMake\\\\BipedalLocomotionFrameworkConfig.cmake exit 1  # [win]\n\n  - name: {{ namepython }}\n    script: build_py.sh  # [unix]\n    script: bld_py.bat  # [win]\n    build:\n      # icub-models is used just for tests, we do not actually link the C++ library\n      ignore_run_exports:\n        - icub-models\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - pybind11\n        - pybind11-abi\n        - ninja\n        - cmake\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - pybind11                               # [build_platform != target_platform]\n        - pybind11-abi                           # [build_platform != target_platform]\n        - {{ cdt('mesa-libgl-devel') }}  # [linux]\n        - {{ cdt('mesa-dri-drivers') }}  # [linux]\n        - {{ cdt('libselinux') }}  # [linux]\n        - {{ cdt('libxdamage') }}  # [linux]\n        - {{ cdt('libxxf86vm') }}  # [linux]\n        - {{ cdt('libxext') }}     # [linux]\n      host:\n        - {{ pin_subpackage(namecxx, exact=True) }}\n        - python\n        - pip\n        - pybind11\n        - pybind11-abi\n        - liblie-group-controllers\n        - yarp-cxx\n        - tomlplusplus\n        - idyntree\n        - fmt\n        - spdlog\n        - xorg-libxfixes  # [linux]\n        - icub-models # Requested just for tests\n        - scipy # Requested just for tests\n        - pytest # Requested just for tests\n        - manifpy # Requested just for tests\n      run:\n        - {{ pin_subpackage(namecxx, exact=True) }}\n        - python\n        - numpy\n        - manifpy\n        - idyntree\n    test:\n      commands:\n        - test $(pip list | grep bipedal_locomotion_framework | tr -s \" \" | grep $PKG_VERSION | wc -l) -eq 1  # [unix]\n        - pip check\n      requires:\n        - pip\n      imports:\n        - bipedal_locomotion_framework\n\n  - name: {{ name }}\n    build:\n      run_exports:\n        - {{ pin_subpackage(namecxx, max_pin='x.x.x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage(namecxx, exact=True) }}\n        - {{ pin_subpackage(namepython, max_pin='x.x.x') }}\n    test:\n      imports:\n        - bipedal_locomotion_framework\n\nabout:\n  home: https://github.com/ami-iit/bipedal-locomotion-framework\n  license: BSD-3-Clause\n  license_file:\n    - LICENSE\n  summary: Suite of libraries for achieving bipedal locomotion on humanoid robots.\n\n\nextra:\n  recipe-maintainers:\n    - traversaro\n    - GiulioRomualdi\n",
  "req": {
   "__set__": true,
   "elements": [
