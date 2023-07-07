@@ -8,7 +8,8 @@
   "build_platform": {
    "linux_aarch64": "linux_64",
    "linux_ppc64le": "linux_64",
-   "osx_arm64": "osx_64"
+   "osx_arm64": "osx_64",
+   "win_arm64": "win_64"
   },
   "provider": {
    "linux_aarch64": "default",
@@ -28,7 +29,7 @@
    "summary": "Zstandard - Fast real-time compression algorithm"
   },
   "build": {
-   "number": "6"
+   "number": "7"
   },
   "extra": {
    "feedstock-name": "zstd",
@@ -57,8 +58,7 @@
      ],
      "host": [
       "zlib"
-     ],
-     "run": []
+     ]
     },
     "script": "install.sh",
     "test": {
@@ -126,6 +126,11 @@
   "package": {
    "name": "zstd-split",
    "version": "1.5.2"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub"
+   ]
   },
   "source": {
    "patches": null,
@@ -177,7 +182,7 @@
    "summary": "Zstandard - Fast real-time compression algorithm"
   },
   "build": {
-   "number": "6"
+   "number": "7"
   },
   "extra": {
    "feedstock-name": "zstd",
@@ -206,8 +211,7 @@
      ],
      "host": [
       "zlib"
-     ],
-     "run": []
+     ]
     },
     "script": "install.sh",
     "test": {
@@ -275,6 +279,11 @@
   "package": {
    "name": "zstd-split",
    "version": "1.5.2"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub"
+   ]
   },
   "source": {
    "patches": null,
@@ -326,7 +335,7 @@
    "summary": "Zstandard - Fast real-time compression algorithm"
   },
   "build": {
-   "number": "6"
+   "number": "7"
   },
   "extra": {
    "feedstock-name": "zstd",
@@ -355,8 +364,7 @@
      ],
      "host": [
       "zlib"
-     ],
-     "run": []
+     ]
     },
     "script": "install.sh",
     "test": {
@@ -425,6 +433,11 @@
    "name": "zstd-split",
    "version": "1.5.2"
   },
+  "requirements": {
+   "build": [
+    "c_compiler_stub"
+   ]
+  },
   "source": {
    "patches": null,
    "sha256": "f7de13462f7a82c29ab865820149e778cbfe01087b3a55b5332707abf9db4a6e",
@@ -475,11 +488,15 @@
    "summary": "Zstandard - Fast real-time compression algorithm"
   },
   "build": {
-   "number": "6"
+   "number": "7"
   },
   "extra": {
    "feedstock-name": "zstd",
    "recipe-maintainers": [
+    "rmax",
+    "msarahan",
+    "xhochy",
+    "hmaarrfk",
     "rmax",
     "msarahan",
     "xhochy",
@@ -524,8 +541,7 @@
      ],
      "host": [
       "zlib"
-     ],
-     "run": []
+     ]
     },
     "script": "install.sh",
     "test": {
@@ -606,8 +622,7 @@
      ],
      "host": [
       "zlib"
-     ],
-     "run": []
+     ]
     },
     "script": "install.sh",
     "test": {
@@ -688,8 +703,7 @@
      ],
      "host": [
       "zlib"
-     ],
-     "run": []
+     ]
     },
     "script": "install.sh",
     "test": {
@@ -770,8 +784,7 @@
      ],
      "host": [
       "zlib"
-     ],
-     "run": []
+     ]
     },
     "script": "install.sh",
     "test": {
@@ -852,8 +865,7 @@
      ],
      "host": [
       "zlib"
-     ],
-     "run": []
+     ]
     },
     "script": "install.sh",
     "test": {
@@ -933,9 +945,89 @@
      ],
      "host": [
       "zlib"
+     ]
+    },
+    "script": "install.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_BIN%\\zstd.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\zstd.lib exit 1",
+      "if not exist %LIBRARY_BIN%\\libzstd.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\libzstd.lib exit 1",
+      "if exist %LIBRARY_LIB%\\zstd_static.lib exit 1",
+      "if exist %LIBRARY_LIB%\\libzstd_static.lib exit 1",
+      "if not exist %LIBRARY_INC%\\zstd.h exit 1",
+      "zstd -be -i5",
+      "if not exist %LIBRARY_LIB%\\pkgconfig\\libzstd.pc exit 1",
+      "set \"PKG_CONFIG_PATH=%LIBRARY_LIB%\\pkgconfig\"",
+      "pkg-config --cflags libzstd",
+      "cd cf_test",
+      "cmake %CMAKE_ARGS% ."
+     ],
+     "files": [
+      "cf_test/"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cmake",
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "name": "zstd-static",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake"
+     ],
+     "host": [
+      "zstd"
      ],
      "run": [
-      "ucrt"
+      "zstd"
+     ]
+    },
+    "script": "install.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_LIB%\\zstd_static.lib exit 1",
+      "if not exist %LIBRARY_INC%\\zstd.h exit 1",
+      "zstd -be -i5",
+      "if not exist %LIBRARY_LIB%\\pkgconfig\\libzstd.pc exit 1",
+      "set \"PKG_CONFIG_PATH=%LIBRARY_LIB%\\pkgconfig\"",
+      "pkg-config --cflags libzstd",
+      "cd cf_test",
+      "cmake %CMAKE_ARGS% ."
+     ],
+     "files": [
+      "cf_test/"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cmake",
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "zstd"
+     ]
+    },
+    "name": "zstd",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake"
+     ],
+     "host": [
+      "zlib"
      ]
     },
     "script": "install.bat",
@@ -1008,6 +1100,17 @@
    "name": "zstd-split",
    "version": "1.5.2"
   },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "c_compiler_stub",
+    "c_compiler_stub",
+    "c_compiler_stub",
+    "c_compiler_stub",
+    "c_compiler_stub",
+    "c_compiler_stub"
+   ]
+  },
   "source": {
    "patches": [
     "patches/windows-cmake-pkg-config.patch"
@@ -1028,7 +1131,7 @@
    "summary": "Zstandard - Fast real-time compression algorithm"
   },
   "build": {
-   "number": "6"
+   "number": "7"
   },
   "extra": {
    "feedstock-name": "zstd",
@@ -1057,8 +1160,7 @@
      ],
      "host": [
       "zlib"
-     ],
-     "run": []
+     ]
     },
     "script": "install.sh",
     "test": {
@@ -1126,6 +1228,11 @@
   "package": {
    "name": "zstd-split",
    "version": "1.5.2"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub"
+   ]
   },
   "source": {
    "patches": null,
@@ -1177,7 +1284,7 @@
    "summary": "Zstandard - Fast real-time compression algorithm"
   },
   "build": {
-   "number": "6"
+   "number": "7"
   },
   "extra": {
    "feedstock-name": "zstd",
@@ -1206,8 +1313,7 @@
      ],
      "host": [
       "zlib"
-     ],
-     "run": []
+     ]
     },
     "script": "install.sh",
     "test": {
@@ -1275,6 +1381,11 @@
   "package": {
    "name": "zstd-split",
    "version": "1.5.2"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub"
+   ]
   },
   "source": {
    "patches": null,
@@ -1329,12 +1440,13 @@
   "linux_ppc64le",
   "osx_64",
   "osx_arm64",
-  "win_64"
+  "win_64",
+  "win_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/zstd.json"
  },
- "raw_meta_yaml": "{% set version = \"1.5.2\" %}\n\npackage:\n  name: zstd-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/facebook/zstd/archive/v{{ version }}.tar.gz\n  sha256: f7de13462f7a82c29ab865820149e778cbfe01087b3a55b5332707abf9db4a6e\n  patches:\n    - patches/windows-cmake-pkg-config.patch  # [win]\n\nbuild:\n  number: 6\n\noutputs:\n  - name: zstd\n    script: install.sh  # [unix]\n    script: install.bat  # [win]\n    build:\n      run_exports:\n        # pretty bad removal of symbols in every other micro release:\n        #   https://abi-laboratory.pro/tracker/timeline/zstd/\n        #  Working smoothly since 1.4.x\n        - {{ pin_subpackage('zstd', max_pin='x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - ninja\n        - make  # [unix]\n        - cmake-no-system  # [unix]\n        - cmake  # [win]\n      host:\n        - zlib\n      run:\n        - ucrt   # [win]\n    test:\n      requires:\n        # cmake needs compiler to be able to run package detection, see\n        # https://discourse.cmake.org/t/questions-about-find-package-cli-msvc/6194\n        - {{ compiler('c') }}\n        - cmake\n        - pkg-config\n      files:\n        - cf_test/\n      commands:\n        # shared libraries\n        - test -f ${PREFIX}/lib/libzstd.so                  # [linux]\n        - test -f ${PREFIX}/lib/libzstd.dylib               # [osx]\n        - if not exist %LIBRARY_BIN%\\zstd.dll exit 1        # [win]\n        - if not exist %LIBRARY_LIB%\\zstd.lib exit 1        # [win]\n        # duplicated for packages depending on lib-prefixed files\n        - if not exist %LIBRARY_BIN%\\libzstd.dll exit 1     # [win]\n        - if not exist %LIBRARY_LIB%\\libzstd.lib exit 1     # [win]\n\n        # absence of static libraries\n        - test ! -f ${PREFIX}/lib/libzstd.a                 # [unix]\n        - if exist %LIBRARY_LIB%\\zstd_static.lib exit 1     # [win]\n        - if exist %LIBRARY_LIB%\\libzstd_static.lib exit 1  # [win]\n\n        # headers\n        - test -f ${PREFIX}/include/zstd.h                  # [unix]\n        - if not exist %LIBRARY_INC%\\zstd.h exit 1          # [win]\n\n        # CLI\n        - zstd -be -i5\n\n        # pkgconfig\n        - test -f ${PREFIX}/lib/pkgconfig/libzstd.pc              # [unix]\n        - if not exist %LIBRARY_LIB%\\pkgconfig\\libzstd.pc exit 1  # [win]\n        - export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig            # [unix]\n        - set \"PKG_CONFIG_PATH=%LIBRARY_LIB%\\pkgconfig\"           # [win]\n        - pkg-config --cflags libzstd\n\n        # cmake\n        - cd cf_test\n        - cmake $CMAKE_ARGS .   # [unix and (build_platform == target_platform)]\n        - cmake %CMAKE_ARGS% .  # [win]\n\n  - name: zstd-static\n    script: install.sh  # [unix]\n    script: install.bat  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - ninja\n        - make  # [unix]\n        - cmake-no-system  # [unix]\n        - cmake  # [win]\n      host:\n        - {{ pin_subpackage('zstd', exact=True) }}\n      run:\n        - {{ pin_subpackage('zstd', exact=True) }}\n    test:\n      requires:\n        - {{ compiler('c') }}\n        - cmake\n        - pkg-config\n      files:\n        - cf_test/\n      commands:\n        # static libraries\n        - test -f ${PREFIX}/lib/libzstd.a                   # [unix]\n        - if not exist %LIBRARY_LIB%\\zstd_static.lib exit 1  # [win]\n\n        # headers\n        - test -f ${PREFIX}/include/zstd.h                  # [unix]\n        - if not exist %LIBRARY_INC%\\zstd.h exit 1          # [win]\n\n        # CLI\n        - zstd -be -i5\n\n        # pkgconfig\n        - test -f ${PREFIX}/lib/pkgconfig/libzstd.pc              # [unix]\n        - if not exist %LIBRARY_LIB%\\pkgconfig\\libzstd.pc exit 1  # [win]\n        - export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig            # [unix]\n        - set \"PKG_CONFIG_PATH=%LIBRARY_LIB%\\pkgconfig\"           # [win]\n        - pkg-config --cflags libzstd\n\n        # cmake\n        - cd cf_test\n        - cmake $CMAKE_ARGS .   # [build_platform == target_platform and unix]\n        - cmake %CMAKE_ARGS% .  # [win]\n\nabout:\n  home: http://www.zstd.net\n  license: BSD-3-Clause\n  license_file: LICENSE\n  summary: Zstandard - Fast real-time compression algorithm\n  description: |\n    Zstandard is a real-time compression algorithm, providing high compression\n    ratios. It offers a very wide range of compression / speed trade-off, while\n    being backed by a very fast decoder. It also offers a special mode for\n    small data, called dictionary compression, and can create dictionaries from\n    any sample set. Zstandard library is provided as open source software using\n    a BSD license.\n  doc_url: https://facebook.github.io/zstd/zstd_manual.html\n  dev_url: https://github.com/facebook/zstd\n\nextra:\n  feedstock-name: zstd\n  recipe-maintainers:\n    - rmax\n    - msarahan\n    - xhochy\n    - hmaarrfk\n",
+ "raw_meta_yaml": "{% set version = \"1.5.2\" %}\n\npackage:\n  name: zstd-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/facebook/zstd/archive/v{{ version }}.tar.gz\n  sha256: f7de13462f7a82c29ab865820149e778cbfe01087b3a55b5332707abf9db4a6e\n  patches:\n    - patches/windows-cmake-pkg-config.patch  # [win]\n\nbuild:\n  number: 7\n\nrequirements:\n  build:\n    # workaround for https://github.com/conda/conda-build/pull/4867\n    - {{ compiler('c') }}\n\noutputs:\n  - name: zstd\n    script: install.sh  # [unix]\n    script: install.bat  # [win]\n    build:\n      run_exports:\n        # pretty bad removal of symbols in every other micro release:\n        #   https://abi-laboratory.pro/tracker/timeline/zstd/\n        #  Working smoothly since 1.4.x\n        - {{ pin_subpackage('zstd', max_pin='x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - ninja\n        - make  # [unix]\n        - cmake-no-system  # [unix]\n        - cmake  # [win]\n      host:\n        - zlib\n    test:\n      requires:\n        # cmake needs compiler to be able to run package detection, see\n        # https://discourse.cmake.org/t/questions-about-find-package-cli-msvc/6194\n        - {{ compiler('c') }}\n        - cmake\n        - pkg-config\n      files:\n        - cf_test/\n      commands:\n        # shared libraries\n        - test -f ${PREFIX}/lib/libzstd.so                  # [linux]\n        - test -f ${PREFIX}/lib/libzstd.dylib               # [osx]\n        - if not exist %LIBRARY_BIN%\\zstd.dll exit 1        # [win]\n        - if not exist %LIBRARY_LIB%\\zstd.lib exit 1        # [win]\n        # duplicated for packages depending on lib-prefixed files\n        - if not exist %LIBRARY_BIN%\\libzstd.dll exit 1     # [win]\n        - if not exist %LIBRARY_LIB%\\libzstd.lib exit 1     # [win]\n\n        # absence of static libraries\n        - test ! -f ${PREFIX}/lib/libzstd.a                 # [unix]\n        - if exist %LIBRARY_LIB%\\zstd_static.lib exit 1     # [win]\n        - if exist %LIBRARY_LIB%\\libzstd_static.lib exit 1  # [win]\n\n        # headers\n        - test -f ${PREFIX}/include/zstd.h                  # [unix]\n        - if not exist %LIBRARY_INC%\\zstd.h exit 1          # [win]\n\n        # CLI\n        - zstd -be -i5\n\n        # pkgconfig\n        - test -f ${PREFIX}/lib/pkgconfig/libzstd.pc              # [unix]\n        - if not exist %LIBRARY_LIB%\\pkgconfig\\libzstd.pc exit 1  # [win]\n        - export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig            # [unix]\n        - set \"PKG_CONFIG_PATH=%LIBRARY_LIB%\\pkgconfig\"           # [win]\n        - pkg-config --cflags libzstd\n\n        # cmake\n        - cd cf_test\n        - cmake $CMAKE_ARGS .   # [unix and (build_platform == target_platform)]\n        - cmake %CMAKE_ARGS% .  # [win]\n\n  - name: zstd-static\n    script: install.sh  # [unix]\n    script: install.bat  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - ninja\n        - make  # [unix]\n        - cmake-no-system  # [unix]\n        - cmake  # [win]\n      host:\n        - {{ pin_subpackage('zstd', exact=True) }}\n      run:\n        - {{ pin_subpackage('zstd', exact=True) }}\n    test:\n      requires:\n        - {{ compiler('c') }}\n        - cmake\n        - pkg-config\n      files:\n        - cf_test/\n      commands:\n        # static libraries\n        - test -f ${PREFIX}/lib/libzstd.a                   # [unix]\n        - if not exist %LIBRARY_LIB%\\zstd_static.lib exit 1  # [win]\n\n        # headers\n        - test -f ${PREFIX}/include/zstd.h                  # [unix]\n        - if not exist %LIBRARY_INC%\\zstd.h exit 1          # [win]\n\n        # CLI\n        - zstd -be -i5\n\n        # pkgconfig\n        - test -f ${PREFIX}/lib/pkgconfig/libzstd.pc              # [unix]\n        - if not exist %LIBRARY_LIB%\\pkgconfig\\libzstd.pc exit 1  # [win]\n        - export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig            # [unix]\n        - set \"PKG_CONFIG_PATH=%LIBRARY_LIB%\\pkgconfig\"           # [win]\n        - pkg-config --cflags libzstd\n\n        # cmake\n        - cd cf_test\n        - cmake $CMAKE_ARGS .   # [build_platform == target_platform and unix]\n        - cmake %CMAKE_ARGS% .  # [win]\n\nabout:\n  home: http://www.zstd.net\n  license: BSD-3-Clause\n  license_file: LICENSE\n  summary: Zstandard - Fast real-time compression algorithm\n  description: |\n    Zstandard is a real-time compression algorithm, providing high compression\n    ratios. It offers a very wide range of compression / speed trade-off, while\n    being backed by a very fast decoder. It also offers a special mode for\n    small data, called dictionary compression, and can create dictionaries from\n    any sample set. Zstandard library is provided as open source software using\n    a BSD license.\n  doc_url: https://facebook.github.io/zstd/zstd_manual.html\n  dev_url: https://github.com/facebook/zstd\n\nextra:\n  feedstock-name: zstd\n  recipe-maintainers:\n    - rmax\n    - msarahan\n    - xhochy\n    - hmaarrfk\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1344,7 +1456,6 @@
    "cxx_compiler_stub",
    "make",
    "ninja",
-   "ucrt",
    "zlib",
    "zstd"
   ]
@@ -1375,7 +1486,6 @@
    "elements": [
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "ucrt",
     "zstd"
    ]
   },
@@ -1411,7 +1521,6 @@
   "run": {
    "__set__": true,
    "elements": [
-    "ucrt",
     "zstd"
    ]
   },
@@ -1440,7 +1549,7 @@
    "summary": "Zstandard - Fast real-time compression algorithm"
   },
   "build": {
-   "number": "6"
+   "number": "7"
   },
   "extra": {
    "feedstock-name": "zstd",
@@ -1468,9 +1577,6 @@
      ],
      "host": [
       "zlib"
-     ],
-     "run": [
-      "ucrt"
      ]
     },
     "script": "install.bat",
@@ -1543,6 +1649,11 @@
    "name": "zstd-split",
    "version": "1.5.2"
   },
+  "requirements": {
+   "build": [
+    "c_compiler_stub"
+   ]
+  },
   "source": {
    "patches": [
     "patches/windows-cmake-pkg-config.patch"
@@ -1571,7 +1682,162 @@
   "run": {
    "__set__": true,
    "elements": [
-    "ucrt",
+    "zstd"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "pkg-config"
+   ]
+  }
+ },
+ "win_arm64_meta_yaml": {
+  "about": {
+   "description": "Zstandard is a real-time compression algorithm, providing high compression\nratios. It offers a very wide range of compression / speed trade-off, while\nbeing backed by a very fast decoder. It also offers a special mode for\nsmall data, called dictionary compression, and can create dictionaries from\nany sample set. Zstandard library is provided as open source software using\na BSD license.\n",
+   "dev_url": "https://github.com/facebook/zstd",
+   "doc_url": "https://facebook.github.io/zstd/zstd_manual.html",
+   "home": "http://www.zstd.net",
+   "license": "BSD-3-Clause",
+   "license_file": "LICENSE",
+   "summary": "Zstandard - Fast real-time compression algorithm"
+  },
+  "build": {
+   "number": "7"
+  },
+  "extra": {
+   "feedstock-name": "zstd",
+   "recipe-maintainers": [
+    "rmax",
+    "msarahan",
+    "xhochy",
+    "hmaarrfk"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "run_exports": [
+      "zstd"
+     ]
+    },
+    "name": "zstd",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake"
+     ],
+     "host": [
+      "zlib"
+     ]
+    },
+    "script": "install.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_BIN%\\zstd.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\zstd.lib exit 1",
+      "if not exist %LIBRARY_BIN%\\libzstd.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\libzstd.lib exit 1",
+      "if exist %LIBRARY_LIB%\\zstd_static.lib exit 1",
+      "if exist %LIBRARY_LIB%\\libzstd_static.lib exit 1",
+      "if not exist %LIBRARY_INC%\\zstd.h exit 1",
+      "zstd -be -i5",
+      "if not exist %LIBRARY_LIB%\\pkgconfig\\libzstd.pc exit 1",
+      "set \"PKG_CONFIG_PATH=%LIBRARY_LIB%\\pkgconfig\"",
+      "pkg-config --cflags libzstd",
+      "cd cf_test",
+      "cmake %CMAKE_ARGS% ."
+     ],
+     "files": [
+      "cf_test/"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cmake",
+      "pkg-config"
+     ]
+    }
+   },
+   {
+    "name": "zstd-static",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake"
+     ],
+     "host": [
+      "zstd"
+     ],
+     "run": [
+      "zstd"
+     ]
+    },
+    "script": "install.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_LIB%\\zstd_static.lib exit 1",
+      "if not exist %LIBRARY_INC%\\zstd.h exit 1",
+      "zstd -be -i5",
+      "if not exist %LIBRARY_LIB%\\pkgconfig\\libzstd.pc exit 1",
+      "set \"PKG_CONFIG_PATH=%LIBRARY_LIB%\\pkgconfig\"",
+      "pkg-config --cflags libzstd",
+      "cd cf_test",
+      "cmake %CMAKE_ARGS% ."
+     ],
+     "files": [
+      "cf_test/"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cmake",
+      "pkg-config"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "zstd-split",
+   "version": "1.5.2"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub"
+   ]
+  },
+  "source": {
+   "patches": [
+    "patches/windows-cmake-pkg-config.patch"
+   ],
+   "sha256": "f7de13462f7a82c29ab865820149e778cbfe01087b3a55b5332707abf9db4a6e",
+   "url": "https://github.com/facebook/zstd/archive/v1.5.2.tar.gz"
+  }
+ },
+ "win_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "zlib",
+    "zstd"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
     "zstd"
    ]
   },
