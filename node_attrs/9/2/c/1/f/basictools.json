@@ -13,33 +13,7 @@
    "summary": "Tools for finite element computations"
   },
   "build": {
-   "entry_points": [
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
-   ],
-   "number": "0",
-   "script": "PYTHON -m pip install --no-deps . -vv",
-   "script_env": [
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1"
-   ],
-   "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -49,165 +23,519 @@
     "fbordeu"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   }
+  ],
   "package": {
-   "name": "basictools",
-   "version": "1.9.5"
-  },
-  "requirements": {
-   "build": [
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub"
-   ],
-   "host": [
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm"
-   ],
-   "run": [
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn"
-   ]
+   "name": "basictools-split",
+   "version": "1.9.7"
   },
   "source": {
-   "sha256": "7d3fb639bbf547ade7658579a51e82fa7d687e190b48e76fc4c2976d708186f9",
-   "url": "https://gitlab.com/DRTI/basic-tools/-/archive/1.9.5/basic-tools-1.9.5.tar.bz2"
-  },
-  "test": {
-   "commands": [
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s"
-   ],
-   "imports": [
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools"
-   ],
-   "requires": [
-    "OpenSSH",
-    "mesalib >=21.0",
-    "cdt_stub",
-    "cdt_stub",
-    "OpenSSH",
-    "mesalib >=21.0",
-    "cdt_stub",
-    "cdt_stub",
-    "OpenSSH",
-    "mesalib >=21.0",
-    "cdt_stub",
-    "cdt_stub",
-    "OpenSSH",
-    "mesalib >=21.0",
-    "cdt_stub",
-    "cdt_stub"
-   ]
+   "sha256": "f2d1f9b4c4d91f4111dc0fbdfb085d0e3805018eae80e0fff520bb2b901b2a19",
+   "url": "https://gitlab.com/DRTI/basic-tools/-/archive/1.9.7/basic-tools-1.9.7.tar.bz2"
   }
  },
  "linux_64_requirements": {
@@ -215,12 +543,15 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "cython",
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "boost-cpp",
     "cython",
     "eigen",
     "eigency",
@@ -236,31 +567,35 @@
   "run": {
    "__set__": true,
    "elements": [
+    "basictools-core",
+    "basictools-extensions",
+    "boost-cpp",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cython",
+    "eigen",
     "eigency",
     "h5py",
     "meshio",
+    "mkl",
+    "mkl-include",
     "networkx",
     "numpy",
     "psutil",
-    "pyamg",
     "pycgns",
-    "pyparsing",
+    "pytest",
     "python",
     "pyvista",
-    "scikit-learn",
     "scikit-sparse",
     "scipy",
+    "setuptools-scm",
     "sympy",
     "vtk"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": [
-    "cdt_stub",
-    "mesalib",
-    "openssh"
-   ]
+   "elements": []
   }
  },
  "meta_yaml": {
@@ -272,69 +607,7 @@
    "summary": "Tools for finite element computations"
   },
   "build": {
-   "entry_points": [
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
-   ],
-   "number": "0",
-   "script": "PYTHON -m pip install --no-deps . -vv",
-   "script_env": [
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "EIGEN_INC=%LIBRARY_INC%\\eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "EIGEN_INC=%LIBRARY_INC%\\eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "EIGEN_INC=%LIBRARY_INC%\\eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "EIGEN_INC=%LIBRARY_INC%\\eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1"
-   ],
-   "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -352,395 +625,1530 @@
     "fbordeu"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "bld_core.bat",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "bld_core.bat",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "bld_core.bat",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "bld_core.bat",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   }
+  ],
   "package": {
-   "name": "basictools",
-   "version": "1.9.5"
-  },
-  "requirements": {
-   "build": [
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub"
-   ],
-   "host": [
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm"
-   ],
-   "run": [
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pywin32",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pywin32",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pywin32",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pywin32",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn"
-   ]
+   "name": "basictools-split",
+   "version": "1.9.7"
   },
   "source": {
-   "sha256": "7d3fb639bbf547ade7658579a51e82fa7d687e190b48e76fc4c2976d708186f9",
-   "url": "https://gitlab.com/DRTI/basic-tools/-/archive/1.9.5/basic-tools-1.9.5.tar.bz2"
-  },
-  "test": {
-   "commands": [
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k UtSplitter -k UtMerger -k ConstraintsHolder -f -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k UtSplitter -k UtMerger -k ConstraintsHolder -f -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k UtSplitter -k UtMerger -k ConstraintsHolder -f -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k UtSplitter -k UtMerger -k ConstraintsHolder -f -s"
-   ],
-   "imports": [
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools"
-   ],
-   "requires": null
+   "sha256": "f2d1f9b4c4d91f4111dc0fbdfb085d0e3805018eae80e0fff520bb2b901b2a19",
+   "url": "https://gitlab.com/DRTI/basic-tools/-/archive/1.9.7/basic-tools-1.9.7.tar.bz2"
   }
  },
- "name": "basictools",
+ "name": "basictools-split",
  "osx_64_meta_yaml": {
   "about": {
    "home": "https://gitlab.com/DRTI/basic-tools",
@@ -750,33 +2158,7 @@
    "summary": "Tools for finite element computations"
   },
   "build": {
-   "entry_points": [
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
-   ],
-   "number": "0",
-   "script": "PYTHON -m pip install --no-deps . -vv",
-   "script_env": [
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "CC=${CXX}",
-    "EIGEN_INC=${PREFIX}/include/eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1"
-   ],
-   "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -786,148 +2168,519 @@
     "fbordeu"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "build_core.sh",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   }
+  ],
   "package": {
-   "name": "basictools",
-   "version": "1.9.5"
-  },
-  "requirements": {
-   "build": [
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub"
-   ],
-   "host": [
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm"
-   ],
-   "run": [
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn"
-   ]
+   "name": "basictools-split",
+   "version": "1.9.7"
   },
   "source": {
-   "sha256": "7d3fb639bbf547ade7658579a51e82fa7d687e190b48e76fc4c2976d708186f9",
-   "url": "https://gitlab.com/DRTI/basic-tools/-/archive/1.9.5/basic-tools-1.9.5.tar.bz2"
-  },
-  "test": {
-   "commands": [
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s"
-   ],
-   "imports": [
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools"
-   ],
-   "requires": null
+   "sha256": "f2d1f9b4c4d91f4111dc0fbdfb085d0e3805018eae80e0fff520bb2b901b2a19",
+   "url": "https://gitlab.com/DRTI/basic-tools/-/archive/1.9.7/basic-tools-1.9.7.tar.bz2"
   }
  },
  "osx_64_requirements": {
@@ -935,12 +2688,15 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "cython",
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "boost-cpp",
     "cython",
     "eigen",
     "eigency",
@@ -956,20 +2712,28 @@
   "run": {
    "__set__": true,
    "elements": [
+    "basictools-core",
+    "basictools-extensions",
+    "boost-cpp",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cython",
+    "eigen",
     "eigency",
     "h5py",
     "meshio",
+    "mkl",
+    "mkl-include",
     "networkx",
     "numpy",
     "psutil",
-    "pyamg",
     "pycgns",
-    "pyparsing",
+    "pytest",
     "python",
     "pyvista",
-    "scikit-learn",
     "scikit-sparse",
     "scipy",
+    "setuptools-scm",
     "sympy",
     "vtk"
    ]
@@ -982,7 +2746,10 @@
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "basictools"
+   "basictools",
+   "basictools-core",
+   "basictools-devenv",
+   "basictools-extensions"
   ]
  },
  "parsing_error": false,
@@ -994,10 +2761,13 @@
  "pr_info": {
   "__lazy_json__": "pr_info/basictools.json"
  },
- "raw_meta_yaml": "{% set version = \"1.9.5\" %}\n\npackage:\n  name: basictools\n  version: {{ version }}\n\nsource:\n  url: https://gitlab.com/DRTI/basic-tools/-/archive/{{ version }}/basic-tools-{{ version }}.tar.bz2\n  sha256: 7d3fb639bbf547ade7658579a51e82fa7d687e190b48e76fc4c2976d708186f9\nbuild:\n  number: 0\n  script_env:\n    - CC=${CXX}  # [unix]\n    - EIGEN_INC=${PREFIX}/include/eigen3  # [unix]\n    - EIGEN_INC=%LIBRARY_INC%\\eigen3  # [win]\n    - MKL_DYNAMIC=FALSE\n    - MKL_NUM_THREADS=1\n  script: {{ PYTHON }} -m pip install --no-deps . -vv\n  entry_points:\n    - \"MeshFileConvert = BasicTools.IO.MeshFileConverter:Main\"\n  skip_compile_pyc:\n    \"BasicToolsParaViewBridge.py\"\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n  host:\n    - python\n    - pip\n    - numpy =1.21  # [py==38]\n    - numpy =1.21  # [py==39]\n    - numpy =1.21  # [py==310]\n    - numpy =1.23  # [py==311]\n    - cython\n    - eigency\n    - mkl\n    - mkl-include\n    - eigen\n    - sympy\n    - setuptools-scm\n  run:\n    - python\n    - {{ pin_compatible('numpy') }}\n    - sympy\n    - eigency\n    - psutil\n    - pywin32  # [win]\n    - pyparsing\n    - scipy >=1.9\n    - scikit-sparse\n    - pyamg\n    - h5py\n#    - mpi4py  # [not win]\n    - vtk\n    - pycgns\n    - networkx >=3.0\n    - meshio\n    - pyvista\n    - scikit-learn\n\n\ntest:\n  requires:\n    - OpenSSH  # [linux]\n    - mesalib >=21.0  # [linux]\n    - {{ cdt('libx11-devel') }}  # [linux]\n    - {{ cdt('mesa-libgl-devel') }}  # [linux]\n  imports:\n    - BasicTools\n  commands :\n    - python -u -m BasicTools.Helpers.Tests -k Catalyst -k OpenInParaView -k PyVistaBridge -f  -s  # [not win]\n    - python -u -m BasicTools.Helpers.Tests -k Catalyst -k UtSplitter -k UtMerger -k ConstraintsHolder -f -s  # [win]\n\nabout:\n  home: https://gitlab.com/DRTI/basic-tools\n  license: BSD-3-Clause\n  license_file: LICENSE.txt\n  license_family: BSD\n  summary: Tools for finite element computations\n\nextra:\n  recipe-maintainers:\n    - fbordeu\n",
+ "raw_meta_yaml": "{% set version = \"1.9.7\" %}\n\npackage:\n  name: basictools-split\n  version: {{ version }}\n\n\nsource:\n  url: https://gitlab.com/DRTI/basic-tools/-/archive/{{ version }}/basic-tools-{{ version }}.tar.bz2\n  sha256: f2d1f9b4c4d91f4111dc0fbdfb085d0e3805018eae80e0fff520bb2b901b2a19\n\n\nbuild:\n  number: 0\n  skip: True  # [py==38 and osx]\n\noutputs:\n  - name: basictools-core\n    version: {{ version }}\n    script: build_core.sh  # [not win]\n    script: bld_core.bat  # [win]\n    build:\n      script_env:\n        - BASICTOOLS_DISABLE_MKL=0\n        - BASICTOOLS_USE_EIGENCYEIGEN=0\n      entry_points:\n        - \"MeshFileConvert = BasicTools.IO.MeshFileConverter:Main\"\n      skip_compile_pyc:\n        \"BasicToolsParaViewBridge.py\"\n\n    requirements:\n      build:\n        - python\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cython\n      host:\n        - python\n        - numpy =1.21  # [py==38]\n        - numpy =1.21  # [py==39]\n        - numpy =1.21  # [py==310]\n        - numpy =1.23  # [py==311]\n        - cython\n        - sympy\n        - eigency\n        - mkl\n        - mkl-include\n        - setuptools-scm\n        - eigen\n        - boost-cpp\n        - pip\n      run:\n        - python\n        - {{ pin_compatible('numpy') }}\n        - scipy >=1.9\n        - sympy\n        - eigency\n        - mkl\n        - networkx >=3.0\n        - scikit-sparse\n    test:\n      imports:\n        - BasicTools\n      commands:\n        - python -u -m BasicTools.Helpers.Tests\n\n  - name: \"basictools-extensions\"\n    version: {{ version }}\n    requirements:\n      - python\n      - vtk\n      - psutil\n      - scikit-sparse\n      - h5py\n      - meshio\n      - pyvista\n      - networkx >=3.0\n    test:\n      imports:\n        - psutil\n        - sksparse.cholmod\n        - h5py\n        - meshio\n        - networkx\n\n  - name: \"basictools\"\n    version: {{ version }}\n    requirements:\n      run:\n        - {{ pin_subpackage('basictools-core', exact=True) }}\n        - {{ pin_subpackage('basictools-extensions', exact=True) }}\n    test:\n      imports:\n        - BasicTools\n      commands:\n        - python -u -m BasicTools.Helpers.Tests\n\n  - name: \"basictools-devenv\"\n    version: {{ version }}\n    requirements:\n      - {{ compiler('c') }}\n      - {{ compiler('cxx') }}\n      - python {{ python }}\n      - numpy >=1.20\n      - sympy\n      - cython\n      - eigency\n      - mkl\n      - mkl-include\n      - setuptools-scm\n      - eigen\n      - scipy >=1.9\n      - eigency\n      - scikit-sparse\n      - h5py\n      - pycgns\n      - networkx >=3.0\n      - boost-cpp\n      - pytest\n      - vtk\n    test:\n      imports:\n        - numpy\n\nabout:\n  home: https://gitlab.com/DRTI/basic-tools\n  license: BSD-3-Clause\n  license_file: LICENSE.txt\n  license_family: BSD\n  summary: Tools for finite element computations\n\nextra:\n  recipe-maintainers:\n    - fbordeu\n",
  "req": {
   "__set__": true,
   "elements": [
+   "basictools-core",
+   "basictools-extensions",
+   "boost-cpp",
    "c_compiler_stub",
    "cxx_compiler_stub",
    "cython",
@@ -1011,13 +2781,10 @@
    "numpy",
    "pip",
    "psutil",
-   "pyamg",
    "pycgns",
-   "pyparsing",
+   "pytest",
    "python",
    "pyvista",
-   "pywin32",
-   "scikit-learn",
    "scikit-sparse",
    "scipy",
    "setuptools-scm",
@@ -1030,12 +2797,15 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "cython",
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "boost-cpp",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cython",
@@ -1053,23 +2823,28 @@
   "run": {
    "__set__": true,
    "elements": [
+    "basictools-core",
+    "basictools-extensions",
+    "boost-cpp",
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "cython",
+    "eigen",
     "eigency",
     "h5py",
     "meshio",
+    "mkl",
+    "mkl-include",
     "networkx",
     "numpy",
     "psutil",
-    "pyamg",
     "pycgns",
-    "pyparsing",
+    "pytest",
     "python",
     "pyvista",
-    "pywin32",
-    "scikit-learn",
     "scikit-sparse",
     "scipy",
+    "setuptools-scm",
     "sympy",
     "vtk"
    ]
@@ -1085,12 +2860,15 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "cython",
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "boost-cpp",
     "cython",
     "eigen",
     "eigency",
@@ -1106,21 +2884,29 @@
   "run": {
    "__set__": true,
    "elements": [
+    "basictools-core",
+    "basictools-extensions",
+    "boost-cpp",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cython",
+    "eigen",
     "eigency",
     "h5py",
     "meshio",
+    "mkl",
+    "mkl-include",
     "networkx >=3.0",
     "numpy",
+    "numpy >=1.20",
     "psutil",
-    "pyamg",
     "pycgns",
-    "pyparsing",
+    "pytest",
     "python",
     "pyvista",
-    "pywin32",
-    "scikit-learn",
     "scikit-sparse",
     "scipy >=1.9",
+    "setuptools-scm",
     "sympy",
     "vtk"
    ]
@@ -1130,8 +2916,8 @@
    "elements": []
   }
  },
- "url": "https://gitlab.com/DRTI/basic-tools/-/archive/1.9.5/basic-tools-1.9.5.tar.bz2",
- "version": "1.9.5",
+ "url": "https://gitlab.com/DRTI/basic-tools/-/archive/1.9.7/basic-tools-1.9.7.tar.bz2",
+ "version": "1.9.7",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/basictools.json"
  },
@@ -1144,29 +2930,7 @@
    "summary": "Tools for finite element computations"
   },
   "build": {
-   "entry_points": [
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main",
-    "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
-   ],
-   "number": "0",
-   "script": "PYTHON -m pip install --no-deps . -vv",
-   "script_env": [
-    "EIGEN_INC=%LIBRARY_INC%\\eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "EIGEN_INC=%LIBRARY_INC%\\eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "EIGEN_INC=%LIBRARY_INC%\\eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1",
-    "EIGEN_INC=%LIBRARY_INC%\\eigen3",
-    "MKL_DYNAMIC=FALSE",
-    "MKL_NUM_THREADS=1"
-   ],
-   "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1176,152 +2940,519 @@
     "fbordeu"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "bld_core.bat",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "bld_core.bat",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "bld_core.bat",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "MeshFileConvert = BasicTools.IO.MeshFileConverter:Main"
+     ],
+     "script_env": [
+      "BASICTOOLS_DISABLE_MKL=0",
+      "BASICTOOLS_USE_EIGENCYEIGEN=0"
+     ],
+     "skip_compile_pyc": "BasicToolsParaViewBridge.py"
+    },
+    "name": "basictools-core",
+    "requirements": {
+     "build": [
+      "python",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cython"
+     ],
+     "host": [
+      "python",
+      "numpy =1.21",
+      "cython",
+      "sympy",
+      "eigency",
+      "mkl",
+      "mkl-include",
+      "setuptools-scm",
+      "eigen",
+      "boost-cpp",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "numpy",
+      "scipy >=1.9",
+      "sympy",
+      "eigency",
+      "mkl",
+      "networkx >=3.0",
+      "scikit-sparse"
+     ]
+    },
+    "script": "bld_core.bat",
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-extensions",
+    "requirements": [
+     "python",
+     "vtk",
+     "psutil",
+     "scikit-sparse",
+     "h5py",
+     "meshio",
+     "pyvista",
+     "networkx >=3.0"
+    ],
+    "test": {
+     "imports": [
+      "psutil",
+      "sksparse.cholmod",
+      "h5py",
+      "meshio",
+      "networkx"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools",
+    "requirements": {
+     "run": [
+      "basictools-core",
+      "basictools-extensions"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python -u -m BasicTools.Helpers.Tests"
+     ],
+     "imports": [
+      "BasicTools"
+     ]
+    },
+    "version": "1.9.7"
+   },
+   {
+    "name": "basictools-devenv",
+    "requirements": [
+     "c_compiler_stub",
+     "cxx_compiler_stub",
+     "python",
+     "numpy >=1.20",
+     "sympy",
+     "cython",
+     "eigency",
+     "mkl",
+     "mkl-include",
+     "setuptools-scm",
+     "eigen",
+     "scipy >=1.9",
+     "eigency",
+     "scikit-sparse",
+     "h5py",
+     "pycgns",
+     "networkx >=3.0",
+     "boost-cpp",
+     "pytest",
+     "vtk"
+    ],
+    "test": {
+     "imports": [
+      "numpy"
+     ]
+    },
+    "version": "1.9.7"
+   }
+  ],
   "package": {
-   "name": "basictools",
-   "version": "1.9.5"
-  },
-  "requirements": {
-   "build": [
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cxx_compiler_stub"
-   ],
-   "host": [
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm",
-    "python",
-    "pip",
-    "numpy =1.21",
-    "cython",
-    "eigency",
-    "mkl",
-    "mkl-include",
-    "eigen",
-    "sympy",
-    "setuptools-scm"
-   ],
-   "run": [
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pywin32",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pywin32",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pywin32",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn",
-    "python",
-    "numpy",
-    "sympy",
-    "eigency",
-    "psutil",
-    "pywin32",
-    "pyparsing",
-    "scipy >=1.9",
-    "scikit-sparse",
-    "pyamg",
-    "h5py",
-    "vtk",
-    "pycgns",
-    "networkx >=3.0",
-    "meshio",
-    "pyvista",
-    "scikit-learn"
-   ]
+   "name": "basictools-split",
+   "version": "1.9.7"
   },
   "source": {
-   "sha256": "7d3fb639bbf547ade7658579a51e82fa7d687e190b48e76fc4c2976d708186f9",
-   "url": "https://gitlab.com/DRTI/basic-tools/-/archive/1.9.5/basic-tools-1.9.5.tar.bz2"
-  },
-  "test": {
-   "commands": [
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k UtSplitter -k UtMerger -k ConstraintsHolder -f -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k UtSplitter -k UtMerger -k ConstraintsHolder -f -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k UtSplitter -k UtMerger -k ConstraintsHolder -f -s",
-    "python -u -m BasicTools.Helpers.Tests -k Catalyst -k UtSplitter -k UtMerger -k ConstraintsHolder -f -s"
-   ],
-   "imports": [
-    "BasicTools",
-    "BasicTools",
-    "BasicTools",
-    "BasicTools"
-   ],
-   "requires": null
+   "sha256": "f2d1f9b4c4d91f4111dc0fbdfb085d0e3805018eae80e0fff520bb2b901b2a19",
+   "url": "https://gitlab.com/DRTI/basic-tools/-/archive/1.9.7/basic-tools-1.9.7.tar.bz2"
   }
  },
  "win_64_requirements": {
@@ -1329,12 +3460,15 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "cython",
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "boost-cpp",
     "cython",
     "eigen",
     "eigency",
@@ -1350,21 +3484,28 @@
   "run": {
    "__set__": true,
    "elements": [
+    "basictools-core",
+    "basictools-extensions",
+    "boost-cpp",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cython",
+    "eigen",
     "eigency",
     "h5py",
     "meshio",
+    "mkl",
+    "mkl-include",
     "networkx",
     "numpy",
     "psutil",
-    "pyamg",
     "pycgns",
-    "pyparsing",
+    "pytest",
     "python",
     "pyvista",
-    "pywin32",
-    "scikit-learn",
     "scikit-sparse",
     "scipy",
+    "setuptools-scm",
     "sympy",
     "vtk"
    ]
