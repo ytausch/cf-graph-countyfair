@@ -35,7 +35,7 @@
   },
   "package": {
    "name": "constructor",
-   "version": "3.4.3"
+   "version": "3.4.4"
   },
   "requirements": {
    "host": [
@@ -44,9 +44,9 @@
    ],
    "run": [
     "__unix",
-    "conda >=4.6,<23.1.0",
+    "conda >=4.6",
     "python >=3.7",
-    "ruamel_yaml >=0.11.14,<0.16",
+    "ruamel.yaml >=0.11.14,<0.18",
     "conda-standalone",
     "pillow >=3.1"
    ],
@@ -55,14 +55,14 @@
    ]
   },
   "source": {
-   "sha256": "93c5334dc689cc45c487be0b0370f2f86857cd3a1b4e816defb634585eac5aa2",
-   "url": "https://github.com/conda/constructor/archive/3.4.3.tar.gz"
+   "sha256": "d7081751f490622785807de6a78dd8ccdf71093a947489e4af5eeb76a7bd1e21",
+   "url": "https://github.com/conda/constructor/archive/3.4.4.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "pytest -v tests",
-    "python scripts/run_examples.py",
+    "pytest -v tests -k \"not examples\"",
+    "pytest -v tests/test_examples.py",
     "constructor -V"
    ],
    "files": [
@@ -102,7 +102,7 @@
     "conda-standalone",
     "pillow",
     "python",
-    "ruamel_yaml"
+    "ruamel.yaml"
    ]
   },
   "test": {
@@ -151,7 +151,7 @@
   },
   "package": {
    "name": "constructor",
-   "version": "3.4.3"
+   "version": "3.4.4"
   },
   "requirements": {
    "host": [
@@ -162,15 +162,15 @@
    ],
    "run": [
     "__unix",
-    "conda >=4.6,<23.1.0",
+    "conda >=4.6",
     "python >=3.7",
-    "ruamel_yaml >=0.11.14,<0.16",
+    "ruamel.yaml >=0.11.14,<0.18",
     "conda-standalone",
     "pillow >=3.1",
     "__win",
-    "conda >=4.6,<23.1.0",
+    "conda >=4.6",
     "python >=3.7",
-    "ruamel_yaml >=0.11.14,<0.16",
+    "ruamel.yaml >=0.11.14,<0.18",
     "conda-standalone",
     "pillow >=3.1",
     "nsis >=3.08"
@@ -180,17 +180,17 @@
    ]
   },
   "source": {
-   "sha256": "93c5334dc689cc45c487be0b0370f2f86857cd3a1b4e816defb634585eac5aa2",
-   "url": "https://github.com/conda/constructor/archive/3.4.3.tar.gz"
+   "sha256": "d7081751f490622785807de6a78dd8ccdf71093a947489e4af5eeb76a7bd1e21",
+   "url": "https://github.com/conda/constructor/archive/3.4.4.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "pytest -v tests",
-    "python scripts/run_examples.py",
+    "pytest -v tests -k \"not examples\"",
+    "pytest -v tests/test_examples.py",
     "constructor -V",
     "pip check",
-    "pytest -v tests",
+    "pytest -v tests -k \"not examples\"",
     "set \"NSIS_USING_LOG_BUILD=1\"",
     "test_win.bat",
     "constructor -V"
@@ -235,7 +235,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/constructor.json"
  },
- "raw_meta_yaml": "{% set version = \"3.4.3\" %}\n\npackage:\n  name: constructor\n  version: {{ version }}\n\nsource:\n  url: https://github.com/conda/constructor/archive/{{ version }}.tar.gz\n  sha256: 93c5334dc689cc45c487be0b0370f2f86857cd3a1b4e816defb634585eac5aa2\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n  entry_points:\n    - constructor = constructor.main:main\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - __{{ target_os }}\n    # see for the upper conda version constrain https://github.com/conda/constructor/issues/628\n    - conda >=4.6,<23.1.0\n    - python >=3.7\n    - ruamel_yaml >=0.11.14,<0.16\n    - conda-standalone\n    - pillow >=3.1\n    - nsis >=3.08      # [win]\n  run_constrained:   # [unix]\n    - nsis >=3.08      # [unix]\n\ntest:\n  files:\n    - test_win.bat\n  source_files:\n    - tests\n    - scripts\n    - examples\n  requires:\n    - pip\n    - pytest\n    - nsis * *log*  # [win]\n  commands:\n    - pip check\n    - pytest -v tests\n    # Skip for linux-aarch64 because examples use \"main\" channel which has no builds for that platform.\n    - set \"NSIS_USING_LOG_BUILD=1\"  # [win]\n    - python scripts/run_examples.py  # [unix and not aarch64]\n    - test_win.bat  # [win]\n    - constructor -V\n  imports:\n    - constructor\n\nabout:\n  home: http://github.com/conda/constructor\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.txt\n  summary: create installer from conda packages\n  description: |\n    Constructor is a tool for constructing an installer for a collection of\n    conda packages. It creates an Anaconda-like installer consisting of\n    packages.\n  doc_url: https://conda.io/projects/conda/en/latest/\n  dev_url: https://github.com/conda/constructor\n\nextra:\n  recipe-maintainers:\n    - isuruf\n    - jaimergp\n    - jakirkham\n    - jschueller\n    - mbargull\n    - msarahan\n",
+ "raw_meta_yaml": "{% set version = \"3.4.4\" %}\n\npackage:\n  name: constructor\n  version: {{ version }}\n\nsource:\n  url: https://github.com/conda/constructor/archive/{{ version }}.tar.gz\n  sha256: d7081751f490622785807de6a78dd8ccdf71093a947489e4af5eeb76a7bd1e21\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n  entry_points:\n    - constructor = constructor.main:main\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - __{{ target_os }}\n    # see for the upper conda version constrain https://github.com/conda/constructor/issues/628\n    - conda >=4.6\n    - python >=3.7\n    - ruamel.yaml >=0.11.14,<0.18\n    - conda-standalone\n    - pillow >=3.1\n    - nsis >=3.08      # [win]\n  run_constrained:     # [unix]\n    - nsis >=3.08      # [unix]\n\ntest:\n  files:\n    - test_win.bat\n  source_files:\n    - tests\n    - scripts\n    - examples\n  requires:\n    - pip\n    - pytest\n    - nsis * *log*  # [win]\n  commands:\n    - pip check\n    - pytest -v tests -k \"not examples\"\n    # Skip for linux-aarch64 because examples use \"main\" channel which has no builds for that platform.\n    - set \"NSIS_USING_LOG_BUILD=1\"  # [win]\n    - pytest -v tests/test_examples.py  # [unix and not aarch64]\n    - test_win.bat  # [win]\n    - constructor -V\n  imports:\n    - constructor\n\nabout:\n  home: http://github.com/conda/constructor\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.txt\n  summary: create installer from conda packages\n  description: |\n    Constructor is a tool for constructing an installer for a collection of\n    conda packages. It creates an Anaconda-like installer consisting of\n    packages.\n  doc_url: https://conda.io/projects/conda/en/latest/\n  dev_url: https://github.com/conda/constructor\n\nextra:\n  recipe-maintainers:\n    - isuruf\n    - jaimergp\n    - jakirkham\n    - jschueller\n    - mbargull\n    - msarahan\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -247,7 +247,7 @@
    "pillow",
    "pip",
    "python",
-   "ruamel_yaml"
+   "ruamel.yaml"
   ]
  },
  "requirements": {
@@ -272,7 +272,7 @@
     "nsis",
     "pillow",
     "python",
-    "ruamel_yaml"
+    "ruamel.yaml"
    ]
   },
   "test": {
@@ -302,12 +302,12 @@
    "elements": [
     "__unix",
     "__win",
-    "conda >=4.6,<23.1.0",
+    "conda >=4.6",
     "conda-standalone",
     "nsis >=3.08",
     "pillow >=3.1",
     "python >=3.7",
-    "ruamel_yaml >=0.11.14,<0.16"
+    "ruamel.yaml >=0.11.14,<0.18"
    ]
   },
   "test": {
@@ -319,8 +319,8 @@
    ]
   }
  },
- "url": "https://github.com/conda/constructor/archive/3.4.3.tar.gz",
- "version": "3.4.3",
+ "url": "https://github.com/conda/constructor/archive/3.4.4.tar.gz",
+ "version": "3.4.4",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/constructor.json"
  },
@@ -355,7 +355,7 @@
   },
   "package": {
    "name": "constructor",
-   "version": "3.4.3"
+   "version": "3.4.4"
   },
   "requirements": {
    "host": [
@@ -364,22 +364,22 @@
    ],
    "run": [
     "__win",
-    "conda >=4.6,<23.1.0",
+    "conda >=4.6",
     "python >=3.7",
-    "ruamel_yaml >=0.11.14,<0.16",
+    "ruamel.yaml >=0.11.14,<0.18",
     "conda-standalone",
     "pillow >=3.1",
     "nsis >=3.08"
    ]
   },
   "source": {
-   "sha256": "93c5334dc689cc45c487be0b0370f2f86857cd3a1b4e816defb634585eac5aa2",
-   "url": "https://github.com/conda/constructor/archive/3.4.3.tar.gz"
+   "sha256": "d7081751f490622785807de6a78dd8ccdf71093a947489e4af5eeb76a7bd1e21",
+   "url": "https://github.com/conda/constructor/archive/3.4.4.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "pytest -v tests",
+    "pytest -v tests -k \"not examples\"",
     "set \"NSIS_USING_LOG_BUILD=1\"",
     "test_win.bat",
     "constructor -V"
@@ -423,7 +423,7 @@
     "nsis",
     "pillow",
     "python",
-    "ruamel_yaml"
+    "ruamel.yaml"
    ]
   },
   "test": {
