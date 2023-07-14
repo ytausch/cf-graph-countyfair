@@ -41,14 +41,14 @@
      "commands": [
       "ls -A1 ${PREFIX}/lib",
       "test -f ${PREFIX}/lib/libze_loader.so.1",
-      "test -f ${PREFIX}/lib/libze_loader.so.1.12.0",
+      "test -f ${PREFIX}/lib/libze_loader.so.1.13.0",
       "test -f ${PREFIX}/lib/libze_tracing_layer.so.1",
-      "test -f ${PREFIX}/lib/libze_tracing_layer.so.1.12.0",
+      "test -f ${PREFIX}/lib/libze_tracing_layer.so.1.13.0",
       "test -f ${PREFIX}/lib/libze_validation_layer.so.1",
-      "test -f ${PREFIX}/lib/libze_validation_layer.so.1.12.0"
+      "test -f ${PREFIX}/lib/libze_validation_layer.so.1.13.0"
      ]
     },
-    "version": "1.12.0"
+    "version": "1.13.1"
    },
    {
     "about": {
@@ -79,12 +79,12 @@
       "test -f ${PREFIX}/lib/pkgconfig/level-zero.pc"
      ]
     },
-    "version": "1.12.0"
+    "version": "1.13.1"
    }
   ],
   "package": {
    "name": "intel-level-zero",
-   "version": "1.12.0"
+   "version": "1.13.1"
   },
   "requirements": {
    "build": [
@@ -96,8 +96,8 @@
   "source": [
    {
     "folder": "level-zero",
-    "sha256": "96e6f7ce0179833316f70582ebe4889619349cd4fb1a76efd49a71d8e8ac2e93",
-    "url": "https://github.com/oneapi-src/level-zero/archive/refs/tags/v1.12.0.tar.gz"
+    "sha256": "9c41640edd3738528911405ffe31c3caa9f9a747c43f6a7375a7b2e77eca3192",
+    "url": "https://github.com/oneapi-src/level-zero/archive/refs/tags/v1.13.1.tar.gz"
    }
   ]
  },
@@ -162,14 +162,14 @@
      "commands": [
       "ls -A1 ${PREFIX}/lib",
       "test -f ${PREFIX}/lib/libze_loader.so.1",
-      "test -f ${PREFIX}/lib/libze_loader.so.1.12.0",
+      "test -f ${PREFIX}/lib/libze_loader.so.1.13.0",
       "test -f ${PREFIX}/lib/libze_tracing_layer.so.1",
-      "test -f ${PREFIX}/lib/libze_tracing_layer.so.1.12.0",
+      "test -f ${PREFIX}/lib/libze_tracing_layer.so.1.13.0",
       "test -f ${PREFIX}/lib/libze_validation_layer.so.1",
-      "test -f ${PREFIX}/lib/libze_validation_layer.so.1.12.0"
+      "test -f ${PREFIX}/lib/libze_validation_layer.so.1.13.0"
      ]
     },
-    "version": "1.12.0"
+    "version": "1.13.1"
    },
    {
     "about": {
@@ -200,12 +200,12 @@
       "test -f ${PREFIX}/lib/pkgconfig/level-zero.pc"
      ]
     },
-    "version": "1.12.0"
+    "version": "1.13.1"
    }
   ],
   "package": {
    "name": "intel-level-zero",
-   "version": "1.12.0"
+   "version": "1.13.1"
   },
   "requirements": {
    "build": [
@@ -217,8 +217,8 @@
   "source": [
    {
     "folder": "level-zero",
-    "sha256": "96e6f7ce0179833316f70582ebe4889619349cd4fb1a76efd49a71d8e8ac2e93",
-    "url": "https://github.com/oneapi-src/level-zero/archive/refs/tags/v1.12.0.tar.gz"
+    "sha256": "9c41640edd3738528911405ffe31c3caa9f9a747c43f6a7375a7b2e77eca3192",
+    "url": "https://github.com/oneapi-src/level-zero/archive/refs/tags/v1.13.1.tar.gz"
    }
   ]
  },
@@ -237,7 +237,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/level-zero.json"
  },
- "raw_meta_yaml": "{% set version = \"1.12.0\" %}\n{% set test_version = \".\".join(version.split('.')[:2] + ['0']) %}\n{% set ze_version = \"1.3\" %}\n\npackage:\n  name: intel-level-zero\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/oneapi-src/level-zero/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: 96e6f7ce0179833316f70582ebe4889619349cd4fb1a76efd49a71d8e8ac2e93\n    folder: level-zero\n\nbuild:\n  number: 0\n  skip: true  # [not (x86 and (linux))]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - make\n\noutputs:\n  - name: level-zero\n    version: {{ version }}\n    script: move-level-zero.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n    about:\n      home: https://github.com/oneapi-src/level-zero\n      license: MIT\n      license_family: MIT\n      description: |\n        oneAPI Level Zero\n    test:\n      commands:\n        - ls -A1 ${PREFIX}/lib   # [linux]\n        - test -f ${PREFIX}/lib/libze_loader.so.1   # [linux]\n        - test -f ${PREFIX}/lib/libze_loader.so.{{ test_version }}   # [linux]\n        - test -f ${PREFIX}/lib/libze_tracing_layer.so.1   # [linux]\n        - test -f ${PREFIX}/lib/libze_tracing_layer.so.{{ test_version }}   # [linux]\n        - test -f ${PREFIX}/lib/libze_validation_layer.so.1   # [linux]\n        - test -f ${PREFIX}/lib/libze_validation_layer.so.{{ test_version }}   # [linux]\n  - name: level-zero-devel\n    version: {{ version }}\n    script: move-level-zero-devel.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n      run:\n        - {{ pin_subpackage('level-zero', exact=True) }}\n    about:\n      home: https://github.com/oneapi-src/level-zero\n      license: MIT\n      license_family: MIT\n      description: |\n        oneAPI Level Zero development libs\n    test:\n      commands:\n        - test -f ${PREFIX}/lib/libze_loader.so   # [linux]\n        - test -f ${PREFIX}/lib/libze_tracing_layer.so   # [linux]\n        - test -f ${PREFIX}/lib/libze_validation_layer.so   # [linux]\n        - test -d ${PREFIX}/include/level_zero   # [linux]\n        - test -d ${PREFIX}/include/level_zero/loader   # [linux]\n        - test -d ${PREFIX}/include/level_zero/layers   # [linux]\n        - test -f ${PREFIX}/lib/pkgconfig/libze_loader.pc   # [linux]\n        - test -f ${PREFIX}/lib/pkgconfig/level-zero.pc   # [linux]\n\nabout:\n  home: https://github.com/oneapi-src/level-zero\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: Intel(R) level zero libraries\n\nextra:\n  feedstock-name: level-zero\n  recipe-maintainers:\n    - oleksandr-pavlyk\n    - kurapov-peter\n",
+ "raw_meta_yaml": "{% set version = \"1.13.1\" %}\n{% set test_version = \".\".join(version.split('.')[:2] + ['0']) %}\n{% set ze_version = \"1.3\" %}\n\npackage:\n  name: intel-level-zero\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/oneapi-src/level-zero/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: 9c41640edd3738528911405ffe31c3caa9f9a747c43f6a7375a7b2e77eca3192\n    folder: level-zero\n\nbuild:\n  number: 0\n  skip: true  # [not (x86 and (linux))]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - make\n\noutputs:\n  - name: level-zero\n    version: {{ version }}\n    script: move-level-zero.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n    about:\n      home: https://github.com/oneapi-src/level-zero\n      license: MIT\n      license_family: MIT\n      description: |\n        oneAPI Level Zero\n    test:\n      commands:\n        - ls -A1 ${PREFIX}/lib   # [linux]\n        - test -f ${PREFIX}/lib/libze_loader.so.1   # [linux]\n        - test -f ${PREFIX}/lib/libze_loader.so.{{ test_version }}   # [linux]\n        - test -f ${PREFIX}/lib/libze_tracing_layer.so.1   # [linux]\n        - test -f ${PREFIX}/lib/libze_tracing_layer.so.{{ test_version }}   # [linux]\n        - test -f ${PREFIX}/lib/libze_validation_layer.so.1   # [linux]\n        - test -f ${PREFIX}/lib/libze_validation_layer.so.{{ test_version }}   # [linux]\n  - name: level-zero-devel\n    version: {{ version }}\n    script: move-level-zero-devel.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n      run:\n        - {{ pin_subpackage('level-zero', exact=True) }}\n    about:\n      home: https://github.com/oneapi-src/level-zero\n      license: MIT\n      license_family: MIT\n      description: |\n        oneAPI Level Zero development libs\n    test:\n      commands:\n        - test -f ${PREFIX}/lib/libze_loader.so   # [linux]\n        - test -f ${PREFIX}/lib/libze_tracing_layer.so   # [linux]\n        - test -f ${PREFIX}/lib/libze_validation_layer.so   # [linux]\n        - test -d ${PREFIX}/include/level_zero   # [linux]\n        - test -d ${PREFIX}/include/level_zero/loader   # [linux]\n        - test -d ${PREFIX}/include/level_zero/layers   # [linux]\n        - test -f ${PREFIX}/lib/pkgconfig/libze_loader.pc   # [linux]\n        - test -f ${PREFIX}/lib/pkgconfig/level-zero.pc   # [linux]\n\nabout:\n  home: https://github.com/oneapi-src/level-zero\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: Intel(R) level zero libraries\n\nextra:\n  feedstock-name: level-zero\n  recipe-maintainers:\n    - oleksandr-pavlyk\n    - kurapov-peter\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -299,8 +299,8 @@
    "elements": []
   }
  },
- "url": "https://github.com/oneapi-src/level-zero/archive/refs/tags/v1.12.0.tar.gz",
- "version": "1.12.0",
+ "url": "https://github.com/oneapi-src/level-zero/archive/refs/tags/v1.13.1.tar.gz",
+ "version": "1.13.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/level-zero.json"
  }
