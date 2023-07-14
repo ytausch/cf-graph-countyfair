@@ -154,11 +154,11 @@
   ],
   "package": {
    "name": "unidist-packages",
-   "version": "0.4.0"
+   "version": "0.4.1"
   },
   "source": {
-   "sha256": "8ea4bae8911c179131867f3e3b581b72f67e0f68578bed032088388dd1e4b616",
-   "url": "https://pypi.io/packages/source/u/unidist/unidist-0.4.0.tar.gz"
+   "sha256": "f47f09d69327b2e03f2180ac142a76e45fdf12694fe316f51612e38075e7323f",
+   "url": "https://pypi.io/packages/source/u/unidist/unidist-0.4.1.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -347,11 +347,11 @@
   ],
   "package": {
    "name": "unidist-packages",
-   "version": "0.4.0"
+   "version": "0.4.1"
   },
   "source": {
-   "sha256": "8ea4bae8911c179131867f3e3b581b72f67e0f68578bed032088388dd1e4b616",
-   "url": "https://pypi.io/packages/source/u/unidist/unidist-0.4.0.tar.gz"
+   "sha256": "f47f09d69327b2e03f2180ac142a76e45fdf12694fe316f51612e38075e7323f",
+   "url": "https://pypi.io/packages/source/u/unidist/unidist-0.4.1.tar.gz"
   }
  },
  "name": "unidist-packages",
@@ -372,7 +372,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/unidist-packages.json"
  },
- "raw_meta_yaml": "{% set name = \"unidist\" %}\n{% set version = \"0.4.0\" %}\n\npackage:\n  name: {{ name }}-packages\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 8ea4bae8911c179131867f3e3b581b72f67e0f68578bed032088388dd1e4b616\n\nbuild:\n  noarch: python\n  number: 0\n\n# the outputs map the unidist options on PyPI (see upstream definition\n# https://github.com/modin-project/unidist/blob/0.2.0/setup.py#L6-L11)\n# from \"unidist[<option>]\" to \"unidist-<option>\" as a conda-forge package\noutputs:\n  - name: unidist-all\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7.1\n      run:\n        - python >=3.7.1\n        - {{ pin_subpackage('unidist', exact=True) }}\n        - {{ pin_subpackage('unidist-dask', exact=True) }}\n        - {{ pin_subpackage('unidist-ray', exact=True) }}\n        - {{ pin_subpackage('unidist-mpi', exact=True) }}\n    test:\n      imports:\n        # dummy test; actual tests are in subpackages\n        - unidist\n\n  - name: unidist\n    build:\n      noarch: python\n      script: python -m pip install . --ignore-installed -vv\n    requirements:\n      host:\n        - pip\n        - python >=3.7.1\n      run:\n        - python >=3.7.1\n        - packaging\n        - cloudpickle\n    test:\n      imports:\n        - unidist\n      commands:\n        # unidist has \"pymp\" and \"pyseq\" backends by default so we test both\n        - python -c \"import unidist; import unidist.config as cfg; cfg.Backend.put('pyseq'); unidist.init(); ref = unidist.put(1); unidist.get(ref)\"\n        - python -c \"import unidist; import unidist.config as cfg; cfg.Backend.put('pymp'); unidist.init(); ref = unidist.put(1); unidist.get(ref)\"\n\n  - name: unidist-dask\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7.1\n      run:\n        - python >=3.7.1\n        - {{ pin_subpackage('unidist', exact=True) }}\n        - dask >=2.22.0\n        - distributed >=2.22.0\n    test:\n      imports:\n        - unidist\n      commands:\n        - python -c \"import unidist; import unidist.config as cfg; cfg.Backend.put('dask'); unidist.init(); ref = unidist.put(1); unidist.get(ref)\"\n\n  - name: unidist-ray\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7.1\n      run:\n        - python >=3.7.1\n        - {{ pin_subpackage('unidist', exact=True) }}\n        - ray-default >=1.13.0\n        # aioredis 2.x breaks Ray\n        # ref: https://github.com/conda-forge/ray-packages-feedstock/issues/38\n        - aioredis <2\n        # https://github.com/modin-project/unidist/issues/324\n        - pydantic <2\n    test:\n      imports:\n        - unidist\n      commands:\n        - python -c \"import unidist; import unidist.config as cfg; cfg.Backend.put('ray'); unidist.init(); ref = unidist.put(1); unidist.get(ref)\"\n\n  - name: unidist-mpi\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7.1\n      run:\n        - python >=3.7.1\n        - {{ pin_subpackage('unidist', exact=True) }}\n        - mpi4py >=3.0.3\n        - msgpack-python >=1.0.0\n    test:\n      # Currently we do not run actual tests for mpi backend because\n      # MPI requires more graceful set up to be run in docker container.\n      # Try out to find a fix.\n      imports:\n        - unidist\n\nabout:\n  home: https://github.com/modin-project/unidist\n  license: Apache-2.0 AND LicenseRef-Public-Domain\n  license_family: Apache\n  license_file:\n    - LICENSE\n    - licenses/versioneer-LICENSE.txt\n  summary: Unified Distributed Execution\n  description: |\n    unidist is a framework that is intended to provide the unified API\n    for distributed execution by supporting various performant execution backends.\n    At the moment the following backends are supported under the hood:\n    Ray, MPI, Dask, Python Multiprocessing (pymp), as well as a Python Sequential (pyseq) backend for debugging.\n  doc_url: https://unidist.readthedocs.io/\n  dev_url: https://github.com/modin-project/unidist\n\nextra:\n  recipe-maintainers:\n    - YarShev\n",
+ "raw_meta_yaml": "{% set name = \"unidist\" %}\n{% set version = \"0.4.1\" %}\n\npackage:\n  name: {{ name }}-packages\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: f47f09d69327b2e03f2180ac142a76e45fdf12694fe316f51612e38075e7323f\n\nbuild:\n  noarch: python\n  number: 0\n\n# the outputs map the unidist options on PyPI (see upstream definition\n# https://github.com/modin-project/unidist/blob/0.2.0/setup.py#L6-L11)\n# from \"unidist[<option>]\" to \"unidist-<option>\" as a conda-forge package\noutputs:\n  - name: unidist-all\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7.1\n      run:\n        - python >=3.7.1\n        - {{ pin_subpackage('unidist', exact=True) }}\n        - {{ pin_subpackage('unidist-dask', exact=True) }}\n        - {{ pin_subpackage('unidist-ray', exact=True) }}\n        - {{ pin_subpackage('unidist-mpi', exact=True) }}\n    test:\n      imports:\n        # dummy test; actual tests are in subpackages\n        - unidist\n\n  - name: unidist\n    build:\n      noarch: python\n      script: python -m pip install . --ignore-installed -vv\n    requirements:\n      host:\n        - pip\n        - python >=3.7.1\n      run:\n        - python >=3.7.1\n        - packaging\n        - cloudpickle\n    test:\n      imports:\n        - unidist\n      commands:\n        # unidist has \"pymp\" and \"pyseq\" backends by default so we test both\n        - python -c \"import unidist; import unidist.config as cfg; cfg.Backend.put('pyseq'); unidist.init(); ref = unidist.put(1); unidist.get(ref)\"\n        - python -c \"import unidist; import unidist.config as cfg; cfg.Backend.put('pymp'); unidist.init(); ref = unidist.put(1); unidist.get(ref)\"\n\n  - name: unidist-dask\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7.1\n      run:\n        - python >=3.7.1\n        - {{ pin_subpackage('unidist', exact=True) }}\n        - dask >=2.22.0\n        - distributed >=2.22.0\n    test:\n      imports:\n        - unidist\n      commands:\n        - python -c \"import unidist; import unidist.config as cfg; cfg.Backend.put('dask'); unidist.init(); ref = unidist.put(1); unidist.get(ref)\"\n\n  - name: unidist-ray\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7.1\n      run:\n        - python >=3.7.1\n        - {{ pin_subpackage('unidist', exact=True) }}\n        - ray-default >=1.13.0\n        # aioredis 2.x breaks Ray\n        # ref: https://github.com/conda-forge/ray-packages-feedstock/issues/38\n        - aioredis <2\n        # https://github.com/modin-project/unidist/issues/324\n        - pydantic <2\n    test:\n      imports:\n        - unidist\n      commands:\n        - python -c \"import unidist; import unidist.config as cfg; cfg.Backend.put('ray'); unidist.init(); ref = unidist.put(1); unidist.get(ref)\"\n\n  - name: unidist-mpi\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7.1\n      run:\n        - python >=3.7.1\n        - {{ pin_subpackage('unidist', exact=True) }}\n        - mpi4py >=3.0.3\n        - msgpack-python >=1.0.0\n    test:\n      # Currently we do not run actual tests for mpi backend because\n      # MPI requires more graceful set up to be run in docker container.\n      # Try out to find a fix.\n      imports:\n        - unidist\n\nabout:\n  home: https://github.com/modin-project/unidist\n  license: Apache-2.0 AND LicenseRef-Public-Domain\n  license_family: Apache\n  license_file:\n    - LICENSE\n    - licenses/versioneer-LICENSE.txt\n  summary: Unified Distributed Execution\n  description: |\n    unidist is a framework that is intended to provide the unified API\n    for distributed execution by supporting various performant execution backends.\n    At the moment the following backends are supported under the hood:\n    Ray, MPI, Dask, Python Multiprocessing (pymp), as well as a Python Sequential (pyseq) backend for debugging.\n  doc_url: https://unidist.readthedocs.io/\n  dev_url: https://github.com/modin-project/unidist\n\nextra:\n  recipe-maintainers:\n    - YarShev\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -466,8 +466,8 @@
    "elements": []
   }
  },
- "url": "https://pypi.io/packages/source/u/unidist/unidist-0.4.0.tar.gz",
- "version": "0.4.0",
+ "url": "https://pypi.io/packages/source/u/unidist/unidist-0.4.1.tar.gz",
+ "version": "0.4.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/unidist-packages.json"
  }
