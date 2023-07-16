@@ -1,7 +1,11 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  }
+ },
  "feedstock_name": "libfyaml",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -16,7 +20,7 @@
    "summary": "Fully feature complete YAML parser and emitter"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "libfyaml"
    ],
@@ -24,7 +28,7 @@
     "./bootstrap.sh",
     "./configure --prefix=\"${PREFIX}\"",
     "make",
-    "make check",
+    "[[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]] && make check",
     "make install"
    ]
   },
@@ -96,8 +100,9 @@
    "summary": "Fully feature complete YAML parser and emitter"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
+    "libfyaml",
     "libfyaml",
     "libfyaml"
    ],
@@ -105,17 +110,23 @@
     "./bootstrap.sh",
     "./configure --prefix=\"${PREFIX}\"",
     "make",
-    "make check",
+    "[[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]] && make check",
     "make install",
     "./bootstrap.sh",
     "./configure --prefix=\"${PREFIX}\"",
     "make",
-    "make check",
+    "[[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]] && make check",
+    "make install",
+    "./bootstrap.sh",
+    "./configure --prefix=\"${PREFIX}\"",
+    "make",
+    "[[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]] && make check",
     "make install"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "MarDiehl",
     "MarDiehl",
     "MarDiehl"
    ]
@@ -139,6 +150,13 @@
     "autoconf",
     "automake",
     "libtool",
+    "pkg-config",
+    "c_compiler_stub",
+    "make",
+    "m4",
+    "autoconf",
+    "automake",
+    "libtool",
     "pkg-config"
    ]
   },
@@ -148,6 +166,7 @@
   },
   "test": {
    "commands": [
+    "fy-tool -h",
     "fy-tool -h",
     "fy-tool -h"
    ]
@@ -166,7 +185,7 @@
    "summary": "Fully feature complete YAML parser and emitter"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "libfyaml"
    ],
@@ -174,7 +193,7 @@
     "./bootstrap.sh",
     "./configure --prefix=\"${PREFIX}\"",
     "make",
-    "make check",
+    "[[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]] && make check",
     "make install"
    ]
   },
@@ -234,6 +253,86 @@
    "elements": []
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "A fancy 1.2 YAML and JSON parser/writer.\n\nFully feature complete YAML parser and emitter, supporting the latest\nYAML spec and passing the full YAML testsuite.\n\nIt is designed to be very efficient, avoiding copies of data, and\nhas no artificial limits like the 1024 character limit for implicit keys.\n\nlibfyaml is using <https://github.com/yaml/yaml-test-suite>\nas a core part of it's testsuite.\n",
+   "dev_url": "https://github.com/pantoniou/libfyaml",
+   "doc_url": "https://pantoniou.github.io/libfyaml",
+   "home": "https://github.com/pantoniou/libfyaml",
+   "license": "MIT",
+   "license_family": "MIT",
+   "license_file": "LICENSE",
+   "summary": "Fully feature complete YAML parser and emitter"
+  },
+  "build": {
+   "number": "1",
+   "run_exports": [
+    "libfyaml"
+   ],
+   "script": [
+    "./bootstrap.sh",
+    "./configure --prefix=\"${PREFIX}\"",
+    "make",
+    "[[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]] && make check",
+    "make install"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "MarDiehl"
+   ]
+  },
+  "package": {
+   "name": "libfyaml",
+   "version": "0.8"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "make",
+    "m4",
+    "autoconf",
+    "automake",
+    "libtool",
+    "pkg-config"
+   ]
+  },
+  "source": {
+   "sha256": "dc4d4348eedca68e8e2394556d57f71410e7d61791a71cbe178302ebe5f26b99",
+   "url": "https://github.com/pantoniou/libfyaml/releases/download/v0.8/libfyaml-0.8.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "fy-tool -h"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "autoconf",
+    "automake",
+    "c_compiler_stub",
+    "libtool",
+    "m4",
+    "make",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -243,12 +342,13 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
-  "osx_64"
+  "osx_64",
+  "osx_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/libfyaml.json"
  },
- "raw_meta_yaml": "{% set version = \"0.8\" %}\n\npackage:\n  name: libfyaml\n  version: {{ version }}\n\nsource:\n  url: https://github.com/pantoniou/libfyaml/releases/download/v{{ version }}/libfyaml-{{ version }}.tar.gz\n  sha256: dc4d4348eedca68e8e2394556d57f71410e7d61791a71cbe178302ebe5f26b99\n\nbuild:\n  number: 0\n  skip: true  # [win]\n  script:\n    - ./bootstrap.sh\n    - ./configure --prefix=\"${PREFIX}\"\n    - make\n    - make check\n    - make install\n  run_exports:\n    - {{ pin_subpackage('libfyaml', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - make\n    - m4\n    - autoconf\n    - automake\n    - libtool\n    - pkg-config\n\ntest:\n  commands:\n    - fy-tool -h\n\nabout:\n  home: https://github.com/pantoniou/libfyaml\n  summary: Fully feature complete YAML parser and emitter\n  description: |\n    A fancy 1.2 YAML and JSON parser/writer.\n\n    Fully feature complete YAML parser and emitter, supporting the latest\n    YAML spec and passing the full YAML testsuite.\n\n    It is designed to be very efficient, avoiding copies of data, and\n    has no artificial limits like the 1024 character limit for implicit keys.\n\n    libfyaml is using <https://github.com/yaml/yaml-test-suite>\n    as a core part of it's testsuite.\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  doc_url: https://pantoniou.github.io/libfyaml\n  dev_url: https://github.com/pantoniou/libfyaml\n\nextra:\n  recipe-maintainers:\n    - MarDiehl\n",
+ "raw_meta_yaml": "{% set version = \"0.8\" %}\n\npackage:\n  name: libfyaml\n  version: {{ version }}\n\nsource:\n  url: https://github.com/pantoniou/libfyaml/releases/download/v{{ version }}/libfyaml-{{ version }}.tar.gz\n  sha256: dc4d4348eedca68e8e2394556d57f71410e7d61791a71cbe178302ebe5f26b99\n\nbuild:\n  number: 1\n  skip: true  # [win]\n  script:\n    - ./bootstrap.sh\n    - ./configure --prefix=\"${PREFIX}\"\n    - make\n    - \"[[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]] && make check\"\n    - make install\n  run_exports:\n    - {{ pin_subpackage('libfyaml', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - make\n    - m4\n    - autoconf\n    - automake\n    - libtool\n    - pkg-config\n\ntest:\n  commands:\n    - fy-tool -h\n\nabout:\n  home: https://github.com/pantoniou/libfyaml\n  summary: Fully feature complete YAML parser and emitter\n  description: |\n    A fancy 1.2 YAML and JSON parser/writer.\n\n    Fully feature complete YAML parser and emitter, supporting the latest\n    YAML spec and passing the full YAML testsuite.\n\n    It is designed to be very efficient, avoiding copies of data, and\n    has no artificial limits like the 1024 character limit for implicit keys.\n\n    libfyaml is using <https://github.com/yaml/yaml-test-suite>\n    as a core part of it's testsuite.\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  doc_url: https://pantoniou.github.io/libfyaml\n  dev_url: https://github.com/pantoniou/libfyaml\n\nextra:\n  recipe-maintainers:\n    - MarDiehl\n",
  "req": {
   "__set__": true,
   "elements": [
