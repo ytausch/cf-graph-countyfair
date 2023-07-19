@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "bot": {
+   "inspection": "hint-all"
+  },
   "build_platform": {
    "osx_arm64": "osx_64"
   },
@@ -15,32 +18,29 @@
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
   "about": {
-   "dev_url": "https://github.com/jupyter/notebook",
-   "doc_source_url": "https://github.com/jupyter/notebook/tree/master/docs",
+   "doc_source_url": "https://github.com/jupyter/notebook/tree/v7.0.0/docs",
    "doc_url": "https://jupyter-notebook.readthedocs.io",
-   "home": "https://jupyter.org",
+   "home": "https://github.com/jupyter/notebook",
    "license": "BSD-3-Clause",
    "license_family": "BSD",
-   "license_file": "LICENSE",
+   "license_file": [
+    "LICENSE",
+    "notebook/labextension/static/third-party-licenses.json"
+   ],
    "summary": "A web-based notebook environment for interactive computing"
   },
   "build": {
    "entry_points": [
-    "jupyter-notebook = notebook.notebookapp:main",
-    "jupyter-nbextension = notebook.nbextensions:main",
-    "jupyter-serverextension = notebook.serverextensions:main",
-    "jupyter-bundlerextension = notebook.bundler.bundlerextensions:main"
+    "jupyter-notebook = notebook.app:main"
    ],
    "noarch": "python",
    "number": "0",
    "script": [
-    "PYTHON -m pip install . --no-deps -vv",
-    "find PREFIX -name '*.js.map' -delete"
+    "PYTHON -m pip install . --no-deps -vv --no-build-isolation"
    ]
   },
   "extra": {
    "recipe-maintainers": [
-    "jtpio",
     "SylvainCorlay",
     "jakirkham",
     "minrk",
@@ -50,62 +50,50 @@
     "lresende",
     "bollwyvl",
     "blink1073",
-    "davidbrochart"
+    "davidbrochart",
+    "jtpio"
    ]
   },
   "package": {
    "name": "notebook",
-   "version": "6.5.4"
+   "version": "7.0.0"
   },
   "requirements": {
-   "build": [],
    "host": [
-    "jupyter-packaging >=0.9,<1",
-    "nbclassic >=0.4.7",
-    "python >=3.7",
-    "pip"
+    "hatch-jupyter-builder >=0.2",
+    "hatchling >=1.11",
+    "jupyterlab >=4.0.2,<5",
+    "pip",
+    "python >=3.8"
    ],
    "run": [
-    "argon2-cffi",
-    "ipykernel",
-    "ipython_genutils",
-    "jinja2",
-    "jupyter_client >=5.3.4",
-    "jupyter_core >=4.6.1",
-    "nbclassic >=0.4.7",
-    "nbconvert-core >=5",
-    "nbformat",
-    "nest-asyncio >=1.5",
-    "prometheus_client",
-    "python >=3.7",
-    "pyzmq >=17",
-    "send2trash >=1.8.0",
-    "terminado >=0.8.3",
-    "tornado >=6.1",
-    "traitlets >=4.2.1"
+    "importlib_resources >=5.0",
+    "jupyter_server >=2.4.0,<3",
+    "jupyterlab >=4.0.2,<5",
+    "jupyterlab_server >=2.22.1,<3",
+    "notebook-shim >=0.2,<0.3",
+    "python >=3.8",
+    "tornado >=6.2.0"
    ]
   },
   "source": {
-   "sha256": "517209568bd47261e2def27a140e97d49070602eea0d226a696f42a7f16c9a4e",
-   "url": "https://pypi.io/packages/source/n/notebook/notebook-6.5.4.tar.gz"
+   "sha256": "38b55e6939df0ba73b53212c3b234e41102f1789e0158606cedaebf00abef6c8",
+   "url": "https://pypi.io/packages/source/n/notebook/notebook-7.0.0.tar.gz"
   },
   "test": {
    "commands": [
-    "python -m pip check",
+    "pip check",
     "jupyter notebook -h",
-    "jupyter nbextension -h",
-    "jupyter serverextension -h",
-    "jupyter bundlerextension -h"
+    "jupyter-notebook -h",
+    "jupyter labextension list",
+    "jupyter labextension list 1>labextensions 2>&1",
+    "grep -iE \"@jupyter-notebook/lab-extension.*OK\" labextensions"
    ],
    "imports": [
-    "notebook",
-    "notebook.tests.launchnotebook"
+    "notebook"
    ],
    "requires": [
-    "pip",
-    "requests",
-    "requests-unixsocket",
-    "nbclassic ==0.4.7"
+    "pip"
    ]
   }
  },
@@ -117,8 +105,9 @@
   "host": {
    "__set__": true,
    "elements": [
-    "jupyter-packaging",
-    "nbclassic",
+    "hatch-jupyter-builder",
+    "hatchling",
+    "jupyterlab",
     "pip",
     "python"
    ]
@@ -126,63 +115,47 @@
   "run": {
    "__set__": true,
    "elements": [
-    "argon2-cffi",
-    "ipykernel",
-    "ipython_genutils",
-    "jinja2",
-    "jupyter_client",
-    "jupyter_core",
-    "nbclassic",
-    "nbconvert-core",
-    "nbformat",
-    "nest-asyncio",
-    "prometheus_client",
+    "importlib_resources",
+    "jupyter_server",
+    "jupyterlab",
+    "jupyterlab_server",
+    "notebook-shim",
     "python",
-    "pyzmq",
-    "send2trash",
-    "terminado",
-    "tornado",
-    "traitlets"
+    "tornado"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "nbclassic",
-    "pip",
-    "requests",
-    "requests-unixsocket"
+    "pip"
    ]
   }
  },
  "meta_yaml": {
   "about": {
-   "dev_url": "https://github.com/jupyter/notebook",
-   "doc_source_url": "https://github.com/jupyter/notebook/tree/master/docs",
+   "doc_source_url": "https://github.com/jupyter/notebook/tree/v7.0.0/docs",
    "doc_url": "https://jupyter-notebook.readthedocs.io",
-   "home": "https://jupyter.org",
+   "home": "https://github.com/jupyter/notebook",
    "license": "BSD-3-Clause",
    "license_family": "BSD",
-   "license_file": "LICENSE",
+   "license_file": [
+    "LICENSE",
+    "notebook/labextension/static/third-party-licenses.json"
+   ],
    "summary": "A web-based notebook environment for interactive computing"
   },
   "build": {
    "entry_points": [
-    "jupyter-notebook = notebook.notebookapp:main",
-    "jupyter-nbextension = notebook.nbextensions:main",
-    "jupyter-serverextension = notebook.serverextensions:main",
-    "jupyter-bundlerextension = notebook.bundler.bundlerextensions:main"
+    "jupyter-notebook = notebook.app:main"
    ],
    "noarch": "python",
    "number": "0",
    "script": [
-    "PYTHON -m pip install . --no-deps -vv",
-    "find PREFIX -name '*.js.map' -delete"
+    "PYTHON -m pip install . --no-deps -vv --no-build-isolation"
    ]
   },
   "extra": {
    "recipe-maintainers": [
-    "jtpio",
     "SylvainCorlay",
     "jakirkham",
     "minrk",
@@ -192,62 +165,50 @@
     "lresende",
     "bollwyvl",
     "blink1073",
-    "davidbrochart"
+    "davidbrochart",
+    "jtpio"
    ]
   },
   "package": {
    "name": "notebook",
-   "version": "6.5.4"
+   "version": "7.0.0"
   },
   "requirements": {
-   "build": [],
    "host": [
-    "jupyter-packaging >=0.9,<1",
-    "nbclassic >=0.4.7",
-    "python >=3.7",
-    "pip"
+    "hatch-jupyter-builder >=0.2",
+    "hatchling >=1.11",
+    "jupyterlab >=4.0.2,<5",
+    "pip",
+    "python >=3.8"
    ],
    "run": [
-    "argon2-cffi",
-    "ipykernel",
-    "ipython_genutils",
-    "jinja2",
-    "jupyter_client >=5.3.4",
-    "jupyter_core >=4.6.1",
-    "nbclassic >=0.4.7",
-    "nbconvert-core >=5",
-    "nbformat",
-    "nest-asyncio >=1.5",
-    "prometheus_client",
-    "python >=3.7",
-    "pyzmq >=17",
-    "send2trash >=1.8.0",
-    "terminado >=0.8.3",
-    "tornado >=6.1",
-    "traitlets >=4.2.1"
+    "importlib_resources >=5.0",
+    "jupyter_server >=2.4.0,<3",
+    "jupyterlab >=4.0.2,<5",
+    "jupyterlab_server >=2.22.1,<3",
+    "notebook-shim >=0.2,<0.3",
+    "python >=3.8",
+    "tornado >=6.2.0"
    ]
   },
   "source": {
-   "sha256": "517209568bd47261e2def27a140e97d49070602eea0d226a696f42a7f16c9a4e",
-   "url": "https://pypi.io/packages/source/n/notebook/notebook-6.5.4.tar.gz"
+   "sha256": "38b55e6939df0ba73b53212c3b234e41102f1789e0158606cedaebf00abef6c8",
+   "url": "https://pypi.io/packages/source/n/notebook/notebook-7.0.0.tar.gz"
   },
   "test": {
    "commands": [
-    "python -m pip check",
+    "pip check",
     "jupyter notebook -h",
-    "jupyter nbextension -h",
-    "jupyter serverextension -h",
-    "jupyter bundlerextension -h"
+    "jupyter-notebook -h",
+    "jupyter labextension list",
+    "jupyter labextension list 1>labextensions 2>&1",
+    "grep -iE \"@jupyter-notebook/lab-extension.*OK\" labextensions"
    ],
    "imports": [
-    "notebook",
-    "notebook.tests.launchnotebook"
+    "notebook"
    ],
    "requires": [
-    "pip",
-    "requests",
-    "requests-unixsocket",
-    "nbclassic ==0.4.7"
+    "pip"
    ]
   }
  },
@@ -265,29 +226,20 @@
  "pr_info": {
   "__lazy_json__": "pr_info/notebook.json"
  },
- "raw_meta_yaml": "{% set version = \"6.5.4\" %}\n{% set min_nbclassic = \"0.4.7\" %}\n\npackage:\n  name: notebook\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/n/notebook/notebook-{{ version }}.tar.gz\n  sha256: 517209568bd47261e2def27a140e97d49070602eea0d226a696f42a7f16c9a4e\n\nbuild:\n  noarch: python\n  script:\n    - {{ PYTHON }} -m pip install . --no-deps -vv\n    - find {{ PREFIX }} -name '*.js.map' -delete  # [not win]\n  number: 0\n  entry_points:\n    - jupyter-notebook = notebook.notebookapp:main\n    - jupyter-nbextension = notebook.nbextensions:main\n    - jupyter-serverextension = notebook.serverextensions:main\n    - jupyter-bundlerextension = notebook.bundler.bundlerextensions:main\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n  host:\n    - jupyter-packaging >=0.9,<1\n    - nbclassic >={{ min_nbclassic }}\n    - python >=3.7\n    - pip\n  run:\n    - argon2-cffi\n    - ipykernel\n    - ipython_genutils\n    - jinja2\n    - jupyter_client >=5.3.4\n    - jupyter_core >=4.6.1\n    - nbclassic >={{ min_nbclassic }}\n    - nbconvert-core >=5\n    - nbformat\n    - nest-asyncio >=1.5\n    - prometheus_client\n    - python >=3.7\n    - pyzmq >=17\n    - send2trash >=1.8.0\n    - terminado >=0.8.3\n    - tornado >=6.1\n    - traitlets >=4.2.1\n\ntest:\n  requires:\n    - pip\n    - requests\n    - requests-unixsocket  # [unix]\n    - nbclassic =={{ min_nbclassic }}\n  commands:\n    - python -m pip check\n    - jupyter notebook -h\n    - jupyter nbextension -h\n    - jupyter serverextension -h\n    - jupyter bundlerextension -h\n  imports:\n    - notebook\n    - notebook.tests.launchnotebook\n\nabout:\n  home: https://jupyter.org\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: A web-based notebook environment for interactive computing\n  dev_url: https://github.com/jupyter/notebook\n  doc_url: https://jupyter-notebook.readthedocs.io\n  doc_source_url: https://github.com/jupyter/notebook/tree/master/docs\n\nextra:\n  recipe-maintainers:\n    - jtpio\n    - SylvainCorlay\n    - jakirkham\n    - minrk\n    - pelson\n    - gnestor\n    - takluyver\n    - lresende\n    - bollwyvl\n    - blink1073\n    - davidbrochart\n",
+ "raw_meta_yaml": "{% set version = \"7.0.0\" %}\n{% set lab_version = \">=4.0.2,<5\" %}\n\npackage:\n  name: notebook\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/n/notebook/notebook-{{ version }}.tar.gz\n  sha256: 38b55e6939df0ba73b53212c3b234e41102f1789e0158606cedaebf00abef6c8\n\nbuild:\n  noarch: python\n  script:\n    - {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation\n  number: 0\n  entry_points:\n    - jupyter-notebook = notebook.app:main\n\nrequirements:\n  host:\n    - hatch-jupyter-builder >=0.2\n    - hatchling >=1.11\n    - jupyterlab {{ lab_version }}\n    - pip\n    - python >=3.8\n  run:\n    - importlib_resources >=5.0\n    - jupyter_server >=2.4.0,<3\n    - jupyterlab {{ lab_version }}\n    - jupyterlab_server >=2.22.1,<3\n    - notebook-shim >=0.2,<0.3\n    - python >=3.8\n    - tornado >=6.2.0\n\ntest:\n  requires:\n    - pip\n    - m2-grep  # [win]\n  commands:\n    - pip check\n    - jupyter notebook -h\n    - jupyter-notebook -h\n    - jupyter labextension list\n    - jupyter labextension list 1>labextensions 2>&1\n    - grep -iE \"@jupyter-notebook/lab-extension.*OK\" labextensions\n  imports:\n    - notebook\n\nabout:\n  home: https://github.com/jupyter/notebook\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file:\n    - LICENSE\n    - notebook/labextension/static/third-party-licenses.json\n    # TODO: upstream issue\n    # - notebook/static/third-party-licenses.json\n  summary: A web-based notebook environment for interactive computing\n  doc_url: https://jupyter-notebook.readthedocs.io\n  doc_source_url: https://github.com/jupyter/notebook/tree/v{{ version }}/docs\n\nextra:\n  recipe-maintainers:\n    - SylvainCorlay\n    - jakirkham\n    - minrk\n    - pelson\n    - gnestor\n    - takluyver\n    - lresende\n    - bollwyvl\n    - blink1073\n    - davidbrochart\n    - jtpio\n",
  "req": {
   "__set__": true,
   "elements": [
-   "argon2-cffi",
-   "ipykernel",
-   "ipython_genutils",
-   "jinja2",
-   "jupyter-packaging",
-   "jupyter_client",
-   "jupyter_core",
-   "nbclassic",
-   "nbconvert-core",
-   "nbformat",
-   "nest-asyncio",
+   "hatch-jupyter-builder",
+   "hatchling",
+   "importlib_resources",
+   "jupyter_server",
+   "jupyterlab",
+   "jupyterlab_server",
+   "notebook-shim",
    "pip",
-   "prometheus_client",
    "python",
-   "pyzmq",
-   "send2trash",
-   "terminado",
-   "tornado",
-   "traitlets"
+   "tornado"
   ]
  },
  "requirements": {
@@ -298,8 +250,9 @@
   "host": {
    "__set__": true,
    "elements": [
-    "jupyter-packaging",
-    "nbclassic",
+    "hatch-jupyter-builder",
+    "hatchling",
+    "jupyterlab",
     "pip",
     "python"
    ]
@@ -307,32 +260,19 @@
   "run": {
    "__set__": true,
    "elements": [
-    "argon2-cffi",
-    "ipykernel",
-    "ipython_genutils",
-    "jinja2",
-    "jupyter_client",
-    "jupyter_core",
-    "nbclassic",
-    "nbconvert-core",
-    "nbformat",
-    "nest-asyncio",
-    "prometheus_client",
+    "importlib_resources",
+    "jupyter_server",
+    "jupyterlab",
+    "jupyterlab_server",
+    "notebook-shim",
     "python",
-    "pyzmq",
-    "send2trash",
-    "terminado",
-    "tornado",
-    "traitlets"
+    "tornado"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "nbclassic",
-    "pip",
-    "requests",
-    "requests-unixsocket"
+    "pip"
    ]
   }
  },
@@ -345,46 +285,34 @@
   "host": {
    "__set__": true,
    "elements": [
-    "jupyter-packaging >=0.9,<1",
-    "nbclassic >=0.4.7",
+    "hatch-jupyter-builder >=0.2",
+    "hatchling >=1.11",
+    "jupyterlab >=4.0.2,<5",
     "pip",
-    "python >=3.7"
+    "python >=3.8"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "argon2-cffi",
-    "ipykernel",
-    "ipython_genutils",
-    "jinja2",
-    "jupyter_client >=5.3.4",
-    "jupyter_core >=4.6.1",
-    "nbclassic >=0.4.7",
-    "nbconvert-core >=5",
-    "nbformat",
-    "nest-asyncio >=1.5",
-    "prometheus_client",
-    "python >=3.7",
-    "pyzmq >=17",
-    "send2trash >=1.8.0",
-    "terminado >=0.8.3",
-    "tornado >=6.1",
-    "traitlets >=4.2.1"
+    "importlib_resources >=5.0",
+    "jupyter_server >=2.4.0,<3",
+    "jupyterlab >=4.0.2,<5",
+    "jupyterlab_server >=2.22.1,<3",
+    "notebook-shim >=0.2,<0.3",
+    "python >=3.8",
+    "tornado >=6.2.0"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "nbclassic ==0.4.7",
-    "pip",
-    "requests",
-    "requests-unixsocket"
+    "pip"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/n/notebook/notebook-6.5.4.tar.gz",
- "version": "6.5.4",
+ "url": "https://pypi.io/packages/source/n/notebook/notebook-7.0.0.tar.gz",
+ "version": "7.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/notebook.json"
  }
