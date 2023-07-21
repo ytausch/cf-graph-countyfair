@@ -43,6 +43,7 @@
       "python >=3.7",
       "aiofiles",
       "jinja2 >=2.10.1",
+      "keyring >=23,<24",
       "ldap3",
       "metomi-isodatetime >=1!3.0,<1!4.0",
       "psutil >=5.6.0",
@@ -98,7 +99,7 @@
   ],
   "package": {
    "name": "metomi-rose",
-   "version": "2.0.4"
+   "version": "2.1.0"
   },
   "requirements": {
    "host": [
@@ -112,8 +113,8 @@
    ]
   },
   "source": {
-   "sha256": "280aa050123af2af23584ec33aa691c2889b690478b9a5839b114dcd66d53985",
-   "url": "https://pypi.io/packages/source/m/metomi-rose/metomi-rose-2.0.4.tar.gz"
+   "sha256": "1b60135a434fe4325d364a57e8f5e81e90f39b373b9d68733458c1adc2513c05",
+   "url": "https://pypi.io/packages/source/m/metomi-rose/metomi-rose-2.1.0.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -135,6 +136,7 @@
     "__unix",
     "aiofiles",
     "jinja2",
+    "keyring",
     "ldap3",
     "metomi-isodatetime",
     "metomi-rose-base",
@@ -190,6 +192,7 @@
       "python >=3.7",
       "aiofiles",
       "jinja2 >=2.10.1",
+      "keyring >=23,<24",
       "ldap3",
       "metomi-isodatetime >=1!3.0,<1!4.0",
       "psutil >=5.6.0",
@@ -245,7 +248,7 @@
   ],
   "package": {
    "name": "metomi-rose",
-   "version": "2.0.4"
+   "version": "2.1.0"
   },
   "requirements": {
    "host": [
@@ -259,8 +262,8 @@
    ]
   },
   "source": {
-   "sha256": "280aa050123af2af23584ec33aa691c2889b690478b9a5839b114dcd66d53985",
-   "url": "https://pypi.io/packages/source/m/metomi-rose/metomi-rose-2.0.4.tar.gz"
+   "sha256": "1b60135a434fe4325d364a57e8f5e81e90f39b373b9d68733458c1adc2513c05",
+   "url": "https://pypi.io/packages/source/m/metomi-rose/metomi-rose-2.1.0.tar.gz"
   }
  },
  "name": "metomi-rose",
@@ -278,13 +281,14 @@
  "pr_info": {
   "__lazy_json__": "pr_info/metomi-rose.json"
  },
- "raw_meta_yaml": "{% set name = \"metomi-rose\" %}\n{% set version = \"2.0.4\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 280aa050123af2af23584ec33aa691c2889b690478b9a5839b114dcd66d53985\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - __unix\n    - pip\n    - python >=3.7\n  run:\n    - __unix\n    - python >=3.7\n\noutputs:\n  # base package with only required dependencies\n  - name: {{ name }}-base\n    build:\n      script: python -m pip install . --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - pip\n        - python >=3.7\n      run:\n        - __unix\n        - python >=3.7\n        - aiofiles\n        - jinja2 >=2.10.1\n        - ldap3\n        - metomi-isodatetime >=1!3.0,<1!4.0\n        - psutil >=5.6.0\n        - requests\n        - sqlalchemy >=1,<2\n        - setuptools >=49\n        # - tornado (rosie disco is temporally disabled)\n    test:\n      imports:\n        - metomi.rose\n        - metomi.rose.macro\n      commands:\n        - rose --version\n        - PAGER=cat rose macro --help\n        # test packaging of non-python files\n        - rose resource syntax/rose-conf.lang\n\n  # \"recommended\" package\n  # For the next release we should spin `rosa` and `rosie disco` out of this\n  - name: {{ name }}\n    build:\n      script: python -m pip install .[graph] --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - pip\n        - python >=3.7\n      run:\n        - __unix\n        - python >=3.7\n        - {{ pin_subpackage(name + \"-base\", exact=True) }}\n        - pygraphviz >1.0,!=1.8\n    test:\n      imports:\n        - metomi.rose\n        - metomi.rose.macro\n      commands:\n        - rose --version\n        - PAGER=cat rose macro --help\n        - PAGER=cat rosie graph --help\n        # test packaging of non-python files\n        - rose resource syntax/rose-conf.lang\n\nabout:\n  home: https://github.com/metomi/rose\n  license: GPL-3.0-only\n  license_family: GPL\n  license_file: COPYING\n  summary: A toolkit for writing, editing and running application configurations.\n  doc_url: http://metomi.github.io/rose\n  dev_url: https://github.com/metomi/rose\n\nextra:\n  recipe-maintainers:\n    - oliver-sanders\n    - wxtim\n    - metronnie\n",
+ "raw_meta_yaml": "{% set name = \"metomi-rose\" %}\n{% set version = \"2.1.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 1b60135a434fe4325d364a57e8f5e81e90f39b373b9d68733458c1adc2513c05\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - __unix\n    - pip\n    - python >=3.7\n  run:\n    - __unix\n    - python >=3.7\n\noutputs:\n  # base package with only required dependencies\n  - name: {{ name }}-base\n    build:\n      script: python -m pip install . --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - pip\n        - python >=3.7\n      run:\n        - __unix\n        - python >=3.7\n        - aiofiles\n        - jinja2 >=2.10.1\n        - keyring >=23,<24\n        - ldap3\n        - metomi-isodatetime >=1!3.0,<1!4.0\n        - psutil >=5.6.0\n        - requests\n        - sqlalchemy >=1,<2\n        - setuptools >=49\n        # - tornado (rosie disco is temporally disabled)\n    test:\n      imports:\n        - metomi.rose\n        - metomi.rose.macro\n      commands:\n        - rose --version\n        - PAGER=cat rose macro --help\n        # test packaging of non-python files\n        - rose resource syntax/rose-conf.lang\n\n  # \"recommended\" package\n  # For the next release we should spin `rosa` and `rosie disco` out of this\n  - name: {{ name }}\n    build:\n      script: python -m pip install .[graph] --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - pip\n        - python >=3.7\n      run:\n        - __unix\n        - python >=3.7\n        - {{ pin_subpackage(name + \"-base\", exact=True) }}\n        - pygraphviz >1.0,!=1.8\n    test:\n      imports:\n        - metomi.rose\n        - metomi.rose.macro\n      commands:\n        - rose --version\n        - PAGER=cat rose macro --help\n        - PAGER=cat rosie graph --help\n        # test packaging of non-python files\n        - rose resource syntax/rose-conf.lang\n\nabout:\n  home: https://github.com/metomi/rose\n  license: GPL-3.0-only\n  license_family: GPL\n  license_file: COPYING\n  summary: A toolkit for writing, editing and running application configurations.\n  doc_url: http://metomi.github.io/rose\n  dev_url: https://github.com/metomi/rose\n\nextra:\n  recipe-maintainers:\n    - oliver-sanders\n    - wxtim\n    - metronnie\n",
  "req": {
   "__set__": true,
   "elements": [
    "__unix",
    "aiofiles",
    "jinja2",
+   "keyring",
    "ldap3",
    "metomi-isodatetime",
    "metomi-rose-base",
@@ -316,6 +320,7 @@
     "__unix",
     "aiofiles",
     "jinja2",
+    "keyring",
     "ldap3",
     "metomi-isodatetime",
     "metomi-rose-base",
@@ -352,6 +357,7 @@
     "__unix",
     "aiofiles",
     "jinja2 >=2.10.1",
+    "keyring >=23,<24",
     "ldap3",
     "metomi-isodatetime >=1!3.0,<1!4.0",
     "metomi-rose-base",
@@ -368,8 +374,8 @@
    "elements": []
   }
  },
- "url": "https://pypi.io/packages/source/m/metomi-rose/metomi-rose-2.0.4.tar.gz",
- "version": "2.0.4",
+ "url": "https://pypi.io/packages/source/m/metomi-rose/metomi-rose-2.1.0.tar.gz",
+ "version": "2.1.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/metomi-rose.json"
  }
