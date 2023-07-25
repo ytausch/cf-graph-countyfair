@@ -6,7 +6,7 @@
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
   "about": {
-   "description": "Glider tools is a Python 3.8 package designed to process data from the first level\nof processing to a science ready dataset. The package is designed to easily import\ndata to a standard column format (numpy.ndarray or pandas.DataFrame).\nCleaning and smoothing functions are flexible and can be applied as required by the\nuser. We provide examples and demonstrate best practices as developed by the SOCCO Group\n",
+   "description": "Glider tools is a Python 3.8+ package designed to process data from the first level of processing to a science ready dataset (delayed mode quality control). The package is designed to easily import data to a standard column format (numpy.ndarray or pandas.DataFrame). Cleaning and smoothing functions are flexible and can be applied as required by the user. We provide examples and demonstrate best practices as developed by the SOCCO Group, with early contributions from Polar Gliders at the University of Gothenburg. GliderTools includes contributions from VOTO. We aim to implement Best Practices developed by OceanGliders in the ongoing discussions.\n",
    "dev_url": "https://github.com/GliderToolsCommunity/GliderTools",
    "home": "https://github.com/GliderToolsCommunity/GliderTools",
    "license": "GPL-3.0-or-later",
@@ -21,13 +21,14 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "MartinMohrmann",
     "jbusecke",
     "callumrollo"
    ]
   },
   "package": {
    "name": "glidertools",
-   "version": "2022.12.13"
+   "version": "2023.7.25"
   },
   "requirements": {
    "host": [
@@ -38,19 +39,20 @@
    ],
    "run": [
     "python >=3.8",
-    "skyfield",
     "numexpr",
-    "netcdf4 ==1.5.4",
+    "netcdf4",
     "scikit-learn >=0.22",
-    "seawater >=3.3",
     "tqdm >=4",
     "xarray >=2022.10.0",
-    "matplotlib-base"
+    "matplotlib-base",
+    "scipy",
+    "pandas",
+    "gsw"
    ]
   },
   "source": {
-   "sha256": "7851e34517c3a399e6876a4dad6b3d16cc7b9667f835ec519ce77e8a7b516844",
-   "url": "https://pypi.io/packages/source/g/glidertools/glidertools-2022.12.13.tar.gz"
+   "sha256": "07efc6d3e54eb78534b1eaace60a67b94abee145217ff73b3123ffd80f888176",
+   "url": "https://pypi.io/packages/source/g/glidertools/glidertools-2023.7.25.tar.gz"
   },
   "test": {
    "imports": [
@@ -75,13 +77,14 @@
   "run": {
    "__set__": true,
    "elements": [
+    "gsw",
     "matplotlib-base",
     "netcdf4",
     "numexpr",
+    "pandas",
     "python",
     "scikit-learn",
-    "seawater",
-    "skyfield",
+    "scipy",
     "tqdm",
     "xarray"
    ]
@@ -93,7 +96,7 @@
  },
  "meta_yaml": {
   "about": {
-   "description": "Glider tools is a Python 3.8 package designed to process data from the first level\nof processing to a science ready dataset. The package is designed to easily import\ndata to a standard column format (numpy.ndarray or pandas.DataFrame).\nCleaning and smoothing functions are flexible and can be applied as required by the\nuser. We provide examples and demonstrate best practices as developed by the SOCCO Group\n",
+   "description": "Glider tools is a Python 3.8+ package designed to process data from the first level of processing to a science ready dataset (delayed mode quality control). The package is designed to easily import data to a standard column format (numpy.ndarray or pandas.DataFrame). Cleaning and smoothing functions are flexible and can be applied as required by the user. We provide examples and demonstrate best practices as developed by the SOCCO Group, with early contributions from Polar Gliders at the University of Gothenburg. GliderTools includes contributions from VOTO. We aim to implement Best Practices developed by OceanGliders in the ongoing discussions.\n",
    "dev_url": "https://github.com/GliderToolsCommunity/GliderTools",
    "home": "https://github.com/GliderToolsCommunity/GliderTools",
    "license": "GPL-3.0-or-later",
@@ -108,13 +111,14 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "MartinMohrmann",
     "jbusecke",
     "callumrollo"
    ]
   },
   "package": {
    "name": "glidertools",
-   "version": "2022.12.13"
+   "version": "2023.7.25"
   },
   "requirements": {
    "host": [
@@ -125,19 +129,20 @@
    ],
    "run": [
     "python >=3.8",
-    "skyfield",
     "numexpr",
-    "netcdf4 ==1.5.4",
+    "netcdf4",
     "scikit-learn >=0.22",
-    "seawater >=3.3",
     "tqdm >=4",
     "xarray >=2022.10.0",
-    "matplotlib-base"
+    "matplotlib-base",
+    "scipy",
+    "pandas",
+    "gsw"
    ]
   },
   "source": {
-   "sha256": "7851e34517c3a399e6876a4dad6b3d16cc7b9667f835ec519ce77e8a7b516844",
-   "url": "https://pypi.io/packages/source/g/glidertools/glidertools-2022.12.13.tar.gz"
+   "sha256": "07efc6d3e54eb78534b1eaace60a67b94abee145217ff73b3123ffd80f888176",
+   "url": "https://pypi.io/packages/source/g/glidertools/glidertools-2023.7.25.tar.gz"
   },
   "test": {
    "imports": [
@@ -159,20 +164,21 @@
  "pr_info": {
   "__lazy_json__": "pr_info/glidertools.json"
  },
- "raw_meta_yaml": "{% set name = \"glidertools\" %}\n{% set version = \"2022.12.13\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 7851e34517c3a399e6876a4dad6b3d16cc7b9667f835ec519ce77e8a7b516844\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - python >=3.8\n    - pip\n    - pytest-runner\n    - setuptools_scm\n  run:\n    - python >=3.8\n    - skyfield\n    - numexpr\n    - netcdf4 ==1.5.4\n    - scikit-learn >=0.22\n    - seawater >=3.3\n    - tqdm >=4\n    - xarray >=2022.10.0\n    - matplotlib-base\n\ntest:\n  imports:\n    - glidertools\n\nabout:\n  home: https://github.com/GliderToolsCommunity/GliderTools\n  license: GPL-3.0-or-later\n  license_family: GPL\n  license_file: LICENSE\n  summary: 'A toolkit for processing Seaglider base station NetCDF files: despiking, smoothing, outlier detection, backscatter, fluorescence quenching, calibration, gridding, interpolation.'\n\n  description: |\n    Glider tools is a Python 3.8 package designed to process data from the first level\n    of processing to a science ready dataset. The package is designed to easily import\n    data to a standard column format (numpy.ndarray or pandas.DataFrame).\n    Cleaning and smoothing functions are flexible and can be applied as required by the\n    user. We provide examples and demonstrate best practices as developed by the SOCCO Group \n  dev_url: https://github.com/GliderToolsCommunity/GliderTools\n\nextra:\n  recipe-maintainers:\n    - jbusecke\n    - callumrollo\n",
+ "raw_meta_yaml": "{% set name = \"glidertools\" %}\n{% set version = \"2023.7.25\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 07efc6d3e54eb78534b1eaace60a67b94abee145217ff73b3123ffd80f888176\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - python >=3.8\n    - pip\n    - pytest-runner\n    - setuptools_scm\n  run:\n    - python >=3.8\n    - numexpr\n    - netcdf4 \n    - scikit-learn >=0.22\n    - tqdm >=4\n    - xarray >=2022.10.0\n    - matplotlib-base\n    - scipy\n    - pandas\n    - gsw\n\ntest:\n  imports:\n    - glidertools\n\nabout:\n  home: https://github.com/GliderToolsCommunity/GliderTools\n  license: GPL-3.0-or-later\n  license_family: GPL\n  license_file: LICENSE\n  summary: 'A toolkit for processing Seaglider base station NetCDF files: despiking, smoothing, outlier detection, backscatter, fluorescence quenching, calibration, gridding, interpolation.'\n\n  description: |\n    Glider tools is a Python 3.8+ package designed to process data from the first level of processing to a science ready dataset (delayed mode quality control). The package is designed to easily import data to a standard column format (numpy.ndarray or pandas.DataFrame). Cleaning and smoothing functions are flexible and can be applied as required by the user. We provide examples and demonstrate best practices as developed by the SOCCO Group, with early contributions from Polar Gliders at the University of Gothenburg. GliderTools includes contributions from VOTO. We aim to implement Best Practices developed by OceanGliders in the ongoing discussions.\n  dev_url: https://github.com/GliderToolsCommunity/GliderTools\n\nextra:\n  recipe-maintainers:\n    - MartinMohrmann\n    - jbusecke\n    - callumrollo\n",
  "req": {
   "__set__": true,
   "elements": [
+   "gsw",
    "matplotlib-base",
    "netcdf4",
    "numexpr",
+   "pandas",
    "pip",
    "pytest-runner",
    "python",
    "scikit-learn",
-   "seawater",
+   "scipy",
    "setuptools_scm",
-   "skyfield",
    "tqdm",
    "xarray"
   ]
@@ -194,13 +200,14 @@
   "run": {
    "__set__": true,
    "elements": [
+    "gsw",
     "matplotlib-base",
     "netcdf4",
     "numexpr",
+    "pandas",
     "python",
     "scikit-learn",
-    "seawater",
-    "skyfield",
+    "scipy",
     "tqdm",
     "xarray"
    ]
@@ -228,13 +235,14 @@
   "run": {
    "__set__": true,
    "elements": [
+    "gsw",
     "matplotlib-base",
-    "netcdf4 ==1.5.4",
+    "netcdf4",
     "numexpr",
+    "pandas",
     "python >=3.8",
     "scikit-learn >=0.22",
-    "seawater >=3.3",
-    "skyfield",
+    "scipy",
     "tqdm >=4",
     "xarray >=2022.10.0"
    ]
@@ -244,8 +252,8 @@
    "elements": []
   }
  },
- "url": "https://pypi.io/packages/source/g/glidertools/glidertools-2022.12.13.tar.gz",
- "version": "2022.12.13",
+ "url": "https://pypi.io/packages/source/g/glidertools/glidertools-2023.7.25.tar.gz",
+ "version": "2023.7.25",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/glidertools.json"
  }
