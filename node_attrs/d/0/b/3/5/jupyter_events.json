@@ -7,7 +7,8 @@
  "linux_64_meta_yaml": {
   "about": {
    "dev_url": "https://github.com/jupyter/jupyter_events",
-   "home": "https://pypi.org/project/jupyter-events/",
+   "doc_url": "https://jupyter-events.readthedocs.io",
+   "home": "https://pypi.org/project/jupyter-events",
    "license": "BSD-3-Clause",
    "license_family": "BSD",
    "license_file": "COPYING.md",
@@ -15,16 +16,117 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
     "Zsailer",
     "blink1073",
-    "afshin"
+    "afshin",
+    "bollwyvl"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+    },
+    "name": "jupyter_events",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "hatchling >=1.0"
+     ],
+     "run": [
+      "jsonschema-with-format-nongpl >=3.2",
+      "python >=3.7",
+      "python-json-logger >=2.0.4",
+      "traitlets >=5.3",
+      "pyyaml >=5.3",
+      "rfc3339-validator",
+      "rfc3986-validator >=0.1.1"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "jupyter_events_with_cli",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "jupyter_events",
+      "click",
+      "python >=3.7",
+      "rich"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "jupyter_events",
+      "jupyter_events.cli"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "_jupyter_events_tests",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "jupyter_events",
+      "jupyter_events_with_cli",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "mypy --no-warn-unused-ignores -p=jupyter_events",
+      "python -m pytest -vv --cov=jupyter_events --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=88"
+     ],
+     "imports": [
+      "jupyter_events",
+      "jupyter_events.cli"
+     ],
+     "requires": [
+      "mypy",
+      "pip",
+      "pytest-asyncio >=0.19.0",
+      "pytest-console-scripts",
+      "pytest-cov",
+      "types-jsonschema"
+     ],
+     "source_files": [
+      "tests",
+      "pyproject.toml"
+     ]
+    }
+   }
+  ],
   "package": {
    "name": "jupyter_events",
    "version": "0.6.3"
@@ -32,38 +134,15 @@
   "requirements": {
    "host": [
     "pip",
-    "python >=3.7",
-    "hatchling >=1.0"
+    "python >=3.7"
    ],
    "run": [
-    "jsonschema >=3.2",
-    "python >=3.7",
-    "python-json-logger >=2.0.4",
-    "traitlets >=5.3",
-    "pyyaml >=5.3",
-    "rfc3339-validator",
-    "rfc3986-validator >=0.1.1"
+    "python >=3.7"
    ]
   },
   "source": {
    "sha256": "9a6e9995f75d1b7146b436ea24d696ce3a35bfa8bfe45e0c33c334c79464d0b3",
-   "url": "https://pypi.io/packages/source/j/jupyter_events/jupyter_events-0.6.3.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "pip check",
-    "pip install -e \".[test]\"",
-    "python -m pytest -vv"
-   ],
-   "imports": [
-    "jupyter_events"
-   ],
-   "requires": [
-    "pip"
-   ],
-   "source_files": [
-    "."
-   ]
+   "url": "https://pypi.io/packages/source/j/jupyter-events/jupyter_events-0.6.3.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -82,26 +161,36 @@
   "run": {
    "__set__": true,
    "elements": [
-    "jsonschema",
+    "click",
+    "jsonschema-with-format-nongpl",
+    "jupyter_events",
+    "jupyter_events_with_cli",
     "python",
     "python-json-logger",
     "pyyaml",
     "rfc3339-validator",
     "rfc3986-validator",
+    "rich",
     "traitlets"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "mypy",
+    "pip",
+    "pytest-asyncio",
+    "pytest-console-scripts",
+    "pytest-cov",
+    "types-jsonschema"
    ]
   }
  },
  "meta_yaml": {
   "about": {
    "dev_url": "https://github.com/jupyter/jupyter_events",
-   "home": "https://pypi.org/project/jupyter-events/",
+   "doc_url": "https://jupyter-events.readthedocs.io",
+   "home": "https://pypi.org/project/jupyter-events",
    "license": "BSD-3-Clause",
    "license_family": "BSD",
    "license_file": "COPYING.md",
@@ -109,16 +198,117 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
     "Zsailer",
     "blink1073",
-    "afshin"
+    "afshin",
+    "bollwyvl"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+    },
+    "name": "jupyter_events",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "hatchling >=1.0"
+     ],
+     "run": [
+      "jsonschema-with-format-nongpl >=3.2",
+      "python >=3.7",
+      "python-json-logger >=2.0.4",
+      "traitlets >=5.3",
+      "pyyaml >=5.3",
+      "rfc3339-validator",
+      "rfc3986-validator >=0.1.1"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "jupyter_events_with_cli",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "jupyter_events",
+      "click",
+      "python >=3.7",
+      "rich"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "jupyter_events",
+      "jupyter_events.cli"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "_jupyter_events_tests",
+    "requirements": {
+     "host": [
+      "python >=3.7"
+     ],
+     "run": [
+      "jupyter_events",
+      "jupyter_events_with_cli",
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "mypy --no-warn-unused-ignores -p=jupyter_events",
+      "python -m pytest -vv --cov=jupyter_events --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=88"
+     ],
+     "imports": [
+      "jupyter_events",
+      "jupyter_events.cli"
+     ],
+     "requires": [
+      "mypy",
+      "pip",
+      "pytest-asyncio >=0.19.0",
+      "pytest-console-scripts",
+      "pytest-cov",
+      "types-jsonschema"
+     ],
+     "source_files": [
+      "tests",
+      "pyproject.toml"
+     ]
+    }
+   }
+  ],
   "package": {
    "name": "jupyter_events",
    "version": "0.6.3"
@@ -126,45 +316,24 @@
   "requirements": {
    "host": [
     "pip",
-    "python >=3.7",
-    "hatchling >=1.0"
+    "python >=3.7"
    ],
    "run": [
-    "jsonschema >=3.2",
-    "python >=3.7",
-    "python-json-logger >=2.0.4",
-    "traitlets >=5.3",
-    "pyyaml >=5.3",
-    "rfc3339-validator",
-    "rfc3986-validator >=0.1.1"
+    "python >=3.7"
    ]
   },
   "source": {
    "sha256": "9a6e9995f75d1b7146b436ea24d696ce3a35bfa8bfe45e0c33c334c79464d0b3",
-   "url": "https://pypi.io/packages/source/j/jupyter_events/jupyter_events-0.6.3.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "pip check",
-    "pip install -e \".[test]\"",
-    "python -m pytest -vv"
-   ],
-   "imports": [
-    "jupyter_events"
-   ],
-   "requires": [
-    "pip"
-   ],
-   "source_files": [
-    "."
-   ]
+   "url": "https://pypi.io/packages/source/j/jupyter-events/jupyter_events-0.6.3.tar.gz"
   }
  },
  "name": "jupyter_events",
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "jupyter_events"
+   "_jupyter_events_tests",
+   "jupyter_events",
+   "jupyter_events_with_cli"
   ]
  },
  "parsing_error": false,
@@ -174,18 +343,22 @@
  "pr_info": {
   "__lazy_json__": "pr_info/jupyter_events.json"
  },
- "raw_meta_yaml": "{% set name = \"jupyter_events\" %}\n{% set version = \"0.6.3\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/jupyter_events-{{ version }}.tar.gz\n  sha256: 9a6e9995f75d1b7146b436ea24d696ce3a35bfa8bfe45e0c33c334c79464d0b3\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - pip\n    - python >=3.7\n    - hatchling >=1.0\n  run:\n    - jsonschema >=3.2\n    - python >=3.7\n    - python-json-logger >=2.0.4\n    - traitlets >=5.3\n    - pyyaml >=5.3\n    - rfc3339-validator\n    - rfc3986-validator >=0.1.1\n\ntest:\n  source_files:\n    - .\n  imports:\n    - jupyter_events\n  commands:\n    - pip check\n    - pip install -e \".[test]\"\n    - python -m pytest -vv\n  requires:\n    - pip\n\nabout:\n  home: https://pypi.org/project/jupyter-events/\n  dev_url: https://github.com/jupyter/jupyter_events\n  summary: Jupyter Event System library\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: COPYING.md\n\nextra:\n  recipe-maintainers:\n    - Zsailer\n    - blink1073\n    - afshin\n",
+ "raw_meta_yaml": "{% set version = \"0.6.3\" %}\n\npackage:\n  name: jupyter_events\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/j/jupyter-events/jupyter_events-{{ version }}.tar.gz\n  sha256: 9a6e9995f75d1b7146b436ea24d696ce3a35bfa8bfe45e0c33c334c79464d0b3\n\nbuild:\n  noarch: python\n  number: 1\n\nrequirements:\n  host:\n    - pip\n    - python >=3.7\n  run:\n    - python >=3.7\n\noutputs:\n  - name: jupyter_events\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    requirements:\n      host:\n        - pip\n        - python >=3.7\n        - hatchling >=1.0\n      run:\n        - jsonschema-with-format-nongpl >=3.2\n        - python >=3.7\n        - python-json-logger >=2.0.4\n        - traitlets >=5.3\n        - pyyaml >=5.3\n        - rfc3339-validator\n        - rfc3986-validator >=0.1.1\n    test:\n      requires:\n        - pip\n      commands:\n        - pip check\n\n  - name: jupyter_events_with_cli\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7\n      run:\n        - {{ pin_subpackage(\"jupyter_events\") }}\n        - click\n        - python >=3.7\n        - rich\n    test:\n      imports:\n        - jupyter_events\n        - jupyter_events.cli\n      requires:\n        - pip\n      commands:\n        - pip check\n\n  - name: _jupyter_events_tests\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7\n      run:\n        - {{ pin_subpackage(\"jupyter_events\") }}\n        - {{ pin_subpackage(\"jupyter_events_with_cli\") }}\n        - python >=3.7\n    test:\n      source_files:\n        - tests\n        - pyproject.toml\n      imports:\n        - jupyter_events\n        - jupyter_events.cli\n      commands:\n        - pip check\n        - mypy --no-warn-unused-ignores -p=jupyter_events\n        - python -m pytest -vv --cov=jupyter_events --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=88\n      requires:\n        - mypy\n        - pip\n        - pytest-asyncio >=0.19.0\n        - pytest-console-scripts\n        - pytest-cov\n        - types-jsonschema\n\nabout:\n  home: https://pypi.org/project/jupyter-events\n  dev_url: https://github.com/jupyter/jupyter_events\n  summary: Jupyter Event System library\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: COPYING.md\n  doc_url: https://jupyter-events.readthedocs.io\n\nextra:\n  recipe-maintainers:\n    - Zsailer\n    - blink1073\n    - afshin\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
+   "click",
    "hatchling",
-   "jsonschema",
+   "jsonschema-with-format-nongpl",
+   "jupyter_events",
+   "jupyter_events_with_cli",
    "pip",
    "python",
    "python-json-logger",
    "pyyaml",
    "rfc3339-validator",
    "rfc3986-validator",
+   "rich",
    "traitlets"
   ]
  },
@@ -205,19 +378,28 @@
   "run": {
    "__set__": true,
    "elements": [
-    "jsonschema",
+    "click",
+    "jsonschema-with-format-nongpl",
+    "jupyter_events",
+    "jupyter_events_with_cli",
     "python",
     "python-json-logger",
     "pyyaml",
     "rfc3339-validator",
     "rfc3986-validator",
+    "rich",
     "traitlets"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "mypy",
+    "pip",
+    "pytest-asyncio",
+    "pytest-console-scripts",
+    "pytest-cov",
+    "types-jsonschema"
    ]
   }
  },
@@ -238,23 +420,32 @@
   "run": {
    "__set__": true,
    "elements": [
-    "jsonschema >=3.2",
+    "click",
+    "jsonschema-with-format-nongpl >=3.2",
+    "jupyter_events",
+    "jupyter_events_with_cli",
     "python >=3.7",
     "python-json-logger >=2.0.4",
     "pyyaml >=5.3",
     "rfc3339-validator",
     "rfc3986-validator >=0.1.1",
+    "rich",
     "traitlets >=5.3"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "mypy",
+    "pip",
+    "pytest-asyncio >=0.19.0",
+    "pytest-console-scripts",
+    "pytest-cov",
+    "types-jsonschema"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/j/jupyter_events/jupyter_events-0.6.3.tar.gz",
+ "url": "https://pypi.io/packages/source/j/jupyter-events/jupyter_events-0.6.3.tar.gz",
  "version": "0.6.3",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/jupyter_events.json"
