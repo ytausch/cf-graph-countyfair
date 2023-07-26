@@ -21,7 +21,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "qt6-3d"
    ]
@@ -52,6 +52,8 @@
     "cdt_stub"
    ],
    "host": [
+    "libvulkan-headers",
+    "libvulkan-loader",
     "qt6-main",
     "assimp",
     "libzlib"
@@ -110,6 +112,8 @@
    "__set__": true,
    "elements": [
     "assimp",
+    "libvulkan-headers",
+    "libvulkan-loader",
     "libzlib",
     "qt6-main"
    ]
@@ -140,7 +144,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "qt6-3d"
    ]
@@ -171,6 +175,8 @@
     "cdt_stub"
    ],
    "host": [
+    "libvulkan-headers",
+    "libvulkan-loader",
     "qt6-main",
     "assimp",
     "libzlib"
@@ -229,6 +235,8 @@
    "__set__": true,
    "elements": [
     "assimp",
+    "libvulkan-headers",
+    "libvulkan-loader",
     "libzlib",
     "qt6-main"
    ]
@@ -259,7 +267,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "qt6-3d",
     "qt6-3d",
@@ -325,6 +333,13 @@
     "c_compiler_stub"
    ],
    "host": [
+    "libvulkan-headers",
+    "libvulkan-loader",
+    "qt6-main",
+    "assimp",
+    "libzlib",
+    "libvulkan-headers",
+    "libvulkan-loader",
     "qt6-main",
     "assimp",
     "libzlib",
@@ -334,9 +349,8 @@
     "qt6-main",
     "assimp",
     "libzlib",
-    "qt6-main",
-    "assimp",
-    "libzlib",
+    "libvulkan-headers",
+    "libvulkan-loader",
     "qt6-main",
     "assimp",
     "libzlib"
@@ -459,7 +473,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "qt6-3d"
    ]
@@ -560,7 +574,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "qt6-3d"
    ]
@@ -666,7 +680,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/qt-3d.json"
  },
- "raw_meta_yaml": "{% set version = \"6.5.1\" %}\n\npackage:\n  name: qt6-3d\n  version: {{ version }}\n\nsource:\n  url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/submodules/qt3d-everywhere-src-{{ version }}.tar.xz\n  md5: 41f8593d23c19358ac0bd4ce86ab4f7e\n  patches:\n    # qt tries to run assimp and fails on win32 although assimp is found \n    - patches/0033-qt3d-disable-assimp-compile-test.patch\n\nbuild:\n  number: 0\n  detect_binary_files_with_prefix: true\n  run_exports:\n    - {{ pin_subpackage('qt6-3d', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - cmake\n    - ninja\n    - perl\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - qt6-main  # [build_platform != target_platform]\n    - sysroot_linux-64 2.17              # [linux]\n    - {{ cdt('mesa-libgl-devel') }}      # [linux]\n    - {{ cdt('mesa-libegl-devel') }}     # [linux]\n    - {{ cdt('mesa-dri-drivers') }}      # [linux]\n    - {{ cdt('libdrm-devel') }}          # [linux]\n    - {{ cdt('libglvnd-glx') }}          # [linux]\n    - {{ cdt('libglvnd-egl') }}          # [linux]\n  host:\n    - qt6-main\n    - assimp\n    - libzlib\n\ntest:\n  requires:\n    - sysroot_linux-64 2.17              # [linux]\n    - {{ cdt('mesa-libgl-devel') }}      # [linux]\n    - {{ cdt('mesa-libegl-devel') }}     # [linux]\n    - {{ cdt('mesa-dri-drivers') }}      # [linux]\n    - {{ cdt('libdrm-devel') }}          # [linux]\n    - {{ cdt('libglvnd-glx') }}          # [linux]\n    - {{ cdt('libglvnd-egl') }}          # [linux]\n    - cmake\n    - ninja\n  source_files:\n    - examples/\n  commands:\n    {% set qt_libs = [\"3DAnimation\", \"3DCore\", \"3DExtras\", \"3DLogic\", \"3DRender\"] %}\n    {% for each_qt_lib in qt_libs %}\n    - test -d $PREFIX/include/qt6/Qt{{ each_qt_lib }}  # [unix]\n    - test -f $PREFIX/lib/libQt6{{ each_qt_lib }}${SHLIB_EXT}  # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\qt6\\\\Qt{{ each_qt_lib }} exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\Qt6{{ each_qt_lib }}.lib exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\bin\\\\Qt6{{ each_qt_lib }}.dll exit 1  # [win]\n    {% endfor %}\n\nabout:\n  home: http://qt-project.org\n  license: LGPL-3.0-only\n  license_file: LICENSES/LGPL-3.0-only.txt\n  summary: Qt is a cross-platform application and UI framework.\n  description: |\n    Qt helps you create connected devices, UIs & applications that run\n    anywhere on any device, on any operating system at any time.\n  doc_url: http://doc.qt.io/\n  dev_url: https://github.com/qt/qt3d\n\nextra:\n  recipe-maintainers:\n    - jschueller\n  feedstock-name: qt-3d\n",
+ "raw_meta_yaml": "{% set version = \"6.5.1\" %}\n\npackage:\n  name: qt6-3d\n  version: {{ version }}\n\nsource:\n  url: https://download.qt.io/official_releases/qt/{{ version.rpartition('.')[0] }}/{{ version }}/submodules/qt3d-everywhere-src-{{ version }}.tar.xz\n  md5: 41f8593d23c19358ac0bd4ce86ab4f7e\n  patches:\n    # qt tries to run assimp and fails on win32 although assimp is found \n    - patches/0033-qt3d-disable-assimp-compile-test.patch\n\nbuild:\n  number: 1\n  detect_binary_files_with_prefix: true\n  run_exports:\n    - {{ pin_subpackage('qt6-3d', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - cmake\n    - ninja\n    - perl\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - qt6-main  # [build_platform != target_platform]\n    - sysroot_linux-64 2.17              # [linux]\n    - {{ cdt('mesa-libgl-devel') }}      # [linux]\n    - {{ cdt('mesa-libegl-devel') }}     # [linux]\n    - {{ cdt('mesa-dri-drivers') }}      # [linux]\n    - {{ cdt('libdrm-devel') }}          # [linux]\n    - {{ cdt('libglvnd-glx') }}          # [linux]\n    - {{ cdt('libglvnd-egl') }}          # [linux]\n  host:\n    - libvulkan-headers                  # [not osx]\n    - libvulkan-loader                   # [not osx]\n    - qt6-main\n    - assimp\n    - libzlib\n\ntest:\n  requires:\n    - sysroot_linux-64 2.17              # [linux]\n    - {{ cdt('mesa-libgl-devel') }}      # [linux]\n    - {{ cdt('mesa-libegl-devel') }}     # [linux]\n    - {{ cdt('mesa-dri-drivers') }}      # [linux]\n    - {{ cdt('libdrm-devel') }}          # [linux]\n    - {{ cdt('libglvnd-glx') }}          # [linux]\n    - {{ cdt('libglvnd-egl') }}          # [linux]\n    - cmake\n    - ninja\n  source_files:\n    - examples/\n  commands:\n    {% set qt_libs = [\"3DAnimation\", \"3DCore\", \"3DExtras\", \"3DLogic\", \"3DRender\"] %}\n    {% for each_qt_lib in qt_libs %}\n    - test -d $PREFIX/include/qt6/Qt{{ each_qt_lib }}  # [unix]\n    - test -f $PREFIX/lib/libQt6{{ each_qt_lib }}${SHLIB_EXT}  # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\qt6\\\\Qt{{ each_qt_lib }} exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\Qt6{{ each_qt_lib }}.lib exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\bin\\\\Qt6{{ each_qt_lib }}.dll exit 1  # [win]\n    {% endfor %}\n\nabout:\n  home: http://qt-project.org\n  license: LGPL-3.0-only\n  license_file: LICENSES/LGPL-3.0-only.txt\n  summary: Qt is a cross-platform application and UI framework.\n  description: |\n    Qt helps you create connected devices, UIs & applications that run\n    anywhere on any device, on any operating system at any time.\n  doc_url: http://doc.qt.io/\n  dev_url: https://github.com/qt/qt3d\n\nextra:\n  recipe-maintainers:\n    - jschueller\n  feedstock-name: qt-3d\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -675,6 +689,8 @@
    "cdt_stub",
    "cmake",
    "cxx_compiler_stub",
+   "libvulkan-headers",
+   "libvulkan-loader",
    "libzlib",
    "ninja",
    "perl",
@@ -701,6 +717,8 @@
     "assimp",
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "libvulkan-headers",
+    "libvulkan-loader",
     "libzlib",
     "qt6-main"
    ]
@@ -740,6 +758,8 @@
    "__set__": true,
    "elements": [
     "assimp",
+    "libvulkan-headers",
+    "libvulkan-loader",
     "libzlib",
     "qt6-main"
    ]
@@ -775,7 +795,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "qt6-3d"
    ]
@@ -799,6 +819,8 @@
     "c_compiler_stub"
    ],
    "host": [
+    "libvulkan-headers",
+    "libvulkan-loader",
     "qt6-main",
     "assimp",
     "libzlib"
@@ -853,6 +875,8 @@
    "__set__": true,
    "elements": [
     "assimp",
+    "libvulkan-headers",
+    "libvulkan-loader",
     "libzlib",
     "qt6-main"
    ]
