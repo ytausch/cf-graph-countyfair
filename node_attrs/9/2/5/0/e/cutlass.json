@@ -25,7 +25,7 @@
   },
   "package": {
    "name": "cutlass",
-   "version": "2.11.0"
+   "version": "3.1.0"
   },
   "requirements": {
    "build": [
@@ -36,15 +36,16 @@
     "make"
    ],
    "host": [
-    "cudnn"
+    "cudnn",
+    "libcublas-dev"
    ],
    "run": [
     "cudnn"
    ]
   },
   "source": {
-   "sha256": "b4394f1e080b63cfc54163069334096324c1262dfc66e67099880005d51b8af9",
-   "url": "https://github.com/NVIDIA/cutlass/archive/refs/tags/v2.11.0.tar.gz"
+   "sha256": "821aa2e5b709a2e5d3922dcf2c5d445b4898a6ef8bac683cfb00125eafbca029",
+   "url": "https://github.com/NVIDIA/cutlass/archive/refs/tags/v3.1.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -71,7 +72,8 @@
   "host": {
    "__set__": true,
    "elements": [
-    "cudnn"
+    "cudnn",
+    "libcublas-dev"
    ]
   },
   "run": {
@@ -106,7 +108,7 @@
   },
   "package": {
    "name": "cutlass",
-   "version": "2.11.0"
+   "version": "3.1.0"
   },
   "requirements": {
    "build": [
@@ -117,15 +119,16 @@
     "make"
    ],
    "host": [
-    "cudnn"
+    "cudnn",
+    "libcublas-dev"
    ],
    "run": [
     "cudnn"
    ]
   },
   "source": {
-   "sha256": "b4394f1e080b63cfc54163069334096324c1262dfc66e67099880005d51b8af9",
-   "url": "https://github.com/NVIDIA/cutlass/archive/refs/tags/v2.11.0.tar.gz"
+   "sha256": "821aa2e5b709a2e5d3922dcf2c5d445b4898a6ef8bac683cfb00125eafbca029",
+   "url": "https://github.com/NVIDIA/cutlass/archive/refs/tags/v3.1.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -152,7 +155,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cutlass.json"
  },
- "raw_meta_yaml": "{% set version = \"2.11.0\" %}\n\npackage:\n  name: cutlass\n  version: {{ version }}\n\nsource:\n  url: https://github.com/NVIDIA/cutlass/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: b4394f1e080b63cfc54163069334096324c1262dfc66e67099880005d51b8af9\n\nbuild:\n  number: 0\n  skip: true  # [not linux]\n  # not supported for CUDA 10 nor CPU\n  # CUDA 11.{0|1} times out consistently\n  skip: true  # [cuda_compiler_version != \"11.2\"]\n  run_exports:\n    - {{ pin_subpackage('cutlass', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - cmake\n    - make\n  host:\n    - cudnn\n  run:\n    - cudnn\ntest:\n  commands:\n    # shared:\n    - test -f $PREFIX/lib/libcutlass.so               # [linux]\n    - if not exist %LIBRARY_BIN%\\cutlass.dll exit 1   # [win]\n\n    # absence of static libraries (windows uses same extension for\n    # static libs and the \"import library\" needed to load a DLL):\n    - test ! -f $PREFIX/lib/libcutlass.a              # [not win]\n\n    # headers:\n    # This list should be substantially longer, but upstream just globs\n    # all *.h files. These are the headers required for triton, but\n    # relevant headers can be added as needed/desired.\n    {% for each_header in [\"library/handle.h\", \"library/library.h\",\n                           \"library/operation_table.h\", \"library/singleton.h\"] %}\n    - test -f $PREFIX/include/cutlass/{{ each_header }} || (echo \"{{ each_header }} not found\" && exit 1)  # [unix]\n    - if not exist %LIBRARY_INC%\\cutlass\\{{ \"\\\\\".join(each_header.split(\"/\")) }} exit 1                    # [win]\n    {% endfor %}\n\nabout:\n  home: https://github.com/NVIDIA/cutlass\n  license: BSD-3-Clause\n  license_file: LICENSE.txt\n  summary: CUDA Templates for Linear Algebra Subroutines\n  dev_url: https://github.com/NVIDIA/cutlass\n\nextra:\n  recipe-maintainers:\n    - h-vetinari\n",
+ "raw_meta_yaml": "{% set version = \"3.1.0\" %}\n\npackage:\n  name: cutlass\n  version: {{ version }}\n\nsource:\n  url: https://github.com/NVIDIA/cutlass/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 821aa2e5b709a2e5d3922dcf2c5d445b4898a6ef8bac683cfb00125eafbca029\n\nbuild:\n  number: 0\n  skip: true  # [not linux]\n  # cutlass 3.1 requires CUDA >=11.4\n  skip: true  # [not (cuda_compiler_version or \"\").startswith(\"12\")]\n  run_exports:\n    - {{ pin_subpackage('cutlass', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - cmake\n    - make\n  host:\n    - cudnn\n    - libcublas-dev     # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  run:\n    - cudnn\ntest:\n  commands:\n    # shared:\n    - test -f $PREFIX/lib/libcutlass.so               # [linux]\n    - if not exist %LIBRARY_BIN%\\cutlass.dll exit 1   # [win]\n\n    # absence of static libraries (windows uses same extension for\n    # static libs and the \"import library\" needed to load a DLL):\n    - test ! -f $PREFIX/lib/libcutlass.a              # [not win]\n\n    # headers:\n    # This list should be substantially longer, but upstream just globs\n    # all *.h files. These are the headers required for triton, but\n    # relevant headers can be added as needed/desired.\n    {% for each_header in [\"library/handle.h\", \"library/library.h\",\n                           \"library/operation_table.h\", \"library/singleton.h\"] %}\n    - test -f $PREFIX/include/cutlass/{{ each_header }} || (echo \"{{ each_header }} not found\" && exit 1)  # [unix]\n    - if not exist %LIBRARY_INC%\\cutlass\\{{ \"\\\\\".join(each_header.split(\"/\")) }} exit 1                    # [win]\n    {% endfor %}\n\nabout:\n  home: https://github.com/NVIDIA/cutlass\n  license: BSD-3-Clause\n  license_file: LICENSE.txt\n  summary: CUDA Templates for Linear Algebra Subroutines\n  dev_url: https://github.com/NVIDIA/cutlass\n\nextra:\n  recipe-maintainers:\n    - h-vetinari\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -161,6 +164,7 @@
    "cuda_compiler_stub",
    "cudnn",
    "cxx_compiler_stub",
+   "libcublas-dev",
    "make"
   ]
  },
@@ -181,7 +185,8 @@
     "c_compiler_stub",
     "cuda_compiler_stub",
     "cudnn",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "libcublas-dev"
    ]
   },
   "run": {
@@ -213,7 +218,8 @@
   "host": {
    "__set__": true,
    "elements": [
-    "cudnn"
+    "cudnn",
+    "libcublas-dev"
    ]
   },
   "run": {
@@ -227,8 +233,8 @@
    "elements": []
   }
  },
- "url": "https://github.com/NVIDIA/cutlass/archive/refs/tags/v2.11.0.tar.gz",
- "version": "2.11.0",
+ "url": "https://github.com/NVIDIA/cutlass/archive/refs/tags/v3.1.0.tar.gz",
+ "version": "3.1.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cutlass.json"
  }
