@@ -138,7 +138,7 @@
   ],
   "package": {
    "name": "rich-split",
-   "version": "13.5.0"
+   "version": "13.5.1"
   },
   "requirements": {
    "host": [
@@ -151,13 +151,13 @@
   "source": [
    {
     "folder": "dist",
-    "sha256": "62c81e88dc078d2372858660e3d5566746870133e51321f852ccc20af5c7e7b2",
-    "url": "https://pypi.io/packages/source/r/rich/rich-13.5.0.tar.gz"
+    "sha256": "881653ee7037803559d8eae98f145e0a4c4b0ec3ff0300d2cc8d479c71fc6819",
+    "url": "https://pypi.io/packages/source/r/rich/rich-13.5.1.tar.gz"
    },
    {
     "folder": "src",
-    "sha256": "d8011f8c0caa17159a99ea64f4b79590a9a8bd5e23ade85562812288d4ab973a",
-    "url": "https://github.com/Textualize/rich/archive/refs/tags/v13.5.0.tar.gz"
+    "sha256": "84e3eff4676e5769b5ca52406f69defabd1b003bc4c3108df0595abf63eae772",
+    "url": "https://github.com/Textualize/rich/archive/refs/tags/v13.5.1.tar.gz"
    }
   ]
  },
@@ -317,7 +317,7 @@
   ],
   "package": {
    "name": "rich-split",
-   "version": "13.5.0"
+   "version": "13.5.1"
   },
   "requirements": {
    "host": [
@@ -330,13 +330,13 @@
   "source": [
    {
     "folder": "dist",
-    "sha256": "62c81e88dc078d2372858660e3d5566746870133e51321f852ccc20af5c7e7b2",
-    "url": "https://pypi.io/packages/source/r/rich/rich-13.5.0.tar.gz"
+    "sha256": "881653ee7037803559d8eae98f145e0a4c4b0ec3ff0300d2cc8d479c71fc6819",
+    "url": "https://pypi.io/packages/source/r/rich/rich-13.5.1.tar.gz"
    },
    {
     "folder": "src",
-    "sha256": "d8011f8c0caa17159a99ea64f4b79590a9a8bd5e23ade85562812288d4ab973a",
-    "url": "https://github.com/Textualize/rich/archive/refs/tags/v13.5.0.tar.gz"
+    "sha256": "84e3eff4676e5769b5ca52406f69defabd1b003bc4c3108df0595abf63eae772",
+    "url": "https://github.com/Textualize/rich/archive/refs/tags/v13.5.1.tar.gz"
    }
   ]
  },
@@ -357,7 +357,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/rich.json"
  },
- "raw_meta_yaml": "{% set min_python = \">=3.7.0\" %}\n{% set min_python = \">=3.7.0\" %}\n{% set version = \"13.5.0\" %}\n\npackage:\n  name: rich-split\n  version: {{ version }}\n\nsource:\n  - folder: dist\n    url: https://pypi.io/packages/source/r/rich/rich-{{ version }}.tar.gz\n    sha256: 62c81e88dc078d2372858660e3d5566746870133e51321f852ccc20af5c7e7b2\n  - folder: src\n    url: https://github.com/Textualize/rich/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: d8011f8c0caa17159a99ea64f4b79590a9a8bd5e23ade85562812288d4ab973a\n\nbuild:\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    - python {{ min_python }}\n  run:\n    - python {{ min_python }}\n\noutputs:\n  - name: rich\n    build:\n      noarch: python\n      script:\n        - cd dist && {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    requirements:\n      host:\n        - pip\n        - poetry-core >=1.0.0\n        - python {{ min_python }}\n      run:\n        # sync with normalized deps from poetry-generated setup.py\n        - markdown-it-py >=2.2.0\n        - pygments >=2.13.0,<3.0.0\n        - python {{ min_python }}\n        - typing_extensions >=4.0.0,<5.0.0\n    test:\n      imports:\n        - rich\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: rich-with-jupyter\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python {{ min_python }}\n      run:\n        - {{ pin_subpackage(\"rich\", max_pin=\"x.x.x\") }}\n        - ipywidgets >=7.5.1,<9.0.0\n        - python {{ min_python }}\n    test:\n      imports:\n        - rich\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: _rich-with-tests\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python {{ min_python }}\n      run:\n        - {{ pin_subpackage(\"rich\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"rich-with-jupyter\", max_pin=\"x.x.x\") }}\n        - python {{ min_python }}\n    test:\n      source_files:\n        - src/tests\n      imports:\n        - rich\n      commands:\n        - pip check\n        - pytest src/tests -vv --cov=rich --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=91\n      requires:\n        - attrs\n        - pip\n        - pytest >=7.0.0,<8.0.0\n        - pytest-cov >=3.0.0,<4.0.0\n\nabout:\n  home: https://github.com/Textualize/rich\n  license: MIT\n  license_family: MIT\n  license_file: dist/LICENSE\n  summary: Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal\n\n  description: |\n    Rich is a Python library for rich text and beautiful formatting in the terminal.\n\n    The Rich API makes it easy to add color and style to terminal output. Rich\n    can also render pretty tables, progress bars, markdown, syntax highlighted\n    source code, tracebacks, and more \u2014 out of the box.\n\n  doc_url: https://rich.readthedocs.io\n  dev_url: https://github.com/Textualize/rich\n\nextra:\n  feedstock-name: rich\n  recipe-maintainers:\n    - jan-janssen\n    - willmcgugan\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"13.5.1\" %}\n{% set min_python = \">=3.7.0\" %}\n\npackage:\n  name: rich-split\n  version: {{ version }}\n\nsource:\n  - folder: dist\n    url: https://pypi.io/packages/source/r/rich/rich-{{ version }}.tar.gz\n    sha256: 881653ee7037803559d8eae98f145e0a4c4b0ec3ff0300d2cc8d479c71fc6819\n  - folder: src\n    url: https://github.com/Textualize/rich/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: 84e3eff4676e5769b5ca52406f69defabd1b003bc4c3108df0595abf63eae772\n\nbuild:\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    - python {{ min_python }}\n  run:\n    - python {{ min_python }}\n\noutputs:\n  - name: rich\n    build:\n      noarch: python\n      script:\n        - cd dist && {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    requirements:\n      host:\n        - pip\n        - poetry-core >=1.0.0\n        - python {{ min_python }}\n      run:\n        # sync with normalized deps from poetry-generated setup.py\n        - markdown-it-py >=2.2.0\n        - pygments >=2.13.0,<3.0.0\n        - python {{ min_python }}\n        - typing_extensions >=4.0.0,<5.0.0\n    test:\n      imports:\n        - rich\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: rich-with-jupyter\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python {{ min_python }}\n      run:\n        - {{ pin_subpackage(\"rich\", max_pin=\"x.x.x\") }}\n        - ipywidgets >=7.5.1,<9.0.0\n        - python {{ min_python }}\n    test:\n      imports:\n        - rich\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: _rich-with-tests\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python {{ min_python }}\n      run:\n        - {{ pin_subpackage(\"rich\", max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage(\"rich-with-jupyter\", max_pin=\"x.x.x\") }}\n        - python {{ min_python }}\n    test:\n      source_files:\n        - src/tests\n      imports:\n        - rich\n      commands:\n        - pip check\n        - pytest src/tests -vv --cov=rich --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=91\n      requires:\n        - attrs\n        - pip\n        - pytest >=7.0.0,<8.0.0\n        - pytest-cov >=3.0.0,<4.0.0\n\nabout:\n  home: https://github.com/Textualize/rich\n  license: MIT\n  license_family: MIT\n  license_file: dist/LICENSE\n  summary: Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal\n\n  description: |\n    Rich is a Python library for rich text and beautiful formatting in the terminal.\n\n    The Rich API makes it easy to add color and style to terminal output. Rich\n    can also render pretty tables, progress bars, markdown, syntax highlighted\n    source code, tracebacks, and more \u2014 out of the box.\n\n  doc_url: https://rich.readthedocs.io\n  dev_url: https://github.com/Textualize/rich\n\nextra:\n  feedstock-name: rich\n  recipe-maintainers:\n    - jan-janssen\n    - willmcgugan\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -443,8 +443,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/r/rich/rich-13.5.0.tar.gz",
- "version": "13.5.0",
+ "url": "https://pypi.io/packages/source/r/rich/rich-13.5.1.tar.gz",
+ "version": "13.5.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/rich.json"
  }
