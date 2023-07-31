@@ -9,15 +9,16 @@
    "dev_url": "https://github.com/beeware/rubicon-objc",
    "home": "https://beeware.org/rubicon",
    "license": "BSD-3-Clause",
-   "license_file": [
-    "LICENSE"
-   ],
+   "license_file": "LICENSE",
    "summary": "A bridge between an Objective C runtime environment and Python."
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1",
+   "script": [
+    "sed -i.bak \"3i version = 0.4.5\" setup.cfg",
+    "PYTHON -m pip install . -vv"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -45,7 +46,8 @@
   },
   "test": {
    "commands": [
-    "pip check"
+    "pip check",
+    "pip list | grep rubicon-objc.*0.4.5"
    ],
    "imports": [
     "rubicon"
@@ -87,15 +89,16 @@
    "dev_url": "https://github.com/beeware/rubicon-objc",
    "home": "https://beeware.org/rubicon",
    "license": "BSD-3-Clause",
-   "license_file": [
-    "LICENSE"
-   ],
+   "license_file": "LICENSE",
    "summary": "A bridge between an Objective C runtime environment and Python."
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1",
+   "script": [
+    "sed -i.bak \"3i version = 0.4.5\" setup.cfg",
+    "PYTHON -m pip install . -vv"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -123,7 +126,8 @@
   },
   "test": {
    "commands": [
-    "pip check"
+    "pip check",
+    "pip list | grep rubicon-objc.*0.4.5"
    ],
    "imports": [
     "rubicon"
@@ -147,7 +151,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/rubicon-objc.json"
  },
- "raw_meta_yaml": "{% set name = \"rubicon-objc\" %}\n{% set version = \"0.4.5\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rubicon-objc-{{ version }}.tar.gz\n  sha256: f848b6033687f811a11a9d133d6bc4799627b953edbf0e975af598231bd1b272\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - pip\n    - python >=3.5\n    - setuptools >=46.4.0\n    - wheel >=0.32.0\n  run:\n    - python >=3.5\n\ntest:\n  imports:\n    - rubicon\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://beeware.org/rubicon\n  summary: A bridge between an Objective C runtime environment and Python.\n  dev_url: https://github.com/beeware/rubicon-objc\n  license: BSD-3-Clause\n  license_file:\n    - LICENSE\n\nextra:\n  recipe-maintainers:\n    - thewchan\n",
+ "raw_meta_yaml": "{% set name = \"rubicon-objc\" %}\n{% set version = \"0.4.5\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/rubicon-objc-{{ version }}.tar.gz\n  sha256: f848b6033687f811a11a9d133d6bc4799627b953edbf0e975af598231bd1b272\n\nbuild:\n  noarch: python\n  script:\n    # burn in the version so that pip can list it correctly\n    - sed -i.bak \"3i version = {{ version }}\" setup.cfg\n    - {{ PYTHON }} -m pip install . -vv\n  number: 1\n\nrequirements:\n  host:\n    - pip\n    - python >=3.5\n    - setuptools >=46.4.0\n    - wheel >=0.32.0\n  run:\n    - python >=3.5\n\ntest:\n  imports:\n    - rubicon\n  commands:\n    - pip check\n    - pip list | grep rubicon-objc.*{{ version }}\n  requires:\n    - pip\n\nabout:\n  home: https://beeware.org/rubicon\n  summary: A bridge between an Objective C runtime environment and Python.\n  dev_url: https://github.com/beeware/rubicon-objc\n  license: BSD-3-Clause\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - thewchan\n",
  "req": {
   "__set__": true,
   "elements": [
