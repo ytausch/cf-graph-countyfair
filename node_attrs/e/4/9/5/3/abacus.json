@@ -16,16 +16,25 @@
     "LICENSE",
     "libnpy.LICENSE",
     "LICENSE",
+    "libnpy.LICENSE",
+    "LICENSE",
+    "libnpy.LICENSE",
+    "LICENSE",
     "libnpy.LICENSE"
    ],
    "summary": "An electronic structure package based on plane wave and numerical atomic basis sets."
   },
   "build": {
-   "number": "0",
-   "script": "export CMAKE_PREFIX_PATH=`python -c \"import torch;print(torch.__path__[0])\"`/share/cmake:$CMAKE_PREFIX_PATH\ncmake -B conda_build ${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DENABLE_DEEPKS=1 -DENABLE_LIBXC=1\ncmake --build conda_build -j`nproc`\ncmake --install conda_build\n"
+   "number": "1",
+   "script": "export CMAKE_PREFIX_PATH=`python -c \"import torch;print(torch.__path__[0])\"`/share/cmake:$CMAKE_PREFIX_PATH\nif [[ ${cuda_compiler_version} != \"None\" ]]; then\n  export CMAKE_ARGS=\"-DUSE_CUDA=1 ${CMAKE_ARGS}\"\nfi\ncmake -B conda_build ${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DENABLE_DEEPKS=1 -DENABLE_LIBXC=1\ncmake --build conda_build -j`nproc`\ncmake --install conda_build\n",
+   "string": "cuda_mpi_openmpi_h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
+    "njzjz",
+    "caic99",
+    "njzjz",
+    "caic99",
     "njzjz",
     "caic99",
     "njzjz",
@@ -45,33 +54,85 @@
     "cxx_compiler_stub",
     "make",
     "cmake",
+    "libgomp",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "make",
+    "cmake",
+    "libgomp",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "make",
+    "cmake",
     "libgomp"
    ],
    "host": [
     "openmpi",
     "openblas",
+    "elpa",
     "elpa * mpi_openmpi_*",
+    "fftw",
     "fftw * mpi_openmpi_*",
     "cereal",
     "pytorch",
+    "pytorch * cpu_*",
     "libxc-c",
+    "libxc-c * cpu_*",
     "openmpi",
     "openblas",
+    "elpa",
     "elpa * mpi_openmpi_*",
+    "fftw",
     "fftw * mpi_openmpi_*",
     "cereal",
     "pytorch",
-    "libxc-c"
+    "pytorch * cpu_*",
+    "libxc-c",
+    "libxc-c * cpu_*",
+    "openmpi",
+    "openblas",
+    "elpa",
+    "elpa * mpi_openmpi_*",
+    "fftw",
+    "fftw * mpi_openmpi_*",
+    "cereal",
+    "pytorch",
+    "pytorch * cpu_*",
+    "libxc-c",
+    "libxc-c * cuda_*",
+    "openmpi",
+    "openblas",
+    "elpa",
+    "elpa * mpi_openmpi_*",
+    "fftw",
+    "fftw * mpi_openmpi_*",
+    "cereal",
+    "pytorch",
+    "pytorch * cpu_*",
+    "libxc-c",
+    "libxc-c * cuda_*"
    ],
    "run": [
     "openmpi",
     "scalapack",
     "libopenblas",
     "openblas",
+    "pytorch cpu*",
     "openmpi",
     "scalapack",
     "libopenblas",
-    "openblas"
+    "openblas",
+    "pytorch cpu*",
+    "openmpi",
+    "scalapack",
+    "libopenblas",
+    "openblas",
+    "pytorch cuda*",
+    "openmpi",
+    "scalapack",
+    "libopenblas",
+    "openblas",
+    "pytorch cuda*"
    ]
   },
   "source": {
@@ -80,6 +141,10 @@
   },
   "test": {
    "commands": [
+    "export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes",
+    "abacus",
+    "export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes",
+    "abacus",
     "export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes",
     "abacus",
     "export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes",
@@ -92,6 +157,7 @@
    "__set__": true,
    "elements": [
     "cmake",
+    "cuda_compiler_stub",
     "cxx_compiler_stub",
     "libgomp",
     "make"
@@ -115,6 +181,7 @@
     "libopenblas",
     "openblas",
     "openmpi",
+    "pytorch",
     "scalapack"
    ]
   },
@@ -135,16 +202,25 @@
     "LICENSE",
     "libnpy.LICENSE",
     "LICENSE",
+    "libnpy.LICENSE",
+    "LICENSE",
+    "libnpy.LICENSE",
+    "LICENSE",
     "libnpy.LICENSE"
    ],
    "summary": "An electronic structure package based on plane wave and numerical atomic basis sets."
   },
   "build": {
-   "number": "0",
-   "script": "export CMAKE_PREFIX_PATH=`python -c \"import torch;print(torch.__path__[0])\"`/share/cmake:$CMAKE_PREFIX_PATH\ncmake -B conda_build ${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DENABLE_DEEPKS=1 -DENABLE_LIBXC=1\ncmake --build conda_build -j`nproc`\ncmake --install conda_build\n"
+   "number": "1",
+   "script": "export CMAKE_PREFIX_PATH=`python -c \"import torch;print(torch.__path__[0])\"`/share/cmake:$CMAKE_PREFIX_PATH\nif [[ ${cuda_compiler_version} != \"None\" ]]; then\n  export CMAKE_ARGS=\"-DUSE_CUDA=1 ${CMAKE_ARGS}\"\nfi\ncmake -B conda_build ${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DENABLE_DEEPKS=1 -DENABLE_LIBXC=1\ncmake --build conda_build -j`nproc`\ncmake --install conda_build\n",
+   "string": "cuda_mpi_openmpi_h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
+    "njzjz",
+    "caic99",
+    "njzjz",
+    "caic99",
     "njzjz",
     "caic99",
     "njzjz",
@@ -164,33 +240,85 @@
     "cxx_compiler_stub",
     "make",
     "cmake",
+    "libgomp",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "make",
+    "cmake",
+    "libgomp",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "make",
+    "cmake",
     "libgomp"
    ],
    "host": [
     "openmpi",
     "openblas",
+    "elpa",
     "elpa * mpi_openmpi_*",
+    "fftw",
     "fftw * mpi_openmpi_*",
     "cereal",
     "pytorch",
+    "pytorch * cpu_*",
     "libxc-c",
+    "libxc-c * cpu_*",
     "openmpi",
     "openblas",
+    "elpa",
     "elpa * mpi_openmpi_*",
+    "fftw",
     "fftw * mpi_openmpi_*",
     "cereal",
     "pytorch",
-    "libxc-c"
+    "pytorch * cpu_*",
+    "libxc-c",
+    "libxc-c * cpu_*",
+    "openmpi",
+    "openblas",
+    "elpa",
+    "elpa * mpi_openmpi_*",
+    "fftw",
+    "fftw * mpi_openmpi_*",
+    "cereal",
+    "pytorch",
+    "pytorch * cpu_*",
+    "libxc-c",
+    "libxc-c * cuda_*",
+    "openmpi",
+    "openblas",
+    "elpa",
+    "elpa * mpi_openmpi_*",
+    "fftw",
+    "fftw * mpi_openmpi_*",
+    "cereal",
+    "pytorch",
+    "pytorch * cpu_*",
+    "libxc-c",
+    "libxc-c * cuda_*"
    ],
    "run": [
     "openmpi",
     "scalapack",
     "libopenblas",
     "openblas",
+    "pytorch cpu*",
     "openmpi",
     "scalapack",
     "libopenblas",
-    "openblas"
+    "openblas",
+    "pytorch cpu*",
+    "openmpi",
+    "scalapack",
+    "libopenblas",
+    "openblas",
+    "pytorch cuda*",
+    "openmpi",
+    "scalapack",
+    "libopenblas",
+    "openblas",
+    "pytorch cuda*"
    ]
   },
   "source": {
@@ -199,6 +327,10 @@
   },
   "test": {
    "commands": [
+    "export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes",
+    "abacus",
+    "export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes",
+    "abacus",
     "export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes",
     "abacus",
     "export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes",
@@ -220,12 +352,13 @@
  "pr_info": {
   "__lazy_json__": "pr_info/abacus.json"
  },
- "raw_meta_yaml": "{% set name = \"abacus\" %}\n{% set version = \"3.2.4\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/deepmodeling/abacus-develop/archive/v{{ version }}.tar.gz\n  sha256: 65a84a4a02a085c42f86d54b487bf3f1501a45f940370a8a7527c881145f78d6\n\nbuild:\n  script: |\n    export CMAKE_PREFIX_PATH=`python -c \"import torch;print(torch.__path__[0])\"`/share/cmake:$CMAKE_PREFIX_PATH\n    cmake -B conda_build ${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DENABLE_DEEPKS=1 -DENABLE_LIBXC=1\n    cmake --build conda_build -j`nproc`\n    cmake --install conda_build\n  number: 0\n  skip: true  # [not linux]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - make\n    - cmake\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux]\n\n  host:\n    - {{ mpi }}\n    - openblas\n    - elpa * mpi_{{ mpi }}_*\n    - fftw * mpi_{{ mpi }}_*\n    - cereal\n    - pytorch\n    - libxc-c\n\n  run:\n    - {{ mpi }}\n    - scalapack\n    - libopenblas\n    - openblas\n\ntest:\n  commands:\n    - export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes  # [mpi == \"openmpi\"]\n    - abacus\n    - mpirun -n 2 abacus  # [mpi == \"mpich\"]\n\nabout:\n  home: http://abacus.ustc.edu.cn/\n  doc_url: https://abacus.deepmodeling.com/\n  dev_url: https://github.com/deepmodeling/abacus-develop\n  license: LGPL-3.0-only AND MIT\n  license_family: LGPL\n  license_file:\n    - LICENSE\n    - libnpy.LICENSE\n  summary: An electronic structure package based on plane wave and numerical atomic basis sets.\n  description: >\n    ABACUS (Atomic-orbital Based Ab-initio Computation at UStc) is an open-source package based on density functional theory (DFT).\n    The package utilizes both plane wave and numerical atomic basis sets with the usage of norm-conserving pseudopotentials\n    to describe the interactions between nuclear ions and valence electrons. ABACUS supports LDA, GGA, meta-GGA, and hybrid functionals.\n    Apart from single-point calculations, the package allows geometry optimizations and ab-initio molecular dynamics with various ensembles.\n\nextra:\n  recipe-maintainers:\n    - njzjz\n    - caic99\n",
+ "raw_meta_yaml": "{% set name = \"abacus\" %}\n{% set version = \"3.2.4\" %}\n{% set proc_type = \"cuda\" if cuda_compiler_version != \"None\" else \"cpu\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/deepmodeling/abacus-develop/archive/v{{ version }}.tar.gz\n  sha256: 65a84a4a02a085c42f86d54b487bf3f1501a45f940370a8a7527c881145f78d6\n\nbuild:\n  script: |\n    export CMAKE_PREFIX_PATH=`python -c \"import torch;print(torch.__path__[0])\"`/share/cmake:$CMAKE_PREFIX_PATH\n    if [[ ${cuda_compiler_version} != \"None\" ]]; then\n      export CMAKE_ARGS=\"-DUSE_CUDA=1 ${CMAKE_ARGS}\"\n    fi\n    cmake -B conda_build ${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DENABLE_DEEPKS=1 -DENABLE_LIBXC=1\n    cmake --build conda_build -j`nproc`\n    cmake --install conda_build\n  number: 1\n  skip: true  # [not linux]\n  string: {{ proc_type }}_mpi_{{ mpi }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n    - make\n    - cmake\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux]\n\n  host:\n    - {{ mpi }}\n    - openblas\n    - elpa\n    - elpa * mpi_{{ mpi }}_*\n    - fftw\n    - fftw * mpi_{{ mpi }}_*\n    - cereal\n    - pytorch\n    - pytorch * cpu_*\n    - libxc-c\n    - libxc-c * {{ proc_type }}_*\n\n  run:\n    - {{ mpi }}\n    - scalapack\n    - libopenblas\n    - openblas\n    - {{ pin_compatible('pytorch', max_pin='x.x') }} {{ proc_type }}*\n\ntest:\n  commands:\n    - export OMPI_MCA_plm=isolated OMPI_MCA_btl_vader_single_copy_mechanism=none OMPI_MCA_rmaps_base_oversubscribe=yes  # [mpi == \"openmpi\"]\n    - abacus\n    - mpirun -n 2 abacus  # [mpi == \"mpich\"]\n\nabout:\n  home: http://abacus.ustc.edu.cn/\n  doc_url: https://abacus.deepmodeling.com/\n  dev_url: https://github.com/deepmodeling/abacus-develop\n  license: LGPL-3.0-only AND MIT\n  license_family: LGPL\n  license_file:\n    - LICENSE\n    - libnpy.LICENSE\n  summary: An electronic structure package based on plane wave and numerical atomic basis sets.\n  description: >\n    ABACUS (Atomic-orbital Based Ab-initio Computation at UStc) is an open-source package based on density functional theory (DFT).\n    The package utilizes both plane wave and numerical atomic basis sets with the usage of norm-conserving pseudopotentials\n    to describe the interactions between nuclear ions and valence electrons. ABACUS supports LDA, GGA, meta-GGA, and hybrid functionals.\n    Apart from single-point calculations, the package allows geometry optimizations and ab-initio molecular dynamics with various ensembles.\n\nextra:\n  recipe-maintainers:\n    - njzjz\n    - caic99\n",
  "req": {
   "__set__": true,
   "elements": [
    "cereal",
    "cmake",
+   "cuda_compiler_stub",
    "cxx_compiler_stub",
    "elpa",
    "fftw",
@@ -244,6 +377,7 @@
    "__set__": true,
    "elements": [
     "cmake",
+    "cuda_compiler_stub",
     "cxx_compiler_stub",
     "libgomp",
     "make"
@@ -254,6 +388,7 @@
    "elements": [
     "cereal",
     "ctng-compilers",
+    "cuda_compiler_stub",
     "cxx_compiler_stub",
     "elpa",
     "fftw",
@@ -267,10 +402,12 @@
    "__set__": true,
    "elements": [
     "ctng-compilers",
+    "cuda_compiler_stub",
     "cxx_compiler_stub",
     "libopenblas",
     "openblas",
     "openmpi",
+    "pytorch",
     "scalapack"
    ]
   },
@@ -285,6 +422,7 @@
    "__set__": true,
    "elements": [
     "cmake",
+    "cuda_compiler_stub",
     "cxx_compiler_stub",
     "libgomp",
     "make"
@@ -294,12 +432,17 @@
    "__set__": true,
    "elements": [
     "cereal",
+    "elpa",
     "elpa * mpi_openmpi_*",
+    "fftw",
     "fftw * mpi_openmpi_*",
     "libxc-c",
+    "libxc-c * cpu_*",
+    "libxc-c * cuda_*",
     "openblas",
     "openmpi",
-    "pytorch"
+    "pytorch",
+    "pytorch * cpu_*"
    ]
   },
   "run": {
@@ -308,6 +451,8 @@
     "libopenblas",
     "openblas",
     "openmpi",
+    "pytorch cpu*",
+    "pytorch cuda*",
     "scalapack"
    ]
   },
