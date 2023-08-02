@@ -17,8 +17,8 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1",
+   "script": "SETUPTOOLS_SCM_PRETEND_VERSION=0.2.5 PYTHON -m pip install . -v"
   },
   "extra": {
    "recipe-maintainers": [
@@ -30,16 +30,15 @@
    "version": "0.2.5"
   },
   "requirements": {
-   "build": [
-    "c_compiler_stub",
-    "pip"
-   ],
    "host": [
-    "python >=3.6",
-    "pip"
+    "pip",
+    "python >=3.9",
+    "setuptools >=45",
+    "setuptools_scm >=3.4",
+    "toml"
    ],
    "run": [
-    "python >=3.6",
+    "python >=3.8",
     "numpy >=1.13.0",
     "obspy >=1.2.1",
     "pandas >=1.0",
@@ -48,7 +47,8 @@
     "setuptools",
     "pydantic >=1.9.0,<2.0.0",
     "pytables",
-    "typing_extensions"
+    "typing_extensions",
+    "packaging"
    ]
   },
   "source": {
@@ -56,24 +56,31 @@
    "url": "https://pypi.io/packages/source/o/obsplus/obsplus-0.2.5.tar.gz"
   },
   "test": {
+   "commands": [
+    "pip check",
+    "python -c \"import obsplus; ver = obsplus.__version__; assert ver != '0.0.0'\""
+   ],
    "imports": [
     "obsplus"
+   ],
+   "requires": [
+    "pip"
    ]
   }
  },
  "linux_64_requirements": {
   "build": {
    "__set__": true,
-   "elements": [
-    "c_compiler_stub",
-    "pip"
-   ]
+   "elements": []
   },
   "host": {
    "__set__": true,
    "elements": [
     "pip",
-    "python"
+    "python",
+    "setuptools",
+    "setuptools_scm",
+    "toml"
    ]
   },
   "run": {
@@ -81,6 +88,7 @@
    "elements": [
     "numpy",
     "obspy",
+    "packaging",
     "pandas",
     "progressbar2",
     "pydantic",
@@ -93,7 +101,9 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "meta_yaml": {
@@ -109,8 +119,8 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1",
+   "script": "SETUPTOOLS_SCM_PRETEND_VERSION=0.2.5 PYTHON -m pip install . -v"
   },
   "extra": {
    "recipe-maintainers": [
@@ -122,16 +132,15 @@
    "version": "0.2.5"
   },
   "requirements": {
-   "build": [
-    "c_compiler_stub",
-    "pip"
-   ],
    "host": [
-    "python >=3.6",
-    "pip"
+    "pip",
+    "python >=3.9",
+    "setuptools >=45",
+    "setuptools_scm >=3.4",
+    "toml"
    ],
    "run": [
-    "python >=3.6",
+    "python >=3.8",
     "numpy >=1.13.0",
     "obspy >=1.2.1",
     "pandas >=1.0",
@@ -140,7 +149,8 @@
     "setuptools",
     "pydantic >=1.9.0,<2.0.0",
     "pytables",
-    "typing_extensions"
+    "typing_extensions",
+    "packaging"
    ]
   },
   "source": {
@@ -148,8 +158,15 @@
    "url": "https://pypi.io/packages/source/o/obsplus/obsplus-0.2.5.tar.gz"
   },
   "test": {
+   "commands": [
+    "pip check",
+    "python -c \"import obsplus; ver = obsplus.__version__; assert ver != '0.0.0'\""
+   ],
    "imports": [
     "obsplus"
+   ],
+   "requires": [
+    "pip"
    ]
   }
  },
@@ -167,13 +184,13 @@
  "pr_info": {
   "__lazy_json__": "pr_info/obsplus.json"
  },
- "raw_meta_yaml": "{% set name = \"obsplus\" %}\n{% set version = \"0.2.5\" %}\n{% set sha256 = \"b6a6c6ce552aca9597ba5666cf9649aec2eede6264c7bcc4febafda2f274a6d5\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - pip\n  host:\n    - python >=3.6\n    - pip\n  run:\n    - python >=3.6\n    - numpy >=1.13.0\n    - obspy >=1.2.1\n    - pandas >=1.0\n    - progressbar2\n    - scipy\n    - setuptools\n    - pydantic >=1.9.0,<2.0.0\n    - pytables\n    - typing_extensions\n\ntest:\n  imports:\n    - obsplus\n\nabout:\n  home: https://github.com/niosh-mining/obsplus\n  license: LGPL-3.0-or-later\n  license_family: LGPL\n  license_file: LICENSE.txt\n  summary: An Pandas-Centric ObsPy Expansion Pack\n  description: |\n    ObsPlus is a utility package for ObsPy.\n  doc_url: https://github.com/niosh-mining/obsplus\n  dev_url: https://github.com/niosh-mining/obsplus\n\nextra:\n  recipe-maintainers:\n    - d-chambers\n",
+ "raw_meta_yaml": "{% set name = \"obsplus\" %}\n{% set version = \"0.2.5\" %}\n{% set sha256 = \"b6a6c6ce552aca9597ba5666cf9649aec2eede6264c7bcc4febafda2f274a6d5\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\nbuild:\n  noarch: python\n  script: SETUPTOOLS_SCM_PRETEND_VERSION={{ version }} {{ PYTHON }} -m pip install . -v\n  number: 1\n\nrequirements:\n  host:\n    - pip\n    - python >=3.9\n    - setuptools >=45\n    - setuptools_scm >=3.4\n    - toml\n  run:\n    - python >=3.8\n    - numpy >=1.13.0\n    - obspy >=1.2.1\n    - pandas >=1.0\n    - progressbar2\n    - scipy\n    - setuptools\n    - pydantic >=1.9.0,<2.0.0\n    - pytables\n    - typing_extensions\n    - packaging\n\ntest:\n  imports:\n    - obsplus\n  commands:\n    - pip check\n    - python -c \"import obsplus; ver = obsplus.__version__; assert ver != '0.0.0'\"\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/niosh-mining/obsplus\n  license: LGPL-3.0-or-later\n  license_family: LGPL\n  license_file: LICENSE.txt\n  summary: An Pandas-Centric ObsPy Expansion Pack\n  description: |\n    ObsPlus is a utility package for ObsPy.\n  doc_url: https://github.com/niosh-mining/obsplus\n  dev_url: https://github.com/niosh-mining/obsplus\n\nextra:\n  recipe-maintainers:\n    - d-chambers\n",
  "req": {
   "__set__": true,
   "elements": [
-   "c_compiler_stub",
    "numpy",
    "obspy",
+   "packaging",
    "pandas",
    "pip",
    "progressbar2",
@@ -182,31 +199,32 @@
    "python",
    "scipy",
    "setuptools",
+   "setuptools_scm",
+   "toml",
    "typing_extensions"
   ]
  },
  "requirements": {
   "build": {
    "__set__": true,
-   "elements": [
-    "c_compiler_stub",
-    "pip"
-   ]
+   "elements": []
   },
   "host": {
    "__set__": true,
    "elements": [
-    "c_compiler_stub",
     "pip",
-    "python"
+    "python",
+    "setuptools",
+    "setuptools_scm",
+    "toml"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "c_compiler_stub",
     "numpy",
     "obspy",
+    "packaging",
     "pandas",
     "progressbar2",
     "pydantic",
@@ -219,23 +237,25 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "strong_exports": false,
  "total_requirements": {
   "build": {
    "__set__": true,
-   "elements": [
-    "c_compiler_stub",
-    "pip"
-   ]
+   "elements": []
   },
   "host": {
    "__set__": true,
    "elements": [
     "pip",
-    "python >=3.6"
+    "python >=3.9",
+    "setuptools >=45",
+    "setuptools_scm >=3.4",
+    "toml"
    ]
   },
   "run": {
@@ -243,11 +263,12 @@
    "elements": [
     "numpy >=1.13.0",
     "obspy >=1.2.1",
+    "packaging",
     "pandas >=1.0",
     "progressbar2",
     "pydantic >=1.9.0,<2.0.0",
     "pytables",
-    "python >=3.6",
+    "python >=3.8",
     "scipy",
     "setuptools",
     "typing_extensions"
@@ -255,7 +276,9 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "url": "https://pypi.io/packages/source/o/obsplus/obsplus-0.2.5.tar.gz",
