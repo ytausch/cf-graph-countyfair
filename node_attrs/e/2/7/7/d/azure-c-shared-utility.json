@@ -12,15 +12,22 @@
    "summary": "Azure C Shared Utility\n"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
+    "azure-c-shared-utility",
     "azure-c-shared-utility"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "jdblischak",
+    "jjerphan",
+    "seanyen",
     "xylar",
-    "seanyen"
+    "jdblischak",
+    "jjerphan",
+    "seanyen",
+    "xylar"
    ]
   },
   "package": {
@@ -29,16 +36,83 @@
   },
   "requirements": {
    "build": [
-    "vs2017_win-64",
+    "c_compiler_stub",
+    "cmake",
+    "make",
+    "c_compiler_stub",
     "cmake",
     "ninja"
    ],
    "host": [
-    "azure-macro-utils-c",
+    "azure-macro-utils-c <2020.10.29",
+    "libuuid",
+    "umock-c",
+    "azure-macro-utils-c <2020.10.29",
     "umock-c"
    ],
    "run": [
-    "azure-macro-utils-c",
+    "azure-macro-utils-c <2020.10.29",
+    "umock-c",
+    "azure-macro-utils-c <2020.10.29",
+    "umock-c"
+   ]
+  },
+  "source": [
+   {
+    "sha256": "643f3b84ac511b301e481c35278e6a4deacb9e945ad1e36dc3ff4b5f45300b39",
+    "url": "https://github.com/Azure/azure-c-shared-utility/archive/2020-01-22.tar.gz"
+   },
+   {
+    "sha256": "643f3b84ac511b301e481c35278e6a4deacb9e945ad1e36dc3ff4b5f45300b39",
+    "url": "https://github.com/Azure/azure-c-shared-utility/archive/2020-01-22.tar.gz"
+   }
+  ],
+  "test": {
+   "commands": [
+    "test -f \"${PREFIX}/lib/libaziotsharedutil${SHLIB_EXT}\"",
+    "if not exist %PREFIX%\\\\Library\\\\bin\\\\aziotsharedutil.dll exit 1"
+   ]
+  }
+ },
+ "name": "azure-c-shared-utility",
+ "osx_64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/Azure/azure-c-shared-utility",
+   "license": "MIT",
+   "license_file": "LICENSE",
+   "summary": "Azure C Shared Utility\n"
+  },
+  "build": {
+   "number": "1",
+   "run_exports": [
+    "azure-c-shared-utility"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "jdblischak",
+    "jjerphan",
+    "seanyen",
+    "xylar"
+   ]
+  },
+  "package": {
+   "name": "azure-c-shared-utility",
+   "version": "2020.01.22"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cmake",
+    "make"
+   ],
+   "host": [
+    "azure-macro-utils-c <2020.10.29",
+    "libuuid",
+    "umock-c"
+   ],
+   "run": [
+    "azure-macro-utils-c <2020.10.29",
     "umock-c"
    ]
   },
@@ -50,11 +124,39 @@
   ],
   "test": {
    "commands": [
-    "if not exist %PREFIX%\\\\Library\\\\bin\\\\aziotsharedutil.dll exit 1"
+    "test -f \"${PREFIX}/lib/libaziotsharedutil${SHLIB_EXT}\""
    ]
   }
  },
- "name": "azure-c-shared-utility",
+ "osx_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "azure-macro-utils-c",
+    "libuuid",
+    "umock-c"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "azure-macro-utils-c",
+    "umock-c"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -63,45 +165,50 @@
  },
  "parsing_error": false,
  "platforms": [
+  "osx_64",
   "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/azure-c-shared-utility.json"
  },
- "raw_meta_yaml": "{% set name = \"azure-c-shared-utility\" %}\n{% set version = \"2020.01.22\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/Azure/azure-c-shared-utility/archive/{{ version.replace('.', '-') }}.tar.gz\n    sha256: 643f3b84ac511b301e481c35278e6a4deacb9e945ad1e36dc3ff4b5f45300b39\n\nbuild:\n  number: 0\n  skip: true  # [not win64]\n  run_exports:\n    - {{ pin_subpackage(name, exact=True) }}\n\nrequirements:\n  build:\n    - vs2017_win-64          # [win64]\n    - cmake\n    - ninja\n  host:\n    - azure-macro-utils-c\n    - umock-c\n  run:\n    - azure-macro-utils-c\n    - umock-c\n\ntest:\n  commands:\n    - if not exist %PREFIX%\\\\Library\\\\bin\\\\aziotsharedutil.dll exit 1  # [win]\n\nabout:\n  home: https://github.com/Azure/azure-c-shared-utility\n  license: MIT\n  license_file: LICENSE\n  summary: |\n    Azure C Shared Utility\n\nextra:\n  recipe-maintainers:\n    - xylar\n    - seanyen\n",
+ "raw_meta_yaml": "{% set name = \"azure-c-shared-utility\" %}\n{% set version = \"2020.01.22\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/Azure/azure-c-shared-utility/archive/{{ version.replace('.', '-') }}.tar.gz\n    sha256: 643f3b84ac511b301e481c35278e6a4deacb9e945ad1e36dc3ff4b5f45300b39\n\nbuild:\n  number: 1\n  skip: true  # [linux]\n  run_exports:\n    - {{ pin_subpackage(name, max_pin='x.x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - cmake\n    - make   # [not win]\n    - ninja  # [win]\n  host:\n    # 2022.08.09 is the first backward-incompatible version after\n    # azure-macro-utils-c was renamed to macro-utils-c.\n    # See: https://github.com/conda-forge/azure-macro-utils-c-feedstock/commit/abca76cfa9b6738d76e44fb5428559d4f245808c\n    - azure-macro-utils-c <2020.10.29\n    - libuuid  # [unix]\n    - umock-c\n  run:\n    - azure-macro-utils-c <2020.10.29\n    - umock-c\n\ntest:\n  commands:\n    - if not exist %PREFIX%\\\\Library\\\\bin\\\\aziotsharedutil.dll exit 1  # [win]\n    - test -f \"${PREFIX}/lib/libaziotsharedutil${SHLIB_EXT}\"  # [not win]\n\nabout:\n  home: https://github.com/Azure/azure-c-shared-utility\n  license: MIT\n  license_file: LICENSE\n  summary: |\n    Azure C Shared Utility\n\nextra:\n  recipe-maintainers:\n    - jdblischak\n    - jjerphan\n    - seanyen\n    - xylar\n",
  "req": {
   "__set__": true,
   "elements": [
    "azure-macro-utils-c",
+   "c_compiler_stub",
    "cmake",
+   "libuuid",
+   "make",
    "ninja",
-   "umock-c",
-   "vs2017_win-64"
+   "umock-c"
   ]
  },
  "requirements": {
   "build": {
    "__set__": true,
    "elements": [
+    "c_compiler_stub",
     "cmake",
-    "ninja",
-    "vs2017_win-64"
+    "make",
+    "ninja"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "azure-macro-utils-c",
-    "umock-c",
-    "vc"
+    "c_compiler_stub",
+    "libuuid",
+    "umock-c"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "azure-macro-utils-c",
-    "umock-c",
-    "vc"
+    "c_compiler_stub",
+    "umock-c"
    ]
   },
   "test": {
@@ -114,22 +221,24 @@
   "build": {
    "__set__": true,
    "elements": [
+    "c_compiler_stub",
     "cmake",
-    "ninja",
-    "vs2017_win-64"
+    "make",
+    "ninja"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
-    "azure-macro-utils-c",
+    "azure-macro-utils-c <2020.10.29",
+    "libuuid",
     "umock-c"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "azure-macro-utils-c",
+    "azure-macro-utils-c <2020.10.29",
     "umock-c"
    ]
   },
@@ -151,15 +260,17 @@
    "summary": "Azure C Shared Utility\n"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "azure-c-shared-utility"
    ]
   },
   "extra": {
    "recipe-maintainers": [
-    "xylar",
-    "seanyen"
+    "jdblischak",
+    "jjerphan",
+    "seanyen",
+    "xylar"
    ]
   },
   "package": {
@@ -168,16 +279,16 @@
   },
   "requirements": {
    "build": [
-    "vs2017_win-64",
+    "c_compiler_stub",
     "cmake",
     "ninja"
    ],
    "host": [
-    "azure-macro-utils-c",
+    "azure-macro-utils-c <2020.10.29",
     "umock-c"
    ],
    "run": [
-    "azure-macro-utils-c",
+    "azure-macro-utils-c <2020.10.29",
     "umock-c"
    ]
   },
@@ -197,9 +308,9 @@
   "build": {
    "__set__": true,
    "elements": [
+    "c_compiler_stub",
     "cmake",
-    "ninja",
-    "vs2017_win-64"
+    "ninja"
    ]
   },
   "host": {
