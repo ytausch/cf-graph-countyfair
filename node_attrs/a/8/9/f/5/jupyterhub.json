@@ -160,7 +160,7 @@
   ],
   "package": {
    "name": "jupyterhub-feedstock",
-   "version": "4.0.1"
+   "version": "4.0.2"
   },
   "requirements": {
    "host": [
@@ -172,8 +172,8 @@
    ]
   },
   "source": {
-   "sha256": "8e283ff59e5c4016712077d2549ed74acd915a32836fe00218678a8781bd7ede",
-   "url": "https://pypi.io/packages/source/j/jupyterhub/jupyterhub-4.0.1.tar.gz"
+   "sha256": "d4e450eed8d90dfbcf0eca08f00f2093a0bce74dc51f7cfc0b7057f602341a1d",
+   "url": "https://pypi.io/packages/source/j/jupyterhub/jupyterhub-4.0.2.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -495,7 +495,7 @@
   ],
   "package": {
    "name": "jupyterhub-feedstock",
-   "version": "4.0.1"
+   "version": "4.0.2"
   },
   "requirements": {
    "host": [
@@ -510,8 +510,8 @@
    ]
   },
   "source": {
-   "sha256": "8e283ff59e5c4016712077d2549ed74acd915a32836fe00218678a8781bd7ede",
-   "url": "https://pypi.io/packages/source/j/jupyterhub/jupyterhub-4.0.1.tar.gz"
+   "sha256": "d4e450eed8d90dfbcf0eca08f00f2093a0bce74dc51f7cfc0b7057f602341a1d",
+   "url": "https://pypi.io/packages/source/j/jupyterhub/jupyterhub-4.0.2.tar.gz"
   }
  },
  "name": "jupyterhub-feedstock",
@@ -532,7 +532,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/jupyterhub.json"
  },
- "raw_meta_yaml": "{% set version = \"4.0.1\" %}\n\npackage:\n  name: jupyterhub-feedstock\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/j/jupyterhub/jupyterhub-{{ version }}.tar.gz\n  sha256: 8e283ff59e5c4016712077d2549ed74acd915a32836fe00218678a8781bd7ede\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - python >=3.7\n\noutputs:\n  - name: jupyterhub-base\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . --no-deps -vv\n      entry_points:\n        - jupyterhub = jupyterhub.app:main\n        - jupyterhub-singleuser = jupyterhub.singleuser:main\n    requirements:\n      host:\n        - python >=3.7\n        - pip\n      run:\n        - __{{ noarch_platform }}\n        - alembic >=1.4\n        - async_generator >=1.9\n        - certipy >=0.1.2\n        - importlib-metadata >=3.6  # not actually required for Python >=3.10\n        - jinja2 >=2.11.0\n        - jupyter_telemetry >=0.1.0\n        - oauthlib >=3.0\n        - packaging\n        {% if noarch_platform == \"unix\" %}\n        - pamela\n        {% else %}\n        - psutil\n        {% endif %}\n        - prometheus_client >=0.4.0\n        - python >=3.7\n        - python-dateutil\n        - requests\n        - sqlalchemy >=1.4\n        - tornado >=5.1\n        - traitlets >=4.3.2\n      run_constrained:\n        - psutil >=5.6.5\n\n    test:\n      requires:\n        - pip\n      imports:\n        - jupyterhub\n        - jupyterhub.apihandlers\n        - jupyterhub.handlers\n        - jupyterhub.tests\n        - jupyterhub.app\n      commands:\n        - pip check\n        - jupyterhub --help-all\n        {% if noarch_platform == \"unix\" %}\n        - test -f $PREFIX/share/jupyterhub/templates/page.html\n        - test -f $PREFIX/share/jupyterhub/static/components/jquery/dist/jquery.min.js\n        - test -f $PREFIX/share/jupyterhub/static/css/style.min.css\n        - test -f $PREFIX/share/jupyterhub/static/js/home.js\n        {% else %}\n        - dir %PREFIX%\\share\\jupyterhub\\templates\\page.html || exit 1\n        - dir %PREFIX%\\share\\jupyterhub\\static\\components\\jquery\\dist\\jquery.min.js || exit 1\n        - dir %PREFIX%\\share\\jupyterhub\\static\\css\\style.min.css || exit 1\n        - dir %PREFIX%\\share\\jupyterhub\\static\\js\\home.js || exit 1\n        {% endif %}\n\n  - name: jupyterhub-singleuser\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7\n      run:\n        - __{{ noarch_platform }}\n        - {{ pin_subpackage(\"jupyterhub-base\", exact=True) }}\n        - jupyterlab >=3.1\n        - python >=3.7\n    test:\n      requires:\n        - pip\n      imports:\n        - jupyterhub.singleuser\n      commands:\n        - pip check\n        - jupyterhub-singleuser --help-all\n\n  - name: jupyterhub\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7\n      run:\n        - __{{ noarch_platform }}\n        - {{ pin_subpackage(\"jupyterhub-base\", exact=True) }}\n        - configurable-http-proxy >=4\n        - nodejs >=12\n        - psutil  # undeclared extra, used preferentially for logging\n        - pycurl  # undeclared extra, used preferentially for performance\n        - python >=3.7\n    test:\n      requires:\n        - pip\n      imports:\n        - jupyterhub\n      commands:\n        - pip check\n        - jupyterhub --help-all\n        - configurable-http-proxy --help  # [not win]\n\nabout:\n  home: https://github.com/jupyterhub/jupyterhub\n  license: BSD-3-Clause\n  license_file: COPYING.md\n  summary: Multi-user server for Jupyter notebooks\n  doc_url: https://jupyterhub.readthedocs.io\n\nextra:\n  feedstock-name: jupyterhub\n  recipe-maintainers:\n    - minrk\n    - blink1073\n    - consideRatio\n    - manics\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"4.0.2\" %}\n\npackage:\n  name: jupyterhub-feedstock\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/j/jupyterhub/jupyterhub-{{ version }}.tar.gz\n  sha256: d4e450eed8d90dfbcf0eca08f00f2093a0bce74dc51f7cfc0b7057f602341a1d\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - python >=3.7\n\noutputs:\n  - name: jupyterhub-base\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . --no-deps -vv\n      entry_points:\n        - jupyterhub = jupyterhub.app:main\n        - jupyterhub-singleuser = jupyterhub.singleuser:main\n    requirements:\n      host:\n        - python >=3.7\n        - pip\n      run:\n        - __{{ noarch_platform }}\n        - alembic >=1.4\n        - async_generator >=1.9\n        - certipy >=0.1.2\n        - importlib-metadata >=3.6  # not actually required for Python >=3.10\n        - jinja2 >=2.11.0\n        - jupyter_telemetry >=0.1.0\n        - oauthlib >=3.0\n        - packaging\n        {% if noarch_platform == \"unix\" %}\n        - pamela\n        {% else %}\n        - psutil\n        {% endif %}\n        - prometheus_client >=0.4.0\n        - python >=3.7\n        - python-dateutil\n        - requests\n        - sqlalchemy >=1.4\n        - tornado >=5.1\n        - traitlets >=4.3.2\n      run_constrained:\n        - psutil >=5.6.5\n\n    test:\n      requires:\n        - pip\n      imports:\n        - jupyterhub\n        - jupyterhub.apihandlers\n        - jupyterhub.handlers\n        - jupyterhub.tests\n        - jupyterhub.app\n      commands:\n        - pip check\n        - jupyterhub --help-all\n        {% if noarch_platform == \"unix\" %}\n        - test -f $PREFIX/share/jupyterhub/templates/page.html\n        - test -f $PREFIX/share/jupyterhub/static/components/jquery/dist/jquery.min.js\n        - test -f $PREFIX/share/jupyterhub/static/css/style.min.css\n        - test -f $PREFIX/share/jupyterhub/static/js/home.js\n        {% else %}\n        - dir %PREFIX%\\share\\jupyterhub\\templates\\page.html || exit 1\n        - dir %PREFIX%\\share\\jupyterhub\\static\\components\\jquery\\dist\\jquery.min.js || exit 1\n        - dir %PREFIX%\\share\\jupyterhub\\static\\css\\style.min.css || exit 1\n        - dir %PREFIX%\\share\\jupyterhub\\static\\js\\home.js || exit 1\n        {% endif %}\n\n  - name: jupyterhub-singleuser\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7\n      run:\n        - __{{ noarch_platform }}\n        - {{ pin_subpackage(\"jupyterhub-base\", exact=True) }}\n        - jupyterlab >=3.1\n        - python >=3.7\n    test:\n      requires:\n        - pip\n      imports:\n        - jupyterhub.singleuser\n      commands:\n        - pip check\n        - jupyterhub-singleuser --help-all\n\n  - name: jupyterhub\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7\n      run:\n        - __{{ noarch_platform }}\n        - {{ pin_subpackage(\"jupyterhub-base\", exact=True) }}\n        - configurable-http-proxy >=4\n        - nodejs >=12\n        - psutil  # undeclared extra, used preferentially for logging\n        - pycurl  # undeclared extra, used preferentially for performance\n        - python >=3.7\n    test:\n      requires:\n        - pip\n      imports:\n        - jupyterhub\n      commands:\n        - pip check\n        - jupyterhub --help-all\n        - configurable-http-proxy --help  # [not win]\n\nabout:\n  home: https://github.com/jupyterhub/jupyterhub\n  license: BSD-3-Clause\n  license_file: COPYING.md\n  summary: Multi-user server for Jupyter notebooks\n  doc_url: https://jupyterhub.readthedocs.io\n\nextra:\n  feedstock-name: jupyterhub\n  recipe-maintainers:\n    - minrk\n    - blink1073\n    - consideRatio\n    - manics\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -660,8 +660,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/j/jupyterhub/jupyterhub-4.0.1.tar.gz",
- "version": "4.0.1",
+ "url": "https://pypi.io/packages/source/j/jupyterhub/jupyterhub-4.0.2.tar.gz",
+ "version": "4.0.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/jupyterhub.json"
  },
@@ -811,7 +811,7 @@
   ],
   "package": {
    "name": "jupyterhub-feedstock",
-   "version": "4.0.1"
+   "version": "4.0.2"
   },
   "requirements": {
    "host": [
@@ -823,8 +823,8 @@
    ]
   },
   "source": {
-   "sha256": "8e283ff59e5c4016712077d2549ed74acd915a32836fe00218678a8781bd7ede",
-   "url": "https://pypi.io/packages/source/j/jupyterhub/jupyterhub-4.0.1.tar.gz"
+   "sha256": "d4e450eed8d90dfbcf0eca08f00f2093a0bce74dc51f7cfc0b7057f602341a1d",
+   "url": "https://pypi.io/packages/source/j/jupyterhub/jupyterhub-4.0.2.tar.gz"
   }
  },
  "win_64_requirements": {
