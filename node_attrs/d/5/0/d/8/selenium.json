@@ -22,7 +22,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv --no-deps"
   },
   "extra": {
@@ -42,15 +42,19 @@
     "pip"
    ],
    "run": [
+    "certifi >=2021.10.8",
     "python >=3.7",
+    "selenium-manager 4.11.*",
     "trio >=0.17,<1.dev0",
     "trio-websocket >=0.9,<1.dev0",
-    "urllib3 >=1.26,<3",
-    "certifi >=2021.10.8"
+    "urllib3 >=1.26,<3"
    ]
   },
   "source": [
    {
+    "patches": [
+     "0000-find-manager-on-path.diff"
+    ],
     "sha256": "9f9a5ed586280a3594f7461eb1d9dab3eac9d91e28572f365e9b98d9d03e02b5",
     "url": "https://pypi.io/packages/source/s/selenium/selenium-4.11.2.tar.gz"
    },
@@ -73,7 +77,8 @@
   ],
   "test": {
    "commands": [
-    "pip check"
+    "pip check",
+    "python -c \"from selenium.webdriver.common.selenium_manager import SeleniumManager; assert SeleniumManager.get_binary().exists()\""
    ],
    "imports": [
     "selenium",
@@ -111,6 +116,7 @@
    "elements": [
     "certifi",
     "python",
+    "selenium-manager",
     "trio",
     "trio-websocket",
     "urllib3"
@@ -137,7 +143,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv --no-deps"
   },
   "extra": {
@@ -157,15 +163,19 @@
     "pip"
    ],
    "run": [
+    "certifi >=2021.10.8",
     "python >=3.7",
+    "selenium-manager 4.11.*",
     "trio >=0.17,<1.dev0",
     "trio-websocket >=0.9,<1.dev0",
-    "urllib3 >=1.26,<3",
-    "certifi >=2021.10.8"
+    "urllib3 >=1.26,<3"
    ]
   },
   "source": [
    {
+    "patches": [
+     "0000-find-manager-on-path.diff"
+    ],
     "sha256": "9f9a5ed586280a3594f7461eb1d9dab3eac9d91e28572f365e9b98d9d03e02b5",
     "url": "https://pypi.io/packages/source/s/selenium/selenium-4.11.2.tar.gz"
    },
@@ -188,7 +198,8 @@
   ],
   "test": {
    "commands": [
-    "pip check"
+    "pip check",
+    "python -c \"from selenium.webdriver.common.selenium_manager import SeleniumManager; assert SeleniumManager.get_binary().exists()\""
    ],
    "imports": [
     "selenium",
@@ -223,13 +234,14 @@
  "pr_info": {
   "__lazy_json__": "pr_info/selenium.json"
  },
- "raw_meta_yaml": "{% set version = \"4.11.2\" %}\n\npackage:\n  name: selenium\n  version: {{ version }}\n\nsource:\n  - url: https://pypi.io/packages/source/s/selenium/selenium-{{ version }}.tar.gz\n    sha256: 9f9a5ed586280a3594f7461eb1d9dab3eac9d91e28572f365e9b98d9d03e02b5\n  - fn: LICENSE-selenium-{{ version }}\n    url:\n      - https://raw.githubusercontent.com/SeleniumHQ/selenium/selenium-{{ version }}-python/LICENSE\n      - https://raw.githubusercontent.com/SeleniumHQ/selenium/selenium-{{ version }}/LICENSE\n    sha256: 5e1dea875e2c2a1707eb69ca64eee1faf6a8f2df818230943d590f794d12a359\n  - fn: NOTICE-selenium-{{ version }}\n    url:\n      - https://raw.githubusercontent.com/SeleniumHQ/selenium/selenium-{{ version }}-python/NOTICE\n      - https://raw.githubusercontent.com/SeleniumHQ/selenium/selenium-{{ version }}/NOTICE\n    sha256: 3e4b6f37b254d80f77ed41946e6f9ddd94ad4815b4578d207a6168fde6c68ad2\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv --no-deps\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - python >=3.7\n    - trio >=0.17,<1.dev0\n    - trio-websocket >=0.9,<1.dev0\n    - urllib3 >=1.26,<3\n    - certifi >=2021.10.8\ntest:\n  requires:\n    - pip\n  imports:\n    - selenium\n    - selenium.common\n    - selenium.webdriver\n    - selenium.webdriver.chrome\n    - selenium.webdriver.chromium\n    - selenium.webdriver.common\n    - selenium.webdriver.common.html5\n    - selenium.webdriver.edge\n    - selenium.webdriver.firefox\n    - selenium.webdriver.ie\n    - selenium.webdriver.remote\n    - selenium.webdriver.support\n  commands:\n    - pip check\n\nabout:\n  home: https://www.selenium.dev\n  license_file:\n    - LICENSE-selenium-{{ version }}\n    - NOTICE-selenium-{{ version }}\n  license: Apache-2.0\n  summary: Python bindings for the Selenium WebDriver for automating web browser interaction.\n  dev_url: https://github.com/SeleniumHQ/selenium\n  doc_url: https://www.selenium.dev/documentation\n\nextra:\n  recipe-maintainers:\n    - pmlandwehr\n    - ocefpaf\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"4.11.2\" %}\n\npackage:\n  name: selenium\n  version: {{ version }}\n\nsource:\n  - url: https://pypi.io/packages/source/s/selenium/selenium-{{ version }}.tar.gz\n    sha256: 9f9a5ed586280a3594f7461eb1d9dab3eac9d91e28572f365e9b98d9d03e02b5\n    patches:\n      - 0000-find-manager-on-path.diff\n  - fn: LICENSE-selenium-{{ version }}\n    url:\n      - https://raw.githubusercontent.com/SeleniumHQ/selenium/selenium-{{ version }}-python/LICENSE\n      - https://raw.githubusercontent.com/SeleniumHQ/selenium/selenium-{{ version }}/LICENSE\n    sha256: 5e1dea875e2c2a1707eb69ca64eee1faf6a8f2df818230943d590f794d12a359\n  - fn: NOTICE-selenium-{{ version }}\n    url:\n      - https://raw.githubusercontent.com/SeleniumHQ/selenium/selenium-{{ version }}-python/NOTICE\n      - https://raw.githubusercontent.com/SeleniumHQ/selenium/selenium-{{ version }}/NOTICE\n    sha256: 3e4b6f37b254d80f77ed41946e6f9ddd94ad4815b4578d207a6168fde6c68ad2\n\nbuild:\n  noarch: python\n  number: 1\n  script: {{ PYTHON }} -m pip install . -vv --no-deps\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - certifi >=2021.10.8\n    - python >=3.7\n    - selenium-manager {{ version.split('.')[:2] | join('.') }}.*\n    - trio >=0.17,<1.dev0\n    - trio-websocket >=0.9,<1.dev0\n    - urllib3 >=1.26,<3\ntest:\n  requires:\n    - pip\n  imports:\n    - selenium\n    - selenium.common\n    - selenium.webdriver\n    - selenium.webdriver.chrome\n    - selenium.webdriver.chromium\n    - selenium.webdriver.common\n    - selenium.webdriver.common.html5\n    - selenium.webdriver.edge\n    - selenium.webdriver.firefox\n    - selenium.webdriver.ie\n    - selenium.webdriver.remote\n    - selenium.webdriver.support\n  commands:\n    - pip check\n    - python -c \"from selenium.webdriver.common.selenium_manager import SeleniumManager; assert SeleniumManager.get_binary().exists()\"\n\nabout:\n  home: https://www.selenium.dev\n  license_file:\n    - LICENSE-selenium-{{ version }}\n    - NOTICE-selenium-{{ version }}\n  license: Apache-2.0\n  summary: Python bindings for the Selenium WebDriver for automating web browser interaction.\n  dev_url: https://github.com/SeleniumHQ/selenium\n  doc_url: https://www.selenium.dev/documentation\n\nextra:\n  recipe-maintainers:\n    - pmlandwehr\n    - ocefpaf\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
    "certifi",
    "pip",
    "python",
+   "selenium-manager",
    "trio",
    "trio-websocket",
    "urllib3"
@@ -252,6 +264,7 @@
    "elements": [
     "certifi",
     "python",
+    "selenium-manager",
     "trio",
     "trio-websocket",
     "urllib3"
@@ -282,6 +295,7 @@
    "elements": [
     "certifi >=2021.10.8",
     "python >=3.7",
+    "selenium-manager 4.11.*",
     "trio >=0.17,<1.dev0",
     "trio-websocket >=0.9,<1.dev0",
     "urllib3 >=1.26,<3"
