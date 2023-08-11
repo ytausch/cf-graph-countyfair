@@ -22,7 +22,7 @@
    "summary": "Google's C++ test framework"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gtest",
@@ -37,6 +37,11 @@
   },
   "outputs": [
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
@@ -144,7 +149,7 @@
    "summary": "Google's C++ test framework"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gtest",
@@ -159,6 +164,11 @@
   },
   "outputs": [
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
@@ -266,7 +276,7 @@
    "summary": "Google's C++ test framework"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gtest",
@@ -281,6 +291,11 @@
   },
   "outputs": [
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
@@ -388,7 +403,7 @@
    "summary": "Google's C++ test framework"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gtest",
@@ -433,6 +448,11 @@
   },
   "outputs": [
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
@@ -486,6 +506,11 @@
     "version": "1.14.0"
    },
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
@@ -539,6 +564,11 @@
     "version": "1.14.0"
    },
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
@@ -592,6 +622,11 @@
     "version": "1.14.0"
    },
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
@@ -645,6 +680,11 @@
     "version": "1.14.0"
    },
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
@@ -698,6 +738,11 @@
     "version": "1.14.0"
    },
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
@@ -793,7 +838,7 @@
    "summary": "Google's C++ test framework"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gtest",
@@ -808,6 +853,11 @@
   },
   "outputs": [
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
@@ -915,7 +965,7 @@
    "summary": "Google's C++ test framework"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gtest",
@@ -930,6 +980,11 @@
   },
   "outputs": [
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
@@ -1047,7 +1102,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/gtest.json"
  },
- "raw_meta_yaml": "{% set version = \"1.14.0\" %}\n\n\npackage:\n  name: gtest-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/google/googletest/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n  host: []  # Empty host dependency section\n\noutputs:\n  - name: gtest\n    script: build-gtest.sh   # [unix]\n    script: build-gtest.bat  # [win]\n    version: {{ version }}\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      run_constrained:\n        - gmock {{ version }}\n    test:\n      requires:\n        - pkg-config\n      commands:\n        # libraries\n        {% for each_lib in [\"gtest\", \"gtest_main\", \"gmock\", \"gmock_main\"] %}\n        # presence of shared libs\n        - test -f $PREFIX/lib/lib{{ each_lib }}${SHLIB_EXT}      # [unix]\n        - if not exist %LIBRARY_BIN%\\\\{{ each_lib }}.dll exit 1  # [win]\n        - if not exist %LIBRARY_LIB%\\\\{{ each_lib }}.lib exit 1  # [win]\n\n        # absence of static libs\n        - test ! -f $PREFIX/lib/lib{{ each_lib }}.a              # [unix]\n\n        # pkg-config\n        - pkg-config --print-errors --exact-version \"{{ version }}\" {{ each_lib }}\n        {% endfor %}\n\n        # headers (selection)\n        {% for each_header in [\"gtest/gtest.h\", \"gmock/gmock.h\"] %}\n        - test -f $PREFIX/include/{{ each_header }} || (echo \"{{ each_header }} not found\" && exit 1)  # [unix]\n        - if not exist %LIBRARY_INC%\\{{ \"\\\\\".join(each_header.split(\"/\")) }} exit 1                    # [win]\n        {% endfor %}\n\n  # empty wrapper for compatibility with previous output naming/separation\n  - name: gmock\n    version: {{ version }}\n    requirements:\n      host:\n        - {{ pin_subpackage('gtest', exact=True) }}\n      run:\n        - {{ pin_subpackage('gtest', exact=True) }}\n    test:\n      commands:\n        - echo \"Tested above\"\n\nabout:\n  home: https://github.com/google/googletest\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Google's C++ test framework\n\nextra:\n  recipe-maintainers:\n    - SylvainCorlay\n    - scopatz\n    - wesm\n    - marcelotrevisani\n    - xhochy\n    - h-vetinari\n  feedstock-name: gtest\n",
+ "raw_meta_yaml": "{% set version = \"1.14.0\" %}\n\n\npackage:\n  name: gtest-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/google/googletest/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 8ad598c73ad796e0d8280b082cebd82a630d73e73cd3c70057938a6501bba5d7\n\nbuild:\n  number: 1\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n  host: []  # Empty host dependency section\n\noutputs:\n  - name: gtest\n    script: build-gtest.sh   # [unix]\n    script: build-gtest.bat  # [win]\n    version: {{ version }}\n    build:\n      # Builds are linked against the x.x.x version SO.\n      run_exports:\n        - {{ pin_subpackage('gtest', max_pin='x.x.x') }}\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      run_constrained:\n        - gmock {{ version }}\n    test:\n      requires:\n        - pkg-config\n      commands:\n        # libraries\n        {% for each_lib in [\"gtest\", \"gtest_main\", \"gmock\", \"gmock_main\"] %}\n        # presence of shared libs\n        - test -f $PREFIX/lib/lib{{ each_lib }}${SHLIB_EXT}      # [unix]\n        - if not exist %LIBRARY_BIN%\\\\{{ each_lib }}.dll exit 1  # [win]\n        - if not exist %LIBRARY_LIB%\\\\{{ each_lib }}.lib exit 1  # [win]\n\n        # absence of static libs\n        - test ! -f $PREFIX/lib/lib{{ each_lib }}.a              # [unix]\n\n        # pkg-config\n        - pkg-config --print-errors --exact-version \"{{ version }}\" {{ each_lib }}\n        {% endfor %}\n\n        # headers (selection)\n        {% for each_header in [\"gtest/gtest.h\", \"gmock/gmock.h\"] %}\n        - test -f $PREFIX/include/{{ each_header }} || (echo \"{{ each_header }} not found\" && exit 1)  # [unix]\n        - if not exist %LIBRARY_INC%\\{{ \"\\\\\".join(each_header.split(\"/\")) }} exit 1                    # [win]\n        {% endfor %}\n\n  # empty wrapper for compatibility with previous output naming/separation\n  - name: gmock\n    version: {{ version }}\n    requirements:\n      host:\n        - {{ pin_subpackage('gtest', exact=True) }}\n      run:\n        - {{ pin_subpackage('gtest', exact=True) }}\n    test:\n      commands:\n        - echo \"Tested above\"\n\nabout:\n  home: https://github.com/google/googletest\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Google's C++ test framework\n\nextra:\n  recipe-maintainers:\n    - SylvainCorlay\n    - scopatz\n    - wesm\n    - marcelotrevisani\n    - xhochy\n    - h-vetinari\n  feedstock-name: gtest\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1130,7 +1185,7 @@
    "summary": "Google's C++ test framework"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gtest",
@@ -1145,6 +1200,11 @@
   },
   "outputs": [
    {
+    "build": {
+     "run_exports": [
+      "gtest"
+     ]
+    },
     "name": "gtest",
     "requirements": {
      "build": [
