@@ -37,11 +37,11 @@
      "host": [
       "__unix",
       "pip",
-      "python >=3.7, <3.12"
+      "python >=3.7"
      ],
      "run": [
       "__unix",
-      "python >=3.7, <3.12",
+      "python >=3.7",
       "ansimarkup >=1.0.0",
       "async-timeout >=3.0.0",
       "colorama >=0.4,<1.0",
@@ -70,11 +70,11 @@
      "host": [
       "__unix",
       "pip",
-      "python >=3.7, <3.12"
+      "python >=3.7"
      ],
      "run": [
       "__unix",
-      "python >=3.7, <3.12",
+      "python >=3.7",
       "cylc-flow-base",
       "empy >=3.3,<3.4",
       "graphviz",
@@ -88,22 +88,22 @@
   ],
   "package": {
    "name": "cylc-flow",
-   "version": "8.2.0"
+   "version": "8.2.1"
   },
   "requirements": {
    "host": [
     "__unix",
     "pip",
-    "python >=3.7, <3.12"
+    "python >=3.7"
    ],
    "run": [
     "__unix",
-    "python >=3.7, <3.12"
+    "python >=3.7"
    ]
   },
   "source": {
-   "sha256": "cbe35e0d72d1ca36f28a4cebe9b9040a3445a74253bc94051a3c906cf179ded0",
-   "url": "https://pypi.io/packages/source/c/cylc-flow/cylc-flow-8.2.0.tar.gz"
+   "sha256": "b42693ed0d6b2c1b9cf4d8d3aa6cd6929202391967f6f554e74bd53298ec918b",
+   "url": "https://pypi.io/packages/source/c/cylc-flow/cylc-flow-8.2.1.tar.gz"
   },
   "test": {
    "commands": [
@@ -201,11 +201,11 @@
      "host": [
       "__unix",
       "pip",
-      "python >=3.7, <3.12"
+      "python >=3.7"
      ],
      "run": [
       "__unix",
-      "python >=3.7, <3.12",
+      "python >=3.7",
       "ansimarkup >=1.0.0",
       "async-timeout >=3.0.0",
       "colorama >=0.4,<1.0",
@@ -234,11 +234,11 @@
      "host": [
       "__unix",
       "pip",
-      "python >=3.7, <3.12"
+      "python >=3.7"
      ],
      "run": [
       "__unix",
-      "python >=3.7, <3.12",
+      "python >=3.7",
       "cylc-flow-base",
       "empy >=3.3,<3.4",
       "graphviz",
@@ -252,22 +252,22 @@
   ],
   "package": {
    "name": "cylc-flow",
-   "version": "8.2.0"
+   "version": "8.2.1"
   },
   "requirements": {
    "host": [
     "__unix",
     "pip",
-    "python >=3.7, <3.12"
+    "python >=3.7"
    ],
    "run": [
     "__unix",
-    "python >=3.7, <3.12"
+    "python >=3.7"
    ]
   },
   "source": {
-   "sha256": "cbe35e0d72d1ca36f28a4cebe9b9040a3445a74253bc94051a3c906cf179ded0",
-   "url": "https://pypi.io/packages/source/c/cylc-flow/cylc-flow-8.2.0.tar.gz"
+   "sha256": "b42693ed0d6b2c1b9cf4d8d3aa6cd6929202391967f6f554e74bd53298ec918b",
+   "url": "https://pypi.io/packages/source/c/cylc-flow/cylc-flow-8.2.1.tar.gz"
   },
   "test": {
    "commands": [
@@ -300,7 +300,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cylc-flow.json"
  },
- "raw_meta_yaml": "{% set name = \"cylc-flow\" %}\n{% set version = \"8.2.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: cbe35e0d72d1ca36f28a4cebe9b9040a3445a74253bc94051a3c906cf179ded0\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - __unix\n    - pip\n    - python >=3.7, <3.12\n  run:\n    - __unix\n    - python >=3.7, <3.12\n\ntest:\n  files:\n    - tests/simple-datetime/flow.cylc\n  imports:\n    - cylc.flow\n  commands:\n    - cylc --version\n    - cylc version --long\n    - cylc get-resources job.sh  # check packaging of non-python files\n    - cylc help licence  # check packaging of licence file\n    - cylc validate ./tests/simple-datetime\n\noutputs:\n  # base package with only required dependencies\n  - name: {{ name }}-base\n    build:\n      script: python -m pip install . --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - pip\n        - python >=3.7, <3.12\n      run:\n        - __unix\n        - python >=3.7, <3.12\n        - ansimarkup >=1.0.0\n        - async-timeout >=3.0.0\n        - colorama >=0.4,<1.0\n        - graphene >=2.1,<3\n        - jinja2 >=3.0,<3.1\n        - metomi-isodatetime >=1!3.0.0, <1!3.1.0\n        - protobuf >=4.21.2,<4.22.0\n        - psutil >=5.6.0\n        - pyzmq >=22\n        - setuptools >=49,!=67\n        - importlib_metadata  # py<3.8 TODO: selectors don't work for noarch packages\n        - urwid >=2,<3\n        # non-pinned transitive dependencies used for type checking\n        - rx\n        - promise\n        - tomli >=2.0  # py<3.11 TODO: selectors don't work for noarch packages\n\n\n  # full package with all dependencies installed\n  # (excluding tests, developer extensions, etc)\n  - name: {{ name }}\n    build:\n      script: python -m pip install .[empy,report-timings,tutorials,graph] --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - pip\n        - python >=3.7, <3.12\n      run:\n        - __unix\n        - python >=3.7, <3.12\n        - {{ pin_subpackage(name + \"-base\", exact=True) }}\n        # Dependencies for the `pip install` command above:\n        - empy >=3.3,<3.4\n        # static graphing\n        - graphviz\n        - pillow\n        # report-timings\n        - pandas >=1.0,<2\n        - matplotlib-base\n        # tutorials\n        - requests\n\nabout:\n  home: https://cylc.org/\n  license: GPL-3.0-only\n  license_family: GPL\n  license_file: LICENSE.txt\n  summary: A workflow engine for cycling systems\n  description: |\n    Cylc (\"silk\") is a workflow engine for cycling systems - it orchestrates\n    distributed workflows of interdependent cycling tasks that may continue to\n    run indefinitely.\n  doc_url: https://cylc.github.io/cylc-doc/\n  dev_url: https://github.com/cylc/cylc-flow\n\nextra:\n  recipe-maintainers:\n    - MetRonnie\n    - hjoliver\n    - oliver-sanders\n",
+ "raw_meta_yaml": "{% set name = \"cylc-flow\" %}\n{% set version = \"8.2.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: b42693ed0d6b2c1b9cf4d8d3aa6cd6929202391967f6f554e74bd53298ec918b\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - __unix\n    - pip\n    - python >=3.7\n  run:\n    - __unix\n    - python >=3.7\n\ntest:\n  files:\n    - tests/simple-datetime/flow.cylc\n  imports:\n    - cylc.flow\n  commands:\n    - cylc --version\n    - cylc version --long\n    - cylc get-resources job.sh  # check packaging of non-python files\n    - cylc help licence  # check packaging of licence file\n    - cylc validate ./tests/simple-datetime\n\noutputs:\n  # base package with only required dependencies\n  - name: {{ name }}-base\n    build:\n      script: python -m pip install . --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - pip\n        - python >=3.7\n      run:\n        - __unix\n        - python >=3.7\n        - ansimarkup >=1.0.0\n        - async-timeout >=3.0.0\n        - colorama >=0.4,<1.0\n        - graphene >=2.1,<3\n        - jinja2 >=3.0,<3.1\n        - metomi-isodatetime >=1!3.0.0, <1!3.1.0\n        - protobuf >=4.21.2,<4.22.0\n        - psutil >=5.6.0\n        - pyzmq >=22\n        - setuptools >=49,!=67\n        - importlib_metadata  # py<3.8 TODO: selectors don't work for noarch packages\n        - urwid >=2,<3\n        # non-pinned transitive dependencies used for type checking\n        - rx\n        - promise\n        - tomli >=2.0  # py<3.11 TODO: selectors don't work for noarch packages\n\n\n  # full package with all dependencies installed\n  # (excluding tests, developer extensions, etc)\n  - name: {{ name }}\n    build:\n      script: python -m pip install .[empy,report-timings,tutorials,graph] --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - pip\n        - python >=3.7\n      run:\n        - __unix\n        - python >=3.7\n        - {{ pin_subpackage(name + \"-base\", exact=True) }}\n        # Dependencies for the `pip install` command above:\n        - empy >=3.3,<3.4\n        # static graphing\n        - graphviz\n        - pillow\n        # report-timings\n        - pandas >=1.0,<2\n        - matplotlib-base\n        # tutorials\n        - requests\n\nabout:\n  home: https://cylc.org/\n  license: GPL-3.0-only\n  license_family: GPL\n  license_file: LICENSE.txt\n  summary: A workflow engine for cycling systems\n  description: |\n    Cylc (\"silk\") is a workflow engine for cycling systems - it orchestrates\n    distributed workflows of interdependent cycling tasks that may continue to\n    run indefinitely.\n  doc_url: https://cylc.github.io/cylc-doc/\n  dev_url: https://github.com/cylc/cylc-flow\n\nextra:\n  recipe-maintainers:\n    - MetRonnie\n    - hjoliver\n    - oliver-sanders\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -389,7 +389,7 @@
    "elements": [
     "__unix",
     "pip",
-    "python >=3.7, <3.12"
+    "python >=3.7"
    ]
   },
   "run": {
@@ -412,7 +412,7 @@
     "promise",
     "protobuf >=4.21.2,<4.22.0",
     "psutil >=5.6.0",
-    "python >=3.7, <3.12",
+    "python >=3.7",
     "pyzmq >=22",
     "requests",
     "rx",
@@ -426,8 +426,8 @@
    "elements": []
   }
  },
- "url": "https://pypi.io/packages/source/c/cylc-flow/cylc-flow-8.2.0.tar.gz",
- "version": "8.2.0",
+ "url": "https://pypi.io/packages/source/c/cylc-flow/cylc-flow-8.2.1.tar.gz",
+ "version": "8.2.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cylc-flow.json"
  }
