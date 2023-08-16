@@ -4,6 +4,11 @@
  "conda-forge.yml": {
   "bot": {
    "automerge": true
+  },
+  "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
+   "osx_arm64": "osx_64"
   }
  },
  "feedstock_name": "tflint",
@@ -13,20 +18,26 @@
    "dev_url": "https://github.com/terraform-linters/tflint.git",
    "home": "https://github.com/terraform-linters/tflint",
    "license": "MPL 2.0",
-   "license_file": "src/github.com/terraform-linters/tflint/LICENSE",
+   "license_file": [
+    "src/LICENSE",
+    "library_licenses/"
+   ],
    "summary": "TFLint is a Terraform linter focused on possible errors, best practices, etc."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
-    "pushd src/github.com/terraform-linters/tflint",
-    "go install -v ."
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o $PREFIX/bin/tflint",
+    "chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)"
    ]
   },
   "extra": {
    "recipe-maintainers": [
     "sodre",
-    "mariusvniekerk"
+    "mariusvniekerk",
+    "pavelzw"
    ]
   },
   "package": {
@@ -35,28 +46,174 @@
   },
   "requirements": {
    "build": [
-    "go_compiler_stub"
+    "go-nocgo_compiler_stub",
+    "go-licenses"
    ]
   },
   "source": [
    {
-    "folder": "src/github.com/terraform-linters/tflint",
+    "folder": "src",
     "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
     "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
    }
   ],
   "test": {
    "commands": [
-    "bash -c \"tflint -v\""
-   ],
-   "requires": null
+    "tflint -v",
+    "tflint --help"
+   ]
   }
  },
  "linux_64_requirements": {
   "build": {
    "__set__": true,
    "elements": [
-    "go_compiler_stub"
+    "go-licenses",
+    "go-nocgo_compiler_stub"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "linux_aarch64_meta_yaml": {
+  "about": {
+   "dev_url": "https://github.com/terraform-linters/tflint.git",
+   "home": "https://github.com/terraform-linters/tflint",
+   "license": "MPL 2.0",
+   "license_file": [
+    "src/LICENSE",
+    "library_licenses/"
+   ],
+   "summary": "TFLint is a Terraform linter focused on possible errors, best practices, etc."
+  },
+  "build": {
+   "number": "1",
+   "script": [
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o $PREFIX/bin/tflint",
+    "chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "sodre",
+    "mariusvniekerk",
+    "pavelzw"
+   ]
+  },
+  "package": {
+   "name": "tflint",
+   "version": "0.47.0"
+  },
+  "requirements": {
+   "build": [
+    "go-nocgo_compiler_stub",
+    "go-licenses"
+   ]
+  },
+  "source": [
+   {
+    "folder": "src",
+    "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
+    "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
+   }
+  ],
+  "test": {
+   "commands": [
+    "tflint -v",
+    "tflint --help"
+   ]
+  }
+ },
+ "linux_aarch64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "go-licenses",
+    "go-nocgo_compiler_stub"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "linux_ppc64le_meta_yaml": {
+  "about": {
+   "dev_url": "https://github.com/terraform-linters/tflint.git",
+   "home": "https://github.com/terraform-linters/tflint",
+   "license": "MPL 2.0",
+   "license_file": [
+    "src/LICENSE",
+    "library_licenses/"
+   ],
+   "summary": "TFLint is a Terraform linter focused on possible errors, best practices, etc."
+  },
+  "build": {
+   "number": "1",
+   "script": [
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o $PREFIX/bin/tflint",
+    "chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "sodre",
+    "mariusvniekerk",
+    "pavelzw"
+   ]
+  },
+  "package": {
+   "name": "tflint",
+   "version": "0.47.0"
+  },
+  "requirements": {
+   "build": [
+    "go-nocgo_compiler_stub",
+    "go-licenses"
+   ]
+  },
+  "source": [
+   {
+    "folder": "src",
+    "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
+    "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
+   }
+  ],
+  "test": {
+   "commands": [
+    "tflint -v",
+    "tflint --help"
+   ]
+  }
+ },
+ "linux_ppc64le_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "go-licenses",
+    "go-nocgo_compiler_stub"
    ]
   },
   "host": {
@@ -77,28 +234,70 @@
    "dev_url": "https://github.com/terraform-linters/tflint.git",
    "home": "https://github.com/terraform-linters/tflint",
    "license": "MPL 2.0",
-   "license_file": "src/github.com/terraform-linters/tflint/LICENSE",
+   "license_file": [
+    "src/LICENSE",
+    "library_licenses/",
+    "src/LICENSE",
+    "library_licenses/",
+    "src/LICENSE",
+    "library_licenses/",
+    "src/LICENSE",
+    "library_licenses/",
+    "src/LICENSE",
+    "library_licenses/",
+    "src/LICENSE",
+    "library_licenses/"
+   ],
    "summary": "TFLint is a Terraform linter focused on possible errors, best practices, etc."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
-    "pushd src/github.com/terraform-linters/tflint",
-    "go install -v .",
-    "pushd src/github.com/terraform-linters/tflint",
-    "go install -v .",
-    "pushd src/github.com/terraform-linters/tflint",
-    "go install -v ."
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o $PREFIX/bin/tflint",
+    "chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)",
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o $PREFIX/bin/tflint",
+    "chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)",
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o $PREFIX/bin/tflint",
+    "chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)",
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o $PREFIX/bin/tflint",
+    "chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)",
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o $PREFIX/bin/tflint",
+    "chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)",
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o %LIBRARY_BIN%\\tflint.exe"
    ]
   },
   "extra": {
    "recipe-maintainers": [
     "sodre",
     "mariusvniekerk",
+    "pavelzw",
     "sodre",
     "mariusvniekerk",
+    "pavelzw",
     "sodre",
-    "mariusvniekerk"
+    "mariusvniekerk",
+    "pavelzw",
+    "sodre",
+    "mariusvniekerk",
+    "pavelzw",
+    "sodre",
+    "mariusvniekerk",
+    "pavelzw",
+    "sodre",
+    "mariusvniekerk",
+    "pavelzw"
    ]
   },
   "package": {
@@ -107,36 +306,66 @@
   },
   "requirements": {
    "build": [
-    "go_compiler_stub",
-    "go_compiler_stub",
-    "go_compiler_stub"
+    "go-nocgo_compiler_stub",
+    "go-licenses",
+    "go-nocgo_compiler_stub",
+    "go-licenses",
+    "go-nocgo_compiler_stub",
+    "go-licenses",
+    "go-nocgo_compiler_stub",
+    "go-licenses",
+    "go-nocgo_compiler_stub",
+    "go-licenses",
+    "go-nocgo_compiler_stub",
+    "go-licenses"
    ]
   },
   "source": [
    {
-    "folder": "src/github.com/terraform-linters/tflint",
+    "folder": "src",
     "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
     "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
    },
    {
-    "folder": "src/github.com/terraform-linters/tflint",
+    "folder": "src",
     "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
     "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
    },
    {
-    "folder": "src/github.com/terraform-linters/tflint",
+    "folder": "src",
+    "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
+    "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
+   },
+   {
+    "folder": "src",
+    "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
+    "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
+   },
+   {
+    "folder": "src",
+    "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
+    "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
+   },
+   {
+    "folder": "src",
     "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
     "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
    }
   ],
   "test": {
    "commands": [
-    "bash -c \"tflint -v\"",
-    "bash -c \"tflint -v\"",
-    "bash -c \"tflint -v\""
-   ],
-   "requires": [
-    "m2-bash"
+    "tflint -v",
+    "tflint --help",
+    "tflint -v",
+    "tflint --help",
+    "tflint -v",
+    "tflint --help",
+    "tflint -v",
+    "tflint --help",
+    "tflint -v",
+    "tflint --help",
+    "tflint -v",
+    "tflint --help"
    ]
   }
  },
@@ -146,20 +375,26 @@
    "dev_url": "https://github.com/terraform-linters/tflint.git",
    "home": "https://github.com/terraform-linters/tflint",
    "license": "MPL 2.0",
-   "license_file": "src/github.com/terraform-linters/tflint/LICENSE",
+   "license_file": [
+    "src/LICENSE",
+    "library_licenses/"
+   ],
    "summary": "TFLint is a Terraform linter focused on possible errors, best practices, etc."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
-    "pushd src/github.com/terraform-linters/tflint",
-    "go install -v ."
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o $PREFIX/bin/tflint",
+    "chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)"
    ]
   },
   "extra": {
    "recipe-maintainers": [
     "sodre",
-    "mariusvniekerk"
+    "mariusvniekerk",
+    "pavelzw"
    ]
   },
   "package": {
@@ -168,28 +403,102 @@
   },
   "requirements": {
    "build": [
-    "go_compiler_stub"
+    "go-nocgo_compiler_stub",
+    "go-licenses"
    ]
   },
   "source": [
    {
-    "folder": "src/github.com/terraform-linters/tflint",
+    "folder": "src",
     "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
     "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
    }
   ],
   "test": {
    "commands": [
-    "bash -c \"tflint -v\""
-   ],
-   "requires": null
+    "tflint -v",
+    "tflint --help"
+   ]
   }
  },
  "osx_64_requirements": {
   "build": {
    "__set__": true,
    "elements": [
-    "go_compiler_stub"
+    "go-licenses",
+    "go-nocgo_compiler_stub"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "dev_url": "https://github.com/terraform-linters/tflint.git",
+   "home": "https://github.com/terraform-linters/tflint",
+   "license": "MPL 2.0",
+   "license_file": [
+    "src/LICENSE",
+    "library_licenses/"
+   ],
+   "summary": "TFLint is a Terraform linter focused on possible errors, best practices, etc."
+  },
+  "build": {
+   "number": "1",
+   "script": [
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o $PREFIX/bin/tflint",
+    "chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "sodre",
+    "mariusvniekerk",
+    "pavelzw"
+   ]
+  },
+  "package": {
+   "name": "tflint",
+   "version": "0.47.0"
+  },
+  "requirements": {
+   "build": [
+    "go-nocgo_compiler_stub",
+    "go-licenses"
+   ]
+  },
+  "source": [
+   {
+    "folder": "src",
+    "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
+    "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
+   }
+  ],
+  "test": {
+   "commands": [
+    "tflint -v",
+    "tflint --help"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "go-licenses",
+    "go-nocgo_compiler_stub"
    ]
   },
   "host": {
@@ -214,24 +523,29 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
+  "linux_aarch64",
+  "linux_ppc64le",
   "osx_64",
+  "osx_arm64",
   "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/tflint.json"
  },
- "raw_meta_yaml": "{% set goname = \"github.com/terraform-linters/tflint\" %}\n{% set version = \"0.47.0\" %}\n\n{% set name = goname.split('/')[-1] %}\n{% set pkg_src = ('src/'+goname).replace(\"/\",os.sep) %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - folder: {{ pkg_src }}\n    url: https://{{ goname }}/archive/v{{ version }}.tar.gz\n    sha256: 2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe\n\nbuild:\n  number: 0\n  script:\n    - pushd {{ pkg_src }}\n    - go install -v .\n\nrequirements:\n  build:\n    - {{ compiler('go') }}\n\ntest:\n  requires:\n    - m2-bash  # [win]\n  commands:\n    - bash -c \"{{ name|lower }} -v\"\n\nabout:\n  home: https://github.com/terraform-linters/tflint\n  license: MPL 2.0\n  license_file: {{ pkg_src }}/LICENSE\n  summary: TFLint is a Terraform linter focused on possible errors, best practices, etc.\n  dev_url: https://github.com/terraform-linters/tflint.git\n\nextra:\n  recipe-maintainers:\n    - sodre\n    - mariusvniekerk\n",
+ "raw_meta_yaml": "{% set goname = \"github.com/terraform-linters/tflint\" %}\n{% set version = \"0.47.0\" %}\n\n{% set name = goname.split('/')[-1] %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - folder: src\n    url: https://{{ goname }}/archive/v{{ version }}.tar.gz\n    sha256: 2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe\n\nbuild:\n  number: 1\n  script:\n    - cd src\n    - go-licenses save . --save_path ../library_licenses\n    - go build -v -o $PREFIX/bin/tflint  # [not win]\n    - go build -v -o %LIBRARY_BIN%\\tflint.exe  # [win]\n    # Clear out cache to avoid file not removable warnings\n    - chmod -R u+w $(go env GOPATH) && rm -r $(go env GOPATH)  # [unix]\n\nrequirements:\n  build:\n    - {{ compiler('go-nocgo') }}\n    - go-licenses\n\ntest:\n  commands:\n    - tflint -v\n    - tflint --help\n\nabout:\n  home: https://github.com/terraform-linters/tflint\n  license: MPL 2.0\n  license_file:\n    - src/LICENSE\n    - library_licenses/\n  summary: TFLint is a Terraform linter focused on possible errors, best practices, etc.\n  dev_url: https://github.com/terraform-linters/tflint.git\n\nextra:\n  recipe-maintainers:\n    - sodre\n    - mariusvniekerk\n    - pavelzw\n",
  "req": {
   "__set__": true,
   "elements": [
-   "go_compiler_stub"
+   "go-licenses",
+   "go-nocgo_compiler_stub"
   ]
  },
  "requirements": {
   "build": {
    "__set__": true,
    "elements": [
-    "go_compiler_stub"
+    "go-licenses",
+    "go-nocgo_compiler_stub"
    ]
   },
   "host": {
@@ -244,9 +558,7 @@
   },
   "test": {
    "__set__": true,
-   "elements": [
-    "m2-bash"
-   ]
+   "elements": []
   }
  },
  "strong_exports": false,
@@ -254,7 +566,8 @@
   "build": {
    "__set__": true,
    "elements": [
-    "go_compiler_stub"
+    "go-licenses",
+    "go-nocgo_compiler_stub"
    ]
   },
   "host": {
@@ -267,9 +580,7 @@
   },
   "test": {
    "__set__": true,
-   "elements": [
-    "m2-bash"
-   ]
+   "elements": []
   }
  },
  "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz",
@@ -282,20 +593,25 @@
    "dev_url": "https://github.com/terraform-linters/tflint.git",
    "home": "https://github.com/terraform-linters/tflint",
    "license": "MPL 2.0",
-   "license_file": "src/github.com/terraform-linters/tflint/LICENSE",
+   "license_file": [
+    "src/LICENSE",
+    "library_licenses/"
+   ],
    "summary": "TFLint is a Terraform linter focused on possible errors, best practices, etc."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
-    "pushd src/github.com/terraform-linters/tflint",
-    "go install -v ."
+    "cd src",
+    "go-licenses save . --save_path ../library_licenses",
+    "go build -v -o %LIBRARY_BIN%\\tflint.exe"
    ]
   },
   "extra": {
    "recipe-maintainers": [
     "sodre",
-    "mariusvniekerk"
+    "mariusvniekerk",
+    "pavelzw"
    ]
   },
   "package": {
@@ -304,22 +620,21 @@
   },
   "requirements": {
    "build": [
-    "go_compiler_stub"
+    "go-nocgo_compiler_stub",
+    "go-licenses"
    ]
   },
   "source": [
    {
-    "folder": "src/github.com/terraform-linters/tflint",
+    "folder": "src",
     "sha256": "2e9cefebb18e4fb15faa217dd2005feda2fdcabb7948d1298773b8458bb04abe",
     "url": "https://github.com/terraform-linters/tflint/archive/v0.47.0.tar.gz"
    }
   ],
   "test": {
    "commands": [
-    "bash -c \"tflint -v\""
-   ],
-   "requires": [
-    "m2-bash"
+    "tflint -v",
+    "tflint --help"
    ]
   }
  },
@@ -327,7 +642,8 @@
   "build": {
    "__set__": true,
    "elements": [
-    "go_compiler_stub"
+    "go-licenses",
+    "go-nocgo_compiler_stub"
    ]
   },
   "host": {
@@ -340,9 +656,7 @@
   },
   "test": {
    "__set__": true,
-   "elements": [
-    "m2-bash"
-   ]
+   "elements": []
   }
  }
 }
