@@ -1,0 +1,287 @@
+{
+ "archived": false,
+ "branch": "main",
+ "conda-forge.yml": {},
+ "feedstock_name": "spral",
+ "hash_type": "sha256",
+ "linux_64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/ralna/spral",
+   "license": "BSD-3-Clause",
+   "license_file": "LICENCE",
+   "summary": "Sparse Parallel Robust Algorithms Library."
+  },
+  "build": {
+   "number": "0",
+   "run_exports": [
+    "libspral"
+   ]
+  },
+  "extra": {
+   "feedstock-name": "spral",
+   "recipe-maintainers": [
+    "traversaro"
+   ]
+  },
+  "package": {
+   "name": "libspral",
+   "version": "2023.08.02"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "fortran_compiler_stub",
+    "autoconf",
+    "automake",
+    "pkg-config",
+    "make",
+    "libgomp"
+   ],
+   "host": [
+    "blas-devel",
+    "libblas",
+    "libcblas",
+    "liblapack",
+    "libhwloc 2.9.1",
+    "zlib",
+    "metis 5.1.0"
+   ],
+   "run": [
+    "metis 5.1.0"
+   ]
+  },
+  "source": [
+   {
+    "sha256": "754500618b5da8404600c0bcc285cdcd0de62fa5676b8965e80253ccf7914598",
+    "url": "https://github.com/ralna/spral/archive/refs/tags/v2023.08.02.tar.gz"
+   }
+  ],
+  "test": {
+   "commands": [
+    "test -f ${PREFIX}/include/spral.h",
+    "test -f ${PREFIX}/lib/libspral${SHLIB_EXT}"
+   ]
+  }
+ },
+ "linux_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "autoconf",
+    "automake",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "fortran_compiler_stub",
+    "libgomp",
+    "make",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "blas-devel",
+    "libblas",
+    "libcblas",
+    "libhwloc",
+    "liblapack",
+    "metis",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "metis"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "meta_yaml": {
+  "about": {
+   "home": "https://github.com/ralna/spral",
+   "license": "BSD-3-Clause",
+   "license_file": "LICENCE",
+   "summary": "Sparse Parallel Robust Algorithms Library."
+  },
+  "build": {
+   "number": "0",
+   "run_exports": [
+    "libspral"
+   ]
+  },
+  "extra": {
+   "feedstock-name": "spral",
+   "recipe-maintainers": [
+    "traversaro"
+   ]
+  },
+  "package": {
+   "name": "libspral",
+   "version": "2023.08.02"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "fortran_compiler_stub",
+    "autoconf",
+    "automake",
+    "pkg-config",
+    "make",
+    "libgomp"
+   ],
+   "host": [
+    "blas-devel",
+    "libblas",
+    "libcblas",
+    "liblapack",
+    "libhwloc 2.9.1",
+    "zlib",
+    "metis 5.1.0"
+   ],
+   "run": [
+    "metis 5.1.0"
+   ]
+  },
+  "source": [
+   {
+    "sha256": "754500618b5da8404600c0bcc285cdcd0de62fa5676b8965e80253ccf7914598",
+    "url": "https://github.com/ralna/spral/archive/refs/tags/v2023.08.02.tar.gz"
+   }
+  ],
+  "test": {
+   "commands": [
+    "test -f ${PREFIX}/include/spral.h",
+    "test -f ${PREFIX}/lib/libspral${SHLIB_EXT}"
+   ]
+  }
+ },
+ "name": "libspral",
+ "outputs_names": {
+  "__set__": true,
+  "elements": [
+   "libspral"
+  ]
+ },
+ "parsing_error": false,
+ "platforms": [
+  "linux_64"
+ ],
+ "pr_info": {
+  "__lazy_json__": "pr_info/spral.json"
+ },
+ "raw_meta_yaml": "{% set repo_name = \"spral\" %}\n{% set cxx_name = \"lib\" + repo_name %}\n{% set version = \"2023.08.02\" %}\n\npackage:\n  name: {{ cxx_name }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/ralna/spral/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: 754500618b5da8404600c0bcc285cdcd0de62fa5676b8965e80253ccf7914598\n\nbuild:\n  skip: true  # [not linux]\n  number: 0\n  run_exports:\n    - {{ pin_subpackage(cxx_name, max_pin='x.x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('fortran') }}\n    - autoconf\n    - automake\n    - pkg-config\n    - make\n    - libgomp  # [linux]\n  host:\n    - blas-devel\n    - libblas\n    - libcblas\n    - liblapack\n    # Workaround for https://github.com/conda-forge/libhwloc-feedstock/issues/64\n    - libhwloc 2.9.1\n    - zlib\n    # workaround for https://github.com/conda-forge/metis-feedstock/issues/35\n    - metis 5.1.0\n  run:\n    # workaround for https://github.com/conda-forge/metis-feedstock/issues/35\n    - metis 5.1.0\n\ntest:\n  commands:\n    - test -f ${PREFIX}/include/spral.h  # [unix]\n    - test -f ${PREFIX}/lib/libspral${SHLIB_EXT}  # [unix]\n\nabout:\n  home: https://github.com/ralna/spral\n  license: BSD-3-Clause\n  license_file: LICENCE\n  summary:  Sparse Parallel Robust Algorithms Library.\n\nextra:\n  feedstock-name: {{ repo_name }}\n  recipe-maintainers:\n    - traversaro\n",
+ "req": {
+  "__set__": true,
+  "elements": [
+   "autoconf",
+   "automake",
+   "blas-devel",
+   "c_compiler_stub",
+   "cxx_compiler_stub",
+   "fortran_compiler_stub",
+   "libblas",
+   "libcblas",
+   "libgomp",
+   "libhwloc",
+   "liblapack",
+   "make",
+   "metis",
+   "pkg-config",
+   "zlib"
+  ]
+ },
+ "requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "autoconf",
+    "automake",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "fortran_compiler_stub",
+    "libgomp",
+    "make",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "blas-devel",
+    "c_compiler_stub",
+    "ctng-compilers",
+    "cxx_compiler_stub",
+    "fortran_compiler_stub",
+    "libblas",
+    "libcblas",
+    "libhwloc",
+    "liblapack",
+    "metis",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "ctng-compilers",
+    "cxx_compiler_stub",
+    "fortran_compiler_stub",
+    "metis"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "strong_exports": false,
+ "total_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "autoconf",
+    "automake",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "fortran_compiler_stub",
+    "libgomp",
+    "make",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "blas-devel",
+    "libblas",
+    "libcblas",
+    "libhwloc 2.9.1",
+    "liblapack",
+    "metis 5.1.0",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "metis 5.1.0"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "url": "https://github.com/ralna/spral/archive/refs/tags/v2023.08.02.tar.gz",
+ "version": "2023.08.02",
+ "version_pr_info": {
+  "__lazy_json__": "version_pr_info/spral.json"
+ }
+}
