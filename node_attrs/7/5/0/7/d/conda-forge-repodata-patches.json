@@ -17,6 +17,8 @@
     "yamllint -d '{extends: default, rules: {document-start: disable, line-length: {max: 120}}}' patch_yaml/.",
     "black --check patch_yaml_utils.py",
     "ruff patch_yaml_utils.py",
+    "black --check patch_yaml_model.py",
+    "ruff patch_yaml_model.py",
     "black --check test_patch_yaml_utils.py",
     "ruff test_patch_yaml_utils.py",
     "pytest -vv test_patch_yaml_utils.py",
@@ -31,16 +33,17 @@
   },
   "package": {
    "name": "conda-forge-repodata-patches",
-   "version": "20230830.14.12.06"
+   "version": "20230830.14.44.56"
   },
   "requirements": {
    "build": [
-    "python 3.*",
+    "python 3.11.*",
     "requests",
     "tqdm",
     "license-expression",
     "packaging",
     "pyyaml",
+    "pydantic",
     "black",
     "ruff",
     "pytest",
@@ -69,6 +72,8 @@
     "gen_patch_json.py",
     "get_license_family.py",
     "show_diff.py",
+    "patch_yaml_model.json",
+    "patch_yaml_model.py",
     "patch_yaml_utils.py",
     "patch_yaml",
     "test_patch_yaml_utils.py"
@@ -80,6 +85,7 @@
     "tqdm",
     "license-expression",
     "pyyaml",
+    "pydantic",
     "conda-build"
    ]
   }
@@ -91,6 +97,7 @@
     "black",
     "license-expression",
     "packaging",
+    "pydantic",
     "pytest",
     "python",
     "pyyaml",
@@ -114,6 +121,7 @@
     "conda-build",
     "license-expression",
     "packaging",
+    "pydantic",
     "python",
     "pyyaml",
     "requests",
@@ -135,6 +143,8 @@
     "yamllint -d '{extends: default, rules: {document-start: disable, line-length: {max: 120}}}' patch_yaml/.",
     "black --check patch_yaml_utils.py",
     "ruff patch_yaml_utils.py",
+    "black --check patch_yaml_model.py",
+    "ruff patch_yaml_model.py",
     "black --check test_patch_yaml_utils.py",
     "ruff test_patch_yaml_utils.py",
     "pytest -vv test_patch_yaml_utils.py",
@@ -149,16 +159,17 @@
   },
   "package": {
    "name": "conda-forge-repodata-patches",
-   "version": "20230830.14.12.06"
+   "version": "20230830.14.44.56"
   },
   "requirements": {
    "build": [
-    "python 3.*",
+    "python 3.11.*",
     "requests",
     "tqdm",
     "license-expression",
     "packaging",
     "pyyaml",
+    "pydantic",
     "black",
     "ruff",
     "pytest",
@@ -187,6 +198,8 @@
     "gen_patch_json.py",
     "get_license_family.py",
     "show_diff.py",
+    "patch_yaml_model.json",
+    "patch_yaml_model.py",
     "patch_yaml_utils.py",
     "patch_yaml",
     "test_patch_yaml_utils.py"
@@ -198,6 +211,7 @@
     "tqdm",
     "license-expression",
     "pyyaml",
+    "pydantic",
     "conda-build"
    ]
   }
@@ -216,13 +230,14 @@
  "pr_info": {
   "__lazy_json__": "pr_info/conda-forge-repodata-patches.json"
  },
- "raw_meta_yaml": "{% set version = datetime.datetime.utcnow().strftime('%Y%m%d.%H.%M.%S') %}\n\npackage:\n  name: conda-forge-repodata-patches\n  version: {{ version }}\n\nsource:\n  path: .\n\nbuild:\n  noarch: generic\n  number: 0\n  script:\n    - \"yamllint -d '{extends: default, rules: {document-start: disable, line-length: {max: 120}}}' patch_yaml/.\"\n    - black --check patch_yaml_utils.py\n    - ruff patch_yaml_utils.py\n    - black --check test_patch_yaml_utils.py\n    - ruff test_patch_yaml_utils.py\n    - pytest -vv test_patch_yaml_utils.py\n    - pytest -vv test_gen_patch_json.py\n    - python gen_patch_json.py\n\nrequirements:\n  build:\n    - python 3.*\n    - requests\n    - tqdm\n    - license-expression\n    - packaging\n    - pyyaml\n    - black\n    - ruff\n    - pytest\n    - yamllint\n  host:\n  run:\n\ntest:\n  files:\n    - test_gen_patch_json.py\n    - gen_patch_json.py\n    - get_license_family.py\n    - show_diff.py\n    - patch_yaml_utils.py\n    - patch_yaml\n    - test_patch_yaml_utils.py\n  requires:\n    - python 3.*\n    - requests\n    - packaging\n    - tqdm\n    - license-expression\n    - pyyaml\n    - conda-build\n  commands:\n    {% for subdir in (\"noarch\", \"linux-64\", \"linux-armv7l\", \"linux-ppc64le\", \"osx-64\", \"osx-arm64\", \"win-32\", \"win-64\") %}\n    - test -e $PREFIX/{{ subdir }}/patch_instructions.json\n    {% endfor %}\n    - python show_diff.py\n\nabout:\n  summary: generate tweaks to index metadata, hosted separately from anaconda.org index\n  home: https://github.com/conda-forge/conda-forge-repodata-patches-feedstock\n  license: CC-PDDC\n  description: |\n    See the [recipe/patch_yaml/README.md](recipe/patch_yaml/README.md) for how generate patches from static YAML files.\n    This mechanism should work for most things. If it does not work for your specific case, you\n    can write custom code in `generate_patch_json.py`.\n\nextra:\n  recipe-maintainers:\n    - conda-forge/core\n",
+ "raw_meta_yaml": "{% set version = datetime.datetime.utcnow().strftime('%Y%m%d.%H.%M.%S') %}\n\npackage:\n  name: conda-forge-repodata-patches\n  version: {{ version }}\n\nsource:\n  path: .\n\nbuild:\n  noarch: generic\n  number: 0\n  script:\n    - \"yamllint -d '{extends: default, rules: {document-start: disable, line-length: {max: 120}}}' patch_yaml/.\"\n    - black --check patch_yaml_utils.py\n    - ruff patch_yaml_utils.py\n    - black --check patch_yaml_model.py\n    - ruff patch_yaml_model.py\n    - black --check test_patch_yaml_utils.py\n    - ruff test_patch_yaml_utils.py\n    - pytest -vv test_patch_yaml_utils.py\n    - pytest -vv test_gen_patch_json.py\n    - python gen_patch_json.py\n\nrequirements:\n  build:\n    - python 3.11.*\n    - requests\n    - tqdm\n    - license-expression\n    - packaging\n    - pyyaml\n    - pydantic\n    - black\n    - ruff\n    - pytest\n    - yamllint\n  host:\n  run:\n\ntest:\n  files:\n    - test_gen_patch_json.py\n    - gen_patch_json.py\n    - get_license_family.py\n    - show_diff.py\n    - patch_yaml_model.json\n    - patch_yaml_model.py\n    - patch_yaml_utils.py\n    - patch_yaml\n    - test_patch_yaml_utils.py\n  requires:\n    - python 3.*\n    - requests\n    - packaging\n    - tqdm\n    - license-expression\n    - pyyaml\n    - pydantic\n    - conda-build\n  commands:\n    {% for subdir in (\"noarch\", \"linux-64\", \"linux-armv7l\", \"linux-ppc64le\", \"osx-64\", \"osx-arm64\", \"win-32\", \"win-64\") %}\n    - test -e $PREFIX/{{ subdir }}/patch_instructions.json\n    {% endfor %}\n    - python show_diff.py\n\nabout:\n  summary: generate tweaks to index metadata, hosted separately from anaconda.org index\n  home: https://github.com/conda-forge/conda-forge-repodata-patches-feedstock\n  license: CC-PDDC\n  description: |\n    See the [recipe/patch_yaml/README.md](recipe/patch_yaml/README.md) for how generate patches from static YAML files.\n    This mechanism should work for most things. If it does not work for your specific case, you\n    can write custom code in `generate_patch_json.py`.\n\nextra:\n  recipe-maintainers:\n    - conda-forge/core\n",
  "req": {
   "__set__": true,
   "elements": [
    "black",
    "license-expression",
    "packaging",
+   "pydantic",
    "pytest",
    "python",
    "pyyaml",
@@ -239,6 +254,7 @@
     "black",
     "license-expression",
     "packaging",
+    "pydantic",
     "pytest",
     "python",
     "pyyaml",
@@ -262,6 +278,7 @@
     "conda-build",
     "license-expression",
     "packaging",
+    "pydantic",
     "python",
     "pyyaml",
     "requests",
@@ -278,8 +295,9 @@
     "black",
     "license-expression",
     "packaging",
+    "pydantic",
     "pytest",
-    "python 3.*",
+    "python 3.11.*",
     "pyyaml",
     "requests",
     "ruff",
@@ -301,6 +319,7 @@
     "conda-build",
     "license-expression",
     "packaging",
+    "pydantic",
     "python 3.*",
     "pyyaml",
     "requests",
@@ -309,7 +328,7 @@
   }
  },
  "url": null,
- "version": "20230830.14.12.06",
+ "version": "20230830.14.44.56",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/conda-forge-repodata-patches.json"
  }
