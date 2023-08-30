@@ -16,7 +16,7 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": "PYTHON -m pip install . -vv  --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -27,30 +27,41 @@
   },
   "package": {
    "name": "sidecar",
-   "version": "0.5.2"
+   "version": "0.7.0"
   },
   "requirements": {
    "host": [
-    "python  >=3.7",
+    "python >=3.8",
     "pip",
+    "hatch-nodejs-version",
+    "hatch-jupyter-builder >=0.8.1",
+    "hatchling",
     "jupyter-packaging  >=0.7.9"
    ],
    "run": [
-    "python  >=3.7",
-    "ipywidgets >=7.6.0,<9",
-    "jupyterlab >=3,<4"
+    "python >=3.8",
+    "ipywidgets >=7.6.0,<9"
+   ],
+   "run_constrained": [
+    "jupyterlab >=4,<5"
    ]
   },
   "source": {
-   "sha256": "fd4558417ce786fb59b81e44f7d6868e4a5beccbdb2ae29506f2b3d1c4f85c80",
-   "url": "https://pypi.io/packages/source/s/sidecar/sidecar-0.5.2.tar.gz"
+   "sha256": "c3fa1694b5611c1fab9d7a96c07577ba0764068a89b7b39be9b9ce9770e9d363",
+   "url": "https://pypi.io/packages/source/s/sidecar/sidecar-0.7.0.tar.gz"
   },
   "test": {
    "commands": [
-    "test -f ${PREFIX}/share/jupyter/labextensions/@jupyter-widgets/jupyterlab-sidecar/package.json"
+    "test -f ${PREFIX}/share/jupyter/labextensions/@jupyter-widgets/jupyterlab-sidecar/package.json",
+    "jupyter labextension list",
+    "jupyter labextension list 1>labextensions 2>&1",
+    "grep -iE \"jupyterlab-sidecar.*OK\" labextensions"
    ],
    "imports": [
     "sidecar"
+   ],
+   "requires": [
+    "jupyterlab >=4,<5"
    ]
   }
  },
@@ -62,6 +73,9 @@
   "host": {
    "__set__": true,
    "elements": [
+    "hatch-jupyter-builder",
+    "hatch-nodejs-version",
+    "hatchling",
     "jupyter-packaging",
     "pip",
     "python"
@@ -71,13 +85,14 @@
    "__set__": true,
    "elements": [
     "ipywidgets",
-    "jupyterlab",
     "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "jupyterlab"
+   ]
   }
  },
  "meta_yaml": {
@@ -92,7 +107,7 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": "PYTHON -m pip install . -vv  --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -103,30 +118,41 @@
   },
   "package": {
    "name": "sidecar",
-   "version": "0.5.2"
+   "version": "0.7.0"
   },
   "requirements": {
    "host": [
-    "python  >=3.7",
+    "python >=3.8",
     "pip",
+    "hatch-nodejs-version",
+    "hatch-jupyter-builder >=0.8.1",
+    "hatchling",
     "jupyter-packaging  >=0.7.9"
    ],
    "run": [
-    "python  >=3.7",
-    "ipywidgets >=7.6.0,<9",
-    "jupyterlab >=3,<4"
+    "python >=3.8",
+    "ipywidgets >=7.6.0,<9"
+   ],
+   "run_constrained": [
+    "jupyterlab >=4,<5"
    ]
   },
   "source": {
-   "sha256": "fd4558417ce786fb59b81e44f7d6868e4a5beccbdb2ae29506f2b3d1c4f85c80",
-   "url": "https://pypi.io/packages/source/s/sidecar/sidecar-0.5.2.tar.gz"
+   "sha256": "c3fa1694b5611c1fab9d7a96c07577ba0764068a89b7b39be9b9ce9770e9d363",
+   "url": "https://pypi.io/packages/source/s/sidecar/sidecar-0.7.0.tar.gz"
   },
   "test": {
    "commands": [
-    "test -f ${PREFIX}/share/jupyter/labextensions/@jupyter-widgets/jupyterlab-sidecar/package.json"
+    "test -f ${PREFIX}/share/jupyter/labextensions/@jupyter-widgets/jupyterlab-sidecar/package.json",
+    "jupyter labextension list",
+    "jupyter labextension list 1>labextensions 2>&1",
+    "grep -iE \"jupyterlab-sidecar.*OK\" labextensions"
    ],
    "imports": [
     "sidecar"
+   ],
+   "requires": [
+    "jupyterlab >=4,<5"
    ]
   }
  },
@@ -144,13 +170,15 @@
  "pr_info": {
   "__lazy_json__": "pr_info/sidecar.json"
  },
- "raw_meta_yaml": "{% set name = \"sidecar\" %}\n{% set version = \"0.5.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: fd4558417ce786fb59b81e44f7d6868e4a5beccbdb2ae29506f2b3d1c4f85c80\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - python  >=3.7\n    - pip\n    - jupyter-packaging  >=0.7.9\n  run:\n    - python  >=3.7\n    - ipywidgets >=7.6.0,<9\n    - jupyterlab >=3,<4\n\ntest:\n  imports:\n    - sidecar\n  commands:\n    - test -f ${PREFIX}/share/jupyter/labextensions/@jupyter-widgets/jupyterlab-sidecar/package.json                                      # [unix]\n    - if exist %PREFIX%\\\\share\\\\jupyter\\\\labextensions\\\\@jupyter-widgets\\\\jupyterlab-sidecar\\\\package.json (exit 0) else (exit 1)         # [win]\n\nabout:\n  home: https://github.com/jupyter-widgets/jupyterlab-sidecar\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.txt\n  summary: A sidecar output widget for JupyterLab\n  dev_url: https://github.com/jupyter-widgets/jupyterlab-sidecar\n\nextra:\n  recipe-maintainers:\n    - jasongrout\n    - SylvainCorlay\n    - martinRenou\n",
+ "raw_meta_yaml": "{% set name = \"sidecar\" %}\n{% set version = \"0.7.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: c3fa1694b5611c1fab9d7a96c07577ba0764068a89b7b39be9b9ce9770e9d363\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv  --no-deps --no-build-isolation\n\nrequirements:\n  host:\n    - python >=3.8\n    - pip\n    - hatch-nodejs-version\n    - hatch-jupyter-builder >=0.8.1\n    - hatchling\n    - jupyter-packaging  >=0.7.9\n  run:\n    - python >=3.8\n    - ipywidgets >=7.6.0,<9\n  run_constrained:\n    - jupyterlab >=4,<5\n\ntest:\n  requires:\n    - jupyterlab >=4,<5\n  imports:\n    - sidecar\n  commands:\n    - test -f ${PREFIX}/share/jupyter/labextensions/@jupyter-widgets/jupyterlab-sidecar/package.json                                      # [unix]\n    - if exist %PREFIX%\\\\share\\\\jupyter\\\\labextensions\\\\@jupyter-widgets\\\\jupyterlab-sidecar\\\\package.json (exit 0) else (exit 1)         # [win]\n    - jupyter labextension list\n    - jupyter labextension list 1>labextensions 2>&1\n    - grep -iE \"jupyterlab-sidecar.*OK\" labextensions\n\nabout:\n  home: https://github.com/jupyter-widgets/jupyterlab-sidecar\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.txt\n  summary: A sidecar output widget for JupyterLab\n  dev_url: https://github.com/jupyter-widgets/jupyterlab-sidecar\n\nextra:\n  recipe-maintainers:\n    - jasongrout\n    - SylvainCorlay\n    - martinRenou\n",
  "req": {
   "__set__": true,
   "elements": [
+   "hatch-jupyter-builder",
+   "hatch-nodejs-version",
+   "hatchling",
    "ipywidgets",
    "jupyter-packaging",
-   "jupyterlab",
    "pip",
    "python"
   ]
@@ -163,6 +191,9 @@
   "host": {
    "__set__": true,
    "elements": [
+    "hatch-jupyter-builder",
+    "hatch-nodejs-version",
+    "hatchling",
     "jupyter-packaging",
     "pip",
     "python"
@@ -172,13 +203,14 @@
    "__set__": true,
    "elements": [
     "ipywidgets",
-    "jupyterlab",
     "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "jupyterlab"
+   ]
   }
  },
  "strong_exports": false,
@@ -190,26 +222,30 @@
   "host": {
    "__set__": true,
    "elements": [
+    "hatch-jupyter-builder >=0.8.1",
+    "hatch-nodejs-version",
+    "hatchling",
     "jupyter-packaging  >=0.7.9",
     "pip",
-    "python  >=3.7"
+    "python >=3.8"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "ipywidgets >=7.6.0,<9",
-    "jupyterlab >=3,<4",
-    "python  >=3.7"
+    "python >=3.8"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "jupyterlab >=4,<5"
+   ]
   }
  },
- "url": "https://pypi.io/packages/source/s/sidecar/sidecar-0.5.2.tar.gz",
- "version": "0.5.2",
+ "url": "https://pypi.io/packages/source/s/sidecar/sidecar-0.7.0.tar.gz",
+ "version": "0.7.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/sidecar.json"
  }
