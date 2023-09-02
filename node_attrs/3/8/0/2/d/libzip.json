@@ -25,7 +25,7 @@
    "summary": "A C library for reading, creating, and modifying zip archives."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "libzip"
    ]
@@ -55,7 +55,9 @@
   },
   "source": {
    "fn": "libzip-1.10.1.tar.gz",
-   "patches": null,
+   "patches": [
+    "fix-zstd-pkgconfig.patch"
+   ],
    "sha256": "9669ae5dfe3ac5b3897536dc8466a874c8cf2c0e3b1fdd08d75b273884299363",
    "url": "https://libzip.org/download/libzip-1.10.1.tar.gz"
   },
@@ -105,7 +107,7 @@
    "summary": "A C library for reading, creating, and modifying zip archives."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "libzip"
    ]
@@ -135,7 +137,9 @@
   },
   "source": {
    "fn": "libzip-1.10.1.tar.gz",
-   "patches": null,
+   "patches": [
+    "fix-zstd-pkgconfig.patch"
+   ],
    "sha256": "9669ae5dfe3ac5b3897536dc8466a874c8cf2c0e3b1fdd08d75b273884299363",
    "url": "https://libzip.org/download/libzip-1.10.1.tar.gz"
   },
@@ -185,7 +189,7 @@
    "summary": "A C library for reading, creating, and modifying zip archives."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "libzip"
    ]
@@ -215,7 +219,9 @@
   },
   "source": {
    "fn": "libzip-1.10.1.tar.gz",
-   "patches": null,
+   "patches": [
+    "fix-zstd-pkgconfig.patch"
+   ],
    "sha256": "9669ae5dfe3ac5b3897536dc8466a874c8cf2c0e3b1fdd08d75b273884299363",
    "url": "https://libzip.org/download/libzip-1.10.1.tar.gz"
   },
@@ -265,7 +271,7 @@
    "summary": "A C library for reading, creating, and modifying zip archives."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "libzip",
     "libzip",
@@ -345,7 +351,13 @@
   "source": {
    "fn": "libzip-1.10.1.tar.gz",
    "patches": [
-    "fix-bz2-pkgconfig-win.patch"
+    "fix-zstd-pkgconfig.patch",
+    "fix-zstd-pkgconfig.patch",
+    "fix-zstd-pkgconfig.patch",
+    "fix-zstd-pkgconfig.patch",
+    "fix-zstd-pkgconfig.patch",
+    "fix-bz2-pkgconfig-win.patch",
+    "fix-zstd-pkgconfig.patch"
    ],
    "sha256": "9669ae5dfe3ac5b3897536dc8466a874c8cf2c0e3b1fdd08d75b273884299363",
    "url": "https://libzip.org/download/libzip-1.10.1.tar.gz"
@@ -380,7 +392,7 @@
    "summary": "A C library for reading, creating, and modifying zip archives."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "libzip"
    ]
@@ -410,7 +422,9 @@
   },
   "source": {
    "fn": "libzip-1.10.1.tar.gz",
-   "patches": null,
+   "patches": [
+    "fix-zstd-pkgconfig.patch"
+   ],
    "sha256": "9669ae5dfe3ac5b3897536dc8466a874c8cf2c0e3b1fdd08d75b273884299363",
    "url": "https://libzip.org/download/libzip-1.10.1.tar.gz"
   },
@@ -460,7 +474,7 @@
    "summary": "A C library for reading, creating, and modifying zip archives."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "libzip"
    ]
@@ -490,7 +504,9 @@
   },
   "source": {
    "fn": "libzip-1.10.1.tar.gz",
-   "patches": null,
+   "patches": [
+    "fix-zstd-pkgconfig.patch"
+   ],
    "sha256": "9669ae5dfe3ac5b3897536dc8466a874c8cf2c0e3b1fdd08d75b273884299363",
    "url": "https://libzip.org/download/libzip-1.10.1.tar.gz"
   },
@@ -546,7 +562,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/libzip.json"
  },
- "raw_meta_yaml": "{% set name = \"libzip\" %}\n{% set version = \"1.10.1\" %}\n{% set sha256 = \"9669ae5dfe3ac5b3897536dc8466a874c8cf2c0e3b1fdd08d75b273884299363\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: https://libzip.org/download/libzip-{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n  patches:\n    - fix-bz2-pkgconfig-win.patch  # [win]\n\nbuild:\n  number: 0\n  run_exports:\n    - {{ pin_subpackage(name, max_pin='x') }}\n\nrequirements:\n  build:\n    - cmake\n    - make                               # [not win]\n    - perl 5.32.*  # avoid making a matrix of perl builds\n    - {{ compiler('c') }}\n  host:\n    - zlib\n    - bzip2\n    - openssl\n    # perl is needed to run the package tests\n\ntest:\n  commands:\n    - test -f ${PREFIX}/bin/ziptool  # [linux or osx]\n    - test -f ${PREFIX}/lib/libzip.so  # [linux]\n    - test -f ${PREFIX}/lib/libzip.dylib  # [osx]\n    - if not exist %LIBRARY_BIN%\\\\ziptool.exe exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\\\zip.lib exit 1  # [win]\n\nabout:\n  home: https://libzip.org/\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: A C library for reading, creating, and modifying zip archives.\n  description: |\n    libzip is a C library for reading, creating, and modifying zip archives.\n    Files can be added from data buffers, files, or compressed data copied\n    directly from other zip archives. Changes made without closing the\n    archive can be reverted. The API is documented by man pages.\n  doc_url: https://libzip.org/documentation/\n  dev_url: https://github.com/nih-at/libzip\n\nextra:\n  recipe-maintainers:\n    - ceholden\n    - traversaro\n",
+ "raw_meta_yaml": "{% set name = \"libzip\" %}\n{% set version = \"1.10.1\" %}\n{% set sha256 = \"9669ae5dfe3ac5b3897536dc8466a874c8cf2c0e3b1fdd08d75b273884299363\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: https://libzip.org/download/libzip-{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n  patches:\n    - fix-bz2-pkgconfig-win.patch  # [win]\n    - fix-zstd-pkgconfig.patch\n\nbuild:\n  number: 1\n  run_exports:\n    - {{ pin_subpackage(name, max_pin='x') }}\n\nrequirements:\n  build:\n    - cmake\n    - make                               # [not win]\n    - perl 5.32.*  # avoid making a matrix of perl builds\n    - {{ compiler('c') }}\n  host:\n    - zlib\n    - bzip2\n    - openssl\n    # perl is needed to run the package tests\n\ntest:\n  commands:\n    - test -f ${PREFIX}/bin/ziptool  # [linux or osx]\n    - test -f ${PREFIX}/lib/libzip.so  # [linux]\n    - test -f ${PREFIX}/lib/libzip.dylib  # [osx]\n    - if not exist %LIBRARY_BIN%\\\\ziptool.exe exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\\\zip.lib exit 1  # [win]\n\nabout:\n  home: https://libzip.org/\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: A C library for reading, creating, and modifying zip archives.\n  description: |\n    libzip is a C library for reading, creating, and modifying zip archives.\n    Files can be added from data buffers, files, or compressed data copied\n    directly from other zip archives. Changes made without closing the\n    archive can be reverted. The API is documented by man pages.\n  doc_url: https://libzip.org/documentation/\n  dev_url: https://github.com/nih-at/libzip\n\nextra:\n  recipe-maintainers:\n    - ceholden\n    - traversaro\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -634,7 +650,7 @@
    "summary": "A C library for reading, creating, and modifying zip archives."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "libzip"
    ]
@@ -664,7 +680,8 @@
   "source": {
    "fn": "libzip-1.10.1.tar.gz",
    "patches": [
-    "fix-bz2-pkgconfig-win.patch"
+    "fix-bz2-pkgconfig-win.patch",
+    "fix-zstd-pkgconfig.patch"
    ],
    "sha256": "9669ae5dfe3ac5b3897536dc8466a874c8cf2c0e3b1fdd08d75b273884299363",
    "url": "https://libzip.org/download/libzip-1.10.1.tar.gz"
