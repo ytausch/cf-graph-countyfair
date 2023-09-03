@@ -4,15 +4,16 @@
  "conda-forge.yml": {},
  "feedstock_name": "flang",
  "hash_type": "sha256",
- "meta_yaml": {
+ "linux_64_meta_yaml": {
   "about": {
-   "home": "http://github.com/flang-compiler/flang",
-   "license": "Apache 2.0",
-   "license_file": "LICENSE.txt",
+   "dev_url": "https://github.com/llvm/llvm-project",
+   "home": "https://flang.llvm.org",
+   "license": "Apache-2.0",
+   "license_file": "flang/LICENSE.TXT",
    "summary": "Flang is a Fortran compiler targeting LLVM."
   },
   "build": {
-   "number": "20210131",
+   "number": "0",
    "track_features": [
     "flang"
    ]
@@ -29,61 +30,379 @@
     "requirements": {
      "build": [
       "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cmake",
-      "ninja",
-      "m2-sed",
-      "m2-gawk",
-      "m2-grep"
+      "cxx_compiler_stub"
      ],
      "host": [
-      "clangdev ==11.0.1",
-      "llvm-openmp ==11.0.1",
-      "llvmdev ==11.0.1"
+      "clangdev ==17.0.0.rc3",
+      "compiler-rt ==17.0.0.rc3",
+      "llvmdev ==17.0.0.rc3",
+      "mlir ==17.0.0.rc3"
      ],
-     "run": [
-      "llvm-openmp ==11.0.1"
-     ]
+     "run": []
     },
-    "script": "install_libflang.bat"
+    "script": "install_libflang.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libFortranRuntime.so"
+     ]
+    }
+   },
+   {
+    "name": "libfortran-main",
+    "requirements": {
+     "build": [],
+     "host": [
+      "libflang"
+     ],
+     "run": []
+    },
+    "script": "install_libfortran_main.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libFortran_main.a"
+     ]
+    }
    },
    {
     "name": "flang",
     "requirements": {
      "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
       "cmake",
       "ninja",
-      "m2-sed",
-      "m2-gawk",
-      "m2-grep"
+      "c_compiler_stub",
+      "cxx_compiler_stub"
      ],
      "host": [
-      "clangdev ==11.0.1",
-      "llvm-openmp ==11.0.1",
-      "llvmdev ==11.0.1"
+      "clangdev ==17.0.0.rc3",
+      "compiler-rt ==17.0.0.rc3",
+      "llvm-openmp ==17.0.0.rc3",
+      "llvmdev ==17.0.0.rc3",
+      "mlir ==17.0.0.rc3",
+      "llvm ==17.0.0.rc3",
+      "libclang-cpp ==17.0.0.rc3",
+      "libflang",
+      "libfortran-main"
      ],
      "run": [
-      "clangdev ==11.0.1",
-      "llvm-openmp ==11.0.1",
-      "libflang"
+      "sysroot_linux-64 ==2.17",
+      "clangdev ==17.0.0.rc3",
+      "llvm-openmp ==17.0.0.rc3",
+      "libflang",
+      "libfortran-main"
      ]
     },
     "run_exports": {
      "strong": [
-      "libflang >=11.0.1"
+      "libflang >=17.0.0.rc3"
+     ]
+    },
+    "script": "install_flang.sh",
+    "test": {
+     "commands": [
+      "flang-new hello_world.f90",
+      "./a.out"
+     ],
+     "files": [
+      "hello_world.f90"
+     ],
+     "requires": null
+    }
+   },
+   {
+    "name": "flang_linux-64",
+    "requirements": [
+     "flang"
+    ],
+    "run_exports": {
+     "strong": [
+      "libflang >=17.0.0.rc3"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "flang-split",
+   "version": "17.0.0.rc3"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "sysroot_linux-64 ==2.17"
+   ],
+   "host": [
+    "clangdev ==17.0.0.rc3",
+    "compiler-rt ==17.0.0.rc3",
+    "lit ==17.0.0.rc3",
+    "llvm-openmp ==17.0.0.rc3",
+    "llvmdev ==17.0.0.rc3",
+    "mlir ==17.0.0.rc3",
+    "zlib"
+   ]
+  },
+  "source": {
+   "patches": [
+    "patches/0002-flang-Allow-runtime-build-with-AVOID_NATIVE_INT128_T.patch"
+   ],
+   "sha256": "60493f4e974fcca7b739aea4901af2d957b0eaea34b42815359be59cf6c88fa2",
+   "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.0-rc3/llvm-project-17.0.0rc3.src.tar.xz"
+  },
+  "test": {
+   "commands": [
+    "flang --version"
+   ]
+  }
+ },
+ "linux_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja",
+    "sysroot_linux-64"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "clangdev",
+    "compiler-rt",
+    "libclang-cpp",
+    "libflang",
+    "libfortran-main",
+    "lit",
+    "llvm",
+    "llvm-openmp",
+    "llvmdev",
+    "mlir",
+    "zlib"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "clangdev",
+    "flang",
+    "libflang",
+    "libfortran-main",
+    "llvm-openmp",
+    "sysroot_linux-64"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "meta_yaml": {
+  "about": {
+   "dev_url": "https://github.com/llvm/llvm-project",
+   "home": "https://flang.llvm.org",
+   "license": "Apache-2.0",
+   "license_file": "flang/LICENSE.TXT",
+   "summary": "Flang is a Fortran compiler targeting LLVM."
+  },
+  "build": {
+   "number": "0",
+   "track_features": [
+    "flang",
+    "flang"
+   ]
+  },
+  "extra": {
+   "feedstock-name": "flang",
+   "recipe-maintainers": [
+    "isuruf",
+    "isuruf"
+   ]
+  },
+  "outputs": [
+   {
+    "name": "libflang",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "host": [
+      "clangdev ==17.0.0.rc3",
+      "compiler-rt ==17.0.0.rc3",
+      "llvmdev ==17.0.0.rc3",
+      "mlir ==17.0.0.rc3"
+     ],
+     "run": []
+    },
+    "script": "install_libflang.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libFortranRuntime.so"
+     ]
+    }
+   },
+   {
+    "name": "libfortran-main",
+    "requirements": {
+     "build": [],
+     "host": [
+      "libflang"
+     ],
+     "run": []
+    },
+    "script": "install_libfortran_main.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libFortran_main.a"
+     ]
+    }
+   },
+   {
+    "name": "flang",
+    "requirements": {
+     "build": [
+      "cmake",
+      "ninja",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "host": [
+      "clangdev ==17.0.0.rc3",
+      "compiler-rt ==17.0.0.rc3",
+      "llvm-openmp ==17.0.0.rc3",
+      "llvmdev ==17.0.0.rc3",
+      "mlir ==17.0.0.rc3",
+      "llvm ==17.0.0.rc3",
+      "libclang-cpp ==17.0.0.rc3",
+      "libflang",
+      "libfortran-main"
+     ],
+     "run": [
+      "sysroot_linux-64 ==2.17",
+      "clangdev ==17.0.0.rc3",
+      "llvm-openmp ==17.0.0.rc3",
+      "libflang",
+      "libfortran-main"
+     ]
+    },
+    "run_exports": {
+     "strong": [
+      "libflang >=17.0.0.rc3"
+     ]
+    },
+    "script": "install_flang.sh",
+    "test": {
+     "commands": [
+      "flang-new hello_world.f90",
+      "./a.out"
+     ],
+     "files": [
+      "hello_world.f90"
+     ],
+     "requires": null
+    }
+   },
+   {
+    "name": "flang_linux-64",
+    "requirements": [
+     "flang"
+    ],
+    "run_exports": {
+     "strong": [
+      "libflang >=17.0.0.rc3"
+     ]
+    }
+   },
+   {
+    "name": "libflang",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "host": [
+      "clangdev ==17.0.0.rc3",
+      "compiler-rt ==17.0.0.rc3",
+      "llvmdev ==17.0.0.rc3",
+      "mlir ==17.0.0.rc3"
+     ],
+     "run": [
+      "compiler-rt ==17.0.0.rc3"
+     ]
+    },
+    "script": "install_libflang.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_LIB%\\FortranRuntime.lib exit 1"
+     ]
+    }
+   },
+   {
+    "name": "libfortran-main",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "host": [
+      "libflang"
+     ],
+     "run": []
+    },
+    "script": "install_libfortran_main.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_LIB%\\Fortran_main.lib exit 1"
+     ]
+    }
+   },
+   {
+    "name": "flang",
+    "requirements": {
+     "build": [
+      "cmake",
+      "ninja",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "host": [
+      "clangdev ==17.0.0.rc3",
+      "compiler-rt ==17.0.0.rc3",
+      "llvm-openmp ==17.0.0.rc3",
+      "llvmdev ==17.0.0.rc3",
+      "mlir ==17.0.0.rc3",
+      "llvm ==17.0.0.rc3",
+      "libclang-cpp ==17.0.0.rc3",
+      "zlib",
+      "libflang",
+      "libfortran-main"
+     ],
+     "run": [
+      "clangdev ==17.0.0.rc3",
+      "llvm-openmp ==17.0.0.rc3",
+      "libflang",
+      "libfortran-main"
+     ]
+    },
+    "run_exports": {
+     "strong": [
+      "libflang >=17.0.0.rc3"
      ]
     },
     "script": "install_flang.bat",
     "test": {
      "commands": [
-      "call \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\vcvarsall.bat\" amd64",
-      "flang hello_world.f90",
+      "flang-new hello_world.f90",
       "a.exe"
      ],
      "files": [
       "hello_world.f90"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
      ]
     }
    },
@@ -94,14 +413,14 @@
     ],
     "run_exports": {
      "strong": [
-      "libflang >=11.0.1"
+      "libflang >=17.0.0.rc3"
      ]
     }
    }
   ],
   "package": {
    "name": "flang-split",
-   "version": "11.0.1"
+   "version": "17.0.0.rc3"
   },
   "requirements": {
    "build": [
@@ -109,22 +428,40 @@
     "cxx_compiler_stub",
     "cmake",
     "ninja",
-    "m2-sed",
-    "m2-gawk",
-    "m2-grep"
+    "sysroot_linux-64 ==2.17",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
    ],
    "host": [
-    "clangdev ==11.0.1",
-    "llvm-openmp ==11.0.1",
-    "llvmdev ==11.0.1"
+    "clangdev ==17.0.0.rc3",
+    "compiler-rt ==17.0.0.rc3",
+    "lit ==17.0.0.rc3",
+    "llvm-openmp ==17.0.0.rc3",
+    "llvmdev ==17.0.0.rc3",
+    "mlir ==17.0.0.rc3",
+    "zlib",
+    "clangdev ==17.0.0.rc3",
+    "compiler-rt ==17.0.0.rc3",
+    "lit ==17.0.0.rc3",
+    "llvm-openmp ==17.0.0.rc3",
+    "llvmdev ==17.0.0.rc3",
+    "mlir ==17.0.0.rc3",
+    "zlib"
    ]
   },
   "source": {
-   "sha256": "e4fa46a0b29cabf4c4583231b79f923d6296efc4196099cbaebf5828f03a2607",
-   "url": "https://github.com/xoviat/flang/archive/1192ff0775ddf94f7944dc40181406c088b4d575.tar.gz"
+   "patches": [
+    "patches/0002-flang-Allow-runtime-build-with-AVOID_NATIVE_INT128_T.patch",
+    "patches/0002-flang-Allow-runtime-build-with-AVOID_NATIVE_INT128_T.patch"
+   ],
+   "sha256": "60493f4e974fcca7b739aea4901af2d957b0eaea34b42815359be59cf6c88fa2",
+   "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.0-rc3/llvm-project-17.0.0rc3.src.tar.xz"
   },
   "test": {
    "commands": [
+    "flang --version",
     "flang --version"
    ]
   }
@@ -134,33 +471,41 @@
   "__set__": true,
   "elements": [
    "flang",
+   "flang_linux-64",
    "flang_win-64",
-   "libflang"
+   "libflang",
+   "libfortran-main"
   ]
  },
  "parsing_error": false,
  "platforms": [
+  "linux_64",
   "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/flang.json"
  },
- "raw_meta_yaml": "{% set clang_variant = os.environ.get('CLANG_VARIANT', 'flang') %}\n{% set flang_commit = \"1192ff0775ddf94f7944dc40181406c088b4d575\" %}\n{% set llvm_version = \"11.0.1\" %}\n{% set version = llvm_version %}\n{% set sha256 = \"e4fa46a0b29cabf4c4583231b79f923d6296efc4196099cbaebf5828f03a2607\" %}\n{% set build_number = \"20210131\" %}\n\npackage:\n  name: flang-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/xoviat/flang/archive/{{ flang_commit }}.tar.gz\n  sha256: {{ sha256 }}\n\nbuild:\n  number: {{ build_number }}\n  skip: true    # [osx]\n  skip: true    # [unix]\n  skip: true    # [win32]\n  skip: true    # [win and vc<14]\n  track_features:\n    - flang\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n    - m2-sed   # [win]\n    - m2-gawk  # [win]\n    - m2-grep  # [win]\n  host:\n    - clangdev =={{ llvm_version }}\n    - llvm-openmp =={{ llvm_version }}\n    - llvmdev =={{ llvm_version }}\n\ntest:\n  commands:\n    - flang --version\n\noutputs:\n  - name: libflang\n    script: install_libflang.sh   # [unix]\n    script: install_libflang.bat  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n        - m2-sed   # [win]\n        - m2-gawk  # [win]\n        - m2-grep  # [win]\n      host:\n        - clangdev =={{ llvm_version }}\n        - llvm-openmp =={{ llvm_version }}\n        - llvmdev =={{ llvm_version }}\n      run:\n        - llvm-openmp =={{ llvm_version }}\n\n  - name: flang\n    script: install_flang.sh      # [unix]\n    script: install_flang.bat     # [win]\n    run_exports:\n      strong:\n        - libflang >={{ version }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n        - m2-sed   # [win]\n        - m2-gawk  # [win]\n        - m2-grep  # [win]\n      host:\n        - clangdev =={{ llvm_version }}\n        - llvm-openmp =={{ llvm_version }}\n        - llvmdev =={{ llvm_version }}\n      run:\n        - clangdev =={{ llvm_version }}\n        - llvm-openmp =={{ llvm_version }}\n        - {{ pin_subpackage('libflang', exact=True) }}\n    test:\n      files:\n        - hello_world.f90\n      commands:\n        # TODO - Figure out why the following line is needed.\n        - call \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\vcvarsall.bat\" amd64  # [win64]\n        - flang hello_world.f90\n        - ./a.out   # [unix]\n        - a.exe     # [win]\n\n  - name: flang_{{ target_platform }}\n    run_exports:\n      strong:\n        - libflang >={{ version }}\n    requirements:\n      - {{ pin_subpackage('flang', exact=True) }}\n\n\nabout:\n  home: http://github.com/flang-compiler/flang\n  license: Apache 2.0\n  license_file: LICENSE.txt\n  summary: Flang is a Fortran compiler targeting LLVM.\n\nextra:\n  recipe-maintainers:\n    - isuruf\n  feedstock-name: flang\n",
+ "raw_meta_yaml": "{% set version = \"17.0.0.rc3\" %}\n\npackage:\n  name: flang-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/llvm/llvm-project/releases/download/llvmorg-{{ version.replace(\".rc\", \"-rc\") }}/llvm-project-{{ version.replace(\".rc\", \"rc\") }}.src.tar.xz\n  sha256: 60493f4e974fcca7b739aea4901af2d957b0eaea34b42815359be59cf6c88fa2\n  patches:\n    # link compiler-rt libs (upstream's find_compiler_rt_library doesn't work correctly);\n    # probably related to https://github.com/llvm/llvm-project/issues/63286\n    # - patches/0001-always-link-in-compiler-rt-builtins-on-windows-apple.patch\n    # backport https://reviews.llvm.org/D154660\n    - patches/0002-flang-Allow-runtime-build-with-AVOID_NATIVE_INT128_T.patch\n\nbuild:\n  number: 0\n  # intentionally only windows (main target) & linux (debuggability)\n  skip: true  # [osx]\n  track_features:\n    - flang\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n    - sysroot_linux-64 ==2.17  # [linux64]\n    - mlir =={{ version }}     # [build_platform != target_platform]\n  host:\n    - clangdev =={{ version }}\n    - compiler-rt =={{ version }}\n    - lit =={{ version }}\n    - llvm-openmp =={{ version }}\n    - llvmdev =={{ version }}\n    - mlir =={{ version }}\n    - zlib\n\ntest:\n  commands:\n    - flang --version\n\noutputs:\n  - name: libflang\n    script: install_libflang.sh   # [unix]\n    script: install_libflang.bat  # [win]\n    requirements:\n      build:\n        # for strong run-exports\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n      host:\n        - clangdev =={{ version }}\n        - compiler-rt =={{ version }}\n        - llvmdev =={{ version }}\n        - mlir =={{ version }}\n      run:\n        # necessary to link on windows (even for static lib), e.g.\n        # FortranDecimal.lib(binary-to-decimal.cpp.obj) : error LNK2019: unresolved external symbol __udivti3 ...\n        - compiler-rt =={{ version }}  # [win]\n    test:\n      commands:\n        # shared lib on linux\n        - test -f $PREFIX/lib/libFortranRuntime.so              # [linux]\n        # static lib on win (fails to export symbols for shared build)\n        - if not exist %LIBRARY_LIB%\\FortranRuntime.lib exit 1  # [win]\n\n  - name: libfortran-main\n    script: install_libfortran_main.sh   # [unix]\n    script: install_libfortran_main.bat  # [win]\n    requirements:\n      build:\n        # if there's no build env, windows fails with EnvironmentLocationNotFound (what?!)\n        - {{ compiler('c') }}    # [win]\n        - {{ compiler('cxx') }}  # [win]\n      host:\n        # this is just here to have a non-empty host environment\n        - {{ pin_subpackage('libflang', exact=True) }}\n      run:\n        # not sure what we need here\n    test:\n      commands:\n        - test -f $PREFIX/lib/libFortran_main.a                 # [unix]\n        - if not exist %LIBRARY_LIB%\\Fortran_main.lib exit 1    # [win]\n\n  - name: flang\n    script: install_flang.sh      # [unix]\n    script: install_flang.bat     # [win]\n    run_exports:\n      strong:\n        - libflang >={{ version }}\n    requirements:\n      build:\n        - cmake\n        - ninja\n        # for strong run-exports\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n      host:\n        - clangdev =={{ version }}\n        - compiler-rt =={{ version }}\n        - llvm-openmp =={{ version }}\n        - llvmdev =={{ version }}\n        - mlir =={{ version }}\n        # for required run-exports\n        - llvm =={{ version }}\n        - libclang-cpp =={{ version }}\n        # ninja really wants to find z.lib on win\n        - zlib  # [win]\n        - {{ pin_subpackage('libflang', exact=True) }}\n        - {{ pin_subpackage('libfortran-main', exact=True) }}\n      run:\n        - sysroot_{{ target_platform }} ==2.17  # [linux]\n        - clangdev =={{ version }}\n        - llvm-openmp =={{ version }}\n        - {{ pin_subpackage('libflang', exact=True) }}\n        - {{ pin_subpackage('libfortran-main', exact=True) }}\n    test:\n      requires:\n        - {{ compiler('c') }}       # [win]\n        - {{ compiler('cxx') }}     # [win]\n      files:\n        - hello_world.f90\n      commands:\n        # see naming discussion: https://discourse.llvm.org/t/reviving-rename-flang-new-to-flang/68130/2\n        # - flang hello_world.f90\n        - flang-new hello_world.f90\n        - ./a.out   # [unix]\n        - a.exe     # [win]\n\n  - name: flang_{{ target_platform }}\n    run_exports:\n      strong:\n        - libflang >={{ version }}\n    requirements:\n      - {{ pin_subpackage('flang', exact=True) }}\n\n\nabout:\n  home: https://flang.llvm.org\n  license: Apache-2.0\n  license_file: flang/LICENSE.TXT\n  summary: Flang is a Fortran compiler targeting LLVM.\n  dev_url: https://github.com/llvm/llvm-project\n\nextra:\n  recipe-maintainers:\n    - isuruf\n  feedstock-name: flang\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
    "clangdev",
    "cmake",
+   "compiler-rt",
    "cxx_compiler_stub",
    "flang",
+   "libclang-cpp",
    "libflang",
+   "libfortran-main",
+   "lit",
+   "llvm",
    "llvm-openmp",
    "llvmdev",
-   "m2-gawk",
-   "m2-grep",
-   "m2-sed",
-   "ninja"
+   "mlir",
+   "ninja",
+   "sysroot_linux-64",
+   "zlib"
   ]
  },
  "requirements": {
@@ -170,10 +515,8 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "m2-gawk",
-    "m2-grep",
-    "m2-sed",
-    "ninja"
+    "ninja",
+    "sysroot_linux-64"
    ]
   },
   "host": {
@@ -181,10 +524,18 @@
    "elements": [
     "c_compiler_stub",
     "clangdev",
+    "compiler-rt",
     "cxx_compiler_stub",
+    "libclang-cpp",
+    "libflang",
+    "libfortran-main",
+    "lit",
+    "llvm",
     "llvm-openmp",
     "llvmdev",
-    "openmp"
+    "mlir",
+    "openmp",
+    "zlib"
    ]
   },
   "run": {
@@ -192,16 +543,22 @@
    "elements": [
     "c_compiler_stub",
     "clangdev",
+    "compiler-rt",
     "cxx_compiler_stub",
     "flang",
     "libflang",
+    "libfortran-main",
     "llvm-openmp",
-    "openmp"
+    "openmp",
+    "sysroot_linux-64"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cxx_compiler_stub"
+   ]
   }
  },
  "strong_exports": false,
@@ -212,48 +569,61 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "m2-gawk",
-    "m2-grep",
-    "m2-sed",
-    "ninja"
+    "ninja",
+    "sysroot_linux-64 ==2.17"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
-    "clangdev ==11.0.1",
-    "llvm-openmp ==11.0.1",
-    "llvmdev ==11.0.1"
+    "clangdev ==17.0.0.rc3",
+    "compiler-rt ==17.0.0.rc3",
+    "libclang-cpp ==17.0.0.rc3",
+    "libflang",
+    "libfortran-main",
+    "lit ==17.0.0.rc3",
+    "llvm ==17.0.0.rc3",
+    "llvm-openmp ==17.0.0.rc3",
+    "llvmdev ==17.0.0.rc3",
+    "mlir ==17.0.0.rc3",
+    "zlib"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "clangdev ==11.0.1",
+    "clangdev ==17.0.0.rc3",
+    "compiler-rt ==17.0.0.rc3",
     "flang",
     "libflang",
-    "llvm-openmp ==11.0.1"
+    "libfortran-main",
+    "llvm-openmp ==17.0.0.rc3",
+    "sysroot_linux-64 ==2.17"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cxx_compiler_stub"
+   ]
   }
  },
- "url": "https://github.com/xoviat/flang/archive/1192ff0775ddf94f7944dc40181406c088b4d575.tar.gz",
- "version": "11.0.1",
+ "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.0-rc3/llvm-project-17.0.0rc3.src.tar.xz",
+ "version": "17.0.0.rc3",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/flang.json"
  },
  "win_64_meta_yaml": {
   "about": {
-   "home": "http://github.com/flang-compiler/flang",
-   "license": "Apache 2.0",
-   "license_file": "LICENSE.txt",
+   "dev_url": "https://github.com/llvm/llvm-project",
+   "home": "https://flang.llvm.org",
+   "license": "Apache-2.0",
+   "license_file": "flang/LICENSE.TXT",
    "summary": "Flang is a Fortran compiler targeting LLVM."
   },
   "build": {
-   "number": "20210131",
+   "number": "0",
    "track_features": [
     "flang"
    ]
@@ -270,61 +640,89 @@
     "requirements": {
      "build": [
       "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cmake",
-      "ninja",
-      "m2-sed",
-      "m2-gawk",
-      "m2-grep"
+      "cxx_compiler_stub"
      ],
      "host": [
-      "clangdev ==11.0.1",
-      "llvm-openmp ==11.0.1",
-      "llvmdev ==11.0.1"
+      "clangdev ==17.0.0.rc3",
+      "compiler-rt ==17.0.0.rc3",
+      "llvmdev ==17.0.0.rc3",
+      "mlir ==17.0.0.rc3"
      ],
      "run": [
-      "llvm-openmp ==11.0.1"
+      "compiler-rt ==17.0.0.rc3"
      ]
     },
-    "script": "install_libflang.bat"
+    "script": "install_libflang.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_LIB%\\FortranRuntime.lib exit 1"
+     ]
+    }
+   },
+   {
+    "name": "libfortran-main",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "host": [
+      "libflang"
+     ],
+     "run": []
+    },
+    "script": "install_libfortran_main.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_LIB%\\Fortran_main.lib exit 1"
+     ]
+    }
    },
    {
     "name": "flang",
     "requirements": {
      "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
       "cmake",
       "ninja",
-      "m2-sed",
-      "m2-gawk",
-      "m2-grep"
+      "c_compiler_stub",
+      "cxx_compiler_stub"
      ],
      "host": [
-      "clangdev ==11.0.1",
-      "llvm-openmp ==11.0.1",
-      "llvmdev ==11.0.1"
+      "clangdev ==17.0.0.rc3",
+      "compiler-rt ==17.0.0.rc3",
+      "llvm-openmp ==17.0.0.rc3",
+      "llvmdev ==17.0.0.rc3",
+      "mlir ==17.0.0.rc3",
+      "llvm ==17.0.0.rc3",
+      "libclang-cpp ==17.0.0.rc3",
+      "zlib",
+      "libflang",
+      "libfortran-main"
      ],
      "run": [
-      "clangdev ==11.0.1",
-      "llvm-openmp ==11.0.1",
-      "libflang"
+      "clangdev ==17.0.0.rc3",
+      "llvm-openmp ==17.0.0.rc3",
+      "libflang",
+      "libfortran-main"
      ]
     },
     "run_exports": {
      "strong": [
-      "libflang >=11.0.1"
+      "libflang >=17.0.0.rc3"
      ]
     },
     "script": "install_flang.bat",
     "test": {
      "commands": [
-      "call \"C:\\Program Files (x86)\\Microsoft Visual Studio 14.0\\VC\\vcvarsall.bat\" amd64",
-      "flang hello_world.f90",
+      "flang-new hello_world.f90",
       "a.exe"
      ],
      "files": [
       "hello_world.f90"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cxx_compiler_stub"
      ]
     }
    },
@@ -335,34 +733,38 @@
     ],
     "run_exports": {
      "strong": [
-      "libflang >=11.0.1"
+      "libflang >=17.0.0.rc3"
      ]
     }
    }
   ],
   "package": {
    "name": "flang-split",
-   "version": "11.0.1"
+   "version": "17.0.0.rc3"
   },
   "requirements": {
    "build": [
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
-    "ninja",
-    "m2-sed",
-    "m2-gawk",
-    "m2-grep"
+    "ninja"
    ],
    "host": [
-    "clangdev ==11.0.1",
-    "llvm-openmp ==11.0.1",
-    "llvmdev ==11.0.1"
+    "clangdev ==17.0.0.rc3",
+    "compiler-rt ==17.0.0.rc3",
+    "lit ==17.0.0.rc3",
+    "llvm-openmp ==17.0.0.rc3",
+    "llvmdev ==17.0.0.rc3",
+    "mlir ==17.0.0.rc3",
+    "zlib"
    ]
   },
   "source": {
-   "sha256": "e4fa46a0b29cabf4c4583231b79f923d6296efc4196099cbaebf5828f03a2607",
-   "url": "https://github.com/xoviat/flang/archive/1192ff0775ddf94f7944dc40181406c088b4d575.tar.gz"
+   "patches": [
+    "patches/0002-flang-Allow-runtime-build-with-AVOID_NATIVE_INT128_T.patch"
+   ],
+   "sha256": "60493f4e974fcca7b739aea4901af2d957b0eaea34b42815359be59cf6c88fa2",
+   "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.0-rc3/llvm-project-17.0.0rc3.src.tar.xz"
   },
   "test": {
    "commands": [
@@ -377,9 +779,6 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "m2-gawk",
-    "m2-grep",
-    "m2-sed",
     "ninja"
    ]
   },
@@ -387,22 +786,35 @@
    "__set__": true,
    "elements": [
     "clangdev",
+    "compiler-rt",
+    "libclang-cpp",
+    "libflang",
+    "libfortran-main",
+    "lit",
+    "llvm",
     "llvm-openmp",
-    "llvmdev"
+    "llvmdev",
+    "mlir",
+    "zlib"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "clangdev",
+    "compiler-rt",
     "flang",
     "libflang",
+    "libfortran-main",
     "llvm-openmp"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cxx_compiler_stub"
+   ]
   }
  }
 }
