@@ -23,6 +23,8 @@
     "LICENSE.txt",
     "source/PTL/LICENSE",
     "LICENSE.txt",
+    "source/PTL/LICENSE",
+    "LICENSE.txt",
     "source/PTL/LICENSE"
    ],
    "summary": "Tomographic reconstruction in Python."
@@ -31,10 +33,18 @@
    "own_environment": true
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
+    "tomopy/admins",
+    "dgursoy",
+    "decarlof",
+    "licode",
+    "ravescovi",
+    "tacaswell",
+    "oleksandr-pavlyk",
+    "carterbox",
     "tomopy/admins",
     "dgursoy",
     "decarlof",
@@ -74,7 +84,106 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda11.2h1234567_102",
+     "string": "cuda11.2h1234567_103",
+     "track_features": null
+    },
+    "name": "libtomo",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "libgomp",
+      "ninja"
+     ],
+     "host": [
+      "fftw"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "tomopy >1.11.0"
+     ]
+    },
+    "script": "build-cxx.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libtomo-recon$SHLIB_EXT",
+      "test -f $PREFIX/include/libtomo/recon.h",
+      "test -f $PREFIX/lib/cmake/libtomo/libtomoTargets.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.14.1"
+     ]
+    },
+    "name": "tomopy",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.6,<4",
+      "setuptools >=45",
+      "setuptools_scm >=6.2",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libtomo",
+      "importlib_metadata",
+      "numexpr =2.*",
+      "numpy >1.12,!=1.22.4",
+      "pywavelets =1.*",
+      "python >=3.6,<4",
+      "scikit-image >=0.17,<1",
+      "scipy =1.*",
+      "tifffile >=2019"
+     ],
+     "run_constrained": [
+      "astra-toolbox >1.8,<3"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "unset CUDA_VERSION",
+      "pytest test -vs"
+     ],
+     "imports": [
+      "tomopy",
+      "tomopy.misc",
+      "tomopy.prep",
+      "tomopy.recon",
+      "tomopy.sim",
+      "tomopy.util"
+     ],
+     "requires": [
+      "pip",
+      "pytest"
+     ],
+     "source_files": [
+      "test/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libtomo",
+      "libtomo =*=cuda*"
+     ],
+     "script_env": [
+      "USE_CUDA=ON",
+      "USE_MKL=OFF",
+      "USE_OPENCV=OFF",
+      "CUDAARCHS=all"
+     ],
+     "string": "cuda11.8h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -173,7 +282,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "h1234567_2",
+     "string": "h1234567_3",
      "track_features": [
       "nocuda_CmNhJ1DLKR"
      ]
@@ -271,7 +380,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda12.0h1234567_102",
+     "string": "cuda12.0h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -364,6 +473,18 @@
    "version": "1.14.1"
   },
   "source": [
+   {
+    "patches": [
+     "shared-cuda-npp.patch"
+    ],
+    "sha256": "f8a61ebe019c2d39e80ba7bd25fa6af34794e506a9505cd43d1edbc6a66b6806",
+    "url": "https://github.com/tomopy/tomopy/releases/download/1.14.1/tomopy-1.14.1.zip"
+   },
+   {
+    "folder": "source/PTL",
+    "sha256": "2fa6b5f8e9e63aa0e9c4e933eadc216e32b13cc6388a15bc3f8fb369757417f2",
+    "url": "https://github.com/jrmadsen/PTL/archive/refs/tags/tomopy-v1.0.tar.gz"
+   },
    {
     "patches": [
      "shared-cuda-npp.patch"
@@ -462,6 +583,8 @@
     "LICENSE.txt",
     "source/PTL/LICENSE",
     "LICENSE.txt",
+    "source/PTL/LICENSE",
+    "LICENSE.txt",
     "source/PTL/LICENSE"
    ],
    "summary": "Tomographic reconstruction in Python."
@@ -470,10 +593,18 @@
    "own_environment": true
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
+    "tomopy/admins",
+    "dgursoy",
+    "decarlof",
+    "licode",
+    "ravescovi",
+    "tacaswell",
+    "oleksandr-pavlyk",
+    "carterbox",
     "tomopy/admins",
     "dgursoy",
     "decarlof",
@@ -513,7 +644,106 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda11.2h1234567_102",
+     "string": "cuda11.2h1234567_103",
+     "track_features": null
+    },
+    "name": "libtomo",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "libgomp",
+      "ninja"
+     ],
+     "host": [
+      "fftw"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "tomopy >1.11.0"
+     ]
+    },
+    "script": "build-cxx.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libtomo-recon$SHLIB_EXT",
+      "test -f $PREFIX/include/libtomo/recon.h",
+      "test -f $PREFIX/lib/cmake/libtomo/libtomoTargets.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.14.1"
+     ]
+    },
+    "name": "tomopy",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.6,<4",
+      "setuptools >=45",
+      "setuptools_scm >=6.2",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libtomo",
+      "importlib_metadata",
+      "numexpr =2.*",
+      "numpy >1.12,!=1.22.4",
+      "pywavelets =1.*",
+      "python >=3.6,<4",
+      "scikit-image >=0.17,<1",
+      "scipy =1.*",
+      "tifffile >=2019"
+     ],
+     "run_constrained": [
+      "astra-toolbox >1.8,<3"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "unset CUDA_VERSION",
+      "pytest test -vs"
+     ],
+     "imports": [
+      "tomopy",
+      "tomopy.misc",
+      "tomopy.prep",
+      "tomopy.recon",
+      "tomopy.sim",
+      "tomopy.util"
+     ],
+     "requires": [
+      "pip",
+      "pytest"
+     ],
+     "source_files": [
+      "test/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libtomo",
+      "libtomo =*=cuda*"
+     ],
+     "script_env": [
+      "USE_CUDA=ON",
+      "USE_MKL=OFF",
+      "USE_OPENCV=OFF",
+      "CUDAARCHS=all"
+     ],
+     "string": "cuda11.8h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -612,7 +842,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "h1234567_2",
+     "string": "h1234567_3",
      "track_features": [
       "nocuda_CmNhJ1DLKR"
      ]
@@ -710,7 +940,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda12.0h1234567_102",
+     "string": "cuda12.0h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -803,6 +1033,18 @@
    "version": "1.14.1"
   },
   "source": [
+   {
+    "patches": [
+     "shared-cuda-npp.patch"
+    ],
+    "sha256": "f8a61ebe019c2d39e80ba7bd25fa6af34794e506a9505cd43d1edbc6a66b6806",
+    "url": "https://github.com/tomopy/tomopy/releases/download/1.14.1/tomopy-1.14.1.zip"
+   },
+   {
+    "folder": "source/PTL",
+    "sha256": "2fa6b5f8e9e63aa0e9c4e933eadc216e32b13cc6388a15bc3f8fb369757417f2",
+    "url": "https://github.com/jrmadsen/PTL/archive/refs/tags/tomopy-v1.0.tar.gz"
+   },
    {
     "patches": [
      "shared-cuda-npp.patch"
@@ -901,6 +1143,8 @@
     "LICENSE.txt",
     "source/PTL/LICENSE",
     "LICENSE.txt",
+    "source/PTL/LICENSE",
+    "LICENSE.txt",
     "source/PTL/LICENSE"
    ],
    "summary": "Tomographic reconstruction in Python."
@@ -909,10 +1153,18 @@
    "own_environment": true
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
+    "tomopy/admins",
+    "dgursoy",
+    "decarlof",
+    "licode",
+    "ravescovi",
+    "tacaswell",
+    "oleksandr-pavlyk",
+    "carterbox",
     "tomopy/admins",
     "dgursoy",
     "decarlof",
@@ -952,7 +1204,106 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda11.2h1234567_102",
+     "string": "cuda11.2h1234567_103",
+     "track_features": null
+    },
+    "name": "libtomo",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "libgomp",
+      "ninja"
+     ],
+     "host": [
+      "fftw"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "tomopy >1.11.0"
+     ]
+    },
+    "script": "build-cxx.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libtomo-recon$SHLIB_EXT",
+      "test -f $PREFIX/include/libtomo/recon.h",
+      "test -f $PREFIX/lib/cmake/libtomo/libtomoTargets.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.14.1"
+     ]
+    },
+    "name": "tomopy",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.6,<4",
+      "setuptools >=45",
+      "setuptools_scm >=6.2",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libtomo",
+      "importlib_metadata",
+      "numexpr =2.*",
+      "numpy >1.12,!=1.22.4",
+      "pywavelets =1.*",
+      "python >=3.6,<4",
+      "scikit-image >=0.17,<1",
+      "scipy =1.*",
+      "tifffile >=2019"
+     ],
+     "run_constrained": [
+      "astra-toolbox >1.8,<3"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "unset CUDA_VERSION",
+      "pytest test -vs"
+     ],
+     "imports": [
+      "tomopy",
+      "tomopy.misc",
+      "tomopy.prep",
+      "tomopy.recon",
+      "tomopy.sim",
+      "tomopy.util"
+     ],
+     "requires": [
+      "pip",
+      "pytest"
+     ],
+     "source_files": [
+      "test/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libtomo",
+      "libtomo =*=cuda*"
+     ],
+     "script_env": [
+      "USE_CUDA=ON",
+      "USE_MKL=OFF",
+      "USE_OPENCV=OFF",
+      "CUDAARCHS=all"
+     ],
+     "string": "cuda11.8h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -1051,7 +1402,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "h1234567_2",
+     "string": "h1234567_3",
      "track_features": [
       "nocuda_CmNhJ1DLKR"
      ]
@@ -1149,7 +1500,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda12.0h1234567_102",
+     "string": "cuda12.0h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -1242,6 +1593,18 @@
    "version": "1.14.1"
   },
   "source": [
+   {
+    "patches": [
+     "shared-cuda-npp.patch"
+    ],
+    "sha256": "f8a61ebe019c2d39e80ba7bd25fa6af34794e506a9505cd43d1edbc6a66b6806",
+    "url": "https://github.com/tomopy/tomopy/releases/download/1.14.1/tomopy-1.14.1.zip"
+   },
+   {
+    "folder": "source/PTL",
+    "sha256": "2fa6b5f8e9e63aa0e9c4e933eadc216e32b13cc6388a15bc3f8fb369757417f2",
+    "url": "https://github.com/jrmadsen/PTL/archive/refs/tags/tomopy-v1.0.tar.gz"
+   },
    {
     "patches": [
      "shared-cuda-npp.patch"
@@ -1358,6 +1721,14 @@
     "LICENSE.txt",
     "source/PTL/LICENSE",
     "LICENSE.txt",
+    "source/PTL/LICENSE",
+    "LICENSE.txt",
+    "source/PTL/LICENSE",
+    "LICENSE.txt",
+    "source/PTL/LICENSE",
+    "LICENSE.txt",
+    "source/PTL/LICENSE",
+    "LICENSE.txt",
     "source/PTL/LICENSE"
    ],
    "summary": "Tomographic reconstruction in Python."
@@ -1366,10 +1737,42 @@
    "own_environment": true
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
+    "tomopy/admins",
+    "dgursoy",
+    "decarlof",
+    "licode",
+    "ravescovi",
+    "tacaswell",
+    "oleksandr-pavlyk",
+    "carterbox",
+    "tomopy/admins",
+    "dgursoy",
+    "decarlof",
+    "licode",
+    "ravescovi",
+    "tacaswell",
+    "oleksandr-pavlyk",
+    "carterbox",
+    "tomopy/admins",
+    "dgursoy",
+    "decarlof",
+    "licode",
+    "ravescovi",
+    "tacaswell",
+    "oleksandr-pavlyk",
+    "carterbox",
+    "tomopy/admins",
+    "dgursoy",
+    "decarlof",
+    "licode",
+    "ravescovi",
+    "tacaswell",
+    "oleksandr-pavlyk",
+    "carterbox",
     "tomopy/admins",
     "dgursoy",
     "decarlof",
@@ -1481,7 +1884,106 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda11.2h1234567_102",
+     "string": "cuda11.2h1234567_103",
+     "track_features": null
+    },
+    "name": "libtomo",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "libgomp",
+      "ninja"
+     ],
+     "host": [
+      "fftw"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "tomopy >1.11.0"
+     ]
+    },
+    "script": "build-cxx.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libtomo-recon$SHLIB_EXT",
+      "test -f $PREFIX/include/libtomo/recon.h",
+      "test -f $PREFIX/lib/cmake/libtomo/libtomoTargets.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.14.1"
+     ]
+    },
+    "name": "tomopy",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.6,<4",
+      "setuptools >=45",
+      "setuptools_scm >=6.2",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libtomo",
+      "importlib_metadata",
+      "numexpr =2.*",
+      "numpy >1.12,!=1.22.4",
+      "pywavelets =1.*",
+      "python >=3.6,<4",
+      "scikit-image >=0.17,<1",
+      "scipy =1.*",
+      "tifffile >=2019"
+     ],
+     "run_constrained": [
+      "astra-toolbox >1.8,<3"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "unset CUDA_VERSION",
+      "pytest test -vs"
+     ],
+     "imports": [
+      "tomopy",
+      "tomopy.misc",
+      "tomopy.prep",
+      "tomopy.recon",
+      "tomopy.sim",
+      "tomopy.util"
+     ],
+     "requires": [
+      "pip",
+      "pytest"
+     ],
+     "source_files": [
+      "test/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libtomo",
+      "libtomo =*=cuda*"
+     ],
+     "script_env": [
+      "USE_CUDA=ON",
+      "USE_MKL=OFF",
+      "USE_OPENCV=OFF",
+      "CUDAARCHS=all"
+     ],
+     "string": "cuda11.8h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -1580,7 +2082,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "h1234567_2",
+     "string": "h1234567_3",
      "track_features": [
       "nocuda_CmNhJ1DLKR"
      ]
@@ -1678,7 +2180,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda12.0h1234567_102",
+     "string": "cuda12.0h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -1777,7 +2279,106 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda11.2h1234567_102",
+     "string": "cuda11.2h1234567_103",
+     "track_features": null
+    },
+    "name": "libtomo",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "libgomp",
+      "ninja"
+     ],
+     "host": [
+      "fftw"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "tomopy >1.11.0"
+     ]
+    },
+    "script": "build-cxx.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libtomo-recon$SHLIB_EXT",
+      "test -f $PREFIX/include/libtomo/recon.h",
+      "test -f $PREFIX/lib/cmake/libtomo/libtomoTargets.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.14.1"
+     ]
+    },
+    "name": "tomopy",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.6,<4",
+      "setuptools >=45",
+      "setuptools_scm >=6.2",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libtomo",
+      "importlib_metadata",
+      "numexpr =2.*",
+      "numpy >1.12,!=1.22.4",
+      "pywavelets =1.*",
+      "python >=3.6,<4",
+      "scikit-image >=0.17,<1",
+      "scipy =1.*",
+      "tifffile >=2019"
+     ],
+     "run_constrained": [
+      "astra-toolbox >1.8,<3"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "unset CUDA_VERSION",
+      "pytest test -vs"
+     ],
+     "imports": [
+      "tomopy",
+      "tomopy.misc",
+      "tomopy.prep",
+      "tomopy.recon",
+      "tomopy.sim",
+      "tomopy.util"
+     ],
+     "requires": [
+      "pip",
+      "pytest"
+     ],
+     "source_files": [
+      "test/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libtomo",
+      "libtomo =*=cuda*"
+     ],
+     "script_env": [
+      "USE_CUDA=ON",
+      "USE_MKL=OFF",
+      "USE_OPENCV=OFF",
+      "CUDAARCHS=all"
+     ],
+     "string": "cuda11.8h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -1876,7 +2477,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "h1234567_2",
+     "string": "h1234567_3",
      "track_features": [
       "nocuda_CmNhJ1DLKR"
      ]
@@ -1974,7 +2575,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda12.0h1234567_102",
+     "string": "cuda12.0h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -2073,7 +2674,106 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda11.2h1234567_102",
+     "string": "cuda11.2h1234567_103",
+     "track_features": null
+    },
+    "name": "libtomo",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "libgomp",
+      "ninja"
+     ],
+     "host": [
+      "fftw"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "tomopy >1.11.0"
+     ]
+    },
+    "script": "build-cxx.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libtomo-recon$SHLIB_EXT",
+      "test -f $PREFIX/include/libtomo/recon.h",
+      "test -f $PREFIX/lib/cmake/libtomo/libtomoTargets.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.14.1"
+     ]
+    },
+    "name": "tomopy",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.6,<4",
+      "setuptools >=45",
+      "setuptools_scm >=6.2",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libtomo",
+      "importlib_metadata",
+      "numexpr =2.*",
+      "numpy >1.12,!=1.22.4",
+      "pywavelets =1.*",
+      "python >=3.6,<4",
+      "scikit-image >=0.17,<1",
+      "scipy =1.*",
+      "tifffile >=2019"
+     ],
+     "run_constrained": [
+      "astra-toolbox >1.8,<3"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "unset CUDA_VERSION",
+      "pytest test -vs"
+     ],
+     "imports": [
+      "tomopy",
+      "tomopy.misc",
+      "tomopy.prep",
+      "tomopy.recon",
+      "tomopy.sim",
+      "tomopy.util"
+     ],
+     "requires": [
+      "pip",
+      "pytest"
+     ],
+     "source_files": [
+      "test/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libtomo",
+      "libtomo =*=cuda*"
+     ],
+     "script_env": [
+      "USE_CUDA=ON",
+      "USE_MKL=OFF",
+      "USE_OPENCV=OFF",
+      "CUDAARCHS=all"
+     ],
+     "string": "cuda11.8h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -2172,7 +2872,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "h1234567_2",
+     "string": "h1234567_3",
      "track_features": [
       "nocuda_CmNhJ1DLKR"
      ]
@@ -2270,7 +2970,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda12.0h1234567_102",
+     "string": "cuda12.0h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -2369,7 +3069,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "h1234567_2",
+     "string": "h1234567_3",
      "track_features": [
       "nocuda_CmNhJ1DLKR"
      ]
@@ -2467,7 +3167,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "h1234567_2",
+     "string": "h1234567_3",
      "track_features": [
       "nocuda_CmNhJ1DLKR"
      ]
@@ -2565,7 +3265,106 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda11.2h1234567_102",
+     "string": "cuda11.2h1234567_103",
+     "track_features": null
+    },
+    "name": "libtomo",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja"
+     ],
+     "host": [
+      "fftw"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "tomopy >1.11.0"
+     ]
+    },
+    "script": "bld-cxx.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_LIB%\\\\tomo-recon.lib exit 1",
+      "if not exist %LIBRARY_BIN%\\\\tomo-recon.dll exit 1",
+      "if not exist %LIBRARY_INC%\\\\libtomo\\\\recon.h exit 1",
+      "if not exist %LIBRARY_LIB%\\\\cmake\\\\libtomo\\\\libtomoTargets.cmake exit 1"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.14.1"
+     ]
+    },
+    "name": "tomopy",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.6,<4",
+      "setuptools >=45",
+      "setuptools_scm >=6.2",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libtomo",
+      "importlib_metadata",
+      "numexpr =2.*",
+      "numpy >1.12,!=1.22.4",
+      "pywavelets =1.*",
+      "python >=3.6,<4",
+      "scikit-image >=0.17,<1",
+      "scipy =1.*",
+      "tifffile >=2019"
+     ],
+     "run_constrained": [
+      "astra-toolbox >1.8,<3"
+     ]
+    },
+    "script": "bld-python.bat",
+    "test": {
+     "commands": [
+      "pip check",
+      "set \"CUDA_VERSION=\"",
+      "pytest test -vs"
+     ],
+     "imports": [
+      "tomopy",
+      "tomopy.misc",
+      "tomopy.prep",
+      "tomopy.recon",
+      "tomopy.sim",
+      "tomopy.util"
+     ],
+     "requires": [
+      "pip",
+      "pytest"
+     ],
+     "source_files": [
+      "test/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libtomo",
+      "libtomo =*=cuda*"
+     ],
+     "script_env": [
+      "USE_CUDA=ON",
+      "USE_MKL=OFF",
+      "USE_OPENCV=OFF",
+      "CUDAARCHS=all"
+     ],
+     "string": "cuda11.8h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -2658,6 +3457,54 @@
    "version": "1.14.1"
   },
   "source": [
+   {
+    "patches": [
+     "shared-cuda-npp.patch"
+    ],
+    "sha256": "f8a61ebe019c2d39e80ba7bd25fa6af34794e506a9505cd43d1edbc6a66b6806",
+    "url": "https://github.com/tomopy/tomopy/releases/download/1.14.1/tomopy-1.14.1.zip"
+   },
+   {
+    "folder": "source/PTL",
+    "sha256": "2fa6b5f8e9e63aa0e9c4e933eadc216e32b13cc6388a15bc3f8fb369757417f2",
+    "url": "https://github.com/jrmadsen/PTL/archive/refs/tags/tomopy-v1.0.tar.gz"
+   },
+   {
+    "patches": [
+     "shared-cuda-npp.patch"
+    ],
+    "sha256": "f8a61ebe019c2d39e80ba7bd25fa6af34794e506a9505cd43d1edbc6a66b6806",
+    "url": "https://github.com/tomopy/tomopy/releases/download/1.14.1/tomopy-1.14.1.zip"
+   },
+   {
+    "folder": "source/PTL",
+    "sha256": "2fa6b5f8e9e63aa0e9c4e933eadc216e32b13cc6388a15bc3f8fb369757417f2",
+    "url": "https://github.com/jrmadsen/PTL/archive/refs/tags/tomopy-v1.0.tar.gz"
+   },
+   {
+    "patches": [
+     "shared-cuda-npp.patch"
+    ],
+    "sha256": "f8a61ebe019c2d39e80ba7bd25fa6af34794e506a9505cd43d1edbc6a66b6806",
+    "url": "https://github.com/tomopy/tomopy/releases/download/1.14.1/tomopy-1.14.1.zip"
+   },
+   {
+    "folder": "source/PTL",
+    "sha256": "2fa6b5f8e9e63aa0e9c4e933eadc216e32b13cc6388a15bc3f8fb369757417f2",
+    "url": "https://github.com/jrmadsen/PTL/archive/refs/tags/tomopy-v1.0.tar.gz"
+   },
+   {
+    "patches": [
+     "shared-cuda-npp.patch"
+    ],
+    "sha256": "f8a61ebe019c2d39e80ba7bd25fa6af34794e506a9505cd43d1edbc6a66b6806",
+    "url": "https://github.com/tomopy/tomopy/releases/download/1.14.1/tomopy-1.14.1.zip"
+   },
+   {
+    "folder": "source/PTL",
+    "sha256": "2fa6b5f8e9e63aa0e9c4e933eadc216e32b13cc6388a15bc3f8fb369757417f2",
+    "url": "https://github.com/jrmadsen/PTL/archive/refs/tags/tomopy-v1.0.tar.gz"
+   },
    {
     "patches": [
      "shared-cuda-npp.patch"
@@ -2823,7 +3670,7 @@
    "own_environment": true
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -2850,7 +3697,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "h1234567_2",
+     "string": "h1234567_3",
      "track_features": [
       "nocuda_CmNhJ1DLKR"
      ]
@@ -3018,7 +3865,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/tomopy.json"
  },
- "raw_meta_yaml": "{% set version = \"1.14.1\" %}\n{% set build = 2 %}\n\n# Set CUDA related variables\n{% if cuda_compiler_version is not defined or cuda_compiler_version == \"None\" %}\n  {% set use_cuda = \"OFF\" %}\n  {% set cuda_build_prefix = \"\" %}\n  {% set cuda_build_post = build %}\n{% else %}\n  {% set use_cuda = \"ON\" %}\n  {% set cuda_build_prefix = \"cuda\" + cuda_compiler_version|string %}\n  {% set cuda_build_post = build + 100 %}\n{% endif %}\n\n# Set FFT related variables\n{% if win or osx or linux32 or linux64 %}\n  {% set use_mkl = \"ON\" %}\n  {% set libfft = \"mkl-devel\" %}\n{% else %}\n  {% set use_mkl = \"OFF\" %}\n  {% set libfft = \"fftw\" %}\n{% endif %}\n\n# Set OpenCV related variables\n{% set use_opencv = \"OFF\" %}\n\n{% set cuda_major = environ.get(\"cuda_compiler_version\", \"11.2\").split(\".\")[0]|int %}\n\npackage:\n  name: libtomo\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/tomopy/tomopy/releases/download/{{ version }}/tomopy-{{ version }}.zip\n    sha256: f8a61ebe019c2d39e80ba7bd25fa6af34794e506a9505cd43d1edbc6a66b6806\n    patches:\n      - shared-cuda-npp.patch\n    # There is a special alpha release for only tomopy, so it does not make\n    # sense to dynamically link to PTL from a shared library\n  - url: https://github.com/jrmadsen/PTL/archive/refs/tags/tomopy-v1.0.tar.gz\n    sha256: 2fa6b5f8e9e63aa0e9c4e933eadc216e32b13cc6388a15bc3f8fb369757417f2\n    folder: source/PTL\n\nbuild:\n  number: {{ build }}\n\napp:\n  own_environment: true\n\noutputs:\n  - name: libtomo\n    script: build-cxx.sh  # [unix]\n    script: bld-cxx.bat  # [win]\n    build:\n      string: {{ cuda_build_prefix }}h{{ PKG_HASH }}_{{ cuda_build_post }}\n      script_env:\n        - USE_CUDA={{ use_cuda }}\n        - USE_MKL={{ use_mkl }}\n        - USE_OPENCV={{ use_opencv }}\n        - CUDAARCHS=all\n      run_exports:\n        - {{ pin_subpackage('libtomo') }}\n        - libtomo =*=cuda*  # [cuda_compiler_version != \"None\"]\n        - libtomo =*=h*     # [cuda_compiler_version == \"None\"]\n      track_features:\n        - nocuda_CmNhJ1DLKR  # [cuda_compiler_version == \"None\"]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n        - cmake >=3.23\n        - llvm-openmp  # [osx]\n        - libgomp      # [linux]\n        - ninja\n      host:\n{% if cuda_major == 12 %}\n        - libnpp-dev\n{% endif %}\n        - {{ libfft }}\n      run:\n        - __cuda  # [cuda_compiler_version != \"None\"]\n      run_constrained:\n        - tomopy >1.11.0  # tomopy split into two packages\n    test:\n      commands:\n        - test -f $PREFIX/lib/libtomo-recon$SHLIB_EXT  # [unix]\n        - test -f $PREFIX/include/libtomo/recon.h  # [unix]\n        - test -f $PREFIX/lib/cmake/libtomo/libtomoTargets.cmake  # [unix]\n        - if not exist %LIBRARY_LIB%\\\\tomo-recon.lib exit 1  # [win]\n        - if not exist %LIBRARY_BIN%\\\\tomo-recon.dll exit 1  # [win]\n        - if not exist %LIBRARY_INC%\\\\libtomo\\\\recon.h exit 1  # [win]\n        - if not exist %LIBRARY_LIB%\\\\cmake\\\\libtomo\\\\libtomoTargets.cmake exit 1  # [win]\n\n  - name: tomopy\n    script: build-python.sh  # [unix]\n    script: bld-python.bat  # [win]\n    build:\n      noarch: python\n      script_env:\n        - SETUPTOOLS_SCM_PRETEND_VERSION={{ PKG_VERSION }}\n    requirements:\n      host:\n        - pip\n        - python >=3.6,<4\n        - setuptools >=45\n        - setuptools_scm >=6.2\n        - setuptools_scm_git_archive\n      run:\n        - {{ pin_subpackage('libtomo') }}\n        - importlib_metadata\n        - numexpr =2.*\n        - numpy >1.12,!=1.22.4\n        - pywavelets =1.*\n        - python >=3.6,<4\n        - scikit-image >=0.17,<1\n        - scipy =1.*\n        - tifffile >=2019\n      run_constrained:\n        - astra-toolbox >1.8,<3\n    test:\n      requires:\n        - pip\n        - pytest\n      imports:\n        - tomopy\n        - tomopy.misc\n        - tomopy.prep\n        - tomopy.recon\n        - tomopy.sim\n        - tomopy.util\n      source_files:\n        - test/*\n      commands:\n        - pip check\n        - unset CUDA_VERSION   # [unix]\n        - set \"CUDA_VERSION=\"  # [win]\n        - pytest test -vs\n\nabout:\n  home: http://tomopy.readthedocs.io\n  license: BSD-3-Clause AND MIT\n  license_family: BSD\n  license_file:\n    - LICENSE.txt\n    - source/PTL/LICENSE\n  summary: Tomographic reconstruction in Python.\n  description: >\n    TomoPy is an open-source Python package for tomographic data processing and image reconstruction.\n  doc_url: http://tomopy.readthedocs.io\n  dev_url: https://github.com/tomopy/tomopy\n\nextra:\n  recipe-maintainers:\n    - tomopy/admins\n    - dgursoy\n    - decarlof\n    - licode\n    - ravescovi\n    - tacaswell\n    - oleksandr-pavlyk\n    - carterbox\n",
+ "raw_meta_yaml": "{% set version = \"1.14.1\" %}\n{% set build = 3 %}\n\n# Set CUDA related variables\n{% if cuda_compiler_version is not defined or cuda_compiler_version == \"None\" %}\n  {% set use_cuda = \"OFF\" %}\n  {% set cuda_build_prefix = \"\" %}\n  {% set cuda_build_post = build %}\n{% else %}\n  {% set use_cuda = \"ON\" %}\n  {% set cuda_build_prefix = \"cuda\" + cuda_compiler_version|string %}\n  {% set cuda_build_post = build + 100 %}\n{% endif %}\n\n# Set FFT related variables\n{% if win or osx or linux32 or linux64 %}\n  {% set use_mkl = \"ON\" %}\n  {% set libfft = \"mkl-devel\" %}\n{% else %}\n  {% set use_mkl = \"OFF\" %}\n  {% set libfft = \"fftw\" %}\n{% endif %}\n\n# Set OpenCV related variables\n{% set use_opencv = \"OFF\" %}\n\n{% set cuda_major = environ.get(\"cuda_compiler_version\", \"11.2\").split(\".\")[0]|int %}\n\npackage:\n  name: libtomo\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/tomopy/tomopy/releases/download/{{ version }}/tomopy-{{ version }}.zip\n    sha256: f8a61ebe019c2d39e80ba7bd25fa6af34794e506a9505cd43d1edbc6a66b6806\n    patches:\n      - shared-cuda-npp.patch\n    # There is a special alpha release for only tomopy, so it does not make\n    # sense to dynamically link to PTL from a shared library\n  - url: https://github.com/jrmadsen/PTL/archive/refs/tags/tomopy-v1.0.tar.gz\n    sha256: 2fa6b5f8e9e63aa0e9c4e933eadc216e32b13cc6388a15bc3f8fb369757417f2\n    folder: source/PTL\n\nbuild:\n  number: {{ build }}\n\napp:\n  own_environment: true\n\noutputs:\n  - name: libtomo\n    script: build-cxx.sh  # [unix]\n    script: bld-cxx.bat  # [win]\n    build:\n      string: {{ cuda_build_prefix }}h{{ PKG_HASH }}_{{ cuda_build_post }}\n      script_env:\n        - USE_CUDA={{ use_cuda }}\n        - USE_MKL={{ use_mkl }}\n        - USE_OPENCV={{ use_opencv }}\n        - CUDAARCHS=all\n      run_exports:\n        - {{ pin_subpackage('libtomo') }}\n        - libtomo =*=cuda*  # [cuda_compiler_version != \"None\"]\n        - libtomo =*=h*     # [cuda_compiler_version == \"None\"]\n      track_features:\n        - nocuda_CmNhJ1DLKR  # [cuda_compiler_version == \"None\"]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n        - cmake >=3.23\n        - llvm-openmp  # [osx]\n        - libgomp      # [linux]\n        - ninja\n      host:\n{% if cuda_major == 12 %}\n        - libnpp-dev\n{% endif %}\n        - {{ libfft }}\n      run:\n        - __cuda  # [cuda_compiler_version != \"None\"]\n      run_constrained:\n        - tomopy >1.11.0  # tomopy split into two packages\n    test:\n      commands:\n        - test -f $PREFIX/lib/libtomo-recon$SHLIB_EXT  # [unix]\n        - test -f $PREFIX/include/libtomo/recon.h  # [unix]\n        - test -f $PREFIX/lib/cmake/libtomo/libtomoTargets.cmake  # [unix]\n        - if not exist %LIBRARY_LIB%\\\\tomo-recon.lib exit 1  # [win]\n        - if not exist %LIBRARY_BIN%\\\\tomo-recon.dll exit 1  # [win]\n        - if not exist %LIBRARY_INC%\\\\libtomo\\\\recon.h exit 1  # [win]\n        - if not exist %LIBRARY_LIB%\\\\cmake\\\\libtomo\\\\libtomoTargets.cmake exit 1  # [win]\n\n  - name: tomopy\n    script: build-python.sh  # [unix]\n    script: bld-python.bat  # [win]\n    build:\n      noarch: python\n      script_env:\n        - SETUPTOOLS_SCM_PRETEND_VERSION={{ PKG_VERSION }}\n    requirements:\n      host:\n        - pip\n        - python >=3.6,<4\n        - setuptools >=45\n        - setuptools_scm >=6.2\n        - setuptools_scm_git_archive\n      run:\n        - {{ pin_subpackage('libtomo') }}\n        - importlib_metadata\n        - numexpr =2.*\n        - numpy >1.12,!=1.22.4\n        - pywavelets =1.*\n        - python >=3.6,<4\n        - scikit-image >=0.17,<1\n        - scipy =1.*\n        - tifffile >=2019\n      run_constrained:\n        - astra-toolbox >1.8,<3\n    test:\n      requires:\n        - pip\n        - pytest\n      imports:\n        - tomopy\n        - tomopy.misc\n        - tomopy.prep\n        - tomopy.recon\n        - tomopy.sim\n        - tomopy.util\n      source_files:\n        - test/*\n      commands:\n        - pip check\n        - unset CUDA_VERSION   # [unix]\n        - set \"CUDA_VERSION=\"  # [win]\n        - pytest test -vs\n\nabout:\n  home: http://tomopy.readthedocs.io\n  license: BSD-3-Clause AND MIT\n  license_family: BSD\n  license_file:\n    - LICENSE.txt\n    - source/PTL/LICENSE\n  summary: Tomographic reconstruction in Python.\n  description: >\n    TomoPy is an open-source Python package for tomographic data processing and image reconstruction.\n  doc_url: http://tomopy.readthedocs.io\n  dev_url: https://github.com/tomopy/tomopy\n\nextra:\n  recipe-maintainers:\n    - tomopy/admins\n    - dgursoy\n    - decarlof\n    - licode\n    - ravescovi\n    - tacaswell\n    - oleksandr-pavlyk\n    - carterbox\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -3169,6 +4016,8 @@
     "LICENSE.txt",
     "source/PTL/LICENSE",
     "LICENSE.txt",
+    "source/PTL/LICENSE",
+    "LICENSE.txt",
     "source/PTL/LICENSE"
    ],
    "summary": "Tomographic reconstruction in Python."
@@ -3177,10 +4026,18 @@
    "own_environment": true
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
+    "tomopy/admins",
+    "dgursoy",
+    "decarlof",
+    "licode",
+    "ravescovi",
+    "tacaswell",
+    "oleksandr-pavlyk",
+    "carterbox",
     "tomopy/admins",
     "dgursoy",
     "decarlof",
@@ -3212,7 +4069,7 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "h1234567_2",
+     "string": "h1234567_3",
      "track_features": [
       "nocuda_CmNhJ1DLKR"
      ]
@@ -3310,7 +4167,106 @@
       "USE_OPENCV=OFF",
       "CUDAARCHS=all"
      ],
-     "string": "cuda11.2h1234567_102",
+     "string": "cuda11.2h1234567_103",
+     "track_features": null
+    },
+    "name": "libtomo",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja"
+     ],
+     "host": [
+      "fftw"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "tomopy >1.11.0"
+     ]
+    },
+    "script": "bld-cxx.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_LIB%\\\\tomo-recon.lib exit 1",
+      "if not exist %LIBRARY_BIN%\\\\tomo-recon.dll exit 1",
+      "if not exist %LIBRARY_INC%\\\\libtomo\\\\recon.h exit 1",
+      "if not exist %LIBRARY_LIB%\\\\cmake\\\\libtomo\\\\libtomoTargets.cmake exit 1"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.14.1"
+     ]
+    },
+    "name": "tomopy",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.6,<4",
+      "setuptools >=45",
+      "setuptools_scm >=6.2",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libtomo",
+      "importlib_metadata",
+      "numexpr =2.*",
+      "numpy >1.12,!=1.22.4",
+      "pywavelets =1.*",
+      "python >=3.6,<4",
+      "scikit-image >=0.17,<1",
+      "scipy =1.*",
+      "tifffile >=2019"
+     ],
+     "run_constrained": [
+      "astra-toolbox >1.8,<3"
+     ]
+    },
+    "script": "bld-python.bat",
+    "test": {
+     "commands": [
+      "pip check",
+      "set \"CUDA_VERSION=\"",
+      "pytest test -vs"
+     ],
+     "imports": [
+      "tomopy",
+      "tomopy.misc",
+      "tomopy.prep",
+      "tomopy.recon",
+      "tomopy.sim",
+      "tomopy.util"
+     ],
+     "requires": [
+      "pip",
+      "pytest"
+     ],
+     "source_files": [
+      "test/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libtomo",
+      "libtomo =*=cuda*"
+     ],
+     "script_env": [
+      "USE_CUDA=ON",
+      "USE_MKL=OFF",
+      "USE_OPENCV=OFF",
+      "CUDAARCHS=all"
+     ],
+     "string": "cuda11.8h1234567_103",
      "track_features": null
     },
     "name": "libtomo",
@@ -3403,6 +4359,18 @@
    "version": "1.14.1"
   },
   "source": [
+   {
+    "patches": [
+     "shared-cuda-npp.patch"
+    ],
+    "sha256": "f8a61ebe019c2d39e80ba7bd25fa6af34794e506a9505cd43d1edbc6a66b6806",
+    "url": "https://github.com/tomopy/tomopy/releases/download/1.14.1/tomopy-1.14.1.zip"
+   },
+   {
+    "folder": "source/PTL",
+    "sha256": "2fa6b5f8e9e63aa0e9c4e933eadc216e32b13cc6388a15bc3f8fb369757417f2",
+    "url": "https://github.com/jrmadsen/PTL/archive/refs/tags/tomopy-v1.0.tar.gz"
+   },
    {
     "patches": [
      "shared-cuda-npp.patch"
