@@ -22,11 +22,12 @@
    "summary": "parallelized TOF PET projectors"
   },
   "build": {
-   "number": "202"
+   "number": "203"
   },
   "extra": {
    "feedstock-name": "parallelproj",
    "recipe-maintainers": [
+    "gschramm",
     "gschramm",
     "gschramm",
     "gschramm"
@@ -42,7 +43,92 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda112_h1234567_202"
+     "string": "cuda112_h1234567_203"
+    },
+    "name": "libparallelproj",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja",
+      "python"
+     ],
+     "host": [
+      "libgomp"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "parallelproj >=1.3.4"
+     ]
+    },
+    "script": "build-parallelproj.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_c.h",
+      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake",
+      "test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_cuda.h"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
+     ]
+    },
+    "name": "parallelproj",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "setuptools >=45",
+      "setuptools_scm >=7.0",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libparallelproj",
+      "python >=3.8",
+      "numpy >=1.22",
+      "matplotlib-base >=3.0",
+      "array-api-compat"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test/parallelproj -vs"
+     ],
+     "imports": [
+      "parallelproj"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "scipy >=1.0"
+     ],
+     "source_files": [
+      "test/parallelproj/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "cudatoolkit"
+     ],
+     "run_exports": [
+      "libparallelproj",
+      "libparallelproj =*=cuda*"
+     ],
+     "string": "cuda118_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -127,7 +213,7 @@
       "libparallelproj",
       "libparallelproj =*=cpu*"
      ],
-     "string": "cpu_h1234567_2"
+     "string": "cpu_h1234567_3"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -206,7 +292,7 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda120_h1234567_202"
+     "string": "cuda120_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -342,11 +428,12 @@
    "summary": "parallelized TOF PET projectors"
   },
   "build": {
-   "number": "202"
+   "number": "203"
   },
   "extra": {
    "feedstock-name": "parallelproj",
    "recipe-maintainers": [
+    "gschramm",
     "gschramm",
     "gschramm",
     "gschramm"
@@ -362,7 +449,93 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda112_h1234567_202"
+     "string": "cuda112_h1234567_203"
+    },
+    "name": "libparallelproj",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja",
+      "python"
+     ],
+     "host": [
+      "libgomp"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "parallelproj >=1.3.4"
+     ]
+    },
+    "script": "build-parallelproj.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_c.h",
+      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake",
+      "test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_cuda.h"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
+     ],
+     "skip": true
+    },
+    "name": "parallelproj",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "setuptools >=45",
+      "setuptools_scm >=7.0",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libparallelproj",
+      "python >=3.8",
+      "numpy >=1.22",
+      "matplotlib-base >=3.0",
+      "array-api-compat"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test/parallelproj -vs"
+     ],
+     "imports": [
+      "parallelproj"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "scipy >=1.0"
+     ],
+     "source_files": [
+      "test/parallelproj/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "cudatoolkit"
+     ],
+     "run_exports": [
+      "libparallelproj",
+      "libparallelproj =*=cuda*"
+     ],
+     "string": "cuda118_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -448,7 +621,7 @@
       "libparallelproj",
       "libparallelproj =*=cpu*"
      ],
-     "string": "cpu_h1234567_2"
+     "string": "cpu_h1234567_3"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -528,7 +701,7 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda120_h1234567_202"
+     "string": "cuda120_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -665,11 +838,12 @@
    "summary": "parallelized TOF PET projectors"
   },
   "build": {
-   "number": "202"
+   "number": "203"
   },
   "extra": {
    "feedstock-name": "parallelproj",
    "recipe-maintainers": [
+    "gschramm",
     "gschramm",
     "gschramm",
     "gschramm"
@@ -685,7 +859,93 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda112_h1234567_202"
+     "string": "cuda112_h1234567_203"
+    },
+    "name": "libparallelproj",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja",
+      "python"
+     ],
+     "host": [
+      "libgomp"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "parallelproj >=1.3.4"
+     ]
+    },
+    "script": "build-parallelproj.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_c.h",
+      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake",
+      "test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_cuda.h"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
+     ],
+     "skip": true
+    },
+    "name": "parallelproj",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "setuptools >=45",
+      "setuptools_scm >=7.0",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libparallelproj",
+      "python >=3.8",
+      "numpy >=1.22",
+      "matplotlib-base >=3.0",
+      "array-api-compat"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test/parallelproj -vs"
+     ],
+     "imports": [
+      "parallelproj"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "scipy >=1.0"
+     ],
+     "source_files": [
+      "test/parallelproj/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "cudatoolkit"
+     ],
+     "run_exports": [
+      "libparallelproj",
+      "libparallelproj =*=cuda*"
+     ],
+     "string": "cuda118_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -771,7 +1031,7 @@
       "libparallelproj",
       "libparallelproj =*=cpu*"
      ],
-     "string": "cpu_h1234567_2"
+     "string": "cpu_h1234567_3"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -851,7 +1111,7 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda120_h1234567_202"
+     "string": "cuda120_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -988,11 +1248,15 @@
    "summary": "parallelized TOF PET projectors"
   },
   "build": {
-   "number": "202"
+   "number": "203"
   },
   "extra": {
    "feedstock-name": "parallelproj",
    "recipe-maintainers": [
+    "gschramm",
+    "gschramm",
+    "gschramm",
+    "gschramm",
     "gschramm",
     "gschramm",
     "gschramm",
@@ -1018,7 +1282,92 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda112_h1234567_202"
+     "string": "cuda112_h1234567_203"
+    },
+    "name": "libparallelproj",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja",
+      "python"
+     ],
+     "host": [
+      "libgomp"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "parallelproj >=1.3.4"
+     ]
+    },
+    "script": "build-parallelproj.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_c.h",
+      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake",
+      "test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_cuda.h"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
+     ]
+    },
+    "name": "parallelproj",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "setuptools >=45",
+      "setuptools_scm >=7.0",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libparallelproj",
+      "python >=3.8",
+      "numpy >=1.22",
+      "matplotlib-base >=3.0",
+      "array-api-compat"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test/parallelproj -vs"
+     ],
+     "imports": [
+      "parallelproj"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "scipy >=1.0"
+     ],
+     "source_files": [
+      "test/parallelproj/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "cudatoolkit"
+     ],
+     "run_exports": [
+      "libparallelproj",
+      "libparallelproj =*=cuda*"
+     ],
+     "string": "cuda118_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -1103,7 +1452,7 @@
       "libparallelproj",
       "libparallelproj =*=cpu*"
      ],
-     "string": "cpu_h1234567_2"
+     "string": "cpu_h1234567_3"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -1182,7 +1531,7 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda120_h1234567_202"
+     "string": "cuda120_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -1267,7 +1616,93 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda112_h1234567_202"
+     "string": "cuda112_h1234567_203"
+    },
+    "name": "libparallelproj",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja",
+      "python"
+     ],
+     "host": [
+      "libgomp"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "parallelproj >=1.3.4"
+     ]
+    },
+    "script": "build-parallelproj.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_c.h",
+      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake",
+      "test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_cuda.h"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
+     ],
+     "skip": true
+    },
+    "name": "parallelproj",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "setuptools >=45",
+      "setuptools_scm >=7.0",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libparallelproj",
+      "python >=3.8",
+      "numpy >=1.22",
+      "matplotlib-base >=3.0",
+      "array-api-compat"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test/parallelproj -vs"
+     ],
+     "imports": [
+      "parallelproj"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "scipy >=1.0"
+     ],
+     "source_files": [
+      "test/parallelproj/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "cudatoolkit"
+     ],
+     "run_exports": [
+      "libparallelproj",
+      "libparallelproj =*=cuda*"
+     ],
+     "string": "cuda118_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -1353,259 +1788,7 @@
       "libparallelproj",
       "libparallelproj =*=cpu*"
      ],
-     "string": "cpu_h1234567_2"
-    },
-    "name": "libparallelproj",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cmake >=3.23",
-      "ninja",
-      "python"
-     ],
-     "host": [
-      "libgomp"
-     ],
-     "run": [],
-     "run_constrained": [
-      "parallelproj >=1.3.4"
-     ]
-    },
-    "script": "build-parallelproj.sh",
-    "test": {
-     "commands": [
-      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
-      "test -f $PREFIX/include/parallelproj_c.h",
-      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake"
-     ]
-    }
-   },
-   {
-    "build": {
-     "noarch": "python",
-     "script_env": [
-      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
-     ],
-     "skip": true
-    },
-    "name": "parallelproj",
-    "requirements": {
-     "build": [],
-     "host": [
-      "pip",
-      "setuptools >=45",
-      "setuptools_scm >=7.0",
-      "setuptools_scm_git_archive"
-     ],
-     "run": [
-      "libparallelproj",
-      "python >=3.8",
-      "numpy >=1.22",
-      "matplotlib-base >=3.0",
-      "array-api-compat"
-     ]
-    },
-    "script": "build-python.sh",
-    "test": {
-     "commands": [
-      "pip check",
-      "pytest test/parallelproj -vs"
-     ],
-     "imports": [
-      "parallelproj"
-     ],
-     "requires": [
-      "pip",
-      "pytest",
-      "scipy >=1.0"
-     ],
-     "source_files": [
-      "test/parallelproj/*"
-     ]
-    }
-   },
-   {
-    "build": {
-     "ignore_run_exports": [
-      "cudatoolkit"
-     ],
-     "run_exports": [
-      "libparallelproj",
-      "libparallelproj =*=cuda*"
-     ],
-     "string": "cuda120_h1234567_202"
-    },
-    "name": "libparallelproj",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "cmake >=3.23",
-      "ninja",
-      "python"
-     ],
-     "host": [
-      "libgomp"
-     ],
-     "run": [
-      "__cuda"
-     ],
-     "run_constrained": [
-      "parallelproj >=1.3.4"
-     ]
-    },
-    "script": "build-parallelproj.sh",
-    "test": {
-     "commands": [
-      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
-      "test -f $PREFIX/include/parallelproj_c.h",
-      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake",
-      "test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT",
-      "test -f $PREFIX/include/parallelproj_cuda.h"
-     ]
-    }
-   },
-   {
-    "build": {
-     "noarch": "python",
-     "script_env": [
-      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
-     ],
-     "skip": true
-    },
-    "name": "parallelproj",
-    "requirements": {
-     "build": [],
-     "host": [
-      "pip",
-      "setuptools >=45",
-      "setuptools_scm >=7.0",
-      "setuptools_scm_git_archive"
-     ],
-     "run": [
-      "libparallelproj",
-      "python >=3.8",
-      "numpy >=1.22",
-      "matplotlib-base >=3.0",
-      "array-api-compat"
-     ]
-    },
-    "script": "build-python.sh",
-    "test": {
-     "commands": [
-      "pip check",
-      "pytest test/parallelproj -vs"
-     ],
-     "imports": [
-      "parallelproj"
-     ],
-     "requires": [
-      "pip",
-      "pytest",
-      "scipy >=1.0"
-     ],
-     "source_files": [
-      "test/parallelproj/*"
-     ]
-    }
-   },
-   {
-    "build": {
-     "ignore_run_exports": [
-      "cudatoolkit"
-     ],
-     "run_exports": [
-      "libparallelproj",
-      "libparallelproj =*=cuda*"
-     ],
-     "string": "cuda112_h1234567_202"
-    },
-    "name": "libparallelproj",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cuda_compiler_stub",
-      "cmake >=3.23",
-      "ninja",
-      "python"
-     ],
-     "host": [
-      "libgomp"
-     ],
-     "run": [
-      "__cuda"
-     ],
-     "run_constrained": [
-      "parallelproj >=1.3.4"
-     ]
-    },
-    "script": "build-parallelproj.sh",
-    "test": {
-     "commands": [
-      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
-      "test -f $PREFIX/include/parallelproj_c.h",
-      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake",
-      "test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT",
-      "test -f $PREFIX/include/parallelproj_cuda.h"
-     ]
-    }
-   },
-   {
-    "build": {
-     "noarch": "python",
-     "script_env": [
-      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
-     ],
-     "skip": true
-    },
-    "name": "parallelproj",
-    "requirements": {
-     "build": [],
-     "host": [
-      "pip",
-      "setuptools >=45",
-      "setuptools_scm >=7.0",
-      "setuptools_scm_git_archive"
-     ],
-     "run": [
-      "libparallelproj",
-      "python >=3.8",
-      "numpy >=1.22",
-      "matplotlib-base >=3.0",
-      "array-api-compat"
-     ]
-    },
-    "script": "build-python.sh",
-    "test": {
-     "commands": [
-      "pip check",
-      "pytest test/parallelproj -vs"
-     ],
-     "imports": [
-      "parallelproj"
-     ],
-     "requires": [
-      "pip",
-      "pytest",
-      "scipy >=1.0"
-     ],
-     "source_files": [
-      "test/parallelproj/*"
-     ]
-    }
-   },
-   {
-    "build": {
-     "ignore_run_exports": [
-      "cudatoolkit"
-     ],
-     "run_exports": [
-      "libparallelproj",
-      "libparallelproj =*=cpu*"
-     ],
-     "string": "cpu_h1234567_2"
+     "string": "cpu_h1234567_3"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -1685,7 +1868,179 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda120_h1234567_202"
+     "string": "cuda120_h1234567_203"
+    },
+    "name": "libparallelproj",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja",
+      "python"
+     ],
+     "host": [
+      "libgomp"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "parallelproj >=1.3.4"
+     ]
+    },
+    "script": "build-parallelproj.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_c.h",
+      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake",
+      "test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_cuda.h"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
+     ],
+     "skip": true
+    },
+    "name": "parallelproj",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "setuptools >=45",
+      "setuptools_scm >=7.0",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libparallelproj",
+      "python >=3.8",
+      "numpy >=1.22",
+      "matplotlib-base >=3.0",
+      "array-api-compat"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test/parallelproj -vs"
+     ],
+     "imports": [
+      "parallelproj"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "scipy >=1.0"
+     ],
+     "source_files": [
+      "test/parallelproj/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "cudatoolkit"
+     ],
+     "run_exports": [
+      "libparallelproj",
+      "libparallelproj =*=cuda*"
+     ],
+     "string": "cuda112_h1234567_203"
+    },
+    "name": "libparallelproj",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja",
+      "python"
+     ],
+     "host": [
+      "libgomp"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "parallelproj >=1.3.4"
+     ]
+    },
+    "script": "build-parallelproj.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_c.h",
+      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake",
+      "test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_cuda.h"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
+     ],
+     "skip": true
+    },
+    "name": "parallelproj",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "setuptools >=45",
+      "setuptools_scm >=7.0",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libparallelproj",
+      "python >=3.8",
+      "numpy >=1.22",
+      "matplotlib-base >=3.0",
+      "array-api-compat"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test/parallelproj -vs"
+     ],
+     "imports": [
+      "parallelproj"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "scipy >=1.0"
+     ],
+     "source_files": [
+      "test/parallelproj/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "cudatoolkit"
+     ],
+     "run_exports": [
+      "libparallelproj",
+      "libparallelproj =*=cuda*"
+     ],
+     "string": "cuda118_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -1771,7 +2126,173 @@
       "libparallelproj",
       "libparallelproj =*=cpu*"
      ],
-     "string": "cpu_h1234567_2"
+     "string": "cpu_h1234567_3"
+    },
+    "name": "libparallelproj",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cmake >=3.23",
+      "ninja",
+      "python"
+     ],
+     "host": [
+      "libgomp"
+     ],
+     "run": [],
+     "run_constrained": [
+      "parallelproj >=1.3.4"
+     ]
+    },
+    "script": "build-parallelproj.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_c.h",
+      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
+     ],
+     "skip": true
+    },
+    "name": "parallelproj",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "setuptools >=45",
+      "setuptools_scm >=7.0",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libparallelproj",
+      "python >=3.8",
+      "numpy >=1.22",
+      "matplotlib-base >=3.0",
+      "array-api-compat"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test/parallelproj -vs"
+     ],
+     "imports": [
+      "parallelproj"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "scipy >=1.0"
+     ],
+     "source_files": [
+      "test/parallelproj/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "cudatoolkit"
+     ],
+     "run_exports": [
+      "libparallelproj",
+      "libparallelproj =*=cuda*"
+     ],
+     "string": "cuda120_h1234567_203"
+    },
+    "name": "libparallelproj",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja",
+      "python"
+     ],
+     "host": [
+      "libgomp"
+     ],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "parallelproj >=1.3.4"
+     ]
+    },
+    "script": "build-parallelproj.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_c.h",
+      "test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake",
+      "test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT",
+      "test -f $PREFIX/include/parallelproj_cuda.h"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
+     ],
+     "skip": true
+    },
+    "name": "parallelproj",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "setuptools >=45",
+      "setuptools_scm >=7.0",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libparallelproj",
+      "python >=3.8",
+      "numpy >=1.22",
+      "matplotlib-base >=3.0",
+      "array-api-compat"
+     ]
+    },
+    "script": "build-python.sh",
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test/parallelproj -vs"
+     ],
+     "imports": [
+      "parallelproj"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "scipy >=1.0"
+     ],
+     "source_files": [
+      "test/parallelproj/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "cudatoolkit"
+     ],
+     "run_exports": [
+      "libparallelproj",
+      "libparallelproj =*=cpu*"
+     ],
+     "string": "cpu_h1234567_3"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -1851,7 +2372,7 @@
       "libparallelproj",
       "libparallelproj =*=cpu*"
      ],
-     "string": "cpu_h1234567_2"
+     "string": "cpu_h1234567_3"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -1931,7 +2452,7 @@
       "libparallelproj",
       "libparallelproj =*=cpu*"
      ],
-     "string": "cpu_h1234567_2"
+     "string": "cpu_h1234567_3"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -2010,7 +2531,90 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda112_h1234567_202"
+     "string": "cuda112_h1234567_203"
+    },
+    "name": "libparallelproj",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja",
+      "python"
+     ],
+     "host": [],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "parallelproj >=1.3.4"
+     ]
+    },
+    "script": "bld-parallelproj.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_LIB%\\parallelproj_c.lib exit 1",
+      "if not exist %LIBRARY_BIN%\\parallelproj_c.dll exit 1",
+      "if not exist %LIBRARY_INC%\\parallelproj_c.h exit 1",
+      "if not exist %LIBRARY_LIB%\\cmake\\parallelproj\\parallelprojConfig.cmake exit 1"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
+     ],
+     "skip": true
+    },
+    "name": "parallelproj",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "setuptools >=45",
+      "setuptools_scm >=7.0",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libparallelproj",
+      "python >=3.8",
+      "numpy >=1.22",
+      "matplotlib-base >=3.0",
+      "array-api-compat"
+     ]
+    },
+    "script": "bld-python.bat",
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test/parallelproj -vs"
+     ],
+     "imports": [
+      "parallelproj"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "scipy >=1.0"
+     ],
+     "source_files": [
+      "test/parallelproj/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "cudatoolkit"
+     ],
+     "run_exports": [
+      "libparallelproj",
+      "libparallelproj =*=cuda*"
+     ],
+     "string": "cuda118_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -2103,7 +2707,7 @@
    "summary": "parallelized TOF PET projectors"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "feedstock-name": "parallelproj",
@@ -2121,7 +2725,7 @@
       "libparallelproj",
       "libparallelproj =*=cpu*"
      ],
-     "string": "cpu_h1234567_2"
+     "string": "cpu_h1234567_3"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -2249,7 +2853,7 @@
    "summary": "parallelized TOF PET projectors"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "feedstock-name": "parallelproj",
@@ -2267,7 +2871,7 @@
       "libparallelproj",
       "libparallelproj =*=cpu*"
      ],
-     "string": "cpu_h1234567_2"
+     "string": "cpu_h1234567_3"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -2406,7 +3010,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/parallelproj.json"
  },
- "raw_meta_yaml": "{% set name = \"parallelproj\" %}\n{% set version = \"1.5.0\" %}\n{% set build_number = 2 %}\n\n{% if cuda_compiler_version != \"None\" %}\n{% set build_number = build_number + 200 %}\n{% endif %}\n\npackage:\n  name: parallelproj-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/gschramm/parallelproj/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 761ad311f80f31a673dae9390bc22ed27d0bf0cec7d94117975bcc12441b3090\n\nbuild:\n  number: {{ build_number }}\n\noutputs:\n  - name: libparallelproj\n    script: build-parallelproj.sh  # [unix]\n    script: bld-parallelproj.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('libparallelproj') }}\n        - libparallelproj =*=cuda*  # [cuda_compiler_version != \"None\"]\n        - libparallelproj =*=cpu*  # [cuda_compiler_version == \"None\"]\n      ignore_run_exports:\n        - cudatoolkit\n      string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n      string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == \"None\"]\n\n\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}  # [cuda_compiler_version != \"None\"]\n        - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n        - cmake >=3.23\n        - ninja\n        - python\n      host:\n        - libgomp      # [linux]\n        - llvm-openmp  # [osx]\n      run:\n        - __cuda  # [cuda_compiler_version != \"None\"]\n      run_constrained:\n        - parallelproj >=1.3.4  # parallelproj output renamed to libparallelproj\n    test:\n      commands:\n        - test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT  # [unix]\n        - test -f $PREFIX/include/parallelproj_c.h  # [unix]\n        - test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake  # [unix]\n        - test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT  # [linux and cuda_compiler_version != \"None\"]\n        - test -f $PREFIX/include/parallelproj_cuda.h  # [linux and cuda_compiler_version != \"None\"]\n        - if not exist %LIBRARY_LIB%\\parallelproj_c.lib exit 1  # [win]\n        - if not exist %LIBRARY_BIN%\\parallelproj_c.dll exit 1  # [win]\n        - if not exist %LIBRARY_INC%\\parallelproj_c.h exit 1  # [win]\n        - if not exist %LIBRARY_LIB%\\cmake\\parallelproj\\parallelprojConfig.cmake exit 1  # [win]\n\n  - name: parallelproj\n    script: build-python.sh  # [unix]\n    script: bld-python.bat  # [win]\n    build:\n      skip: true  # [not linux64]\n      noarch: python\n      script_env:\n        - SETUPTOOLS_SCM_PRETEND_VERSION={{ PKG_VERSION }}\n    requirements:\n      build:\n        - python  # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n      host:\n        - pip\n        - setuptools >=45\n        - setuptools_scm >=7.0\n        - setuptools_scm_git_archive\n      run:\n        - {{ pin_subpackage('libparallelproj') }}\n        - python >=3.8\n        - numpy >=1.22\n        - matplotlib-base >=3.0\n        - array-api-compat\n    test:\n      requires:\n        - pip\n        - pytest\n        - scipy >=1.0\n      imports:\n        - parallelproj\n      source_files:\n        - test/parallelproj/*\n      commands:\n        - pip check\n        - pytest test/parallelproj -vs\n\nabout:\n  home: https://github.com/gschramm/parallelproj\n  license: MIT\n  license_file: LICENSE\n  summary: parallelized TOF PET projectors\n\nextra:\n  recipe-maintainers:\n    - gschramm\n  feedstock-name: parallelproj\n",
+ "raw_meta_yaml": "{% set name = \"parallelproj\" %}\n{% set version = \"1.5.0\" %}\n{% set build_number = 3 %}\n\n{% if cuda_compiler_version != \"None\" %}\n{% set build_number = build_number + 200 %}\n{% endif %}\n\npackage:\n  name: parallelproj-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/gschramm/parallelproj/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 761ad311f80f31a673dae9390bc22ed27d0bf0cec7d94117975bcc12441b3090\n\nbuild:\n  number: {{ build_number }}\n\noutputs:\n  - name: libparallelproj\n    script: build-parallelproj.sh  # [unix]\n    script: bld-parallelproj.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('libparallelproj') }}\n        - libparallelproj =*=cuda*  # [cuda_compiler_version != \"None\"]\n        - libparallelproj =*=cpu*  # [cuda_compiler_version == \"None\"]\n      ignore_run_exports:\n        - cudatoolkit\n      string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n      string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == \"None\"]\n\n\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}  # [cuda_compiler_version != \"None\"]\n        - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n        - cmake >=3.23\n        - ninja\n        - python\n      host:\n        - libgomp      # [linux]\n        - llvm-openmp  # [osx]\n      run:\n        - __cuda  # [cuda_compiler_version != \"None\"]\n      run_constrained:\n        - parallelproj >=1.3.4  # parallelproj output renamed to libparallelproj\n    test:\n      commands:\n        - test -f $PREFIX/lib/libparallelproj_c$SHLIB_EXT  # [unix]\n        - test -f $PREFIX/include/parallelproj_c.h  # [unix]\n        - test -f $PREFIX/lib/cmake/parallelproj/parallelprojConfig.cmake  # [unix]\n        - test -f $PREFIX/lib/libparallelproj_cuda$SHLIB_EXT  # [linux and cuda_compiler_version != \"None\"]\n        - test -f $PREFIX/include/parallelproj_cuda.h  # [linux and cuda_compiler_version != \"None\"]\n        - if not exist %LIBRARY_LIB%\\parallelproj_c.lib exit 1  # [win]\n        - if not exist %LIBRARY_BIN%\\parallelproj_c.dll exit 1  # [win]\n        - if not exist %LIBRARY_INC%\\parallelproj_c.h exit 1  # [win]\n        - if not exist %LIBRARY_LIB%\\cmake\\parallelproj\\parallelprojConfig.cmake exit 1  # [win]\n\n  - name: parallelproj\n    script: build-python.sh  # [unix]\n    script: bld-python.bat  # [win]\n    build:\n      skip: true  # [not linux64]\n      noarch: python\n      script_env:\n        - SETUPTOOLS_SCM_PRETEND_VERSION={{ PKG_VERSION }}\n    requirements:\n      build:\n        - python  # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n      host:\n        - pip\n        - setuptools >=45\n        - setuptools_scm >=7.0\n        - setuptools_scm_git_archive\n      run:\n        - {{ pin_subpackage('libparallelproj') }}\n        - python >=3.8\n        - numpy >=1.22\n        - matplotlib-base >=3.0\n        - array-api-compat\n    test:\n      requires:\n        - pip\n        - pytest\n        - scipy >=1.0\n      imports:\n        - parallelproj\n      source_files:\n        - test/parallelproj/*\n      commands:\n        - pip check\n        - pytest test/parallelproj -vs\n\nabout:\n  home: https://github.com/gschramm/parallelproj\n  license: MIT\n  license_file: LICENSE\n  summary: parallelized TOF PET projectors\n\nextra:\n  recipe-maintainers:\n    - gschramm\n  feedstock-name: parallelproj\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -2539,11 +3143,12 @@
    "summary": "parallelized TOF PET projectors"
   },
   "build": {
-   "number": "202"
+   "number": "203"
   },
   "extra": {
    "feedstock-name": "parallelproj",
    "recipe-maintainers": [
+    "gschramm",
     "gschramm",
     "gschramm"
    ]
@@ -2558,7 +3163,7 @@
       "libparallelproj",
       "libparallelproj =*=cpu*"
      ],
-     "string": "cpu_h1234567_2"
+     "string": "cpu_h1234567_3"
     },
     "name": "libparallelproj",
     "requirements": {
@@ -2637,7 +3242,90 @@
       "libparallelproj",
       "libparallelproj =*=cuda*"
      ],
-     "string": "cuda112_h1234567_202"
+     "string": "cuda112_h1234567_203"
+    },
+    "name": "libparallelproj",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cuda_compiler_stub",
+      "cmake >=3.23",
+      "ninja",
+      "python"
+     ],
+     "host": [],
+     "run": [
+      "__cuda"
+     ],
+     "run_constrained": [
+      "parallelproj >=1.3.4"
+     ]
+    },
+    "script": "bld-parallelproj.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_LIB%\\parallelproj_c.lib exit 1",
+      "if not exist %LIBRARY_BIN%\\parallelproj_c.dll exit 1",
+      "if not exist %LIBRARY_INC%\\parallelproj_c.h exit 1",
+      "if not exist %LIBRARY_LIB%\\cmake\\parallelproj\\parallelprojConfig.cmake exit 1"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script_env": [
+      "SETUPTOOLS_SCM_PRETEND_VERSION=1.5.0"
+     ],
+     "skip": true
+    },
+    "name": "parallelproj",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "setuptools >=45",
+      "setuptools_scm >=7.0",
+      "setuptools_scm_git_archive"
+     ],
+     "run": [
+      "libparallelproj",
+      "python >=3.8",
+      "numpy >=1.22",
+      "matplotlib-base >=3.0",
+      "array-api-compat"
+     ]
+    },
+    "script": "bld-python.bat",
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest test/parallelproj -vs"
+     ],
+     "imports": [
+      "parallelproj"
+     ],
+     "requires": [
+      "pip",
+      "pytest",
+      "scipy >=1.0"
+     ],
+     "source_files": [
+      "test/parallelproj/*"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports": [
+      "cudatoolkit"
+     ],
+     "run_exports": [
+      "libparallelproj",
+      "libparallelproj =*=cuda*"
+     ],
+     "string": "cuda118_h1234567_203"
     },
     "name": "libparallelproj",
     "requirements": {
