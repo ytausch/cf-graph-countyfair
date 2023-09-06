@@ -1,7 +1,13 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
+   "osx_arm64": "osx_64"
+  }
+ },
  "feedstock_name": "simdjson",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -15,13 +21,14 @@
    "summary": "Parsing gigabytes of JSON per second"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "simdjson"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "AntoinePrv",
     "elbaro"
    ]
   },
@@ -31,7 +38,9 @@
   },
   "requirements": {
    "build": [
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
    ]
   },
   "source": {
@@ -40,8 +49,20 @@
   },
   "test": {
    "commands": [
-    "test -f $PREFIX/include/simdjson.h",
-    "test -f $PREFIX/lib/libsimdjson.so"
+    "test -f \"${PREFIX}/include/simdjson.h\"",
+    "test -f \"${PREFIX}/lib/libsimdjson${SHLIB_EXT}\"",
+    "test -f \"${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake\"",
+    "cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}",
+    "cmake --build build/",
+    "cmake --build build --target test"
+   ],
+   "files": [
+    "test/*"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake"
    ]
   }
  },
@@ -49,7 +70,9 @@
   "build": {
    "__set__": true,
    "elements": [
-    "cxx_compiler_stub"
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
    ]
   },
   "host": {
@@ -62,7 +85,175 @@
   },
   "test": {
    "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  }
+ },
+ "linux_aarch64_meta_yaml": {
+  "about": {
+   "description": "JSON is everywhere on the Internet.\nServers spend a *lot* of time parsing it. We need a fresh approach.\nThe simdjson library uses commonly available SIMD instructions and\nmicroparallel algorithms to parse JSON 2.5x faster than anything else out there.\n",
+   "dev_url": "https://github.com/simdjson/simdjson",
+   "doc_url": "https://github.com/simdjson/simdjson#quick-start",
+   "home": "https://github.com/simdjson/simdjson",
+   "license": "Apache-2.0",
+   "license_file": "LICENSE",
+   "summary": "Parsing gigabytes of JSON per second"
+  },
+  "build": {
+   "number": "1",
+   "run_exports": [
+    "simdjson"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "AntoinePrv",
+    "elbaro"
+   ]
+  },
+  "package": {
+   "name": "simdjson",
+   "version": "3.2.2"
+  },
+  "requirements": {
+   "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "source": {
+   "sha256": "13a702536e051db612cdca82bf8585f2c69d9c6fd156ef291b170f13202c1b4c",
+   "url": "https://github.com/simdjson/simdjson/archive/v3.2.2.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f \"${PREFIX}/include/simdjson.h\"",
+    "test -f \"${PREFIX}/lib/libsimdjson${SHLIB_EXT}\"",
+    "test -f \"${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake\"",
+    "cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}",
+    "cmake --build build/",
+    "cmake --build build --target test"
+   ],
+   "files": [
+    "test/*"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake"
+   ]
+  }
+ },
+ "linux_aarch64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
    "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  }
+ },
+ "linux_ppc64le_meta_yaml": {
+  "about": {
+   "description": "JSON is everywhere on the Internet.\nServers spend a *lot* of time parsing it. We need a fresh approach.\nThe simdjson library uses commonly available SIMD instructions and\nmicroparallel algorithms to parse JSON 2.5x faster than anything else out there.\n",
+   "dev_url": "https://github.com/simdjson/simdjson",
+   "doc_url": "https://github.com/simdjson/simdjson#quick-start",
+   "home": "https://github.com/simdjson/simdjson",
+   "license": "Apache-2.0",
+   "license_file": "LICENSE",
+   "summary": "Parsing gigabytes of JSON per second"
+  },
+  "build": {
+   "number": "1",
+   "run_exports": [
+    "simdjson"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "AntoinePrv",
+    "elbaro"
+   ]
+  },
+  "package": {
+   "name": "simdjson",
+   "version": "3.2.2"
+  },
+  "requirements": {
+   "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "source": {
+   "sha256": "13a702536e051db612cdca82bf8585f2c69d9c6fd156ef291b170f13202c1b4c",
+   "url": "https://github.com/simdjson/simdjson/archive/v3.2.2.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f \"${PREFIX}/include/simdjson.h\"",
+    "test -f \"${PREFIX}/lib/libsimdjson${SHLIB_EXT}\"",
+    "test -f \"${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake\"",
+    "cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}",
+    "cmake --build build/",
+    "cmake --build build --target test"
+   ],
+   "files": [
+    "test/*"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake"
+   ]
+  }
+ },
+ "linux_ppc64le_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   }
  },
  "meta_yaml": {
@@ -76,15 +267,29 @@
    "summary": "Parsing gigabytes of JSON per second"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
+    "simdjson",
+    "simdjson",
+    "simdjson",
+    "simdjson",
     "simdjson",
     "simdjson"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "AntoinePrv",
     "elbaro",
+    "AntoinePrv",
+    "elbaro",
+    "AntoinePrv",
+    "elbaro",
+    "AntoinePrv",
+    "elbaro",
+    "AntoinePrv",
+    "elbaro",
+    "AntoinePrv",
     "elbaro"
    ]
   },
@@ -95,7 +300,23 @@
   "requirements": {
    "build": [
     "cxx_compiler_stub",
-    "cxx_compiler_stub"
+    "cmake",
+    "ninja",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
    ]
   },
   "source": {
@@ -104,10 +325,70 @@
   },
   "test": {
    "commands": [
-    "test -f $PREFIX/include/simdjson.h",
-    "test -f $PREFIX/lib/libsimdjson.so",
-    "test -f $PREFIX/include/simdjson.h",
-    "test -f $PREFIX/lib/libsimdjson.so"
+    "test -f \"${PREFIX}/include/simdjson.h\"",
+    "test -f \"${PREFIX}/lib/libsimdjson${SHLIB_EXT}\"",
+    "test -f \"${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake\"",
+    "cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}",
+    "cmake --build build/",
+    "cmake --build build --target test",
+    "test -f \"${PREFIX}/include/simdjson.h\"",
+    "test -f \"${PREFIX}/lib/libsimdjson${SHLIB_EXT}\"",
+    "test -f \"${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake\"",
+    "cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}",
+    "cmake --build build/",
+    "cmake --build build --target test",
+    "test -f \"${PREFIX}/include/simdjson.h\"",
+    "test -f \"${PREFIX}/lib/libsimdjson${SHLIB_EXT}\"",
+    "test -f \"${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake\"",
+    "cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}",
+    "cmake --build build/",
+    "cmake --build build --target test",
+    "test -f \"${PREFIX}/include/simdjson.h\"",
+    "test -f \"${PREFIX}/lib/libsimdjson${SHLIB_EXT}\"",
+    "test -f \"${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake\"",
+    "cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}",
+    "cmake --build build/",
+    "cmake --build build --target test",
+    "test -f \"${PREFIX}/include/simdjson.h\"",
+    "test -f \"${PREFIX}/lib/libsimdjson${SHLIB_EXT}\"",
+    "test -f \"${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake\"",
+    "cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}",
+    "cmake --build build/",
+    "cmake --build build --target test",
+    "if not exist %LIBRARY_INC%\\simdjson.h (exit 1)",
+    "if not exist %LIBRARY_BIN%\\simdjson.dll (exit 1)",
+    "if not exist %LIBRARY_LIB%\\cmake\\simdjson\\simdjson-config.cmake (exit 1)",
+    "cmake -G Ninja -S test/ -B build/ %CMAKE_ARGS%",
+    "cmake --build build/",
+    "cmake --build build --target test"
+   ],
+   "files": [
+    "test/*",
+    "test/*",
+    "test/*",
+    "test/*",
+    "test/*",
+    "test/*"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake"
    ]
   }
  },
@@ -123,13 +404,14 @@
    "summary": "Parsing gigabytes of JSON per second"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "simdjson"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "AntoinePrv",
     "elbaro"
    ]
   },
@@ -139,7 +421,9 @@
   },
   "requirements": {
    "build": [
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
    ]
   },
   "source": {
@@ -148,8 +432,20 @@
   },
   "test": {
    "commands": [
-    "test -f $PREFIX/include/simdjson.h",
-    "test -f $PREFIX/lib/libsimdjson.so"
+    "test -f \"${PREFIX}/include/simdjson.h\"",
+    "test -f \"${PREFIX}/lib/libsimdjson${SHLIB_EXT}\"",
+    "test -f \"${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake\"",
+    "cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}",
+    "cmake --build build/",
+    "cmake --build build --target test"
+   ],
+   "files": [
+    "test/*"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake"
    ]
   }
  },
@@ -157,7 +453,9 @@
   "build": {
    "__set__": true,
    "elements": [
-    "cxx_compiler_stub"
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
    ]
   },
   "host": {
@@ -170,7 +468,93 @@
   },
   "test": {
    "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  }
+ },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "JSON is everywhere on the Internet.\nServers spend a *lot* of time parsing it. We need a fresh approach.\nThe simdjson library uses commonly available SIMD instructions and\nmicroparallel algorithms to parse JSON 2.5x faster than anything else out there.\n",
+   "dev_url": "https://github.com/simdjson/simdjson",
+   "doc_url": "https://github.com/simdjson/simdjson#quick-start",
+   "home": "https://github.com/simdjson/simdjson",
+   "license": "Apache-2.0",
+   "license_file": "LICENSE",
+   "summary": "Parsing gigabytes of JSON per second"
+  },
+  "build": {
+   "number": "1",
+   "run_exports": [
+    "simdjson"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "AntoinePrv",
+    "elbaro"
+   ]
+  },
+  "package": {
+   "name": "simdjson",
+   "version": "3.2.2"
+  },
+  "requirements": {
+   "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "source": {
+   "sha256": "13a702536e051db612cdca82bf8585f2c69d9c6fd156ef291b170f13202c1b4c",
+   "url": "https://github.com/simdjson/simdjson/archive/v3.2.2.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f \"${PREFIX}/include/simdjson.h\"",
+    "test -f \"${PREFIX}/lib/libsimdjson${SHLIB_EXT}\"",
+    "test -f \"${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake\"",
+    "cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}",
+    "cmake --build build/",
+    "cmake --build build --target test"
+   ],
+   "files": [
+    "test/*"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
    "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   }
  },
  "outputs_names": {
@@ -182,23 +566,31 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
-  "osx_64"
+  "linux_aarch64",
+  "linux_ppc64le",
+  "osx_64",
+  "osx_arm64",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/simdjson.json"
  },
- "raw_meta_yaml": "{% set name = \"simdjson\" %}\n{% set version = \"3.2.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/simdjson/simdjson/archive/v{{ version }}.tar.gz\n  sha256: 13a702536e051db612cdca82bf8585f2c69d9c6fd156ef291b170f13202c1b4c\n\nbuild:\n  number: 0\n  skip: true  # [win]\n  run_exports:\n    - simdjson\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n\ntest:\n  commands:\n    - test -f $PREFIX/include/simdjson.h\n    - test -f $PREFIX/lib/libsimdjson.so\n\nabout:\n  home: https://github.com/simdjson/simdjson\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Parsing gigabytes of JSON per second\n\n  description: |\n    JSON is everywhere on the Internet.\n    Servers spend a *lot* of time parsing it. We need a fresh approach.\n    The simdjson library uses commonly available SIMD instructions and\n    microparallel algorithms to parse JSON 2.5x faster than anything else out there.\n  doc_url: https://github.com/simdjson/simdjson#quick-start\n  dev_url: https://github.com/simdjson/simdjson\n\nextra:\n  recipe-maintainers:\n    - elbaro\n",
+ "raw_meta_yaml": "{% set name = \"simdjson\" %}\n{% set version = \"3.2.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/simdjson/simdjson/archive/v{{ version }}.tar.gz\n  sha256: 13a702536e051db612cdca82bf8585f2c69d9c6fd156ef291b170f13202c1b4c\n\nbuild:\n  number: 1\n  run_exports:\n    - simdjson\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n\ntest:\n  requires:\n    - {{ compiler('cxx') }}\n    - ninja\n    - cmake\n  files:\n    - test/*\n  commands:\n    - test -f \"${PREFIX}/include/simdjson.h\"                                    # [unix]\n    - test -f \"${PREFIX}/lib/libsimdjson${SHLIB_EXT}\"                           # [unix]\n    - test -f \"${PREFIX}/lib/cmake/simdjson/simdjson-config.cmake\"              # [unix]\n    - if not exist %LIBRARY_INC%\\simdjson.h (exit 1)                            # [win]\n    - if not exist %LIBRARY_BIN%\\simdjson.dll (exit 1)                          # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\simdjson\\simdjson-config.cmake (exit 1)  # [win]\n    # Running a test trying to link to the library\n    - cmake -G Ninja -S test/ -B build/ ${CMAKE_ARGS}  # [unix]\n    - cmake -G Ninja -S test/ -B build/ %CMAKE_ARGS%   # [win]\n    - cmake --build build/\n    - cmake --build build --target test\n\nabout:\n  home: https://github.com/simdjson/simdjson\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Parsing gigabytes of JSON per second\n\n  description: |\n    JSON is everywhere on the Internet.\n    Servers spend a *lot* of time parsing it. We need a fresh approach.\n    The simdjson library uses commonly available SIMD instructions and\n    microparallel algorithms to parse JSON 2.5x faster than anything else out there.\n  doc_url: https://github.com/simdjson/simdjson#quick-start\n  dev_url: https://github.com/simdjson/simdjson\n\nextra:\n  recipe-maintainers:\n    - AntoinePrv\n    - elbaro\n",
  "req": {
   "__set__": true,
   "elements": [
-   "cxx_compiler_stub"
+   "cmake",
+   "cxx_compiler_stub",
+   "ninja"
   ]
  },
  "requirements": {
   "build": {
    "__set__": true,
    "elements": [
-    "cxx_compiler_stub"
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
    ]
   },
   "host": {
@@ -215,7 +607,11 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   }
  },
  "strong_exports": false,
@@ -223,7 +619,9 @@
   "build": {
    "__set__": true,
    "elements": [
-    "cxx_compiler_stub"
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
    ]
   },
   "host": {
@@ -236,12 +634,98 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   }
  },
  "url": "https://github.com/simdjson/simdjson/archive/v3.2.2.tar.gz",
  "version": "3.2.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/simdjson.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "description": "JSON is everywhere on the Internet.\nServers spend a *lot* of time parsing it. We need a fresh approach.\nThe simdjson library uses commonly available SIMD instructions and\nmicroparallel algorithms to parse JSON 2.5x faster than anything else out there.\n",
+   "dev_url": "https://github.com/simdjson/simdjson",
+   "doc_url": "https://github.com/simdjson/simdjson#quick-start",
+   "home": "https://github.com/simdjson/simdjson",
+   "license": "Apache-2.0",
+   "license_file": "LICENSE",
+   "summary": "Parsing gigabytes of JSON per second"
+  },
+  "build": {
+   "number": "1",
+   "run_exports": [
+    "simdjson"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "AntoinePrv",
+    "elbaro"
+   ]
+  },
+  "package": {
+   "name": "simdjson",
+   "version": "3.2.2"
+  },
+  "requirements": {
+   "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "source": {
+   "sha256": "13a702536e051db612cdca82bf8585f2c69d9c6fd156ef291b170f13202c1b4c",
+   "url": "https://github.com/simdjson/simdjson/archive/v3.2.2.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "if not exist %LIBRARY_INC%\\simdjson.h (exit 1)",
+    "if not exist %LIBRARY_BIN%\\simdjson.dll (exit 1)",
+    "if not exist %LIBRARY_LIB%\\cmake\\simdjson\\simdjson-config.cmake (exit 1)",
+    "cmake -G Ninja -S test/ -B build/ %CMAKE_ARGS%",
+    "cmake --build build/",
+    "cmake --build build --target test"
+   ],
+   "files": [
+    "test/*"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "ninja",
+    "cmake"
+   ]
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  }
  }
 }
