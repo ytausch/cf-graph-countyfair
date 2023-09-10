@@ -15,13 +15,13 @@
    "summary": "A first-principles materials simulation code using DFT"
   },
   "build": {
-   "number": "11",
+   "number": "12",
    "run_exports": [
     "siesta",
     "siesta",
     "siesta"
    ],
-   "string": "mpi_openmpi_h1234567_11"
+   "string": "mpi_openmpi_h1234567_12"
   },
   "extra": {
    "recipe-maintainers": [
@@ -183,7 +183,7 @@
    "summary": "A first-principles materials simulation code using DFT"
   },
   "build": {
-   "number": "11",
+   "number": "12",
    "run_exports": [
     "siesta",
     "siesta",
@@ -192,7 +192,7 @@
     "siesta",
     "siesta"
    ],
-   "string": "mpi_openmpi_h1234567_11"
+   "string": "mpi_openmpi_h1234567_12"
   },
   "extra": {
    "recipe-maintainers": [
@@ -396,13 +396,13 @@
    "summary": "A first-principles materials simulation code using DFT"
   },
   "build": {
-   "number": "11",
+   "number": "12",
    "run_exports": [
     "siesta",
     "siesta",
     "siesta"
    ],
-   "string": "mpi_openmpi_h1234567_11"
+   "string": "mpi_openmpi_h1234567_12"
   },
   "extra": {
    "recipe-maintainers": [
@@ -567,7 +567,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/siesta.json"
  },
- "raw_meta_yaml": "{% set name = \"siesta\" %}\n{% set siesta_version = \"4.0.2\" %}\n{% set version = siesta_version.split(\"-b\")[0] %}\n{% set sha256 = \"04300ba77a32d0ba2844d704e1c404d1417bd8c1ab76dba9d19f074076d9bc18\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-v{{ siesta_version }}.tar.bz2\n  url: https://gitlab.com/siesta-project/{{ name }}/-/archive/v{{ siesta_version }}/siesta-v{{ siesta_version }}.tar.bz2\n  sha256: {{ sha256 }}\n  patches:\n    # make version.o a phony target\n    - patches/makefile_conda-clean.patch\n\n# Default build version to be stepped with every new build!\n{% set build = 11 %}\n\n# Define build matrix for MPI vs. non-mpi\n## ensure mpi is defined (needed for conda-smithy recipe-lint)\n{% set mpi = mpi or 'nompi' %}\n{% if mpi == 'nompi' %}\n# prioritize nompi variant via build number\n{% set build = build + 1000 %}\n{% endif %}\n\n{% if mpi != 'nompi' %}\n{% set mpi_prefix = \"mpi_\" + mpi %}\n{% else %}\n{% set mpi_prefix = \"nompi\" %}\n{% endif %}\n\nbuild:\n  number: {{ build }}\n  skip: true  # [win]\n\n  string: \"{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}\"\n\n  run_exports:\n    - {{ name }}\n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}\n    - {{ compiler('c') }}\n    - make  # [not win]\n  host:\n    - libblas\n    - liblapack\n    - {{ mpi }}  # [mpi != 'nompi']\n    - zlib\n    - fox\n    - scalapack  # [mpi != 'nompi']\n    # need to list hdf5, libnetcdf and netcdf-fortran twice to get version\n    # pinning from conda_build_config and build pinning from {{ mpi_prefix }}\n    - hdf5\n    - hdf5 * {{ mpi_prefix }}_*\n    - libnetcdf\n    - libnetcdf * {{ mpi_prefix }}_*\n    - netcdf-fortran\n    - netcdf-fortran * {{ mpi_prefix }}_*\n  run:\n    - {{ mpi }}  # [mpi != 'nompi']\n    - zlib\n    - fox\n    - scalapack  # [mpi != 'nompi']\n    - hdf5 * {{ mpi_prefix }}_*\n    - libnetcdf * {{ mpi_prefix }}_*\n    - netcdf-fortran * {{ mpi_prefix }}_*\n\ntest:\n  source_files:\n    - Tests/**\n\nabout:\n  home: https://gitlab.com/siesta-project\n  license: GPL-3.0-or-later\n  license_family: GPL\n  license_file: COPYING\n  summary: A first-principles materials simulation code using DFT\n  description: |\n    SIESTA is both a method and its computer program implementation,\n    to perform efficient electronic structure calculations and ab initio\n    molecular dynamics simulations of molecules and solids. SIESTA's\n    efficiency stems from the use of strictly localized basis sets and\n    from the implementation of linear-scaling algorithms which can be\n    applied to suitable systems. A very important feature of the code is\n    that its accuracy and cost can be tuned in a wide range, from quick\n    exploratory calculations to highly accurate simulations matching the\n    quality of other approaches, such as plane-wave and all-electron methods.\n  dev_url: https://gitlab.com/siesta-project/siesta\n\nextra:\n  recipe-maintainers:\n    - zerothi\n    - albgar\n    - jan-janssen\n",
+ "raw_meta_yaml": "{% set name = \"siesta\" %}\n{% set siesta_version = \"4.0.2\" %}\n{% set version = siesta_version.split(\"-b\")[0] %}\n{% set sha256 = \"04300ba77a32d0ba2844d704e1c404d1417bd8c1ab76dba9d19f074076d9bc18\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-v{{ siesta_version }}.tar.bz2\n  url: https://gitlab.com/siesta-project/{{ name }}/-/archive/v{{ siesta_version }}/siesta-v{{ siesta_version }}.tar.bz2\n  sha256: {{ sha256 }}\n  patches:\n    # make version.o a phony target\n    - patches/makefile_conda-clean.patch\n\n# Default build version to be stepped with every new build!\n{% set build = 12 %}\n\n# Define build matrix for MPI vs. non-mpi\n## ensure mpi is defined (needed for conda-smithy recipe-lint)\n{% set mpi = mpi or 'nompi' %}\n{% if mpi == 'nompi' %}\n# prioritize nompi variant via build number\n{% set build = build + 1000 %}\n{% endif %}\n\n{% if mpi != 'nompi' %}\n{% set mpi_prefix = \"mpi_\" + mpi %}\n{% else %}\n{% set mpi_prefix = \"nompi\" %}\n{% endif %}\n\nbuild:\n  number: {{ build }}\n  skip: true  # [win]\n\n  string: \"{{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}\"\n\n  run_exports:\n    - {{ name }}\n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}\n    - {{ compiler('c') }}\n    - make  # [not win]\n  host:\n    - libblas\n    - liblapack\n    - {{ mpi }}  # [mpi != 'nompi']\n    - zlib\n    - fox\n    - scalapack  # [mpi != 'nompi']\n    # need to list hdf5, libnetcdf and netcdf-fortran twice to get version\n    # pinning from conda_build_config and build pinning from {{ mpi_prefix }}\n    - hdf5\n    - hdf5 * {{ mpi_prefix }}_*\n    - libnetcdf\n    - libnetcdf * {{ mpi_prefix }}_*\n    - netcdf-fortran\n    - netcdf-fortran * {{ mpi_prefix }}_*\n  run:\n    - {{ mpi }}  # [mpi != 'nompi']\n    - zlib\n    - fox\n    - scalapack  # [mpi != 'nompi']\n    - hdf5 * {{ mpi_prefix }}_*\n    - libnetcdf * {{ mpi_prefix }}_*\n    - netcdf-fortran * {{ mpi_prefix }}_*\n\ntest:\n  source_files:\n    - Tests/**\n\nabout:\n  home: https://gitlab.com/siesta-project\n  license: GPL-3.0-or-later\n  license_family: GPL\n  license_file: COPYING\n  summary: A first-principles materials simulation code using DFT\n  description: |\n    SIESTA is both a method and its computer program implementation,\n    to perform efficient electronic structure calculations and ab initio\n    molecular dynamics simulations of molecules and solids. SIESTA's\n    efficiency stems from the use of strictly localized basis sets and\n    from the implementation of linear-scaling algorithms which can be\n    applied to suitable systems. A very important feature of the code is\n    that its accuracy and cost can be tuned in a wide range, from quick\n    exploratory calculations to highly accurate simulations matching the\n    quality of other approaches, such as plane-wave and all-electron methods.\n  dev_url: https://gitlab.com/siesta-project/siesta\n\nextra:\n  recipe-maintainers:\n    - zerothi\n    - albgar\n    - jan-janssen\n",
  "req": {
   "__set__": true,
   "elements": [

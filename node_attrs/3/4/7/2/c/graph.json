@@ -16,7 +16,7 @@
    "summary": "Graphs and Graph Algorithms in C++, including Minimum Cost (Lifted) Multicuts"
   },
   "build": {
-   "number": "4"
+   "number": "5"
   },
   "extra": {
    "recipe-maintainers": [
@@ -36,17 +36,14 @@
    ],
    "host": [
     "hdf5"
-   ],
-   "run": [
-    "hdf5"
    ]
   },
   "source": {
-   "fn": "graph-1.11.tar.gz",
    "patches": [
     "hdf5_fixes.diff",
     "install_fixes.diff",
-    "msvc_fixes.diff"
+    "msvc_fixes.diff",
+    "cpp_limits.patch"
    ],
    "sha256": "00432f3007b4cb2a8d6f2e021fd5625a79e307d6532971719ca6ab81dd0ae752",
    "url": "https://github.com/bjoern-andres/graph/archive/v1.11.tar.gz"
@@ -75,9 +72,7 @@
   },
   "run": {
    "__set__": true,
-   "elements": [
-    "hdf5"
-   ]
+   "elements": []
   },
   "test": {
    "__set__": true,
@@ -92,7 +87,7 @@
    "summary": "Graphs and Graph Algorithms in C++, including Minimum Cost (Lifted) Multicuts"
   },
   "build": {
-   "number": "4"
+   "number": "5"
   },
   "extra": {
    "recipe-maintainers": [
@@ -123,25 +118,22 @@
     "hdf5",
     "hdf5",
     "hdf5"
-   ],
-   "run": [
-    "hdf5",
-    "hdf5",
-    "hdf5"
    ]
   },
   "source": {
-   "fn": "graph-1.11.tar.gz",
    "patches": [
     "hdf5_fixes.diff",
     "install_fixes.diff",
     "msvc_fixes.diff",
+    "cpp_limits.patch",
     "hdf5_fixes.diff",
     "install_fixes.diff",
     "msvc_fixes.diff",
+    "cpp_limits.patch",
     "hdf5_fixes.diff",
     "install_fixes.diff",
-    "msvc_fixes.diff"
+    "msvc_fixes.diff",
+    "cpp_limits.patch"
    ],
    "sha256": "00432f3007b4cb2a8d6f2e021fd5625a79e307d6532971719ca6ab81dd0ae752",
    "url": "https://github.com/bjoern-andres/graph/archive/v1.11.tar.gz"
@@ -163,7 +155,7 @@
    "summary": "Graphs and Graph Algorithms in C++, including Minimum Cost (Lifted) Multicuts"
   },
   "build": {
-   "number": "4"
+   "number": "5"
   },
   "extra": {
    "recipe-maintainers": [
@@ -183,17 +175,14 @@
    ],
    "host": [
     "hdf5"
-   ],
-   "run": [
-    "hdf5"
    ]
   },
   "source": {
-   "fn": "graph-1.11.tar.gz",
    "patches": [
     "hdf5_fixes.diff",
     "install_fixes.diff",
-    "msvc_fixes.diff"
+    "msvc_fixes.diff",
+    "cpp_limits.patch"
    ],
    "sha256": "00432f3007b4cb2a8d6f2e021fd5625a79e307d6532971719ca6ab81dd0ae752",
    "url": "https://github.com/bjoern-andres/graph/archive/v1.11.tar.gz"
@@ -222,9 +211,7 @@
   },
   "run": {
    "__set__": true,
-   "elements": [
-    "hdf5"
-   ]
+   "elements": []
   },
   "test": {
    "__set__": true,
@@ -246,7 +233,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/graph.json"
  },
- "raw_meta_yaml": "{% set name = \"graph\" %}\n{% set version = \"1.11\" %}\n{% set sha256 = \"00432f3007b4cb2a8d6f2e021fd5625a79e307d6532971719ca6ab81dd0ae752\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: https://github.com/bjoern-andres/graph/archive/v{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\n  patches:\n    - hdf5_fixes.diff\n    - install_fixes.diff\n    - msvc_fixes.diff\n\nbuild:\n  number: 4\n\nrequirements:\n  build:\n    - cmake\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - make   # [unix]\n  host:\n    - hdf5\n  run:\n    - hdf5\n\ntest:\n  commands:\n    - test -f $PREFIX/include/andres/graph/graph.hxx                  # [unix]\n    - if not exist %LIBRARY_INC%\\\\andres\\\\graph\\\\graph.hxx exit 1     # [win]\n\nabout:\n  home: http://www.andres.sc/graph.html\n  license: BSD-3-Clause\n  # Taken from http://www.andres.sc/graph.html\n  license_file: LICENSE\n  summary: 'Graphs and Graph Algorithms in C++, including Minimum Cost (Lifted) Multicuts'\n\nextra:\n  recipe-maintainers:\n    - bluescarni\n",
+ "raw_meta_yaml": "{% set name = \"graph\" %}\n{% set version = \"1.11\" %}\n{% set sha256 = \"00432f3007b4cb2a8d6f2e021fd5625a79e307d6532971719ca6ab81dd0ae752\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/bjoern-andres/graph/archive/v{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\n  patches:\n    - hdf5_fixes.diff\n    - install_fixes.diff\n    - msvc_fixes.diff\n    # https://github.com/bjoern-andres/graph/pull/54\n    - cpp_limits.patch\n\nbuild:\n  number: 5\n\nrequirements:\n  build:\n    - cmake\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - make   # [unix]\n  host:\n    - hdf5\n\ntest:\n  commands:\n    - test -f $PREFIX/include/andres/graph/graph.hxx                  # [unix]\n    - if not exist %LIBRARY_INC%\\\\andres\\\\graph\\\\graph.hxx exit 1     # [win]\n\nabout:\n  home: http://www.andres.sc/graph.html\n  license: BSD-3-Clause\n  # Taken from http://www.andres.sc/graph.html\n  license_file: LICENSE\n  summary: 'Graphs and Graph Algorithms in C++, including Minimum Cost (Lifted) Multicuts'\n\nextra:\n  recipe-maintainers:\n    - bluescarni\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -279,8 +266,7 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub",
-    "hdf5"
+    "cxx_compiler_stub"
    ]
   },
   "test": {
@@ -307,9 +293,7 @@
   },
   "run": {
    "__set__": true,
-   "elements": [
-    "hdf5"
-   ]
+   "elements": []
   },
   "test": {
    "__set__": true,
@@ -329,7 +313,7 @@
    "summary": "Graphs and Graph Algorithms in C++, including Minimum Cost (Lifted) Multicuts"
   },
   "build": {
-   "number": "4"
+   "number": "5"
   },
   "extra": {
    "recipe-maintainers": [
@@ -348,17 +332,14 @@
    ],
    "host": [
     "hdf5"
-   ],
-   "run": [
-    "hdf5"
    ]
   },
   "source": {
-   "fn": "graph-1.11.tar.gz",
    "patches": [
     "hdf5_fixes.diff",
     "install_fixes.diff",
-    "msvc_fixes.diff"
+    "msvc_fixes.diff",
+    "cpp_limits.patch"
    ],
    "sha256": "00432f3007b4cb2a8d6f2e021fd5625a79e307d6532971719ca6ab81dd0ae752",
    "url": "https://github.com/bjoern-andres/graph/archive/v1.11.tar.gz"
@@ -386,9 +367,7 @@
   },
   "run": {
    "__set__": true,
-   "elements": [
-    "hdf5"
-   ]
+   "elements": []
   },
   "test": {
    "__set__": true,
