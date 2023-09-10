@@ -20,7 +20,7 @@
    "summary": "Cling-based C++ kernel for Jupyter based on xeus"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "xeus-cling"
    ]
@@ -126,7 +126,7 @@
    "summary": "Cling-based C++ kernel for Jupyter based on xeus"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "xeus-cling"
    ]
@@ -195,7 +195,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/xeus-cling.json"
  },
- "raw_meta_yaml": "{% set name = \"xeus-cling\" %}\n{% set version = \"0.15.3\" %}\n\n{% set clang_version = [9, 0, 1] %}\n{% set cling_version = \"0.9\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: https://github.com/jupyter-xeus/xeus-cling/archive/{{ version }}.tar.gz\n  sha256: 34125486c9c90bd33a16acd28d1b880d99a4ed768e17c465c5675e36ef18f676\n\nbuild:\n  number: 0\n  # Cling has not been built for windows yet\n  skip: true  # [not linux or aarch64]\n  run_exports:\n    - {{ pin_subpackage(name, max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - make  # [unix]\n  host:\n    - cppzmq >=4.6.0,<5\n    - xeus-zmq >=1.1.0,<2.0\n    - xtl >=0.7,<0.8\n    - pugixml\n    - cpp-argparse >=2.9,<3\n    - nlohmann_json >=3.9.1,<4\n    - dirent >=1.21,<2.0  # [win]\n    - zlib\n    - llvmdev {{ clang_version[0] }}\n    - clangdev {{ clang_version|join('.') }} cling_v{{ cling_version }}*\n    - cling {{ cling_version }}\n  run:\n    # Even though cppzmq, xtl and nlohmann_json are header-only,\n    # they are used at runtime by the c++ interpreter.\n    - {{ pin_compatible('cppzmq', max_pin='x.x') }}\n    - {{ pin_compatible('xtl', max_pin='x.x') }}\n    - {{ pin_compatible('nlohmann_json', max_pin='x.x') }}\n\ntest:\n  requires:\n    - jupyter_kernel_test\n  commands:\n    - test -f ${PREFIX}/bin/xcpp  # [unix]\n    - if exist %LIBRARY_PREFIX%\\bin\\xcpp.exe (exit 0) else (exit 1)  # [win]\n\nabout:\n  home: https://github.com/jupyter-xeus/xeus-cling\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Cling-based C++ kernel for Jupyter based on xeus\n  description: Jupyter kernel for the C++ programming language\n  doc_url: https://xeus-cling.readthedocs.io\n  dev_url: https://github.com/jupyter-xeus/xeus-cling\n\nextra:\n  recipe-maintainers:\n    - SylvainCorlay\n    - JohanMabille\n    - gouarin\n    - martinRenou\n",
+ "raw_meta_yaml": "{% set name = \"xeus-cling\" %}\n{% set version = \"0.15.3\" %}\n\n{% set clang_version = [9, 0, 1] %}\n{% set cling_version = \"0.9\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: https://github.com/jupyter-xeus/xeus-cling/archive/{{ version }}.tar.gz\n  sha256: 34125486c9c90bd33a16acd28d1b880d99a4ed768e17c465c5675e36ef18f676\n\nbuild:\n  number: 1\n  # Cling has not been built for windows yet\n  skip: true  # [not linux or aarch64]\n  run_exports:\n    - {{ pin_subpackage(name, max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - make  # [unix]\n  host:\n    - cppzmq >=4.6.0,<5\n    - xeus-zmq >=1.1.0,<2.0\n    - xtl >=0.7,<0.8\n    - pugixml\n    - cpp-argparse >=2.9,<3\n    - nlohmann_json >=3.9.1,<4\n    - dirent >=1.21,<2.0  # [win]\n    - zlib\n    - llvmdev {{ clang_version[0] }}\n    - clangdev {{ clang_version|join('.') }} cling_v{{ cling_version }}*\n    - cling {{ cling_version }}\n  run:\n    # Even though cppzmq, xtl and nlohmann_json are header-only,\n    # they are used at runtime by the c++ interpreter.\n    - {{ pin_compatible('cppzmq', max_pin='x.x') }}\n    - {{ pin_compatible('xtl', max_pin='x.x') }}\n    - {{ pin_compatible('nlohmann_json', max_pin='x.x') }}\n\ntest:\n  requires:\n    - jupyter_kernel_test\n  commands:\n    - test -f ${PREFIX}/bin/xcpp  # [unix]\n    - if exist %LIBRARY_PREFIX%\\bin\\xcpp.exe (exit 0) else (exit 1)  # [win]\n\nabout:\n  home: https://github.com/jupyter-xeus/xeus-cling\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Cling-based C++ kernel for Jupyter based on xeus\n  description: Jupyter kernel for the C++ programming language\n  doc_url: https://xeus-cling.readthedocs.io\n  dev_url: https://github.com/jupyter-xeus/xeus-cling\n\nextra:\n  recipe-maintainers:\n    - SylvainCorlay\n    - JohanMabille\n    - gouarin\n    - martinRenou\n",
  "req": {
   "__set__": true,
   "elements": [
