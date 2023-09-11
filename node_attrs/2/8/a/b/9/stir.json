@@ -90,7 +90,7 @@
   },
   "package": {
    "name": "stir",
-   "version": "5.1.1"
+   "version": "5.1.2"
   },
   "requirements": {
    "build": [
@@ -321,8 +321,8 @@
    ]
   },
   "source": {
-   "sha256": "5d85717a0d0137b6d30e0dc22fe718c1fd33873b26ad0be44e8db953fc2bfd31",
-   "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.1.tar.gz"
+   "sha256": "20c0b6aa72b73e64b8a24e0618a24f3d614069ab4e37f48b918ea06df67fa843",
+   "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.2.tar.gz"
   },
   "test": {
    "commands": [
@@ -787,7 +787,7 @@
   },
   "package": {
    "name": "stir",
-   "version": "5.1.1"
+   "version": "5.1.2"
   },
   "requirements": {
    "build": [
@@ -1350,8 +1350,8 @@
    ]
   },
   "source": {
-   "sha256": "5d85717a0d0137b6d30e0dc22fe718c1fd33873b26ad0be44e8db953fc2bfd31",
-   "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.1.tar.gz"
+   "sha256": "20c0b6aa72b73e64b8a24e0618a24f3d614069ab4e37f48b918ea06df67fa843",
+   "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.2.tar.gz"
   },
   "test": {
    "commands": [
@@ -1931,7 +1931,7 @@
   },
   "package": {
    "name": "stir",
-   "version": "5.1.1"
+   "version": "5.1.2"
   },
   "requirements": {
    "build": [
@@ -2010,8 +2010,8 @@
    ]
   },
   "source": {
-   "sha256": "5d85717a0d0137b6d30e0dc22fe718c1fd33873b26ad0be44e8db953fc2bfd31",
-   "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.1.tar.gz"
+   "sha256": "20c0b6aa72b73e64b8a24e0618a24f3d614069ab4e37f48b918ea06df67fa843",
+   "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.2.tar.gz"
   },
   "test": {
    "commands": [
@@ -2182,7 +2182,7 @@
   },
   "package": {
    "name": "stir",
-   "version": "5.1.1"
+   "version": "5.1.2"
   },
   "requirements": {
    "build": [
@@ -2261,8 +2261,8 @@
    ]
   },
   "source": {
-   "sha256": "5d85717a0d0137b6d30e0dc22fe718c1fd33873b26ad0be44e8db953fc2bfd31",
-   "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.1.tar.gz"
+   "sha256": "20c0b6aa72b73e64b8a24e0618a24f3d614069ab4e37f48b918ea06df67fa843",
+   "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.2.tar.gz"
   },
   "test": {
    "commands": [
@@ -2407,7 +2407,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/stir.json"
  },
- "raw_meta_yaml": "\n{% set name = \"STIR\" %}\n{% set version = \"5.1.1\" %}\n{% set build_number = 0 %}\n\n{% if cuda_compiler_version != \"None\" %}\n{% set build_number = build_number + 200 %}\n{% endif %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/UCL/STIR/archive/refs/tags/rel_{{ version }}.tar.gz\n  sha256: 5d85717a0d0137b6d30e0dc22fe718c1fd33873b26ad0be44e8db953fc2bfd31\n\nbuild:\n  number: {{ build_number }}\n  skip: true  # [linux and cuda_compiler_version == \"10.2\"]\n  ignore_run_exports:\n    - cudatoolkit\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == \"None\"]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux]\n    - cmake\n    - ninja\n    - swig\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n  host:\n    - boost-cpp\n    - hdf5  # [not win and not osx_arm64]\n    - python\n    - numpy\n    - libitk-devel\n    - libitk\n    - nlohmann_json\n    - libparallelproj\n    - root_base  # [not win]\n    - zlib  # [win]\n  run:\n    - python\n    - {{ pin_compatible('numpy') }}\n    - __cuda  # [cuda_compiler_version != \"None\"]\n\ntest:\n  requires:\n    - pytest\n  imports:\n    - stir\n  source_files:\n    - recon_test_pack\n    - examples\n    - src/swig/test/python\n  commands:\n    - stir_config --config-dir\n    - cd recon_test_pack\n    - ./run_test_simulate_and_recon.sh  # [not win]\n    - ./run_test_listmode_recon.sh  # [not win]\n    - ./run_test_simulate_and_recon_with_motion.sh  # [not win]\n    - ./run_scatter_tests.sh  # [not win]\n    - ./run_tests.sh --nointbp  # [not win]\n    - ./run_test_zoom_image.sh  # [not win]\n    - ./run_root_GATE.sh  # [not win]\n    - run_tests  # [win]\n    - cd SPECT\n    - ./run_SPECT_tests.sh  # [not win]\n    - cd ..\n    - cd ..\n    - pytest src/swig/test/python\n\n\nabout:\n  home: http://stir.sourceforge.net/\n  license: Apache-2.0 AND LicenseRef-PARAPET-license\n  license_file: LICENSE.txt\n  summary: 'Software for Tomographic Image Reconstruction'\n  description: |\n    STIR is Open Source software for use in tomographic imaging.\n    Its aim is to provide a Multi-Platform Object-Oriented framework for all data manipulations in tomographic imaging.\n    Check the recipe at https://github.com/conda-forge/stir-feedstock/blob/main/recipe/meta.yaml\n    to see which dependencies are included in this conda package.\n\n    This package contains all STIR utilities and Python support. It is built with ITK on all platforms\n    and ROOT on Linux and OSX.\n\n  doc_url: http://stir.sourceforge.net/documentation\n  dev_url: https://github.com/UCL/STIR\n\nextra:\n  recipe-maintainers:\n    - KrisThielemans\n    - olivierverdier\n    - paskino\n    - casperdcl\n",
+ "raw_meta_yaml": "\n{% set name = \"STIR\" %}\n{% set version = \"5.1.2\" %}\n{% set build_number = 0 %}\n\n{% if cuda_compiler_version != \"None\" %}\n{% set build_number = build_number + 200 %}\n{% endif %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/UCL/STIR/archive/refs/tags/rel_{{ version }}.tar.gz\n  sha256: 20c0b6aa72b73e64b8a24e0618a24f3d614069ab4e37f48b918ea06df67fa843\n\nbuild:\n  number: {{ build_number }}\n  skip: true  # [linux and cuda_compiler_version == \"10.2\"]\n  ignore_run_exports:\n    - cudatoolkit\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == \"None\"]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux]\n    - cmake\n    - ninja\n    - swig\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n  host:\n    - boost-cpp\n    - hdf5  # [not win and not osx_arm64]\n    - python\n    - numpy\n    - libitk-devel\n    - libitk\n    - nlohmann_json\n    - libparallelproj\n    - root_base  # [not win]\n    - zlib  # [win]\n  run:\n    - python\n    - {{ pin_compatible('numpy') }}\n    - __cuda  # [cuda_compiler_version != \"None\"]\n\ntest:\n  requires:\n    - pytest\n  imports:\n    - stir\n  source_files:\n    - recon_test_pack\n    - examples\n    - src/swig/test/python\n  commands:\n    - stir_config --config-dir\n    - cd recon_test_pack\n    - ./run_test_simulate_and_recon.sh  # [not win]\n    - ./run_test_listmode_recon.sh  # [not win]\n    - ./run_test_simulate_and_recon_with_motion.sh  # [not win]\n    - ./run_scatter_tests.sh  # [not win]\n    - ./run_tests.sh --nointbp  # [not win]\n    - ./run_test_zoom_image.sh  # [not win]\n    - ./run_root_GATE.sh  # [not win]\n    - run_tests  # [win]\n    - cd SPECT\n    - ./run_SPECT_tests.sh  # [not win]\n    - cd ..\n    - cd ..\n    - pytest src/swig/test/python\n\n\nabout:\n  home: http://stir.sourceforge.net/\n  license: Apache-2.0 AND LicenseRef-PARAPET-license\n  license_file: LICENSE.txt\n  summary: 'Software for Tomographic Image Reconstruction'\n  description: |\n    STIR is Open Source software for use in tomographic imaging.\n    Its aim is to provide a Multi-Platform Object-Oriented framework for all data manipulations in tomographic imaging.\n    Check the recipe at https://github.com/conda-forge/stir-feedstock/blob/main/recipe/meta.yaml\n    to see which dependencies are included in this conda package.\n\n    This package contains all STIR utilities and Python support. It is built with ITK on all platforms\n    and ROOT on Linux and OSX.\n\n  doc_url: http://stir.sourceforge.net/documentation\n  dev_url: https://github.com/UCL/STIR\n\nextra:\n  recipe-maintainers:\n    - KrisThielemans\n    - olivierverdier\n    - paskino\n    - casperdcl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -2531,8 +2531,8 @@
    ]
   }
  },
- "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.1.tar.gz",
- "version": "5.1.1",
+ "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.2.tar.gz",
+ "version": "5.1.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/stir.json"
  },
@@ -2618,7 +2618,7 @@
   },
   "package": {
    "name": "stir",
-   "version": "5.1.1"
+   "version": "5.1.2"
   },
   "requirements": {
    "build": [
@@ -2825,8 +2825,8 @@
    ]
   },
   "source": {
-   "sha256": "5d85717a0d0137b6d30e0dc22fe718c1fd33873b26ad0be44e8db953fc2bfd31",
-   "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.1.tar.gz"
+   "sha256": "20c0b6aa72b73e64b8a24e0618a24f3d614069ab4e37f48b918ea06df67fa843",
+   "url": "https://github.com/UCL/STIR/archive/refs/tags/rel_5.1.2.tar.gz"
   },
   "test": {
    "commands": [
