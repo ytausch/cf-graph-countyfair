@@ -18,10 +18,10 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+   "number": "0"
   },
   "extra": {
+   "feedstock-name": "jupyterlab_server",
    "recipe-maintainers": [
     "jasongrout",
     "blink1073",
@@ -31,62 +31,113 @@
     "jtpio"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+    },
+    "name": "jupyterlab_server",
+    "requirements": {
+     "host": [
+      "hatchling >=1.5",
+      "pip",
+      "python >=3.8"
+     ],
+     "run": [
+      "babel >=2.10",
+      "importlib-metadata >=4.8.3",
+      "jinja2 >=3.0.3",
+      "json5 >=0.9.0",
+      "jsonschema >=4.18",
+      "jupyter_server >=1.21,<3",
+      "packaging >=21.3",
+      "python >=3.8",
+      "requests >=2.31"
+     ],
+     "run_constrained": [
+      "openapi-core >=0.18.0,<0.19.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "downstreams": [
+      "jupyterlab"
+     ],
+     "imports": [
+      "jupyterlab_server"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "jupyterlab_server-with-openapi",
+    "requirements": {
+     "host": [
+      "python >=3.8"
+     ],
+     "run": [
+      "jupyterlab_server",
+      "openapi-core",
+      "python >=3.8",
+      "ruamel.yaml"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "cd tests && pytest -vv --cov=jupyterlab_server --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=85"
+     ],
+     "imports": [
+      "jupyterlab_server"
+     ],
+     "requires": [
+      "ipykernel",
+      "jsonschema >=4.18",
+      "openapi-spec-validator >=0.6.0,<0.7.0",
+      "pip",
+      "pytest >=7.0",
+      "pytest-console-scripts",
+      "pytest-cov",
+      "pytest-jupyter-server >=0.6.2",
+      "pytest-timeout",
+      "requests-mock",
+      "strict-rfc3339",
+      "werkzeug"
+     ],
+     "source_files": [
+      "tests",
+      "jupyterlab_server/test_data"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "jupyterlab_server",
-   "version": "2.24.0"
+   "name": "jupyterlab_server-split",
+   "version": "2.25.0"
   },
   "requirements": {
    "host": [
-    "hatchling >=1.5",
-    "pip",
-    "python >=3.7"
+    "python >=3.8"
    ],
    "run": [
-    "babel >=2.10",
-    "importlib-metadata >=4.8.3",
-    "jinja2 >=3.0.3",
-    "json5 >=0.9.0",
-    "jsonschema >=4.17.3",
-    "jupyter_server >=1.21,<3",
-    "packaging >=21.3",
-    "python >=3.7",
-    "requests >=2.28"
+    "python >=3.8"
    ]
   },
   "source": {
-   "sha256": "4e6f99e0a5579bbbc32e449c4dbb039561d4f1a7827d5733273ed56738f21f07",
-   "url": "https://pypi.io/packages/source/j/jupyterlab_server/jupyterlab_server-2.24.0.tar.gz"
+   "sha256": "77c2f1f282d610f95e496e20d5bf1d2a7706826dfb7b18f3378ae2870d272fb7",
+   "url": "https://pypi.io/packages/source/j/jupyterlab_server/jupyterlab_server-2.25.0.tar.gz"
   },
   "test": {
    "commands": [
-    "pip check",
-    "cd tests && pytest -vv --cov=jupyterlab_server --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=85"
-   ],
-   "downstreams": [
-    "jupyterlab"
-   ],
-   "imports": [
-    "jupyterlab_server"
-   ],
-   "requires": [
-    "ipykernel",
-    "jsonschema <4.18",
-    "openapi-core >=0.16.1,<0.17",
-    "openapi-spec-validator >=0.5.1,<0.7.0",
-    "pip",
-    "pytest >=7.0",
-    "pytest-console-scripts",
-    "pytest-cov",
-    "pytest-jupyter-server >=0.6.2",
-    "pytest-timeout",
-    "requests-mock",
-    "ruamel.yaml",
-    "strict-rfc3339",
-    "werkzeug"
-   ],
-   "source_files": [
-    "tests",
-    "jupyterlab_server/test_data"
+    "echo tests in outputs"
    ]
   }
  },
@@ -112,9 +163,12 @@
     "json5",
     "jsonschema",
     "jupyter_server",
+    "jupyterlab_server",
+    "openapi-core",
     "packaging",
     "python",
-    "requests"
+    "requests",
+    "ruamel.yaml"
    ]
   },
   "test": {
@@ -122,7 +176,6 @@
    "elements": [
     "ipykernel",
     "jsonschema",
-    "openapi-core",
     "openapi-spec-validator",
     "pip",
     "pytest",
@@ -131,7 +184,6 @@
     "pytest-jupyter-server",
     "pytest-timeout",
     "requests-mock",
-    "ruamel.yaml",
     "strict-rfc3339",
     "werkzeug"
    ]
@@ -147,10 +199,10 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+   "number": "0"
   },
   "extra": {
+   "feedstock-name": "jupyterlab_server",
    "recipe-maintainers": [
     "jasongrout",
     "blink1073",
@@ -160,70 +212,123 @@
     "jtpio"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+    },
+    "name": "jupyterlab_server",
+    "requirements": {
+     "host": [
+      "hatchling >=1.5",
+      "pip",
+      "python >=3.8"
+     ],
+     "run": [
+      "babel >=2.10",
+      "importlib-metadata >=4.8.3",
+      "jinja2 >=3.0.3",
+      "json5 >=0.9.0",
+      "jsonschema >=4.18",
+      "jupyter_server >=1.21,<3",
+      "packaging >=21.3",
+      "python >=3.8",
+      "requests >=2.31"
+     ],
+     "run_constrained": [
+      "openapi-core >=0.18.0,<0.19.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "downstreams": [
+      "jupyterlab"
+     ],
+     "imports": [
+      "jupyterlab_server"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "jupyterlab_server-with-openapi",
+    "requirements": {
+     "host": [
+      "python >=3.8"
+     ],
+     "run": [
+      "jupyterlab_server",
+      "openapi-core",
+      "python >=3.8",
+      "ruamel.yaml"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "cd tests && pytest -vv --cov=jupyterlab_server --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=85"
+     ],
+     "imports": [
+      "jupyterlab_server"
+     ],
+     "requires": [
+      "ipykernel",
+      "jsonschema >=4.18",
+      "openapi-spec-validator >=0.6.0,<0.7.0",
+      "pip",
+      "pytest >=7.0",
+      "pytest-console-scripts",
+      "pytest-cov",
+      "pytest-jupyter-server >=0.6.2",
+      "pytest-timeout",
+      "requests-mock",
+      "strict-rfc3339",
+      "werkzeug"
+     ],
+     "source_files": [
+      "tests",
+      "jupyterlab_server/test_data"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "jupyterlab_server",
-   "version": "2.24.0"
+   "name": "jupyterlab_server-split",
+   "version": "2.25.0"
   },
   "requirements": {
    "host": [
-    "hatchling >=1.5",
-    "pip",
-    "python >=3.7"
+    "python >=3.8"
    ],
    "run": [
-    "babel >=2.10",
-    "importlib-metadata >=4.8.3",
-    "jinja2 >=3.0.3",
-    "json5 >=0.9.0",
-    "jsonschema >=4.17.3",
-    "jupyter_server >=1.21,<3",
-    "packaging >=21.3",
-    "python >=3.7",
-    "requests >=2.28"
+    "python >=3.8"
    ]
   },
   "source": {
-   "sha256": "4e6f99e0a5579bbbc32e449c4dbb039561d4f1a7827d5733273ed56738f21f07",
-   "url": "https://pypi.io/packages/source/j/jupyterlab_server/jupyterlab_server-2.24.0.tar.gz"
+   "sha256": "77c2f1f282d610f95e496e20d5bf1d2a7706826dfb7b18f3378ae2870d272fb7",
+   "url": "https://pypi.io/packages/source/j/jupyterlab_server/jupyterlab_server-2.25.0.tar.gz"
   },
   "test": {
    "commands": [
-    "pip check",
-    "cd tests && pytest -vv --cov=jupyterlab_server --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=85"
-   ],
-   "downstreams": [
-    "jupyterlab"
-   ],
-   "imports": [
-    "jupyterlab_server"
-   ],
-   "requires": [
-    "ipykernel",
-    "jsonschema <4.18",
-    "openapi-core >=0.16.1,<0.17",
-    "openapi-spec-validator >=0.5.1,<0.7.0",
-    "pip",
-    "pytest >=7.0",
-    "pytest-console-scripts",
-    "pytest-cov",
-    "pytest-jupyter-server >=0.6.2",
-    "pytest-timeout",
-    "requests-mock",
-    "ruamel.yaml",
-    "strict-rfc3339",
-    "werkzeug"
-   ],
-   "source_files": [
-    "tests",
-    "jupyterlab_server/test_data"
+    "echo tests in outputs"
    ]
   }
  },
- "name": "jupyterlab_server",
+ "name": "jupyterlab_server-split",
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "jupyterlab_server"
+   "jupyterlab_server",
+   "jupyterlab_server-split",
+   "jupyterlab_server-with-openapi"
   ]
  },
  "parsing_error": false,
@@ -233,7 +338,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/jupyterlab_server.json"
  },
- "raw_meta_yaml": "{% set version = \"2.24.0\" %}\n\npackage:\n  name: jupyterlab_server\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/j/jupyterlab_server/jupyterlab_server-{{ version }}.tar.gz\n  sha256: 4e6f99e0a5579bbbc32e449c4dbb039561d4f1a7827d5733273ed56738f21f07\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv\n\nrequirements:\n  host:\n    - hatchling >=1.5\n    - pip\n    - python >=3.7\n\n  run:\n    - babel >=2.10\n    - importlib-metadata >=4.8.3\n    - jinja2 >=3.0.3\n    - json5 >=0.9.0\n    - jsonschema >=4.17.3\n    - jupyter_server >=1.21,<3\n    - packaging >=21.3\n    - python >=3.7\n    - requests >=2.28\n\ntest:\n  source_files:\n    - tests\n    - jupyterlab_server/test_data\n  requires:\n    - ipykernel\n    - jsonschema <4.18\n    - openapi-core >=0.16.1,<0.17\n    - openapi-spec-validator >=0.5.1,<0.7.0\n    - pip\n    - pytest >=7.0\n    - pytest-console-scripts\n    - pytest-cov\n    - pytest-jupyter-server >=0.6.2\n    - pytest-timeout\n    - requests-mock\n    - ruamel.yaml\n    - strict-rfc3339\n    - werkzeug\n  imports:\n    - jupyterlab_server\n  commands:\n    - pip check\n    - cd tests && pytest -vv --cov=jupyterlab_server --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=85\n  downstreams:\n    - jupyterlab\n\nabout:\n  home: https://github.com/jupyterlab/jupyterlab_server\n  license: BSD-3-Clause\n  license_file: LICENSE\n  summary: A set of server components for JupyterLab and JupyterLab like applications.\n  doc_url: https://jupyterlab-server.readthedocs.io\n\nextra:\n  recipe-maintainers:\n    - jasongrout\n    - blink1073\n    - afshin\n    - SylvainCorlay\n    - bollwyvl\n    - jtpio\n",
+ "raw_meta_yaml": "{% set version = \"2.25.0\" %}\n\npackage:\n  name: jupyterlab_server-split\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/j/jupyterlab_server/jupyterlab_server-{{ version }}.tar.gz\n  sha256: 77c2f1f282d610f95e496e20d5bf1d2a7706826dfb7b18f3378ae2870d272fb7\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - python >=3.8\n  run:\n    - python >=3.8\n\ntest:\n  commands:\n    - echo tests in outputs\n\noutputs:\n  - name: jupyterlab_server\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv\n    requirements:\n      host:\n        - hatchling >=1.5\n        - pip\n        - python >=3.8\n      run:\n        - babel >=2.10\n        - importlib-metadata >=4.8.3\n        - jinja2 >=3.0.3\n        - json5 >=0.9.0\n        - jsonschema >=4.18\n        - jupyter_server >=1.21,<3\n        - packaging >=21.3\n        - python >=3.8\n        - requests >=2.31\n      run_constrained:\n        # hard dep in jupyterlab_server-with-openapi:run\n        - openapi-core >=0.18.0,<0.19.0\n    test:\n      requires:\n        - pip\n      imports:\n        - jupyterlab_server\n      commands:\n        - pip check\n      downstreams:\n        - jupyterlab\n\n  - name: jupyterlab_server-with-openapi\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - {{ pin_subpackage(\"jupyterlab_server\", max_pin=\"x.x.x\") }}\n        # version pin in jupyterlab_server-with-openapi:run_constrained\n        - openapi-core\n        - python >=3.8\n        - ruamel.yaml\n    test:\n      source_files:\n        - tests\n        - jupyterlab_server/test_data\n      requires:\n        - ipykernel\n        - jsonschema >=4.18\n        - openapi-spec-validator >=0.6.0,<0.7.0\n        - pip\n        - pytest >=7.0\n        - pytest-console-scripts\n        - pytest-cov\n        - pytest-jupyter-server >=0.6.2\n        - pytest-timeout\n        - requests-mock\n        - strict-rfc3339\n        - werkzeug\n      imports:\n        - jupyterlab_server\n      commands:\n        - pip check\n        - cd tests && pytest -vv --cov=jupyterlab_server --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=85\n\nabout:\n  home: https://github.com/jupyterlab/jupyterlab_server\n  license: BSD-3-Clause\n  license_file: LICENSE\n  summary: A set of server components for JupyterLab and JupyterLab like applications.\n  doc_url: https://jupyterlab-server.readthedocs.io\n\nextra:\n  feedstock-name: jupyterlab_server\n  recipe-maintainers:\n    - jasongrout\n    - blink1073\n    - afshin\n    - SylvainCorlay\n    - bollwyvl\n    - jtpio\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -244,10 +349,13 @@
    "json5",
    "jsonschema",
    "jupyter_server",
+   "jupyterlab_server",
+   "openapi-core",
    "packaging",
    "pip",
    "python",
-   "requests"
+   "requests",
+   "ruamel.yaml"
   ]
  },
  "requirements": {
@@ -272,9 +380,12 @@
     "json5",
     "jsonschema",
     "jupyter_server",
+    "jupyterlab_server",
+    "openapi-core",
     "packaging",
     "python",
-    "requests"
+    "requests",
+    "ruamel.yaml"
    ]
   },
   "test": {
@@ -282,7 +393,6 @@
    "elements": [
     "ipykernel",
     "jsonschema",
-    "openapi-core",
     "openapi-spec-validator",
     "pip",
     "pytest",
@@ -291,7 +401,6 @@
     "pytest-jupyter-server",
     "pytest-timeout",
     "requests-mock",
-    "ruamel.yaml",
     "strict-rfc3339",
     "werkzeug"
    ]
@@ -308,7 +417,7 @@
    "elements": [
     "hatchling >=1.5",
     "pip",
-    "python >=3.7"
+    "python >=3.8"
    ]
   },
   "run": {
@@ -318,20 +427,22 @@
     "importlib-metadata >=4.8.3",
     "jinja2 >=3.0.3",
     "json5 >=0.9.0",
-    "jsonschema >=4.17.3",
+    "jsonschema >=4.18",
     "jupyter_server >=1.21,<3",
+    "jupyterlab_server",
+    "openapi-core",
     "packaging >=21.3",
-    "python >=3.7",
-    "requests >=2.28"
+    "python >=3.8",
+    "requests >=2.31",
+    "ruamel.yaml"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
     "ipykernel",
-    "jsonschema <4.18",
-    "openapi-core >=0.16.1,<0.17",
-    "openapi-spec-validator >=0.5.1,<0.7.0",
+    "jsonschema >=4.18",
+    "openapi-spec-validator >=0.6.0,<0.7.0",
     "pip",
     "pytest >=7.0",
     "pytest-console-scripts",
@@ -339,14 +450,13 @@
     "pytest-jupyter-server >=0.6.2",
     "pytest-timeout",
     "requests-mock",
-    "ruamel.yaml",
     "strict-rfc3339",
     "werkzeug"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/j/jupyterlab_server/jupyterlab_server-2.24.0.tar.gz",
- "version": "2.24.0",
+ "url": "https://pypi.io/packages/source/j/jupyterlab_server/jupyterlab_server-2.25.0.tar.gz",
+ "version": "2.25.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/jupyterlab_server.json"
  }
