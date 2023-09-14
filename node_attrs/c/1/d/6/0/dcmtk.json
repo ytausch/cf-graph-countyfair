@@ -14,7 +14,7 @@
    "summary": "OFFIS DICOM toolkit"
   },
   "build": {
-   "number": "4",
+   "number": "5",
    "run_exports": [
     "dcmtk"
    ]
@@ -122,7 +122,7 @@
    "summary": "OFFIS DICOM toolkit"
   },
   "build": {
-   "number": "4",
+   "number": "5",
    "run_exports": [
     "dcmtk",
     "dcmtk",
@@ -286,7 +286,7 @@
    "summary": "OFFIS DICOM toolkit"
   },
   "build": {
-   "number": "4",
+   "number": "5",
    "run_exports": [
     "dcmtk"
    ]
@@ -372,7 +372,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/dcmtk.json"
  },
- "raw_meta_yaml": "{% set name = \"DCMTK\" %}\n{% set version = \"3.6.7\" %}\n{% set libraries = [\n  \"ofstd\", \"oflog\", \"dcmdata\", \"i2d\", \"dcmimgle\", \"dcmimage\", \"ijg8\", \"ijg12\",\n  \"ijg16\", \"dcmjpeg\", \"dcmtkcharls\", \"dcmjpls\", \"dcmnet\", \"dcmtls\", \"dcmsr\",\n  \"cmr\", \"dcmdsig\", \"dcmwlm\", \"dcmqrdb\", \"dcmpstat\", \"dcmrt\", \"dcmiod\",\n  \"dcmfg\", \"dcmseg\", \"dcmtract\", \"dcmpmap\", \"dcmect\" ]\n%}\n{% set SO_MAJOR = \"17\" %}\n\npackage:\n  name: {{ name | lower }}\n  version: {{ version }}\n\nsource:\n  url: https://dicom.offis.de/download/dcmtk/dcmtk{{ version | replace('.','') }}/dcmtk-{{ version }}.tar.gz\n  sha256: 7c58298e3e8d60232ee6fc8408cfadd14463cc11a3c4ca4c59af5988c7e9710a\n\nbuild:\n  number: 4\n  run_exports:\n    - {{ pin_subpackage(name|lower, max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - cmake\n    - ninja\n  host:\n    - libpng\n    - libtiff\n    - libxml2\n    - openssl\n    - zlib\n\ntest:\n  commands:\n    - dcmdump --help\n    - test -f $PREFIX/include/dcmtk/ofstd/ofstd.h  # [unix]\n    - if not exist %LIBRARY_INC%\\\\dcmtk\\\\ofstd\\\\ofstd.h exit 1  # [win]\n    {% for library in libraries %}\n    - test -f $PREFIX/lib/lib{{ library }}.so.{{ SO_MAJOR }}  # [linux]\n    - test -f $PREFIX/lib/lib{{ library }}.{{ SO_MAJOR }}.dylib  # [mac]\n    - if not exist %LIBRARY_BIN%\\\\{{ library }}.dll exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\\\{{ library }}.lib exit 1  # [win]\n    {% endfor %}\n    - test -f $PREFIX/lib/pkgconfig/dcmtk.pc  # [unix]\n    - if not exist %LIBRARY_LIB%\\\\pkgconfig\\\\dcmtk.pc exit 1  # [win]\n    - test -f $PREFIX/lib/cmake/dcmtk/DCMTKConfig.cmake  # [unix]\n    - if not exist %LIBRARY_PREFIX%\\\\cmake\\\\DCMTKConfig.cmake exit 1  # [win]\n\nabout:\n  home: http://dicom.offis.de\n  summary: OFFIS DICOM toolkit\n  description: |\n    DCMTK is a collection of libraries and applications implementing large \n    parts the DICOM standard. It includes software for examining, constructing \n    and converting DICOM image files, handling offline media, sending and \n    receiving images over a network connection, as well as demonstrative image \n    storage and worklist servers. DCMTK is is written in a mixture of ANSI C \n    and C++. \n  license: BSD-3-Clause\n  license_file: COPYRIGHT\n  dev_url: \"https://git.dcmtk.org/\"\n\nextra:\n  recipe-maintainers:\n    - lamyj\n",
+ "raw_meta_yaml": "{% set name = \"DCMTK\" %}\n{% set version = \"3.6.7\" %}\n{% set libraries = [\n  \"ofstd\", \"oflog\", \"dcmdata\", \"i2d\", \"dcmimgle\", \"dcmimage\", \"ijg8\", \"ijg12\",\n  \"ijg16\", \"dcmjpeg\", \"dcmtkcharls\", \"dcmjpls\", \"dcmnet\", \"dcmtls\", \"dcmsr\",\n  \"cmr\", \"dcmdsig\", \"dcmwlm\", \"dcmqrdb\", \"dcmpstat\", \"dcmrt\", \"dcmiod\",\n  \"dcmfg\", \"dcmseg\", \"dcmtract\", \"dcmpmap\", \"dcmect\" ]\n%}\n{% set SO_MAJOR = \"17\" %}\n\npackage:\n  name: {{ name | lower }}\n  version: {{ version }}\n\nsource:\n  url: https://dicom.offis.de/download/dcmtk/dcmtk{{ version | replace('.','') }}/dcmtk-{{ version }}.tar.gz\n  sha256: 7c58298e3e8d60232ee6fc8408cfadd14463cc11a3c4ca4c59af5988c7e9710a\n\nbuild:\n  number: 5\n  run_exports:\n    - {{ pin_subpackage(name|lower, max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - cmake\n    - ninja\n  host:\n    - libpng\n    - libtiff\n    - libxml2\n    - openssl\n    - zlib\n\ntest:\n  commands:\n    - dcmdump --help\n    - test -f $PREFIX/include/dcmtk/ofstd/ofstd.h  # [unix]\n    - if not exist %LIBRARY_INC%\\\\dcmtk\\\\ofstd\\\\ofstd.h exit 1  # [win]\n    {% for library in libraries %}\n    - test -f $PREFIX/lib/lib{{ library }}.so.{{ SO_MAJOR }}  # [linux]\n    - test -f $PREFIX/lib/lib{{ library }}.{{ SO_MAJOR }}.dylib  # [mac]\n    - if not exist %LIBRARY_BIN%\\\\{{ library }}.dll exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\\\{{ library }}.lib exit 1  # [win]\n    {% endfor %}\n    - test -f $PREFIX/lib/pkgconfig/dcmtk.pc  # [unix]\n    - if not exist %LIBRARY_LIB%\\\\pkgconfig\\\\dcmtk.pc exit 1  # [win]\n    - test -f $PREFIX/lib/cmake/dcmtk/DCMTKConfig.cmake  # [unix]\n    - if not exist %LIBRARY_PREFIX%\\\\cmake\\\\DCMTKConfig.cmake exit 1  # [win]\n\nabout:\n  home: http://dicom.offis.de\n  summary: OFFIS DICOM toolkit\n  description: |\n    DCMTK is a collection of libraries and applications implementing large \n    parts the DICOM standard. It includes software for examining, constructing \n    and converting DICOM image files, handling offline media, sending and \n    receiving images over a network connection, as well as demonstrative image \n    storage and worklist servers. DCMTK is is written in a mixture of ANSI C \n    and C++. \n  license: BSD-3-Clause\n  license_file: COPYRIGHT\n  dev_url: \"https://git.dcmtk.org/\"\n\nextra:\n  recipe-maintainers:\n    - lamyj\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -466,7 +466,7 @@
    "summary": "OFFIS DICOM toolkit"
   },
   "build": {
-   "number": "4",
+   "number": "5",
    "run_exports": [
     "dcmtk"
    ]
