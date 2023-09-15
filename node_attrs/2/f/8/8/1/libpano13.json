@@ -18,7 +18,7 @@
    "summary": "Panorama Tools"
   },
   "build": {
-   "number": "5",
+   "number": "6",
    "run_exports": [
     "libpano13"
    ]
@@ -107,7 +107,7 @@
    "summary": "Panorama Tools"
   },
   "build": {
-   "number": "5",
+   "number": "6",
    "run_exports": [
     "libpano13",
     "libpano13",
@@ -228,7 +228,7 @@
    "summary": "Panorama Tools"
   },
   "build": {
-   "number": "5",
+   "number": "6",
    "run_exports": [
     "libpano13"
    ]
@@ -317,7 +317,7 @@
    "summary": "Panorama Tools"
   },
   "build": {
-   "number": "5",
+   "number": "6",
    "run_exports": [
     "libpano13"
    ]
@@ -413,7 +413,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/libpano13.json"
  },
- "raw_meta_yaml": "{% set version = \"2.9.20\" %}\n{% set rc_version = \"rc2\" %}\n\npackage:\n  name: libpano13\n  version: {{ version }}{{ rc_version }}\n\nsource:\n  url: https://master.dl.sourceforge.net/project/panotools/libpano13/libpano13-{{ version }}/libpano13-{{ version }}_{{ rc_version }}.tar.gz\n  sha256: 6c7184a8af080934252d55e63a0f83457e2b8d59b3b8bb9ad62a21dea82f16cd\n  patches:\n    - patches/0001-Fixup-copyright-symbol.patch\n    - patches/0002-Fixup-uint32-uint32_t.patch\n    - patches/0003-Avoid-warning-about-unsigned-char-char-conversion.patch\n    - patches/0004-Avoid-uint16-warnings-by-using-uint16_t.patch\n    - patches/0005-Deifne-c2pstr-for-mac-aarch64-as-well.patch  # [osx and arm64]\n\nbuild:\n  number: 5\n  run_exports:\n    - {{ pin_subpackage('libpano13', max_pin='x.x.x') }}\n\nrequirements:\n  build:\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake  # [win]\n    - ninja  # [win]\n    - make   # [not win]\n  host:\n    - perl\n    - libpng\n    - libjpeg-turbo\n    - libtiff\n    - zlib\n    - openjdk\n    # hmaarrfk 2020/05/24:\n    # GTK3 is an optional dependency, for now lets not build with it.\n    # - gtk3\n\ntest:\n  commands:\n    - test -f ${PREFIX}/include/pano13/version.h   # [unix]\n    - test -f ${PREFIX}/lib/libpano13${SHLIB_EXT}  # [unix]\n    - if not exist %LIBRARY_INC%\\\\pano13\\\\version.h exit 1  # [win]\n    - if not exist %LIBRARY_BIN%\\\\pano13.dll exit 1         # [win]\n    - PTinfo -h\n    # Opens a GUI on Windows and waits for user to close it, exits with -1\n    # anyway :-|\n    - panoinfo -help  # [not win]\n    - if not exist %LIBRARY_BIN%\\\\panoinfo.exe exit 1  # [win]\n\nabout:\n  home: http://panotools.sourceforge.net/\n\n  license: GPL-2.0-only\n  license_family: GPL\n  license_file: COPYING\n  summary: Panorama Tools\n\n  description: |\n    This is the pano13 library, part of the Panorama Tools by Helmut\n    Dersch of the University of Applied Sciences Furtwangen.\n\n    Also included with the library are\n    PToptimizer  a command-line tool for optimizing control points.\n    PTmender     a command-line tool for reprojecting images.\n\nextra:\n  recipe-maintainers:\n    - hmaarrfk\n",
+ "raw_meta_yaml": "{% set version = \"2.9.20\" %}\n{% set rc_version = \"rc2\" %}\n\npackage:\n  name: libpano13\n  version: {{ version }}{{ rc_version }}\n\nsource:\n  url: https://master.dl.sourceforge.net/project/panotools/libpano13/libpano13-{{ version }}/libpano13-{{ version }}_{{ rc_version }}.tar.gz\n  sha256: 6c7184a8af080934252d55e63a0f83457e2b8d59b3b8bb9ad62a21dea82f16cd\n  patches:\n    - patches/0001-Fixup-copyright-symbol.patch\n    - patches/0002-Fixup-uint32-uint32_t.patch\n    - patches/0003-Avoid-warning-about-unsigned-char-char-conversion.patch\n    - patches/0004-Avoid-uint16-warnings-by-using-uint16_t.patch\n    - patches/0005-Deifne-c2pstr-for-mac-aarch64-as-well.patch  # [osx and arm64]\n\nbuild:\n  number: 6\n  run_exports:\n    - {{ pin_subpackage('libpano13', max_pin='x.x.x') }}\n\nrequirements:\n  build:\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake  # [win]\n    - ninja  # [win]\n    - make   # [not win]\n  host:\n    - perl\n    - libpng\n    - libjpeg-turbo\n    - libtiff\n    - zlib\n    - openjdk\n    # hmaarrfk 2020/05/24:\n    # GTK3 is an optional dependency, for now lets not build with it.\n    # - gtk3\n\ntest:\n  commands:\n    - test -f ${PREFIX}/include/pano13/version.h   # [unix]\n    - test -f ${PREFIX}/lib/libpano13${SHLIB_EXT}  # [unix]\n    - if not exist %LIBRARY_INC%\\\\pano13\\\\version.h exit 1  # [win]\n    - if not exist %LIBRARY_BIN%\\\\pano13.dll exit 1         # [win]\n    - PTinfo -h\n    # Opens a GUI on Windows and waits for user to close it, exits with -1\n    # anyway :-|\n    - panoinfo -help  # [not win]\n    - if not exist %LIBRARY_BIN%\\\\panoinfo.exe exit 1  # [win]\n\nabout:\n  home: http://panotools.sourceforge.net/\n\n  license: GPL-2.0-only\n  license_family: GPL\n  license_file: COPYING\n  summary: Panorama Tools\n\n  description: |\n    This is the pano13 library, part of the Panorama Tools by Helmut\n    Dersch of the University of Applied Sciences Furtwangen.\n\n    Also included with the library are\n    PToptimizer  a command-line tool for optimizing control points.\n    PTmender     a command-line tool for reprojecting images.\n\nextra:\n  recipe-maintainers:\n    - hmaarrfk\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -516,7 +516,7 @@
    "summary": "Panorama Tools"
   },
   "build": {
-   "number": "5",
+   "number": "6",
    "run_exports": [
     "libpano13"
    ]
