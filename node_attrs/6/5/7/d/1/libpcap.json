@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  },
   "provider": {
    "linux_aarch64": "default",
    "linux_ppc64le": "default",
@@ -264,11 +267,14 @@
     "libpcap",
     "libpcap",
     "libpcap",
+    "libpcap",
     "libpcap"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "nehaljwani",
+    "seanyen",
     "nehaljwani",
     "seanyen",
     "nehaljwani",
@@ -316,6 +322,13 @@
     "make",
     "pkg-config",
     "c_compiler_stub",
+    "autoconf",
+    "flex",
+    "bison",
+    "m4",
+    "make",
+    "pkg-config",
+    "c_compiler_stub",
     "cmake",
     "ninja",
     "winflexbison"
@@ -331,6 +344,7 @@
     "fixopenssl3.patch",
     "fixopenssl3.patch",
     "fixopenssl3.patch",
+    "fixopenssl3.patch",
     "fix-install.patch",
     "fixopenssl3.patch"
    ],
@@ -339,6 +353,8 @@
   },
   "test": {
    "commands": [
+    "test -f $PREFIX/lib/libpcap${SHLIB_EXT}",
+    "test -f $PREFIX/include/pcap.h",
     "test -f $PREFIX/lib/libpcap${SHLIB_EXT}",
     "test -f $PREFIX/include/pcap.h",
     "test -f $PREFIX/lib/libpcap${SHLIB_EXT}",
@@ -433,6 +449,85 @@
    "elements": []
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "dev_url": "https://github.com/the-tcpdump-group/libpcap",
+   "doc_url": "http://www.tcpdump.org/#documentation",
+   "home": "www.tcpdump.org",
+   "license": "BSD-3-Clause",
+   "license_family": "BSD",
+   "license_file": "LICENSE",
+   "summary": "the LIBpcap interface to various kernel packet capture mechanism"
+  },
+  "build": {
+   "number": "1",
+   "run_exports": [
+    "libpcap"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "nehaljwani",
+    "seanyen"
+   ]
+  },
+  "package": {
+   "name": "libpcap",
+   "version": "1.10.4"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "autoconf",
+    "flex",
+    "bison",
+    "m4",
+    "make",
+    "pkg-config"
+   ],
+   "host": []
+  },
+  "source": {
+   "fn": "libpcap-1.10.4.tar.gz",
+   "patches": [
+    "fixopenssl3.patch"
+   ],
+   "sha256": "ed19a0383fad72e3ad435fd239d7cd80d64916b87269550159d20e47160ebe5f",
+   "url": "http://www.tcpdump.org/release/libpcap-1.10.4.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f $PREFIX/lib/libpcap${SHLIB_EXT}",
+    "test -f $PREFIX/include/pcap.h"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "autoconf",
+    "bison",
+    "c_compiler_stub",
+    "flex",
+    "m4",
+    "make",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -445,6 +540,7 @@
   "linux_aarch64",
   "linux_ppc64le",
   "osx_64",
+  "osx_arm64",
   "win_64"
  ],
  "pr_info": {
