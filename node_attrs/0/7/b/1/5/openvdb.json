@@ -14,8 +14,9 @@
    "summary": "OpenVDB - Sparse volume data structure and tools"
   },
   "build": {
-   "number": "4",
+   "number": "5",
    "run_exports": [
+    "openvdb",
     "openvdb",
     "openvdb",
     "openvdb",
@@ -24,6 +25,8 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "versatran01",
+    "tetov",
     "versatran01",
     "tetov",
     "versatran01",
@@ -40,6 +43,9 @@
   },
   "requirements": {
    "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
     "cxx_compiler_stub",
     "cmake",
     "make",
@@ -85,9 +91,20 @@
     "numpy",
     "python",
     "tbb-devel",
+    "zlib",
+    "blosc",
+    "boost",
+    "boost-cpp",
+    "jemalloc",
+    "numpy",
+    "python",
+    "tbb-devel",
     "zlib"
    ],
    "run": [
+    "boost",
+    "boost-cpp",
+    "python",
     "boost",
     "boost-cpp",
     "python",
@@ -103,11 +120,25 @@
    ]
   },
   "source": {
+   "patches": [
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch"
+   ],
    "sha256": "887a3391fbd96b20c77914f4fb3ab4b33d26e5fc479aa036d395def5523c622f",
    "url": "https://github.com/AcademySoftwareFoundation/openvdb/archive/refs/tags/v10.0.1.tar.gz"
   },
   "test": {
    "commands": [
+    "test -f ${PREFIX}/bin/vdb_print",
+    "test -f ${PREFIX}/include/openvdb/openvdb.h",
+    "test -f ${PREFIX}/lib/cmake/OpenVDB/FindOpenVDB.cmake",
+    "test -f ${PREFIX}/lib/libopenvdb.so.10.0.1",
+    "test -f ${PREFIX}/lib/libopenvdb.so",
+    "vdb_print --help",
+    "python -c \"import pyopenvdb; import numpy; grid = pyopenvdb.FloatGrid(); grid.copyFromArray(numpy.random.rand(200, 200, 200))\"",
     "test -f ${PREFIX}/bin/vdb_print",
     "test -f ${PREFIX}/include/openvdb/openvdb.h",
     "test -f ${PREFIX}/lib/cmake/OpenVDB/FindOpenVDB.cmake",
@@ -141,9 +172,11 @@
     "pyopenvdb",
     "pyopenvdb",
     "pyopenvdb",
+    "pyopenvdb",
     "pyopenvdb"
    ],
    "requires": [
+    "numpy",
     "numpy",
     "numpy",
     "numpy",
@@ -198,8 +231,10 @@
    "summary": "OpenVDB - Sparse volume data structure and tools"
   },
   "build": {
-   "number": "4",
+   "number": "5",
    "run_exports": [
+    "openvdb",
+    "openvdb",
     "openvdb",
     "openvdb",
     "openvdb",
@@ -212,6 +247,10 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "versatran01",
+    "tetov",
+    "versatran01",
+    "tetov",
     "versatran01",
     "tetov",
     "versatran01",
@@ -250,6 +289,11 @@
     "make",
     "cxx_compiler_stub",
     "cmake",
+    "make",
+    "cxx_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "cmake",
     "cxx_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
@@ -286,6 +330,21 @@
     "boost",
     "boost-cpp",
     "jemalloc",
+    "numpy",
+    "python",
+    "tbb-devel",
+    "zlib",
+    "blosc",
+    "boost",
+    "boost-cpp",
+    "jemalloc",
+    "numpy",
+    "python",
+    "tbb-devel",
+    "zlib",
+    "blosc",
+    "boost",
+    "boost-cpp",
     "numpy",
     "python",
     "tbb-devel",
@@ -343,10 +402,28 @@
     "python",
     "boost",
     "boost-cpp",
+    "python",
+    "boost",
+    "boost-cpp",
+    "python",
+    "boost",
+    "boost-cpp",
     "python"
    ]
   },
   "source": {
+   "patches": [
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch"
+   ],
    "sha256": "887a3391fbd96b20c77914f4fb3ab4b33d26e5fc479aa036d395def5523c622f",
    "url": "https://github.com/AcademySoftwareFoundation/openvdb/archive/refs/tags/v10.0.1.tar.gz"
   },
@@ -378,6 +455,20 @@
     "test -f ${PREFIX}/lib/cmake/OpenVDB/FindOpenVDB.cmake",
     "test -f ${PREFIX}/lib/libopenvdb.so.10.0.1",
     "test -f ${PREFIX}/lib/libopenvdb.so",
+    "vdb_print --help",
+    "python -c \"import pyopenvdb; import numpy; grid = pyopenvdb.FloatGrid(); grid.copyFromArray(numpy.random.rand(200, 200, 200))\"",
+    "test -f ${PREFIX}/bin/vdb_print",
+    "test -f ${PREFIX}/include/openvdb/openvdb.h",
+    "test -f ${PREFIX}/lib/cmake/OpenVDB/FindOpenVDB.cmake",
+    "test -f ${PREFIX}/lib/libopenvdb.so.10.0.1",
+    "test -f ${PREFIX}/lib/libopenvdb.so",
+    "vdb_print --help",
+    "python -c \"import pyopenvdb; import numpy; grid = pyopenvdb.FloatGrid(); grid.copyFromArray(numpy.random.rand(200, 200, 200))\"",
+    "if not exist %LIBRARY_BIN%\\openvdb%SHLIB_EXT% exit 1",
+    "if not exist %LIBRARY_BIN%\\vdb_print.exe exit 1",
+    "if not exist %LIBRARY_LIB%\\openvdb.lib exit 1",
+    "if not exist %LIBRARY_INC%\\openvdb\\openvdb.h exit 1",
+    "if not exist %LIBRARY_LIB%\\cmake\\OpenVDB\\FindOpenVDB.cmake exit 1",
     "vdb_print --help",
     "python -c \"import pyopenvdb; import numpy; grid = pyopenvdb.FloatGrid(); grid.copyFromArray(numpy.random.rand(200, 200, 200))\"",
     "if not exist %LIBRARY_BIN%\\openvdb%SHLIB_EXT% exit 1",
@@ -417,9 +508,13 @@
     "pyopenvdb",
     "pyopenvdb",
     "pyopenvdb",
+    "pyopenvdb",
+    "pyopenvdb",
     "pyopenvdb"
    ],
    "requires": [
+    "numpy",
+    "numpy",
     "numpy",
     "numpy",
     "numpy",
@@ -446,7 +541,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/openvdb.json"
  },
- "raw_meta_yaml": "{% set version = \"10.0.1\" %}\n\npackage:\n  name: openvdb\n  version: {{ version }}\n\nsource:\n  url: https://github.com/AcademySoftwareFoundation/openvdb/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 887a3391fbd96b20c77914f4fb3ab4b33d26e5fc479aa036d395def5523c622f\n\nbuild:\n  number: 4\n  skip: true  # [osx]\n  run_exports:\n    - {{ pin_subpackage('openvdb', max_pin='x') }}\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - make  # [unix]\n\n  host:\n    - blosc  \n    - boost\n    - boost-cpp  \n    - jemalloc  # [unix]\n    - numpy\n    - python\n    - tbb-devel\n    - zlib \n\n  run:\n    - boost\n    - boost-cpp\n    - python\n\ntest:\n  requires:\n    - numpy\n\n  commands:\n    - test -f ${PREFIX}/bin/vdb_print  # [unix]\n    - test -f ${PREFIX}/include/openvdb/openvdb.h  # [unix]\n    - test -f ${PREFIX}/lib/cmake/OpenVDB/FindOpenVDB.cmake  # [unix]\n    - test -f ${PREFIX}/lib/libopenvdb.so.{{ version }}  # [unix]\n    - test -f ${PREFIX}/lib/libopenvdb.so  # [unix]\n    - if not exist %LIBRARY_BIN%\\openvdb%SHLIB_EXT% exit 1  # [win]\n    - if not exist %LIBRARY_BIN%\\vdb_print.exe exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\openvdb.lib exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\openvdb\\openvdb.h exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\OpenVDB\\FindOpenVDB.cmake exit 1  # [win]\n    - vdb_print --help\n    # test numpy support\n    - python -c \"import pyopenvdb; import numpy; grid = pyopenvdb.FloatGrid(); grid.copyFromArray(numpy.random.rand(200, 200, 200))\"\n  imports:\n    - pyopenvdb\n\nabout:\n  home: https://github.com/AcademySoftwareFoundation/openvdb\n  summary: 'OpenVDB - Sparse volume data structure and tools'\n  description: |\n    OpenVDB is an open source C++ library comprising a novel hierarchical data structure and a large suite of tools for the efficient storage and manipulation of sparse volumetric data discretized on three-dimensional grids. It was developed by DreamWorks Animation for use in volumetric applications typically encountered in feature film production.\n  license: MPL-2.0\n  license_file: LICENSE\n  dev_url: https://github.com/AcademySoftwareFoundation/openvdb\n\nextra:\n  recipe-maintainers:\n    - versatran01\n    - tetov\n",
+ "raw_meta_yaml": "{% set version = \"10.0.1\" %}\n\npackage:\n  name: openvdb\n  version: {{ version }}\n\nsource:\n  url: https://github.com/AcademySoftwareFoundation/openvdb/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 887a3391fbd96b20c77914f4fb3ab4b33d26e5fc479aa036d395def5523c622f\n  patches:\n    - 0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch\n\nbuild:\n  number: 5\n  skip: true  # [osx]\n  run_exports:\n    - {{ pin_subpackage('openvdb', max_pin='x') }}\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - make  # [unix]\n\n  host:\n    - blosc  \n    - boost\n    - boost-cpp  \n    - jemalloc  # [unix]\n    - numpy\n    - python\n    - tbb-devel\n    - zlib \n\n  run:\n    - boost\n    - boost-cpp\n    - python\n\ntest:\n  requires:\n    - numpy\n\n  commands:\n    - test -f ${PREFIX}/bin/vdb_print  # [unix]\n    - test -f ${PREFIX}/include/openvdb/openvdb.h  # [unix]\n    - test -f ${PREFIX}/lib/cmake/OpenVDB/FindOpenVDB.cmake  # [unix]\n    - test -f ${PREFIX}/lib/libopenvdb.so.{{ version }}  # [unix]\n    - test -f ${PREFIX}/lib/libopenvdb.so  # [unix]\n    - if not exist %LIBRARY_BIN%\\openvdb%SHLIB_EXT% exit 1  # [win]\n    - if not exist %LIBRARY_BIN%\\vdb_print.exe exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\openvdb.lib exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\openvdb\\openvdb.h exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\OpenVDB\\FindOpenVDB.cmake exit 1  # [win]\n    - vdb_print --help\n    # test numpy support\n    - python -c \"import pyopenvdb; import numpy; grid = pyopenvdb.FloatGrid(); grid.copyFromArray(numpy.random.rand(200, 200, 200))\"\n  imports:\n    - pyopenvdb\n\nabout:\n  home: https://github.com/AcademySoftwareFoundation/openvdb\n  summary: 'OpenVDB - Sparse volume data structure and tools'\n  description: |\n    OpenVDB is an open source C++ library comprising a novel hierarchical data structure and a large suite of tools for the efficient storage and manipulation of sparse volumetric data discretized on three-dimensional grids. It was developed by DreamWorks Animation for use in volumetric applications typically encountered in feature film production.\n  license: MPL-2.0\n  license_file: LICENSE\n  dev_url: https://github.com/AcademySoftwareFoundation/openvdb\n\nextra:\n  recipe-maintainers:\n    - versatran01\n    - tetov\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -555,8 +650,9 @@
    "summary": "OpenVDB - Sparse volume data structure and tools"
   },
   "build": {
-   "number": "4",
+   "number": "5",
    "run_exports": [
+    "openvdb",
     "openvdb",
     "openvdb",
     "openvdb",
@@ -565,6 +661,8 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "versatran01",
+    "tetov",
     "versatran01",
     "tetov",
     "versatran01",
@@ -588,9 +686,18 @@
     "cxx_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
     "cmake"
    ],
    "host": [
+    "blosc",
+    "boost",
+    "boost-cpp",
+    "numpy",
+    "python",
+    "tbb-devel",
+    "zlib",
     "blosc",
     "boost",
     "boost-cpp",
@@ -632,15 +739,32 @@
     "python",
     "boost",
     "boost-cpp",
+    "python",
+    "boost",
+    "boost-cpp",
     "python"
    ]
   },
   "source": {
+   "patches": [
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch",
+    "0001-Use-Python-SOABI-in-pyopenvdb-dll-filename.patch"
+   ],
    "sha256": "887a3391fbd96b20c77914f4fb3ab4b33d26e5fc479aa036d395def5523c622f",
    "url": "https://github.com/AcademySoftwareFoundation/openvdb/archive/refs/tags/v10.0.1.tar.gz"
   },
   "test": {
    "commands": [
+    "if not exist %LIBRARY_BIN%\\openvdb%SHLIB_EXT% exit 1",
+    "if not exist %LIBRARY_BIN%\\vdb_print.exe exit 1",
+    "if not exist %LIBRARY_LIB%\\openvdb.lib exit 1",
+    "if not exist %LIBRARY_INC%\\openvdb\\openvdb.h exit 1",
+    "if not exist %LIBRARY_LIB%\\cmake\\OpenVDB\\FindOpenVDB.cmake exit 1",
+    "vdb_print --help",
+    "python -c \"import pyopenvdb; import numpy; grid = pyopenvdb.FloatGrid(); grid.copyFromArray(numpy.random.rand(200, 200, 200))\"",
     "if not exist %LIBRARY_BIN%\\openvdb%SHLIB_EXT% exit 1",
     "if not exist %LIBRARY_BIN%\\vdb_print.exe exit 1",
     "if not exist %LIBRARY_LIB%\\openvdb.lib exit 1",
@@ -674,9 +798,11 @@
     "pyopenvdb",
     "pyopenvdb",
     "pyopenvdb",
+    "pyopenvdb",
     "pyopenvdb"
    ],
    "requires": [
+    "numpy",
     "numpy",
     "numpy",
     "numpy",

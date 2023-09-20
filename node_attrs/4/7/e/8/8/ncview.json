@@ -1,7 +1,11 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  }
+ },
  "feedstock_name": "ncview",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -113,6 +117,9 @@
     "xylar",
     "zklaus",
     "ocefpaf",
+    "xylar",
+    "zklaus",
+    "ocefpaf",
     "xylar"
    ]
   },
@@ -122,6 +129,8 @@
   },
   "requirements": {
    "build": [
+    "c_compiler_stub",
+    "make",
     "c_compiler_stub",
     "make",
     "c_compiler_stub",
@@ -141,15 +150,25 @@
     "udunits2",
     "xorg-libxaw",
     "xorg-libxt",
+    "xorg-libx11",
+    "libnetcdf",
+    "libpng",
+    "udunits2",
+    "xorg-libxaw",
+    "xorg-libxt",
     "xorg-libx11"
    ],
    "run": [
+    "xorg-libxaw",
     "xorg-libxaw",
     "xorg-libxaw"
    ]
   },
   "source": {
    "patches": [
+    "0001-remove-same-compiler-test.patch",
+    "remove-explicit-expat-linking.patch",
+    "0000-change_pnglib_suffix.patch",
     "0001-remove-same-compiler-test.patch",
     "remove-explicit-expat-linking.patch",
     "0000-change_pnglib_suffix.patch",
@@ -161,6 +180,9 @@
   },
   "test": {
    "commands": [
+    "test -f $PREFIX/bin/ncview",
+    "test -x $PREFIX/bin/ncview",
+    "ncview -c 2>&1 |egrep \"Error: Can't open display:\"",
     "test -f $PREFIX/bin/ncview",
     "test -x $PREFIX/bin/ncview",
     "ncview -c 2>&1 |egrep \"Error: Can't open display:\"",
@@ -258,6 +280,93 @@
    "elements": []
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "Ncview is a visual browser for netCDF format files. Typically you\nwould use ncview to get a quick and easy, push-button look at your\nnetCDF files. You can view simple movies of the data, view along\nvarious dimensions, take a look at the actual data values, change\ncolor maps, invert the data, etc.\n",
+   "home": "http://meteora.ucsd.edu/~pierce/ncview_home_page.html",
+   "license": "GPL-3.0-only",
+   "license_family": "GPL",
+   "license_file": "COPYING",
+   "summary": "Visual browser for netCDF format files"
+  },
+  "build": {
+   "number": "11"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "zklaus",
+    "ocefpaf",
+    "xylar"
+   ]
+  },
+  "package": {
+   "name": "ncview",
+   "version": "2.1.8"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "make"
+   ],
+   "host": [
+    "libnetcdf",
+    "libpng",
+    "udunits2",
+    "xorg-libxaw",
+    "xorg-libxt",
+    "xorg-libx11"
+   ],
+   "run": [
+    "xorg-libxaw"
+   ]
+  },
+  "source": {
+   "patches": [
+    "0000-change_pnglib_suffix.patch",
+    "0001-remove-same-compiler-test.patch",
+    "remove-explicit-expat-linking.patch"
+   ],
+   "sha256": "e8badc507b9b774801288d1c2d59eb79ab31b004df4858d0674ed0d87dfc91be",
+   "url": "ftp://cirrus.ucsd.edu/pub/ncview/ncview-2.1.8.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f $PREFIX/bin/ncview",
+    "test -x $PREFIX/bin/ncview",
+    "ncview -c 2>&1 |egrep \"Error: Can't open display:\""
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "libnetcdf",
+    "libpng",
+    "udunits2",
+    "xorg-libx11",
+    "xorg-libxaw",
+    "xorg-libxt"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "xorg-libxaw"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -267,7 +376,8 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
-  "osx_64"
+  "osx_64",
+  "osx_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/ncview.json"
