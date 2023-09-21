@@ -16,7 +16,13 @@
    "summary": "A PyTorch repo for data loading and utilities to be shared by the PyTorch domain libraries."
   },
   "build": {
-   "number": "0",
+   "ignore_run_exports_from": [
+    "zlib",
+    "zlib",
+    "zlib",
+    "zlib"
+   ],
+   "number": "1",
    "script": [
     "export BUILD_S3=TRUE",
     "export CMAKE_GENERATOR=\"Ninja\"",
@@ -77,21 +83,25 @@
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
-    "pytorch"
+    "pytorch",
+    "zlib"
    ],
    "run": [
     "python",
@@ -203,7 +213,8 @@
     "pip",
     "pybind11",
     "python",
-    "pytorch"
+    "pytorch",
+    "zlib"
    ]
   },
   "run": {
@@ -239,7 +250,17 @@
    "summary": "A PyTorch repo for data loading and utilities to be shared by the PyTorch domain libraries."
   },
   "build": {
-   "number": "0",
+   "ignore_run_exports_from": [
+    "zlib",
+    "zlib",
+    "zlib",
+    "zlib",
+    "zlib",
+    "zlib",
+    "zlib",
+    "zlib"
+   ],
+   "number": "1",
    "script": [
     "export BUILD_S3=TRUE",
     "export CMAKE_GENERATOR=\"Ninja\"",
@@ -340,41 +361,49 @@
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
-    "pytorch"
+    "pytorch",
+    "zlib"
    ],
    "run": [
     "python",
@@ -555,7 +584,13 @@
    "summary": "A PyTorch repo for data loading and utilities to be shared by the PyTorch domain libraries."
   },
   "build": {
-   "number": "0",
+   "ignore_run_exports_from": [
+    "zlib",
+    "zlib",
+    "zlib",
+    "zlib"
+   ],
+   "number": "1",
    "script": [
     "export BUILD_S3=TRUE",
     "export CMAKE_GENERATOR=\"Ninja\"",
@@ -616,21 +651,25 @@
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
     "pytorch",
+    "zlib",
     "pip",
     "python",
     "pybind11",
     "aws-sdk-cpp",
-    "pytorch"
+    "pytorch",
+    "zlib"
    ],
    "run": [
     "python",
@@ -742,7 +781,8 @@
     "pip",
     "pybind11",
     "python",
-    "pytorch"
+    "pytorch",
+    "zlib"
    ]
   },
   "run": {
@@ -784,7 +824,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/torchdata.json"
  },
- "raw_meta_yaml": "{% set version = \"0.6.1\" %}\n\npackage:\n  name: torchdata\n  version: {{ version }}\n\nsource:\n  url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: c596db251c5e6550db3f00e4308ee7112585cca4d6a1c82a433478fd86693257\n\nbuild:\n  number: 0\n  # no pytorch on windows in conda-forge, see\n  # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32\n  skip: true  # [win]\n  script:\n    - export BUILD_S3=TRUE\n    - export CMAKE_GENERATOR=\"Ninja\"\n    - export USE_SYSTEM_LIBS=TRUE\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n  host:\n    - pip\n    - python\n    - pybind11\n    - aws-sdk-cpp\n    - pytorch\n  run:\n    - python\n    - requests\n    - urllib3 >=1.25\n    - pytorch\n\ntest:\n  imports:\n    - torchdata\n  requires:\n    - pip\n    - pytest\n    - adlfs\n    - awscli\n    - datasets\n    - expecttest\n    - fsspec\n    - numpy *\n    - portalocker >=2.0.0\n    - s3fs\n  source_files:\n    - test/\n  commands:\n    - pip check\n    - cd test\n    {% set tests_to_skip = \"_not_a_real_test\" %}\n    # flaky tests\n    {% set tests_to_skip = tests_to_skip + \" or test_fsspec_memory_list\" %}\n    {% set tests_to_skip = tests_to_skip + \" or test_elastic_training_dl1_backend_gloo\" %}\n    {% set tests_to_skip = tests_to_skip + \" or test_elastic_training_dl2_backend_gloo\" %}\n    # tend to fail due to Google Drive rate-limiting\n    {% set tests_to_skip = tests_to_skip + \" or test_gdrive_iterdatapipe\" %}\n    {% set tests_to_skip = tests_to_skip + \" or test_online_iterdatapipe\" %}\n    # unclear this fails only on py<=39\n    {% set tests_to_skip = tests_to_skip + \" or test_fsspec_io_iterdatapipe\" %}  # [py<=39]\n    # test_audio_examples uses an uninstalled local folder (\"examples\");\n    # avoid test_text_examples due to cycle since torchtext depends on torchdata\n    - pytest -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k \"not ({{ tests_to_skip }})\"\n\nabout:\n  home: https://github.com/pytorch/data\n  summary: A PyTorch repo for data loading and utilities to be shared by the PyTorch domain libraries.\n  license: BSD-3-Clause\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - BastianZim\n    - Tobias-Fischer\n    - h-vetinari\n",
+ "raw_meta_yaml": "{% set version = \"0.6.1\" %}\n\npackage:\n  name: torchdata\n  version: {{ version }}\n\nsource:\n  url: https://github.com/pytorch/data/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: c596db251c5e6550db3f00e4308ee7112585cca4d6a1c82a433478fd86693257\n\nbuild:\n  number: 1\n  # no pytorch on windows in conda-forge, see\n  # https://github.com/conda-forge/pytorch-cpu-feedstock/issues/32\n  skip: true  # [win]\n  ignore_run_exports_from:\n    # CMake really wants to find it, but we don't need it\n    - zlib\n  script:\n    - export BUILD_S3=TRUE\n    - export CMAKE_GENERATOR=\"Ninja\"\n    - export USE_SYSTEM_LIBS=TRUE\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n  host:\n    - pip\n    - python\n    - pybind11\n    - aws-sdk-cpp\n    - pytorch\n    - zlib\n  run:\n    - python\n    - requests\n    - urllib3 >=1.25\n    - pytorch\n\ntest:\n  imports:\n    - torchdata\n  requires:\n    - pip\n    - pytest\n    - adlfs\n    - awscli\n    - datasets\n    - expecttest\n    - fsspec\n    - numpy *\n    - portalocker >=2.0.0\n    - s3fs\n  source_files:\n    - test/\n  commands:\n    - pip check\n    - cd test\n    {% set tests_to_skip = \"_not_a_real_test\" %}\n    # flaky tests\n    {% set tests_to_skip = tests_to_skip + \" or test_fsspec_memory_list\" %}\n    {% set tests_to_skip = tests_to_skip + \" or test_elastic_training_dl1_backend_gloo\" %}\n    {% set tests_to_skip = tests_to_skip + \" or test_elastic_training_dl2_backend_gloo\" %}\n    # tend to fail due to Google Drive rate-limiting\n    {% set tests_to_skip = tests_to_skip + \" or test_gdrive_iterdatapipe\" %}\n    {% set tests_to_skip = tests_to_skip + \" or test_online_iterdatapipe\" %}\n    # unclear this fails only on py<=39\n    {% set tests_to_skip = tests_to_skip + \" or test_fsspec_io_iterdatapipe\" %}  # [py<=39]\n    # test_audio_examples uses an uninstalled local folder (\"examples\");\n    # avoid test_text_examples due to cycle since torchtext depends on torchdata\n    - pytest -v --ignore=test_audio_examples.py --ignore=test_text_examples.py -k \"not ({{ tests_to_skip }})\"\n\nabout:\n  home: https://github.com/pytorch/data\n  summary: A PyTorch repo for data loading and utilities to be shared by the PyTorch domain libraries.\n  license: BSD-3-Clause\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - BastianZim\n    - Tobias-Fischer\n    - h-vetinari\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -797,7 +837,8 @@
    "python",
    "pytorch",
    "requests",
-   "urllib3"
+   "urllib3",
+   "zlib"
   ]
  },
  "requirements": {
@@ -817,7 +858,8 @@
     "pip",
     "pybind11",
     "python",
-    "pytorch"
+    "pytorch",
+    "zlib"
    ]
   },
   "run": {
@@ -863,7 +905,8 @@
     "pip",
     "pybind11",
     "python",
-    "pytorch"
+    "pytorch",
+    "zlib"
    ]
   },
   "run": {
