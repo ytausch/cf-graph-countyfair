@@ -20,7 +20,7 @@
    "summary": "Data server for TensorBoard"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script_env": null
   },
   "extra": {
@@ -139,7 +139,7 @@
    "summary": "Data server for TensorBoard"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script_env": null
   },
   "extra": {
@@ -258,7 +258,7 @@
    "summary": "Data server for TensorBoard"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script_env": [
     "WHEELNAME=tensorboard_data_server-0.7.0-py3-none-any.whl",
     "WHEELNAME=tensorboard_data_server-0.7.0-py3-none-any.whl",
@@ -325,6 +325,8 @@
     "mdraw",
     "ngam",
     "mdraw",
+    "ngam",
+    "mdraw",
     "ngam"
    ]
   },
@@ -334,6 +336,8 @@
   },
   "requirements": {
    "build": [
+    "c_compiler_stub",
+    "rust_compiler_stub",
     "c_compiler_stub",
     "rust_compiler_stub",
     "c_compiler_stub",
@@ -448,6 +452,9 @@
     "openssl",
     "python",
     "pip",
+    "openssl",
+    "python",
+    "pip",
     "python",
     "pip",
     "python",
@@ -460,6 +467,7 @@
     "pip"
    ],
    "run": [
+    "python",
     "python",
     "python",
     "python",
@@ -531,6 +539,7 @@
     "tensorboard_data_server",
     "tensorboard_data_server",
     "tensorboard_data_server",
+    "tensorboard_data_server",
     "tensorboard_data_server"
    ]
   }
@@ -545,7 +554,7 @@
    "summary": "Data server for TensorBoard"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script_env": null
   },
   "extra": {
@@ -664,11 +673,13 @@
    "summary": "Data server for TensorBoard"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script_env": null
   },
   "extra": {
    "recipe-maintainers": [
+    "mdraw",
+    "ngam",
     "mdraw",
     "ngam",
     "mdraw",
@@ -692,9 +703,14 @@
     "c_compiler_stub",
     "rust_compiler_stub",
     "c_compiler_stub",
+    "rust_compiler_stub",
+    "c_compiler_stub",
     "rust_compiler_stub"
    ],
    "host": [
+    "python",
+    "pip",
+    "openssl",
     "python",
     "pip",
     "openssl",
@@ -712,11 +728,13 @@
     "python",
     "python",
     "python",
+    "python",
     "python"
    ]
   },
   "source": {
    "patches": [
+    "0002-do-not-use-platform-tag.patch",
     "0002-do-not-use-platform-tag.patch",
     "0002-do-not-use-platform-tag.patch",
     "0002-do-not-use-platform-tag.patch",
@@ -727,6 +745,7 @@
   },
   "test": {
    "imports": [
+    "tensorboard_data_server",
     "tensorboard_data_server",
     "tensorboard_data_server",
     "tensorboard_data_server",
@@ -778,7 +797,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/tensorboard-data-server.json"
  },
- "raw_meta_yaml": "{% set name = \"tensorboard-data-server\" %}\n{% set version = \"0.7.0\" %}\n{% set _name = \"tensorboard_data_server\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:  \n  url: https://github.com/tensorflow/tensorboard/archive/refs/tags/data-server-v{{ version }}.tar.gz\n  sha256: 47f0b4edf434cedea351f60ad7ebe63b575cfd103fa19555b404e0e108c364cd\n  patches:\n    - 0001-Do-not-try-to-remove-tmpdir-on-Windows.patch  # [win]\n    - 0002-do-not-use-platform-tag.patch  # [osx and arm64]\n\n# Windows is currently unsupported, so we build an universal dummy wheel instead for Windows\n# See https://github.com/tensorflow/tensorboard/blob/348af4c/tensorboard/data/server/pip_package/build.py#L78-L86\nbuild:\n  script_env:\n    - WHEELNAME={{ _name }}-{{ version }}-py3-none-any.whl  # [win]\n  number: 0\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('c') }}  # [not win]\n    - {{ compiler('rust') }}  # [not win]\n  host:\n    - python\n    - pip\n    - openssl  # [not win]\n  run:\n    - python\n\ntest:\n  imports:\n    - tensorboard_data_server\n\nabout:\n  home: https://github.com/tensorflow/tensorboard\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: 'Data server for TensorBoard'\n  dev_url: https://github.com/tensorflow/tensorboard/tree/master/tensorboard/data/server\n\nextra:\n  recipe-maintainers:\n    - mdraw\n    - ngam\n",
+ "raw_meta_yaml": "{% set name = \"tensorboard-data-server\" %}\n{% set version = \"0.7.0\" %}\n{% set _name = \"tensorboard_data_server\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:  \n  url: https://github.com/tensorflow/tensorboard/archive/refs/tags/data-server-v{{ version }}.tar.gz\n  sha256: 47f0b4edf434cedea351f60ad7ebe63b575cfd103fa19555b404e0e108c364cd\n  patches:\n    - 0001-Do-not-try-to-remove-tmpdir-on-Windows.patch  # [win]\n    - 0002-do-not-use-platform-tag.patch  # [osx and arm64]\n\n# Windows is currently unsupported, so we build an universal dummy wheel instead for Windows\n# See https://github.com/tensorflow/tensorboard/blob/348af4c/tensorboard/data/server/pip_package/build.py#L78-L86\nbuild:\n  script_env:\n    - WHEELNAME={{ _name }}-{{ version }}-py3-none-any.whl  # [win]\n  number: 1\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('c') }}  # [not win]\n    - {{ compiler('rust') }}  # [not win]\n  host:\n    - python\n    - pip\n    - openssl  # [not win]\n  run:\n    - python\n\ntest:\n  imports:\n    - tensorboard_data_server\n\nabout:\n  home: https://github.com/tensorflow/tensorboard\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: 'Data server for TensorBoard'\n  dev_url: https://github.com/tensorflow/tensorboard/tree/master/tensorboard/data/server\n\nextra:\n  recipe-maintainers:\n    - mdraw\n    - ngam\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -860,7 +879,7 @@
    "summary": "Data server for TensorBoard"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script_env": [
     "WHEELNAME=tensorboard_data_server-0.7.0-py3-none-any.whl",
     "WHEELNAME=tensorboard_data_server-0.7.0-py3-none-any.whl",
