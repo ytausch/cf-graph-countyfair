@@ -33,7 +33,7 @@
     "gunicorn=gunicorn.app.wsgiapp:run",
     "gunicorn=gunicorn.app.wsgiapp:run"
    ],
-   "number": "0",
+   "number": "1",
    "preserve_egg_dir": true,
    "script": "PYTHON -m pip install . --no-deps -vv"
   },
@@ -211,7 +211,7 @@
     "gunicorn=gunicorn.app.wsgiapp:run",
     "gunicorn=gunicorn.app.wsgiapp:run"
    ],
-   "number": "0",
+   "number": "1",
    "preserve_egg_dir": true,
    "script": "PYTHON -m pip install . --no-deps -vv"
   },
@@ -389,7 +389,7 @@
     "gunicorn=gunicorn.app.wsgiapp:run",
     "gunicorn=gunicorn.app.wsgiapp:run"
    ],
-   "number": "0",
+   "number": "1",
    "preserve_egg_dir": true,
    "script": "PYTHON -m pip install . --no-deps -vv"
   },
@@ -587,14 +587,19 @@
     "gunicorn=gunicorn.app.wsgiapp:run",
     "gunicorn=gunicorn.app.wsgiapp:run",
     "gunicorn=gunicorn.app.wsgiapp:run",
+    "gunicorn=gunicorn.app.wsgiapp:run",
     "gunicorn=gunicorn.app.wsgiapp:run"
    ],
-   "number": "0",
+   "number": "1",
    "preserve_egg_dir": true,
    "script": "PYTHON -m pip install . --no-deps -vv"
   },
   "extra": {
    "recipe-maintainers": [
+    "kwilcox",
+    "daf",
+    "jakirkham",
+    "sodre",
     "kwilcox",
     "daf",
     "jakirkham",
@@ -771,9 +776,14 @@
     "python",
     "pip",
     "python",
+    "pip",
+    "python",
     "pip"
    ],
    "run": [
+    "python",
+    "setuptools >=3.0",
+    "packaging",
     "python",
     "setuptools >=3.0",
     "packaging",
@@ -893,9 +903,15 @@
     "gunicorn --help",
     "gunicorn --help",
     "gunicorn --help",
+    "gunicorn --help",
     "gunicorn --help"
    ],
    "imports": [
+    "gunicorn",
+    "gunicorn.app",
+    "gunicorn.http",
+    "gunicorn.instrument",
+    "gunicorn.workers",
     "gunicorn",
     "gunicorn.app",
     "gunicorn.http",
@@ -1093,6 +1109,8 @@
     "paste",
     "pastedeploy",
     "paste",
+    "pastedeploy",
+    "paste",
     "pastedeploy"
    ]
   }
@@ -1114,7 +1132,7 @@
     "gunicorn=gunicorn.app.wsgiapp:run",
     "gunicorn=gunicorn.app.wsgiapp:run"
    ],
-   "number": "0",
+   "number": "1",
    "preserve_egg_dir": true,
    "script": "PYTHON -m pip install . --no-deps -vv"
   },
@@ -1288,14 +1306,19 @@
     "gunicorn=gunicorn.app.wsgiapp:run",
     "gunicorn=gunicorn.app.wsgiapp:run",
     "gunicorn=gunicorn.app.wsgiapp:run",
+    "gunicorn=gunicorn.app.wsgiapp:run",
     "gunicorn=gunicorn.app.wsgiapp:run"
    ],
-   "number": "0",
+   "number": "1",
    "preserve_egg_dir": true,
    "script": "PYTHON -m pip install . --no-deps -vv"
   },
   "extra": {
    "recipe-maintainers": [
+    "kwilcox",
+    "daf",
+    "jakirkham",
+    "sodre",
     "kwilcox",
     "daf",
     "jakirkham",
@@ -1328,9 +1351,14 @@
     "python",
     "pip",
     "python",
+    "pip",
+    "python",
     "pip"
    ],
    "run": [
+    "python",
+    "setuptools >=3.0",
+    "packaging",
     "python",
     "setuptools >=3.0",
     "packaging",
@@ -1351,6 +1379,7 @@
   },
   "test": {
    "commands": [
+    "gunicorn --help",
     "gunicorn --help",
     "gunicorn --help",
     "gunicorn --help",
@@ -1376,9 +1405,16 @@
     "gunicorn.app",
     "gunicorn.http",
     "gunicorn.instrument",
+    "gunicorn.workers",
+    "gunicorn",
+    "gunicorn.app",
+    "gunicorn.http",
+    "gunicorn.instrument",
     "gunicorn.workers"
    ],
    "requires": [
+    "paste",
+    "pastedeploy",
     "paste",
     "pastedeploy",
     "paste",
@@ -1435,7 +1471,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/gunicorn.json"
  },
- "raw_meta_yaml": "{% set version = \"21.2.0\" %}\n\npackage:\n  name: gunicorn\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/g/gunicorn/gunicorn-{{ version }}.tar.gz\n  sha256: 88ec8bff1d634f98e61b9f65bc4bf3cd918a90806c6f5c48bc5603849ec81033\n\nbuild:\n  skip: true  # [win]\n  skip: true  # [py<38]\n  number: 0\n  script: {{ PYTHON }} -m pip install . --no-deps -vv\n  preserve_egg_dir: true\n  entry_points:\n    - gunicorn=gunicorn.app.wsgiapp:run\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n  host:\n    - python\n    - pip\n  run:\n    - python\n    - setuptools >=3.0\n    - packaging\n\ntest:\n  imports:\n    - gunicorn\n    - gunicorn.app\n    - gunicorn.http\n    - gunicorn.instrument\n    - gunicorn.workers\n  commands:\n    - gunicorn --help\n  requires:\n    - paste\n    - pastedeploy\n\nabout:\n  home: http://gunicorn.org\n  license: MIT\n  license_file: LICENSE\n  summary: WSGI HTTP Server for UNIX\n\nextra:\n  recipe-maintainers:\n    - kwilcox\n    - daf\n    - jakirkham\n    - sodre\n",
+ "raw_meta_yaml": "{% set version = \"21.2.0\" %}\n\npackage:\n  name: gunicorn\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/g/gunicorn/gunicorn-{{ version }}.tar.gz\n  sha256: 88ec8bff1d634f98e61b9f65bc4bf3cd918a90806c6f5c48bc5603849ec81033\n\nbuild:\n  skip: true  # [win]\n  skip: true  # [py<38]\n  number: 1\n  script: {{ PYTHON }} -m pip install . --no-deps -vv\n  preserve_egg_dir: true\n  entry_points:\n    - gunicorn=gunicorn.app.wsgiapp:run\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n  host:\n    - python\n    - pip\n  run:\n    - python\n    - setuptools >=3.0\n    - packaging\n\ntest:\n  imports:\n    - gunicorn\n    - gunicorn.app\n    - gunicorn.http\n    - gunicorn.instrument\n    - gunicorn.workers\n  commands:\n    - gunicorn --help\n  requires:\n    - paste\n    - pastedeploy\n\nabout:\n  home: http://gunicorn.org\n  license: MIT\n  license_file: LICENSE\n  summary: WSGI HTTP Server for UNIX\n\nextra:\n  recipe-maintainers:\n    - kwilcox\n    - daf\n    - jakirkham\n    - sodre\n",
  "req": {
   "__set__": true,
   "elements": [
