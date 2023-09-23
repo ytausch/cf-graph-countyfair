@@ -6,6 +6,8 @@
    "automerge": true
   },
   "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
    "osx_arm64": "osx_64"
   },
   "provider": {
@@ -26,7 +28,7 @@
    "summary": "Cross-platform windowing and multimedia library"
   },
   "build": {
-   "number": "3",
+   "number": "4",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -181,7 +183,7 @@
    "summary": "Cross-platform windowing and multimedia library"
   },
   "build": {
-   "number": "3",
+   "number": "4",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -336,7 +338,7 @@
    "summary": "Cross-platform windowing and multimedia library"
   },
   "build": {
-   "number": "3",
+   "number": "4",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -491,11 +493,15 @@
    "summary": "Cross-platform windowing and multimedia library"
   },
   "build": {
-   "number": "3",
+   "number": "4",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
    "recipe-maintainers": [
+    "mwcraig",
+    "jakirkham",
+    "bitcraft",
+    "hoechenberger",
     "mwcraig",
     "jakirkham",
     "bitcraft",
@@ -708,9 +714,15 @@
     "python",
     "pip",
     "python",
+    "pip",
+    "python",
     "pip"
    ],
    "run": [
+    "python",
+    "freetype",
+    "future",
+    "ffmpeg >=4,<6",
     "python",
     "freetype",
     "future",
@@ -884,6 +896,7 @@
     "pyproject.toml.patch",
     "pyproject.toml.patch",
     "pyproject.toml.patch",
+    "pyproject.toml.patch",
     "pyproject.toml.patch"
    ],
    "sha256": "4d00e067451f3b10fd51b69764fddab65444372a2da344ee2b35f0a8e6ebf005",
@@ -909,6 +922,7 @@
     "xvfb-run --server-args=\":99 -screen 0 1024x768x24 -ac +extension GLX -noreset\" python run_tests.py",
     "xvfb-run --server-args=\":99 -screen 0 1024x768x24 -ac +extension GLX -noreset\" python run_tests.py",
     "xvfb-run --server-args=\":99 -screen 0 1024x768x24 -ac +extension GLX -noreset\" python run_tests.py",
+    "python run_tests.py",
     "python run_tests.py",
     "python run_tests.py",
     "python run_tests.py",
@@ -960,6 +974,7 @@
     "run_tests.py",
     "run_tests.py",
     "run_tests.py",
+    "run_tests.py",
     "run_tests.py"
    ],
    "requires": null
@@ -976,7 +991,7 @@
    "summary": "Cross-platform windowing and multimedia library"
   },
   "build": {
-   "number": "3",
+   "number": "4",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -1122,11 +1137,15 @@
    "summary": "Cross-platform windowing and multimedia library"
   },
   "build": {
-   "number": "3",
+   "number": "4",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
    "recipe-maintainers": [
+    "mwcraig",
+    "jakirkham",
+    "bitcraft",
+    "hoechenberger",
     "mwcraig",
     "jakirkham",
     "bitcraft",
@@ -1159,9 +1178,15 @@
     "python",
     "pip",
     "python",
+    "pip",
+    "python",
     "pip"
    ],
    "run": [
+    "python",
+    "freetype",
+    "future",
+    "ffmpeg >=4,<6",
     "python",
     "freetype",
     "future",
@@ -1185,6 +1210,7 @@
     "pyproject.toml.patch",
     "pyproject.toml.patch",
     "pyproject.toml.patch",
+    "pyproject.toml.patch",
     "pyproject.toml.patch"
    ],
    "sha256": "4d00e067451f3b10fd51b69764fddab65444372a2da344ee2b35f0a8e6ebf005",
@@ -1195,9 +1221,11 @@
     "python run_tests.py",
     "python run_tests.py",
     "python run_tests.py",
+    "python run_tests.py",
     "python run_tests.py"
    ],
    "files": [
+    "run_tests.py",
     "run_tests.py",
     "run_tests.py",
     "run_tests.py",
@@ -1250,7 +1278,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pyglet.json"
  },
- "raw_meta_yaml": "{% set name = \"pyglet\" %}\n{% set version = \"1.5.27\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.zip\n  sha256: 4d00e067451f3b10fd51b69764fddab65444372a2da344ee2b35f0a8e6ebf005\n  patches:\n    - pyproject.toml.patch  # remove contents of unneeded file.\n\nbuild:\n  number: 3\n  script: {{ PYTHON }} -m pip install . -vv\n  skip: true  # [py2k]\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n  host:\n    - python\n    - pip\n  run:\n    - python\n    - freetype\n    - future\n    - ffmpeg >=4,<6\n\ntest:\n  # We moved all \"import ...\" tests to `run_tests.py` because on Linux, we\n  # need to run the tests through xvfb-run as some of them require a\n  # (virtual) display. On Windows and macOS, on the other hand, we can run the\n  # test script directly.\n  requires:\n    - libglu  # [linux]\n  files:\n    - run_tests.py\n  commands:\n    - python run_tests.py  # [not linux]\n    - xvfb-run --server-args=\":99 -screen 0 1024x768x24 -ac +extension GLX -noreset\" python run_tests.py  # [linux]\n\nabout:\n  home: http://pyglet.org\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Cross-platform windowing and multimedia library\n  dev_url: https://github.com/pyglet/pyglet\n\nextra:\n  recipe-maintainers:\n    - mwcraig\n    - jakirkham\n    - bitcraft\n    - hoechenberger\n",
+ "raw_meta_yaml": "{% set name = \"pyglet\" %}\n{% set version = \"1.5.27\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.zip\n  sha256: 4d00e067451f3b10fd51b69764fddab65444372a2da344ee2b35f0a8e6ebf005\n  patches:\n    - pyproject.toml.patch  # remove contents of unneeded file.\n\nbuild:\n  number: 4\n  script: {{ PYTHON }} -m pip install . -vv\n  skip: true  # [py2k]\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n  host:\n    - python\n    - pip\n  run:\n    - python\n    - freetype\n    - future\n    - ffmpeg >=4,<6\n\ntest:\n  # We moved all \"import ...\" tests to `run_tests.py` because on Linux, we\n  # need to run the tests through xvfb-run as some of them require a\n  # (virtual) display. On Windows and macOS, on the other hand, we can run the\n  # test script directly.\n  requires:\n    - libglu  # [linux]\n  files:\n    - run_tests.py\n  commands:\n    - python run_tests.py  # [not linux]\n    - xvfb-run --server-args=\":99 -screen 0 1024x768x24 -ac +extension GLX -noreset\" python run_tests.py  # [linux]\n\nabout:\n  home: http://pyglet.org\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Cross-platform windowing and multimedia library\n  dev_url: https://github.com/pyglet/pyglet\n\nextra:\n  recipe-maintainers:\n    - mwcraig\n    - jakirkham\n    - bitcraft\n    - hoechenberger\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1329,7 +1357,7 @@
    "summary": "Cross-platform windowing and multimedia library"
   },
   "build": {
-   "number": "3",
+   "number": "4",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
