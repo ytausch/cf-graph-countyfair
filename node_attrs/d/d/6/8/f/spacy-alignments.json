@@ -25,7 +25,7 @@
    "summary": "Align tokenizations for spaCy + transformers"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   },
   "extra": {
@@ -183,7 +183,7 @@
    "summary": "Align tokenizations for spaCy + transformers"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   },
   "extra": {
@@ -341,7 +341,7 @@
    "summary": "Align tokenizations for spaCy + transformers"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   },
   "extra": {
@@ -499,11 +499,14 @@
    "summary": "Align tokenizations for spaCy + transformers"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   },
   "extra": {
    "recipe-maintainers": [
+    "honnibal",
+    "ines",
+    "adrianeboyd",
     "honnibal",
     "ines",
     "adrianeboyd",
@@ -614,6 +617,8 @@
   },
   "requirements": {
    "build": [
+    "cxx_compiler_stub",
+    "rust_compiler_stub",
     "cxx_compiler_stub",
     "rust_compiler_stub",
     "cxx_compiler_stub",
@@ -819,9 +824,14 @@
     "pip",
     "python",
     "setuptools",
+    "setuptools-rust",
+    "pip",
+    "python",
+    "setuptools",
     "setuptools-rust"
    ],
    "run": [
+    "python",
     "python",
     "python",
     "python",
@@ -897,9 +907,11 @@
     "python -m pytest --tb=native --pyargs spacy_alignments",
     "python -m pytest --tb=native --pyargs spacy_alignments",
     "python -m pytest --tb=native --pyargs spacy_alignments",
+    "python -m pytest --tb=native --pyargs spacy_alignments",
     "python -m pytest --tb=native --pyargs spacy_alignments"
    ],
    "imports": [
+    "spacy_alignments",
     "spacy_alignments",
     "spacy_alignments",
     "spacy_alignments",
@@ -1003,6 +1015,8 @@
     "pytest",
     "hypothesis",
     "pytest",
+    "hypothesis",
+    "pytest",
     "hypothesis"
    ]
   }
@@ -1019,7 +1033,7 @@
    "summary": "Align tokenizations for spaCy + transformers"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   },
   "extra": {
@@ -1177,11 +1191,14 @@
    "summary": "Align tokenizations for spaCy + transformers"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   },
   "extra": {
    "recipe-maintainers": [
+    "honnibal",
+    "ines",
+    "adrianeboyd",
     "honnibal",
     "ines",
     "adrianeboyd",
@@ -1209,9 +1226,15 @@
     "cxx_compiler_stub",
     "rust_compiler_stub",
     "cxx_compiler_stub",
+    "rust_compiler_stub",
+    "cxx_compiler_stub",
     "rust_compiler_stub"
    ],
    "host": [
+    "pip",
+    "python",
+    "setuptools",
+    "setuptools-rust",
     "pip",
     "python",
     "setuptools",
@@ -1233,6 +1256,7 @@
     "python",
     "python",
     "python",
+    "python",
     "python"
    ]
   },
@@ -1245,15 +1269,19 @@
     "python -m pytest --tb=native --pyargs spacy_alignments",
     "python -m pytest --tb=native --pyargs spacy_alignments",
     "python -m pytest --tb=native --pyargs spacy_alignments",
+    "python -m pytest --tb=native --pyargs spacy_alignments",
     "python -m pytest --tb=native --pyargs spacy_alignments"
    ],
    "imports": [
     "spacy_alignments",
     "spacy_alignments",
     "spacy_alignments",
+    "spacy_alignments",
     "spacy_alignments"
    ],
    "requires": [
+    "pytest",
+    "hypothesis",
     "pytest",
     "hypothesis",
     "pytest",
@@ -1314,7 +1342,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/spacy-alignments.json"
  },
- "raw_meta_yaml": "{% set name = \"spacy-alignments\" %}\n{% set module_name = \"spacy_alignments\" %}\n{% set version = \"0.9.0\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 8dc358821591f576eef7bfe10187bc7b06b9a0c438a1f346170638718eff1263\n\n\nbuild:\n  number: 1\n  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('cxx') }}\n    - {{ compiler('rust') }}\n  host:\n    - pip\n    - python\n    - setuptools\n    - setuptools-rust\n  run:\n    - python\n\ntest:\n  requires:\n    - pytest\n    - hypothesis\n  imports:\n    - {{ module_name }}\n  commands:\n    - python -m pytest --tb=native --pyargs {{ module_name }}\n\nabout:\n  home: https://spacy.io/\n  license: MIT\n  license_file: LICENSE\n  summary: Align tokenizations for spaCy + transformers\n  description: |\n    A spaCy package for Yohei Tamura's Rust tokenizations library.\n  doc_url: https://github.com/explosion/spacy-alignments\n  dev_url: https://github.com/explosion/spacy-alignments\n\nextra:\n  recipe-maintainers:\n    - honnibal\n    - ines\n    - adrianeboyd\n",
+ "raw_meta_yaml": "{% set name = \"spacy-alignments\" %}\n{% set module_name = \"spacy_alignments\" %}\n{% set version = \"0.9.0\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 8dc358821591f576eef7bfe10187bc7b06b9a0c438a1f346170638718eff1263\n\n\nbuild:\n  number: 2\n  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('cxx') }}\n    - {{ compiler('rust') }}\n  host:\n    - pip\n    - python\n    - setuptools\n    - setuptools-rust\n  run:\n    - python\n\ntest:\n  requires:\n    - pytest\n    - hypothesis\n  imports:\n    - {{ module_name }}\n  commands:\n    - python -m pytest --tb=native --pyargs {{ module_name }}\n\nabout:\n  home: https://spacy.io/\n  license: MIT\n  license_file: LICENSE\n  summary: Align tokenizations for spaCy + transformers\n  description: |\n    A spaCy package for Yohei Tamura's Rust tokenizations library.\n  doc_url: https://github.com/explosion/spacy-alignments\n  dev_url: https://github.com/explosion/spacy-alignments\n\nextra:\n  recipe-maintainers:\n    - honnibal\n    - ines\n    - adrianeboyd\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1407,7 +1435,7 @@
    "summary": "Align tokenizations for spaCy + transformers"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
   },
   "extra": {
