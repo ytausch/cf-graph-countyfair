@@ -27,7 +27,7 @@
    "summary": "Distributed Evolutionary Algorithms in Python"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
     "PYTHON setup.py build_ext -IPREFIX/include",
     "PYTHON -m pip install . --no-deps -vv --no-build-isolation",
@@ -232,8 +232,10 @@
    "summary": "Distributed Evolutionary Algorithms in Python"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
+    "PYTHON setup.py build_ext -IPREFIX/include",
+    "PYTHON -m pip install . --no-deps -vv --no-build-isolation",
     "PYTHON setup.py build_ext -IPREFIX/include",
     "PYTHON -m pip install . --no-deps -vv --no-build-isolation",
     "PYTHON setup.py build_ext -IPREFIX/include",
@@ -282,6 +284,9 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "bollwyvl",
+    "rhiever",
+    "tonyfast",
     "bollwyvl",
     "rhiever",
     "tonyfast",
@@ -399,9 +404,14 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "c_compiler_stub",
+    "cxx_compiler_stub",
+    "c_compiler_stub",
     "cxx_compiler_stub"
    ],
    "host": [
+    "numpy",
+    "python",
+    "pip",
     "numpy",
     "python",
     "pip",
@@ -513,6 +523,8 @@
     "numpy",
     "python",
     "numpy",
+    "python",
+    "numpy",
     "python"
    ]
   },
@@ -522,6 +534,8 @@
   },
   "test": {
    "commands": [
+    "pip check",
+    "pytest -vv --cov=deap --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=37",
     "pip check",
     "pytest -vv --cov=deap --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=37",
     "pip check",
@@ -655,9 +669,15 @@
     "deap",
     "deap.benchmarks",
     "deap.tools",
+    "deap.tools._hypervolume",
+    "deap",
+    "deap.benchmarks",
+    "deap.tools",
     "deap.tools._hypervolume"
    ],
    "requires": [
+    "pytest-cov",
+    "pip",
     "pytest-cov",
     "pip",
     "pytest-cov",
@@ -725,6 +745,7 @@
     "tests",
     "tests",
     "tests",
+    "tests",
     "tests"
    ]
   }
@@ -743,7 +764,7 @@
    "summary": "Distributed Evolutionary Algorithms in Python"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
     "PYTHON setup.py build_ext -IPREFIX/include",
     "PYTHON -m pip install . --no-deps -vv --no-build-isolation",
@@ -948,8 +969,10 @@
    "summary": "Distributed Evolutionary Algorithms in Python"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
+    "PYTHON setup.py build_ext -IPREFIX/include",
+    "PYTHON -m pip install . --no-deps -vv --no-build-isolation",
     "PYTHON setup.py build_ext -IPREFIX/include",
     "PYTHON -m pip install . --no-deps -vv --no-build-isolation",
     "PYTHON setup.py build_ext -IPREFIX/include",
@@ -962,6 +985,9 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "bollwyvl",
+    "rhiever",
+    "tonyfast",
     "bollwyvl",
     "rhiever",
     "tonyfast",
@@ -989,9 +1015,14 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "c_compiler_stub",
+    "cxx_compiler_stub",
+    "c_compiler_stub",
     "cxx_compiler_stub"
    ],
    "host": [
+    "numpy",
+    "python",
+    "pip",
     "numpy",
     "python",
     "pip",
@@ -1013,6 +1044,8 @@
     "numpy",
     "python",
     "numpy",
+    "python",
+    "numpy",
     "python"
    ]
   },
@@ -1022,6 +1055,8 @@
   },
   "test": {
    "commands": [
+    "pip check",
+    "pytest -vv --cov=deap --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=37",
     "pip check",
     "pytest -vv --cov=deap --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=37",
     "pip check",
@@ -1047,6 +1082,10 @@
     "deap",
     "deap.benchmarks",
     "deap.tools",
+    "deap.tools._hypervolume",
+    "deap",
+    "deap.benchmarks",
+    "deap.tools",
     "deap.tools._hypervolume"
    ],
    "requires": [
@@ -1057,9 +1096,12 @@
     "pytest-cov",
     "pip",
     "pytest-cov",
+    "pip",
+    "pytest-cov",
     "pip"
    ],
    "source_files": [
+    "tests",
     "tests",
     "tests",
     "tests",
@@ -1114,7 +1156,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/deap.json"
  },
- "raw_meta_yaml": "{% set version = \"1.4.1\" %}\n\npackage:\n  name: deap\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/d/deap/deap-{{ version }}.tar.gz\n  sha256: cc01de9892dfa7d1bc9803dab28892fead177f0182c81db47360a240ead778ff\n\nbuild:\n  skip: true  # [py<37]\n  number: 0\n  script:\n    - {{ PYTHON }} setup.py build_ext -I{{ PREFIX }}/include  # [unix]\n    - {{ PYTHON }} setup.py build_ext -I\"%LIBRARY_INC%\"  # [win]\n    - {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n\n  host:\n    - numpy\n    - python\n    - pip\n  run:\n    - numpy\n    - python\n\ntest:\n  source_files:\n    - tests\n  requires:\n    - pytest-cov\n    - pip\n  imports:\n    - deap\n    - deap.benchmarks\n    - deap.tools\n    - deap.tools._hypervolume\n  commands:\n    - pip check\n    - pytest -vv --cov=deap --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=37\n\nabout:\n  home: https://github.com/DEAP/deap\n  license: LGPL-3.0-or-later\n  license_family: LGPL\n  license_file: LICENSE.txt\n  summary: Distributed Evolutionary Algorithms in Python\n  doc_url: https://deap.readthedocs.io\n  dev_url: https://github.com/deap/deap\n  doc_source_url: https://github.com/DEAP/deap/tree/{{ version }}/doc\n  description: |\n    DEAP is a novel evolutionary computation framework for rapid prototyping and testing of\n    ideas. It seeks to make algorithms explicit and data structures transparent. It works\n    in perfect harmony with parallelisation mechanism such as multiprocessing and SCOOP. The\n    following documentation presents the key concepts and many features to build your own\n    evolutions.\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n    - rhiever\n    - tonyfast\n",
+ "raw_meta_yaml": "{% set version = \"1.4.1\" %}\n\npackage:\n  name: deap\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/d/deap/deap-{{ version }}.tar.gz\n  sha256: cc01de9892dfa7d1bc9803dab28892fead177f0182c81db47360a240ead778ff\n\nbuild:\n  skip: true  # [py<37]\n  number: 1\n  script:\n    - {{ PYTHON }} setup.py build_ext -I{{ PREFIX }}/include  # [unix]\n    - {{ PYTHON }} setup.py build_ext -I\"%LIBRARY_INC%\"  # [win]\n    - {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n\n  host:\n    - numpy\n    - python\n    - pip\n  run:\n    - numpy\n    - python\n\ntest:\n  source_files:\n    - tests\n  requires:\n    - pytest-cov\n    - pip\n  imports:\n    - deap\n    - deap.benchmarks\n    - deap.tools\n    - deap.tools._hypervolume\n  commands:\n    - pip check\n    - pytest -vv --cov=deap --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=37\n\nabout:\n  home: https://github.com/DEAP/deap\n  license: LGPL-3.0-or-later\n  license_family: LGPL\n  license_file: LICENSE.txt\n  summary: Distributed Evolutionary Algorithms in Python\n  doc_url: https://deap.readthedocs.io\n  dev_url: https://github.com/deap/deap\n  doc_source_url: https://github.com/DEAP/deap/tree/{{ version }}/doc\n  description: |\n    DEAP is a novel evolutionary computation framework for rapid prototyping and testing of\n    ideas. It seeks to make algorithms explicit and data structures transparent. It works\n    in perfect harmony with parallelisation mechanism such as multiprocessing and SCOOP. The\n    following documentation presents the key concepts and many features to build your own\n    evolutions.\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n    - rhiever\n    - tonyfast\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1210,7 +1252,7 @@
    "summary": "Distributed Evolutionary Algorithms in Python"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
     "PYTHON setup.py build_ext -I\"%LIBRARY_INC%\"",
     "PYTHON -m pip install . --no-deps -vv --no-build-isolation",
