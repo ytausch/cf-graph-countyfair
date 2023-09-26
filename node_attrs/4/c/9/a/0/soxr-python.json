@@ -3,6 +3,8 @@
  "branch": "main",
  "conda-forge.yml": {
   "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
    "osx_arm64": "osx_64"
   },
   "provider": {
@@ -22,7 +24,7 @@
    "summary": "High quality, one-dimensional sample-rate conversion library"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv --config-settings=\"--build-option=--use-system-libsoxr\""
   },
   "extra": {
@@ -174,7 +176,7 @@
    "summary": "High quality, one-dimensional sample-rate conversion library"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv --config-settings=\"--build-option=--use-system-libsoxr\""
   },
   "extra": {
@@ -326,7 +328,7 @@
    "summary": "High quality, one-dimensional sample-rate conversion library"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv --config-settings=\"--build-option=--use-system-libsoxr\""
   },
   "extra": {
@@ -478,11 +480,12 @@
    "summary": "High quality, one-dimensional sample-rate conversion library"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv --config-settings=\"--build-option=--use-system-libsoxr\""
   },
   "extra": {
    "recipe-maintainers": [
+    "dofuuz",
     "dofuuz",
     "dofuuz",
     "dofuuz",
@@ -558,9 +561,16 @@
     "c_compiler_stub",
     "c_compiler_stub",
     "c_compiler_stub",
+    "c_compiler_stub",
     "c_compiler_stub"
    ],
    "host": [
+    "cython >=3.0a7",
+    "numpy",
+    "pip",
+    "python",
+    "setuptools_scm",
+    "soxr",
     "cython >=3.0a7",
     "numpy",
     "pip",
@@ -834,6 +844,8 @@
     "python",
     "numpy",
     "python",
+    "numpy",
+    "python",
     "numpy"
    ]
   },
@@ -843,6 +855,7 @@
   },
   "test": {
    "commands": [
+    "pip check",
     "pip check",
     "pip check",
     "pip check",
@@ -912,9 +925,11 @@
     "soxr",
     "soxr",
     "soxr",
+    "soxr",
     "soxr"
    ],
    "requires": [
+    "pip",
     "pip",
     "pip",
     "pip",
@@ -963,7 +978,7 @@
    "summary": "High quality, one-dimensional sample-rate conversion library"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv --config-settings=\"--build-option=--use-system-libsoxr\""
   },
   "extra": {
@@ -1115,11 +1130,12 @@
    "summary": "High quality, one-dimensional sample-rate conversion library"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv --config-settings=\"--build-option=--use-system-libsoxr\""
   },
   "extra": {
    "recipe-maintainers": [
+    "dofuuz",
     "dofuuz",
     "dofuuz",
     "dofuuz",
@@ -1135,9 +1151,16 @@
     "c_compiler_stub",
     "c_compiler_stub",
     "c_compiler_stub",
+    "c_compiler_stub",
     "c_compiler_stub"
    ],
    "host": [
+    "cython >=3.0a7",
+    "numpy",
+    "pip",
+    "python",
+    "setuptools_scm",
+    "soxr",
     "cython >=3.0a7",
     "numpy",
     "pip",
@@ -1171,6 +1194,8 @@
     "python",
     "numpy",
     "python",
+    "numpy",
+    "python",
     "numpy"
    ]
   },
@@ -1183,15 +1208,18 @@
     "pip check",
     "pip check",
     "pip check",
+    "pip check",
     "pip check"
    ],
    "imports": [
     "soxr",
     "soxr",
     "soxr",
+    "soxr",
     "soxr"
    ],
    "requires": [
+    "pip",
     "pip",
     "pip",
     "pip",
@@ -1249,7 +1277,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/soxr-python.json"
  },
- "raw_meta_yaml": "{% set name = \"soxr\" %}\n{% set version = \"0.3.5\" %}\n\npackage:\n  name: soxr-python\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/soxr-{{ version }}.tar.gz\n  sha256: b6b60f6381c98249a2f2a594e9234b647b78856c76c060597d53ed27b6efd249\n\nbuild:\n  skip: true  # [py2k]\n  script: {{ PYTHON }} -m pip install . -vv --config-settings=\"--build-option=--use-system-libsoxr\"\n  number: 0\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - cython                                 # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n    - {{ compiler('c') }}\n  host:\n    - cython >=3.0a7\n    - numpy\n    - pip\n    - python\n    - setuptools_scm\n    - soxr\n  run:\n    - python\n    - {{ pin_compatible('numpy') }}\n\ntest:\n  imports:\n    - soxr\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/dofuuz/python-soxr\n  summary: High quality, one-dimensional sample-rate conversion library\n  doc_url: https://python-soxr.readthedocs.io\n  dev_url: https://github.com/dofuuz/python-soxr\n  license: LGPL-2.1-or-later\n  license_file: COPYING.LGPL\n\nextra:\n  recipe-maintainers:\n    - dofuuz\n",
+ "raw_meta_yaml": "{% set name = \"soxr\" %}\n{% set version = \"0.3.5\" %}\n\npackage:\n  name: soxr-python\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/soxr-{{ version }}.tar.gz\n  sha256: b6b60f6381c98249a2f2a594e9234b647b78856c76c060597d53ed27b6efd249\n\nbuild:\n  skip: true  # [py2k]\n  script: {{ PYTHON }} -m pip install . -vv --config-settings=\"--build-option=--use-system-libsoxr\"\n  number: 1\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - cython                                 # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n    - {{ compiler('c') }}\n  host:\n    - cython >=3.0a7\n    - numpy\n    - pip\n    - python\n    - setuptools_scm\n    - soxr\n  run:\n    - python\n    - {{ pin_compatible('numpy') }}\n\ntest:\n  imports:\n    - soxr\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/dofuuz/python-soxr\n  summary: High quality, one-dimensional sample-rate conversion library\n  doc_url: https://python-soxr.readthedocs.io\n  dev_url: https://github.com/dofuuz/python-soxr\n  license: LGPL-2.1-or-later\n  license_file: COPYING.LGPL\n\nextra:\n  recipe-maintainers:\n    - dofuuz\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1344,7 +1372,7 @@
    "summary": "High quality, one-dimensional sample-rate conversion library"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv --config-settings=\"--build-option=--use-system-libsoxr\""
   },
   "extra": {
