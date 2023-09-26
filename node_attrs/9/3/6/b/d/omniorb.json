@@ -6,7 +6,7 @@
    "osx_arm64": "osx_64"
   },
   "provider": {
-   "linux_aarch64": "default",
+   "linux_aarch64": "azure",
    "linux_ppc64le": "azure",
    "win": "azure"
   }
@@ -28,15 +28,20 @@
     "COPYING",
     "COPYING.LIB",
     "COPYING",
+    "COPYING.LIB",
+    "COPYING",
     "COPYING.LIB"
    ],
    "summary": "Robust high performance CORBA ORB for C++ and Python"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "beenje",
+    "carlodri",
+    "lockhart",
     "beenje",
     "carlodri",
     "lockhart",
@@ -224,6 +229,66 @@
      "etc/omniORB-config",
      "lib/libomni*.a",
      "lib/libCOS*.a",
+     "lib/python3.12/site-packages/_omniidl*",
+     "lib/python3.12/site-packages/omniidl",
+     "lib/python3.12/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.so*",
+     "lib/libCOS*.so*"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
      "lib/python3.8/site-packages/_omniidl*",
      "lib/python3.8/site-packages/omniidl",
      "lib/python3.8/site-packages/omniidl_be",
@@ -318,9 +383,18 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "autoconf",
+    "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "autoconf",
     "make"
    ],
    "host": [
+    "python",
+    "openssl",
+    "zlib",
+    "zstd",
     "python",
     "openssl",
     "zlib",
@@ -346,11 +420,15 @@
     "python",
     "omniorb-libs",
     "python",
+    "omniorb-libs",
+    "python",
     "omniorb-libs"
    ]
   },
   "source": {
    "patches": [
+    "0001-Avoid-kernel-128-character-shebang-limit.patch",
+    "patch-configure.diff",
     "0001-Avoid-kernel-128-character-shebang-limit.patch",
     "patch-configure.diff",
     "0001-Avoid-kernel-128-character-shebang-limit.patch",
@@ -368,9 +446,11 @@
     "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl",
+    "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl"
    ],
    "source_files": [
+    "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
@@ -425,15 +505,20 @@
     "COPYING",
     "COPYING.LIB",
     "COPYING",
+    "COPYING.LIB",
+    "COPYING",
     "COPYING.LIB"
    ],
    "summary": "Robust high performance CORBA ORB for C++ and Python"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "beenje",
+    "carlodri",
+    "lockhart",
     "beenje",
     "carlodri",
     "lockhart",
@@ -621,6 +706,66 @@
      "etc/omniORB-config",
      "lib/libomni*.a",
      "lib/libCOS*.a",
+     "lib/python3.12/site-packages/_omniidl*",
+     "lib/python3.12/site-packages/omniidl",
+     "lib/python3.12/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.so*",
+     "lib/libCOS*.so*"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
      "lib/python3.8/site-packages/_omniidl*",
      "lib/python3.8/site-packages/omniidl",
      "lib/python3.8/site-packages/omniidl_be",
@@ -715,9 +860,18 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "autoconf",
+    "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "autoconf",
     "make"
    ],
    "host": [
+    "python",
+    "openssl",
+    "zlib",
+    "zstd",
     "python",
     "openssl",
     "zlib",
@@ -743,11 +897,15 @@
     "python",
     "omniorb-libs",
     "python",
+    "omniorb-libs",
+    "python",
     "omniorb-libs"
    ]
   },
   "source": {
    "patches": [
+    "0001-Avoid-kernel-128-character-shebang-limit.patch",
+    "patch-configure.diff",
     "0001-Avoid-kernel-128-character-shebang-limit.patch",
     "patch-configure.diff",
     "0001-Avoid-kernel-128-character-shebang-limit.patch",
@@ -765,9 +923,11 @@
     "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl",
+    "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl"
    ],
    "source_files": [
+    "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
@@ -822,15 +982,20 @@
     "COPYING",
     "COPYING.LIB",
     "COPYING",
+    "COPYING.LIB",
+    "COPYING",
     "COPYING.LIB"
    ],
    "summary": "Robust high performance CORBA ORB for C++ and Python"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "beenje",
+    "carlodri",
+    "lockhart",
     "beenje",
     "carlodri",
     "lockhart",
@@ -1018,6 +1183,66 @@
      "etc/omniORB-config",
      "lib/libomni*.a",
      "lib/libCOS*.a",
+     "lib/python3.12/site-packages/_omniidl*",
+     "lib/python3.12/site-packages/omniidl",
+     "lib/python3.12/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.so*",
+     "lib/libCOS*.so*"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
      "lib/python3.8/site-packages/_omniidl*",
      "lib/python3.8/site-packages/omniidl",
      "lib/python3.8/site-packages/omniidl_be",
@@ -1112,9 +1337,18 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "autoconf",
+    "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "autoconf",
     "make"
    ],
    "host": [
+    "python",
+    "openssl",
+    "zlib",
+    "zstd",
     "python",
     "openssl",
     "zlib",
@@ -1140,11 +1374,15 @@
     "python",
     "omniorb-libs",
     "python",
+    "omniorb-libs",
+    "python",
     "omniorb-libs"
    ]
   },
   "source": {
    "patches": [
+    "0001-Avoid-kernel-128-character-shebang-limit.patch",
+    "patch-configure.diff",
     "0001-Avoid-kernel-128-character-shebang-limit.patch",
     "patch-configure.diff",
     "0001-Avoid-kernel-128-character-shebang-limit.patch",
@@ -1162,9 +1400,11 @@
     "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl",
+    "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl"
    ],
    "source_files": [
+    "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
@@ -1259,15 +1499,45 @@
     "COPYING",
     "COPYING.LIB",
     "COPYING",
+    "COPYING.LIB",
+    "COPYING",
+    "COPYING.LIB",
+    "COPYING",
+    "COPYING.LIB",
+    "COPYING",
+    "COPYING.LIB",
+    "COPYING",
+    "COPYING.LIB",
+    "COPYING",
+    "COPYING.LIB",
+    "COPYING",
     "COPYING.LIB"
    ],
    "summary": "Robust high performance CORBA ORB for C++ and Python"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "beenje",
+    "carlodri",
+    "lockhart",
+    "beenje",
+    "carlodri",
+    "lockhart",
+    "beenje",
+    "carlodri",
+    "lockhart",
+    "beenje",
+    "carlodri",
+    "lockhart",
+    "beenje",
+    "carlodri",
+    "lockhart",
+    "beenje",
+    "carlodri",
+    "lockhart",
     "beenje",
     "carlodri",
     "lockhart",
@@ -1515,189 +1785,9 @@
      "etc/omniORB-config",
      "lib/libomni*.a",
      "lib/libCOS*.a",
-     "lib/python3.8/site-packages/_omniidl*",
-     "lib/python3.8/site-packages/omniidl",
-     "lib/python3.8/site-packages/omniidl_be",
-     "share/idl/omniORB",
-     "var/omniNames-logs"
-    ],
-    "name": "omniorb"
-   },
-   {
-    "build": {
-     "run_exports": [
-      "omniorb-libs"
-     ]
-    },
-    "files": [
-     "include/COS",
-     "include/omniORB4",
-     "include/omnithread",
-     "include/omni*",
-     "lib/pkgconfig/omni*.pc",
-     "lib/libomni*.so*",
-     "lib/libCOS*.so*"
-    ],
-    "name": "omniorb-libs",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "autoconf",
-      "make"
-     ],
-     "host": [
-      "openssl",
-      "zlib",
-      "zstd"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/omniconfig.h",
-      "test -f ${PREFIX}/include/omnithread.h",
-      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
-      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
-     ]
-    }
-   },
-   {
-    "files": [
-     "bin/catior",
-     "bin/convertior",
-     "bin/genior",
-     "bin/nameclt",
-     "bin/omkdepend",
-     "bin/omni*",
-     "etc/omniORB-config",
-     "lib/libomni*.a",
-     "lib/libCOS*.a",
-     "lib/python3.9/site-packages/_omniidl*",
-     "lib/python3.9/site-packages/omniidl",
-     "lib/python3.9/site-packages/omniidl_be",
-     "share/idl/omniORB",
-     "var/omniNames-logs"
-    ],
-    "name": "omniorb"
-   },
-   {
-    "build": {
-     "run_exports": [
-      "omniorb-libs"
-     ]
-    },
-    "files": [
-     "include/COS",
-     "include/omniORB4",
-     "include/omnithread",
-     "include/omni*",
-     "lib/pkgconfig/omni*.pc",
-     "lib/libomni*.so*",
-     "lib/libCOS*.so*"
-    ],
-    "name": "omniorb-libs",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "autoconf",
-      "make"
-     ],
-     "host": [
-      "openssl",
-      "zlib",
-      "zstd"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/omniconfig.h",
-      "test -f ${PREFIX}/include/omnithread.h",
-      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
-      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
-     ]
-    }
-   },
-   {
-    "files": [
-     "bin/catior",
-     "bin/convertior",
-     "bin/genior",
-     "bin/nameclt",
-     "bin/omkdepend",
-     "bin/omni*",
-     "etc/omniORB-config",
-     "lib/libomni*.a",
-     "lib/libCOS*.a",
-     "lib/python3.10/site-packages/_omniidl*",
-     "lib/python3.10/site-packages/omniidl",
-     "lib/python3.10/site-packages/omniidl_be",
-     "share/idl/omniORB",
-     "var/omniNames-logs"
-    ],
-    "name": "omniorb"
-   },
-   {
-    "build": {
-     "run_exports": [
-      "omniorb-libs"
-     ]
-    },
-    "files": [
-     "include/COS",
-     "include/omniORB4",
-     "include/omnithread",
-     "include/omni*",
-     "lib/pkgconfig/omni*.pc",
-     "lib/libomni*.so*",
-     "lib/libCOS*.so*"
-    ],
-    "name": "omniorb-libs",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "autoconf",
-      "make"
-     ],
-     "host": [
-      "openssl",
-      "zlib",
-      "zstd"
-     ]
-    },
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/omniconfig.h",
-      "test -f ${PREFIX}/include/omnithread.h",
-      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
-      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
-     ]
-    }
-   },
-   {
-    "files": [
-     "bin/catior",
-     "bin/convertior",
-     "bin/genior",
-     "bin/nameclt",
-     "bin/omkdepend",
-     "bin/omni*",
-     "etc/omniORB-config",
-     "lib/libomni*.a",
-     "lib/libCOS*.a",
-     "lib/python3.11/site-packages/_omniidl*",
-     "lib/python3.11/site-packages/omniidl",
-     "lib/python3.11/site-packages/omniidl_be",
+     "lib/python3.12/site-packages/_omniidl*",
+     "lib/python3.12/site-packages/omniidl",
+     "lib/python3.12/site-packages/omniidl_be",
      "share/idl/omniORB",
      "var/omniNames-logs"
     ],
@@ -1995,6 +2085,366 @@
      "etc/omniORB-config",
      "lib/libomni*.a",
      "lib/libCOS*.a",
+     "lib/python3.12/site-packages/_omniidl*",
+     "lib/python3.12/site-packages/omniidl",
+     "lib/python3.12/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.so*",
+     "lib/libCOS*.so*"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
+     "lib/python3.8/site-packages/_omniidl*",
+     "lib/python3.8/site-packages/omniidl",
+     "lib/python3.8/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.so*",
+     "lib/libCOS*.so*"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
+     "lib/python3.9/site-packages/_omniidl*",
+     "lib/python3.9/site-packages/omniidl",
+     "lib/python3.9/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.so*",
+     "lib/libCOS*.so*"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
+     "lib/python3.10/site-packages/_omniidl*",
+     "lib/python3.10/site-packages/omniidl",
+     "lib/python3.10/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.so*",
+     "lib/libCOS*.so*"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
+     "lib/python3.11/site-packages/_omniidl*",
+     "lib/python3.11/site-packages/omniidl",
+     "lib/python3.11/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.so*",
+     "lib/libCOS*.so*"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
+     "lib/python3.12/site-packages/_omniidl*",
+     "lib/python3.12/site-packages/omniidl",
+     "lib/python3.12/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.so*",
+     "lib/libCOS*.so*"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
      "lib/python3.8/site-packages/_omniidl*",
      "lib/python3.8/site-packages/omniidl",
      "lib/python3.8/site-packages/omniidl_be",
@@ -2235,6 +2685,66 @@
      "etc/omniORB-config",
      "lib/libomni*.a",
      "lib/libCOS*.a",
+     "lib/python3.12/site-packages/_omniidl*",
+     "lib/python3.12/site-packages/omniidl",
+     "lib/python3.12/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.dylib",
+     "lib/libCOS*.dylib"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
      "lib/python3.8/site-packages/_omniidl*",
      "lib/python3.8/site-packages/omniidl",
      "lib/python3.8/site-packages/omniidl_be",
@@ -2475,6 +2985,66 @@
      "etc/omniORB-config",
      "lib/libomni*.a",
      "lib/libCOS*.a",
+     "lib/python3.12/site-packages/_omniidl*",
+     "lib/python3.12/site-packages/omniidl",
+     "lib/python3.12/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.dylib",
+     "lib/libCOS*.dylib"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
      "lib/python3.8/site-packages/_omniidl*",
      "lib/python3.8/site-packages/omniidl",
      "lib/python3.8/site-packages/omniidl_be",
@@ -2540,6 +3110,64 @@
      "lib/python3.9/site-packages/omniidl_be",
      "share/idl/omniORB",
      "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "Library/include/COS",
+     "Library/include/omniORB4",
+     "Library/include/omnithread",
+     "Library/include/omniVms",
+     "Library/include/omni*",
+     "Library/bin/COS*_rt.dll",
+     "Library/bin/omni*_rt.dll",
+     "Library/lib/COS*_rt.lib",
+     "Library/lib/omni*_rt.lib"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "make",
+      "posix"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_INC%\\\\omniconfig.h exit 1",
+      "if not exist %LIBRARY_INC%\\\\omnithread.h exit 1",
+      "if not exist %LIBRARY_INC%\\\\omniORB4\\\\CORBA.h exit 1",
+      "if not exist %LIBRARY_BIN%\\\\omniORB4_rt.dll exit 1",
+      "if not exist %LIBRARY_BIN%\\\\COS4_rt.dll exit 1",
+      "if not exist %LIBRARY_BIN%\\\\omnithread_rt.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\\\omniORB4_rt.lib exit 1",
+      "if not exist %LIBRARY_LIB%\\\\COS4_rt.lib exit 1",
+      "if not exist %LIBRARY_LIB%\\\\omnithread_rt.lib exit 1"
+     ]
+    }
+   },
+   {
+    "files": [
+     "Library/bin/catior.exe",
+     "Library/bin/convertior.exe",
+     "Library/bin/genior.exe",
+     "Library/bin/nameclt.exe",
+     "Library/bin/omkdepend.exe",
+     "Library/bin/omni*.exe",
+     "Lib/site-packages/omniidl",
+     "Lib/site-packages/omniidl_be"
     ],
     "name": "omniorb"
    },
@@ -2882,6 +3510,35 @@
     "cxx_compiler_stub",
     "autoconf",
     "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "autoconf",
+    "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "autoconf",
+    "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "autoconf",
+    "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "autoconf",
+    "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "autoconf",
+    "make",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "make",
+    "posix",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "make",
@@ -2995,9 +3652,45 @@
     "python",
     "openssl",
     "zlib",
+    "zstd",
+    "python",
+    "openssl",
+    "zlib",
+    "zstd",
+    "python",
+    "openssl",
+    "zlib",
+    "zstd",
+    "python",
+    "openssl",
+    "zlib",
+    "zstd",
+    "python",
+    "openssl",
+    "zlib",
+    "zstd",
+    "python",
+    "openssl",
+    "zlib",
+    "zstd",
+    "python",
+    "openssl",
+    "zlib",
     "zstd"
    ],
    "run": [
+    "python",
+    "omniorb-libs",
+    "python",
+    "omniorb-libs",
+    "python",
+    "omniorb-libs",
+    "python",
+    "omniorb-libs",
+    "python",
+    "omniorb-libs",
+    "python",
+    "omniorb-libs",
     "python",
     "omniorb-libs",
     "python",
@@ -3090,6 +3783,17 @@
     "patch-configure.diff",
     "0001-Avoid-kernel-128-character-shebang-limit.patch",
     "patch-configure.diff",
+    "0001-Avoid-kernel-128-character-shebang-limit.patch",
+    "patch-configure.diff",
+    "0001-Avoid-kernel-128-character-shebang-limit.patch",
+    "patch-configure.diff",
+    "0001-Avoid-kernel-128-character-shebang-limit.patch",
+    "patch-configure.diff",
+    "0001-Avoid-kernel-128-character-shebang-limit.patch",
+    "patch-configure.diff",
+    "0001-Avoid-kernel-128-character-shebang-limit.patch",
+    "patch-configure.diff",
+    "windows-build.patch",
     "windows-build.patch",
     "windows-build.patch",
     "windows-build.patch",
@@ -3101,6 +3805,12 @@
   "test": {
    "commands": null,
    "source_files": [
+    "idl/echo.idl",
+    "idl/echo.idl",
+    "idl/echo.idl",
+    "idl/echo.idl",
+    "idl/echo.idl",
+    "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
@@ -3144,15 +3854,20 @@
     "COPYING",
     "COPYING.LIB",
     "COPYING",
+    "COPYING.LIB",
+    "COPYING",
     "COPYING.LIB"
    ],
    "summary": "Robust high performance CORBA ORB for C++ and Python"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "beenje",
+    "carlodri",
+    "lockhart",
     "beenje",
     "carlodri",
     "lockhart",
@@ -3340,6 +4055,66 @@
      "etc/omniORB-config",
      "lib/libomni*.a",
      "lib/libCOS*.a",
+     "lib/python3.12/site-packages/_omniidl*",
+     "lib/python3.12/site-packages/omniidl",
+     "lib/python3.12/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.dylib",
+     "lib/libCOS*.dylib"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
      "lib/python3.8/site-packages/_omniidl*",
      "lib/python3.8/site-packages/omniidl",
      "lib/python3.8/site-packages/omniidl_be",
@@ -3434,9 +4209,18 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "autoconf",
+    "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "autoconf",
     "make"
    ],
    "host": [
+    "python",
+    "openssl",
+    "zlib",
+    "zstd",
     "python",
     "openssl",
     "zlib",
@@ -3462,11 +4246,15 @@
     "python",
     "omniorb-libs",
     "python",
+    "omniorb-libs",
+    "python",
     "omniorb-libs"
    ]
   },
   "source": {
    "patches": [
+    "0001-Avoid-kernel-128-character-shebang-limit.patch",
+    "patch-configure.diff",
     "0001-Avoid-kernel-128-character-shebang-limit.patch",
     "patch-configure.diff",
     "0001-Avoid-kernel-128-character-shebang-limit.patch",
@@ -3484,9 +4272,11 @@
     "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl",
+    "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl"
    ],
    "source_files": [
+    "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
@@ -3541,15 +4331,20 @@
     "COPYING",
     "COPYING.LIB",
     "COPYING",
+    "COPYING.LIB",
+    "COPYING",
     "COPYING.LIB"
    ],
    "summary": "Robust high performance CORBA ORB for C++ and Python"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "beenje",
+    "carlodri",
+    "lockhart",
     "beenje",
     "carlodri",
     "lockhart",
@@ -3737,6 +4532,66 @@
      "etc/omniORB-config",
      "lib/libomni*.a",
      "lib/libCOS*.a",
+     "lib/python3.12/site-packages/_omniidl*",
+     "lib/python3.12/site-packages/omniidl",
+     "lib/python3.12/site-packages/omniidl_be",
+     "share/idl/omniORB",
+     "var/omniNames-logs"
+    ],
+    "name": "omniorb"
+   },
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "include/COS",
+     "include/omniORB4",
+     "include/omnithread",
+     "include/omni*",
+     "lib/pkgconfig/omni*.pc",
+     "lib/libomni*.dylib",
+     "lib/libCOS*.dylib"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "autoconf",
+      "make"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/omniconfig.h",
+      "test -f ${PREFIX}/include/omnithread.h",
+      "test -f ${PREFIX}/include/omniORB4/acconfig.h",
+      "test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc"
+     ]
+    }
+   },
+   {
+    "files": [
+     "bin/catior",
+     "bin/convertior",
+     "bin/genior",
+     "bin/nameclt",
+     "bin/omkdepend",
+     "bin/omni*",
+     "etc/omniORB-config",
+     "lib/libomni*.a",
+     "lib/libCOS*.a",
      "lib/python3.8/site-packages/_omniidl*",
      "lib/python3.8/site-packages/omniidl",
      "lib/python3.8/site-packages/omniidl_be",
@@ -3831,9 +4686,18 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "autoconf",
+    "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "autoconf",
     "make"
    ],
    "host": [
+    "python",
+    "openssl",
+    "zlib",
+    "zstd",
     "python",
     "openssl",
     "zlib",
@@ -3859,11 +4723,15 @@
     "python",
     "omniorb-libs",
     "python",
+    "omniorb-libs",
+    "python",
     "omniorb-libs"
    ]
   },
   "source": {
    "patches": [
+    "0001-Avoid-kernel-128-character-shebang-limit.patch",
+    "patch-configure.diff",
     "0001-Avoid-kernel-128-character-shebang-limit.patch",
     "patch-configure.diff",
     "0001-Avoid-kernel-128-character-shebang-limit.patch",
@@ -3881,9 +4749,11 @@
     "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl",
+    "omniidl -bcxx idl/echo.idl",
     "omniidl -bcxx idl/echo.idl"
    ],
    "source_files": [
+    "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
@@ -3942,7 +4812,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/omniorb.json"
  },
- "raw_meta_yaml": "{% set version = \"4.3.1\" %}\n\npackage:\n  name: omniorb\n  version: {{ version }}\n\nsource:\n  url: https://sourceforge.net/projects/omniorb/files/omniORB/omniORB-{{ version }}/omniORB-{{ version }}.tar.bz2\n  sha256: 0f42bc3eb737cae680dafa85b3ae3958e9f56a37912c5fb6b875933f8fb7390d\n  patches:\n    - 0001-Avoid-kernel-128-character-shebang-limit.patch  # [unix]\n    - windows-build.patch                                  # [win]\n    - patch-configure.diff                                 # [unix]\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - zstd                                   # [build_platform != target_platform]\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - autoconf  # [unix]\n    - make\n    - posix     # [win]\n  host:\n    - python\n    - openssl\n    - zlib\n    - zstd\n  run:\n    - python\n    - {{ pin_subpackage('omniorb-libs', exact=True) }}\n\ntest:\n  source_files:\n    - idl/echo.idl\n  commands:\n    - omniidl -bcxx idl/echo.idl  # [unix]\n\noutputs:\n  - name: omniorb-libs\n    build:\n      run_exports:\n        - {{ pin_subpackage('omniorb-libs', max_pin='x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - autoconf  # [unix]\n        - make\n        - posix     # [win]\n      host:\n        - openssl\n        - zlib\n        - zstd\n    files:\n      - include/COS                  # [unix]\n      - include/omniORB4             # [unix]\n      - include/omnithread           # [unix]\n      - include/omni*                # [unix]\n      - lib/pkgconfig/omni*.pc       # [unix]\n      - Library/include/COS          # [win]\n      - Library/include/omniORB4     # [win]\n      - Library/include/omnithread   # [win]\n      - Library/include/omniVms      # [win]\n      - Library/include/omni*        # [win]\n      - lib/libomni*.so*             # [linux]\n      - lib/libCOS*.so*              # [linux]\n      - lib/libomni*.dylib           # [osx]\n      - lib/libCOS*.dylib            # [osx]\n      - Library/bin/COS*_rt.dll      # [win]\n      - Library/bin/omni*_rt.dll     # [win]\n      - Library/lib/COS*_rt.lib      # [win]\n      - Library/lib/omni*_rt.lib     # [win]\n    test:\n      commands:\n        - test -f ${PREFIX}/include/omniconfig.h                           # [unix]\n        - test -f ${PREFIX}/include/omnithread.h                           # [unix]\n        - test -f ${PREFIX}/include/omniORB4/acconfig.h                    # [unix]\n        - test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}                    # [unix]\n        - test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}                        # [unix]\n        - test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}                  # [unix]\n        - test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc                      # [unix]\n        - if not exist %LIBRARY_INC%\\\\omniconfig.h exit 1                  # [win]\n        - if not exist %LIBRARY_INC%\\\\omnithread.h exit 1                  # [win]\n        - if not exist %LIBRARY_INC%\\\\omniORB4\\\\CORBA.h exit 1             # [win]\n        - if not exist %LIBRARY_BIN%\\\\omniORB4_rt.dll exit 1               # [win]\n        - if not exist %LIBRARY_BIN%\\\\COS4_rt.dll exit 1                   # [win]\n        - if not exist %LIBRARY_BIN%\\\\omnithread_rt.dll exit 1             # [win]\n        - if not exist %LIBRARY_LIB%\\\\omniORB4_rt.lib exit 1               # [win]\n        - if not exist %LIBRARY_LIB%\\\\COS4_rt.lib exit 1                   # [win]\n        - if not exist %LIBRARY_LIB%\\\\omnithread_rt.lib exit 1             # [win]\n  - name: omniorb\n    files:\n      # WARNING! globs aren't supported for directories (only files)\n      # conda-build will NOT filter on new files only!\n      - bin/catior                                       # [unix]\n      - bin/convertior                                   # [unix]\n      - bin/genior                                       # [unix]\n      - bin/nameclt                                      # [unix]\n      - bin/omkdepend                                    # [unix]\n      - bin/omni*                                        # [unix]\n      - etc/omniORB-config                               # [unix]\n      - lib/libomni*.a                                   # [unix]\n      - lib/libCOS*.a                                    # [unix]\n      - lib/python{{ PY_VER }}/site-packages/_omniidl*   # [unix]\n      - lib/python{{ PY_VER }}/site-packages/omniidl     # [unix]\n      - lib/python{{ PY_VER }}/site-packages/omniidl_be  # [unix]\n      - share/idl/omniORB                                # [unix]\n      - var/omniNames-logs                               # [unix]\n      - Library/bin/catior.exe                           # [win]\n      - Library/bin/convertior.exe                       # [win]\n      - Library/bin/genior.exe                           # [win]\n      - Library/bin/nameclt.exe                          # [win]\n      - Library/bin/omkdepend.exe                        # [win]\n      - Library/bin/omni*.exe                            # [win]\n      - Lib/site-packages/omniidl                        # [win]\n      - Lib/site-packages/omniidl_be                     # [win]\n\nabout:\n  home: http://omniorb.sourceforge.net/index.html\n  license: GPL-2.0-or-later OR LGPL-2.1-or-later\n  license_file:\n    - COPYING\n    - COPYING.LIB\n  summary: Robust high performance CORBA ORB for C++ and Python\n  description: |\n    omniORB is an Object Request Broker (ORB) which implements\n    specification 2.6 of the Common Object Request Broker Architecture\n    (CORBA).\n  doc_url: http://omniorb.sourceforge.net/docs.html\n  dev_url: https://sourceforge.net/projects/omniorb/\n\nextra:\n  recipe-maintainers:\n    - beenje\n    - carlodri\n    - lockhart\n",
+ "raw_meta_yaml": "{% set version = \"4.3.1\" %}\n\npackage:\n  name: omniorb\n  version: {{ version }}\n\nsource:\n  url: https://sourceforge.net/projects/omniorb/files/omniORB/omniORB-{{ version }}/omniORB-{{ version }}.tar.bz2\n  sha256: 0f42bc3eb737cae680dafa85b3ae3958e9f56a37912c5fb6b875933f8fb7390d\n  patches:\n    - 0001-Avoid-kernel-128-character-shebang-limit.patch  # [unix]\n    - windows-build.patch                                  # [win]\n    - patch-configure.diff                                 # [unix]\n\nbuild:\n  number: 1\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - zstd                                   # [build_platform != target_platform]\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - autoconf  # [unix]\n    - make\n    - posix     # [win]\n  host:\n    - python\n    - openssl\n    - zlib\n    - zstd\n  run:\n    - python\n    - {{ pin_subpackage('omniorb-libs', exact=True) }}\n\ntest:\n  source_files:\n    - idl/echo.idl\n  commands:\n    - omniidl -bcxx idl/echo.idl  # [unix]\n\noutputs:\n  - name: omniorb-libs\n    build:\n      run_exports:\n        - {{ pin_subpackage('omniorb-libs', max_pin='x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - autoconf  # [unix]\n        - make\n        - posix     # [win]\n      host:\n        - openssl\n        - zlib\n        - zstd\n    files:\n      - include/COS                  # [unix]\n      - include/omniORB4             # [unix]\n      - include/omnithread           # [unix]\n      - include/omni*                # [unix]\n      - lib/pkgconfig/omni*.pc       # [unix]\n      - Library/include/COS          # [win]\n      - Library/include/omniORB4     # [win]\n      - Library/include/omnithread   # [win]\n      - Library/include/omniVms      # [win]\n      - Library/include/omni*        # [win]\n      - lib/libomni*.so*             # [linux]\n      - lib/libCOS*.so*              # [linux]\n      - lib/libomni*.dylib           # [osx]\n      - lib/libCOS*.dylib            # [osx]\n      - Library/bin/COS*_rt.dll      # [win]\n      - Library/bin/omni*_rt.dll     # [win]\n      - Library/lib/COS*_rt.lib      # [win]\n      - Library/lib/omni*_rt.lib     # [win]\n    test:\n      commands:\n        - test -f ${PREFIX}/include/omniconfig.h                           # [unix]\n        - test -f ${PREFIX}/include/omnithread.h                           # [unix]\n        - test -f ${PREFIX}/include/omniORB4/acconfig.h                    # [unix]\n        - test -f ${PREFIX}/lib/libomniORB4${SHLIB_EXT}                    # [unix]\n        - test -f ${PREFIX}/lib/libCOS4${SHLIB_EXT}                        # [unix]\n        - test -f ${PREFIX}/lib/libomnithread${SHLIB_EXT}                  # [unix]\n        - test -f ${PREFIX}/lib/pkgconfig/omniORB4.pc                      # [unix]\n        - if not exist %LIBRARY_INC%\\\\omniconfig.h exit 1                  # [win]\n        - if not exist %LIBRARY_INC%\\\\omnithread.h exit 1                  # [win]\n        - if not exist %LIBRARY_INC%\\\\omniORB4\\\\CORBA.h exit 1             # [win]\n        - if not exist %LIBRARY_BIN%\\\\omniORB4_rt.dll exit 1               # [win]\n        - if not exist %LIBRARY_BIN%\\\\COS4_rt.dll exit 1                   # [win]\n        - if not exist %LIBRARY_BIN%\\\\omnithread_rt.dll exit 1             # [win]\n        - if not exist %LIBRARY_LIB%\\\\omniORB4_rt.lib exit 1               # [win]\n        - if not exist %LIBRARY_LIB%\\\\COS4_rt.lib exit 1                   # [win]\n        - if not exist %LIBRARY_LIB%\\\\omnithread_rt.lib exit 1             # [win]\n  - name: omniorb\n    files:\n      # WARNING! globs aren't supported for directories (only files)\n      # conda-build will NOT filter on new files only!\n      - bin/catior                                       # [unix]\n      - bin/convertior                                   # [unix]\n      - bin/genior                                       # [unix]\n      - bin/nameclt                                      # [unix]\n      - bin/omkdepend                                    # [unix]\n      - bin/omni*                                        # [unix]\n      - etc/omniORB-config                               # [unix]\n      - lib/libomni*.a                                   # [unix]\n      - lib/libCOS*.a                                    # [unix]\n      - lib/python{{ PY_VER }}/site-packages/_omniidl*   # [unix]\n      - lib/python{{ PY_VER }}/site-packages/omniidl     # [unix]\n      - lib/python{{ PY_VER }}/site-packages/omniidl_be  # [unix]\n      - share/idl/omniORB                                # [unix]\n      - var/omniNames-logs                               # [unix]\n      - Library/bin/catior.exe                           # [win]\n      - Library/bin/convertior.exe                       # [win]\n      - Library/bin/genior.exe                           # [win]\n      - Library/bin/nameclt.exe                          # [win]\n      - Library/bin/omkdepend.exe                        # [win]\n      - Library/bin/omni*.exe                            # [win]\n      - Lib/site-packages/omniidl                        # [win]\n      - Lib/site-packages/omniidl_be                     # [win]\n\nabout:\n  home: http://omniorb.sourceforge.net/index.html\n  license: GPL-2.0-or-later OR LGPL-2.1-or-later\n  license_file:\n    - COPYING\n    - COPYING.LIB\n  summary: Robust high performance CORBA ORB for C++ and Python\n  description: |\n    omniORB is an Object Request Broker (ORB) which implements\n    specification 2.6 of the Common Object Request Broker Architecture\n    (CORBA).\n  doc_url: http://omniorb.sourceforge.net/docs.html\n  dev_url: https://sourceforge.net/projects/omniorb/\n\nextra:\n  recipe-maintainers:\n    - beenje\n    - carlodri\n    - lockhart\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -4050,15 +4920,20 @@
     "COPYING",
     "COPYING.LIB",
     "COPYING",
+    "COPYING.LIB",
+    "COPYING",
     "COPYING.LIB"
    ],
    "summary": "Robust high performance CORBA ORB for C++ and Python"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "beenje",
+    "carlodri",
+    "lockhart",
     "beenje",
     "carlodri",
     "lockhart",
@@ -4074,6 +4949,64 @@
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "run_exports": [
+      "omniorb-libs"
+     ]
+    },
+    "files": [
+     "Library/include/COS",
+     "Library/include/omniORB4",
+     "Library/include/omnithread",
+     "Library/include/omniVms",
+     "Library/include/omni*",
+     "Library/bin/COS*_rt.dll",
+     "Library/bin/omni*_rt.dll",
+     "Library/lib/COS*_rt.lib",
+     "Library/lib/omni*_rt.lib"
+    ],
+    "name": "omniorb-libs",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "make",
+      "posix"
+     ],
+     "host": [
+      "openssl",
+      "zlib",
+      "zstd"
+     ]
+    },
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_INC%\\\\omniconfig.h exit 1",
+      "if not exist %LIBRARY_INC%\\\\omnithread.h exit 1",
+      "if not exist %LIBRARY_INC%\\\\omniORB4\\\\CORBA.h exit 1",
+      "if not exist %LIBRARY_BIN%\\\\omniORB4_rt.dll exit 1",
+      "if not exist %LIBRARY_BIN%\\\\COS4_rt.dll exit 1",
+      "if not exist %LIBRARY_BIN%\\\\omnithread_rt.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\\\omniORB4_rt.lib exit 1",
+      "if not exist %LIBRARY_LIB%\\\\COS4_rt.lib exit 1",
+      "if not exist %LIBRARY_LIB%\\\\omnithread_rt.lib exit 1"
+     ]
+    }
+   },
+   {
+    "files": [
+     "Library/bin/catior.exe",
+     "Library/bin/convertior.exe",
+     "Library/bin/genior.exe",
+     "Library/bin/nameclt.exe",
+     "Library/bin/omkdepend.exe",
+     "Library/bin/omni*.exe",
+     "Lib/site-packages/omniidl",
+     "Lib/site-packages/omniidl_be"
+    ],
+    "name": "omniorb"
+   },
    {
     "build": {
      "run_exports": [
@@ -4328,9 +5261,17 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "make",
+    "posix",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "make",
     "posix"
    ],
    "host": [
+    "python",
+    "openssl",
+    "zlib",
+    "zstd",
     "python",
     "openssl",
     "zlib",
@@ -4356,11 +5297,14 @@
     "python",
     "omniorb-libs",
     "python",
+    "omniorb-libs",
+    "python",
     "omniorb-libs"
    ]
   },
   "source": {
    "patches": [
+    "windows-build.patch",
     "windows-build.patch",
     "windows-build.patch",
     "windows-build.patch",
@@ -4372,6 +5316,7 @@
   "test": {
    "commands": null,
    "source_files": [
+    "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
     "idl/echo.idl",
