@@ -28,10 +28,11 @@
   "extra": {
    "recipe-maintainers": [
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv"
    ]
   },
@@ -168,10 +169,11 @@
   "extra": {
    "recipe-maintainers": [
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv"
    ]
   },
@@ -308,10 +310,11 @@
   "extra": {
    "recipe-maintainers": [
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv"
    ]
   },
@@ -448,40 +451,46 @@
   "extra": {
    "recipe-maintainers": [
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv",
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv",
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv",
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv",
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv",
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv"
    ]
   },
@@ -961,10 +970,11 @@
   "extra": {
    "recipe-maintainers": [
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv"
    ]
   },
@@ -1101,10 +1111,11 @@
   "extra": {
    "recipe-maintainers": [
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv"
    ]
   },
@@ -1244,7 +1255,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/yaml-cpp.json"
  },
- "raw_meta_yaml": "{% set version = \"0.8.0\" %}\n\npackage:\n  name: yaml-cpp-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/jbeder/yaml-cpp/archive/refs/tags/{{ version }}.tar.gz\n  sha256: fbe74bbdcee21d656715688706da3c8becfd946d92cd44705cc6098bb23b3a16\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n\noutputs:\n  - name: yaml-cpp\n    script: build-dyn.sh   # [unix]\n    script: build-dyn.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('yaml-cpp', max_pin='x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n    test:\n      files:\n        - test/\n      requires:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      commands:\n        - test -f \"${PREFIX}/lib/libyaml-cpp${SHLIB_EXT}\"   # [unix]\n        - if not exist %LIBRARY_BIN%\\yaml-cpp.dll (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\yaml-cpp.lib (exit 1)  # [win]\n        - test ! -f \"${PREFIX}/lib/libyaml-cpp.a\"  # [unix]\n        - test -f \"${PREFIX}/lib/cmake/yaml-cpp/yaml-cpp-config.cmake\"              # [unix]\n        - if not exist %LIBRARY_LIB%\\cmake\\yaml-cpp\\yaml-cpp-config.cmake (exit 1)  # [win]\n        # Running a test trying to link to the library\n        - cmake -G Ninja -S test/ -B build-test/ ${CMAKE_ARGS}  # [unix]\n        - cmake -G Ninja -S test/ -B build-test/ %CMAKE_ARGS%   # [win]\n        - cmake --build build-test/\n        - cmake --build build-test/ --target test\n\n  - name: yaml-cpp-static\n    script: build-static.sh   # [unix]\n    script: build-static.bat  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      run_constrained:\n        - yaml-cpp < 0\n    test:\n      files:\n        - test/\n      requires:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      commands:\n        - test ! -f \"${PREFIX}/lib/libyaml-cpp${SHLIB_EXT}\"   # [unix]\n        - if exist %LIBRARY_BIN%\\yaml-cpp.dll (exit 1)        # [win]\n        - if not exist %LIBRARY_LIB%\\yaml-cpp.lib (exit 1)  # [win]\n        - test -f \"${PREFIX}/lib/libyaml-cpp.a\"             # [unix]\n        - test -f \"${PREFIX}/lib/cmake/yaml-cpp/yaml-cpp-config.cmake\"              # [unix]\n        - if not exist %LIBRARY_LIB%\\cmake\\yaml-cpp\\yaml-cpp-config.cmake (exit 1)  # [win]\n        # Running a test trying to link to the library\n        - cmake -G Ninja -S test/ -B build-test/ ${CMAKE_ARGS}  # [unix]\n        - cmake -G Ninja -S test/ -B build-test/ %CMAKE_ARGS%   # [win]\n        - cmake --build build-test/\n        - cmake --build build-test/ --target test\n\nabout:\n  home: https://github.com/jbeder/yaml-cpp\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: yaml-cpp is a YAML parser and emitter in C++ matching the YAML 1.2 spec.\n  doc_url: https://github.com/jbeder/yaml-cpp/wiki/Tutorial\n  dev_url: https://github.com/jbeder/yaml-cpp\n\nextra:\n  recipe-maintainers:\n    - AntoinePrv\n    - allanleal\n    - marcelotrevisani\n    - tadeu\n    - seanyen\n    - wolfv\n",
+ "raw_meta_yaml": "{% set version = \"0.8.0\" %}\n\npackage:\n  name: yaml-cpp-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/jbeder/yaml-cpp/archive/refs/tags/{{ version }}.tar.gz\n  sha256: fbe74bbdcee21d656715688706da3c8becfd946d92cd44705cc6098bb23b3a16\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n\noutputs:\n  - name: yaml-cpp\n    script: build-dyn.sh   # [unix]\n    script: build-dyn.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('yaml-cpp', max_pin='x.x') }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n    test:\n      files:\n        - test/\n      requires:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      commands:\n        - test -f \"${PREFIX}/lib/libyaml-cpp${SHLIB_EXT}\"   # [unix]\n        - if not exist %LIBRARY_BIN%\\yaml-cpp.dll (exit 1)  # [win]\n        - if not exist %LIBRARY_LIB%\\yaml-cpp.lib (exit 1)  # [win]\n        - test ! -f \"${PREFIX}/lib/libyaml-cpp.a\"  # [unix]\n        - test -f \"${PREFIX}/lib/cmake/yaml-cpp/yaml-cpp-config.cmake\"              # [unix]\n        - if not exist %LIBRARY_LIB%\\cmake\\yaml-cpp\\yaml-cpp-config.cmake (exit 1)  # [win]\n        # Running a test trying to link to the library\n        - cmake -G Ninja -S test/ -B build-test/ ${CMAKE_ARGS}  # [unix]\n        - cmake -G Ninja -S test/ -B build-test/ %CMAKE_ARGS%   # [win]\n        - cmake --build build-test/\n        - cmake --build build-test/ --target test\n\n  - name: yaml-cpp-static\n    script: build-static.sh   # [unix]\n    script: build-static.bat  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      run_constrained:\n        - yaml-cpp < 0\n    test:\n      files:\n        - test/\n      requires:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      commands:\n        - test ! -f \"${PREFIX}/lib/libyaml-cpp${SHLIB_EXT}\"   # [unix]\n        - if exist %LIBRARY_BIN%\\yaml-cpp.dll (exit 1)        # [win]\n        - if not exist %LIBRARY_LIB%\\yaml-cpp.lib (exit 1)  # [win]\n        - test -f \"${PREFIX}/lib/libyaml-cpp.a\"             # [unix]\n        - test -f \"${PREFIX}/lib/cmake/yaml-cpp/yaml-cpp-config.cmake\"              # [unix]\n        - if not exist %LIBRARY_LIB%\\cmake\\yaml-cpp\\yaml-cpp-config.cmake (exit 1)  # [win]\n        # Running a test trying to link to the library\n        - cmake -G Ninja -S test/ -B build-test/ ${CMAKE_ARGS}  # [unix]\n        - cmake -G Ninja -S test/ -B build-test/ %CMAKE_ARGS%   # [win]\n        - cmake --build build-test/\n        - cmake --build build-test/ --target test\n\nabout:\n  home: https://github.com/jbeder/yaml-cpp\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: yaml-cpp is a YAML parser and emitter in C++ matching the YAML 1.2 spec.\n  doc_url: https://github.com/jbeder/yaml-cpp/wiki/Tutorial\n  dev_url: https://github.com/jbeder/yaml-cpp\n\nextra:\n  recipe-maintainers:\n    - AntoinePrv\n    - JohanMabille\n    - allanleal\n    - marcelotrevisani\n    - seanyen\n    - tadeu\n    - wolfv\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1338,10 +1349,11 @@
   "extra": {
    "recipe-maintainers": [
     "AntoinePrv",
+    "JohanMabille",
     "allanleal",
     "marcelotrevisani",
-    "tadeu",
     "seanyen",
+    "tadeu",
     "wolfv"
    ]
   },
