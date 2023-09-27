@@ -28,7 +28,7 @@
    "summary": "Python CFFI binding around SuiteSparse::GraphBLAS"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -246,7 +246,7 @@
    "summary": "Python CFFI binding around SuiteSparse::GraphBLAS"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -464,7 +464,7 @@
    "summary": "Python CFFI binding around SuiteSparse::GraphBLAS"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -682,11 +682,14 @@
    "summary": "Python CFFI binding around SuiteSparse::GraphBLAS"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
    "recipe-maintainers": [
+    "jim22k",
+    "eriknw",
+    "michelp",
     "jim22k",
     "eriknw",
     "michelp",
@@ -830,9 +833,19 @@
     "c_compiler_stub",
     "c_compiler_stub",
     "c_compiler_stub",
+    "c_compiler_stub",
     "c_compiler_stub"
    ],
    "host": [
+    "python",
+    "pip",
+    "setuptools >=64",
+    "setuptools-git-versioning",
+    "cffi",
+    "cython",
+    "graphblas =8.0.2",
+    "numpy",
+    "pytest-runner",
     "python",
     "pip",
     "setuptools >=64",
@@ -1242,6 +1255,9 @@
     "cffi",
     "numpy",
     "python",
+    "cffi",
+    "numpy",
+    "python",
     "cffi"
    ]
   },
@@ -1251,6 +1267,10 @@
   },
   "test": {
    "commands": [
+    "pip check",
+    "python -c \"import platform ; print(platform.machine())\"",
+    "python -c \"from suitesparse_graphblas import lib, ffi\"",
+    "pytest -v --pyargs suitesparse_graphblas",
     "pip check",
     "python -c \"import platform ; print(platform.machine())\"",
     "python -c \"from suitesparse_graphblas import lib, ffi\"",
@@ -1422,9 +1442,12 @@
     "suitesparse_graphblas",
     "suitesparse_graphblas",
     "suitesparse_graphblas",
+    "suitesparse_graphblas",
     "suitesparse_graphblas"
    ],
    "requires": [
+    "pip",
+    "pytest",
     "pip",
     "pytest",
     "pip",
@@ -1508,7 +1531,7 @@
    "summary": "Python CFFI binding around SuiteSparse::GraphBLAS"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -1726,11 +1749,14 @@
    "summary": "Python CFFI binding around SuiteSparse::GraphBLAS"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
    "recipe-maintainers": [
+    "jim22k",
+    "eriknw",
+    "michelp",
     "jim22k",
     "eriknw",
     "michelp",
@@ -1754,9 +1780,19 @@
     "c_compiler_stub",
     "c_compiler_stub",
     "c_compiler_stub",
+    "c_compiler_stub",
     "c_compiler_stub"
    ],
    "host": [
+    "python",
+    "pip",
+    "setuptools >=64",
+    "setuptools-git-versioning",
+    "cffi",
+    "cython",
+    "graphblas =8.0.2",
+    "numpy",
+    "pytest-runner",
     "python",
     "pip",
     "setuptools >=64",
@@ -1806,6 +1842,9 @@
     "cffi",
     "numpy",
     "python",
+    "cffi",
+    "numpy",
+    "python",
     "cffi"
    ]
   },
@@ -1830,15 +1869,22 @@
     "pip check",
     "python -c \"import platform ; print(platform.machine())\"",
     "python -c \"from suitesparse_graphblas import lib, ffi\"",
+    "pytest -v --pyargs suitesparse_graphblas",
+    "pip check",
+    "python -c \"import platform ; print(platform.machine())\"",
+    "python -c \"from suitesparse_graphblas import lib, ffi\"",
     "pytest -v --pyargs suitesparse_graphblas"
    ],
    "imports": [
     "suitesparse_graphblas",
     "suitesparse_graphblas",
     "suitesparse_graphblas",
+    "suitesparse_graphblas",
     "suitesparse_graphblas"
    ],
    "requires": [
+    "pip",
+    "pytest",
     "pip",
     "pytest",
     "pip",
@@ -1905,7 +1951,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/python-suitesparse-graphblas.json"
  },
- "raw_meta_yaml": "{% set name = \"python-suitesparse-graphblas\" %}\n{% set version = \"8.0.2.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/s/suitesparse-graphblas/suitesparse-graphblas-{{ version }}.tar.gz\n  sha256: 7d0f7fdded70d549800a4ba3d9b6ed4cb17980c3de1c2d3a1861880100a72ef3\n\nbuild:\n  skip: true  # [py<38]\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - cython                                 # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n    - cffi                                   # [build_platform != target_platform]\n    - {{ compiler('c') }}\n  host:\n    - python\n    - pip\n    - setuptools >=64\n    - setuptools-git-versioning\n    - cffi\n    - cython\n    - graphblas ={{ version.rsplit('.', 1)[0] }}\n    - numpy\n    - pytest-runner\n  run:\n    - {{ pin_compatible('numpy') }}\n    - python\n    - cffi\n\ntest:\n  imports:\n    - suitesparse_graphblas\n  commands:\n    - pip check\n    - python -c \"import platform ; print(platform.machine())\"\n    - python -c \"from suitesparse_graphblas import lib, ffi\"\n    - pytest -v --pyargs suitesparse_graphblas\n  requires:\n    - pip\n    - pytest\n\nabout:\n  home: https://github.com/GraphBLAS/python-suitesparse-graphblas\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Python CFFI binding around SuiteSparse::GraphBLAS\n  description: |\n    Python CFFI binding around SuiteSparse::GraphBLAS. This is a base package that exposes\n    only the low level CFFI API bindings and symbols. This package is shared by the syntax\n    bindings pygraphblas and python-graphblas.\n  dev_url: https://github.com/GraphBLAS/python-suitesparse-graphblas\n\nextra:\n  recipe-maintainers:\n    - jim22k\n    - eriknw\n    - michelp\n",
+ "raw_meta_yaml": "{% set name = \"python-suitesparse-graphblas\" %}\n{% set version = \"8.0.2.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/s/suitesparse-graphblas/suitesparse-graphblas-{{ version }}.tar.gz\n  sha256: 7d0f7fdded70d549800a4ba3d9b6ed4cb17980c3de1c2d3a1861880100a72ef3\n\nbuild:\n  skip: true  # [py<38]\n  number: 1\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - cython                                 # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n    - cffi                                   # [build_platform != target_platform]\n    - {{ compiler('c') }}\n  host:\n    - python\n    - pip\n    - setuptools >=64\n    - setuptools-git-versioning\n    - cffi\n    - cython\n    - graphblas ={{ version.rsplit('.', 1)[0] }}\n    - numpy\n    - pytest-runner\n  run:\n    - {{ pin_compatible('numpy') }}\n    - python\n    - cffi\n\ntest:\n  imports:\n    - suitesparse_graphblas\n  commands:\n    - pip check\n    - python -c \"import platform ; print(platform.machine())\"\n    - python -c \"from suitesparse_graphblas import lib, ffi\"\n    - pytest -v --pyargs suitesparse_graphblas\n  requires:\n    - pip\n    - pytest\n\nabout:\n  home: https://github.com/GraphBLAS/python-suitesparse-graphblas\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Python CFFI binding around SuiteSparse::GraphBLAS\n  description: |\n    Python CFFI binding around SuiteSparse::GraphBLAS. This is a base package that exposes\n    only the low level CFFI API bindings and symbols. This package is shared by the syntax\n    bindings pygraphblas and python-graphblas.\n  dev_url: https://github.com/GraphBLAS/python-suitesparse-graphblas\n\nextra:\n  recipe-maintainers:\n    - jim22k\n    - eriknw\n    - michelp\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -2014,7 +2060,7 @@
    "summary": "Python CFFI binding around SuiteSparse::GraphBLAS"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
