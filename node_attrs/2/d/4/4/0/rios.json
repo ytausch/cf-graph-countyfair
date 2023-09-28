@@ -13,9 +13,11 @@
   },
   "build": {
    "entry_points": [
-    "testrios.py = rios.riostests.riostestutils:testAll",
+    "testrios = rios.riostests.riostestutils:testAll",
     "riosprintstats.py = rios.cmdline.riosprintstats:main",
-    "rioscalcstats.py = rios.cmdline.rioscalcstats:main"
+    "riosprintstats = rios.cmdline.riosprintstats:main",
+    "rioscalcstats.py = rios.cmdline.rioscalcstats:main",
+    "rioscalcstats = rios.cmdline.rioscalcstats:main"
    ],
    "noarch": "python",
    "number": "0",
@@ -30,7 +32,7 @@
   },
   "package": {
    "name": "rios",
-   "version": "1.4.15"
+   "version": "1.4.16"
   },
   "requirements": {
    "host": [
@@ -41,22 +43,25 @@
    "run": [
     "python >=3.6",
     "numpy",
-    "gdal"
+    "gdal",
+    "cloudpickle"
    ]
   },
   "source": {
-   "fn": "rios-1.4.15.tar.gz",
+   "fn": "rios-1.4.16.tar.gz",
    "patches": [
     "nocmdline.patch"
    ],
-   "sha256": "71670508dbffcd8f5d24fbb25e6a2b7e1d23b5e899ddc78c90d403bd65981cf4",
-   "url": "https://github.com/ubarsc/rios/releases/download/rios-1.4.15/rios-1.4.15.tar.gz"
+   "sha256": "2f553d85ff4ff26bfda2a8c6bd3d9dcce5ace847f7d9bd2f072c8943f3758ded",
+   "url": "https://github.com/ubarsc/rios/releases/download/rios-1.4.16/rios-1.4.16.tar.gz"
   },
   "test": {
    "commands": [
-    "testrios.py",
+    "testrios",
     "rioscalcstats.py -h",
-    "riosprintstats.py -h"
+    "rioscalcstats -h",
+    "riosprintstats.py -h",
+    "riosprintstats -h"
    ],
    "imports": [
     "rios"
@@ -79,6 +84,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "cloudpickle",
     "gdal",
     "numpy",
     "python"
@@ -98,9 +104,11 @@
   },
   "build": {
    "entry_points": [
-    "testrios.py = rios.riostests.riostestutils:testAll",
+    "testrios = rios.riostests.riostestutils:testAll",
     "riosprintstats.py = rios.cmdline.riosprintstats:main",
-    "rioscalcstats.py = rios.cmdline.rioscalcstats:main"
+    "riosprintstats = rios.cmdline.riosprintstats:main",
+    "rioscalcstats.py = rios.cmdline.rioscalcstats:main",
+    "rioscalcstats = rios.cmdline.rioscalcstats:main"
    ],
    "noarch": "python",
    "number": "0",
@@ -115,7 +123,7 @@
   },
   "package": {
    "name": "rios",
-   "version": "1.4.15"
+   "version": "1.4.16"
   },
   "requirements": {
    "host": [
@@ -126,22 +134,25 @@
    "run": [
     "python >=3.6",
     "numpy",
-    "gdal"
+    "gdal",
+    "cloudpickle"
    ]
   },
   "source": {
-   "fn": "rios-1.4.15.tar.gz",
+   "fn": "rios-1.4.16.tar.gz",
    "patches": [
     "nocmdline.patch"
    ],
-   "sha256": "71670508dbffcd8f5d24fbb25e6a2b7e1d23b5e899ddc78c90d403bd65981cf4",
-   "url": "https://github.com/ubarsc/rios/releases/download/rios-1.4.15/rios-1.4.15.tar.gz"
+   "sha256": "2f553d85ff4ff26bfda2a8c6bd3d9dcce5ace847f7d9bd2f072c8943f3758ded",
+   "url": "https://github.com/ubarsc/rios/releases/download/rios-1.4.16/rios-1.4.16.tar.gz"
   },
   "test": {
    "commands": [
-    "testrios.py",
+    "testrios",
     "rioscalcstats.py -h",
-    "riosprintstats.py -h"
+    "rioscalcstats -h",
+    "riosprintstats.py -h",
+    "riosprintstats -h"
    ],
    "imports": [
     "rios"
@@ -162,10 +173,11 @@
  "pr_info": {
   "__lazy_json__": "pr_info/rios.json"
  },
- "raw_meta_yaml": "{% set version = \"1.4.15\" %}\n\npackage:\n  name: rios\n  version: {{ version }}\n\nsource:\n  fn: rios-{{ version }}.tar.gz\n  url: https://github.com/ubarsc/rios/releases/download/rios-{{ version }}/rios-{{ version }}.tar.gz\n  sha256: 71670508dbffcd8f5d24fbb25e6a2b7e1d23b5e899ddc78c90d403bd65981cf4\n  patches:\n    # Don't install the command line progs, use entry point instead\n    # Setting the env vars doesn't work for noarch packages.\n    - nocmdline.patch\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n  entry_points:\n    - testrios.py = rios.riostests.riostestutils:testAll\n    - riosprintstats.py = rios.cmdline.riosprintstats:main\n    - rioscalcstats.py = rios.cmdline.rioscalcstats:main\n\nrequirements:\n  host:\n    - python >=3.6\n    - pip\n    - numpy\n  run:\n    - python >=3.6\n    - numpy\n    - gdal\n\ntest:\n  imports:\n    - rios\n  commands:\n    - testrios.py\n    - rioscalcstats.py -h\n    - riosprintstats.py -h\n\nabout:\n  home: http://www.rioshome.org\n  license: GPL-3.0-or-later\n  license_file: LICENSE.txt\n  summary: Raster I/O simplification, a set of Python modules built on top of GDAL to simplify processing raster data, including data with Raster Attribute Tables.\n\nextra:\n  recipe-maintainers:\n    - gillins\n    - danclewley\n    - neilflood\n",
+ "raw_meta_yaml": "{% set version = \"1.4.16\" %}\n\npackage:\n  name: rios\n  version: {{ version }}\n\nsource:\n  fn: rios-{{ version }}.tar.gz\n  url: https://github.com/ubarsc/rios/releases/download/rios-{{ version }}/rios-{{ version }}.tar.gz\n  sha256: 2f553d85ff4ff26bfda2a8c6bd3d9dcce5ace847f7d9bd2f072c8943f3758ded\n  patches:\n    # Don't install the command line progs, use entry point instead\n    # Setting the env vars doesn't work for noarch packages.\n    - nocmdline.patch\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n  entry_points:\n    - testrios = rios.riostests.riostestutils:testAll\n    - riosprintstats.py = rios.cmdline.riosprintstats:main\n    - riosprintstats = rios.cmdline.riosprintstats:main\n    - rioscalcstats.py = rios.cmdline.rioscalcstats:main\n    - rioscalcstats = rios.cmdline.rioscalcstats:main\n\nrequirements:\n  host:\n    - python >=3.6\n    - pip\n    - numpy\n  run:\n    - python >=3.6\n    - numpy\n    - gdal\n    - cloudpickle\n\ntest:\n  imports:\n    - rios\n  commands:\n    - testrios\n    - rioscalcstats.py -h\n    - rioscalcstats -h\n    - riosprintstats.py -h\n    - riosprintstats -h\n\nabout:\n  home: http://www.rioshome.org\n  license: GPL-3.0-or-later\n  license_file: LICENSE.txt\n  summary: Raster I/O simplification, a set of Python modules built on top of GDAL to simplify processing raster data, including data with Raster Attribute Tables.\n\nextra:\n  recipe-maintainers:\n    - gillins\n    - danclewley\n    - neilflood\n",
  "req": {
   "__set__": true,
   "elements": [
+   "cloudpickle",
    "gdal",
    "numpy",
    "pip",
@@ -188,6 +200,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "cloudpickle",
     "gdal",
     "numpy",
     "python"
@@ -215,6 +228,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "cloudpickle",
     "gdal",
     "numpy",
     "python >=3.6"
@@ -225,8 +239,8 @@
    "elements": []
   }
  },
- "url": "https://github.com/ubarsc/rios/releases/download/rios-1.4.15/rios-1.4.15.tar.gz",
- "version": "1.4.15",
+ "url": "https://github.com/ubarsc/rios/releases/download/rios-1.4.16/rios-1.4.16.tar.gz",
+ "version": "1.4.16",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/rios.json"
  }
