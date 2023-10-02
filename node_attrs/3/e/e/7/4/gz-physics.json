@@ -20,7 +20,7 @@
    "summary": "Abstract physics interface designed to support simulation and rapid development of robot applications. "
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gz-physics",
@@ -149,7 +149,7 @@
    "summary": "Abstract physics interface designed to support simulation and rapid development of robot applications. "
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gz-physics",
@@ -278,7 +278,7 @@
    "summary": "Abstract physics interface designed to support simulation and rapid development of robot applications. "
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gz-physics",
@@ -407,7 +407,7 @@
    "summary": "Abstract physics interface designed to support simulation and rapid development of robot applications. "
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gz-physics",
@@ -838,7 +838,7 @@
    "summary": "Abstract physics interface designed to support simulation and rapid development of robot applications. "
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gz-physics",
@@ -967,7 +967,7 @@
    "summary": "Abstract physics interface designed to support simulation and rapid development of robot applications. "
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gz-physics",
@@ -1107,7 +1107,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/gz-physics.json"
  },
- "raw_meta_yaml": "{% set component_name = \"physics\" %}\n{% set repo_name = \"gz-\" + component_name %}\n{% set version = \"6_6.5.1\" %}\n{% set major_version = version.split('_')[0] %}\n{% set version_package = version.split('_')[1] %}\n{% set name = repo_name + major_version %}\n{% set component_version = component_name + major_version %}\n{% set cxx_name = \"lib\" + name %}\n\npackage:\n  name: {{ name }}\n  version: {{ version_package }}\n\nsource:\n  - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ version }}.tar.gz\n    sha256: 4c8f7aef073124817bc54bb9427f6ba72c5b0d5e177e62e95f1dc18fd611d05a\n    patches:\n      - disable_fake_install.patch\n      - disable_integration_tests.patch  # [win]\n      - workaround_win_base_test.patch  # [win]\n\nbuild:\n  number: 0\n\noutputs:\n  - name: {{ cxx_name }}\n    script: build_cxx.sh  # [unix]\n    script: bld_cxx.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - {{ compiler('c') }}\n        - ninja\n        - cmake\n        - pkg-config\n      host:\n        - libgz-cmake3\n        - libgz-plugin2\n        - libgz-math7\n        - libgz-common5\n        - libgz-utils2\n        - libsdformat13\n        - eigen\n        - assimp\n        - dartsim\n        - libode\n        - bullet-cpp\n\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n\n  - name: {{ name }}\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n\nabout:\n  home: https://github.com/gazebosim/{{ repo_name }}\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: 'Abstract physics interface designed to support simulation and rapid development of robot applications. '\n\nextra:\n  feedstock-name: {{ repo_name }}\n  recipe-maintainers:\n    - Tobias-Fischer\n    - traversaro\n",
+ "raw_meta_yaml": "{% set component_name = \"physics\" %}\n{% set repo_name = \"gz-\" + component_name %}\n{% set version = \"6_6.5.1\" %}\n{% set major_version = version.split('_')[0] %}\n{% set version_package = version.split('_')[1] %}\n{% set name = repo_name + major_version %}\n{% set component_version = component_name + major_version %}\n{% set cxx_name = \"lib\" + name %}\n\npackage:\n  name: {{ name }}\n  version: {{ version_package }}\n\nsource:\n  - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ version }}.tar.gz\n    sha256: 4c8f7aef073124817bc54bb9427f6ba72c5b0d5e177e62e95f1dc18fd611d05a\n    patches:\n      - disable_fake_install.patch\n      - disable_integration_tests.patch  # [win]\n      - workaround_win_base_test.patch  # [win]\n\nbuild:\n  number: 1\n\noutputs:\n  - name: {{ cxx_name }}\n    script: build_cxx.sh  # [unix]\n    script: bld_cxx.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - {{ compiler('c') }}\n        - ninja\n        - cmake\n        - pkg-config\n      host:\n        - libgz-cmake3\n        - libgz-plugin2\n        - libgz-math7\n        - libgz-common5\n        - libgz-utils2\n        - libsdformat13\n        - eigen\n        - assimp\n        - dartsim\n        - libode\n        - bullet-cpp\n\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n\n  - name: {{ name }}\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n\nabout:\n  home: https://github.com/gazebosim/{{ repo_name }}\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: 'Abstract physics interface designed to support simulation and rapid development of robot applications. '\n\nextra:\n  feedstock-name: {{ repo_name }}\n  recipe-maintainers:\n    - Tobias-Fischer\n    - traversaro\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1224,7 +1224,7 @@
    "summary": "Abstract physics interface designed to support simulation and rapid development of robot applications. "
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "gz-physics",
