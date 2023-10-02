@@ -20,7 +20,7 @@
    "summary": "PySCF: Python-based Simulations of Chemistry Framework"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": [
     "export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"",
     "PYTHON -m pip install . -vv",
@@ -238,7 +238,7 @@
    "summary": "PySCF: Python-based Simulations of Chemistry Framework"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": [
     "export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"",
     "PYTHON -m pip install . -vv",
@@ -456,7 +456,7 @@
    "summary": "PySCF: Python-based Simulations of Chemistry Framework"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": [
     "export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"",
     "PYTHON -m pip install . -vv",
@@ -899,7 +899,7 @@
    "summary": "PySCF: Python-based Simulations of Chemistry Framework"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": [
     "export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"",
     "PYTHON -m pip install . -vv",
@@ -1123,7 +1123,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pyscf.json"
  },
- "raw_meta_yaml": "{% set name = \"pyscf\" %}\n{% set version = \"2.3.0\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/pyscf/pyscf/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 884065031ae6591dbf75cd2e05336bb43363cf44eeef3443de4adefe0124ee36\n\nbuild:\n  number: 1\n  skip: true  # [win]\n  script:\n    - export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake >=3.10\n    - python                              # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n  host:\n    - libblas\n    - libcint\n    - libxc-c >=6\n    - llvm-openmp\n    - make\n    - pip\n    - python\n    - xcfun 2.1.1\n  run:\n    - h5py >=2.7\n    - numpy >=1.13,!=1.16,!=1.17\n    - python\n    - scipy >=0.19,!=1.5.0,!=1.5\n  run_constrained:\n    - pyberny >=0.6.2\n    - geometric >=0.9.7.2\n\ntest:\n  imports:\n    - pyscf\n    - pyscf.dft\n    # Tests LIBXC and XCFUN\n  commands:\n    - pip check\n    - cp {{ RECIPE_DIR }}/pyscf_conf.py .pyscf_conf.py\n    - >\n      pytest pyscf/lib pyscf/scf -s -c setup.cfg --cov-report xml --cov-report term --cov-config .coveragerc --cov pyscf\n  requires:\n    - pip\n    - pytest\n    - pytest-cov\n  source_files:\n    - .coveragerc\n    - pyscf\n    - setup.cfg\n\nabout:\n  home: https://pyscf.org\n  summary: 'PySCF: Python-based Simulations of Chemistry Framework'\n  license: Apache-2.0\n  license_file: LICENSE\n  dev_url: https://github.com/pyscf/pyscf\n\nextra:\n  recipe-maintainers:\n    - awvwgk\n    - maxscheurer\n    - BastianZim\n",
+ "raw_meta_yaml": "{% set name = \"pyscf\" %}\n{% set version = \"2.3.0\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/pyscf/pyscf/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 884065031ae6591dbf75cd2e05336bb43363cf44eeef3443de4adefe0124ee36\n\nbuild:\n  number: 2\n  skip: true  # [win]\n  script:\n    - export CMAKE_CONFIGURE_ARGS=\"${CMAKE_ARGS} -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DBUILD_LIBCINT=OFF -DBUILD_LIBXC=OFF -DBUILD_XCFUN=OFF -LAH\"\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake >=3.10\n    - python                              # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n  host:\n    - libblas\n    - libcint\n    - libxc-c >=6\n    - llvm-openmp\n    - make\n    - pip\n    - python\n    - xcfun 2.1.1\n  run:\n    - h5py >=2.7\n    - numpy >=1.13,!=1.16,!=1.17\n    - python\n    - scipy >=0.19,!=1.5.0,!=1.5\n  run_constrained:\n    - pyberny >=0.6.2\n    - geometric >=0.9.7.2\n\ntest:\n  imports:\n    - pyscf\n    - pyscf.dft\n    # Tests LIBXC and XCFUN\n  commands:\n    - pip check\n    - cp {{ RECIPE_DIR }}/pyscf_conf.py .pyscf_conf.py\n    - >\n      pytest pyscf/lib pyscf/scf -s -c setup.cfg --cov-report xml --cov-report term --cov-config .coveragerc --cov pyscf\n  requires:\n    - pip\n    - pytest\n    - pytest-cov\n  source_files:\n    - .coveragerc\n    - pyscf\n    - setup.cfg\n\nabout:\n  home: https://pyscf.org\n  summary: 'PySCF: Python-based Simulations of Chemistry Framework'\n  license: Apache-2.0\n  license_file: LICENSE\n  dev_url: https://github.com/pyscf/pyscf\n\nextra:\n  recipe-maintainers:\n    - awvwgk\n    - maxscheurer\n    - BastianZim\n",
  "req": {
   "__set__": true,
   "elements": [
