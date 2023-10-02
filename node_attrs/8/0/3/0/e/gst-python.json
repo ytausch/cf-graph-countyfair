@@ -37,7 +37,7 @@
     "gst-plugins-base",
     "libstdcxx-ng"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -296,7 +296,7 @@
     "gst-plugins-base",
     "libstdcxx-ng"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -575,7 +575,7 @@
     "gst-plugins-base",
     "libstdcxx-ng"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -899,7 +899,7 @@
     "gst-plugins-base",
     "gst-plugins-base"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1822,7 +1822,7 @@
     "gst-plugins-base",
     "libcxx"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -2015,7 +2015,7 @@
     "gst-plugins-base",
     "libcxx"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -2203,7 +2203,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/gst-python.json"
  },
- "raw_meta_yaml": "{% set name = \"gst-python\" %}\n{% set version = \"1.22.6\" %}\n{% set sha256 = \"51de2d6d13b12ce095eac97c0b94ee59c2aeba3712bb7462b78c4d57dde176c5\" %}\n\n# handle GST versions\n{% set version_arr = version.split(\".\") %}\n{% set gst_version = \".\".join((version_arr[0], version_arr[1])) %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://gstreamer.freedesktop.org/src/{{ name }}/{{ name }}-{{ version }}.tar.xz\n  sha256: {{ sha256 }}\n  patches:\n    # see https://gitlab.freedesktop.org/gstreamer/gst-python/-/merge_requests/41\n    - overlinking.patch\n\nbuild:\n  ignore_run_exports:\n    # required by meson, but not actually used\n    - gst-plugins-base\n    - libcxx  # [osx]\n    - libstdcxx-ng  # [linux]\n  number: 1\n  skip: true  # [python_impl != 'cpython']\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ cdt('libxau-devel') }}          # [linux]\n    - {{ cdt('libxext-devel') }}         # [linux]\n    - {{ cdt('libx11-devel') }}          # [linux]\n    - {{ cdt('libxrender-devel') }}      # [linux]\n    - {{ cdt('xorg-x11-proto-devel') }}  # [linux]\n    - {{ cdt('mesa-libgl-devel') }}      # [linux]\n    - {{ cdt('libdrm-devel') }}          # [linux]\n    - {{ cdt('libxdamage-devel') }}      # [linux]\n    - {{ cdt('libxfixes-devel') }}       # [linux]\n    - {{ cdt('libxxf86vm-devel') }}      # [linux]\n    - {{ cdt('mesa-dri-drivers') }}      # [linux]\n    # These dependencies are only for cos7 platforms\n    - {{ cdt('libglvnd-glx') }}          # [linux & (ppc64le | aarch64)]\n    - {{ cdt('libglvnd') }}              # [linux & (ppc64le | aarch64)]\n    - {{ cdt('libxshmfence-devel') }}    # [linux & (ppc64le | aarch64)]\n    - {{ cdt('mesa-khr-devel') }}        # [linux & (ppc64le | aarch64)]\n    # expat here is _only_ required for mesa-dri-drivers\n    - {{ cdt('expat') }}                 # [linux]\n    - {{ cdt('libselinux-devel') }}      # [linux]\n    - pkg-config\n    - meson\n    # see https://github.com/mesonbuild/meson/issues/7611\n    - meson !=0.56.*  # [win]\n    - ninja\n  host:\n    - gstreamer\n    - gstreamer {{ gst_version }}\n    - gst-plugins-base {{ gst_version }}\n    - glib\n    - python\n    - pygobject >=3.8\n    - setuptools\n  run:\n    - {{ pin_compatible('gstreamer') }}\n    - {{ pin_compatible('gst-plugins-base') }}\n    - python\n    - pygobject\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/gstreamer-1.0/libgstpython${SHLIB_EXT}  # [unix]\n    - if not exist %LIBRARY_LIB%\\\\gstreamer-1.0\\\\gstpython.dll exit 1  # [win]\n    - gst-inspect-1.0 --plugin python\n\nabout:\n  home: http://gstreamer.freedesktop.org/modules/gst-python.html\n  dev_url: https://gitlab.freedesktop.org/gstreamer/gst-python\n  license: LGPL-2.1-or-later\n  license_family: LGPL\n  license_file: COPYING\n  summary: GStreamer Python binding overrides\n  description: GStreamer Python binding overrides\n\nextra:\n  recipe-maintainers:\n    - duncanmmacleod\n    - tschoonj\n",
+ "raw_meta_yaml": "{% set name = \"gst-python\" %}\n{% set version = \"1.22.6\" %}\n{% set sha256 = \"51de2d6d13b12ce095eac97c0b94ee59c2aeba3712bb7462b78c4d57dde176c5\" %}\n\n# handle GST versions\n{% set version_arr = version.split(\".\") %}\n{% set gst_version = \".\".join((version_arr[0], version_arr[1])) %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://gstreamer.freedesktop.org/src/{{ name }}/{{ name }}-{{ version }}.tar.xz\n  sha256: {{ sha256 }}\n  patches:\n    # see https://gitlab.freedesktop.org/gstreamer/gst-python/-/merge_requests/41\n    - overlinking.patch\n\nbuild:\n  ignore_run_exports:\n    # required by meson, but not actually used\n    - gst-plugins-base\n    - libcxx  # [osx]\n    - libstdcxx-ng  # [linux]\n  number: 2\n  skip: true  # [python_impl != 'cpython']\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ cdt('libxau-devel') }}          # [linux]\n    - {{ cdt('libxext-devel') }}         # [linux]\n    - {{ cdt('libx11-devel') }}          # [linux]\n    - {{ cdt('libxrender-devel') }}      # [linux]\n    - {{ cdt('xorg-x11-proto-devel') }}  # [linux]\n    - {{ cdt('mesa-libgl-devel') }}      # [linux]\n    - {{ cdt('libdrm-devel') }}          # [linux]\n    - {{ cdt('libxdamage-devel') }}      # [linux]\n    - {{ cdt('libxfixes-devel') }}       # [linux]\n    - {{ cdt('libxxf86vm-devel') }}      # [linux]\n    - {{ cdt('mesa-dri-drivers') }}      # [linux]\n    # These dependencies are only for cos7 platforms\n    - {{ cdt('libglvnd-glx') }}          # [linux & (ppc64le | aarch64)]\n    - {{ cdt('libglvnd') }}              # [linux & (ppc64le | aarch64)]\n    - {{ cdt('libxshmfence-devel') }}    # [linux & (ppc64le | aarch64)]\n    - {{ cdt('mesa-khr-devel') }}        # [linux & (ppc64le | aarch64)]\n    # expat here is _only_ required for mesa-dri-drivers\n    - {{ cdt('expat') }}                 # [linux]\n    - {{ cdt('libselinux-devel') }}      # [linux]\n    - pkg-config\n    - meson\n    # see https://github.com/mesonbuild/meson/issues/7611\n    - meson !=0.56.*  # [win]\n    - ninja\n  host:\n    - gstreamer\n    - gstreamer {{ gst_version }}\n    - gst-plugins-base {{ gst_version }}\n    - glib\n    - python\n    - pygobject >=3.8\n    - setuptools\n  run:\n    - {{ pin_compatible('gstreamer') }}\n    - {{ pin_compatible('gst-plugins-base') }}\n    - python\n    - pygobject\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/gstreamer-1.0/libgstpython${SHLIB_EXT}  # [unix]\n    - if not exist %LIBRARY_LIB%\\\\gstreamer-1.0\\\\gstpython.dll exit 1  # [win]\n    - gst-inspect-1.0 --plugin python\n\nabout:\n  home: http://gstreamer.freedesktop.org/modules/gst-python.html\n  dev_url: https://gitlab.freedesktop.org/gstreamer/gst-python\n  license: LGPL-2.1-or-later\n  license_family: LGPL\n  license_file: COPYING\n  summary: GStreamer Python binding overrides\n  description: GStreamer Python binding overrides\n\nextra:\n  recipe-maintainers:\n    - duncanmmacleod\n    - tschoonj\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -2325,7 +2325,7 @@
     "gst-plugins-base",
     "gst-plugins-base"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
