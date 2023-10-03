@@ -24,10 +24,15 @@
     "$RPATH/libsotest.so.1",
     "$RPATH/libsotest.so.1",
     "$RPATH/libsotest.so.1",
+    "$RPATH/libsotest.so.1",
     "$RPATH/libsotest.so.1"
    ],
-   "number": "0",
+   "number": "1",
    "script": [
+    "./configure --prefix=$PREFIX",
+    "make",
+    "make check",
+    "make install",
     "./configure --prefix=$PREFIX",
     "make",
     "make check",
@@ -56,6 +61,7 @@
     "ngam",
     "ngam",
     "ngam",
+    "ngam",
     "ngam"
    ]
   },
@@ -79,9 +85,14 @@
     "make",
     "c_compiler_stub",
     "sysroot_linux-64 2.17",
+    "make",
+    "c_compiler_stub",
+    "sysroot_linux-64 2.17",
     "make"
    ],
    "host": [
+    "python",
+    "requests >=2.6.0",
     "python",
     "requests >=2.6.0",
     "python",
@@ -118,11 +129,17 @@
     "python",
     "requests >=2.6.0",
     "squashfs-tools >=4.2",
+    "squashfuse >=0.1.100",
+    "tar",
+    "python",
+    "requests >=2.6.0",
+    "squashfs-tools >=4.2",
     "squashfuse >=0.1.100"
    ]
   },
   "source": {
    "patches": [
+    "0001-hardcode-build.patch",
     "0001-hardcode-build.patch",
     "0001-hardcode-build.patch",
     "0001-hardcode-build.patch",
@@ -134,6 +151,10 @@
   },
   "test": {
    "commands": [
+    "echo \"testing...\"",
+    "ch-run --help",
+    "ch-run --version",
+    "ch-image --help",
     "echo \"testing...\"",
     "ch-run --help",
     "ch-run --version",
@@ -204,10 +225,15 @@
     "$RPATH/libsotest.so.1",
     "$RPATH/libsotest.so.1",
     "$RPATH/libsotest.so.1",
+    "$RPATH/libsotest.so.1",
     "$RPATH/libsotest.so.1"
    ],
-   "number": "0",
+   "number": "1",
    "script": [
+    "./configure --prefix=$PREFIX",
+    "make",
+    "make check",
+    "make install",
     "./configure --prefix=$PREFIX",
     "make",
     "make check",
@@ -236,6 +262,7 @@
     "ngam",
     "ngam",
     "ngam",
+    "ngam",
     "ngam"
    ]
   },
@@ -259,9 +286,14 @@
     "make",
     "c_compiler_stub",
     "sysroot_linux-64 2.17",
+    "make",
+    "c_compiler_stub",
+    "sysroot_linux-64 2.17",
     "make"
    ],
    "host": [
+    "python",
+    "requests >=2.6.0",
     "python",
     "requests >=2.6.0",
     "python",
@@ -298,11 +330,17 @@
     "python",
     "requests >=2.6.0",
     "squashfs-tools >=4.2",
+    "squashfuse >=0.1.100",
+    "tar",
+    "python",
+    "requests >=2.6.0",
+    "squashfs-tools >=4.2",
     "squashfuse >=0.1.100"
    ]
   },
   "source": {
    "patches": [
+    "0001-hardcode-build.patch",
     "0001-hardcode-build.patch",
     "0001-hardcode-build.patch",
     "0001-hardcode-build.patch",
@@ -314,6 +352,10 @@
   },
   "test": {
    "commands": [
+    "echo \"testing...\"",
+    "ch-run --help",
+    "ch-run --version",
+    "ch-image --help",
     "echo \"testing...\"",
     "ch-run --help",
     "ch-run --version",
@@ -351,7 +393,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/charliecloud.json"
  },
- "raw_meta_yaml": "{% set version = \"0.34\" %}\n\npackage:\n  name: charliecloud\n  version: {{ version }}\n\nsource:\n  url: https://github.com/hpc/charliecloud/releases/download/v{{ version }}/charliecloud-{{ version }}.tar.gz\n  sha256: 034080c162949f4344ae1011cda026d4bb3ecd5cdb53135ac06d236f87e3b27d\n  patches:\n    # this hard-turns the flag OFF for building the tests (otherwise fail)\n    # it also hard-turns the flag ON for ch-image.\n    - 0001-hardcode-build.patch\n\nbuild:\n  number: 0\n  skip: true  # [not linux]\n  script:\n    - ./configure --prefix=$PREFIX\n    - make\n    - make check\n    - make install\n\n  missing_dso_whitelist:\n    - $RPATH/libsotest.so.1\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - sysroot_linux-64 2.17  # [linux64]\n    - make\n\n  host:\n  # not clear if python (>=3.6) + requests (>=2.6.0) are needed at all?\n    - python\n    - requests >=2.6.0\n\n  # strictly speaking:\n  # squashfs + squashfuse are not needed\n  # however, it is best to bundle them here\n  # otherwise the pkg is meaningless... \n  run:\n    - tar\n    - python\n    - requests >=2.6.0\n    - squashfs-tools >=4.2\n    - squashfuse >=0.1.100\n\ntest:\n  commands:\n    - echo \"testing...\"\n    - ch-run --help\n    - ch-run --version\n    - ch-image --help\n#     # try the tutorial: \n#     # https://hpc.github.io/charliecloud/tutorial.html#seconds-to-charliecloud\n#     - cd $PREFIX/share/doc/charliecloud/examples/hello\n#     - ch-build -t hello . --force\n#     - ch-builder2tar hello /var/tmp\n#     - ch-tar2dir /var/tmp/hello.tar.gz /var/tmp\n# #     # all tests pass up to ch-run because of problem with user+mnt usernames\n# #     # in conda-forge build centos build containers\n# #     - ch-run /var/tmp/hello -- echo \"I'm in a container\"\n\nabout:\n  home: https://hpc.github.io/charliecloud\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Lightweight user-defined software stacks for high-performance computing.\n\n  description: Lightweight user-defined software stacks for high-performance computing.\n\n\n  dev_url: https://github.com/hpc/charliecloud\n  doc_url: https://hpc.github.io/charliecloud\n\nextra:\n  recipe-maintainers:\n    - ngam\n",
+ "raw_meta_yaml": "{% set version = \"0.34\" %}\n\npackage:\n  name: charliecloud\n  version: {{ version }}\n\nsource:\n  url: https://github.com/hpc/charliecloud/releases/download/v{{ version }}/charliecloud-{{ version }}.tar.gz\n  sha256: 034080c162949f4344ae1011cda026d4bb3ecd5cdb53135ac06d236f87e3b27d\n  patches:\n    # this hard-turns the flag OFF for building the tests (otherwise fail)\n    # it also hard-turns the flag ON for ch-image.\n    - 0001-hardcode-build.patch\n\nbuild:\n  number: 1\n  skip: true  # [not linux]\n  script:\n    - ./configure --prefix=$PREFIX\n    - make\n    - make check\n    - make install\n\n  missing_dso_whitelist:\n    - $RPATH/libsotest.so.1\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - sysroot_linux-64 2.17  # [linux64]\n    - make\n\n  host:\n  # not clear if python (>=3.6) + requests (>=2.6.0) are needed at all?\n    - python\n    - requests >=2.6.0\n\n  # strictly speaking:\n  # squashfs + squashfuse are not needed\n  # however, it is best to bundle them here\n  # otherwise the pkg is meaningless... \n  run:\n    - tar\n    - python\n    - requests >=2.6.0\n    - squashfs-tools >=4.2\n    - squashfuse >=0.1.100\n\ntest:\n  commands:\n    - echo \"testing...\"\n    - ch-run --help\n    - ch-run --version\n    - ch-image --help\n#     # try the tutorial: \n#     # https://hpc.github.io/charliecloud/tutorial.html#seconds-to-charliecloud\n#     - cd $PREFIX/share/doc/charliecloud/examples/hello\n#     - ch-build -t hello . --force\n#     - ch-builder2tar hello /var/tmp\n#     - ch-tar2dir /var/tmp/hello.tar.gz /var/tmp\n# #     # all tests pass up to ch-run because of problem with user+mnt usernames\n# #     # in conda-forge build centos build containers\n# #     - ch-run /var/tmp/hello -- echo \"I'm in a container\"\n\nabout:\n  home: https://hpc.github.io/charliecloud\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Lightweight user-defined software stacks for high-performance computing.\n\n  description: Lightweight user-defined software stacks for high-performance computing.\n\n\n  dev_url: https://github.com/hpc/charliecloud\n  doc_url: https://hpc.github.io/charliecloud\n\nextra:\n  recipe-maintainers:\n    - ngam\n",
  "req": {
   "__set__": true,
   "elements": [
