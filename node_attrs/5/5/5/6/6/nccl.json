@@ -29,7 +29,7 @@
   },
   "build": {
    "ignore_run_exports_from": null,
-   "number": "1",
+   "number": "0",
    "run_exports": [
     "nccl",
     "nccl",
@@ -48,7 +48,7 @@
   },
   "package": {
    "name": "nccl",
-   "version": "2.18.5.1"
+   "version": "2.19.3.1"
   },
   "requirements": {
    "build": [
@@ -80,8 +80,8 @@
     "0001-Allow-custom-NVCC-path.patch",
     "0001-Allow-custom-NVCC-path.patch"
    ],
-   "sha256": "16ac98f3e926c024ce48e10ab220e19ce734adc48c423cfd55ad6f509bd1179f",
-   "url": "https://github.com/NVIDIA/nccl/archive/v2.18.5-1.tar.gz"
+   "sha256": "1c5474553afedb88e878c772f13d6f90b9226b3f2971dfa6f873adb9443100c2",
+   "url": "https://github.com/NVIDIA/nccl/archive/v2.19.3-1.tar.gz"
   },
   "test": {
    "commands": [
@@ -137,7 +137,7 @@
   },
   "build": {
    "ignore_run_exports_from": null,
-   "number": "1",
+   "number": "0",
    "run_exports": [
     "nccl",
     "nccl",
@@ -156,7 +156,7 @@
   },
   "package": {
    "name": "nccl",
-   "version": "2.18.5.1"
+   "version": "2.19.3.1"
   },
   "requirements": {
    "build": [
@@ -188,8 +188,8 @@
     "0001-Allow-custom-NVCC-path.patch",
     "0001-Allow-custom-NVCC-path.patch"
    ],
-   "sha256": "16ac98f3e926c024ce48e10ab220e19ce734adc48c423cfd55ad6f509bd1179f",
-   "url": "https://github.com/NVIDIA/nccl/archive/v2.18.5-1.tar.gz"
+   "sha256": "1c5474553afedb88e878c772f13d6f90b9226b3f2971dfa6f873adb9443100c2",
+   "url": "https://github.com/NVIDIA/nccl/archive/v2.19.3-1.tar.gz"
   },
   "test": {
    "commands": [
@@ -245,7 +245,7 @@
   },
   "build": {
    "ignore_run_exports_from": null,
-   "number": "1",
+   "number": "0",
    "run_exports": [
     "nccl",
     "nccl",
@@ -264,7 +264,7 @@
   },
   "package": {
    "name": "nccl",
-   "version": "2.18.5.1"
+   "version": "2.19.3.1"
   },
   "requirements": {
    "build": [
@@ -296,8 +296,8 @@
     "0001-Allow-custom-NVCC-path.patch",
     "0001-Allow-custom-NVCC-path.patch"
    ],
-   "sha256": "16ac98f3e926c024ce48e10ab220e19ce734adc48c423cfd55ad6f509bd1179f",
-   "url": "https://github.com/NVIDIA/nccl/archive/v2.18.5-1.tar.gz"
+   "sha256": "1c5474553afedb88e878c772f13d6f90b9226b3f2971dfa6f873adb9443100c2",
+   "url": "https://github.com/NVIDIA/nccl/archive/v2.19.3-1.tar.gz"
   },
   "test": {
    "commands": [
@@ -353,7 +353,7 @@
   },
   "build": {
    "ignore_run_exports_from": null,
-   "number": "1",
+   "number": "0",
    "run_exports": [
     "nccl",
     "nccl",
@@ -390,7 +390,7 @@
   },
   "package": {
    "name": "nccl",
-   "version": "2.18.5.1"
+   "version": "2.19.3.1"
   },
   "requirements": {
    "build": [
@@ -460,8 +460,8 @@
     "0001-Allow-custom-NVCC-path.patch",
     "0001-Allow-custom-NVCC-path.patch"
    ],
-   "sha256": "16ac98f3e926c024ce48e10ab220e19ce734adc48c423cfd55ad6f509bd1179f",
-   "url": "https://github.com/NVIDIA/nccl/archive/v2.18.5-1.tar.gz"
+   "sha256": "1c5474553afedb88e878c772f13d6f90b9226b3f2971dfa6f873adb9443100c2",
+   "url": "https://github.com/NVIDIA/nccl/archive/v2.19.3-1.tar.gz"
   },
   "test": {
    "commands": [
@@ -511,7 +511,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/nccl.json"
  },
- "raw_meta_yaml": "{% set name = \"nccl\" %}\n{% set version = \"2.18.5-1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version|replace(\"-\", \".\") }}\n\nsource:\n  url: https://github.com/NVIDIA/nccl/archive/v{{ version }}.tar.gz\n  sha256: 16ac98f3e926c024ce48e10ab220e19ce734adc48c423cfd55ad6f509bd1179f\n  patches:\n    # Upstreaming w/PR: https://github.com/NVIDIA/nccl/pull/854\n    - 0001-Allow-custom-NVCC-path.patch\n\nbuild:\n  number: 1\n  skip: true  # [(not linux) or cuda_compiler_version in (undefined, \"None\", \"10.2\")]\n  ignore_run_exports_from:\n    # Ignore `cudatoolkit` dependency in CUDA 11 builds\n    - {{ compiler(\"cuda\") }}  # [(cuda_compiler_version or \"\").startswith(\"11\")]\n  run_exports:\n    # xref: https://github.com/NVIDIA/nccl/issues/218\n    - {{ pin_subpackage(name, max_pin=\"x\") }}\n\nrequirements:\n  build:\n    - {{ compiler(\"c\") }}\n    - {{ compiler(\"cxx\") }}\n    - {{ compiler(\"cuda\") }}\n    - make\n  host:\n    - cuda-version ={{ cuda_compiler_version }}          # [(cuda_compiler_version or \"\").startswith(\"11\")]\n  run:\n    - {{ pin_compatible(\"cuda-version\", max_pin=\"x\") }}  # [(cuda_compiler_version or \"\").startswith(\"11\")]\n\ntest:\n  commands:\n    - test -f \"${PREFIX}/include/nccl.h\"\n    - test -f \"${PREFIX}/lib/libnccl.so\"\n    - test ! -f \"${PREFIX}/lib/libnccl_static.a\"\n\nabout:\n  home: https://developer.nvidia.com/nccl\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.txt\n  summary: Optimized primitives for collective multi-GPU communication\n\n  description: |\n    The NVIDIA Collective Communications Library (NCCL) implements multi-GPU\n    and multi-node collective communication primitives that are performance\n    optimized for NVIDIA GPUs. NCCL provides routines such as all-gather,\n    all-reduce, broadcast, reduce, reduce-scatter, that are optimized to\n    achieve high bandwidth over PCIe and NVLink high-speed interconnect.\n\n  doc_url: https://docs.nvidia.com/deeplearning/sdk/nccl-developer-guide/docs/index.html\n  dev_url: https://github.com/NVIDIA/nccl\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - leofang\n",
+ "raw_meta_yaml": "{% set name = \"nccl\" %}\n{% set version = \"2.19.3-1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version|replace(\"-\", \".\") }}\n\nsource:\n  url: https://github.com/NVIDIA/nccl/archive/v{{ version }}.tar.gz\n  sha256: 1c5474553afedb88e878c772f13d6f90b9226b3f2971dfa6f873adb9443100c2\n  patches:\n    # Upstreaming w/PR: https://github.com/NVIDIA/nccl/pull/854\n    - 0001-Allow-custom-NVCC-path.patch\n\nbuild:\n  number: 0\n  skip: true  # [(not linux) or cuda_compiler_version in (undefined, \"None\", \"10.2\")]\n  ignore_run_exports_from:\n    # Ignore `cudatoolkit` dependency in CUDA 11 builds\n    - {{ compiler(\"cuda\") }}  # [(cuda_compiler_version or \"\").startswith(\"11\")]\n  run_exports:\n    # xref: https://github.com/NVIDIA/nccl/issues/218\n    - {{ pin_subpackage(name, max_pin=\"x\") }}\n\nrequirements:\n  build:\n    - {{ compiler(\"c\") }}\n    - {{ compiler(\"cxx\") }}\n    - {{ compiler(\"cuda\") }}\n    - make\n  host:\n    - cuda-version ={{ cuda_compiler_version }}          # [(cuda_compiler_version or \"\").startswith(\"11\")]\n  run:\n    - {{ pin_compatible(\"cuda-version\", max_pin=\"x\") }}  # [(cuda_compiler_version or \"\").startswith(\"11\")]\n\ntest:\n  commands:\n    - test -f \"${PREFIX}/include/nccl.h\"\n    - test -f \"${PREFIX}/lib/libnccl.so\"\n    - test ! -f \"${PREFIX}/lib/libnccl_static.a\"\n\nabout:\n  home: https://developer.nvidia.com/nccl\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.txt\n  summary: Optimized primitives for collective multi-GPU communication\n\n  description: |\n    The NVIDIA Collective Communications Library (NCCL) implements multi-GPU\n    and multi-node collective communication primitives that are performance\n    optimized for NVIDIA GPUs. NCCL provides routines such as all-gather,\n    all-reduce, broadcast, reduce, reduce-scatter, that are optimized to\n    achieve high bandwidth over PCIe and NVLink high-speed interconnect.\n\n  doc_url: https://docs.nvidia.com/deeplearning/sdk/nccl-developer-guide/docs/index.html\n  dev_url: https://github.com/NVIDIA/nccl\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - leofang\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -584,8 +584,8 @@
    "elements": []
   }
  },
- "url": "https://github.com/NVIDIA/nccl/archive/v2.18.5-1.tar.gz",
- "version": "2.18.5.1",
+ "url": "https://github.com/NVIDIA/nccl/archive/v2.19.3-1.tar.gz",
+ "version": "2.19.3.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/nccl.json"
  }
