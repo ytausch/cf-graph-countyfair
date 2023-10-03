@@ -26,25 +26,25 @@
     "lib/SiftGPU/LICENSE",
     "COPYING.txt",
     "lib/LSD/LICENSE",
-    "lib/PBA/LICENSE",
     "lib/PoissonRecon/LICENSE",
     "lib/SiftGPU/LICENSE",
     "COPYING.txt",
     "lib/LSD/LICENSE",
+    "lib/PBA/LICENSE",
     "lib/PoissonRecon/LICENSE",
     "lib/SiftGPU/LICENSE"
    ],
    "summary": "COLMAP is a general-purpose Structure-from-Motion (SfM) and Multi-View Stereo (MVS) pipeline with a graphical and command-line interface."
   },
   "build": {
-   "number": "5",
+   "number": "6",
    "run_exports": [
     "colmap",
     "colmap",
     "colmap",
     "colmap"
    ],
-   "string": "cpuh1234567_5"
+   "string": "cpuh1234567_6"
   },
   "extra": {
    "recipe-maintainers": [
@@ -100,6 +100,7 @@
     "sysroot_linux-64 2.17",
     "cxx_compiler_stub",
     "c_compiler_stub",
+    "cuda_compiler_stub",
     "cmake",
     "make",
     "pkg-config",
@@ -118,7 +119,6 @@
     "sysroot_linux-64 2.17",
     "cxx_compiler_stub",
     "c_compiler_stub",
-    "cuda_compiler_stub",
     "cmake",
     "make",
     "pkg-config",
@@ -149,7 +149,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -178,7 +178,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -207,7 +207,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -224,6 +224,7 @@
     "gmp",
     "lz4-c",
     "metis",
+    "libcurand-dev",
     "xorg-libxext",
     "xorg-libxdmcp",
     "xorg-libxau",
@@ -236,7 +237,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -252,11 +253,9 @@
     "vlfeat",
     "gmp",
     "lz4-c",
-    "metis",
-    "libcurand-dev"
+    "metis"
    ],
    "run": [
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -270,7 +269,6 @@
     "xorg-libsm",
     "libglu",
     "__cuda >=11.2",
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -284,7 +282,6 @@
     "xorg-libsm",
     "libglu",
     "__cuda >=11.8",
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -297,7 +294,7 @@
     "xorg-libice",
     "xorg-libsm",
     "libglu",
-    "boost-cpp",
+    "__cuda >=12.0",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -309,20 +306,10 @@
     "xorg-libx11",
     "xorg-libice",
     "xorg-libsm",
-    "libglu",
-    "__cuda >=12.0"
+    "libglu"
    ]
   },
   "source": [
-   {
-    "patches": [
-     "fix_build.patch",
-     "unvendor_vlfeat.patch",
-     "fix_find_lz4.patch"
-    ],
-    "sha256": "02288f8f61692fe38049d65608ed832b31246e7792692376afb712fa4cef8775",
-    "url": "https://github.com/colmap/colmap/archive/3.8.tar.gz"
-   },
    {
     "patches": [
      "fix_build.patch",
@@ -354,6 +341,15 @@
     ],
     "sha256": "02288f8f61692fe38049d65608ed832b31246e7792692376afb712fa4cef8775",
     "url": "https://github.com/colmap/colmap/archive/3.8.tar.gz"
+   },
+   {
+    "patches": [
+     "fix_build.patch",
+     "unvendor_vlfeat.patch",
+     "fix_find_lz4.patch"
+    ],
+    "sha256": "02288f8f61692fe38049d65608ed832b31246e7792692376afb712fa4cef8775",
+    "url": "https://github.com/colmap/colmap/archive/3.8.tar.gz"
    }
   ],
   "test": {
@@ -368,10 +364,10 @@
     "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
     "test -f $PREFIX/bin/colmap",
     "test -f $PREFIX/lib/colmap/libcolmap.a",
+    "test -f $PREFIX/lib/colmap/libcolmap_cuda.a",
     "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
     "test -f $PREFIX/bin/colmap",
     "test -f $PREFIX/lib/colmap/libcolmap.a",
-    "test -f $PREFIX/lib/colmap/libcolmap_cuda.a",
     "test -f $PREFIX/share/colmap/COLMAPConfig.cmake"
    ]
   }
@@ -395,7 +391,6 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "ceres-solver",
     "cgal-cpp",
     "eigen",
@@ -407,6 +402,7 @@
     "glog",
     "gmp",
     "libblas",
+    "libboost-devel",
     "libcblas",
     "libcurand-dev",
     "libglu",
@@ -431,7 +427,6 @@
    "__set__": true,
    "elements": [
     "__cuda",
-    "boost-cpp",
     "flann",
     "libglu",
     "libxcb",
@@ -468,25 +463,25 @@
     "lib/SiftGPU/LICENSE",
     "COPYING.txt",
     "lib/LSD/LICENSE",
-    "lib/PBA/LICENSE",
     "lib/PoissonRecon/LICENSE",
     "lib/SiftGPU/LICENSE",
     "COPYING.txt",
     "lib/LSD/LICENSE",
+    "lib/PBA/LICENSE",
     "lib/PoissonRecon/LICENSE",
     "lib/SiftGPU/LICENSE"
    ],
    "summary": "COLMAP is a general-purpose Structure-from-Motion (SfM) and Multi-View Stereo (MVS) pipeline with a graphical and command-line interface."
   },
   "build": {
-   "number": "5",
+   "number": "6",
    "run_exports": [
     "colmap",
     "colmap",
     "colmap",
     "colmap"
    ],
-   "string": "cpuh1234567_5"
+   "string": "cpuh1234567_6"
   },
   "extra": {
    "recipe-maintainers": [
@@ -540,6 +535,7 @@
     "cdt_stub",
     "cxx_compiler_stub",
     "c_compiler_stub",
+    "cuda_compiler_stub",
     "cmake",
     "make",
     "pkg-config",
@@ -557,7 +553,6 @@
     "cdt_stub",
     "cxx_compiler_stub",
     "c_compiler_stub",
-    "cuda_compiler_stub",
     "cmake",
     "make",
     "pkg-config",
@@ -587,7 +582,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -616,7 +611,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -645,7 +640,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -662,6 +657,7 @@
     "gmp",
     "lz4-c",
     "metis",
+    "libcurand-dev",
     "xorg-libxext",
     "xorg-libxdmcp",
     "xorg-libxau",
@@ -674,7 +670,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -690,11 +686,9 @@
     "vlfeat",
     "gmp",
     "lz4-c",
-    "metis",
-    "libcurand-dev"
+    "metis"
    ],
    "run": [
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -708,7 +702,6 @@
     "xorg-libsm",
     "libglu",
     "__cuda >=11.2",
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -722,7 +715,6 @@
     "xorg-libsm",
     "libglu",
     "__cuda >=11.8",
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -735,7 +727,7 @@
     "xorg-libice",
     "xorg-libsm",
     "libglu",
-    "boost-cpp",
+    "__cuda >=12.0",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -747,20 +739,10 @@
     "xorg-libx11",
     "xorg-libice",
     "xorg-libsm",
-    "libglu",
-    "__cuda >=12.0"
+    "libglu"
    ]
   },
   "source": [
-   {
-    "patches": [
-     "fix_build.patch",
-     "unvendor_vlfeat.patch",
-     "fix_find_lz4.patch"
-    ],
-    "sha256": "02288f8f61692fe38049d65608ed832b31246e7792692376afb712fa4cef8775",
-    "url": "https://github.com/colmap/colmap/archive/3.8.tar.gz"
-   },
    {
     "patches": [
      "fix_build.patch",
@@ -792,6 +774,15 @@
     ],
     "sha256": "02288f8f61692fe38049d65608ed832b31246e7792692376afb712fa4cef8775",
     "url": "https://github.com/colmap/colmap/archive/3.8.tar.gz"
+   },
+   {
+    "patches": [
+     "fix_build.patch",
+     "unvendor_vlfeat.patch",
+     "fix_find_lz4.patch"
+    ],
+    "sha256": "02288f8f61692fe38049d65608ed832b31246e7792692376afb712fa4cef8775",
+    "url": "https://github.com/colmap/colmap/archive/3.8.tar.gz"
    }
   ],
   "test": {
@@ -806,10 +797,10 @@
     "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
     "test -f $PREFIX/bin/colmap",
     "test -f $PREFIX/lib/colmap/libcolmap.a",
+    "test -f $PREFIX/lib/colmap/libcolmap_cuda.a",
     "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
     "test -f $PREFIX/bin/colmap",
     "test -f $PREFIX/lib/colmap/libcolmap.a",
-    "test -f $PREFIX/lib/colmap/libcolmap_cuda.a",
     "test -f $PREFIX/share/colmap/COLMAPConfig.cmake"
    ]
   }
@@ -832,7 +823,6 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "ceres-solver",
     "cgal-cpp",
     "eigen",
@@ -844,6 +834,7 @@
     "glog",
     "gmp",
     "libblas",
+    "libboost-devel",
     "libcblas",
     "libcurand-dev",
     "libglu",
@@ -868,7 +859,6 @@
    "__set__": true,
    "elements": [
     "__cuda",
-    "boost-cpp",
     "flann",
     "libglu",
     "libxcb",
@@ -905,11 +895,6 @@
     "lib/SiftGPU/LICENSE",
     "COPYING.txt",
     "lib/LSD/LICENSE",
-    "lib/PBA/LICENSE",
-    "lib/PoissonRecon/LICENSE",
-    "lib/SiftGPU/LICENSE",
-    "COPYING.txt",
-    "lib/LSD/LICENSE",
     "lib/PoissonRecon/LICENSE",
     "lib/SiftGPU/LICENSE",
     "COPYING.txt",
@@ -929,6 +914,11 @@
     "lib/SiftGPU/LICENSE",
     "COPYING.txt",
     "lib/LSD/LICENSE",
+    "lib/PoissonRecon/LICENSE",
+    "lib/SiftGPU/LICENSE",
+    "COPYING.txt",
+    "lib/LSD/LICENSE",
+    "lib/PBA/LICENSE",
     "lib/PoissonRecon/LICENSE",
     "lib/SiftGPU/LICENSE",
     "COPYING.txt",
@@ -960,7 +950,7 @@
    "summary": "COLMAP is a general-purpose Structure-from-Motion (SfM) and Multi-View Stereo (MVS) pipeline with a graphical and command-line interface."
   },
   "build": {
-   "number": "5",
+   "number": "6",
    "run_exports": [
     "colmap",
     "colmap",
@@ -976,7 +966,7 @@
     "colmap",
     "colmap"
    ],
-   "string": "cpuh1234567_5"
+   "string": "cpuh1234567_6"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1041,6 +1031,25 @@
     "sysroot_linux-64 2.17",
     "cxx_compiler_stub",
     "c_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "make",
+    "pkg-config",
+    "ninja",
+    "libgomp",
+    "cdt_stub",
+    "cdt_stub",
+    "cdt_stub",
+    "cdt_stub",
+    "cdt_stub",
+    "cdt_stub",
+    "cdt_stub",
+    "cdt_stub",
+    "cdt_stub",
+    "cdt_stub",
+    "sysroot_linux-64 2.17",
+    "cxx_compiler_stub",
+    "c_compiler_stub",
     "cmake",
     "make",
     "pkg-config",
@@ -1075,7 +1084,6 @@
     "cdt_stub",
     "cdt_stub",
     "cdt_stub",
-    "sysroot_linux-64 2.17",
     "cxx_compiler_stub",
     "c_compiler_stub",
     "cuda_compiler_stub",
@@ -1114,24 +1122,6 @@
     "cdt_stub",
     "cxx_compiler_stub",
     "c_compiler_stub",
-    "cmake",
-    "make",
-    "pkg-config",
-    "ninja",
-    "libgomp",
-    "cdt_stub",
-    "cdt_stub",
-    "cdt_stub",
-    "cdt_stub",
-    "cdt_stub",
-    "cdt_stub",
-    "cdt_stub",
-    "cdt_stub",
-    "cdt_stub",
-    "cdt_stub",
-    "cxx_compiler_stub",
-    "c_compiler_stub",
-    "cuda_compiler_stub",
     "cmake",
     "make",
     "pkg-config",
@@ -1194,7 +1184,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1223,7 +1213,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1252,36 +1242,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
-    "suitesparse",
-    "eigen",
-    "freeimage",
-    "glog",
-    "gflags",
-    "glew",
-    "cgal-cpp",
-    "ceres-solver",
-    "qt-main",
-    "git",
-    "flann",
-    "sqlite",
-    "vlfeat",
-    "gmp",
-    "lz4-c",
-    "metis",
-    "xorg-libxext",
-    "xorg-libxdmcp",
-    "xorg-libxau",
-    "libxcb",
-    "xorg-libxfixes",
-    "xorg-libxrender",
-    "xorg-libx11",
-    "xorg-libice",
-    "xorg-libsm",
-    "libglu",
-    "libblas",
-    "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1311,7 +1272,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1340,7 +1301,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1369,7 +1330,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1398,7 +1359,7 @@
     "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1425,9 +1386,10 @@
     "xorg-libx11",
     "xorg-libice",
     "xorg-libsm",
+    "libglu",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1455,7 +1417,35 @@
     "xorg-libsm",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
+    "suitesparse",
+    "eigen",
+    "freeimage",
+    "glog",
+    "gflags",
+    "glew",
+    "cgal-cpp",
+    "ceres-solver",
+    "qt-main",
+    "git",
+    "flann",
+    "sqlite",
+    "vlfeat",
+    "gmp",
+    "lz4-c",
+    "metis",
+    "xorg-libxext",
+    "xorg-libxdmcp",
+    "xorg-libxau",
+    "libxcb",
+    "xorg-libxfixes",
+    "xorg-libxrender",
+    "xorg-libx11",
+    "xorg-libice",
+    "xorg-libsm",
+    "libblas",
+    "libcblas",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1474,7 +1464,7 @@
     "metis",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1491,7 +1481,7 @@
     "metis",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1508,7 +1498,7 @@
     "metis",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1525,7 +1515,6 @@
     "metis"
    ],
    "run": [
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -1539,7 +1528,6 @@
     "xorg-libsm",
     "libglu",
     "__cuda >=11.2",
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -1553,20 +1541,6 @@
     "xorg-libsm",
     "libglu",
     "__cuda >=11.8",
-    "boost-cpp",
-    "vlfeat",
-    "flann",
-    "xorg-libxext",
-    "xorg-libxdmcp",
-    "xorg-libxau",
-    "libxcb",
-    "xorg-libxfixes",
-    "xorg-libxrender",
-    "xorg-libx11",
-    "xorg-libice",
-    "xorg-libsm",
-    "libglu",
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -1580,7 +1554,18 @@
     "xorg-libsm",
     "libglu",
     "__cuda >=12.0",
-    "boost-cpp",
+    "vlfeat",
+    "flann",
+    "xorg-libxext",
+    "xorg-libxdmcp",
+    "xorg-libxau",
+    "libxcb",
+    "xorg-libxfixes",
+    "xorg-libxrender",
+    "xorg-libx11",
+    "xorg-libice",
+    "xorg-libsm",
+    "libglu",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -1594,7 +1579,6 @@
     "xorg-libsm",
     "libglu",
     "__cuda >=11.2",
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -1608,20 +1592,6 @@
     "xorg-libsm",
     "libglu",
     "__cuda >=11.8",
-    "boost-cpp",
-    "vlfeat",
-    "flann",
-    "xorg-libxext",
-    "xorg-libxdmcp",
-    "xorg-libxau",
-    "libxcb",
-    "xorg-libxfixes",
-    "xorg-libxrender",
-    "xorg-libx11",
-    "xorg-libice",
-    "xorg-libsm",
-    "libglu",
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -1635,7 +1605,6 @@
     "xorg-libsm",
     "libglu",
     "__cuda >=12.0",
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -1647,7 +1616,7 @@
     "xorg-libx11",
     "xorg-libice",
     "xorg-libsm",
-    "boost-cpp",
+    "libglu",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -1659,12 +1628,20 @@
     "xorg-libx11",
     "xorg-libice",
     "xorg-libsm",
-    "boost-cpp",
+    "vlfeat",
     "flann",
-    "boost-cpp",
+    "xorg-libxext",
+    "xorg-libxdmcp",
+    "xorg-libxau",
+    "libxcb",
+    "xorg-libxfixes",
+    "xorg-libxrender",
+    "xorg-libx11",
+    "xorg-libice",
+    "xorg-libsm",
+    "flann",
     "flann",
     "__cuda >=11.2",
-    "boost-cpp",
     "flann",
     "__cuda >=11.8"
    ]
@@ -1692,15 +1669,6 @@
     "patches": [
      "fix_build.patch",
      "unvendor_vlfeat.patch",
-     "fix_find_lz4.patch"
-    ],
-    "sha256": "02288f8f61692fe38049d65608ed832b31246e7792692376afb712fa4cef8775",
-    "url": "https://github.com/colmap/colmap/archive/3.8.tar.gz"
-   },
-   {
-    "patches": [
-     "fix_build.patch",
-     "unvendor_vlfeat.patch",
      "fix_find_lz4.patch",
      "1809.patch",
      "1840.patch",
@@ -1748,6 +1716,15 @@
      "1823.patch",
      "1838.patch",
      "1841.patch"
+    ],
+    "sha256": "02288f8f61692fe38049d65608ed832b31246e7792692376afb712fa4cef8775",
+    "url": "https://github.com/colmap/colmap/archive/3.8.tar.gz"
+   },
+   {
+    "patches": [
+     "fix_build.patch",
+     "unvendor_vlfeat.patch",
+     "fix_find_lz4.patch"
     ],
     "sha256": "02288f8f61692fe38049d65608ed832b31246e7792692376afb712fa4cef8775",
     "url": "https://github.com/colmap/colmap/archive/3.8.tar.gz"
@@ -1807,6 +1784,14 @@
     "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
     "test -f $PREFIX/bin/colmap",
     "test -f $PREFIX/lib/colmap/libcolmap.a",
+    "test -f $PREFIX/lib/colmap/libcolmap_cuda.a",
+    "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
+    "test -f $PREFIX/bin/colmap",
+    "test -f $PREFIX/lib/colmap/libcolmap.a",
+    "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
+    "test -f $PREFIX/bin/colmap",
+    "test -f $PREFIX/lib/colmap/libcolmap.a",
+    "test -f $PREFIX/lib/colmap/libcolmap_cuda.a",
     "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
     "test -f $PREFIX/bin/colmap",
     "test -f $PREFIX/lib/colmap/libcolmap.a",
@@ -1818,14 +1803,6 @@
     "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
     "test -f $PREFIX/bin/colmap",
     "test -f $PREFIX/lib/colmap/libcolmap.a",
-    "test -f $PREFIX/lib/colmap/libcolmap_cuda.a",
-    "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
-    "test -f $PREFIX/bin/colmap",
-    "test -f $PREFIX/lib/colmap/libcolmap.a",
-    "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
-    "test -f $PREFIX/bin/colmap",
-    "test -f $PREFIX/lib/colmap/libcolmap.a",
-    "test -f $PREFIX/lib/colmap/libcolmap_cuda.a",
     "test -f $PREFIX/share/colmap/COLMAPConfig.cmake",
     "test -f $PREFIX/bin/colmap",
     "test -f $PREFIX/lib/colmap/libcolmap.a",
@@ -1854,11 +1831,11 @@
    "summary": "COLMAP is a general-purpose Structure-from-Motion (SfM) and Multi-View Stereo (MVS) pipeline with a graphical and command-line interface."
   },
   "build": {
-   "number": "5",
+   "number": "6",
    "run_exports": [
     "colmap"
    ],
-   "string": "cpuh1234567_5"
+   "string": "cpuh1234567_6"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1893,7 +1870,7 @@
     "xorg-libsm",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -1912,7 +1889,6 @@
     "metis"
    ],
    "run": [
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -1962,7 +1938,6 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "ceres-solver",
     "cgal-cpp",
     "eigen",
@@ -1974,6 +1949,7 @@
     "glog",
     "gmp",
     "libblas",
+    "libboost-devel",
     "libcblas",
     "libxcb",
     "lz4-c",
@@ -1995,7 +1971,6 @@
   "run": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "flann",
     "libxcb",
     "vlfeat",
@@ -2028,11 +2003,11 @@
    "summary": "COLMAP is a general-purpose Structure-from-Motion (SfM) and Multi-View Stereo (MVS) pipeline with a graphical and command-line interface."
   },
   "build": {
-   "number": "5",
+   "number": "6",
    "run_exports": [
     "colmap"
    ],
-   "string": "cpuh1234567_5"
+   "string": "cpuh1234567_6"
   },
   "extra": {
    "recipe-maintainers": [
@@ -2065,7 +2040,7 @@
     "xorg-libsm",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -2084,7 +2059,6 @@
     "metis"
    ],
    "run": [
-    "boost-cpp",
     "vlfeat",
     "flann",
     "xorg-libxext",
@@ -2133,7 +2107,6 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "ceres-solver",
     "cgal-cpp",
     "eigen",
@@ -2145,6 +2118,7 @@
     "glog",
     "gmp",
     "libblas",
+    "libboost-devel",
     "libcblas",
     "libxcb",
     "lz4-c",
@@ -2166,7 +2140,6 @@
   "run": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "flann",
     "libxcb",
     "vlfeat",
@@ -2202,12 +2175,11 @@
  "pr_info": {
   "__lazy_json__": "pr_info/colmap.json"
  },
- "raw_meta_yaml": "{% set name = \"colmap\" %}\n{% set version = \"3.8\" %}\n{% set build = 5 %}\n\n{% set processor = \"cpu\" if cuda_compiler_version == \"None\" else \"gpu\" %}  # [not osx]\n{% set processor = \"cpu\" %}  # [osx]\n\n# Prioritize gpu build if cudatoolkit can be installed (through __cuda virtual package)\n{% set build = build + 100 if processor == \"gpu\" else build %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz\n    sha256: 02288f8f61692fe38049d65608ed832b31246e7792692376afb712fa4cef8775\n    patches:\n      - fix_build.patch\n      - unvendor_vlfeat.patch  # [unix]\n      - fix_find_lz4.patch\n      - 1809.patch  # [cuda_compiler_version == \"12.0\"]\n      - 1840.patch  # [cuda_compiler_version == \"12.0\"]\n      - 1823.patch  # [cuda_compiler_version == \"12.0\"]\n      - 1838.patch  # [cuda_compiler_version == \"12.0\"]\n      - 1841.patch  # [cuda_compiler_version == \"12.0\"]\n\nbuild:\n  number: {{ build }}\n  skip: true  # [osx and cuda_compiler_version != \"None\"]\n  string: {{ processor }}h{{ PKG_HASH }}_{{ build }}\n  run_exports:\n    - {{ pin_subpackage('colmap', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - {{ compiler('cuda') }}         # [not osx and cuda_compiler_version != \"None\"]\n    - cmake\n    - make                           # [unix]\n    - pkg-config\n    - ninja\n    - llvm-openmp                    # [osx]\n    - libgomp                        # [linux]\n    # x11 stuff\n    - {{ cdt('mesa-libgl-devel') }}  # [unix and not arm64]\n    - {{ cdt('mesa-dri-drivers') }}  # [unix and not arm64]\n    - {{ cdt('libselinux') }}        # [linux]\n    - {{ cdt('libxcb') }}            # [linux]\n    - {{ cdt('libxdamage') }}        # [linux]\n    - {{ cdt('libxfixes') }}         # [linux]\n    - {{ cdt('libxxf86vm') }}        # [linux]\n    - {{ cdt('libxext') }}           # [linux]\n    - {{ cdt('libxau') }}            # [linux]\n    - {{ cdt('expat-devel') }}       # [linux]\n    - sysroot_linux-64 2.17          # [linux64]\n  host:\n    # x11 stuff\n    - xorg-libxext                   # [unix]\n    - xorg-libxdmcp                  # [unix]\n    - xorg-libxau                    # [unix]\n    - libxcb                         # [unix]\n    - xorg-libxfixes                 # [unix]\n    - xorg-libxrender                # [unix]\n    - xorg-libx11                    # [unix]\n    - xorg-libice                    # [unix]\n    - xorg-libsm                     # [unix]\n    - libglu                         # [linux]\n    # deps\n    - libblas\n    - libcblas\n    - boost-cpp\n    - suitesparse\n    - eigen\n    - freeimage\n    - glog\n    - gflags\n    - glew\n    - cgal-cpp\n    - ceres-solver\n    - qt-main\n    - git\n    - flann\n    - sqlite\n    - vlfeat                         # [unix]\n    - gmp                            # [unix]\n    - lz4-c\n    - metis\n    - libcurand-dev                  # [cuda_compiler_version == \"12.0\"]\n  run:\n    - boost-cpp\n    - vlfeat                         # [unix]\n    - flann\n    - xorg-libxext                   # [unix]\n    - xorg-libxdmcp                  # [unix]\n    - xorg-libxau                    # [unix]\n    - libxcb                         # [unix]\n    - xorg-libxfixes                 # [unix]\n    - xorg-libxrender                # [unix]\n    - xorg-libx11                    # [unix]\n    - xorg-libice                    # [unix]\n    - xorg-libsm                     # [unix]\n    - libglu                         # [linux]\n    - __cuda >={{ cuda_compiler_version }}  # [not osx and cuda_compiler_version != \"None\"]\n\ntest:\n  commands:\n    - if exist %PREFIX%\\\\Library\\\\bin\\\\colmap.exe (exit 0) else (exit 1)  # [win]\n    - test -f $PREFIX/bin/colmap  # [unix]\n    - test -f $PREFIX/lib/colmap/libcolmap.a  # [unix]\n    - test -f $PREFIX/lib/colmap/libcolmap_cuda.a  # [unix and cuda_compiler_version != \"None\"]\n    - test -f $PREFIX/share/colmap/COLMAPConfig.cmake  # [unix]\n\nabout:\n  home: https://colmap.github.io/\n  license: BSD-3-Clause\n  license_file:\n    - COPYING.txt\n    - lib/LSD/LICENSE\n    - lib/PBA/LICENSE  # [cuda_compiler_version != \"12.0\"]\n    - lib/PoissonRecon/LICENSE\n    - lib/SiftGPU/LICENSE\n  summary: COLMAP is a general-purpose Structure-from-Motion (SfM) and Multi-View Stereo (MVS) pipeline with a graphical and command-line interface.\n\nextra:\n  recipe-maintainers:\n    - Tobias-Fischer\n",
+ "raw_meta_yaml": "{% set name = \"colmap\" %}\n{% set version = \"3.8\" %}\n{% set build = 6 %}\n\n{% set processor = \"cpu\" if cuda_compiler_version == \"None\" else \"gpu\" %}  # [not osx]\n{% set processor = \"cpu\" %}  # [osx]\n\n# Prioritize gpu build if cudatoolkit can be installed (through __cuda virtual package)\n{% set build = build + 100 if processor == \"gpu\" else build %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/{{ name }}/{{ name }}/archive/{{ version }}.tar.gz\n    sha256: 02288f8f61692fe38049d65608ed832b31246e7792692376afb712fa4cef8775\n    patches:\n      - fix_build.patch\n      - unvendor_vlfeat.patch  # [unix]\n      - fix_find_lz4.patch\n      - 1809.patch  # [cuda_compiler_version == \"12.0\"]\n      - 1840.patch  # [cuda_compiler_version == \"12.0\"]\n      - 1823.patch  # [cuda_compiler_version == \"12.0\"]\n      - 1838.patch  # [cuda_compiler_version == \"12.0\"]\n      - 1841.patch  # [cuda_compiler_version == \"12.0\"]\n\nbuild:\n  number: {{ build }}\n  skip: true  # [osx and cuda_compiler_version != \"None\"]\n  string: {{ processor }}h{{ PKG_HASH }}_{{ build }}\n  run_exports:\n    - {{ pin_subpackage('colmap', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - {{ compiler('cuda') }}         # [not osx and cuda_compiler_version != \"None\"]\n    - cmake\n    - make                           # [unix]\n    - pkg-config\n    - ninja\n    - llvm-openmp                    # [osx]\n    - libgomp                        # [linux]\n    # x11 stuff\n    - {{ cdt('mesa-libgl-devel') }}  # [unix and not arm64]\n    - {{ cdt('mesa-dri-drivers') }}  # [unix and not arm64]\n    - {{ cdt('libselinux') }}        # [linux]\n    - {{ cdt('libxcb') }}            # [linux]\n    - {{ cdt('libxdamage') }}        # [linux]\n    - {{ cdt('libxfixes') }}         # [linux]\n    - {{ cdt('libxxf86vm') }}        # [linux]\n    - {{ cdt('libxext') }}           # [linux]\n    - {{ cdt('libxau') }}            # [linux]\n    - {{ cdt('expat-devel') }}       # [linux]\n    - sysroot_linux-64 2.17          # [linux64]\n  host:\n    # x11 stuff\n    - xorg-libxext                   # [unix]\n    - xorg-libxdmcp                  # [unix]\n    - xorg-libxau                    # [unix]\n    - libxcb                         # [unix]\n    - xorg-libxfixes                 # [unix]\n    - xorg-libxrender                # [unix]\n    - xorg-libx11                    # [unix]\n    - xorg-libice                    # [unix]\n    - xorg-libsm                     # [unix]\n    - libglu                         # [linux]\n    # deps\n    - libblas\n    - libcblas\n    - libboost-devel\n    - suitesparse\n    - eigen\n    - freeimage\n    - glog\n    - gflags\n    - glew\n    - cgal-cpp\n    - ceres-solver\n    - qt-main\n    - git\n    - flann\n    - sqlite\n    - vlfeat                         # [unix]\n    - gmp                            # [unix]\n    - lz4-c\n    - metis\n    - libcurand-dev                  # [cuda_compiler_version == \"12.0\"]\n  run:\n    - vlfeat                         # [unix]\n    - flann\n    - xorg-libxext                   # [unix]\n    - xorg-libxdmcp                  # [unix]\n    - xorg-libxau                    # [unix]\n    - libxcb                         # [unix]\n    - xorg-libxfixes                 # [unix]\n    - xorg-libxrender                # [unix]\n    - xorg-libx11                    # [unix]\n    - xorg-libice                    # [unix]\n    - xorg-libsm                     # [unix]\n    - libglu                         # [linux]\n    - __cuda >={{ cuda_compiler_version }}  # [not osx and cuda_compiler_version != \"None\"]\n\ntest:\n  commands:\n    - if exist %PREFIX%\\\\Library\\\\bin\\\\colmap.exe (exit 0) else (exit 1)  # [win]\n    - test -f $PREFIX/bin/colmap  # [unix]\n    - test -f $PREFIX/lib/colmap/libcolmap.a  # [unix]\n    - test -f $PREFIX/lib/colmap/libcolmap_cuda.a  # [unix and cuda_compiler_version != \"None\"]\n    - test -f $PREFIX/share/colmap/COLMAPConfig.cmake  # [unix]\n\nabout:\n  home: https://colmap.github.io/\n  license: BSD-3-Clause\n  license_file:\n    - COPYING.txt\n    - lib/LSD/LICENSE\n    - lib/PBA/LICENSE  # [cuda_compiler_version != \"12.0\"]\n    - lib/PoissonRecon/LICENSE\n    - lib/SiftGPU/LICENSE\n  summary: COLMAP is a general-purpose Structure-from-Motion (SfM) and Multi-View Stereo (MVS) pipeline with a graphical and command-line interface.\n\nextra:\n  recipe-maintainers:\n    - Tobias-Fischer\n",
  "req": {
   "__set__": true,
   "elements": [
    "__cuda",
-   "boost-cpp",
    "c_compiler_stub",
    "cdt_stub",
    "ceres-solver",
@@ -2224,6 +2196,7 @@
    "glog",
    "gmp",
    "libblas",
+   "libboost-devel",
    "libcblas",
    "libcurand-dev",
    "libglu",
@@ -2270,7 +2243,6 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "c_compiler_stub",
     "ceres-solver",
     "cgal-cpp",
@@ -2286,6 +2258,7 @@
     "glog",
     "gmp",
     "libblas",
+    "libboost-devel",
     "libcblas",
     "libcurand-dev",
     "libglu",
@@ -2311,7 +2284,6 @@
    "__set__": true,
    "elements": [
     "__cuda",
-    "boost-cpp",
     "c_compiler_stub",
     "ctng-compilers",
     "cuda_compiler_stub",
@@ -2357,7 +2329,6 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "ceres-solver",
     "cgal-cpp",
     "eigen",
@@ -2369,6 +2340,7 @@
     "glog",
     "gmp",
     "libblas",
+    "libboost-devel",
     "libcblas",
     "libcurand-dev",
     "libglu",
@@ -2395,7 +2367,6 @@
     "__cuda >=11.2",
     "__cuda >=11.8",
     "__cuda >=12.0",
-    "boost-cpp",
     "flann",
     "libglu",
     "libxcb",
@@ -2444,13 +2415,13 @@
    "summary": "COLMAP is a general-purpose Structure-from-Motion (SfM) and Multi-View Stereo (MVS) pipeline with a graphical and command-line interface."
   },
   "build": {
-   "number": "5",
+   "number": "6",
    "run_exports": [
     "colmap",
     "colmap",
     "colmap"
    ],
-   "string": "cpuh1234567_5"
+   "string": "cpuh1234567_6"
   },
   "extra": {
    "recipe-maintainers": [
@@ -2486,7 +2457,7 @@
    "host": [
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -2503,7 +2474,7 @@
     "metis",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -2520,7 +2491,7 @@
     "metis",
     "libblas",
     "libcblas",
-    "boost-cpp",
+    "libboost-devel",
     "suitesparse",
     "eigen",
     "freeimage",
@@ -2537,12 +2508,9 @@
     "metis"
    ],
    "run": [
-    "boost-cpp",
     "flann",
-    "boost-cpp",
     "flann",
     "__cuda >=11.2",
-    "boost-cpp",
     "flann",
     "__cuda >=11.8"
    ]
@@ -2596,7 +2564,6 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "ceres-solver",
     "cgal-cpp",
     "eigen",
@@ -2607,6 +2574,7 @@
     "glew",
     "glog",
     "libblas",
+    "libboost-devel",
     "libcblas",
     "lz4-c",
     "metis",
@@ -2619,7 +2587,6 @@
    "__set__": true,
    "elements": [
     "__cuda",
-    "boost-cpp",
     "flann"
    ]
   },

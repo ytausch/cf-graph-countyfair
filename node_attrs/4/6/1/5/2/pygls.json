@@ -18,64 +18,116 @@
    "license": "Apache-2.0",
    "license_family": "APACHE",
    "license_file": [
-    "LICENSE.txt",
-    "ThirdPartyNotices.txt"
+    "dist/LICENSE.txt",
+    "src/ThirdPartyNotices.txt"
    ],
    "summary": "a pythonic generic language server (pronounced like \"pie glass\")."
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
     "bollwyvl"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "cd dist && PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+    },
+    "name": "pygls",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7.9",
+      "poetry-core"
+     ],
+     "run": [
+      "python >=3.7.9",
+      "lsprotocol ==2023.0.0b1",
+      "typeguard >=3.0.0,<4.0.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "pip list",
+      "pip list | grep -iE 'pygls\\s+1.1.0$'"
+     ],
+     "imports": [
+      "pygls"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "pygls-with-ws",
+    "requirements": {
+     "host": [
+      "python >=3.7.9"
+     ],
+     "run": [
+      "pygls",
+      "python >=3.7.9",
+      "websockets >=11.0.3,<12.0.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "cd src",
+      "coverage run --source=pygls --parallel --branch -m pytest -ra -vv --timeout=20 --asyncio-mode=auto -k \"not (test_code_actions or test_completion or test_diagnostics or test_inline_value)\"",
+      "coverage combine",
+      "coverage report --show-missing --skip-covered --fail-under=62"
+     ],
+     "imports": [
+      "pygls"
+     ],
+     "requires": [
+      "coverage",
+      "pip",
+      "pytest",
+      "pytest-asyncio",
+      "pytest-timeout"
+     ],
+     "source_files": [
+      "src/tests"
+     ]
+    }
+   }
+  ],
   "package": {
    "name": "pygls",
-   "version": "1.0.2"
+   "version": "1.1.0"
   },
   "requirements": {
    "host": [
-    "pip",
-    "python >=3.7",
-    "setuptools >=44",
-    "setuptools-scm >=3.4.3",
-    "toml"
+    "python >=3.7.9"
    ],
    "run": [
-    "python >=3.7",
-    "lsprotocol",
-    "typeguard >=3,<4"
+    "python >=3.7.9"
    ]
   },
-  "source": {
-   "sha256": "888ed63d1f650b4fc64d603d73d37545386ec533c0caac921aed80f80ea946a4",
-   "url": "https://pypi.io/packages/source/p/pygls/pygls-1.0.2.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "pip check",
-    "pip list",
-    "pip list | grep -iE 'pygls\\s+1.0.2$'",
-    "pytest tests -vv --cov=pygls --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=82"
-   ],
-   "imports": [
-    "pygls"
-   ],
-   "requires": [
-    "mock",
-    "pip",
-    "pytest",
-    "pytest-asyncio",
-    "pytest-cov"
-   ],
-   "source_files": [
-    "tests"
-   ]
-  }
+  "source": [
+   {
+    "folder": "dist",
+    "sha256": "eb19b818039d3d705ec8adbcdf5809a93af925f30cd7a3f3b7573479079ba00e",
+    "url": "https://pypi.io/packages/source/p/pygls/pygls-1.1.0.tar.gz"
+   },
+   {
+    "folder": "src",
+    "sha256": "585b6b3030580c96208d3176d397ac531603157279a55e0763c1b1e096680538",
+    "url": "https://github.com/openlawlibrary/pygls/archive/refs/tags/v1.1.0.tar.gz"
+   }
+  ]
  },
  "linux_64_requirements": {
   "build": {
@@ -86,28 +138,28 @@
    "__set__": true,
    "elements": [
     "pip",
-    "python",
-    "setuptools",
-    "setuptools-scm",
-    "toml"
+    "poetry-core",
+    "python"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "lsprotocol",
+    "pygls",
     "python",
-    "typeguard"
+    "typeguard",
+    "websockets"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "mock",
+    "coverage",
     "pip",
     "pytest",
     "pytest-asyncio",
-    "pytest-cov"
+    "pytest-timeout"
    ]
   }
  },
@@ -121,70 +173,123 @@
    "license": "Apache-2.0",
    "license_family": "APACHE",
    "license_file": [
-    "LICENSE.txt",
-    "ThirdPartyNotices.txt"
+    "dist/LICENSE.txt",
+    "src/ThirdPartyNotices.txt"
    ],
    "summary": "a pythonic generic language server (pronounced like \"pie glass\")."
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
     "bollwyvl"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "cd dist && PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+    },
+    "name": "pygls",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7.9",
+      "poetry-core"
+     ],
+     "run": [
+      "python >=3.7.9",
+      "lsprotocol ==2023.0.0b1",
+      "typeguard >=3.0.0,<4.0.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "pip list",
+      "pip list | grep -iE 'pygls\\s+1.1.0$'"
+     ],
+     "imports": [
+      "pygls"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "pygls-with-ws",
+    "requirements": {
+     "host": [
+      "python >=3.7.9"
+     ],
+     "run": [
+      "pygls",
+      "python >=3.7.9",
+      "websockets >=11.0.3,<12.0.0"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "cd src",
+      "coverage run --source=pygls --parallel --branch -m pytest -ra -vv --timeout=20 --asyncio-mode=auto -k \"not (test_code_actions or test_completion or test_diagnostics or test_inline_value)\"",
+      "coverage combine",
+      "coverage report --show-missing --skip-covered --fail-under=62"
+     ],
+     "imports": [
+      "pygls"
+     ],
+     "requires": [
+      "coverage",
+      "pip",
+      "pytest",
+      "pytest-asyncio",
+      "pytest-timeout"
+     ],
+     "source_files": [
+      "src/tests"
+     ]
+    }
+   }
+  ],
   "package": {
    "name": "pygls",
-   "version": "1.0.2"
+   "version": "1.1.0"
   },
   "requirements": {
    "host": [
-    "pip",
-    "python >=3.7",
-    "setuptools >=44",
-    "setuptools-scm >=3.4.3",
-    "toml"
+    "python >=3.7.9"
    ],
    "run": [
-    "python >=3.7",
-    "lsprotocol",
-    "typeguard >=3,<4"
+    "python >=3.7.9"
    ]
   },
-  "source": {
-   "sha256": "888ed63d1f650b4fc64d603d73d37545386ec533c0caac921aed80f80ea946a4",
-   "url": "https://pypi.io/packages/source/p/pygls/pygls-1.0.2.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "pip check",
-    "pip list",
-    "pip list | grep -iE 'pygls\\s+1.0.2$'",
-    "pytest tests -vv --cov=pygls --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=82"
-   ],
-   "imports": [
-    "pygls"
-   ],
-   "requires": [
-    "mock",
-    "pip",
-    "pytest",
-    "pytest-asyncio",
-    "pytest-cov"
-   ],
-   "source_files": [
-    "tests"
-   ]
-  }
+  "source": [
+   {
+    "folder": "dist",
+    "sha256": "eb19b818039d3d705ec8adbcdf5809a93af925f30cd7a3f3b7573479079ba00e",
+    "url": "https://pypi.io/packages/source/p/pygls/pygls-1.1.0.tar.gz"
+   },
+   {
+    "folder": "src",
+    "sha256": "585b6b3030580c96208d3176d397ac531603157279a55e0763c1b1e096680538",
+    "url": "https://github.com/openlawlibrary/pygls/archive/refs/tags/v1.1.0.tar.gz"
+   }
+  ]
  },
  "name": "pygls",
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "pygls"
+   "pygls",
+   "pygls-with-ws"
   ]
  },
  "parsing_error": false,
@@ -194,17 +299,17 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pygls.json"
  },
- "raw_meta_yaml": "{% set version = \"1.0.2\" %}\n\npackage:\n  name: pygls\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/p/pygls/pygls-{{ version }}.tar.gz\n  sha256: 888ed63d1f650b4fc64d603d73d37545386ec533c0caac921aed80f80ea946a4\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n\nrequirements:\n  host:\n    - pip\n    - python >=3.7\n    - setuptools >=44\n    - setuptools-scm >=3.4.3\n    - toml\n  run:\n    - python >=3.7\n    - lsprotocol\n    - typeguard >=3,<4\n\ntest:\n  source_files:\n    - tests\n  requires:\n    - m2-grep  # [win]\n    - mock\n    - pip\n    - pytest\n    - pytest-asyncio\n    - pytest-cov\n  imports:\n    - pygls\n  commands:\n    - pip check\n    - pip list\n    - pip list | grep -iE 'pygls\\s+{{ version.replace(\"\\\\\", \"\\\\\\\\\") }}$'\n    - pytest tests -vv --cov=pygls --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=82\n\nabout:\n  home: https://pygls.readthedocs.io\n  license: Apache-2.0\n  license_family: APACHE\n  license_file:\n    - LICENSE.txt\n    - ThirdPartyNotices.txt\n  summary: a pythonic generic language server (pronounced like \"pie glass\").\n  description: |\n    pygls (pronounced like \"pie glass\") is a pythonic generic implementation of\n    the Language Server Protocol for use as a foundation for writing language\n    servers using Python (e.g. Python, XML, etc.). It allows you to write your\n    own language server in just a few lines of code.\n  dev_url: https://github.com/openlawlibrary/pygls\n  doc_url: https://pygls.readthedocs.io\n  doc_source_url: https://github.com/openlawlibrary/pygls/tree/master/docs/source\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"1.1.0\" %}\n{% set cov_fail_under = \"62\" %}\n{% set pytest_skip = \"test_code_actions or test_completion or test_diagnostics or test_inline_value\" %}\n\npackage:\n  name: pygls\n  version: {{ version }}\n\nsource:\n  - folder: dist\n    url: https://pypi.io/packages/source/p/pygls/pygls-{{ version }}.tar.gz\n    sha256: eb19b818039d3d705ec8adbcdf5809a93af925f30cd7a3f3b7573479079ba00e\n  - folder: src\n    url: https://github.com/openlawlibrary/pygls/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: 585b6b3030580c96208d3176d397ac531603157279a55e0763c1b1e096680538\n\nbuild:\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.7.9\n  run:\n    - python >=3.7.9\n\noutputs:\n  - name: pygls\n    build:\n      noarch: python\n      script: cd dist && {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    requirements:\n      host:\n        - pip\n        - python >=3.7.9\n        - poetry-core\n      run:\n        - python >=3.7.9\n        - lsprotocol ==2023.0.0b1\n        - typeguard >=3.0.0,<4.0.0\n    test:\n      requires:\n        - m2-grep  # [win]\n        - pip\n      imports:\n        - pygls\n      commands:\n        - pip check\n        - pip list\n        - pip list | grep -iE 'pygls\\s+{{ version.replace(\"\\\\\", \"\\\\\\\\\") }}$'\n\n  - name: pygls-with-ws\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7.9\n      run:\n        - {{ pin_subpackage(\"pygls\", max_pin=\"x.x.x\") }}\n        - python >=3.7.9\n        - websockets >=11.0.3,<12.0.0\n    test:\n      source_files:\n        - src/tests\n      requires:\n        - coverage\n        - pip\n        - pytest\n        - pytest-asyncio\n        - pytest-timeout\n      imports:\n        - pygls\n      commands:\n        - pip check\n        - cd src\n        - coverage run --source=pygls --parallel --branch -m pytest -ra -vv --timeout=20 --asyncio-mode=auto -k \"not ({{ pytest_skip }})\"\n        - coverage combine\n        - coverage report --show-missing --skip-covered --fail-under={{ cov_fail_under }}\nabout:\n  home: https://pygls.readthedocs.io\n  license: Apache-2.0\n  license_family: APACHE\n  license_file:\n    - dist/LICENSE.txt\n    - src/ThirdPartyNotices.txt\n  summary: a pythonic generic language server (pronounced like \"pie glass\").\n  description: |\n    pygls (pronounced like \"pie glass\") is a pythonic generic implementation of\n    the Language Server Protocol for use as a foundation for writing language\n    servers using Python (e.g. Python, XML, etc.). It allows you to write your\n    own language server in just a few lines of code.\n  dev_url: https://github.com/openlawlibrary/pygls\n  doc_url: https://pygls.readthedocs.io\n  doc_source_url: https://github.com/openlawlibrary/pygls/tree/master/docs/source\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
    "lsprotocol",
    "pip",
+   "poetry-core",
+   "pygls",
    "python",
-   "setuptools",
-   "setuptools-scm",
-   "toml",
-   "typeguard"
+   "typeguard",
+   "websockets"
   ]
  },
  "requirements": {
@@ -216,28 +321,28 @@
    "__set__": true,
    "elements": [
     "pip",
-    "python",
-    "setuptools",
-    "setuptools-scm",
-    "toml"
+    "poetry-core",
+    "python"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "lsprotocol",
+    "pygls",
     "python",
-    "typeguard"
+    "typeguard",
+    "websockets"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "mock",
+    "coverage",
     "pip",
     "pytest",
     "pytest-asyncio",
-    "pytest-cov"
+    "pytest-timeout"
    ]
   }
  },
@@ -251,33 +356,33 @@
    "__set__": true,
    "elements": [
     "pip",
-    "python >=3.7",
-    "setuptools >=44",
-    "setuptools-scm >=3.4.3",
-    "toml"
+    "poetry-core",
+    "python >=3.7.9"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "lsprotocol",
-    "python >=3.7",
-    "typeguard >=3,<4"
+    "lsprotocol ==2023.0.0b1",
+    "pygls",
+    "python >=3.7.9",
+    "typeguard >=3.0.0,<4.0.0",
+    "websockets >=11.0.3,<12.0.0"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "mock",
+    "coverage",
     "pip",
     "pytest",
     "pytest-asyncio",
-    "pytest-cov"
+    "pytest-timeout"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/p/pygls/pygls-1.0.2.tar.gz",
- "version": "1.0.2",
+ "url": "https://pypi.io/packages/source/p/pygls/pygls-1.1.0.tar.gz",
+ "version": "1.1.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/pygls.json"
  }
