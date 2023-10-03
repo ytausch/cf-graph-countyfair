@@ -3,26 +3,23 @@
  "branch": "main",
  "conda-forge.yml": {
   "bot": {
-   "automerge": true
+   "automerge": true,
+   "inspection": "update-grayskull"
   }
  },
  "feedstock_name": "pylammpsmpi",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
   "about": {
-   "description": "Parallel Lammps Python interface\n",
-   "dev_url": "https://github.com/pyiron/pylammpsmpi",
-   "doc_url": "https://pylammpsmpi.readthedocs.io/",
    "home": "https://github.com/pyiron/pylammpsmpi",
    "license": "BSD-3-Clause",
-   "license_family": "BSD",
    "license_file": "LICENSE",
    "summary": "Parallel Lammps Python interface"
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1",
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -44,13 +41,9 @@
    ],
    "run": [
     "python >3.7",
-    "pip",
     "mpi4py >=3.1.4",
-    "lammps >=2023.08.02",
     "pympipool >=0.7.0",
-    "numpy >=1.23.5",
-    "ase >=3.22.1",
-    "scipy >=1.11.2"
+    "numpy >=1.23.5"
    ]
   },
   "source": {
@@ -63,6 +56,9 @@
    ],
    "imports": [
     "pylammpsmpi"
+   ],
+   "requires": [
+    "pip"
    ]
   }
  },
@@ -81,36 +77,30 @@
   "run": {
    "__set__": true,
    "elements": [
-    "ase",
-    "lammps",
     "mpi4py",
     "numpy",
-    "pip",
     "pympipool",
-    "python",
-    "scipy"
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "meta_yaml": {
   "about": {
-   "description": "Parallel Lammps Python interface\n",
-   "dev_url": "https://github.com/pyiron/pylammpsmpi",
-   "doc_url": "https://pylammpsmpi.readthedocs.io/",
    "home": "https://github.com/pyiron/pylammpsmpi",
    "license": "BSD-3-Clause",
-   "license_family": "BSD",
    "license_file": "LICENSE",
    "summary": "Parallel Lammps Python interface"
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1",
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -132,13 +122,9 @@
    ],
    "run": [
     "python >3.7",
-    "pip",
     "mpi4py >=3.1.4",
-    "lammps >=2023.08.02",
     "pympipool >=0.7.0",
-    "numpy >=1.23.5",
-    "ase >=3.22.1",
-    "scipy >=1.11.2"
+    "numpy >=1.23.5"
    ]
   },
   "source": {
@@ -151,6 +137,9 @@
    ],
    "imports": [
     "pylammpsmpi"
+   ],
+   "requires": [
+    "pip"
    ]
   }
  },
@@ -168,18 +157,15 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pylammpsmpi.json"
  },
- "raw_meta_yaml": "{% set name = \"pylammpsmpi\" %}\n{% set version = \"0.2.3\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 2e88f4abb1999f0c28c691f003fc6bf71029eabf769cc1d27619bbff3d8004fe\n\nbuild:\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n  noarch: python\n\nrequirements:\n  host:\n    - python >3.7\n    - pip\n  run:\n    - python >3.7\n    - pip\n    - mpi4py >=3.1.4\n    - lammps >=2023.08.02\n    - pympipool >=0.7.0\n    - numpy >=1.23.5\n    - ase >=3.22.1\n    - scipy >=1.11.2\n\ntest:\n  imports:\n    - pylammpsmpi\n  commands:\n    - pip check\n\nabout:\n  home: https://github.com/pyiron/pylammpsmpi\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Parallel Lammps Python interface\n\n  description: |\n    Parallel Lammps Python interface\n  doc_url: https://pylammpsmpi.readthedocs.io/\n  dev_url: https://github.com/pyiron/pylammpsmpi\n\nextra:\n  recipe-maintainers:\n    - pyiron-runner\n    - jan-janssen\n    - pmrv\n    - niklassiemer\n    - srmnitc\n",
+ "raw_meta_yaml": "{% set name = \"pylammpsmpi\" %}\n{% set version = \"0.2.3\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pylammpsmpi-{{ version }}.tar.gz\n  sha256: 2e88f4abb1999f0c28c691f003fc6bf71029eabf769cc1d27619bbff3d8004fe\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n  number: 1\n\nrequirements:\n  host:\n    - python >3.7\n    - pip\n  run:\n    - python >3.7\n    - mpi4py >=3.1.4\n    - pympipool >=0.7.0\n    - numpy >=1.23.5\n\ntest:\n  imports:\n    - pylammpsmpi\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/pyiron/pylammpsmpi\n  summary: Parallel Lammps Python interface\n  license: BSD-3-Clause\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - pyiron-runner\n    - jan-janssen\n    - pmrv\n    - niklassiemer\n    - srmnitc\n",
  "req": {
   "__set__": true,
   "elements": [
-   "ase",
-   "lammps",
    "mpi4py",
    "numpy",
    "pip",
    "pympipool",
-   "python",
-   "scipy"
+   "python"
   ]
  },
  "requirements": {
@@ -197,19 +183,17 @@
   "run": {
    "__set__": true,
    "elements": [
-    "ase",
-    "lammps",
     "mpi4py",
     "numpy",
-    "pip",
     "pympipool",
-    "python",
-    "scipy"
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "strong_exports": false,
@@ -228,19 +212,17 @@
   "run": {
    "__set__": true,
    "elements": [
-    "ase >=3.22.1",
-    "lammps >=2023.08.02",
     "mpi4py >=3.1.4",
     "numpy >=1.23.5",
-    "pip",
     "pympipool >=0.7.0",
-    "python >3.7",
-    "scipy >=1.11.2"
+    "python >3.7"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "url": "https://pypi.io/packages/source/p/pylammpsmpi/pylammpsmpi-0.2.3.tar.gz",
