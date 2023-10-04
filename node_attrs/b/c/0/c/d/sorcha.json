@@ -6,28 +6,22 @@
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
   "about": {
-   "dev_url": "https://github.com/dirac-institute/survey_simulator_post_processing",
-   "home": "https://github.com/lsst-sssc/lsstcomet",
-   "license": "MIT AND GPL-3.0",
-   "license_file": [
-    "LICENSE.txt",
-    "src/sorcha/lsstcomet/LICENSE"
-   ],
+   "home": "https://github.com/dirac-institute/sorcha",
+   "license": "BSD-3-Clause AND GPL-3.0-only",
+   "license_file": "LICENSE.txt",
    "summary": "The survey simulator post processing code for the LSST"
   },
   "build": {
    "entry_points": [
     "sorcha = sorcha.sorcha:main",
-    "makeConfigOIF = sorcha.utilities.makeConfigOIF:main",
     "makeConfigSorcha = sorcha.utilities.makeConfigPP:main",
-    "makeMultiConfigOIF = sorcha.utilities.makeMultiConfigOIF:main",
     "makeSLURMscript = sorcha.utilities.makeSLURMscript:main",
     "createResultsSQLDatabase = sorcha.utilities.createResultsSQLDatabase:main",
-    "createTemporaryDatabases = sorcha.utilities.createTemporaryDatabases:main"
+    "bootstrap_sorcha_data_files = sorcha.utilities.retrieve_ephemeris_data_files:main"
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -38,47 +32,59 @@
   },
   "package": {
    "name": "sorcha",
-   "version": "0.4"
+   "version": "0.6.0"
   },
   "requirements": {
    "host": [
     "python >=3.8",
     "setuptools >=62",
-    "setuptools-scm >=6.2",
-    "pytest-runner",
+    "setuptools-scm >=7.0",
     "pip"
    ],
    "run": [
     "python >=3.8",
-    "numpy ==1.24.3",
-    "pandas",
-    "scipy",
+    "numpy",
+    "pandas >=2.0",
     "astropy",
     "matplotlib-base",
     "sbpy",
-    "pytables"
+    "pytables",
+    "spiceypy",
+    "healpy",
+    "assist",
+    "rebound",
+    "pooch",
+    "tqdm",
+    "numba"
    ]
   },
   "source": {
-   "sha256": "13745868289390f960497827edc8dd879a94d65037a6834ce720fd8f7b438b3e",
-   "url": "https://pypi.io/packages/source/s/sorcha/sorcha-0.4.tar.gz"
+   "sha256": "3d1caaab41d2a61c14e8022ec98cae9cdd5f7434e6354acc44e4490a72e451f9",
+   "url": "https://github.com/dirac-institute/sorcha/archive/v0.6.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
     "sorcha --help",
-    "makeConfigOIF --help",
     "makeConfigSorcha --help",
-    "makeMultiConfigOIF --help",
     "makeSLURMscript --help",
     "createResultsSQLDatabase --help",
-    "createTemporaryDatabases --help"
+    "bootstrap_sorcha_data_files --help",
+    "bash -x ./demo/quicktest.sh"
    ],
    "imports": [
     "sorcha"
    ],
    "requires": [
     "pip"
+   ],
+   "source_files": [
+    "demo/quicktest.sh",
+    "data/detectors_corners.csv",
+    "demo/baseline_v2.0_1yr.db",
+    "demo/sorcha_config_demo.ini",
+    "demo/sspp_testset_colours.txt",
+    "demo/sspp_testset_orbits.des"
    ]
   }
  },
@@ -91,7 +97,6 @@
    "__set__": true,
    "elements": [
     "pip",
-    "pytest-runner",
     "python",
     "setuptools",
     "setuptools-scm"
@@ -100,14 +105,20 @@
   "run": {
    "__set__": true,
    "elements": [
+    "assist",
     "astropy",
+    "healpy",
     "matplotlib-base",
+    "numba",
     "numpy",
     "pandas",
+    "pooch",
     "pytables",
     "python",
+    "rebound",
     "sbpy",
-    "scipy"
+    "spiceypy",
+    "tqdm"
    ]
   },
   "test": {
@@ -119,28 +130,22 @@
  },
  "meta_yaml": {
   "about": {
-   "dev_url": "https://github.com/dirac-institute/survey_simulator_post_processing",
-   "home": "https://github.com/lsst-sssc/lsstcomet",
-   "license": "MIT AND GPL-3.0",
-   "license_file": [
-    "LICENSE.txt",
-    "src/sorcha/lsstcomet/LICENSE"
-   ],
+   "home": "https://github.com/dirac-institute/sorcha",
+   "license": "BSD-3-Clause AND GPL-3.0-only",
+   "license_file": "LICENSE.txt",
    "summary": "The survey simulator post processing code for the LSST"
   },
   "build": {
    "entry_points": [
     "sorcha = sorcha.sorcha:main",
-    "makeConfigOIF = sorcha.utilities.makeConfigOIF:main",
     "makeConfigSorcha = sorcha.utilities.makeConfigPP:main",
-    "makeMultiConfigOIF = sorcha.utilities.makeMultiConfigOIF:main",
     "makeSLURMscript = sorcha.utilities.makeSLURMscript:main",
     "createResultsSQLDatabase = sorcha.utilities.createResultsSQLDatabase:main",
-    "createTemporaryDatabases = sorcha.utilities.createTemporaryDatabases:main"
+    "bootstrap_sorcha_data_files = sorcha.utilities.retrieve_ephemeris_data_files:main"
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -151,47 +156,59 @@
   },
   "package": {
    "name": "sorcha",
-   "version": "0.4"
+   "version": "0.6.0"
   },
   "requirements": {
    "host": [
     "python >=3.8",
     "setuptools >=62",
-    "setuptools-scm >=6.2",
-    "pytest-runner",
+    "setuptools-scm >=7.0",
     "pip"
    ],
    "run": [
     "python >=3.8",
-    "numpy ==1.24.3",
-    "pandas",
-    "scipy",
+    "numpy",
+    "pandas >=2.0",
     "astropy",
     "matplotlib-base",
     "sbpy",
-    "pytables"
+    "pytables",
+    "spiceypy",
+    "healpy",
+    "assist",
+    "rebound",
+    "pooch",
+    "tqdm",
+    "numba"
    ]
   },
   "source": {
-   "sha256": "13745868289390f960497827edc8dd879a94d65037a6834ce720fd8f7b438b3e",
-   "url": "https://pypi.io/packages/source/s/sorcha/sorcha-0.4.tar.gz"
+   "sha256": "3d1caaab41d2a61c14e8022ec98cae9cdd5f7434e6354acc44e4490a72e451f9",
+   "url": "https://github.com/dirac-institute/sorcha/archive/v0.6.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
     "sorcha --help",
-    "makeConfigOIF --help",
     "makeConfigSorcha --help",
-    "makeMultiConfigOIF --help",
     "makeSLURMscript --help",
     "createResultsSQLDatabase --help",
-    "createTemporaryDatabases --help"
+    "bootstrap_sorcha_data_files --help",
+    "bash -x ./demo/quicktest.sh"
    ],
    "imports": [
     "sorcha"
    ],
    "requires": [
     "pip"
+   ],
+   "source_files": [
+    "demo/quicktest.sh",
+    "data/detectors_corners.csv",
+    "demo/baseline_v2.0_1yr.db",
+    "demo/sorcha_config_demo.ini",
+    "demo/sspp_testset_colours.txt",
+    "demo/sspp_testset_orbits.des"
    ]
   }
  },
@@ -209,22 +226,27 @@
  "pr_info": {
   "__lazy_json__": "pr_info/sorcha.json"
  },
- "raw_meta_yaml": "{% set name = \"sorcha\" %}\n{% set version = \"0.4\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sorcha-{{ version }}.tar.gz\n  sha256: 13745868289390f960497827edc8dd879a94d65037a6834ce720fd8f7b438b3e\n\nbuild:\n  entry_points:\n    - sorcha = sorcha.sorcha:main\n    - makeConfigOIF = sorcha.utilities.makeConfigOIF:main\n    - makeConfigSorcha = sorcha.utilities.makeConfigPP:main\n    - makeMultiConfigOIF = sorcha.utilities.makeMultiConfigOIF:main\n    - makeSLURMscript = sorcha.utilities.makeSLURMscript:main\n    - createResultsSQLDatabase = sorcha.utilities.createResultsSQLDatabase:main\n    - createTemporaryDatabases = sorcha.utilities.createTemporaryDatabases:main\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.8\n    - setuptools >=62\n    - setuptools-scm >=6.2\n    - pytest-runner\n    - pip\n  run:\n    - python >=3.8\n    - numpy ==1.24.3\n    - pandas\n    - scipy\n    - astropy\n    - matplotlib-base\n    - sbpy\n    - pytables\n\ntest:\n  imports:\n    - sorcha\n  commands:\n    - pip check\n    - sorcha --help\n    - makeConfigOIF --help\n    - makeConfigSorcha --help\n    - makeMultiConfigOIF --help\n    - makeSLURMscript --help\n    - createResultsSQLDatabase --help\n    - createTemporaryDatabases --help\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/lsst-sssc/lsstcomet\n  summary: The survey simulator post processing code for the LSST\n  dev_url: https://github.com/dirac-institute/survey_simulator_post_processing\n  license: MIT AND GPL-3.0\n  license_file:\n    - LICENSE.txt\n    - src/sorcha/lsstcomet/LICENSE\n\nextra:\n  recipe-maintainers:\n    - drewoldag\n    - mschwamb\n    - mjuric\n",
+ "raw_meta_yaml": "{% set name = \"sorcha\" %}\n{% set version = \"0.6.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n   url: https://github.com/dirac-institute/sorcha/archive/v{{ version }}.tar.gz\n   sha256: 3d1caaab41d2a61c14e8022ec98cae9cdd5f7434e6354acc44e4490a72e451f9\n#   path: /Users/mjuric/projects/github.com/mjuric/sorcha\n\nbuild:\n  entry_points:\n    - sorcha = sorcha.sorcha:main\n    - makeConfigSorcha = sorcha.utilities.makeConfigPP:main\n    - makeSLURMscript = sorcha.utilities.makeSLURMscript:main\n    - createResultsSQLDatabase = sorcha.utilities.createResultsSQLDatabase:main\n    - bootstrap_sorcha_data_files = sorcha.utilities.retrieve_ephemeris_data_files:main\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.8\n    - setuptools >=62\n    - setuptools-scm >=7.0\n    - pip\n  run:\n    - python >=3.8\n    - numpy\n    - pandas >=2.0\n    - astropy\n    - matplotlib-base\n    - sbpy\n    - pytables\n    - spiceypy\n    - healpy\n    - assist\n    - rebound\n    - pooch\n    - tqdm\n    - numba\n\ntest:\n  imports:\n    - sorcha\n  commands:\n    - pip check\n    - sorcha --help\n    - makeConfigSorcha --help\n    - makeSLURMscript --help\n    - createResultsSQLDatabase --help\n    - bootstrap_sorcha_data_files --help\n    - bash -x ./demo/quicktest.sh\n  requires:\n    - pip\n  source_files:\n    - demo/quicktest.sh\n    - data/detectors_corners.csv\n    - demo/baseline_v2.0_1yr.db\n    - demo/sorcha_config_demo.ini\n    - demo/sspp_testset_colours.txt\n    - demo/sspp_testset_orbits.des\n\nabout:\n  home: https://github.com/dirac-institute/sorcha\n  summary: The survey simulator post processing code for the LSST\n  license: BSD-3-Clause AND GPL-3.0-only\n  license_file: LICENSE.txt\n\nextra:\n  recipe-maintainers:\n    - drewoldag\n    - mschwamb\n    - mjuric\n",
  "req": {
   "__set__": true,
   "elements": [
+   "assist",
    "astropy",
+   "healpy",
    "matplotlib-base",
+   "numba",
    "numpy",
    "pandas",
    "pip",
+   "pooch",
    "pytables",
-   "pytest-runner",
    "python",
+   "rebound",
    "sbpy",
-   "scipy",
    "setuptools",
-   "setuptools-scm"
+   "setuptools-scm",
+   "spiceypy",
+   "tqdm"
   ]
  },
  "requirements": {
@@ -236,7 +258,6 @@
    "__set__": true,
    "elements": [
     "pip",
-    "pytest-runner",
     "python",
     "setuptools",
     "setuptools-scm"
@@ -245,14 +266,20 @@
   "run": {
    "__set__": true,
    "elements": [
+    "assist",
     "astropy",
+    "healpy",
     "matplotlib-base",
+    "numba",
     "numpy",
     "pandas",
+    "pooch",
     "pytables",
     "python",
+    "rebound",
     "sbpy",
-    "scipy"
+    "spiceypy",
+    "tqdm"
    ]
   },
   "test": {
@@ -272,23 +299,28 @@
    "__set__": true,
    "elements": [
     "pip",
-    "pytest-runner",
     "python >=3.8",
     "setuptools >=62",
-    "setuptools-scm >=6.2"
+    "setuptools-scm >=7.0"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
+    "assist",
     "astropy",
+    "healpy",
     "matplotlib-base",
-    "numpy ==1.24.3",
-    "pandas",
+    "numba",
+    "numpy",
+    "pandas >=2.0",
+    "pooch",
     "pytables",
     "python >=3.8",
+    "rebound",
     "sbpy",
-    "scipy"
+    "spiceypy",
+    "tqdm"
    ]
   },
   "test": {
@@ -298,8 +330,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/s/sorcha/sorcha-0.4.tar.gz",
- "version": "0.4",
+ "url": "https://github.com/dirac-institute/sorcha/archive/v0.6.0.tar.gz",
+ "version": "0.6.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/sorcha.json"
  }
