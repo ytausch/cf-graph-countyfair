@@ -3,6 +3,9 @@
  "branch": "main",
  "conda-forge.yml": {
   "bot": {
+   "abi_migration_branches": [
+    "v9"
+   ],
    "automerge": true
   },
   "build_platform": {
@@ -25,7 +28,7 @@
    "summary": "Messages for Gazebo robot simulation."
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "gz-msgs",
@@ -40,10 +43,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -59,49 +62,105 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-msgs9",
-   "version": "9.5.0"
+   "name": "gz-msgs10",
+   "version": "10.0.0"
   },
   "source": [
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    }
   ]
  },
@@ -124,18 +183,26 @@
     "libgz-math7",
     "libgz-tools2",
     "libprotobuf",
+    "protobuf",
+    "pytest",
+    "python",
     "tinyxml2"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "libgz-msgs9"
+    "gz-msgs10-python",
+    "libgz-msgs10",
+    "protobuf",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "linux_aarch64_meta_yaml": {
@@ -146,7 +213,7 @@
    "summary": "Messages for Gazebo robot simulation."
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "gz-msgs",
@@ -161,10 +228,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -180,49 +247,105 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-msgs9",
-   "version": "9.5.0"
+   "name": "gz-msgs10",
+   "version": "10.0.0"
   },
   "source": [
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    }
   ]
  },
@@ -245,18 +368,26 @@
     "libgz-math7",
     "libgz-tools2",
     "libprotobuf",
+    "protobuf",
+    "pytest",
+    "python",
     "tinyxml2"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "libgz-msgs9"
+    "gz-msgs10-python",
+    "libgz-msgs10",
+    "protobuf",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "linux_ppc64le_meta_yaml": {
@@ -267,7 +398,7 @@
    "summary": "Messages for Gazebo robot simulation."
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "gz-msgs",
@@ -282,10 +413,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -301,49 +432,105 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-msgs9",
-   "version": "9.5.0"
+   "name": "gz-msgs10",
+   "version": "10.0.0"
   },
   "source": [
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    }
   ]
  },
@@ -366,18 +553,26 @@
     "libgz-math7",
     "libgz-tools2",
     "libprotobuf",
+    "protobuf",
+    "pytest",
+    "python",
     "tinyxml2"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "libgz-msgs9"
+    "gz-msgs10-python",
+    "libgz-msgs10",
+    "protobuf",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "meta_yaml": {
@@ -388,7 +583,7 @@
    "summary": "Messages for Gazebo robot simulation."
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "gz-msgs",
@@ -423,10 +618,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -442,44 +637,96 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -495,44 +742,96 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -548,44 +847,96 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.so",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.so",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -601,44 +952,96 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -654,44 +1057,96 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -707,90 +1162,166 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "bld_cxx.bat",
     "test": {
      "commands": [
-      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\msgs9\\\\gz\\\\msgs.hh exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-msgs9.lib exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-msgs9.dll exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-msgs9\\\\gz-msgs9-config.cmake exit 1"
+      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\msgs10\\\\gz\\\\msgs.hh exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-msgs10.lib exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-msgs10.dll exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-msgs10\\\\gz-msgs10-config.cmake exit 1"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "bld_py.bat",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\msgs9\\\\gz\\\\msgs.hh exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-msgs9.lib exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-msgs9.dll exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-msgs9\\\\gz-msgs9-config.cmake exit 1"
+      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\msgs10\\\\gz\\\\msgs.hh exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-msgs10.lib exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-msgs10.dll exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-msgs10\\\\gz-msgs10-config.cmake exit 1"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-msgs9",
-   "version": "9.5.0"
+   "name": "gz-msgs10",
+   "version": "10.0.0"
   },
   "source": [
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    },
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    },
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    },
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    },
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    },
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    }
   ]
  },
- "name": "gz-msgs9",
+ "name": "gz-msgs10",
  "osx_64_meta_yaml": {
   "about": {
    "home": "https://github.com/gazebosim/gz-msgs",
@@ -799,7 +1330,7 @@
    "summary": "Messages for Gazebo robot simulation."
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "gz-msgs",
@@ -814,10 +1345,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -833,49 +1364,105 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-msgs9",
-   "version": "9.5.0"
+   "name": "gz-msgs10",
+   "version": "10.0.0"
   },
   "source": [
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    }
   ]
  },
@@ -898,18 +1485,26 @@
     "libgz-math7",
     "libgz-tools2",
     "libprotobuf",
+    "protobuf",
+    "pytest",
+    "python",
     "tinyxml2"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "libgz-msgs9"
+    "gz-msgs10-python",
+    "libgz-msgs10",
+    "protobuf",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "osx_arm64_meta_yaml": {
@@ -920,7 +1515,7 @@
    "summary": "Messages for Gazebo robot simulation."
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "gz-msgs",
@@ -935,10 +1530,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -954,49 +1549,105 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/msgs9/gz/msgs.hh",
-      "test -f ${PREFIX}/lib/libgz-msgs9.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-msgs9/gz-msgs9-config.cmake"
+      "test -f ${PREFIX}/include/gz/msgs10/gz/msgs.hh",
+      "test -f ${PREFIX}/lib/libgz-msgs10.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-msgs10/gz-msgs10-config.cmake"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-msgs9",
-   "version": "9.5.0"
+   "name": "gz-msgs10",
+   "version": "10.0.0"
   },
   "source": [
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    }
   ]
  },
@@ -1019,25 +1670,34 @@
     "libgz-math7",
     "libgz-tools2",
     "libprotobuf",
+    "protobuf",
+    "pytest",
+    "python",
     "tinyxml2"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "libgz-msgs9"
+    "gz-msgs10-python",
+    "libgz-msgs10",
+    "protobuf",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "gz-msgs9",
-   "libgz-msgs9"
+   "gz-msgs10",
+   "gz-msgs10-python",
+   "libgz-msgs10"
   ]
  },
  "parsing_error": false,
@@ -1052,20 +1712,23 @@
  "pr_info": {
   "__lazy_json__": "pr_info/gz-msgs.json"
  },
- "raw_meta_yaml": "{% set component_name = \"msgs\" %}\n{% set repo_name = \"gz-\" + component_name %}\n{% set version = \"9_9.5.0\" %}\n{% set major_version = version.split('_')[0] %}\n{% set version_package = version.split('_')[1] %}\n{% set name = repo_name + major_version %}\n{% set component_version = component_name + major_version %}\n{% set cxx_name = \"lib\" + name %}\n\npackage:\n  name: {{ name }}\n  version: {{ version_package }}\n\nsource:\n  - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ version }}.tar.gz\n    sha256: b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14\n    patches:\n      - fixprotobuf23.patch\n\nbuild:\n  number: 1\n\noutputs:\n  - name: {{ cxx_name }}\n    script: build_cxx.sh  # [unix]\n    script: bld_cxx.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - {{ compiler('c') }}\n        - ninja\n        - cmake\n        - pkg-config\n        - python\n        # We need all host deps also in build for cross-compiling\n        - libgz-math7  # [build_platform != target_platform]\n        - libgz-tools2  # [build_platform != target_platform]\n        - tinyxml2  # [build_platform != target_platform]\n        - libabseil  # [build_platform != target_platform]\n        - libprotobuf  # [build_platform != target_platform]\n      host:\n        - libgz-math7\n        - libgz-tools2\n        - tinyxml2\n        - libabseil\n        - libprotobuf\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n\n  - name: {{ name }}\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n\nabout:\n  home: https://github.com/gazebosim/{{ repo_name }}\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Messages for Gazebo robot simulation.\n\nextra:\n  feedstock-name: {{ repo_name }}\n  recipe-maintainers:\n    - wolfv\n    - traversaro\n    - j-rivero\n    - Tobias-Fischer\n",
+ "raw_meta_yaml": "{% set component_name = \"msgs\" %}\n{% set repo_name = \"gz-\" + component_name %}\n{% set version = \"10_10.0.0\" %}\n{% set major_version = version.split('_')[0] %}\n{% set version_package = version.split('_')[1] %}\n{% set name = repo_name + major_version %}\n{% set component_version = component_name + major_version %}\n{% set cxx_name = \"lib\" + name %}\n{% set python_name = name + \"-python\" %}\n\n\npackage:\n  name: {{ name }}\n  version: {{ version_package }}\n\nsource:\n  - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ version }}.tar.gz\n    sha256: 81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997\n    patches:\n      - 391.patch\n      - 392.patch\n      - 393.patch\n      - win_enable_cmd_install.patch\n      - win_enable_py_tests.patch\n      \nbuild:\n  number: 0\n\noutputs:\n  - name: {{ cxx_name }}\n    script: build_cxx.sh  # [unix]\n    script: bld_cxx.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - {{ compiler('c') }}\n        - ninja\n        - cmake\n        - pkg-config\n        - python\n        # We need all host deps also in build for cross-compiling\n        - libgz-math7  # [build_platform != target_platform]\n        - libgz-tools2  # [build_platform != target_platform]\n        - tinyxml2  # [build_platform != target_platform]\n        - libabseil  # [build_platform != target_platform]\n        - libprotobuf  # [build_platform != target_platform]\n      host:\n        - libgz-math7\n        - libgz-tools2\n        - tinyxml2\n        - libabseil\n        - libprotobuf\n      run:\n        - python\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n\n  - name: {{ python_name }}\n    build:\n      noarch: python\n    script: build_py.sh  # [unix]\n    script: bld_py.bat  # [win]\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - {{ compiler('c') }}\n        - ninja\n        - cmake\n        - pkg-config\n        - python\n        # We need all host deps also in build for cross-compiling\n        - libgz-math7  # [build_platform != target_platform]\n        - libgz-tools2  # [build_platform != target_platform]\n        - tinyxml2  # [build_platform != target_platform]\n        - libabseil  # [build_platform != target_platform]\n        - libprotobuf  # [build_platform != target_platform]\n      host:\n        - libgz-math7\n        - libgz-tools2\n        - tinyxml2\n        - libabseil\n        - libprotobuf\n        - python\n        - protobuf\n        - pytest\n      run:\n        - python  >=3.8\n        - protobuf\n    test:\n      commands:\n        - pip check\n      requires:\n        - pip\n      imports:\n        - gz.msgs10\n\n  - name: {{ name }}\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n        - {{ pin_subpackage(python_name, max_pin='x.x.x') }}\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n      requires:\n        - pip\n      imports:\n        - gz.msgs10\n\nabout:\n  home: https://github.com/gazebosim/{{ repo_name }}\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Messages for Gazebo robot simulation.\n\nextra:\n  feedstock-name: {{ repo_name }}\n  recipe-maintainers:\n    - wolfv\n    - traversaro\n    - j-rivero\n    - Tobias-Fischer\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
    "cmake",
    "cxx_compiler_stub",
+   "gz-msgs10-python",
    "libabseil",
    "libgz-math7",
-   "libgz-msgs9",
+   "libgz-msgs10",
    "libgz-tools2",
    "libprotobuf",
    "ninja",
    "pkg-config",
+   "protobuf",
+   "pytest",
    "python",
    "tinyxml2"
   ]
@@ -1091,6 +1754,9 @@
     "libgz-math7",
     "libgz-tools2",
     "libprotobuf",
+    "protobuf",
+    "pytest",
+    "python",
     "tinyxml2"
    ]
   },
@@ -1099,12 +1765,17 @@
    "elements": [
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "libgz-msgs9"
+    "gz-msgs10-python",
+    "libgz-msgs10",
+    "protobuf",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "strong_exports": false,
@@ -1127,22 +1798,31 @@
     "libgz-math7",
     "libgz-tools2",
     "libprotobuf",
+    "protobuf",
+    "pytest",
+    "python",
     "tinyxml2"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "libgz-msgs9"
+    "gz-msgs10-python",
+    "libgz-msgs10",
+    "protobuf",
+    "python",
+    "python  >=3.8"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
- "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz",
- "version": "9.5.0",
+ "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz",
+ "version": "10.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/gz-msgs.json"
  },
@@ -1154,7 +1834,7 @@
    "summary": "Messages for Gazebo robot simulation."
   },
   "build": {
-   "number": "1"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "gz-msgs",
@@ -1169,10 +1849,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "libgz-msgs9",
+    "name": "libgz-msgs10",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -1188,51 +1868,107 @@
       "tinyxml2",
       "libabseil",
       "libprotobuf"
+     ],
+     "run": [
+      "python"
      ]
     },
     "script": "bld_cxx.bat",
     "test": {
      "commands": [
-      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\msgs9\\\\gz\\\\msgs.hh exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-msgs9.lib exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-msgs9.dll exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-msgs9\\\\gz-msgs9-config.cmake exit 1"
+      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\msgs10\\\\gz\\\\msgs.hh exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-msgs10.lib exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-msgs10.dll exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-msgs10\\\\gz-msgs10-config.cmake exit 1"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "gz-msgs10-python",
+    "requirements": {
+     "build": [
+      "cxx_compiler_stub",
+      "c_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config",
+      "python"
+     ],
+     "host": [
+      "libgz-math7",
+      "libgz-tools2",
+      "tinyxml2",
+      "libabseil",
+      "libprotobuf",
+      "python",
+      "protobuf",
+      "pytest"
+     ],
+     "run": [
+      "python  >=3.8",
+      "protobuf"
+     ]
+    },
+    "script": "bld_py.bat",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-msgs9"
+      "libgz-msgs10"
      ]
     },
-    "name": "gz-msgs9",
+    "name": "gz-msgs10",
     "requirements": {
      "run": [
-      "libgz-msgs9"
+      "libgz-msgs10",
+      "gz-msgs10-python"
      ]
     },
     "test": {
      "commands": [
-      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\msgs9\\\\gz\\\\msgs.hh exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-msgs9.lib exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-msgs9.dll exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-msgs9\\\\gz-msgs9-config.cmake exit 1"
+      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\msgs10\\\\gz\\\\msgs.hh exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-msgs10.lib exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-msgs10.dll exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-msgs10\\\\gz-msgs10-config.cmake exit 1"
+     ],
+     "imports": [
+      "gz.msgs10"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-msgs9",
-   "version": "9.5.0"
+   "name": "gz-msgs10",
+   "version": "10.0.0"
   },
   "source": [
    {
     "patches": [
-     "fixprotobuf23.patch"
+     "391.patch",
+     "392.patch",
+     "393.patch",
+     "win_enable_cmd_install.patch",
+     "win_enable_py_tests.patch"
     ],
-    "sha256": "b0ee93979a1aaf035b193006052fb6339a52511a3db04ec995f79e39ef798b14",
-    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs9_9.5.0.tar.gz"
+    "sha256": "81afeb973252ffabcbab1372271efac2d3dbd52679916b495000215f43d54997",
+    "url": "https://github.com/gazebosim/gz-msgs/archive/gz-msgs10_10.0.0.tar.gz"
    }
   ]
  },
@@ -1255,18 +1991,26 @@
     "libgz-math7",
     "libgz-tools2",
     "libprotobuf",
+    "protobuf",
+    "pytest",
+    "python",
     "tinyxml2"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "libgz-msgs9"
+    "gz-msgs10-python",
+    "libgz-msgs10",
+    "protobuf",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  }
 }
