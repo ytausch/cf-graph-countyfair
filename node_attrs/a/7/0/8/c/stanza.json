@@ -106,7 +106,7 @@
   ],
   "package": {
    "name": "stanza-meta",
-   "version": "1.6.0"
+   "version": "1.6.1"
   },
   "requirements": {
    "host": [
@@ -117,8 +117,8 @@
    ]
   },
   "source": {
-   "sha256": "1522178e6290a21cc02bccac9668a2b9d5cc09a5dd65c02e58dbf36bcf4295ff",
-   "url": "https://pypi.io/packages/source/s/stanza/stanza-1.6.0.tar.gz"
+   "sha256": "5cc8658ce541ea6c082135740197d8a8f5a57fbc6cbbdc23d9ca1eb8e77aec58",
+   "url": "https://pypi.io/packages/source/s/stanza/stanza-1.6.1.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -254,7 +254,7 @@
   ],
   "package": {
    "name": "stanza-meta",
-   "version": "1.6.0"
+   "version": "1.6.1"
   },
   "requirements": {
    "host": [
@@ -265,8 +265,8 @@
    ]
   },
   "source": {
-   "sha256": "1522178e6290a21cc02bccac9668a2b9d5cc09a5dd65c02e58dbf36bcf4295ff",
-   "url": "https://pypi.io/packages/source/s/stanza/stanza-1.6.0.tar.gz"
+   "sha256": "5cc8658ce541ea6c082135740197d8a8f5a57fbc6cbbdc23d9ca1eb8e77aec58",
+   "url": "https://pypi.io/packages/source/s/stanza/stanza-1.6.1.tar.gz"
   }
  },
  "name": "stanza-meta",
@@ -285,7 +285,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/stanza.json"
  },
- "raw_meta_yaml": "{% set version = \"1.6.0\" %}\n\npackage:\n  name: stanza-meta\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/s/stanza/stanza-{{ version }}.tar.gz\n  sha256: 1522178e6290a21cc02bccac9668a2b9d5cc09a5dd65c02e58dbf36bcf4295ff\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - python >=3.6\n  run:\n    - python >=3.6\n\noutputs:\n  - name: stanza\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    requirements:\n      host:\n        - pip\n        - python >=3.6\n      run:\n        - emoji\n        - numpy\n        - protobuf >=3.15.0\n        - python >=3.6\n        - pytorch >=1.3.0\n        - requests\n        - six\n        - tqdm\n      run_constrained:\n        # actual `run` dependency in stanza-with-transformers\n        - transformers >=3.0.0\n    test:\n      imports:\n        - stanza\n        - stanza.models\n        # check for missing `nn` members\n        - stanza.models.constituency.utils\n      commands:\n        - pip check\n      requires:\n        - pip\n          # test with oldest compatible version on conda-forge\n        - pytorch 1.6.*\n\n  - name: stanza-with-transformers\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.6\n      run:\n        - {{ pin_subpackage(\"stanza\", max_pin=\"x.x.x\") }}\n        - python >=3.6\n        - transformers\n    test:\n      imports:\n        - stanza\n        - stanza.models\n        # for transformers\n        - stanza.models.common.bert_embedding\n      commands:\n        - pip check\n        - python -c \"import stanza; nl = stanza.models.constituency.utils.NONLINEARITY; print(nl); assert 'mish' in nl\"\n      requires:\n        - pip\n        # minimum with `nn.Mish`\n        - pytorch >=1.9.0\n    about:\n      summary: (with transformers) A Python NLP Library for Many Human Languages, by the Stanford NLP Group\n\nabout:\n  home: https://github.com/stanfordnlp/stanza\n  summary: A Python NLP Library for Many Human Languages, by the Stanford NLP Group\n  license: Apache-2.0\n  license_file: LICENSE\n  doc_url: https://stanfordnlp.github.io/stanza\n\nextra:\n  feedstock-name: stanza\n  recipe-maintainers:\n    - AngledLuffa\n    - FernandezMathieu\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"1.6.1\" %}\n\npackage:\n  name: stanza-meta\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/s/stanza/stanza-{{ version }}.tar.gz\n  sha256: 5cc8658ce541ea6c082135740197d8a8f5a57fbc6cbbdc23d9ca1eb8e77aec58\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - python >=3.6\n  run:\n    - python >=3.6\n\noutputs:\n  - name: stanza\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    requirements:\n      host:\n        - pip\n        - python >=3.6\n      run:\n        - emoji\n        - numpy\n        - protobuf >=3.15.0\n        - python >=3.6\n        - pytorch >=1.3.0\n        - requests\n        - six\n        - tqdm\n      run_constrained:\n        # actual `run` dependency in stanza-with-transformers\n        - transformers >=3.0.0\n    test:\n      imports:\n        - stanza\n        - stanza.models\n        # check for missing `nn` members\n        - stanza.models.constituency.utils\n      commands:\n        - pip check\n      requires:\n        - pip\n          # test with oldest compatible version on conda-forge\n        - pytorch 1.6.*\n\n  - name: stanza-with-transformers\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.6\n      run:\n        - {{ pin_subpackage(\"stanza\", max_pin=\"x.x.x\") }}\n        - python >=3.6\n        - transformers\n    test:\n      imports:\n        - stanza\n        - stanza.models\n        # for transformers\n        - stanza.models.common.bert_embedding\n      commands:\n        - pip check\n        - python -c \"import stanza; nl = stanza.models.constituency.utils.NONLINEARITY; print(nl); assert 'mish' in nl\"\n      requires:\n        - pip\n        # minimum with `nn.Mish`\n        - pytorch >=1.9.0\n    about:\n      summary: (with transformers) A Python NLP Library for Many Human Languages, by the Stanford NLP Group\n\nabout:\n  home: https://github.com/stanfordnlp/stanza\n  summary: A Python NLP Library for Many Human Languages, by the Stanford NLP Group\n  license: Apache-2.0\n  license_file: LICENSE\n  doc_url: https://stanfordnlp.github.io/stanza\n\nextra:\n  feedstock-name: stanza\n  recipe-maintainers:\n    - AngledLuffa\n    - FernandezMathieu\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -374,8 +374,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/s/stanza/stanza-1.6.0.tar.gz",
- "version": "1.6.0",
+ "url": "https://pypi.io/packages/source/s/stanza/stanza-1.6.1.tar.gz",
+ "version": "1.6.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/stanza.json"
  }
