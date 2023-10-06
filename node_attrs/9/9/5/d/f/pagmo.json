@@ -23,7 +23,7 @@
    "summary": "A C++ platform to perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -58,7 +58,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
@@ -146,7 +146,7 @@
    "summary": "A C++ platform to perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -181,7 +181,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
@@ -269,7 +269,7 @@
    "summary": "A C++ platform to perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -304,7 +304,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
@@ -392,7 +392,7 @@
    "summary": "A C++ platform to perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -437,7 +437,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
@@ -492,7 +492,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
@@ -547,7 +547,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
@@ -602,7 +602,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
@@ -657,7 +657,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
@@ -711,7 +711,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
@@ -788,7 +788,7 @@
    "summary": "A C++ platform to perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -823,7 +823,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
@@ -911,7 +911,7 @@
    "summary": "A C++ platform to perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -946,7 +946,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
@@ -1045,7 +1045,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pagmo.json"
  },
- "raw_meta_yaml": "{% set version = \"2.19.0\" %}\n\npackage:\n  name: pagmo\n  version: {{ version }}\n\nsource:\n  url: https://github.com/esa/pagmo2/archive/v{{ version }}.tar.gz\n  sha256: 701ada528de7d454201e92a5d88903dd1c22ea64f43861d9694195ddfef82a70\n\nbuild:\n  number: 3\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - cmake\n    - make    # [unix]\n\noutputs:\n  - name: pagmo\n    requirements:\n      host:\n        - eigen\n        - nlopt\n        - libboost-devel\n        - tbb-devel\n        - ipopt\n      run:\n        # NOTE: nlopt, tbb and ipopt\n        # use run_exports().\n    files:\n      - lib/libpagmo*{{ SHLIB_EXT }}   # [not win]\n      - lib/libpagmo.so.*              # [linux]\n      - lib/libpagmo.*.dylib           # [osx]\n      - Library/bin/pagmo.dll          # [win]\n    test:\n      commands:\n        - test -f $PREFIX/lib/libpagmo.so                                     # [linux]\n        - test -f $PREFIX/lib/libpagmo.dylib                                  # [osx]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\pagmo.dll exit 1               # [win]\n\n  - name: pagmo-devel\n    build:\n      run_exports:\n        # NOTE: don't need to list tbb, as\n        # the pagmo public headers do not\n        # use tbb (thus, a dependee of pagmo\n        # does not need to link to tbb).\n        # pagmo's API and ABI change at minor rev bumps.\n        - {{ pin_subpackage('pagmo', max_pin='x.x') }}\n        - {{ pin_compatible('libboost-devel', max_pin='x.x') }}\n        - {{ pin_compatible('nlopt', max_pin='x.x') }}\n        # NOTE: ipopt might change the ABI at minor version bumps:\n        # https://github.com/conda-forge/ipopt-feedstock/issues/85#issuecomment-1168571776\n        - {{ pin_compatible('ipopt', max_pin='x.x.x') }}\n    requirements:\n      host:\n        - eigen\n        - nlopt\n        - tbb-devel\n        - ipopt\n      run:\n        - {{ pin_subpackage(\"pagmo\", exact=True) }}\n        - eigen\n        - tbb-devel\n    files:\n      - include/pagmo            # [not win]\n      - lib/cmake/pagmo          # [not win]\n      - Library/include/pagmo    # [win]\n      - Library/lib/pagmo.lib    # [win]\n      - Library/lib/cmake/pagmo  # [win]\n    test:\n      commands:\n        - test -f $PREFIX/include/pagmo/config.hpp                            # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\pagmo\\\\config.hpp exit 1   # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\pagmo.lib exit 1               # [win]\n\nabout:\n  home: https://esa.github.io/pagmo2/\n  license: GPL-3.0-or-later OR LGPL-3.0-or-later\n  license_file: COPYING.lgpl3\n  summary: A C++ platform to perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model\n\nextra:\n  recipe-maintainers:\n    - bluescarni\n    - darioizzo\n",
+ "raw_meta_yaml": "{% set version = \"2.19.0\" %}\n\npackage:\n  name: pagmo\n  version: {{ version }}\n\nsource:\n  url: https://github.com/esa/pagmo2/archive/v{{ version }}.tar.gz\n  sha256: 701ada528de7d454201e92a5d88903dd1c22ea64f43861d9694195ddfef82a70\n\nbuild:\n  number: 4\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - cmake\n    - make    # [unix]\n\noutputs:\n  - name: pagmo\n    requirements:\n      host:\n        - eigen\n        - nlopt\n        - libboost-devel\n        - tbb-devel\n        - ipopt\n      run:\n        # NOTE: nlopt, tbb and ipopt\n        # use run_exports().\n    files:\n      - lib/libpagmo*{{ SHLIB_EXT }}   # [not win]\n      - lib/libpagmo.so.*              # [linux]\n      - lib/libpagmo.*.dylib           # [osx]\n      - Library/bin/pagmo.dll          # [win]\n    test:\n      commands:\n        - test -f $PREFIX/lib/libpagmo.so                                     # [linux]\n        - test -f $PREFIX/lib/libpagmo.dylib                                  # [osx]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\pagmo.dll exit 1               # [win]\n\n  - name: pagmo-devel\n    build:\n      run_exports:\n        # NOTE: don't need to list tbb, as\n        # the pagmo public headers do not\n        # use tbb (thus, a dependee of pagmo\n        # does not need to link to tbb).\n        # pagmo's API and ABI change at minor rev bumps.\n        - {{ pin_subpackage('pagmo', max_pin='x.x') }}\n        - {{ pin_compatible('libboost', max_pin='x.x') }}\n        - {{ pin_compatible('nlopt', max_pin='x.x') }}\n        # NOTE: ipopt might change the ABI at minor version bumps:\n        # https://github.com/conda-forge/ipopt-feedstock/issues/85#issuecomment-1168571776\n        - {{ pin_compatible('ipopt', max_pin='x.x.x') }}\n    requirements:\n      host:\n        - eigen\n        - nlopt\n        - tbb-devel\n        - ipopt\n      run:\n        - {{ pin_subpackage(\"pagmo\", exact=True) }}\n        - eigen\n        - tbb-devel\n    files:\n      - include/pagmo            # [not win]\n      - lib/cmake/pagmo          # [not win]\n      - Library/include/pagmo    # [win]\n      - Library/lib/pagmo.lib    # [win]\n      - Library/lib/cmake/pagmo  # [win]\n    test:\n      commands:\n        - test -f $PREFIX/include/pagmo/config.hpp                            # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\pagmo\\\\config.hpp exit 1   # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\pagmo.lib exit 1               # [win]\n\nabout:\n  home: https://esa.github.io/pagmo2/\n  license: GPL-3.0-or-later OR LGPL-3.0-or-later\n  license_file: COPYING.lgpl3\n  summary: A C++ platform to perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model\n\nextra:\n  recipe-maintainers:\n    - bluescarni\n    - darioizzo\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1145,7 +1145,7 @@
    "summary": "A C++ platform to perform parallel computations of optimisation tasks (global and local) via the asynchronous generalized island model"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1179,7 +1179,7 @@
     "build": {
      "run_exports": [
       "pagmo",
-      "libboost-devel",
+      "libboost",
       "nlopt",
       "ipopt"
      ]
