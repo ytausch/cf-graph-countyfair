@@ -3,6 +3,8 @@
  "branch": "main",
  "conda-forge.yml": {
   "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
    "osx_arm64": "osx_64"
   },
   "provider": {
@@ -33,7 +35,7 @@
    "summary": "Knock on the Python GIL, determine how busy it is."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script": [
     "PYTHON -m pip install . -vv",
     "PYTHON -m pip install . -vv",
@@ -189,7 +191,7 @@
    "summary": "Knock on the Python GIL, determine how busy it is."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script": [
     "PYTHON -m pip install . -vv",
     "PYTHON -m pip install . -vv",
@@ -345,7 +347,7 @@
    "summary": "Knock on the Python GIL, determine how busy it is."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script": [
     "PYTHON -m pip install . -vv",
     "PYTHON -m pip install . -vv",
@@ -552,13 +554,16 @@
     "LICENSE-MIT",
     "LICENSE",
     "LICENSE-MIT",
+    "LICENSE",
+    "LICENSE-MIT",
     "LICENSE"
    ],
    "summary": "Knock on the Python GIL, determine how busy it is."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script": [
+    "PYTHON -m pip install . -vv",
     "PYTHON -m pip install . -vv",
     "PYTHON -m pip install . -vv",
     "PYTHON -m pip install . -vv",
@@ -630,6 +635,7 @@
     "milesgranger",
     "milesgranger",
     "milesgranger",
+    "milesgranger",
     "milesgranger"
    ]
   },
@@ -639,6 +645,8 @@
   },
   "requirements": {
    "build": [
+    "rust_compiler_stub",
+    "c_compiler_stub",
     "rust_compiler_stub",
     "c_compiler_stub",
     "rust_compiler_stub",
@@ -844,9 +852,14 @@
     "python",
     "pip",
     "maturin >=0.14,<0.15",
+    "toml",
+    "python",
+    "pip",
+    "maturin >=0.14,<0.15",
     "toml"
    ],
    "run": [
+    "python",
     "python",
     "python",
     "python",
@@ -922,9 +935,11 @@
     "pip check",
     "pip check",
     "pip check",
+    "pip check",
     "pip check"
    ],
    "imports": [
+    "gilknocker",
     "gilknocker",
     "gilknocker",
     "gilknocker",
@@ -994,6 +1009,7 @@
     "pip",
     "pip",
     "pip",
+    "pip",
     "pip"
    ]
   }
@@ -1020,7 +1036,7 @@
    "summary": "Knock on the Python GIL, determine how busy it is."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script": [
     "PYTHON -m pip install . -vv",
     "PYTHON -m pip install . -vv",
@@ -1167,13 +1183,16 @@
     "LICENSE-MIT",
     "LICENSE",
     "LICENSE-MIT",
+    "LICENSE",
+    "LICENSE-MIT",
     "LICENSE"
    ],
    "summary": "Knock on the Python GIL, determine how busy it is."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script": [
+    "PYTHON -m pip install . -vv",
     "PYTHON -m pip install . -vv",
     "PYTHON -m pip install . -vv",
     "PYTHON -m pip install . -vv",
@@ -1182,6 +1201,7 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "milesgranger",
     "milesgranger",
     "milesgranger",
     "milesgranger",
@@ -1194,6 +1214,8 @@
   },
   "requirements": {
    "build": [
+    "rust_compiler_stub",
+    "c_compiler_stub",
     "rust_compiler_stub",
     "c_compiler_stub",
     "rust_compiler_stub",
@@ -1219,9 +1241,14 @@
     "python",
     "pip",
     "maturin >=0.14,<0.15",
+    "toml",
+    "python",
+    "pip",
+    "maturin >=0.14,<0.15",
     "toml"
    ],
    "run": [
+    "python",
     "python",
     "python",
     "python",
@@ -1237,15 +1264,18 @@
     "pip check",
     "pip check",
     "pip check",
+    "pip check",
     "pip check"
    ],
    "imports": [
     "gilknocker",
     "gilknocker",
     "gilknocker",
+    "gilknocker",
     "gilknocker"
    ],
    "requires": [
+    "pip",
     "pip",
     "pip",
     "pip",
@@ -1301,7 +1331,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/gilknocker.json"
  },
- "raw_meta_yaml": "{% set name = \"gilknocker\" %}\n{% set version = \"0.4.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/gilknocker-{{ version }}.tar.gz\n  sha256: 0a9ce42b50221e8ea9572e28847ec46a1a527124a25e6f6f7a0f1d2668c9241c\n\nbuild:\n  number: 2\n  script:\n    {% if build_platform != target_platform %}\n    - export PYO3_CROSS_INCLUDE_DIR=$PREFIX/include\n    - export PYO3_CROSS_LIB_DIR=$PREFIX/lib/python$PY_VER\n    - export PYO3_CROSS_PYTHON_VERSION=$PY_VER\n    {% endif %}\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - maturin                                # [build_platform != target_platform]\n    - toml                                   # [build_platform != target_platform]\n    - {{ compiler('rust') }}\n    - {{ compiler('c') }}                    # [unix]\n    - {{ compiler('m2w64_c') }}              # [win]\n  host:\n    - python\n    - pip\n    - maturin >=0.14,<0.15\n    - toml\n  run:\n    - python\n\ntest:\n  imports:\n    - gilknocker\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/milesgranger/gilknocker\n  summary: Knock on the Python GIL, determine how busy it is.\n  license: MIT AND Unlicense\n  license_file:\n    - LICENSE-MIT\n    - LICENSE\n\nextra:\n  recipe-maintainers:\n    - milesgranger\n",
+ "raw_meta_yaml": "{% set name = \"gilknocker\" %}\n{% set version = \"0.4.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/gilknocker-{{ version }}.tar.gz\n  sha256: 0a9ce42b50221e8ea9572e28847ec46a1a527124a25e6f6f7a0f1d2668c9241c\n\nbuild:\n  number: 3\n  script:\n    # PyPy has weird sysconfigdata name\n    - rm -f $PREFIX/lib/pypy$PY_VER/_sysconfigdata.py  # [build_platform != target_platform and target_platform == \"linux-ppc64le\"]\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - maturin                                # [build_platform != target_platform]\n    - toml                                   # [build_platform != target_platform]\n    - {{ compiler('rust') }}\n    - {{ compiler('c') }}                    # [unix]\n    - {{ compiler('m2w64_c') }}              # [win]\n  host:\n    - python\n    - pip\n    - maturin >=0.14,<0.15\n    - toml\n  run:\n    - python\n\ntest:\n  imports:\n    - gilknocker\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/milesgranger/gilknocker\n  summary: Knock on the Python GIL, determine how busy it is.\n  license: MIT AND Unlicense\n  license_file:\n    - LICENSE-MIT\n    - LICENSE\n\nextra:\n  recipe-maintainers:\n    - milesgranger\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1405,7 +1435,7 @@
    "summary": "Knock on the Python GIL, determine how busy it is."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script": [
     "PYTHON -m pip install . -vv",
     "PYTHON -m pip install . -vv",
