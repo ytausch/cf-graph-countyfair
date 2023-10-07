@@ -16,7 +16,7 @@
    "summary": "A software library containing FFT functions written in OpenCL"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -36,7 +36,7 @@
     "cxx_compiler_stub"
    ],
    "host": [
-    "boost-cpp",
+    "libboost-headers",
     "ocl-icd"
    ],
    "run": [
@@ -72,7 +72,7 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
+    "libboost-headers",
     "ocl-icd"
    ]
   },
@@ -95,7 +95,7 @@
    "summary": "A software library containing FFT functions written in OpenCL"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -133,13 +133,13 @@
     "cxx_compiler_stub"
    ],
    "host": [
-    "boost-cpp",
+    "libboost-headers",
     "ocl-icd",
-    "boost-cpp",
+    "libboost-headers",
     "khronos-opencl-icd-loader",
-    "boost-cpp",
+    "libboost-headers",
     "khronos-opencl-icd-loader",
-    "boost-cpp",
+    "libboost-headers",
     "khronos-opencl-icd-loader"
    ],
    "run": [
@@ -187,7 +187,7 @@
    "summary": "A software library containing FFT functions written in OpenCL"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -207,7 +207,7 @@
     "cxx_compiler_stub"
    ],
    "host": [
-    "boost-cpp",
+    "libboost-headers",
     "khronos-opencl-icd-loader"
    ],
    "run": [
@@ -243,8 +243,8 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
-    "khronos-opencl-icd-loader"
+    "khronos-opencl-icd-loader",
+    "libboost-headers"
    ]
   },
   "run": {
@@ -266,7 +266,7 @@
    "summary": "A software library containing FFT functions written in OpenCL"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -286,7 +286,7 @@
     "cxx_compiler_stub"
    ],
    "host": [
-    "boost-cpp",
+    "libboost-headers",
     "khronos-opencl-icd-loader"
    ],
    "run": [
@@ -322,8 +322,8 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
-    "khronos-opencl-icd-loader"
+    "khronos-opencl-icd-loader",
+    "libboost-headers"
    ]
   },
   "run": {
@@ -353,15 +353,15 @@
  "pr_info": {
   "__lazy_json__": "pr_info/clfft.json"
  },
- "raw_meta_yaml": "{% set name = \"clFFT\" %}\n{% set version = \"2.12.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: https://github.com/clMathLibraries/{{ name }}/archive/v{{ version }}.tar.gz\n  sha256: e7348c146ad48c6a3e6997b7702202ad3ee3b5df99edf7ef00bbacc21e897b12\n  patches:\n    # Fix a type issue when using sqrt\n    # xref: https://github.com/clMathLibraries/clFFT/pull/199\n    - PR_199.diff\n    # Fix building with C++11\n    # xref: https://github.com/clMathLibraries/clFFT/pull/184\n    - PR_184.patch\n\nbuild:\n  number: 3\n\nrequirements:\n  build:\n    - make\n    - cmake\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n  host:\n    - boost-cpp\n    - ocl-icd                    # [linux]\n    - khronos-opencl-icd-loader  # [win or osx]\n  run:\n    - ocl-icd                    # [linux]\n    - khronos-opencl-icd-loader  # [win or osx]\n\ntest:\n  commands:\n    # Check files\n    - test -f \"${PREFIX}/include/clFFT.h\"           # [unix]\n    - test -f \"${PREFIX}/lib/libclFFT.so\"           # [linux]\n    - test -f \"${PREFIX}/lib/libclFFT.dylib\"        # [osx]\n    - if not exist %LIBRARY_INC%\\\\clFFT.h exit 1    # [win]\n    - if not exist %LIBRARY_BIN%\\\\clFFT.dll exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\\\clFFT.lib exit 1  # [win]\n\nabout:\n  home: https://github.com/clMathLibraries/clFFT\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: A software library containing FFT functions written in OpenCL\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - isuruf\n",
+ "raw_meta_yaml": "{% set name = \"clFFT\" %}\n{% set version = \"2.12.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: https://github.com/clMathLibraries/{{ name }}/archive/v{{ version }}.tar.gz\n  sha256: e7348c146ad48c6a3e6997b7702202ad3ee3b5df99edf7ef00bbacc21e897b12\n  patches:\n    # Fix a type issue when using sqrt\n    # xref: https://github.com/clMathLibraries/clFFT/pull/199\n    - PR_199.diff\n    # Fix building with C++11\n    # xref: https://github.com/clMathLibraries/clFFT/pull/184\n    - PR_184.patch\n\nbuild:\n  number: 4\n\nrequirements:\n  build:\n    - make\n    - cmake\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n  host:\n    - libboost-headers\n    - ocl-icd                    # [linux]\n    - khronos-opencl-icd-loader  # [win or osx]\n  run:\n    - ocl-icd                    # [linux]\n    - khronos-opencl-icd-loader  # [win or osx]\n\ntest:\n  commands:\n    # Check files\n    - test -f \"${PREFIX}/include/clFFT.h\"           # [unix]\n    - test -f \"${PREFIX}/lib/libclFFT.so\"           # [linux]\n    - test -f \"${PREFIX}/lib/libclFFT.dylib\"        # [osx]\n    - if not exist %LIBRARY_INC%\\\\clFFT.h exit 1    # [win]\n    - if not exist %LIBRARY_BIN%\\\\clFFT.dll exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\\\clFFT.lib exit 1  # [win]\n\nabout:\n  home: https://github.com/clMathLibraries/clFFT\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: A software library containing FFT functions written in OpenCL\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - isuruf\n",
  "req": {
   "__set__": true,
   "elements": [
-   "boost-cpp",
    "c_compiler_stub",
    "cmake",
    "cxx_compiler_stub",
    "khronos-opencl-icd-loader",
+   "libboost-headers",
    "make",
    "ocl-icd"
   ]
@@ -379,10 +379,10 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "khronos-opencl-icd-loader",
+    "libboost-headers",
     "ocl-icd"
    ]
   },
@@ -414,8 +414,8 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "khronos-opencl-icd-loader",
+    "libboost-headers",
     "ocl-icd"
    ]
   },
@@ -444,7 +444,7 @@
    "summary": "A software library containing FFT functions written in OpenCL"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -464,7 +464,7 @@
     "cxx_compiler_stub"
    ],
    "host": [
-    "boost-cpp",
+    "libboost-headers",
     "khronos-opencl-icd-loader"
    ],
    "run": [
@@ -501,8 +501,8 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
-    "khronos-opencl-icd-loader"
+    "khronos-opencl-icd-loader",
+    "libboost-headers"
    ]
   },
   "run": {
