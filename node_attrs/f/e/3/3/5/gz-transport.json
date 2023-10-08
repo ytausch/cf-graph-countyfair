@@ -3,6 +3,9 @@
  "branch": "main",
  "conda-forge.yml": {
   "bot": {
+   "abi_migration_branches": [
+    "v12"
+   ],
    "automerge": true
   },
   "build_platform": {
@@ -39,10 +42,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -53,12 +56,13 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
       "libuuid",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -69,41 +73,93 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-transport12",
-   "version": "12.2.1"
+   "name": "gz-transport13",
+   "version": "13.0.0"
   },
   "source": [
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    }
   ]
  },
@@ -122,12 +178,20 @@
    "__set__": true,
    "elements": [
     "cppzmq",
+    "gz-msgs10-python",
+    "libabseil",
     "libgz-cmake3",
-    "libgz-msgs9",
+    "libgz-msgs10",
     "libgz-tools2",
+    "libgz-transport13",
     "libgz-utils2",
     "libprotobuf",
     "libuuid",
+    "pip",
+    "pybind11",
+    "pybind11-abi",
+    "pytest",
+    "python",
     "sqlite",
     "zeromq"
    ]
@@ -136,12 +200,17 @@
    "__set__": true,
    "elements": [
     "cppzmq",
-    "libgz-transport12"
+    "gz-msgs10-python",
+    "gz-transport13-python",
+    "libgz-transport13",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "linux_aarch64_meta_yaml": {
@@ -166,10 +235,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -180,12 +249,13 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
       "libuuid",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -196,41 +266,93 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-transport12",
-   "version": "12.2.1"
+   "name": "gz-transport13",
+   "version": "13.0.0"
   },
   "source": [
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    }
   ]
  },
@@ -249,12 +371,20 @@
    "__set__": true,
    "elements": [
     "cppzmq",
+    "gz-msgs10-python",
+    "libabseil",
     "libgz-cmake3",
-    "libgz-msgs9",
+    "libgz-msgs10",
     "libgz-tools2",
+    "libgz-transport13",
     "libgz-utils2",
     "libprotobuf",
     "libuuid",
+    "pip",
+    "pybind11",
+    "pybind11-abi",
+    "pytest",
+    "python",
     "sqlite",
     "zeromq"
    ]
@@ -263,12 +393,17 @@
    "__set__": true,
    "elements": [
     "cppzmq",
-    "libgz-transport12"
+    "gz-msgs10-python",
+    "gz-transport13-python",
+    "libgz-transport13",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "linux_ppc64le_meta_yaml": {
@@ -293,10 +428,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -307,12 +442,13 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
       "libuuid",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -323,41 +459,93 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-transport12",
-   "version": "12.2.1"
+   "name": "gz-transport13",
+   "version": "13.0.0"
   },
   "source": [
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    }
   ]
  },
@@ -376,12 +564,20 @@
    "__set__": true,
    "elements": [
     "cppzmq",
+    "gz-msgs10-python",
+    "libabseil",
     "libgz-cmake3",
-    "libgz-msgs9",
+    "libgz-msgs10",
     "libgz-tools2",
+    "libgz-transport13",
     "libgz-utils2",
     "libprotobuf",
     "libuuid",
+    "pip",
+    "pybind11",
+    "pybind11-abi",
+    "pytest",
+    "python",
     "sqlite",
     "zeromq"
    ]
@@ -390,12 +586,17 @@
    "__set__": true,
    "elements": [
     "cppzmq",
-    "libgz-transport12"
+    "gz-msgs10-python",
+    "gz-transport13-python",
+    "libgz-transport13",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "meta_yaml": {
@@ -435,10 +636,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -449,12 +650,13 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
       "libuuid",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -465,39 +667,87 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -508,12 +758,13 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
       "libuuid",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -524,39 +775,87 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -567,12 +866,13 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
       "libuuid",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -583,39 +883,87 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.so",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.so",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -626,11 +974,12 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -641,39 +990,87 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -684,11 +1081,12 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -699,39 +1097,87 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -742,11 +1188,12 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -757,67 +1204,139 @@
     "script": "bld_cxx.bat",
     "test": {
      "commands": [
-      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\transport12\\\\gz\\\\transport.hh exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-transport12.lib exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-transport12.dll exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-transport12\\\\gz-transport12-config.cmake exit 1"
+      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\transport13\\\\gz\\\\transport.hh exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-transport13.lib exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-transport13.dll exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-transport13\\\\gz-transport13-config.cmake exit 1"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "bld_py.bat",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\transport12\\\\gz\\\\transport.hh exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-transport12.lib exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-transport12.dll exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-transport12\\\\gz-transport12-config.cmake exit 1"
+      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\transport13\\\\gz\\\\transport.hh exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-transport13.lib exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-transport13.dll exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-transport13\\\\gz-transport13-config.cmake exit 1"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-transport12",
-   "version": "12.2.1"
+   "name": "gz-transport13",
+   "version": "13.0.0"
   },
   "source": [
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    },
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    },
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    },
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    },
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    },
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    }
   ]
  },
- "name": "gz-transport12",
+ "name": "gz-transport13",
  "osx_64_meta_yaml": {
   "about": {
    "home": "https://github.com/gazebosim/gz-transport",
@@ -840,10 +1359,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -854,11 +1373,12 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -869,41 +1389,93 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-transport12",
-   "version": "12.2.1"
+   "name": "gz-transport13",
+   "version": "13.0.0"
   },
   "source": [
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    }
   ]
  },
@@ -922,11 +1494,19 @@
    "__set__": true,
    "elements": [
     "cppzmq",
+    "gz-msgs10-python",
+    "libabseil",
     "libgz-cmake3",
-    "libgz-msgs9",
+    "libgz-msgs10",
     "libgz-tools2",
+    "libgz-transport13",
     "libgz-utils2",
     "libprotobuf",
+    "pip",
+    "pybind11",
+    "pybind11-abi",
+    "pytest",
+    "python",
     "sqlite",
     "zeromq"
    ]
@@ -935,12 +1515,17 @@
    "__set__": true,
    "elements": [
     "cppzmq",
-    "libgz-transport12"
+    "gz-msgs10-python",
+    "gz-transport13-python",
+    "libgz-transport13",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "osx_arm64_meta_yaml": {
@@ -965,10 +1550,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -979,11 +1564,12 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -994,41 +1580,93 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/transport12/gz/transport.hh",
-      "test -f ${PREFIX}/lib/libgz-transport12.dylib",
-      "test -f ${PREFIX}/lib/cmake/gz-transport12/gz-transport12-config.cmake"
+      "test -f ${PREFIX}/include/gz/transport13/gz/transport.hh",
+      "test -f ${PREFIX}/lib/libgz-transport13.dylib",
+      "test -f ${PREFIX}/lib/cmake/gz-transport13/gz-transport13-config.cmake"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-transport12",
-   "version": "12.2.1"
+   "name": "gz-transport13",
+   "version": "13.0.0"
   },
   "source": [
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    }
   ]
  },
@@ -1047,11 +1685,19 @@
    "__set__": true,
    "elements": [
     "cppzmq",
+    "gz-msgs10-python",
+    "libabseil",
     "libgz-cmake3",
-    "libgz-msgs9",
+    "libgz-msgs10",
     "libgz-tools2",
+    "libgz-transport13",
     "libgz-utils2",
     "libprotobuf",
+    "pip",
+    "pybind11",
+    "pybind11-abi",
+    "pytest",
+    "python",
     "sqlite",
     "zeromq"
    ]
@@ -1060,19 +1706,25 @@
    "__set__": true,
    "elements": [
     "cppzmq",
-    "libgz-transport12"
+    "gz-msgs10-python",
+    "gz-transport13-python",
+    "libgz-transport13",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "gz-transport12",
-   "libgz-transport12"
+   "gz-transport13",
+   "gz-transport13-python",
+   "libgz-transport13"
   ]
  },
  "parsing_error": false,
@@ -1087,7 +1739,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/gz-transport.json"
  },
- "raw_meta_yaml": "{% set component_name = \"transport\" %}\n{% set repo_name = \"gz-\" + component_name %}\n{% set version = \"12.2.1\" %}\n{% set major_version = version.split('.')[0] %}\n{% set name = repo_name + major_version %}\n{% set component_version = component_name + major_version %}\n{% set cxx_name = \"lib\" + name %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ major_version }}_{{ version }}.tar.gz\n    sha256: 85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a\n\nbuild:\n  number: 0\n\noutputs:\n  - name: {{ cxx_name }}\n    script: build_cxx.sh  # [unix]\n    script: bld_cxx.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - {{ compiler('c') }}\n        - ninja\n        - cmake\n        - pkg-config\n      host:\n        - libgz-cmake3\n        - libgz-msgs9\n        - libgz-tools2\n        - libgz-utils2\n        - cppzmq\n        - zeromq\n        - libuuid                            # [linux]\n        - libprotobuf\n        - sqlite\n      run:\n        - cppzmq\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n\n  - name: {{ name }}\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n\nabout:\n  home: https://github.com/gazebosim/{{ repo_name }}\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Transport library for component communication based on publication/subscription and service calls.\n\nextra:\n  feedstock-name: {{ repo_name }}\n  recipe-maintainers:\n    - wolfv\n    - traversaro\n    - j-rivero\n",
+ "raw_meta_yaml": "{% set component_name = \"transport\" %}\n{% set repo_name = \"gz-\" + component_name %}\n{% set version = \"13.0.0\" %}\n{% set major_version = version.split('.')[0] %}\n{% set name = repo_name + major_version %}\n{% set component_version = component_name + major_version %}\n{% set cxx_name = \"lib\" + name %}\n{% set python_name = name + \"-python\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/gazebosim/{{ repo_name }}/archive/{{ repo_name }}{{ major_version }}_{{ version }}.tar.gz\n    sha256: 8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca\n    patches:\n      - standalone_bindings.patch\n      - 452.patch\n\nbuild:\n  number: 0\n\noutputs:\n  - name: {{ cxx_name }}\n    script: build_cxx.sh  # [unix]\n    script: bld_cxx.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - {{ compiler('c') }}\n        - ninja\n        - cmake\n        - pkg-config\n      host:\n        - libgz-cmake3\n        - libgz-msgs10\n        - libgz-tools2\n        - libgz-utils2\n        - cppzmq\n        - zeromq\n        - libuuid                            # [linux]\n        - libabseil\n        - libprotobuf\n        - sqlite\n      run:\n        - cppzmq\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n\n  - name: {{ python_name }}\n    script: build_py.sh  # [unix]\n    script: bld_py.bat  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - ninja\n        - cmake\n        - pkg-config\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - pybind11                               # [build_platform != target_platform]\n        - pybind11-abi                           # [build_platform != target_platform]\n        - pytest                                 # [build_platform != target_platform]\n      host:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n        - python\n        - pip\n        - pybind11\n        - pybind11-abi\n        - pytest\n        - gz-msgs10-python\n        # Workaround for errors of type\n        # package libgz-sim7-<..> requires <...>, but none of the providers can be installed\n        - libabseil\n        - libprotobuf\n        - libgz-msgs10\n      run:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n        - python\n        - gz-msgs10-python\n    test:\n      commands:\n        - pip check\n      requires:\n        - pip\n      imports:\n        - gz.transport13\n\n  - name: {{ name }}\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n        - {{ pin_subpackage(python_name, max_pin='x.x.x') }}\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/{{ component_version }}/gz/{{ component_name }}.hh  # [not win]\n        - test -f ${PREFIX}/lib/lib{{ name }}.so  # [linux]\n        - test -f ${PREFIX}/lib/lib{{ name }}.dylib  # [osx]\n        - test -f ${PREFIX}/lib/cmake/{{ name }}/{{ name }}-config.cmake  # [not win]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\{{ component_version }}\\\\gz\\\\{{ component_name }}.hh exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\{{ name }}.lib exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\{{ name }}.dll exit 1  # [win]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\{{ name }}\\\\{{ name }}-config.cmake exit 1  # [win]\n      requires:\n        - pip\n      imports:\n        - gz.transport13\n\nabout:\n  home: https://github.com/gazebosim/{{ repo_name }}\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Transport library for component communication based on publication/subscription and service calls.\n\nextra:\n  feedstock-name: {{ repo_name }}\n  recipe-maintainers:\n    - wolfv\n    - traversaro\n    - j-rivero\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1095,15 +1747,23 @@
    "cmake",
    "cppzmq",
    "cxx_compiler_stub",
+   "gz-msgs10-python",
+   "gz-transport13-python",
+   "libabseil",
    "libgz-cmake3",
-   "libgz-msgs9",
+   "libgz-msgs10",
    "libgz-tools2",
-   "libgz-transport12",
+   "libgz-transport13",
    "libgz-utils2",
    "libprotobuf",
    "libuuid",
    "ninja",
+   "pip",
    "pkg-config",
+   "pybind11",
+   "pybind11-abi",
+   "pytest",
+   "python",
    "sqlite",
    "zeromq"
   ]
@@ -1125,12 +1785,20 @@
     "c_compiler_stub",
     "cppzmq",
     "cxx_compiler_stub",
+    "gz-msgs10-python",
+    "libabseil",
     "libgz-cmake3",
-    "libgz-msgs9",
+    "libgz-msgs10",
     "libgz-tools2",
+    "libgz-transport13",
     "libgz-utils2",
     "libprotobuf",
     "libuuid",
+    "pip",
+    "pybind11",
+    "pybind11-abi",
+    "pytest",
+    "python",
     "sqlite",
     "zeromq"
    ]
@@ -1141,12 +1809,17 @@
     "c_compiler_stub",
     "cppzmq",
     "cxx_compiler_stub",
-    "libgz-transport12"
+    "gz-msgs10-python",
+    "gz-transport13-python",
+    "libgz-transport13",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "strong_exports": false,
@@ -1165,12 +1838,20 @@
    "__set__": true,
    "elements": [
     "cppzmq",
+    "gz-msgs10-python",
+    "libabseil",
     "libgz-cmake3",
-    "libgz-msgs9",
+    "libgz-msgs10",
     "libgz-tools2",
+    "libgz-transport13",
     "libgz-utils2",
     "libprotobuf",
     "libuuid",
+    "pip",
+    "pybind11",
+    "pybind11-abi",
+    "pytest",
+    "python",
     "sqlite",
     "zeromq"
    ]
@@ -1179,16 +1860,21 @@
    "__set__": true,
    "elements": [
     "cppzmq",
-    "libgz-transport12"
+    "gz-msgs10-python",
+    "gz-transport13-python",
+    "libgz-transport13",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
- "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz",
- "version": "12.2.1",
+ "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz",
+ "version": "13.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/gz-transport.json"
  },
@@ -1214,10 +1900,10 @@
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "libgz-transport12",
+    "name": "libgz-transport13",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
@@ -1228,11 +1914,12 @@
      ],
      "host": [
       "libgz-cmake3",
-      "libgz-msgs9",
+      "libgz-msgs10",
       "libgz-tools2",
       "libgz-utils2",
       "cppzmq",
       "zeromq",
+      "libabseil",
       "libprotobuf",
       "sqlite"
      ],
@@ -1243,43 +1930,95 @@
     "script": "bld_cxx.bat",
     "test": {
      "commands": [
-      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\transport12\\\\gz\\\\transport.hh exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-transport12.lib exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-transport12.dll exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-transport12\\\\gz-transport12-config.cmake exit 1"
+      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\transport13\\\\gz\\\\transport.hh exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-transport13.lib exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-transport13.dll exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-transport13\\\\gz-transport13-config.cmake exit 1"
+     ]
+    }
+   },
+   {
+    "name": "gz-transport13-python",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "ninja",
+      "cmake",
+      "pkg-config"
+     ],
+     "host": [
+      "libgz-transport13",
+      "python",
+      "pip",
+      "pybind11",
+      "pybind11-abi",
+      "pytest",
+      "gz-msgs10-python",
+      "libabseil",
+      "libprotobuf",
+      "libgz-msgs10"
+     ],
+     "run": [
+      "libgz-transport13",
+      "python",
+      "gz-msgs10-python"
+     ]
+    },
+    "script": "bld_py.bat",
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgz-transport12"
+      "libgz-transport13"
      ]
     },
-    "name": "gz-transport12",
+    "name": "gz-transport13",
     "requirements": {
      "run": [
-      "libgz-transport12"
+      "libgz-transport13",
+      "gz-transport13-python"
      ]
     },
     "test": {
      "commands": [
-      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\transport12\\\\gz\\\\transport.hh exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-transport12.lib exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-transport12.dll exit 1",
-      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-transport12\\\\gz-transport12-config.cmake exit 1"
+      "if not exist %PREFIX%\\\\Library\\\\include\\\\gz\\\\transport13\\\\gz\\\\transport.hh exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\gz-transport13.lib exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\bin\\\\gz-transport13.dll exit 1",
+      "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\gz-transport13\\\\gz-transport13-config.cmake exit 1"
+     ],
+     "imports": [
+      "gz.transport13"
+     ],
+     "requires": [
+      "pip"
      ]
     }
    }
   ],
   "package": {
-   "name": "gz-transport12",
-   "version": "12.2.1"
+   "name": "gz-transport13",
+   "version": "13.0.0"
   },
   "source": [
    {
-    "sha256": "85afa1098fda3015bd3439774d5b1518b443e771c235d23fb80560c8870f2b2a",
-    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport12_12.2.1.tar.gz"
+    "patches": [
+     "standalone_bindings.patch",
+     "452.patch"
+    ],
+    "sha256": "8041d81693b69a94e36477178fdf1964f32725e520c33fec2e69c60f28fd84ca",
+    "url": "https://github.com/gazebosim/gz-transport/archive/gz-transport13_13.0.0.tar.gz"
    }
   ]
  },
@@ -1298,11 +2037,19 @@
    "__set__": true,
    "elements": [
     "cppzmq",
+    "gz-msgs10-python",
+    "libabseil",
     "libgz-cmake3",
-    "libgz-msgs9",
+    "libgz-msgs10",
     "libgz-tools2",
+    "libgz-transport13",
     "libgz-utils2",
     "libprotobuf",
+    "pip",
+    "pybind11",
+    "pybind11-abi",
+    "pytest",
+    "python",
     "sqlite",
     "zeromq"
    ]
@@ -1311,12 +2058,17 @@
    "__set__": true,
    "elements": [
     "cppzmq",
-    "libgz-transport12"
+    "gz-msgs10-python",
+    "gz-transport13-python",
+    "libgz-transport13",
+    "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  }
 }
