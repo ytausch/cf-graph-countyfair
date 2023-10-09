@@ -5,7 +5,8 @@
   "bot": {
    "abi_migration_branches": [
     "v9",
-    "v12"
+    "v12",
+    "v13"
    ]
   },
   "build_platform": {
@@ -28,15 +29,10 @@
    "summary": "Simulation Description Format (SDF) parser and description files.\n"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
-    "seanyen",
-    "j-rivero",
-    "conda-forge/ros-core",
-    "Tobias-Fischer",
-    "traversaro",
     "seanyen",
     "j-rivero",
     "conda-forge/ros-core",
@@ -48,18 +44,18 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
       "ninja",
-      "ruby",
       "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -73,14 +69,14 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
+      "test -f ${PREFIX}/include/gz/sdformat14/sdf/sdf.hh",
+      "test -f ${PREFIX}/lib/libsdformat14${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/sdformat14/sdformat14-config.cmake"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -90,15 +86,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -109,7 +106,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -119,133 +116,36 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "libsdformat13",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "c_compiler_stub",
-      "ninja",
-      "ruby",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libgz-cmake3",
-      "libgz-math7",
-      "libgz-tools2",
-      "libgz-utils2",
-      "urdfdom",
-      "tinyxml2"
-     ]
-    },
-    "script": "build_cxx.sh",
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
-     ]
-    }
-   },
-   {
-    "name": "sdformat13-python",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "ninja",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libsdformat13",
-      "python",
-      "pip",
-      "pybind11",
-      "pybind11-abi",
-      "pytest"
-     ],
-     "run": [
-      "libsdformat13",
-      "python",
-      "gz-math7-python"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "pip check"
-     ],
-     "imports": [
-      "sdformat13"
-     ],
-     "requires": [
-      "pip"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "sdformat13",
-    "requirements": {
-     "run": [
-      "libsdformat13",
-      "sdformat13-python"
-     ]
-    },
-    "test": {
-     "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    }
   ],
   "package": {
-   "name": "sdformat13",
-   "version": "13.6.0"
+   "name": "sdformat14",
+   "version": "14.0.0"
   },
   "source": [
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
-   },
-   {
-    "patches": [
-     "standalone_bindings.patch",
-     "fixgzsdfcommandonwin32.patch"
-    ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    }
   ]
  },
@@ -258,17 +158,18 @@
     "cxx_compiler_stub",
     "ninja",
     "pkg-config",
-    "ruby"
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "gz-math7-python",
     "libgz-cmake3",
     "libgz-math7",
     "libgz-tools2",
     "libgz-utils2",
-    "libsdformat13",
+    "libsdformat14",
     "pip",
     "pybind11",
     "pybind11-abi",
@@ -282,9 +183,9 @@
    "__set__": true,
    "elements": [
     "gz-math7-python",
-    "libsdformat13",
+    "libsdformat14",
     "python",
-    "sdformat13-python"
+    "sdformat14-python"
    ]
   },
   "test": {
@@ -302,15 +203,10 @@
    "summary": "Simulation Description Format (SDF) parser and description files.\n"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
-    "seanyen",
-    "j-rivero",
-    "conda-forge/ros-core",
-    "Tobias-Fischer",
-    "traversaro",
     "seanyen",
     "j-rivero",
     "conda-forge/ros-core",
@@ -322,18 +218,18 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
       "ninja",
-      "ruby",
       "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -347,14 +243,14 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
+      "test -f ${PREFIX}/include/gz/sdformat14/sdf/sdf.hh",
+      "test -f ${PREFIX}/lib/libsdformat14${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/sdformat14/sdformat14-config.cmake"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -364,15 +260,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -383,7 +280,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -393,133 +290,36 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "libsdformat13",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "c_compiler_stub",
-      "ninja",
-      "ruby",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libgz-cmake3",
-      "libgz-math7",
-      "libgz-tools2",
-      "libgz-utils2",
-      "urdfdom",
-      "tinyxml2"
-     ]
-    },
-    "script": "build_cxx.sh",
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
-     ]
-    }
-   },
-   {
-    "name": "sdformat13-python",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "ninja",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libsdformat13",
-      "python",
-      "pip",
-      "pybind11",
-      "pybind11-abi",
-      "pytest"
-     ],
-     "run": [
-      "libsdformat13",
-      "python",
-      "gz-math7-python"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "pip check"
-     ],
-     "imports": [
-      "sdformat13"
-     ],
-     "requires": [
-      "pip"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "sdformat13",
-    "requirements": {
-     "run": [
-      "libsdformat13",
-      "sdformat13-python"
-     ]
-    },
-    "test": {
-     "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    }
   ],
   "package": {
-   "name": "sdformat13",
-   "version": "13.6.0"
+   "name": "sdformat14",
+   "version": "14.0.0"
   },
   "source": [
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
-   },
-   {
-    "patches": [
-     "standalone_bindings.patch",
-     "fixgzsdfcommandonwin32.patch"
-    ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    }
   ]
  },
@@ -532,17 +332,18 @@
     "cxx_compiler_stub",
     "ninja",
     "pkg-config",
-    "ruby"
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "gz-math7-python",
     "libgz-cmake3",
     "libgz-math7",
     "libgz-tools2",
     "libgz-utils2",
-    "libsdformat13",
+    "libsdformat14",
     "pip",
     "pybind11",
     "pybind11-abi",
@@ -556,9 +357,9 @@
    "__set__": true,
    "elements": [
     "gz-math7-python",
-    "libsdformat13",
+    "libsdformat14",
     "python",
-    "sdformat13-python"
+    "sdformat14-python"
    ]
   },
   "test": {
@@ -576,15 +377,10 @@
    "summary": "Simulation Description Format (SDF) parser and description files.\n"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
-    "seanyen",
-    "j-rivero",
-    "conda-forge/ros-core",
-    "Tobias-Fischer",
-    "traversaro",
     "seanyen",
     "j-rivero",
     "conda-forge/ros-core",
@@ -596,18 +392,18 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
       "ninja",
-      "ruby",
       "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -621,14 +417,14 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
+      "test -f ${PREFIX}/include/gz/sdformat14/sdf/sdf.hh",
+      "test -f ${PREFIX}/lib/libsdformat14${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/sdformat14/sdformat14-config.cmake"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -638,15 +434,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -657,7 +454,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -667,133 +464,36 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "libsdformat13",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "c_compiler_stub",
-      "ninja",
-      "ruby",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libgz-cmake3",
-      "libgz-math7",
-      "libgz-tools2",
-      "libgz-utils2",
-      "urdfdom",
-      "tinyxml2"
-     ]
-    },
-    "script": "build_cxx.sh",
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
-     ]
-    }
-   },
-   {
-    "name": "sdformat13-python",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "ninja",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libsdformat13",
-      "python",
-      "pip",
-      "pybind11",
-      "pybind11-abi",
-      "pytest"
-     ],
-     "run": [
-      "libsdformat13",
-      "python",
-      "gz-math7-python"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "pip check"
-     ],
-     "imports": [
-      "sdformat13"
-     ],
-     "requires": [
-      "pip"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "sdformat13",
-    "requirements": {
-     "run": [
-      "libsdformat13",
-      "sdformat13-python"
-     ]
-    },
-    "test": {
-     "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    }
   ],
   "package": {
-   "name": "sdformat13",
-   "version": "13.6.0"
+   "name": "sdformat14",
+   "version": "14.0.0"
   },
   "source": [
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
-   },
-   {
-    "patches": [
-     "standalone_bindings.patch",
-     "fixgzsdfcommandonwin32.patch"
-    ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    }
   ]
  },
@@ -806,17 +506,18 @@
     "cxx_compiler_stub",
     "ninja",
     "pkg-config",
-    "ruby"
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "gz-math7-python",
     "libgz-cmake3",
     "libgz-math7",
     "libgz-tools2",
     "libgz-utils2",
-    "libsdformat13",
+    "libsdformat14",
     "pip",
     "pybind11",
     "pybind11-abi",
@@ -830,9 +531,9 @@
    "__set__": true,
    "elements": [
     "gz-math7-python",
-    "libsdformat13",
+    "libsdformat14",
     "python",
-    "sdformat13-python"
+    "sdformat14-python"
    ]
   },
   "test": {
@@ -850,35 +551,10 @@
    "summary": "Simulation Description Format (SDF) parser and description files.\n"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
-    "seanyen",
-    "j-rivero",
-    "conda-forge/ros-core",
-    "Tobias-Fischer",
-    "traversaro",
-    "seanyen",
-    "j-rivero",
-    "conda-forge/ros-core",
-    "Tobias-Fischer",
-    "traversaro",
-    "seanyen",
-    "j-rivero",
-    "conda-forge/ros-core",
-    "Tobias-Fischer",
-    "traversaro",
-    "seanyen",
-    "j-rivero",
-    "conda-forge/ros-core",
-    "Tobias-Fischer",
-    "traversaro",
-    "seanyen",
-    "j-rivero",
-    "conda-forge/ros-core",
-    "Tobias-Fischer",
-    "traversaro",
     "seanyen",
     "j-rivero",
     "conda-forge/ros-core",
@@ -915,18 +591,18 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
       "ninja",
-      "ruby",
       "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -940,14 +616,14 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
+      "test -f ${PREFIX}/include/gz/sdformat14/sdf/sdf.hh",
+      "test -f ${PREFIX}/lib/libsdformat14${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/sdformat14/sdformat14-config.cmake"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -957,15 +633,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -976,7 +653,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -986,37 +663,37 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
       "ninja",
-      "ruby",
       "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -1030,14 +707,14 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
+      "test -f ${PREFIX}/include/gz/sdformat14/sdf/sdf.hh",
+      "test -f ${PREFIX}/lib/libsdformat14${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/sdformat14/sdformat14-config.cmake"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -1047,15 +724,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -1066,7 +744,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -1076,37 +754,37 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
       "ninja",
-      "ruby",
       "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -1120,14 +798,14 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
+      "test -f ${PREFIX}/include/gz/sdformat14/sdf/sdf.hh",
+      "test -f ${PREFIX}/lib/libsdformat14${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/sdformat14/sdformat14-config.cmake"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -1137,15 +815,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -1156,7 +835,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -1166,37 +845,37 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
       "ninja",
-      "ruby",
       "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -1210,14 +889,14 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
+      "test -f ${PREFIX}/include/gz/sdformat14/sdf/sdf.hh",
+      "test -f ${PREFIX}/lib/libsdformat14${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/sdformat14/sdformat14-config.cmake"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -1227,15 +906,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -1246,7 +926,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -1256,37 +936,37 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
       "ninja",
-      "ruby",
       "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -1300,14 +980,14 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
+      "test -f ${PREFIX}/include/gz/sdformat14/sdf/sdf.hh",
+      "test -f ${PREFIX}/lib/libsdformat14${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/sdformat14/sdformat14-config.cmake"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -1317,15 +997,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -1336,7 +1017,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -1346,486 +1027,36 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
-      "ninja",
-      "ruby",
       "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libgz-cmake3",
-      "libgz-math7",
-      "libgz-tools2",
-      "libgz-utils2",
-      "urdfdom",
-      "tinyxml2"
-     ]
-    },
-    "script": "build_cxx.sh",
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
-     ]
-    }
-   },
-   {
-    "name": "sdformat13-python",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "ninja",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libsdformat13",
-      "python",
-      "pip",
-      "pybind11",
-      "pybind11-abi",
-      "pytest"
-     ],
-     "run": [
-      "libsdformat13",
-      "python",
-      "gz-math7-python"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "pip check"
-     ],
-     "imports": [
-      "sdformat13"
-     ],
-     "requires": [
-      "pip"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "sdformat13",
-    "requirements": {
-     "run": [
-      "libsdformat13",
-      "sdformat13-python"
-     ]
-    },
-    "test": {
-     "imports": [
-      "sdformat13"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "libsdformat13",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "c_compiler_stub",
-      "ninja",
-      "ruby",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libgz-cmake3",
-      "libgz-math7",
-      "libgz-tools2",
-      "libgz-utils2",
-      "urdfdom",
-      "tinyxml2"
-     ]
-    },
-    "script": "build_cxx.sh",
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
-     ]
-    }
-   },
-   {
-    "name": "sdformat13-python",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "ninja",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libsdformat13",
-      "python",
-      "pip",
-      "pybind11",
-      "pybind11-abi",
-      "pytest"
-     ],
-     "run": [
-      "libsdformat13",
-      "python",
-      "gz-math7-python"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "pip check"
-     ],
-     "imports": [
-      "sdformat13"
-     ],
-     "requires": [
-      "pip"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "sdformat13",
-    "requirements": {
-     "run": [
-      "libsdformat13",
-      "sdformat13-python"
-     ]
-    },
-    "test": {
-     "imports": [
-      "sdformat13"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "libsdformat13",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "c_compiler_stub",
-      "ninja",
-      "ruby",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libgz-cmake3",
-      "libgz-math7",
-      "libgz-tools2",
-      "libgz-utils2",
-      "urdfdom",
-      "tinyxml2"
-     ]
-    },
-    "script": "build_cxx.sh",
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
-     ]
-    }
-   },
-   {
-    "name": "sdformat13-python",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "ninja",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libsdformat13",
-      "python",
-      "pip",
-      "pybind11",
-      "pybind11-abi",
-      "pytest"
-     ],
-     "run": [
-      "libsdformat13",
-      "python",
-      "gz-math7-python"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "pip check"
-     ],
-     "imports": [
-      "sdformat13"
-     ],
-     "requires": [
-      "pip"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "sdformat13",
-    "requirements": {
-     "run": [
-      "libsdformat13",
-      "sdformat13-python"
-     ]
-    },
-    "test": {
-     "imports": [
-      "sdformat13"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "libsdformat13",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "c_compiler_stub",
-      "ninja",
-      "ruby",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libgz-cmake3",
-      "libgz-math7",
-      "libgz-tools2",
-      "libgz-utils2",
-      "urdfdom",
-      "tinyxml2"
-     ]
-    },
-    "script": "build_cxx.sh",
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
-     ]
-    }
-   },
-   {
-    "name": "sdformat13-python",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "ninja",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libsdformat13",
-      "python",
-      "pip",
-      "pybind11",
-      "pybind11-abi",
-      "pytest"
-     ],
-     "run": [
-      "libsdformat13",
-      "python",
-      "gz-math7-python"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "pip check"
-     ],
-     "imports": [
-      "sdformat13"
-     ],
-     "requires": [
-      "pip"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "sdformat13",
-    "requirements": {
-     "run": [
-      "libsdformat13",
-      "sdformat13-python"
-     ]
-    },
-    "test": {
-     "imports": [
-      "sdformat13"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "libsdformat13",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "c_compiler_stub",
-      "ninja",
-      "ruby",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libgz-cmake3",
-      "libgz-math7",
-      "libgz-tools2",
-      "libgz-utils2",
-      "urdfdom",
-      "tinyxml2"
-     ]
-    },
-    "script": "build_cxx.sh",
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
-     ]
-    }
-   },
-   {
-    "name": "sdformat13-python",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "ninja",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libsdformat13",
-      "python",
-      "pip",
-      "pybind11",
-      "pybind11-abi",
-      "pytest"
-     ],
-     "run": [
-      "libsdformat13",
-      "python",
-      "gz-math7-python"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "pip check"
-     ],
-     "imports": [
-      "sdformat13"
-     ],
-     "requires": [
-      "pip"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "sdformat13",
-    "requirements": {
-     "run": [
-      "libsdformat13",
-      "sdformat13-python"
-     ]
-    },
-    "test": {
-     "imports": [
-      "sdformat13"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "libsdformat13",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "c_compiler_stub",
-      "ruby 2.7",
-      "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -1839,15 +1070,15 @@
     "script": "bld_cxx.bat",
     "test": {
      "commands": [
-      "if not exist %LIBRARY_INC%\\\\gz\\\\sdformat13\\\\sdf\\\\sdf.hh exit 1",
-      "if not exist %LIBRARY_LIB%\\\\sdformat13.lib exit 1",
-      "if not exist %LIBRARY_BIN%\\\\sdformat13.dll exit 1",
-      "if not exist %LIBRARY_LIB%\\\\cmake\\\\sdformat13\\\\sdformat13-config.cmake exit 1"
+      "if not exist %LIBRARY_INC%\\\\gz\\\\sdformat14\\\\sdf\\\\sdf.hh exit 1",
+      "if not exist %LIBRARY_LIB%\\\\sdformat14.lib exit 1",
+      "if not exist %LIBRARY_BIN%\\\\sdformat14.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\\\cmake\\\\sdformat14\\\\sdformat14-config.cmake exit 1"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -1857,15 +1088,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -1876,7 +1108,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -1886,119 +1118,85 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    }
   ],
   "package": {
-   "name": "sdformat13",
-   "version": "13.6.0"
+   "name": "sdformat14",
+   "version": "14.0.0"
   },
   "source": [
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    },
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    },
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    },
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    },
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    },
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
-   },
-   {
-    "patches": [
-     "standalone_bindings.patch",
-     "fixgzsdfcommandonwin32.patch"
-    ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
-   },
-   {
-    "patches": [
-     "standalone_bindings.patch",
-     "fixgzsdfcommandonwin32.patch"
-    ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
-   },
-   {
-    "patches": [
-     "standalone_bindings.patch",
-     "fixgzsdfcommandonwin32.patch"
-    ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
-   },
-   {
-    "patches": [
-     "standalone_bindings.patch",
-     "fixgzsdfcommandonwin32.patch"
-    ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
-   },
-   {
-    "patches": [
-     "standalone_bindings.patch",
-     "fixgzsdfcommandonwin32.patch"
-    ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    }
   ]
  },
- "name": "sdformat13",
+ "name": "sdformat14",
  "osx_64_meta_yaml": {
   "about": {
    "home": "http://sdformat.org/",
@@ -2007,15 +1205,10 @@
    "summary": "Simulation Description Format (SDF) parser and description files.\n"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
-    "seanyen",
-    "j-rivero",
-    "conda-forge/ros-core",
-    "Tobias-Fischer",
-    "traversaro",
     "seanyen",
     "j-rivero",
     "conda-forge/ros-core",
@@ -2027,18 +1220,18 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
       "ninja",
-      "ruby",
       "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -2052,14 +1245,14 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
+      "test -f ${PREFIX}/include/gz/sdformat14/sdf/sdf.hh",
+      "test -f ${PREFIX}/lib/libsdformat14${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/sdformat14/sdformat14-config.cmake"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -2069,15 +1262,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -2088,7 +1282,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -2098,133 +1292,36 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "libsdformat13",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "c_compiler_stub",
-      "ninja",
-      "ruby",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libgz-cmake3",
-      "libgz-math7",
-      "libgz-tools2",
-      "libgz-utils2",
-      "urdfdom",
-      "tinyxml2"
-     ]
-    },
-    "script": "build_cxx.sh",
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
-     ]
-    }
-   },
-   {
-    "name": "sdformat13-python",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "ninja",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libsdformat13",
-      "python",
-      "pip",
-      "pybind11",
-      "pybind11-abi",
-      "pytest"
-     ],
-     "run": [
-      "libsdformat13",
-      "python",
-      "gz-math7-python"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "pip check"
-     ],
-     "imports": [
-      "sdformat13"
-     ],
-     "requires": [
-      "pip"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "sdformat13",
-    "requirements": {
-     "run": [
-      "libsdformat13",
-      "sdformat13-python"
-     ]
-    },
-    "test": {
-     "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    }
   ],
   "package": {
-   "name": "sdformat13",
-   "version": "13.6.0"
+   "name": "sdformat14",
+   "version": "14.0.0"
   },
   "source": [
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
-   },
-   {
-    "patches": [
-     "standalone_bindings.patch",
-     "fixgzsdfcommandonwin32.patch"
-    ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    }
   ]
  },
@@ -2237,17 +1334,18 @@
     "cxx_compiler_stub",
     "ninja",
     "pkg-config",
-    "ruby"
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "gz-math7-python",
     "libgz-cmake3",
     "libgz-math7",
     "libgz-tools2",
     "libgz-utils2",
-    "libsdformat13",
+    "libsdformat14",
     "pip",
     "pybind11",
     "pybind11-abi",
@@ -2261,9 +1359,9 @@
    "__set__": true,
    "elements": [
     "gz-math7-python",
-    "libsdformat13",
+    "libsdformat14",
     "python",
-    "sdformat13-python"
+    "sdformat14-python"
    ]
   },
   "test": {
@@ -2281,15 +1379,10 @@
    "summary": "Simulation Description Format (SDF) parser and description files.\n"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
-    "seanyen",
-    "j-rivero",
-    "conda-forge/ros-core",
-    "Tobias-Fischer",
-    "traversaro",
     "seanyen",
     "j-rivero",
     "conda-forge/ros-core",
@@ -2301,18 +1394,18 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
       "ninja",
-      "ruby",
       "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -2326,14 +1419,14 @@
     "script": "build_cxx.sh",
     "test": {
      "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
+      "test -f ${PREFIX}/include/gz/sdformat14/sdf/sdf.hh",
+      "test -f ${PREFIX}/lib/libsdformat14${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/cmake/sdformat14/sdformat14-config.cmake"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -2343,15 +1436,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -2362,7 +1456,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -2372,133 +1466,36 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "libsdformat13",
-    "requirements": {
-     "build": [
-      "cxx_compiler_stub",
-      "c_compiler_stub",
-      "ninja",
-      "ruby",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libgz-cmake3",
-      "libgz-math7",
-      "libgz-tools2",
-      "libgz-utils2",
-      "urdfdom",
-      "tinyxml2"
-     ]
-    },
-    "script": "build_cxx.sh",
-    "test": {
-     "commands": [
-      "test -f ${PREFIX}/include/gz/sdformat13/sdf/sdf.hh",
-      "test -f ${PREFIX}/lib/libsdformat13${SHLIB_EXT}",
-      "test -f ${PREFIX}/lib/cmake/sdformat13/sdformat13-config.cmake"
-     ]
-    }
-   },
-   {
-    "name": "sdformat13-python",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "ninja",
-      "cmake",
-      "pkg-config"
-     ],
-     "host": [
-      "libsdformat13",
-      "python",
-      "pip",
-      "pybind11",
-      "pybind11-abi",
-      "pytest"
-     ],
-     "run": [
-      "libsdformat13",
-      "python",
-      "gz-math7-python"
-     ]
-    },
-    "script": "build_py.sh",
-    "test": {
-     "commands": [
-      "pip check"
-     ],
-     "imports": [
-      "sdformat13"
-     ],
-     "requires": [
-      "pip"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libsdformat13"
-     ]
-    },
-    "name": "sdformat13",
-    "requirements": {
-     "run": [
-      "libsdformat13",
-      "sdformat13-python"
-     ]
-    },
-    "test": {
-     "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    }
   ],
   "package": {
-   "name": "sdformat13",
-   "version": "13.6.0"
+   "name": "sdformat14",
+   "version": "14.0.0"
   },
   "source": [
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
-   },
-   {
-    "patches": [
-     "standalone_bindings.patch",
-     "fixgzsdfcommandonwin32.patch"
-    ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    }
   ]
  },
@@ -2511,17 +1508,18 @@
     "cxx_compiler_stub",
     "ninja",
     "pkg-config",
-    "ruby"
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "gz-math7-python",
     "libgz-cmake3",
     "libgz-math7",
     "libgz-tools2",
     "libgz-utils2",
-    "libsdformat13",
+    "libsdformat14",
     "pip",
     "pybind11",
     "pybind11-abi",
@@ -2535,9 +1533,9 @@
    "__set__": true,
    "elements": [
     "gz-math7-python",
-    "libsdformat13",
+    "libsdformat14",
     "python",
-    "sdformat13-python"
+    "sdformat14-python"
    ]
   },
   "test": {
@@ -2550,9 +1548,9 @@
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "libsdformat13",
-   "sdformat13",
-   "sdformat13-python"
+   "libsdformat14",
+   "sdformat14",
+   "sdformat14-python"
   ]
  },
  "parsing_error": false,
@@ -2567,7 +1565,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/libsdformat.json"
  },
- "raw_meta_yaml": "{% set repo_name = \"sdformat\" %}\n{% set version = \"13.6.0\" %}\n{% set major_version = version.split('.')[0] %}\n{% set name = repo_name  + major_version %}\n{% set cxx_name = \"lib\" + name %}\n{% set python_name = name + \"-python\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/osrf/sdformat/archive/sdformat{{ major_version }}_{{ version }}.tar.gz\n    sha256: 6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5\n    patches:\n      - standalone_bindings.patch\n      - fixgzsdfcommandonwin32.patch\n\nbuild:\n  number: 2\n\n\noutputs:\n  - name: {{ cxx_name }}\n    script: build_cxx.sh  # [unix]\n    script: bld_cxx.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - {{ compiler('c') }}\n        - ninja                              # [not win]\n        - ruby                               # [not win]\n        - ruby 2.7                           # [win]\n        - cmake\n        - pkg-config\n      host:\n        - libgz-cmake3\n        - libgz-math7\n        - libgz-tools2\n        - libgz-utils2\n        - urdfdom\n        - tinyxml2\n\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/sdformat{{ version.split('.')[0] }}/sdf/sdf.hh  # [not win]\n        - test -f ${PREFIX}/lib/libsdformat{{ version.split('.')[0] }}${SHLIB_EXT}  # [unix]\n        - test -f ${PREFIX}/lib/cmake/sdformat{{ version.split('.')[0] }}/sdformat{{ version.split('.')[0] }}-config.cmake  # [not win]\n        - if not exist %LIBRARY_INC%\\\\gz\\\\sdformat{{ version.split('.')[0] }}\\\\sdf\\\\sdf.hh exit 1  # [win]\n        - if not exist %LIBRARY_LIB%\\\\sdformat{{ version.split('.')[0] }}.lib exit 1  # [win]\n        - if not exist %LIBRARY_BIN%\\\\sdformat{{ version.split('.')[0] }}.dll exit 1  # [win]\n        - if not exist %LIBRARY_LIB%\\\\cmake\\\\sdformat{{ version.split('.')[0] }}\\\\sdformat{{ version.split('.')[0] }}-config.cmake exit 1  # [win]\n\n  - name: {{ python_name }}\n    script: build_py.sh  # [unix]\n    script: bld_py.bat  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - ninja\n        - cmake\n        - pkg-config\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - pybind11                               # [build_platform != target_platform]\n        - pybind11-abi                           # [build_platform != target_platform]\n        - pytest                                 # [build_platform != target_platform]\n      host:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n        - python\n        - pip\n        - pybind11\n        - pybind11-abi\n        - pytest\n      run:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n        - python\n        - gz-math7-python\n    test:\n      commands:\n        - pip check\n      requires:\n        - pip\n      imports:\n        - sdformat13\n\n  - name: {{ name }}\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n        - {{ pin_subpackage(python_name, max_pin='x.x.x') }}\n    test:\n      imports:\n        - sdformat13\n\n\nabout:\n  home: http://sdformat.org/\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: |\n    Simulation Description Format (SDF) parser and description files.\n\nextra:\n  recipe-maintainers:\n    - seanyen\n    - j-rivero\n    - conda-forge/ros-core\n    - Tobias-Fischer\n    - traversaro\n",
+ "raw_meta_yaml": "{% set repo_name = \"sdformat\" %}\n{% set version = \"14.0.0\" %}\n{% set major_version = version.split('.')[0] %}\n{% set name = repo_name  + major_version %}\n{% set cxx_name = \"lib\" + name %}\n{% set python_name = name + \"-python\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/osrf/sdformat/archive/sdformat{{ major_version }}_{{ version }}.tar.gz\n    sha256: a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728\n    patches:\n      - standalone_bindings.patch\n      - standalone_bindings_tests.patch\n      - fixgzsdfcommandonwin32.patch\n\nbuild:\n  number: 0\n\n\noutputs:\n  - name: {{ cxx_name }}\n    script: build_cxx.sh  # [unix]\n    script: bld_cxx.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - {{ compiler('c') }}\n        - ninja                              # [not win]\n        - cmake\n        - pkg-config\n        - python\n      host:\n        - libgz-cmake3\n        - libgz-math7\n        - libgz-tools2\n        - libgz-utils2\n        - urdfdom\n        - tinyxml2\n\n    test:\n      commands:\n        - test -f ${PREFIX}/include/gz/sdformat{{ version.split('.')[0] }}/sdf/sdf.hh  # [not win]\n        - test -f ${PREFIX}/lib/libsdformat{{ version.split('.')[0] }}${SHLIB_EXT}  # [unix]\n        - test -f ${PREFIX}/lib/cmake/sdformat{{ version.split('.')[0] }}/sdformat{{ version.split('.')[0] }}-config.cmake  # [not win]\n        - if not exist %LIBRARY_INC%\\\\gz\\\\sdformat{{ version.split('.')[0] }}\\\\sdf\\\\sdf.hh exit 1  # [win]\n        - if not exist %LIBRARY_LIB%\\\\sdformat{{ version.split('.')[0] }}.lib exit 1  # [win]\n        - if not exist %LIBRARY_BIN%\\\\sdformat{{ version.split('.')[0] }}.dll exit 1  # [win]\n        - if not exist %LIBRARY_LIB%\\\\cmake\\\\sdformat{{ version.split('.')[0] }}\\\\sdformat{{ version.split('.')[0] }}-config.cmake exit 1  # [win]\n\n  - name: {{ python_name }}\n    script: build_py.sh  # [unix]\n    script: bld_py.bat  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - ninja\n        - cmake\n        - pkg-config\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - pybind11                               # [build_platform != target_platform]\n        - pybind11-abi                           # [build_platform != target_platform]\n        - pytest                                 # [build_platform != target_platform]\n      host:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n        - python\n        - pip\n        - pybind11\n        - pybind11-abi\n        - pytest\n        - gz-math7-python\n      run:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n        - python\n        - gz-math7-python\n    test:\n      commands:\n        - pip check\n      requires:\n        - pip\n      imports:\n        - sdformat14\n\n  - name: {{ name }}\n    build:\n      run_exports:\n        - {{ pin_subpackage(cxx_name, max_pin='x') }}\n    requirements:\n      run:\n        - {{ pin_subpackage(cxx_name, exact=True) }}\n        - {{ pin_subpackage(python_name, max_pin='x.x.x') }}\n    test:\n      imports:\n        - sdformat14\n\n\nabout:\n  home: http://sdformat.org/\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: |\n    Simulation Description Format (SDF) parser and description files.\n\nextra:\n  recipe-maintainers:\n    - seanyen\n    - j-rivero\n    - conda-forge/ros-core\n    - Tobias-Fischer\n    - traversaro\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -2579,7 +1577,7 @@
    "libgz-math7",
    "libgz-tools2",
    "libgz-utils2",
-   "libsdformat13",
+   "libsdformat14",
    "ninja",
    "pip",
    "pkg-config",
@@ -2587,8 +1585,7 @@
    "pybind11-abi",
    "pytest",
    "python",
-   "ruby",
-   "sdformat13-python",
+   "sdformat14-python",
    "tinyxml2",
    "urdfdom"
   ]
@@ -2602,7 +1599,7 @@
     "cxx_compiler_stub",
     "ninja",
     "pkg-config",
-    "ruby"
+    "python"
    ]
   },
   "host": {
@@ -2610,11 +1607,12 @@
    "elements": [
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "gz-math7-python",
     "libgz-cmake3",
     "libgz-math7",
     "libgz-tools2",
     "libgz-utils2",
-    "libsdformat13",
+    "libsdformat14",
     "pip",
     "pybind11",
     "pybind11-abi",
@@ -2630,9 +1628,9 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "gz-math7-python",
-    "libsdformat13",
+    "libsdformat14",
     "python",
-    "sdformat13-python"
+    "sdformat14-python"
    ]
   },
   "test": {
@@ -2652,18 +1650,18 @@
     "cxx_compiler_stub",
     "ninja",
     "pkg-config",
-    "ruby",
-    "ruby 2.7"
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "gz-math7-python",
     "libgz-cmake3",
     "libgz-math7",
     "libgz-tools2",
     "libgz-utils2",
-    "libsdformat13",
+    "libsdformat14",
     "pip",
     "pybind11",
     "pybind11-abi",
@@ -2677,9 +1675,9 @@
    "__set__": true,
    "elements": [
     "gz-math7-python",
-    "libsdformat13",
+    "libsdformat14",
     "python",
-    "sdformat13-python"
+    "sdformat14-python"
    ]
   },
   "test": {
@@ -2689,8 +1687,8 @@
    ]
   }
  },
- "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz",
- "version": "13.6.0",
+ "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz",
+ "version": "14.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/libsdformat.json"
  },
@@ -2702,7 +1700,7 @@
    "summary": "Simulation Description Format (SDF) parser and description files.\n"
   },
   "build": {
-   "number": "2"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -2717,17 +1715,17 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "libsdformat13",
+    "name": "libsdformat14",
     "requirements": {
      "build": [
       "cxx_compiler_stub",
       "c_compiler_stub",
-      "ruby 2.7",
       "cmake",
-      "pkg-config"
+      "pkg-config",
+      "python"
      ],
      "host": [
       "libgz-cmake3",
@@ -2741,15 +1739,15 @@
     "script": "bld_cxx.bat",
     "test": {
      "commands": [
-      "if not exist %LIBRARY_INC%\\\\gz\\\\sdformat13\\\\sdf\\\\sdf.hh exit 1",
-      "if not exist %LIBRARY_LIB%\\\\sdformat13.lib exit 1",
-      "if not exist %LIBRARY_BIN%\\\\sdformat13.dll exit 1",
-      "if not exist %LIBRARY_LIB%\\\\cmake\\\\sdformat13\\\\sdformat13-config.cmake exit 1"
+      "if not exist %LIBRARY_INC%\\\\gz\\\\sdformat14\\\\sdf\\\\sdf.hh exit 1",
+      "if not exist %LIBRARY_LIB%\\\\sdformat14.lib exit 1",
+      "if not exist %LIBRARY_BIN%\\\\sdformat14.dll exit 1",
+      "if not exist %LIBRARY_LIB%\\\\cmake\\\\sdformat14\\\\sdformat14-config.cmake exit 1"
      ]
     }
    },
    {
-    "name": "sdformat13-python",
+    "name": "sdformat14-python",
     "requirements": {
      "build": [
       "c_compiler_stub",
@@ -2759,15 +1757,16 @@
       "pkg-config"
      ],
      "host": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "pip",
       "pybind11",
       "pybind11-abi",
-      "pytest"
+      "pytest",
+      "gz-math7-python"
      ],
      "run": [
-      "libsdformat13",
+      "libsdformat14",
       "python",
       "gz-math7-python"
      ]
@@ -2778,7 +1777,7 @@
       "pip check"
      ],
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ],
      "requires": [
       "pip"
@@ -2788,35 +1787,36 @@
    {
     "build": {
      "run_exports": [
-      "libsdformat13"
+      "libsdformat14"
      ]
     },
-    "name": "sdformat13",
+    "name": "sdformat14",
     "requirements": {
      "run": [
-      "libsdformat13",
-      "sdformat13-python"
+      "libsdformat14",
+      "sdformat14-python"
      ]
     },
     "test": {
      "imports": [
-      "sdformat13"
+      "sdformat14"
      ]
     }
    }
   ],
   "package": {
-   "name": "sdformat13",
-   "version": "13.6.0"
+   "name": "sdformat14",
+   "version": "14.0.0"
   },
   "source": [
    {
     "patches": [
      "standalone_bindings.patch",
+     "standalone_bindings_tests.patch",
      "fixgzsdfcommandonwin32.patch"
     ],
-    "sha256": "6d1d2fde6dc9d328dab6cb44037527a61b05f2ff4929641946d124d229396bd5",
-    "url": "https://github.com/osrf/sdformat/archive/sdformat13_13.6.0.tar.gz"
+    "sha256": "a4f38865f7e8b79559c238a1aba7bab1a4ff46c22a67bb91325ad48ba7d25728",
+    "url": "https://github.com/osrf/sdformat/archive/sdformat14_14.0.0.tar.gz"
    }
   ]
  },
@@ -2829,17 +1829,18 @@
     "cxx_compiler_stub",
     "ninja",
     "pkg-config",
-    "ruby"
+    "python"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "gz-math7-python",
     "libgz-cmake3",
     "libgz-math7",
     "libgz-tools2",
     "libgz-utils2",
-    "libsdformat13",
+    "libsdformat14",
     "pip",
     "pybind11",
     "pybind11-abi",
@@ -2853,9 +1854,9 @@
    "__set__": true,
    "elements": [
     "gz-math7-python",
-    "libsdformat13",
+    "libsdformat14",
     "python",
-    "sdformat13-python"
+    "sdformat14-python"
    ]
   },
   "test": {
