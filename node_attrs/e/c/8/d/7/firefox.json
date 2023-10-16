@@ -42,7 +42,7 @@
   },
   "package": {
    "name": "firefox",
-   "version": "118.0.1"
+   "version": "118.0.2"
   },
   "requirements": {
    "build": [
@@ -53,8 +53,8 @@
   },
   "source": {
    "folder": "firefox",
-   "sha256": "dfaaf6a2ff0fd4751659b797a688966907ae53bb76837b1aedc8c9c62bd641bd",
-   "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.1/linux-x86_64/en-US/firefox-118.0.1.tar.bz2"
+   "sha256": "08d98d91fc4d15241061b5345deeb7ce8c6d30032f66388a02089de7d23c92eb",
+   "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.2/linux-x86_64/en-US/firefox-118.0.2.tar.bz2"
   },
   "test": {
    "commands": [
@@ -139,7 +139,7 @@
   },
   "package": {
    "name": "firefox",
-   "version": "118.0.1"
+   "version": "118.0.2"
   },
   "requirements": {
    "build": [
@@ -157,8 +157,8 @@
   "source": {
    "fn": "firefox.msi",
    "folder": "firefox",
-   "sha256": "e90e5e684e8e6129b262f592d37da0d4fdff5246c08aa9318034a65e27296d81",
-   "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.1/win64/en-US/Firefox%20Setup%20118.0.1.msi"
+   "sha256": "14eb62d04dc95b61ef639b4ed9c0ad20ec8ea942c8ed5c10e8da3d9ef8ea32b2",
+   "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.2/win64/en-US/Firefox%20Setup%20118.0.2.msi"
   },
   "test": {
    "commands": [
@@ -227,7 +227,7 @@
   },
   "package": {
    "name": "firefox",
-   "version": "118.0.1"
+   "version": "118.0.2"
   },
   "requirements": {
    "build": [
@@ -237,8 +237,8 @@
   },
   "source": {
    "fn": "firefox.pkg",
-   "sha256": "433152d38a9b46d3e5954948829019f8b2721eea84c40997a065a9b900d38c81",
-   "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.1/mac/en-US/Firefox%20118.0.1.pkg"
+   "sha256": "7f0bfcdd19ed8f8cdc9027a648452d10032c8b84922b81c3b7a9bc0a83386c7f",
+   "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.2/mac/en-US/Firefox%20118.0.2.pkg"
   },
   "test": {
    "commands": [
@@ -307,7 +307,7 @@
   },
   "package": {
    "name": "firefox",
-   "version": "118.0.1"
+   "version": "118.0.2"
   },
   "requirements": {
    "build": [
@@ -317,8 +317,8 @@
   },
   "source": {
    "fn": "firefox.pkg",
-   "sha256": "433152d38a9b46d3e5954948829019f8b2721eea84c40997a065a9b900d38c81",
-   "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.1/mac/en-US/Firefox%20118.0.1.pkg"
+   "sha256": "7f0bfcdd19ed8f8cdc9027a648452d10032c8b84922b81c3b7a9bc0a83386c7f",
+   "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.2/mac/en-US/Firefox%20118.0.2.pkg"
   },
   "test": {
    "commands": [
@@ -377,7 +377,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/firefox.json"
  },
- "raw_meta_yaml": "{% set version = \"118.0.1\" %}\n\npackage:\n  name: firefox\n  version: {{ version }}\n\nsource:\n  folder: firefox  # [linux64]\n  url: https://ftp.mozilla.org/pub/firefox/releases/{{ version }}/linux-x86_64/en-US/firefox-{{ version }}.tar.bz2  # [linux64]\n  sha256: dfaaf6a2ff0fd4751659b797a688966907ae53bb76837b1aedc8c9c62bd641bd  # [linux64]\n\n  fn: firefox.pkg  # [osx]\n  url: https://ftp.mozilla.org/pub/firefox/releases/{{ version }}/mac/en-US/Firefox%20{{ version }}.pkg  # [osx]\n  sha256: 433152d38a9b46d3e5954948829019f8b2721eea84c40997a065a9b900d38c81  # [osx]\n\n  fn: firefox.msi  # [win]\n  url: https://ftp.mozilla.org/pub/firefox/releases/{{ version }}/win64/en-US/Firefox%20Setup%20{{ version }}.msi  # [win]\n  sha256: e90e5e684e8e6129b262f592d37da0d4fdff5246c08aa9318034a65e27296d81  # [win]\n\nbuild:\n  number: 0\n  binary_relocation:\n    - bin/firefox\n  script_env:\n    - MOZ_HEADLESS=1\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - sysroot_linux-64 2.17  # [linux64]\n\ntest:\n  requires:\n    - geckodriver\n    - pytest\n    - python >=3.6\n    - selenium >=4\n  commands:\n    - copy {{ RECIPE_DIR }}\\test_selenium.py .  # [win]\n    - copy {{ RECIPE_DIR }}\\setup.cfg .  # [win]\n    - cp {{ RECIPE_DIR }}/test_selenium.py {{ RECIPE_DIR }}/setup.cfg .  # [not win]\n    - firefox --version\n    - firefox --help\n    # TODO: may be needed in the future\n    # https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html\n    # - set -m && % xattr -r -d com.apple.quarantine $PREFIX/bin/geckodriver  # [osx]\n    - python -m pytest test_selenium.py\n\nabout:\n  home: https://www.mozilla.org/en-US/firefox/releases\n  license: MPL-2.0\n  license_family: MOZILLA\n  license_file: LICENSE\n  summary: Firefox web browser\n\nextra:\n  recipe-maintainers:\n    - birdsarah\n    - ocefpaf\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"118.0.2\" %}\n\npackage:\n  name: firefox\n  version: {{ version }}\n\nsource:\n  folder: firefox  # [linux64]\n  url: https://ftp.mozilla.org/pub/firefox/releases/{{ version }}/linux-x86_64/en-US/firefox-{{ version }}.tar.bz2  # [linux64]\n  sha256: 08d98d91fc4d15241061b5345deeb7ce8c6d30032f66388a02089de7d23c92eb  # [linux64]\n\n  fn: firefox.pkg  # [osx]\n  url: https://ftp.mozilla.org/pub/firefox/releases/{{ version }}/mac/en-US/Firefox%20{{ version }}.pkg  # [osx]\n  sha256: 7f0bfcdd19ed8f8cdc9027a648452d10032c8b84922b81c3b7a9bc0a83386c7f  # [osx]\n\n  fn: firefox.msi  # [win]\n  url: https://ftp.mozilla.org/pub/firefox/releases/{{ version }}/win64/en-US/Firefox%20Setup%20{{ version }}.msi  # [win]\n  sha256: 14eb62d04dc95b61ef639b4ed9c0ad20ec8ea942c8ed5c10e8da3d9ef8ea32b2  # [win]\n\nbuild:\n  number: 0\n  binary_relocation:\n    - bin/firefox\n  script_env:\n    - MOZ_HEADLESS=1\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - sysroot_linux-64 2.17  # [linux64]\n\ntest:\n  requires:\n    - geckodriver\n    - pytest\n    - python >=3.6\n    - selenium >=4\n  commands:\n    - copy {{ RECIPE_DIR }}\\test_selenium.py .  # [win]\n    - copy {{ RECIPE_DIR }}\\setup.cfg .  # [win]\n    - cp {{ RECIPE_DIR }}/test_selenium.py {{ RECIPE_DIR }}/setup.cfg .  # [not win]\n    - firefox --version\n    - firefox --help\n    # TODO: may be needed in the future\n    # https://firefox-source-docs.mozilla.org/testing/geckodriver/Notarization.html\n    # - set -m && % xattr -r -d com.apple.quarantine $PREFIX/bin/geckodriver  # [osx]\n    - python -m pytest test_selenium.py\n\nabout:\n  home: https://www.mozilla.org/en-US/firefox/releases\n  license: MPL-2.0\n  license_family: MOZILLA\n  license_file: LICENSE\n  summary: Firefox web browser\n\nextra:\n  recipe-maintainers:\n    - birdsarah\n    - ocefpaf\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -447,8 +447,8 @@
    ]
   }
  },
- "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.1/win64/en-US/Firefox%20Setup%20118.0.1.msi",
- "version": "118.0.1",
+ "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.2/win64/en-US/Firefox%20Setup%20118.0.2.msi",
+ "version": "118.0.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/firefox.json"
  },
@@ -478,7 +478,7 @@
   },
   "package": {
    "name": "firefox",
-   "version": "118.0.1"
+   "version": "118.0.2"
   },
   "requirements": {
    "build": [
@@ -488,8 +488,8 @@
   },
   "source": {
    "fn": "firefox.msi",
-   "sha256": "e90e5e684e8e6129b262f592d37da0d4fdff5246c08aa9318034a65e27296d81",
-   "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.1/win64/en-US/Firefox%20Setup%20118.0.1.msi"
+   "sha256": "14eb62d04dc95b61ef639b4ed9c0ad20ec8ea942c8ed5c10e8da3d9ef8ea32b2",
+   "url": "https://ftp.mozilla.org/pub/firefox/releases/118.0.2/win64/en-US/Firefox%20Setup%20118.0.2.msi"
   },
   "test": {
    "commands": [

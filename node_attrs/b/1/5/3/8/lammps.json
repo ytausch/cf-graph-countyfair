@@ -20,9 +20,9 @@
    "summary": "LAMMPS stands for Large-scale Atomic/Molecular Massively Parallel Simulator."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script_env": null,
-   "string": "cpu_py311_h1234567_openmpi_2",
+   "string": "cpu_py311_h1234567_openmpi_3",
    "track_features": null
   },
   "extra": {
@@ -750,9 +750,9 @@
    "summary": "LAMMPS stands for Large-scale Atomic/Molecular Massively Parallel Simulator."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script_env": null,
-   "string": "cpu_py311_h1234567_openmpi_2",
+   "string": "cpu_py311_h1234567_openmpi_3",
    "track_features": null
   },
   "extra": {
@@ -2395,9 +2395,9 @@
    "summary": "LAMMPS stands for Large-scale Atomic/Molecular Massively Parallel Simulator."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script_env": null,
-   "string": "cpu_py311_h1234567_openmpi_2",
+   "string": "cpu_py311_h1234567_openmpi_3",
    "track_features": null
   },
   "extra": {
@@ -3026,9 +3026,9 @@
    "summary": "LAMMPS stands for Large-scale Atomic/Molecular Massively Parallel Simulator."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script_env": null,
-   "string": "cpu_py311_h1234567_openmpi_2",
+   "string": "cpu_py311_h1234567_openmpi_3",
    "track_features": null
   },
   "extra": {
@@ -3552,7 +3552,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/lammps.json"
  },
- "raw_meta_yaml": "{% set build = 2 %}\n{% set name = \"lammps\" %}\n{% set version = \"stable_2Aug2023\" %}\n{% set version_plugins = \"stable_2Aug2023\" %}\n{% set sha256 = \"48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df\" %}\n{% set date = datetime.datetime.strptime(version.split('_')[1], \"%d%b%Y\") %}\n{% set conda_version = \"{:%Y.%m.%d}\".format(date) %}\n{% set cuda_major = environ.get(\"cuda_compiler_version\", \"0.0\").split(\".\")[0]|int %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ conda_version }}\n\nsource:\n  - fn: {{ name }}-{{ conda_version }}.tar.gz\n    url: https://github.com/lammps/lammps/archive/{{ version }}.tar.gz\n    sha256: {{ sha256 }}\n    patches: \n      - macos_install.patch\n      - vcsgc_mtp_n2p2.patch\n      - fix-cython.patch\n  - fn: lammps-plugins.tar.gz\n    url: https://github.com/lammps/lammps-plugins/archive/{{ version_plugins }}.tar.gz\n    sha256: 74bedc64941b49c964456d53590d3398af13a37cb82d9ede50326d562e5da429\n    folder: lammps-plugins\n  - fn: mlip.tar.gz\n    url: https://gitlab.com/ivannovikov/interface-lammps-mlip-3/-/archive/342e1dd60803c2f9a8678cf0741851d2a90bd65e/interface-lammps-mlip-3-342e1dd60803c2f9a8678cf0741851d2a90bd65e.tar.gz\n    sha256: 8d2cb7695392c0d96218f0ecb0aefd766142b6bd50c6ebe89f3549811139d268\n    folder: mlip\n    \nbuild:\n  number: {{ build }}\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == \"None\"]\n  skip: True  # [win]\n  skip: True  # [cuda_compiler_version == \"10.2\"]\n  skip: True  # [cuda_compiler_version == \"11.2\"]\n  track_features:\n    - cudatoolkit               # [cuda_compiler_version != \"None\"]\n  script_env:\n{% if cuda_major == 11 %}\n    - Kokkos_OPT_ARGS=-DKokkos_ARCH_KEPLER35=ON\n{% endif %}\n{% if cuda_major == 12 %}\n    - Kokkos_OPT_ARGS=-DKokkos_ARCH_MAXWELL50=ON\n{% endif %}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('fortran') }}\n    - {{ compiler('cuda') }}    # [cuda_compiler_version != \"None\"]\n    - sysroot_linux-64 2.17  # [linux]\n    - cmake\n    - make\n    - pkg-config\n    - python                                 # [build_platform != target_platform]\n    - cython                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n  host:\n    - python\n    - cython\n    - numpy\n    - setuptools\n    - pip\n    - {{ mpi }}\n    - zlib\n    - fftw\n    - hdf5\n    - libpng\n    - libjpeg-turbo\n    - libcblas  # [linux]\n    - libblas  # [linux]\n    - liblapack  # [linux]\n    - libnetcdf\n    - kim-api\n    - libcurl\n    - mpi4py\n    - mlip =3.0  # [linux]\n    - n2p2 =2.2.0  # [linux]\n    - quippy =0.9.12  # [linux]\n    - voro\n    - plumed\n\n  run:\n    - python\n    - setuptools\n    - {{ mpi }}\n    - {{ pin_compatible(\"numpy\") }}\n    - kim-api\n    - mlip =3.0  # [linux]\n    - n2p2 =2.2.0  # [linux]\n    - __cuda  # [cuda_compiler_version != \"None\"]\n\ntest:\n  imports:\n    - lammps\n  commands: \n    - lmp_serial -help > help_serial.txt  # [cuda_compiler_version == \"None\"]\n    - mpiexec -n 1 lmp_mpi -help > help_mpi.txt  # [mpi == 'mpich' and cuda_compiler_version == \"None\"] \n\nabout:\n  home: http://lammps.sandia.gov\n  license: GPL-2.0-only\n  license_family: GPL\n  license_file: '{{ environ[\"RECIPE_DIR\"] }}/LICENSE'\n  summary: 'LAMMPS stands for Large-scale Atomic/Molecular Massively Parallel Simulator.'\n\n  description: |\n    LAMMPS is a classical molecular dynamics simulation code designed to\n    run efficiently on parallel computers.  It was developed at Sandia\n    National Laboratories, a US Department of Energy facility, with\n    funding from the DOE.  It is an open-source code, distributed freely\n    under the terms of the GNU Public License (GPL).\n  doc_url: http://lammps.sandia.gov/doc/Manual.html\n  dev_url: https://github.com/lammps/lammps\n\nextra:\n  recipe-maintainers:\n    - jan-janssen\n    - ellio167\n",
+ "raw_meta_yaml": "{% set build = 3 %}\n{% set name = \"lammps\" %}\n{% set version = \"stable_2Aug2023\" %}\n{% set version_plugins = \"stable_2Aug2023\" %}\n{% set sha256 = \"48dc8b0b0583689e80ea2052275acbc3e3fce89707ac557e120db5564257f7df\" %}\n{% set date = datetime.datetime.strptime(version.split('_')[1], \"%d%b%Y\") %}\n{% set conda_version = \"{:%Y.%m.%d}\".format(date) %}\n{% set cuda_major = environ.get(\"cuda_compiler_version\", \"0.0\").split(\".\")[0]|int %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ conda_version }}\n\nsource:\n  - fn: {{ name }}-{{ conda_version }}.tar.gz\n    url: https://github.com/lammps/lammps/archive/{{ version }}.tar.gz\n    sha256: {{ sha256 }}\n    patches: \n      - macos_install.patch\n      - vcsgc_mtp_n2p2.patch\n      - fix-cython.patch\n  - fn: lammps-plugins.tar.gz\n    url: https://github.com/lammps/lammps-plugins/archive/{{ version_plugins }}.tar.gz\n    sha256: 74bedc64941b49c964456d53590d3398af13a37cb82d9ede50326d562e5da429\n    folder: lammps-plugins\n  - fn: mlip.tar.gz\n    url: https://gitlab.com/ivannovikov/interface-lammps-mlip-3/-/archive/342e1dd60803c2f9a8678cf0741851d2a90bd65e/interface-lammps-mlip-3-342e1dd60803c2f9a8678cf0741851d2a90bd65e.tar.gz\n    sha256: 8d2cb7695392c0d96218f0ecb0aefd766142b6bd50c6ebe89f3549811139d268\n    folder: mlip\n    \nbuild:\n  number: {{ build }}\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: cpu_py{{ CONDA_PY }}_h{{ PKG_HASH }}_{{ mpi }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == \"None\"]\n  skip: True  # [win]\n  skip: True  # [cuda_compiler_version == \"10.2\"]\n  skip: True  # [cuda_compiler_version == \"11.2\"]\n  track_features:\n    - cudatoolkit               # [cuda_compiler_version != \"None\"]\n  script_env:\n{% if cuda_major == 11 %}\n    - Kokkos_OPT_ARGS=-DKokkos_ARCH_KEPLER35=ON\n{% endif %}\n{% if cuda_major == 12 %}\n    - Kokkos_OPT_ARGS=-DKokkos_ARCH_MAXWELL50=ON\n{% endif %}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('fortran') }}\n    - {{ compiler('cuda') }}    # [cuda_compiler_version != \"None\"]\n    - sysroot_linux-64 2.17  # [linux]\n    - cmake\n    - make\n    - pkg-config\n    - python                                 # [build_platform != target_platform]\n    - cython                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - numpy                                  # [build_platform != target_platform]\n  host:\n    - python\n    - cython\n    - numpy\n    - setuptools\n    - pip\n    - {{ mpi }}\n    - zlib\n    - fftw\n    - hdf5\n    - libpng\n    - libjpeg-turbo\n    - libcblas  # [linux]\n    - libblas  # [linux]\n    - liblapack  # [linux]\n    - libnetcdf\n    - kim-api\n    - libcurl\n    - mpi4py\n    - mlip =3.0  # [linux]\n    - n2p2 =2.2.0  # [linux]\n    - quippy =0.9.12  # [linux]\n    - voro\n    - plumed\n\n  run:\n    - python\n    - setuptools\n    - {{ mpi }}\n    - {{ pin_compatible(\"numpy\") }}\n    - kim-api\n    - mlip =3.0  # [linux]\n    - n2p2 =2.2.0  # [linux]\n    - __cuda  # [cuda_compiler_version != \"None\"]\n\ntest:\n  imports:\n    - lammps\n  commands: \n    - lmp_serial -help > help_serial.txt  # [cuda_compiler_version == \"None\"]\n    - mpiexec -n 1 lmp_mpi -help > help_mpi.txt  # [mpi == 'mpich' and cuda_compiler_version == \"None\"] \n\nabout:\n  home: http://lammps.sandia.gov\n  license: GPL-2.0-only\n  license_family: GPL\n  license_file: '{{ environ[\"RECIPE_DIR\"] }}/LICENSE'\n  summary: 'LAMMPS stands for Large-scale Atomic/Molecular Massively Parallel Simulator.'\n\n  description: |\n    LAMMPS is a classical molecular dynamics simulation code designed to\n    run efficiently on parallel computers.  It was developed at Sandia\n    National Laboratories, a US Department of Energy facility, with\n    funding from the DOE.  It is an open-source code, distributed freely\n    under the terms of the GNU Public License (GPL).\n  doc_url: http://lammps.sandia.gov/doc/Manual.html\n  dev_url: https://github.com/lammps/lammps\n\nextra:\n  recipe-maintainers:\n    - jan-janssen\n    - ellio167\n",
  "req": {
   "__set__": true,
   "elements": [
