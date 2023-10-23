@@ -1,7 +1,16 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "bot": {
+   "automerge": true
+  },
+  "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
+   "osx_arm64": "osx_64"
+  }
+ },
  "feedstock_name": "libmirisdr",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -157,6 +166,312 @@
    "elements": []
   }
  },
+ "linux_aarch64_meta_yaml": {
+  "about": {
+   "description": "This software supports Software Defined Radio (SDR) devices based on the Mirics MSi001 + MSi2500 chipsets, including some SDRplay devices:\n\n  - `libmirisdr4` contains the library for mirisdr devices\n  - `libmirisdr` contains the development files for compiling against the mirisdr library\n  - `mirisdr` contains command line tools for using the devices\n\nFor Linux users of `mirisdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n    sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/mirisdr.rules /etc/udev/rules.d/\n    sudo udevadm control --reload\n    sudo udevadm trigger\n\nYou may have to restart for this change to take effect.\n",
+   "home": "https://github.com/f4exb/libmirisdr-4/",
+   "license": "GPL-2.0-or-later",
+   "license_file": "COPYING",
+   "summary": "Driver for Mirics MSi001 + MSi2500 SDR devices"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "feedstock-name": "libmirisdr",
+   "recipe-maintainers": [
+    "ryanvolz"
+   ]
+  },
+  "outputs": [
+   {
+    "files": [
+     "lib/libmirisdr.so.4*"
+    ],
+    "name": "libmirisdr4",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libusb"
+     ],
+     "run": []
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libmirisdr.so.4"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libmirisdr4"
+     ]
+    },
+    "files": [
+     "include/mirisdr.h",
+     "include/mirisdr_export.h",
+     "lib/libmirisdr.so",
+     "lib/pkgconfig/libmirisdr.pc"
+    ],
+    "name": "libmirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/include/mirisdr.h",
+      "test -f $PREFIX/include/mirisdr_export.h",
+      "test -f $PREFIX/lib/libmirisdr${SHLIB_EXT}",
+      "test -f $PREFIX/lib/pkgconfig/libmirisdr.pc"
+     ]
+    }
+   },
+   {
+    "build": {
+     "post-link": "post-link"
+    },
+    "files": [
+     "bin/miri_fm*",
+     "bin/miri_sdr*",
+     "lib/udev/rules.d/mirisdr.rules"
+    ],
+    "name": "mirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "miri_fm -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
+      "miri_sdr -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
+      "test -f $PREFIX/lib/udev/rules.d/mirisdr.rules"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "libmirisdr-split",
+   "version": "2.0.0"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cmake",
+    "ninja",
+    "pkg-config"
+   ],
+   "host": [
+    "libusb"
+   ]
+  },
+  "source": {
+   "patches": [
+    "0001-miri_fm-Don-t-define-round-for-MSVC-use-version-prov.patch",
+    "0002-Rename-mirisdr.dll-to-mirisdr-4.dll-on-Windows.patch"
+   ],
+   "sha256": "c9fa00737f37de788873248c71dd653b0e9c043aed70620ea17cfde8894be2df",
+   "url": "https://github.com/f4exb/libmirisdr-4/archive/refs/tags/v2.0.0.tar.gz"
+  }
+ },
+ "linux_aarch64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "ninja",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "libmirisdr4",
+    "libusb"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libmirisdr4"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "linux_ppc64le_meta_yaml": {
+  "about": {
+   "description": "This software supports Software Defined Radio (SDR) devices based on the Mirics MSi001 + MSi2500 chipsets, including some SDRplay devices:\n\n  - `libmirisdr4` contains the library for mirisdr devices\n  - `libmirisdr` contains the development files for compiling against the mirisdr library\n  - `mirisdr` contains command line tools for using the devices\n\nFor Linux users of `mirisdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n    sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/mirisdr.rules /etc/udev/rules.d/\n    sudo udevadm control --reload\n    sudo udevadm trigger\n\nYou may have to restart for this change to take effect.\n",
+   "home": "https://github.com/f4exb/libmirisdr-4/",
+   "license": "GPL-2.0-or-later",
+   "license_file": "COPYING",
+   "summary": "Driver for Mirics MSi001 + MSi2500 SDR devices"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "feedstock-name": "libmirisdr",
+   "recipe-maintainers": [
+    "ryanvolz"
+   ]
+  },
+  "outputs": [
+   {
+    "files": [
+     "lib/libmirisdr.so.4*"
+    ],
+    "name": "libmirisdr4",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libusb"
+     ],
+     "run": []
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libmirisdr.so.4"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libmirisdr4"
+     ]
+    },
+    "files": [
+     "include/mirisdr.h",
+     "include/mirisdr_export.h",
+     "lib/libmirisdr.so",
+     "lib/pkgconfig/libmirisdr.pc"
+    ],
+    "name": "libmirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/include/mirisdr.h",
+      "test -f $PREFIX/include/mirisdr_export.h",
+      "test -f $PREFIX/lib/libmirisdr${SHLIB_EXT}",
+      "test -f $PREFIX/lib/pkgconfig/libmirisdr.pc"
+     ]
+    }
+   },
+   {
+    "build": {
+     "post-link": "post-link"
+    },
+    "files": [
+     "bin/miri_fm*",
+     "bin/miri_sdr*",
+     "lib/udev/rules.d/mirisdr.rules"
+    ],
+    "name": "mirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "miri_fm -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
+      "miri_sdr -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
+      "test -f $PREFIX/lib/udev/rules.d/mirisdr.rules"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "libmirisdr-split",
+   "version": "2.0.0"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cmake",
+    "ninja",
+    "pkg-config"
+   ],
+   "host": [
+    "libusb"
+   ]
+  },
+  "source": {
+   "patches": [
+    "0001-miri_fm-Don-t-define-round-for-MSVC-use-version-prov.patch",
+    "0002-Rename-mirisdr.dll-to-mirisdr-4.dll-on-Windows.patch"
+   ],
+   "sha256": "c9fa00737f37de788873248c71dd653b0e9c043aed70620ea17cfde8894be2df",
+   "url": "https://github.com/f4exb/libmirisdr-4/archive/refs/tags/v2.0.0.tar.gz"
+  }
+ },
+ "linux_ppc64le_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "ninja",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "libmirisdr4",
+    "libusb"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libmirisdr4"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "meta_yaml": {
   "about": {
    "description": "This software supports Software Defined Radio (SDR) devices based on the Mirics MSi001 + MSi2500 chipsets, including some SDRplay devices:\n\n  - `libmirisdr4` contains the library for mirisdr devices\n  - `libmirisdr` contains the development files for compiling against the mirisdr library\n  - `mirisdr` contains command line tools for using the devices\n\nFor Linux users of `mirisdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n    sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/mirisdr.rules /etc/udev/rules.d/\n    sudo udevadm control --reload\n    sudo udevadm trigger\n\nYou may have to restart for this change to take effect.\n",
@@ -171,6 +486,9 @@
   "extra": {
    "feedstock-name": "libmirisdr",
    "recipe-maintainers": [
+    "ryanvolz",
+    "ryanvolz",
+    "ryanvolz",
     "ryanvolz",
     "ryanvolz",
     "ryanvolz"
@@ -256,6 +574,248 @@
       "miri_fm -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
       "miri_sdr -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
       "test -f $PREFIX/lib/udev/rules.d/mirisdr.rules"
+     ]
+    }
+   },
+   {
+    "files": [
+     "lib/libmirisdr.so.4*"
+    ],
+    "name": "libmirisdr4",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libusb"
+     ],
+     "run": []
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libmirisdr.so.4"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libmirisdr4"
+     ]
+    },
+    "files": [
+     "include/mirisdr.h",
+     "include/mirisdr_export.h",
+     "lib/libmirisdr.so",
+     "lib/pkgconfig/libmirisdr.pc"
+    ],
+    "name": "libmirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/include/mirisdr.h",
+      "test -f $PREFIX/include/mirisdr_export.h",
+      "test -f $PREFIX/lib/libmirisdr${SHLIB_EXT}",
+      "test -f $PREFIX/lib/pkgconfig/libmirisdr.pc"
+     ]
+    }
+   },
+   {
+    "build": {
+     "post-link": "post-link"
+    },
+    "files": [
+     "bin/miri_fm*",
+     "bin/miri_sdr*",
+     "lib/udev/rules.d/mirisdr.rules"
+    ],
+    "name": "mirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "miri_fm -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
+      "miri_sdr -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
+      "test -f $PREFIX/lib/udev/rules.d/mirisdr.rules"
+     ]
+    }
+   },
+   {
+    "files": [
+     "lib/libmirisdr.so.4*"
+    ],
+    "name": "libmirisdr4",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libusb"
+     ],
+     "run": []
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libmirisdr.so.4"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libmirisdr4"
+     ]
+    },
+    "files": [
+     "include/mirisdr.h",
+     "include/mirisdr_export.h",
+     "lib/libmirisdr.so",
+     "lib/pkgconfig/libmirisdr.pc"
+    ],
+    "name": "libmirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/include/mirisdr.h",
+      "test -f $PREFIX/include/mirisdr_export.h",
+      "test -f $PREFIX/lib/libmirisdr${SHLIB_EXT}",
+      "test -f $PREFIX/lib/pkgconfig/libmirisdr.pc"
+     ]
+    }
+   },
+   {
+    "build": {
+     "post-link": "post-link"
+    },
+    "files": [
+     "bin/miri_fm*",
+     "bin/miri_sdr*",
+     "lib/udev/rules.d/mirisdr.rules"
+    ],
+    "name": "mirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "miri_fm -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
+      "miri_sdr -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
+      "test -f $PREFIX/lib/udev/rules.d/mirisdr.rules"
+     ]
+    }
+   },
+   {
+    "files": [
+     "lib/libmirisdr.4*.dylib"
+    ],
+    "name": "libmirisdr4",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libusb"
+     ],
+     "run": []
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libmirisdr.4.dylib"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libmirisdr4"
+     ]
+    },
+    "files": [
+     "include/mirisdr.h",
+     "include/mirisdr_export.h",
+     "lib/libmirisdr.dylib",
+     "lib/pkgconfig/libmirisdr.pc"
+    ],
+    "name": "libmirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/include/mirisdr.h",
+      "test -f $PREFIX/include/mirisdr_export.h",
+      "test -f $PREFIX/lib/libmirisdr${SHLIB_EXT}",
+      "test -f $PREFIX/lib/pkgconfig/libmirisdr.pc"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "files": [
+     "bin/miri_fm*",
+     "bin/miri_sdr*"
+    ],
+    "name": "mirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "miri_fm -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
+      "miri_sdr -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi"
      ]
     }
    },
@@ -437,9 +997,24 @@
     "c_compiler_stub",
     "cmake",
     "ninja",
+    "pkg-config",
+    "c_compiler_stub",
+    "cmake",
+    "ninja",
+    "pkg-config",
+    "c_compiler_stub",
+    "cmake",
+    "ninja",
+    "pkg-config",
+    "c_compiler_stub",
+    "cmake",
+    "ninja",
     "pkg-config"
    ],
    "host": [
+    "libusb",
+    "libusb",
+    "libusb",
     "libusb",
     "libusb",
     "libusb",
@@ -448,6 +1023,12 @@
   },
   "source": {
    "patches": [
+    "0001-miri_fm-Don-t-define-round-for-MSVC-use-version-prov.patch",
+    "0002-Rename-mirisdr.dll-to-mirisdr-4.dll-on-Windows.patch",
+    "0001-miri_fm-Don-t-define-round-for-MSVC-use-version-prov.patch",
+    "0002-Rename-mirisdr.dll-to-mirisdr-4.dll-on-Windows.patch",
+    "0001-miri_fm-Don-t-define-round-for-MSVC-use-version-prov.patch",
+    "0002-Rename-mirisdr.dll-to-mirisdr-4.dll-on-Windows.patch",
     "0001-miri_fm-Don-t-define-round-for-MSVC-use-version-prov.patch",
     "0002-Rename-mirisdr.dll-to-mirisdr-4.dll-on-Windows.patch",
     "0001-miri_fm-Don-t-define-round-for-MSVC-use-version-prov.patch",
@@ -609,6 +1190,155 @@
    "elements": []
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "This software supports Software Defined Radio (SDR) devices based on the Mirics MSi001 + MSi2500 chipsets, including some SDRplay devices:\n\n  - `libmirisdr4` contains the library for mirisdr devices\n  - `libmirisdr` contains the development files for compiling against the mirisdr library\n  - `mirisdr` contains command line tools for using the devices\n\nFor Linux users of `mirisdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n    sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/mirisdr.rules /etc/udev/rules.d/\n    sudo udevadm control --reload\n    sudo udevadm trigger\n\nYou may have to restart for this change to take effect.\n",
+   "home": "https://github.com/f4exb/libmirisdr-4/",
+   "license": "GPL-2.0-or-later",
+   "license_file": "COPYING",
+   "summary": "Driver for Mirics MSi001 + MSi2500 SDR devices"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "feedstock-name": "libmirisdr",
+   "recipe-maintainers": [
+    "ryanvolz"
+   ]
+  },
+  "outputs": [
+   {
+    "files": [
+     "lib/libmirisdr.4*.dylib"
+    ],
+    "name": "libmirisdr4",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libusb"
+     ],
+     "run": []
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/lib/libmirisdr.4.dylib"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libmirisdr4"
+     ]
+    },
+    "files": [
+     "include/mirisdr.h",
+     "include/mirisdr_export.h",
+     "lib/libmirisdr.dylib",
+     "lib/pkgconfig/libmirisdr.pc"
+    ],
+    "name": "libmirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/include/mirisdr.h",
+      "test -f $PREFIX/include/mirisdr_export.h",
+      "test -f $PREFIX/lib/libmirisdr${SHLIB_EXT}",
+      "test -f $PREFIX/lib/pkgconfig/libmirisdr.pc"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "files": [
+     "bin/miri_fm*",
+     "bin/miri_sdr*"
+    ],
+    "name": "mirisdr",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libmirisdr4"
+     ],
+     "run": [
+      "libmirisdr4"
+     ]
+    },
+    "test": {
+     "commands": [
+      "miri_fm -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi",
+      "miri_sdr -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "libmirisdr-split",
+   "version": "2.0.0"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cmake",
+    "ninja",
+    "pkg-config"
+   ],
+   "host": [
+    "libusb"
+   ]
+  },
+  "source": {
+   "patches": [
+    "0001-miri_fm-Don-t-define-round-for-MSVC-use-version-prov.patch",
+    "0002-Rename-mirisdr.dll-to-mirisdr-4.dll-on-Windows.patch"
+   ],
+   "sha256": "c9fa00737f37de788873248c71dd653b0e9c043aed70620ea17cfde8894be2df",
+   "url": "https://github.com/f4exb/libmirisdr-4/archive/refs/tags/v2.0.0.tar.gz"
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "ninja",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "libmirisdr4",
+    "libusb"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libmirisdr4"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -620,7 +1350,10 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
+  "linux_aarch64",
+  "linux_ppc64le",
   "osx_64",
+  "osx_arm64",
   "win_64"
  ],
  "pr_info": {
