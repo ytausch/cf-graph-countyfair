@@ -58,7 +58,7 @@
       "conda_store"
      ]
     },
-    "version": "0.4.14"
+    "version": "2023.10.1"
    },
    {
     "build": {
@@ -73,16 +73,19 @@
      "run": [
       "alembic",
       "celery",
+      "conda",
       "conda-docker",
+      "__linux",
       "conda-pack",
       "fastapi",
       "filelock",
       "itsdangerous",
       "jinja2",
       "minio",
-      "pydantic",
+      "pydantic <2.0a0",
       "pyjwt",
       "python >=3.8",
+      "python-docker",
       "python-multipart",
       "pyyaml",
       "redis-py",
@@ -106,23 +109,23 @@
       "conda_store_server"
      ]
     },
-    "version": "0.4.14"
+    "version": "2023.10.1"
    }
   ],
   "package": {
    "name": "conda-store-split",
-   "version": "0.4.14"
+   "version": "2023.10.1"
   },
   "source": [
    {
     "folder": "conda-store",
-    "sha256": "020b75ae95a38b6a72bc84ed0616febd0ca95b2025648ccd8bdd7e40af9c6655",
-    "url": "https://pypi.io/packages/source/c/conda-store/conda_store-0.4.14.tar.gz"
+    "sha256": "1546c98bef8394103b9f5dc96f2f3dd955b9a773e765d482ca69f723f123e870",
+    "url": "https://pypi.io/packages/source/c/conda-store/conda_store-2023.10.1.tar.gz"
    },
    {
     "folder": "conda-store-server",
-    "sha256": "30f43b57f006d2e9db5d94d5449413c64d4217cf66d9275c58f727f1b6413612",
-    "url": "https://pypi.io/packages/source/c/conda-store-server/conda_store_server-0.4.14.tar.gz"
+    "sha256": "83924a03d17e8d7d1d8d7b1b4f8344556713a77650985391f014a4f01f7e4f1a",
+    "url": "https://pypi.io/packages/source/c/conda-store-server/conda_store_server-2023.10.1.tar.gz"
    }
   ]
  },
@@ -141,10 +144,12 @@
   "run": {
    "__set__": true,
    "elements": [
+    "__linux",
     "aiohttp",
     "alembic",
     "celery",
     "click",
+    "conda",
     "conda-docker",
     "conda-pack",
     "fastapi",
@@ -155,6 +160,7 @@
     "pydantic",
     "pyjwt",
     "python",
+    "python-docker",
     "python-multipart",
     "pyyaml",
     "redis-py",
@@ -189,6 +195,9 @@
   "extra": {
    "feedstock-name": "conda-store",
    "recipe-maintainers": [
+    "trallard",
+    "costrouc",
+    "jaimergp",
     "trallard",
     "costrouc",
     "jaimergp"
@@ -226,7 +235,7 @@
       "conda_store"
      ]
     },
-    "version": "0.4.14"
+    "version": "2023.10.1"
    },
    {
     "build": {
@@ -241,16 +250,19 @@
      "run": [
       "alembic",
       "celery",
+      "conda",
       "conda-docker",
+      "__linux",
       "conda-pack",
       "fastapi",
       "filelock",
       "itsdangerous",
       "jinja2",
       "minio",
-      "pydantic",
+      "pydantic <2.0a0",
       "pyjwt",
       "python >=3.8",
+      "python-docker",
       "python-multipart",
       "pyyaml",
       "redis-py",
@@ -274,27 +286,294 @@
       "conda_store_server"
      ]
     },
-    "version": "0.4.14"
+    "version": "2023.10.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "conda-store",
+    "requirements": {
+     "host": [
+      "python >=3.8",
+      "pip"
+     ],
+     "run": [
+      "aiohttp",
+      "click",
+      "python >=3.8",
+      "rich",
+      "ruamel.yaml",
+      "yarl"
+     ],
+     "run_constrained": [
+      "conda-store-server"
+     ]
+    },
+    "script": "build_conda_store.sh",
+    "test": {
+     "commands": [
+      "conda-store --help"
+     ],
+     "imports": [
+      "conda_store"
+     ]
+    },
+    "version": "2023.10.1"
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "conda-store-server",
+    "requirements": {
+     "host": [
+      "python >=3.8",
+      "pip"
+     ],
+     "run": [
+      "alembic",
+      "celery",
+      "conda",
+      "__osx",
+      "conda-pack",
+      "fastapi",
+      "filelock",
+      "itsdangerous",
+      "jinja2",
+      "minio",
+      "pydantic <2.0a0",
+      "pyjwt",
+      "python >=3.8",
+      "python-docker",
+      "python-multipart",
+      "pyyaml",
+      "redis-py",
+      "requests",
+      "sqlalchemy",
+      "traitlets",
+      "uvicorn",
+      "yarl"
+     ],
+     "run_constrained": [
+      "conda-store"
+     ]
+    },
+    "script": "build_conda_store_server.sh",
+    "test": {
+     "commands": [
+      "conda-store-server --help",
+      "conda-store-worker --help"
+     ],
+     "imports": [
+      "conda_store_server"
+     ]
+    },
+    "version": "2023.10.1"
    }
   ],
   "package": {
    "name": "conda-store-split",
-   "version": "0.4.14"
+   "version": "2023.10.1"
   },
   "source": [
    {
     "folder": "conda-store",
-    "sha256": "020b75ae95a38b6a72bc84ed0616febd0ca95b2025648ccd8bdd7e40af9c6655",
-    "url": "https://pypi.io/packages/source/c/conda-store/conda_store-0.4.14.tar.gz"
+    "sha256": "1546c98bef8394103b9f5dc96f2f3dd955b9a773e765d482ca69f723f123e870",
+    "url": "https://pypi.io/packages/source/c/conda-store/conda_store-2023.10.1.tar.gz"
    },
    {
     "folder": "conda-store-server",
-    "sha256": "30f43b57f006d2e9db5d94d5449413c64d4217cf66d9275c58f727f1b6413612",
-    "url": "https://pypi.io/packages/source/c/conda-store-server/conda_store_server-0.4.14.tar.gz"
+    "sha256": "83924a03d17e8d7d1d8d7b1b4f8344556713a77650985391f014a4f01f7e4f1a",
+    "url": "https://pypi.io/packages/source/c/conda-store-server/conda_store_server-2023.10.1.tar.gz"
+   },
+   {
+    "folder": "conda-store",
+    "sha256": "1546c98bef8394103b9f5dc96f2f3dd955b9a773e765d482ca69f723f123e870",
+    "url": "https://pypi.io/packages/source/c/conda-store/conda_store-2023.10.1.tar.gz"
+   },
+   {
+    "folder": "conda-store-server",
+    "sha256": "83924a03d17e8d7d1d8d7b1b4f8344556713a77650985391f014a4f01f7e4f1a",
+    "url": "https://pypi.io/packages/source/c/conda-store-server/conda_store_server-2023.10.1.tar.gz"
    }
   ]
  },
  "name": "conda-store-split",
+ "osx_64_meta_yaml": {
+  "about": {
+   "description": "End users think in terms of environments not packages. The core\nphilosophy of conda-store is to serve identical conda environments\nin as many ways as possible. Conda Store controls the environment\nlifecycle: management, builds, and serving of environments.\n",
+   "dev_url": "https://github.com/Quansight/conda-store",
+   "doc_url": "https://conda-store.readthedocs.io/",
+   "home": "https://github.com/Quansight/conda-store",
+   "license": "BSD-3-Clause",
+   "license_family": "BSD",
+   "license_file": "LICENSE",
+   "summary": "Conda Environment Management, Builds, and Serve"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "feedstock-name": "conda-store",
+   "recipe-maintainers": [
+    "trallard",
+    "costrouc",
+    "jaimergp"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "conda-store",
+    "requirements": {
+     "host": [
+      "python >=3.8",
+      "pip"
+     ],
+     "run": [
+      "aiohttp",
+      "click",
+      "python >=3.8",
+      "rich",
+      "ruamel.yaml",
+      "yarl"
+     ],
+     "run_constrained": [
+      "conda-store-server"
+     ]
+    },
+    "script": "build_conda_store.sh",
+    "test": {
+     "commands": [
+      "conda-store --help"
+     ],
+     "imports": [
+      "conda_store"
+     ]
+    },
+    "version": "2023.10.1"
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "conda-store-server",
+    "requirements": {
+     "host": [
+      "python >=3.8",
+      "pip"
+     ],
+     "run": [
+      "alembic",
+      "celery",
+      "conda",
+      "__osx",
+      "conda-pack",
+      "fastapi",
+      "filelock",
+      "itsdangerous",
+      "jinja2",
+      "minio",
+      "pydantic <2.0a0",
+      "pyjwt",
+      "python >=3.8",
+      "python-docker",
+      "python-multipart",
+      "pyyaml",
+      "redis-py",
+      "requests",
+      "sqlalchemy",
+      "traitlets",
+      "uvicorn",
+      "yarl"
+     ],
+     "run_constrained": [
+      "conda-store"
+     ]
+    },
+    "script": "build_conda_store_server.sh",
+    "test": {
+     "commands": [
+      "conda-store-server --help",
+      "conda-store-worker --help"
+     ],
+     "imports": [
+      "conda_store_server"
+     ]
+    },
+    "version": "2023.10.1"
+   }
+  ],
+  "package": {
+   "name": "conda-store-split",
+   "version": "2023.10.1"
+  },
+  "source": [
+   {
+    "folder": "conda-store",
+    "sha256": "1546c98bef8394103b9f5dc96f2f3dd955b9a773e765d482ca69f723f123e870",
+    "url": "https://pypi.io/packages/source/c/conda-store/conda_store-2023.10.1.tar.gz"
+   },
+   {
+    "folder": "conda-store-server",
+    "sha256": "83924a03d17e8d7d1d8d7b1b4f8344556713a77650985391f014a4f01f7e4f1a",
+    "url": "https://pypi.io/packages/source/c/conda-store-server/conda_store_server-2023.10.1.tar.gz"
+   }
+  ]
+ },
+ "osx_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": []
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "pip",
+    "python"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "__osx",
+    "aiohttp",
+    "alembic",
+    "celery",
+    "click",
+    "conda",
+    "conda-pack",
+    "fastapi",
+    "filelock",
+    "itsdangerous",
+    "jinja2",
+    "minio",
+    "pydantic",
+    "pyjwt",
+    "python",
+    "python-docker",
+    "python-multipart",
+    "pyyaml",
+    "redis-py",
+    "requests",
+    "rich",
+    "ruamel.yaml",
+    "sqlalchemy",
+    "traitlets",
+    "uvicorn",
+    "yarl"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -304,19 +583,23 @@
  },
  "parsing_error": false,
  "platforms": [
-  "linux_64"
+  "linux_64",
+  "osx_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/conda-store.json"
  },
- "raw_meta_yaml": "{% set name = \"conda-store\" %}\n{% set version = \"0.4.14\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  - url: https://pypi.io/packages/source/c/conda-store/conda_store-{{ version }}.tar.gz\n    sha256: 020b75ae95a38b6a72bc84ed0616febd0ca95b2025648ccd8bdd7e40af9c6655\n    folder: conda-store\n  - url: https://pypi.io/packages/source/c/conda-store-server/conda_store_server-{{ version }}.tar.gz\n    sha256: 30f43b57f006d2e9db5d94d5449413c64d4217cf66d9275c58f727f1b6413612\n    folder: conda-store-server\n\nbuild:\n  number: 0\n\noutputs:\n  - name: conda-store\n    version: {{ version }}\n    build:\n      noarch: python\n    script: build_conda_store.sh\n    requirements:\n      host:\n        - python >=3.8\n        - pip\n      run:\n        - aiohttp\n        - click\n        - python >=3.8\n        - rich\n        - ruamel.yaml\n        - yarl\n      run_constrained:\n        - {{ pin_subpackage('conda-store-server', min_pin='x.x.x', max_pin='x.x.x') }}\n\n    test:\n      imports:\n        - conda_store\n      commands:\n        - conda-store --help\n\n  - name: conda-store-server\n    version: {{ version }}\n    build:\n      noarch: python\n    script: build_conda_store_server.sh\n    requirements:\n      host:\n        - python >=3.8\n        - pip\n      run:\n        - alembic\n        - celery\n        - conda-docker\n        - conda-pack\n        - fastapi\n        - filelock\n        - itsdangerous\n        - jinja2\n        - minio\n        - pydantic\n        - pyjwt\n        - python >=3.8\n        - python-multipart\n        - pyyaml\n        - redis-py\n        - requests\n        - sqlalchemy\n        - traitlets\n        - uvicorn\n        - yarl\n      run_constrained:\n        - {{ pin_subpackage('conda-store', min_pin='x.x.x', max_pin='x.x.x') }}\n\n    test:\n      imports:\n        - conda_store_server\n      commands:\n        - conda-store-server --help\n        - conda-store-worker --help\n\nabout:\n  home: https://github.com/Quansight/conda-store\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Conda Environment Management, Builds, and Serve\n  description: |\n    End users think in terms of environments not packages. The core\n    philosophy of conda-store is to serve identical conda environments\n    in as many ways as possible. Conda Store controls the environment\n    lifecycle: management, builds, and serving of environments.\n  doc_url: https://conda-store.readthedocs.io/\n  dev_url: https://github.com/Quansight/conda-store\n\nextra:\n  feedstock-name: conda-store\n  recipe-maintainers:\n    - trallard\n    - costrouc\n    - jaimergp\n",
+ "raw_meta_yaml": "{% set name = \"conda-store\" %}\n{% set version = \"2023.10.1\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  - url: https://pypi.io/packages/source/c/conda-store/conda_store-{{ version }}.tar.gz\n    sha256: 1546c98bef8394103b9f5dc96f2f3dd955b9a773e765d482ca69f723f123e870\n    folder: conda-store\n  - url: https://pypi.io/packages/source/c/conda-store-server/conda_store_server-{{ version }}.tar.gz\n    sha256: 83924a03d17e8d7d1d8d7b1b4f8344556713a77650985391f014a4f01f7e4f1a\n    folder: conda-store-server\n\nbuild:\n  number: 0\n\noutputs:\n  - name: conda-store\n    version: {{ version }}\n    build:\n      noarch: python\n      skip: true  # [not linux]\n    script: build_conda_store.sh\n    requirements:\n      host:\n        - python >=3.8\n        - pip\n      run:\n        - aiohttp\n        - click\n        - python >=3.8\n        - rich\n        - ruamel.yaml\n        - yarl\n      run_constrained:\n        - {{ pin_subpackage('conda-store-server', min_pin='x.x.x', max_pin='x.x.x') }}\n\n    test:\n      imports:\n        - conda_store\n      commands:\n        - conda-store --help\n\n  - name: conda-store-server\n    version: {{ version }}\n    build:\n      noarch: python\n    script: build_conda_store_server.sh\n    requirements:\n      host:\n        - python >=3.8\n        - pip\n      run:\n        - alembic\n        - celery\n        - conda\n        - conda-docker  # [linux]\n        - __linux  # [linux]\n        - __osx    # [osx]\n        - conda-pack\n        - fastapi\n        - filelock\n        - itsdangerous\n        - jinja2\n        - minio\n        - pydantic <2.0a0\n        - pyjwt\n        - python >=3.8\n        - python-docker\n        - python-multipart\n        - pyyaml\n        - redis-py\n        - requests\n        - sqlalchemy\n        - traitlets\n        - uvicorn\n        - yarl\n      run_constrained:\n        - {{ pin_subpackage('conda-store', min_pin='x.x.x', max_pin='x.x.x') }}\n\n    test:\n      imports:\n        - conda_store_server\n      commands:\n        - conda-store-server --help\n        - conda-store-worker --help\n\nabout:\n  home: https://github.com/Quansight/conda-store\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Conda Environment Management, Builds, and Serve\n  description: |\n    End users think in terms of environments not packages. The core\n    philosophy of conda-store is to serve identical conda environments\n    in as many ways as possible. Conda Store controls the environment\n    lifecycle: management, builds, and serving of environments.\n  doc_url: https://conda-store.readthedocs.io/\n  dev_url: https://github.com/Quansight/conda-store\n\nextra:\n  feedstock-name: conda-store\n  recipe-maintainers:\n    - trallard\n    - costrouc\n    - jaimergp\n",
  "req": {
   "__set__": true,
   "elements": [
+   "__linux",
+   "__osx",
    "aiohttp",
    "alembic",
    "celery",
    "click",
+   "conda",
    "conda-docker",
    "conda-pack",
    "fastapi",
@@ -328,6 +611,7 @@
    "pydantic",
    "pyjwt",
    "python",
+   "python-docker",
    "python-multipart",
    "pyyaml",
    "redis-py",
@@ -355,10 +639,13 @@
   "run": {
    "__set__": true,
    "elements": [
+    "__linux",
+    "__osx",
     "aiohttp",
     "alembic",
     "celery",
     "click",
+    "conda",
     "conda-docker",
     "conda-pack",
     "fastapi",
@@ -369,6 +656,7 @@
     "pydantic",
     "pyjwt",
     "python",
+    "python-docker",
     "python-multipart",
     "pyyaml",
     "redis-py",
@@ -402,10 +690,13 @@
   "run": {
    "__set__": true,
    "elements": [
+    "__linux",
+    "__osx",
     "aiohttp",
     "alembic",
     "celery",
     "click",
+    "conda",
     "conda-docker",
     "conda-pack",
     "fastapi",
@@ -413,9 +704,10 @@
     "itsdangerous",
     "jinja2",
     "minio",
-    "pydantic",
+    "pydantic <2.0a0",
     "pyjwt",
     "python >=3.8",
+    "python-docker",
     "python-multipart",
     "pyyaml",
     "redis-py",
@@ -433,8 +725,8 @@
    "elements": []
   }
  },
- "url": "https://pypi.io/packages/source/c/conda-store/conda_store-0.4.14.tar.gz",
- "version": "0.4.14",
+ "url": "https://pypi.io/packages/source/c/conda-store/conda_store-2023.10.1.tar.gz",
+ "version": "2023.10.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/conda-store.json"
  }

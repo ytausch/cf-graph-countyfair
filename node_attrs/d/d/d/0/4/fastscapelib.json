@@ -5,9 +5,6 @@
   "build_platform": {
    "osx_arm64": "osx_64"
   },
-  "compiler_stack": "comp7",
-  "max_py_ver": "37",
-  "max_r_ver": "35",
   "provider": {
    "win": "azure"
   }
@@ -105,12 +102,12 @@
   ],
   "package": {
    "name": "fastscapelib-split",
-   "version": "0.2.0"
+   "version": "0.2.1"
   },
   "source": {
-   "fn": "fastscapelib-0.2.0.tar.gz",
-   "sha256": "4029657425908b3fc4ef41339bd9db564b0308a4874316c2fdb4c67696db26d9",
-   "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.0.tar.gz"
+   "fn": "fastscapelib-0.2.1.tar.gz",
+   "sha256": "6cfc73ad6f0feae4eecdc49a40ee2e58182ac34e2ad0260a194c819ec400f4cf",
+   "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.1.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -450,12 +447,12 @@
   ],
   "package": {
    "name": "fastscapelib-split",
-   "version": "0.2.0"
+   "version": "0.2.1"
   },
   "source": {
-   "fn": "fastscapelib-0.2.0.tar.gz",
-   "sha256": "4029657425908b3fc4ef41339bd9db564b0308a4874316c2fdb4c67696db26d9",
-   "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.0.tar.gz"
+   "fn": "fastscapelib-0.2.1.tar.gz",
+   "sha256": "6cfc73ad6f0feae4eecdc49a40ee2e58182ac34e2ad0260a194c819ec400f4cf",
+   "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.1.tar.gz"
   }
  },
  "name": "fastscapelib-split",
@@ -549,12 +546,12 @@
   ],
   "package": {
    "name": "fastscapelib-split",
-   "version": "0.2.0"
+   "version": "0.2.1"
   },
   "source": {
-   "fn": "fastscapelib-0.2.0.tar.gz",
-   "sha256": "4029657425908b3fc4ef41339bd9db564b0308a4874316c2fdb4c67696db26d9",
-   "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.0.tar.gz"
+   "fn": "fastscapelib-0.2.1.tar.gz",
+   "sha256": "6cfc73ad6f0feae4eecdc49a40ee2e58182ac34e2ad0260a194c819ec400f4cf",
+   "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.1.tar.gz"
   }
  },
  "osx_64_requirements": {
@@ -683,12 +680,12 @@
   ],
   "package": {
    "name": "fastscapelib-split",
-   "version": "0.2.0"
+   "version": "0.2.1"
   },
   "source": {
-   "fn": "fastscapelib-0.2.0.tar.gz",
-   "sha256": "4029657425908b3fc4ef41339bd9db564b0308a4874316c2fdb4c67696db26d9",
-   "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.0.tar.gz"
+   "fn": "fastscapelib-0.2.1.tar.gz",
+   "sha256": "6cfc73ad6f0feae4eecdc49a40ee2e58182ac34e2ad0260a194c819ec400f4cf",
+   "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.1.tar.gz"
   }
  },
  "osx_arm64_requirements": {
@@ -744,7 +741,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/fastscapelib.json"
  },
- "raw_meta_yaml": "{% set name = \"fastscapelib\" %}\n{% set version = \"0.2.0\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: https://github.com/fastscape-lem/fastscapelib/archive/v{{ version }}.tar.gz\n  sha256: 4029657425908b3fc4ef41339bd9db564b0308a4874316c2fdb4c67696db26d9\n\nbuild:\n  number: 0\n  skip: True  # [python_impl == 'pypy']\n\noutputs:\n  - name: fastscapelib\n    script: install_cpp_headers.sh   # [unix]\n    script: install_cpp_headers.bat  # [win]\n    build:\n      activate_in_script: True\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [linux]\n      host:\n        - xtensor >=0.24,<0.25\n      run:\n        - xtensor >=0.24,<0.25\n    test:\n      commands:\n        - test -f ${PREFIX}/include/fastscapelib/flow_graph.hpp  # [unix]\n        - test -f ${PREFIX}/lib/cmake/fastscapelib/fastscapelibConfig.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/fastscapelib/fastscapelibConfigVersion.cmake  # [unix]\n        - if exist %LIBRARY_PREFIX%\\include\\fastscapelib\\flow_graph.hpp (exit 0) else (exit 1)  # [win]\n        - if exist %LIBRARY_PREFIX%\\lib\\cmake\\fastscapelibConfig.cmake (exit 0) else (exit 1)  # [win]\n        - if exist %LIBRARY_PREFIX%\\lib\\cmake\\fastscapelibConfigVersion.cmake (exit 0) else (exit 1)  # [win]\n  - name: fastscapelib-python\n    build:\n      script:\n        # C++17 features marked as not available\n        # https://conda-forge.org/docs/maintainer/knowledge_base.html#newer-c-features-with-old-sdk\n        - export CXXFLAGS=\"${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY\"  # [osx]\n        - python -m pip install . --no-deps -v --no-build-isolation\n      activate_in_script: True\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - numpy                                  # [build_platform != target_platform]\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [linux]\n      host:\n        - python\n        - scikit-build-core >=0.5,<0.6\n        - pip\n        - numpy\n        - pybind11\n        - pybind11-abi\n        - xtensor-python >=0.26.1,<0.27\n      run:\n        - python\n        - {{ pin_compatible('numpy') }}\n    test:\n      source_files:\n        - python/fastscapelib/tests\n      requires:\n        - pytest\n      imports:\n        - fastscapelib\n      commands:\n        - pytest\n\nabout:\n  home: https://github.com/fastscape-lem/fastscapelib\n  doc_url: https://fastscapelib.readthedocs.io\n  license: GPL-3.0-or-later\n  license_file: LICENSE\n  summary: 'A C++/Python library of efficient algorithms for landscape evolution modeling'\n  description: |\n    Fastscapelib is a C++/Python library of efficient and reusable algorithms for\n    landscape evolution modeling. It aims at providing a (bare bones) toolkit for\n    building your own Landscape Evolution Models (LEMs) or integrating it\n    with other existing codes or models.\n\nextra:\n  recipe-maintainers:\n    - benbovy\n",
+ "raw_meta_yaml": "{% set name = \"fastscapelib\" %}\n{% set version = \"0.2.1\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: https://github.com/fastscape-lem/fastscapelib/archive/v{{ version }}.tar.gz\n  sha256: 6cfc73ad6f0feae4eecdc49a40ee2e58182ac34e2ad0260a194c819ec400f4cf\n\nbuild:\n  number: 0\n\noutputs:\n  - name: fastscapelib\n    script: install_cpp_headers.sh  # [unix]\n    script: install_cpp_headers.bat  # [win]\n    build:\n      activate_in_script: true\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [linux]\n      host:\n        - xtensor >=0.24,<0.25\n      run:\n        - xtensor >=0.24,<0.25\n    test:\n      commands:\n        - test -f ${PREFIX}/include/fastscapelib/flow_graph.hpp  # [unix]\n        - test -f ${PREFIX}/lib/cmake/fastscapelib/fastscapelibConfig.cmake  # [unix]\n        - test -f ${PREFIX}/lib/cmake/fastscapelib/fastscapelibConfigVersion.cmake  # [unix]\n        - if exist %LIBRARY_PREFIX%\\include\\fastscapelib\\flow_graph.hpp (exit 0) else (exit 1)  # [win]\n        - if exist %LIBRARY_PREFIX%\\lib\\cmake\\fastscapelibConfig.cmake (exit 0) else (exit 1)  # [win]\n        - if exist %LIBRARY_PREFIX%\\lib\\cmake\\fastscapelibConfigVersion.cmake (exit 0) else (exit 1)  # [win]\n  - name: fastscapelib-python\n    build:\n      script:\n        # C++17 features marked as not available\n        # https://conda-forge.org/docs/maintainer/knowledge_base.html#newer-c-features-with-old-sdk\n        - export CXXFLAGS=\"${CXXFLAGS} -D_LIBCPP_DISABLE_AVAILABILITY\"  # [osx]\n        - python -m pip install . --no-deps -v --no-build-isolation\n      activate_in_script: true\n      skip: true  # [python_impl == 'pypy']\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - numpy                                  # [build_platform != target_platform]\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [linux]\n      host:\n        - python\n        - scikit-build-core >=0.5,<0.6\n        - pip\n        - numpy\n        - pybind11\n        - pybind11-abi\n        - xtensor-python >=0.26.1,<0.27\n      run:\n        - python\n        - {{ pin_compatible('numpy') }}\n    test:\n      source_files:\n        - python/fastscapelib/tests\n      requires:\n        - pytest\n      imports:\n        - fastscapelib\n      commands:\n        - pytest\n\nabout:\n  home: https://github.com/fastscape-lem/fastscapelib\n  doc_url: https://fastscapelib.readthedocs.io\n  license: GPL-3.0-or-later\n  license_file: LICENSE\n  summary: 'A C++/Python library of efficient algorithms for landscape evolution modeling'\n  description: |\n    Fastscapelib is a C++/Python library of efficient and reusable algorithms for\n    landscape evolution modeling. It aims at providing a (bare bones) toolkit for\n    building your own Landscape Evolution Models (LEMs) or integrating it\n    with other existing codes or models.\n\nextra:\n  recipe-maintainers:\n    - benbovy\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -838,8 +835,8 @@
    ]
   }
  },
- "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.0.tar.gz",
- "version": "0.2.0",
+ "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.1.tar.gz",
+ "version": "0.2.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/fastscapelib.json"
  },
@@ -932,12 +929,12 @@
   ],
   "package": {
    "name": "fastscapelib-split",
-   "version": "0.2.0"
+   "version": "0.2.1"
   },
   "source": {
-   "fn": "fastscapelib-0.2.0.tar.gz",
-   "sha256": "4029657425908b3fc4ef41339bd9db564b0308a4874316c2fdb4c67696db26d9",
-   "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.0.tar.gz"
+   "fn": "fastscapelib-0.2.1.tar.gz",
+   "sha256": "6cfc73ad6f0feae4eecdc49a40ee2e58182ac34e2ad0260a194c819ec400f4cf",
+   "url": "https://github.com/fastscape-lem/fastscapelib/archive/v0.2.1.tar.gz"
   }
  },
  "win_64_requirements": {
