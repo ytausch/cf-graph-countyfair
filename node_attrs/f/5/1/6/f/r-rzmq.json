@@ -24,7 +24,7 @@
    "summary": "Interface to the 'ZeroMQ' lightweight messaging kernel (see <http://www.zeromq.org/> for more information)."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "rpaths": [
     "lib/R/lib/",
     "lib/",
@@ -84,7 +84,13 @@
   "test": {
    "commands": [
     "$R -e \"library('rzmq')\"",
-    "$R -e \"library('rzmq')\""
+    "$R -f tests/poll.R",
+    "$R -e \"library('rzmq')\"",
+    "$R -f tests/poll.R"
+   ],
+   "source_files": [
+    "tests/",
+    "tests/"
    ]
   }
  },
@@ -134,7 +140,7 @@
    "summary": "Interface to the 'ZeroMQ' lightweight messaging kernel (see <http://www.zeromq.org/> for more information)."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "rpaths": [
     "lib/R/lib/",
     "lib/",
@@ -226,9 +232,19 @@
   "test": {
    "commands": [
     "$R -e \"library('rzmq')\"",
+    "$R -f tests/poll.R",
     "$R -e \"library('rzmq')\"",
+    "$R -f tests/poll.R",
     "$R -e \"library('rzmq')\"",
-    "$R -e \"library('rzmq')\""
+    "$R -f tests/poll.R",
+    "$R -e \"library('rzmq')\"",
+    "$R -f tests/poll.R"
+   ],
+   "source_files": [
+    "tests/",
+    "tests/",
+    "tests/",
+    "tests/"
    ]
   }
  },
@@ -246,7 +262,7 @@
    "summary": "Interface to the 'ZeroMQ' lightweight messaging kernel (see <http://www.zeromq.org/> for more information)."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "rpaths": [
     "lib/R/lib/",
     "lib/",
@@ -306,7 +322,13 @@
   "test": {
    "commands": [
     "$R -e \"library('rzmq')\"",
-    "$R -e \"library('rzmq')\""
+    "$R -f tests/poll.R",
+    "$R -e \"library('rzmq')\"",
+    "$R -f tests/poll.R"
+   ],
+   "source_files": [
+    "tests/",
+    "tests/"
    ]
   }
  },
@@ -355,7 +377,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/r-rzmq.json"
  },
- "raw_meta_yaml": "{% set version = \"0.9.11\" %}\n{% set posix = 'm2-' if win else '' %}\n{% set native = 'm2w64-' if win else '' %}\n\npackage:\n  name: r-rzmq\n  version: {{ version|replace(\"-\", \"_\") }}\n\nsource:\n  url:\n    - {{ cran_mirror }}/src/contrib/rzmq_{{ version }}.tar.gz\n    - {{ cran_mirror }}/src/contrib/Archive/rzmq/rzmq_{{ version }}.tar.gz\n  sha256: 315facbc739be0e8679751fb22f427be66475a77b8344b60a18d14ec48e9009a\n\nbuild:\n  merge_build_host: true  # [win]\n  skip: true              # [win]\n  number: 0\n  rpaths:\n    - lib/R/lib/\n    - lib/\n\nrequirements:\n  build:\n    - {{ compiler('c') }}          # [not win]\n    - {{ compiler('m2w64_c') }}    # [win]\n    - {{ compiler('cxx') }}        # [not win]\n    - {{ compiler('m2w64_cxx') }}  # [win]\n    - {{ posix }}filesystem        # [win]\n    - {{ posix }}sed               # [win]\n    - {{ posix }}grep              # [win]\n    - {{ posix }}autoconf\n    - {{ posix }}automake          # [not win]\n    - {{ posix }}automake-wrapper  # [win]\n    - {{ posix }}pkg-config\n    - {{ posix }}make\n    - {{ posix }}coreutils         # [win]\n    - {{ posix }}zip               # [win]\n  host:\n    - r-base\n    - zeromq                       # [not win]\n    - {{ native }}zeromq           # [win]\n  run:\n    - r-base\n    - zeromq                       # [not win]\n    - {{ native }}zeromq           # [win]\n    - {{ native }}gcc-libs         # [win]\n\ntest:\n  commands:\n    - $R -e \"library('rzmq')\"           # [not win]\n    - \"\\\"%R%\\\" -e \\\"library('rzmq')\\\"\"  # [win]\n\nabout:\n  home: http://www.zeromq.org\n  dev_url: http://github.com/ropensci/rzmq\n  license: GPL-3.0-only\n  summary: Interface to the 'ZeroMQ' lightweight messaging kernel (see <http://www.zeromq.org/> for more information).\n  license_family: GPL3\n  license_file:\n    - {{ environ[\"PREFIX\"] }}/lib/R/share/licenses/GPL-3\n\nextra:\n  recipe-maintainers:\n    - conda-forge/r\n    - croth1\n",
+ "raw_meta_yaml": "{% set version = \"0.9.11\" %}\n{% set posix = 'm2-' if win else '' %}\n{% set native = 'm2w64-' if win else '' %}\n\npackage:\n  name: r-rzmq\n  version: {{ version|replace(\"-\", \"_\") }}\n\nsource:\n  url:\n    - {{ cran_mirror }}/src/contrib/rzmq_{{ version }}.tar.gz\n    - {{ cran_mirror }}/src/contrib/Archive/rzmq/rzmq_{{ version }}.tar.gz\n  sha256: 315facbc739be0e8679751fb22f427be66475a77b8344b60a18d14ec48e9009a\n\nbuild:\n  merge_build_host: true  # [win]\n  skip: true              # [win]\n  number: 1\n  rpaths:\n    - lib/R/lib/\n    - lib/\n\nrequirements:\n  build:\n    - {{ compiler('c') }}          # [not win]\n    - {{ compiler('m2w64_c') }}    # [win]\n    - {{ compiler('cxx') }}        # [not win]\n    - {{ compiler('m2w64_cxx') }}  # [win]\n    - {{ posix }}filesystem        # [win]\n    - {{ posix }}sed               # [win]\n    - {{ posix }}grep              # [win]\n    - {{ posix }}autoconf\n    - {{ posix }}automake          # [not win]\n    - {{ posix }}automake-wrapper  # [win]\n    - {{ posix }}pkg-config\n    - {{ posix }}make\n    - {{ posix }}coreutils         # [win]\n    - {{ posix }}zip               # [win]\n  host:\n    - r-base\n    - zeromq                       # [not win]\n    - {{ native }}zeromq           # [win]\n  run:\n    - r-base\n    - zeromq                       # [not win]\n    - {{ native }}zeromq           # [win]\n    - {{ native }}gcc-libs         # [win]\n\ntest:\n  source_files:\n    - tests/\n  commands:\n    - $R -e \"library('rzmq')\"           # [not win]\n    - $R -f tests/poll.R                # [not win]\n    - \"\\\"%R%\\\" -e \\\"library('rzmq')\\\"\"  # [win]\n    - \"\\\"%R%\\\" -r tests/poll.R\"         # [win]\n\nabout:\n  home: http://www.zeromq.org\n  dev_url: http://github.com/ropensci/rzmq\n  license: GPL-3.0-only\n  summary: Interface to the 'ZeroMQ' lightweight messaging kernel (see <http://www.zeromq.org/> for more information).\n  license_family: GPL3\n  license_file:\n    - {{ environ[\"PREFIX\"] }}/lib/R/share/licenses/GPL-3\n\nextra:\n  recipe-maintainers:\n    - conda-forge/r\n    - croth1\n",
  "req": {
   "__set__": true,
   "elements": [
