@@ -10,51 +10,91 @@
    "dev_url": "https://github.com/SimonBoothroyd/smee",
    "doc_url": "https://github.com/SimonBoothroyd/smee",
    "home": "https://github.com/SimonBoothroyd/smee",
-   "license": "MIT",
-   "license_family": "MIT",
-   "license_file": "LICENSE",
+   "license": "MIT AND BSD-3-Clause",
+   "license_file": [
+    "LICENSE",
+    "LICENSE_3RD_PARTY"
+   ],
    "summary": "Differentiably evaluate energies using SMIRNOFF force fields"
   },
   "build": {
-   "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
     "SimonBoothroyd"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "smee-base",
+    "requirements": {
+     "host": [
+      "python >=3.10",
+      "pip",
+      "versioningit",
+      "openff-units",
+      "openff-toolkit-base >=0.9.2",
+      "openff-interchange-base >=0.3.14",
+      "pytorch",
+      "nnpops"
+     ],
+     "run": [
+      "python >=3.10",
+      "openff-units",
+      "openff-toolkit-base >=0.9.2",
+      "openff-interchange-base >=0.3.14",
+      "pytorch",
+      "nnpops",
+      "__unix"
+     ]
+    },
+    "script": "build_base.sh",
+    "test": {
+     "imports": [
+      "smee"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "smee",
+    "requirements": {
+     "host": [
+      "python >=3.10"
+     ],
+     "run": [
+      "python >=3.10",
+      "smee-base",
+      "openmm",
+      "packmol",
+      "numpy",
+      "msgpack-python",
+      "pydantic",
+      "rdkit",
+      "ambertools",
+      "__unix"
+     ]
+    },
+    "test": {
+     "imports": [
+      "smee"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "smee",
-   "version": "0.3.0"
-  },
-  "requirements": {
-   "host": [
-    "python >=3.10",
-    "pip",
-    "versioningit"
-   ],
-   "run": [
-    "python >=3.10",
-    "openff-units",
-    "openff-toolkit-base >=0.9.2",
-    "openff-interchange-base >=0.3.14",
-    "pytorch",
-    "pydantic",
-    "rdkit",
-    "ambertools",
-    "__unix"
-   ]
+   "name": "smee-split",
+   "version": "0.4.0"
   },
   "source": {
-   "sha256": "f54067402f2e0e0b312c0e007aba5681944de4ebd091b55db42181bfcd58c9fd",
-   "url": "https://github.com/SimonBoothroyd/smee/archive/0.3.0.tar.gz"
-  },
-  "test": {
-   "imports": [
-    "smee"
-   ]
+   "sha256": "e621658cb362829f55a5ab5ffaf86d5fedccf6307484311bad20a49267fdccc7",
+   "url": "https://github.com/SimonBoothroyd/smee/archive/0.4.0.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -65,8 +105,13 @@
   "host": {
    "__set__": true,
    "elements": [
+    "nnpops",
+    "openff-interchange-base",
+    "openff-toolkit-base",
+    "openff-units",
     "pip",
     "python",
+    "pytorch",
     "versioningit"
    ]
   },
@@ -75,13 +120,19 @@
    "elements": [
     "__unix",
     "ambertools",
+    "msgpack-python",
+    "nnpops",
+    "numpy",
     "openff-interchange-base",
     "openff-toolkit-base",
     "openff-units",
+    "openmm",
+    "packmol",
     "pydantic",
     "python",
     "pytorch",
-    "rdkit"
+    "rdkit",
+    "smee-base"
    ]
   },
   "test": {
@@ -95,58 +146,99 @@
    "dev_url": "https://github.com/SimonBoothroyd/smee",
    "doc_url": "https://github.com/SimonBoothroyd/smee",
    "home": "https://github.com/SimonBoothroyd/smee",
-   "license": "MIT",
-   "license_family": "MIT",
-   "license_file": "LICENSE",
+   "license": "MIT AND BSD-3-Clause",
+   "license_file": [
+    "LICENSE",
+    "LICENSE_3RD_PARTY"
+   ],
    "summary": "Differentiably evaluate energies using SMIRNOFF force fields"
   },
   "build": {
-   "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
     "SimonBoothroyd"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "smee-base",
+    "requirements": {
+     "host": [
+      "python >=3.10",
+      "pip",
+      "versioningit",
+      "openff-units",
+      "openff-toolkit-base >=0.9.2",
+      "openff-interchange-base >=0.3.14",
+      "pytorch",
+      "nnpops"
+     ],
+     "run": [
+      "python >=3.10",
+      "openff-units",
+      "openff-toolkit-base >=0.9.2",
+      "openff-interchange-base >=0.3.14",
+      "pytorch",
+      "nnpops",
+      "__unix"
+     ]
+    },
+    "script": "build_base.sh",
+    "test": {
+     "imports": [
+      "smee"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "smee",
+    "requirements": {
+     "host": [
+      "python >=3.10"
+     ],
+     "run": [
+      "python >=3.10",
+      "smee-base",
+      "openmm",
+      "packmol",
+      "numpy",
+      "msgpack-python",
+      "pydantic",
+      "rdkit",
+      "ambertools",
+      "__unix"
+     ]
+    },
+    "test": {
+     "imports": [
+      "smee"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "smee",
-   "version": "0.3.0"
-  },
-  "requirements": {
-   "host": [
-    "python >=3.10",
-    "pip",
-    "versioningit"
-   ],
-   "run": [
-    "python >=3.10",
-    "openff-units",
-    "openff-toolkit-base >=0.9.2",
-    "openff-interchange-base >=0.3.14",
-    "pytorch",
-    "pydantic",
-    "rdkit",
-    "ambertools",
-    "__unix"
-   ]
+   "name": "smee-split",
+   "version": "0.4.0"
   },
   "source": {
-   "sha256": "f54067402f2e0e0b312c0e007aba5681944de4ebd091b55db42181bfcd58c9fd",
-   "url": "https://github.com/SimonBoothroyd/smee/archive/0.3.0.tar.gz"
-  },
-  "test": {
-   "imports": [
-    "smee"
-   ]
+   "sha256": "e621658cb362829f55a5ab5ffaf86d5fedccf6307484311bad20a49267fdccc7",
+   "url": "https://github.com/SimonBoothroyd/smee/archive/0.4.0.tar.gz"
   }
  },
- "name": "smee",
+ "name": "smee-split",
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "smee"
+   "smee",
+   "smee-base"
   ]
  },
  "parsing_error": false,
@@ -156,20 +248,26 @@
  "pr_info": {
   "__lazy_json__": "pr_info/smee.json"
  },
- "raw_meta_yaml": "{% set name = \"smee\" %}\n{% set version = \"0.3.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/SimonBoothroyd/smee/archive/{{ version }}.tar.gz\n  sha256: f54067402f2e0e0b312c0e007aba5681944de4ebd091b55db42181bfcd58c9fd\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.10\n    - pip\n    - versioningit\n  run:\n    - python >=3.10\n    - openff-units\n    - openff-toolkit-base >=0.9.2\n    - openff-interchange-base >=0.3.14\n    - pytorch  # [unix]\n    - pydantic\n    # included for convenience so that the openff toolkit can \n    # parameterize molecules without needing extra installs\n    - rdkit\n    - ambertools  # [unix]\n    - __unix  # [unix]\ntest:\n  imports:\n    - smee\n\nabout:\n  home: https://github.com/SimonBoothroyd/smee\n  summary: 'Differentiably evaluate energies using SMIRNOFF force fields'\n  description: |\n    A framework that aims to offer a simple API for differentiably evaluating \n    the energy of SMIRNOFF force fields applied to molecules using pytorch.\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  doc_url: https://github.com/SimonBoothroyd/smee\n  dev_url: https://github.com/SimonBoothroyd/smee\n\nextra:\n  recipe-maintainers:\n    - SimonBoothroyd\n",
+ "raw_meta_yaml": "{% set name = \"smee\" %}\n{% set version = \"0.4.0\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/SimonBoothroyd/smee/archive/{{ version }}.tar.gz\n  sha256: e621658cb362829f55a5ab5ffaf86d5fedccf6307484311bad20a49267fdccc7\n\nbuild:\n  number: 0\n\noutputs:\n  - name: {{ name|lower }}-base\n    script: build_base.sh\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.10\n        - pip\n        - versioningit\n        - openff-units\n        - openff-toolkit-base >=0.9.2\n        - openff-interchange-base >=0.3.14\n        - pytorch\n        - nnpops\n      run:\n        - python >=3.10\n        - openff-units\n        - openff-toolkit-base >=0.9.2\n        - openff-interchange-base >=0.3.14\n        - pytorch  # [unix]\n        - nnpops\n        - __unix  # [unix]\n    test:\n      imports:\n        - smee\n\n  - name: {{ name|lower }}\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.10\n      run:\n        - python >=3.10\n        - {{ pin_subpackage('smee-base', exact=True) }}\n        # md simulations\n        - openmm\n        - packmol\n        - numpy\n        - msgpack-python\n        - pydantic\n        # included for convenience so that the openff toolkit can\n        # parameterize molecules without needing extra installs\n        - rdkit\n        - ambertools  # [unix]\n        - __unix  # [unix]\n    test:\n      imports:\n        - smee\n\nabout:\n  home: https://github.com/SimonBoothroyd/smee\n  summary: 'Differentiably evaluate energies using SMIRNOFF force fields'\n  description: |\n    A framework that aims to offer a simple API for differentiably evaluating \n    the energy of SMIRNOFF force fields applied to molecules using pytorch.\n  license: MIT AND BSD-3-Clause\n  license_file:\n    - LICENSE\n    - LICENSE_3RD_PARTY\n  doc_url: https://github.com/SimonBoothroyd/smee\n  dev_url: https://github.com/SimonBoothroyd/smee\n\nextra:\n  recipe-maintainers:\n    - SimonBoothroyd\n",
  "req": {
   "__set__": true,
   "elements": [
    "__unix",
    "ambertools",
+   "msgpack-python",
+   "nnpops",
+   "numpy",
    "openff-interchange-base",
    "openff-toolkit-base",
    "openff-units",
+   "openmm",
+   "packmol",
    "pip",
    "pydantic",
    "python",
    "pytorch",
    "rdkit",
+   "smee-base",
    "versioningit"
   ]
  },
@@ -181,8 +279,13 @@
   "host": {
    "__set__": true,
    "elements": [
+    "nnpops",
+    "openff-interchange-base",
+    "openff-toolkit-base",
+    "openff-units",
     "pip",
     "python",
+    "pytorch",
     "versioningit"
    ]
   },
@@ -191,13 +294,19 @@
    "elements": [
     "__unix",
     "ambertools",
+    "msgpack-python",
+    "nnpops",
+    "numpy",
     "openff-interchange-base",
     "openff-toolkit-base",
     "openff-units",
+    "openmm",
+    "packmol",
     "pydantic",
     "python",
     "pytorch",
-    "rdkit"
+    "rdkit",
+    "smee-base"
    ]
   },
   "test": {
@@ -214,8 +323,13 @@
   "host": {
    "__set__": true,
    "elements": [
+    "nnpops",
+    "openff-interchange-base >=0.3.14",
+    "openff-toolkit-base >=0.9.2",
+    "openff-units",
     "pip",
     "python >=3.10",
+    "pytorch",
     "versioningit"
    ]
   },
@@ -224,13 +338,19 @@
    "elements": [
     "__unix",
     "ambertools",
+    "msgpack-python",
+    "nnpops",
+    "numpy",
     "openff-interchange-base >=0.3.14",
     "openff-toolkit-base >=0.9.2",
     "openff-units",
+    "openmm",
+    "packmol",
     "pydantic",
     "python >=3.10",
     "pytorch",
-    "rdkit"
+    "rdkit",
+    "smee-base"
    ]
   },
   "test": {
@@ -238,8 +358,8 @@
    "elements": []
   }
  },
- "url": "https://github.com/SimonBoothroyd/smee/archive/0.3.0.tar.gz",
- "version": "0.3.0",
+ "url": "https://github.com/SimonBoothroyd/smee/archive/0.4.0.tar.gz",
+ "version": "0.4.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/smee.json"
  }
