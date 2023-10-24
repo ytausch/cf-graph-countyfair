@@ -16,7 +16,7 @@
    "summary": "A modern, extensible library for molecular mechanics force field science from the Open Force Field Initiative"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -110,6 +110,7 @@
       "python >=3.9",
       "nglview",
       "notebook",
+      "openff-nagl >=0.3.1",
       "qcelemental",
       "qcportal <0.50",
       "qcengine",
@@ -141,7 +142,7 @@
     "path": "./build_base.sh"
    },
    {
-    "sha256": "15a3cb31c19a8905cf020d8201a60e55aeef4a348999c2062d661e032ed09a75",
+    "sha256": "a6cadb44377aed6ed2e2ac5d63d16dd38efdca1c97ad81c43b472b05acd4455d",
     "url": "https://github.com/openforcefield/openff-toolkit/archive/0.14.4.tar.gz"
    }
   ]
@@ -175,6 +176,7 @@
     "openff-amber-ff-ports",
     "openff-forcefields",
     "openff-interchange",
+    "openff-nagl",
     "openff-toolkit",
     "openff-toolkit-base",
     "openff-units",
@@ -211,7 +213,7 @@
    "summary": "A modern, extensible library for molecular mechanics force field science from the Open Force Field Initiative"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -305,6 +307,7 @@
       "python >=3.9",
       "nglview",
       "notebook",
+      "openff-nagl >=0.3.1",
       "qcelemental",
       "qcportal <0.50",
       "qcengine",
@@ -336,7 +339,7 @@
     "path": "./build_base.sh"
    },
    {
-    "sha256": "15a3cb31c19a8905cf020d8201a60e55aeef4a348999c2062d661e032ed09a75",
+    "sha256": "a6cadb44377aed6ed2e2ac5d63d16dd38efdca1c97ad81c43b472b05acd4455d",
     "url": "https://github.com/openforcefield/openff-toolkit/archive/0.14.4.tar.gz"
    }
   ]
@@ -357,7 +360,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/openff-toolkit.json"
  },
- "raw_meta_yaml": "{% set name = \"openff-toolkit\" %}\n{% set version = \"0.14.4\" %}\n\npackage:\n  name: openff-toolkit-split\n  version: {{ version }}\n\nsource:\n  - path: ./build_base.sh\n  - url: https://github.com/openforcefield/openff-toolkit/archive/{{ version }}.tar.gz\n    sha256: 15a3cb31c19a8905cf020d8201a60e55aeef4a348999c2062d661e032ed09a75\n\nbuild:\n  number: 0\n\noutputs:\n  - name: openff-toolkit-base\n    script: build_base.sh\n    build:\n      noarch: python\n\n    requirements:\n      host:\n        - python >=3.9,<3.12\n        - pip\n      run:\n        - python >=3.9\n        - packaging\n        - numpy =1\n        - smirnoff99frosst\n        - openff-forcefields\n        - openff-amber-ff-ports >=0.0.3\n        - openff-units >=0.2.1\n        - openff-utilities\n        - networkx >=2.5\n        - xmltodict\n        - bson\n        - importlib-metadata >=4.10\n        - python-constraint\n        - cachetools\n        - cached-property\n        - typing_extensions\n      run_constrained:\n        - openforcefield ==9999999999\n        - pydantic <3.0.0a0\n    test:\n      imports:\n        - openff.toolkit\n\n  - name: openff-toolkit\n    build:\n      noarch: python\n\n    requirements:\n      host:\n        - python >=3.9,<3.12\n      run:\n        - python >=3.9\n        - openmm >=7.6\n        - openff-interchange >=0.3.0\n        - rdkit\n        - ambertools >=22\n        - mdtraj\n        - {{ pin_subpackage('openff-toolkit-base', exact=True) }}\n        - notebook\n        - ipywidgets\n\n    test:\n      imports:\n        - openff.toolkit\n        - rdkit\n      files:\n        - test_openff_toolkit.py\n      commands:\n        - python test_openff_toolkit.py\n\n  - name: openff-toolkit-examples\n    script: move-examples.sh\n    build:\n      noarch: python\n\n    requirements:\n      run:\n        - python >=3.9\n        - nglview\n        - notebook\n        - qcelemental\n        - qcportal <0.50\n        - qcengine\n        - openmmforcefields  # Expected to bring in 0.11.2, add constraint if this is an issue\n        - pdbfixer\n        - {{ pin_subpackage('openff-toolkit', exact=True) }}\n\n    test:\n      files:\n        - test_examples_copied.py\n      source_files:\n        - examples\n      commands:\n        - python test_examples_copied.py\n\nabout:\n  home: https://openforcefield.org/\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: A modern, extensible library for molecular mechanics force field science from the Open Force Field Initiative\n  description: |\n    The Open Force Field Toolkit, built by the Open Force Field Initiative, is a Python\n    toolkit for the development and application of modern molecular mechanics force fields\n    based on direct chemical perception and rigorous statistical parameterization methods.\n  doc_url: https://open-forcefield-toolkit.readthedocs.io/\n  dev_url: https://github.com/openforcefield/openff-toolkit\n\nextra:\n  recipe-maintainers:\n    - jaimergp\n    - j-wags\n    - mattwthompson\n",
+ "raw_meta_yaml": "{% set name = \"openff-toolkit\" %}\n{% set version = \"0.14.4\" %}\n\npackage:\n  name: openff-toolkit-split\n  version: {{ version }}\n\nsource:\n  - path: ./build_base.sh\n  - url: https://github.com/openforcefield/openff-toolkit/archive/{{ version }}.tar.gz\n    sha256: a6cadb44377aed6ed2e2ac5d63d16dd38efdca1c97ad81c43b472b05acd4455d\n\nbuild:\n  number: 1\n\noutputs:\n  - name: openff-toolkit-base\n    script: build_base.sh\n    build:\n      noarch: python\n\n    requirements:\n      host:\n        - python >=3.9,<3.12\n        - pip\n      run:\n        - python >=3.9\n        - packaging\n        - numpy =1\n        - smirnoff99frosst\n        - openff-forcefields\n        - openff-amber-ff-ports >=0.0.3\n        - openff-units >=0.2.1\n        - openff-utilities\n        - networkx >=2.5\n        - xmltodict\n        - bson\n        - importlib-metadata >=4.10\n        - python-constraint\n        - cachetools\n        - cached-property\n        - typing_extensions\n      run_constrained:\n        - openforcefield ==9999999999\n        - pydantic <3.0.0a0\n    test:\n      imports:\n        - openff.toolkit\n\n  - name: openff-toolkit\n    build:\n      noarch: python\n\n    requirements:\n      host:\n        - python >=3.9,<3.12\n      run:\n        - python >=3.9\n        - openmm >=7.6\n        - openff-interchange >=0.3.0\n        - rdkit\n        - ambertools >=22\n        - mdtraj\n        - {{ pin_subpackage('openff-toolkit-base', exact=True) }}\n        - notebook\n        - ipywidgets\n\n    test:\n      imports:\n        - openff.toolkit\n        - rdkit\n      files:\n        - test_openff_toolkit.py\n      commands:\n        - python test_openff_toolkit.py\n\n  - name: openff-toolkit-examples\n    script: move-examples.sh\n    build:\n      noarch: python\n\n    requirements:\n      run:\n        - python >=3.9\n        - nglview\n        - notebook\n        - openff-nagl >=0.3.1\n        - qcelemental\n        - qcportal <0.50\n        - qcengine\n        - openmmforcefields \n        - pdbfixer\n        - {{ pin_subpackage('openff-toolkit', exact=True) }}\n\n    test:\n      files:\n        - test_examples_copied.py\n      source_files:\n        - examples\n      commands:\n        - python test_examples_copied.py\n\nabout:\n  home: https://openforcefield.org/\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: A modern, extensible library for molecular mechanics force field science from the Open Force Field Initiative\n  description: |\n    The Open Force Field Toolkit, built by the Open Force Field Initiative, is a Python\n    toolkit for the development and application of modern molecular mechanics force fields\n    based on direct chemical perception and rigorous statistical parameterization methods.\n  doc_url: https://open-forcefield-toolkit.readthedocs.io/\n  dev_url: https://github.com/openforcefield/openff-toolkit\n\nextra:\n  recipe-maintainers:\n    - jaimergp\n    - j-wags\n    - mattwthompson\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -375,6 +378,7 @@
    "openff-amber-ff-ports",
    "openff-forcefields",
    "openff-interchange",
+   "openff-nagl",
    "openff-toolkit",
    "openff-toolkit-base",
    "openff-units",
@@ -424,6 +428,7 @@
     "openff-amber-ff-ports",
     "openff-forcefields",
     "openff-interchange",
+    "openff-nagl",
     "openff-toolkit",
     "openff-toolkit-base",
     "openff-units",
@@ -478,6 +483,7 @@
     "openff-amber-ff-ports >=0.0.3",
     "openff-forcefields",
     "openff-interchange >=0.3.0",
+    "openff-nagl >=0.3.1",
     "openff-toolkit",
     "openff-toolkit-base",
     "openff-units >=0.2.1",
