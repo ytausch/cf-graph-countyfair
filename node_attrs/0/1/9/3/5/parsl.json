@@ -81,7 +81,35 @@
      "run": [
       "python >=3.8",
       "parsl",
-      "sqlalchemy >=1.3.0,<2",
+      "sqlalchemy >=1.4,<2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "parsl",
+      "parsl.monitoring"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "parsl-with-visualization",
+    "requirements": {
+     "host": [
+      "python >=3.8"
+     ],
+     "run": [
+      "python >=3.8",
+      "parsl",
+      "parsl-with-monitoring",
       "pydot",
       "networkx >=2.5,<2.6",
       "flask >=1.0.2",
@@ -93,7 +121,8 @@
     },
     "test": {
      "commands": [
-      "pip check"
+      "pip check",
+      "parsl-visualize --help"
      ],
      "imports": [
       "parsl",
@@ -299,7 +328,7 @@
   ],
   "package": {
    "name": "parsl-split",
-   "version": "2023.10.16"
+   "version": "2023.10.23"
   },
   "requirements": {
    "host": [
@@ -311,8 +340,8 @@
    ]
   },
   "source": {
-   "sha256": "a369dbe895af024ce089744623a39237b7dc63e307d858009a2b3028621d9749",
-   "url": "https://pypi.io/packages/source/p/parsl/parsl-2023.10.16.tar.gz"
+   "sha256": "45cab9d70425d3af17f21f3f2125ae2cc88094251c68d519343570a039d1468a",
+   "url": "https://pypi.io/packages/source/p/parsl/parsl-2023.10.23.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -345,6 +374,7 @@
     "pandas",
     "paramiko",
     "parsl",
+    "parsl-with-monitoring",
     "plotly",
     "proxystore",
     "psutil",
@@ -447,7 +477,35 @@
      "run": [
       "python >=3.8",
       "parsl",
-      "sqlalchemy >=1.3.0,<2",
+      "sqlalchemy >=1.4,<2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "parsl",
+      "parsl.monitoring"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "parsl-with-visualization",
+    "requirements": {
+     "host": [
+      "python >=3.8"
+     ],
+     "run": [
+      "python >=3.8",
+      "parsl",
+      "parsl-with-monitoring",
       "pydot",
       "networkx >=2.5,<2.6",
       "flask >=1.0.2",
@@ -459,7 +517,8 @@
     },
     "test": {
      "commands": [
-      "pip check"
+      "pip check",
+      "parsl-visualize --help"
      ],
      "imports": [
       "parsl",
@@ -665,7 +724,7 @@
   ],
   "package": {
    "name": "parsl-split",
-   "version": "2023.10.16"
+   "version": "2023.10.23"
   },
   "requirements": {
    "host": [
@@ -677,8 +736,8 @@
    ]
   },
   "source": {
-   "sha256": "a369dbe895af024ce089744623a39237b7dc63e307d858009a2b3028621d9749",
-   "url": "https://pypi.io/packages/source/p/parsl/parsl-2023.10.16.tar.gz"
+   "sha256": "45cab9d70425d3af17f21f3f2125ae2cc88094251c68d519343570a039d1468a",
+   "url": "https://pypi.io/packages/source/p/parsl/parsl-2023.10.23.tar.gz"
   }
  },
  "name": "parsl-split",
@@ -694,6 +753,7 @@
    "parsl-with-kubernetes",
    "parsl-with-monitoring",
    "parsl-with-proxystore",
+   "parsl-with-visualization",
    "parsl-with-workqueue"
   ]
  },
@@ -704,7 +764,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/parsl.json"
  },
- "raw_meta_yaml": "{% set name = \"parsl\" %}\n{% set version = \"2023.10.16\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/parsl-{{ version }}.tar.gz\n  sha256: a369dbe895af024ce089744623a39237b7dc63e307d858009a2b3028621d9749\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - python >=3.8\n    - pip\n  run:\n    - python >=3.8\n\noutputs:\n  - name: {{ name }}\n    script: install_parsl.sh\n    build:\n      noarch: python\n      entry_points:\n        - parsl-globus-auth=parsl.data_provider.globus:cli_run\n        - parsl-visualize=parsl.monitoring.visualization.app:cli_run\n        - parsl-perf=parsl.benchmark.perf:cli_run\n\n    requirements:\n      host:\n        - python >=3.8\n        - pip\n      run:\n        - python >=3.8\n        # requirements.txt\n        - pyzmq >=17.1.2\n        - typeguard >=2.10,<3\n        - typing-extensions\n        - six\n        - globus-sdk\n        - dill\n        - tblib\n        - requests\n        - paramiko\n        - psutil >=5.5.1\n        - setproctitle\n\n    test:\n      requires:\n        - pip\n      imports:\n        - parsl\n      commands:\n        - pip check\n\n  - name: {{ name }}-with-monitoring\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - sqlalchemy >=1.3.0,<2\n        - pydot\n        - networkx >=2.5,<2.6\n        - flask >=1.0.2\n        - flask-sqlalchemy\n        - pandas <2\n        - plotly\n        # 3.0.1 has a build without proper constraints on setuptools\n        - python-daemon !=3.0.1\n\n    test:\n      imports:\n        - parsl\n        - parsl.monitoring\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name }}-with-aws\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - boto3\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name }}-with-kubernetes\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - kubernetes\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n# oauth-ssh not on conda-forge\n#  - name: {{ name }}-with-oauth_ssh\n#    build:\n#      noarch: python\n#    requirements:\n#      host:\n#        - python >=3.8\n#      run:\n#        - python >=3.8\n#        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n#        - oauth-ssh >=0.9\n#    test:\n#      imports:\n#        - parsl\n#      commands:\n#        - pip check\n#      requires:\n#        - pip\n\n  - name: {{ name }}-with-google_cloud\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - google-auth\n        - google-api-python-client\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name }}-with-gssapi\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - python-gssapi\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n# azure 3.0.0 was not built for linux\n#  - name: {{ name }}-with-azure\n#    build:\n#      noarch: python\n#    requirements:\n#      host:\n#        - python >=3.8\n#      run:\n#        - python >=3.8\n#        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n#        - azure <=4\n#        - msrestazure\n#    test:\n#      imports:\n#        - parsl\n#      commands:\n#        - pip check\n#      requires:\n#        - pip\n\n  - name: {{ name }}-with-workqueue\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - ndcctools\n        # there is no work_queue pypi or conda-forge package\n        # - work_queue\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name }}-with-flux\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - pyyaml\n        - cffi\n        - jsonschema\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name }}-with-proxystore\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - proxystore\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\nabout:\n  home: https://github.com/Parsl/parsl\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Simple parallel workflows system for Python\n\n  description: |\n    Parsl is a Python library for programming and executing \n    data-oriented workflows (dataflows) in parallel.\n  doc_url: https://parsl.readthedocs.io/\n  dev_url: https://github.com/Parsl/parsl\n\nextra:\n  recipe-maintainers:\n    - ZhuozhaoLi\n    - yadudoc\n    - xylar\n",
+ "raw_meta_yaml": "{% set name = \"parsl\" %}\n{% set version = \"2023.10.23\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/parsl-{{ version }}.tar.gz\n  sha256: 45cab9d70425d3af17f21f3f2125ae2cc88094251c68d519343570a039d1468a\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - python >=3.8\n    - pip\n  run:\n    - python >=3.8\n\noutputs:\n  - name: {{ name }}\n    script: install_parsl.sh\n    build:\n      noarch: python\n      entry_points:\n        - parsl-globus-auth=parsl.data_provider.globus:cli_run\n        - parsl-visualize=parsl.monitoring.visualization.app:cli_run\n        - parsl-perf=parsl.benchmark.perf:cli_run\n\n    requirements:\n      host:\n        - python >=3.8\n        - pip\n      run:\n        - python >=3.8\n        # requirements.txt\n        - pyzmq >=17.1.2\n        - typeguard >=2.10,<3\n        - typing-extensions\n        - six\n        - globus-sdk\n        - dill\n        - tblib\n        - requests\n        - paramiko\n        - psutil >=5.5.1\n        - setproctitle\n\n    test:\n      requires:\n        - pip\n      imports:\n        - parsl\n      commands:\n        - pip check\n\n  - name: {{ name }}-with-monitoring\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - sqlalchemy >=1.4,<2\n\n    test:\n      imports:\n        - parsl\n        - parsl.monitoring\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name }}-with-visualization\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - {{ name }}-with-monitoring\n        - pydot\n        - networkx >=2.5,<2.6\n        - flask >=1.0.2\n        - flask-sqlalchemy\n        - pandas <2\n        - plotly\n        # 3.0.1 has a build without proper constraints on setuptools\n        - python-daemon !=3.0.1\n\n    test:\n      imports:\n        - parsl\n        - parsl.monitoring\n      commands:\n        - pip check\n        - parsl-visualize --help\n      requires:\n        - pip\n\n  - name: {{ name }}-with-aws\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - boto3\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name }}-with-kubernetes\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - kubernetes\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n# oauth-ssh not on conda-forge\n#  - name: {{ name }}-with-oauth_ssh\n#    build:\n#      noarch: python\n#    requirements:\n#      host:\n#        - python >=3.8\n#      run:\n#        - python >=3.8\n#        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n#        - oauth-ssh >=0.9\n#    test:\n#      imports:\n#        - parsl\n#      commands:\n#        - pip check\n#      requires:\n#        - pip\n\n  - name: {{ name }}-with-google_cloud\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - google-auth\n        - google-api-python-client\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name }}-with-gssapi\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - python-gssapi\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n# azure 3.0.0 was not built for linux\n#  - name: {{ name }}-with-azure\n#    build:\n#      noarch: python\n#    requirements:\n#      host:\n#        - python >=3.8\n#      run:\n#        - python >=3.8\n#        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n#        - azure <=4\n#        - msrestazure\n#    test:\n#      imports:\n#        - parsl\n#      commands:\n#        - pip check\n#      requires:\n#        - pip\n\n  - name: {{ name }}-with-workqueue\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - ndcctools\n        # there is no work_queue pypi or conda-forge package\n        # - work_queue\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name }}-with-flux\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - pyyaml\n        - cffi\n        - jsonschema\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: {{ name }}-with-proxystore\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.8\n      run:\n        - python >=3.8\n        - {{ pin_subpackage(name, max_pin='x.x.x.x.x.x') }}\n        - proxystore\n    test:\n      imports:\n        - parsl\n      commands:\n        - pip check\n      requires:\n        - pip\n\nabout:\n  home: https://github.com/Parsl/parsl\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Simple parallel workflows system for Python\n\n  description: |\n    Parsl is a Python library for programming and executing \n    data-oriented workflows (dataflows) in parallel.\n  doc_url: https://parsl.readthedocs.io/\n  dev_url: https://github.com/Parsl/parsl\n\nextra:\n  recipe-maintainers:\n    - ZhuozhaoLi\n    - yadudoc\n    - xylar\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -723,6 +783,7 @@
    "pandas",
    "paramiko",
    "parsl",
+   "parsl-with-monitoring",
    "pip",
    "plotly",
    "proxystore",
@@ -772,6 +833,7 @@
     "pandas",
     "paramiko",
     "parsl",
+    "parsl-with-monitoring",
     "plotly",
     "proxystore",
     "psutil",
@@ -828,6 +890,7 @@
     "pandas <2",
     "paramiko",
     "parsl",
+    "parsl-with-monitoring",
     "plotly",
     "proxystore",
     "psutil >=5.5.1",
@@ -840,7 +903,7 @@
     "requests",
     "setproctitle",
     "six",
-    "sqlalchemy >=1.3.0,<2",
+    "sqlalchemy >=1.4,<2",
     "tblib",
     "typeguard >=2.10,<3",
     "typing-extensions"
@@ -853,8 +916,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/p/parsl/parsl-2023.10.16.tar.gz",
- "version": "2023.10.16",
+ "url": "https://pypi.io/packages/source/p/parsl/parsl-2023.10.23.tar.gz",
+ "version": "2023.10.23",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/parsl.json"
  }
