@@ -17,8 +17,8 @@
    "noarch": "python",
    "number": "0",
    "script": [
-    "grep __version__ sqlmodel/__init__.py | grep 0.0.9",
-    "sed -i \"s/version = \\\"0\\\"/version = \\\"0.0.9\\\"/\" pyproject.toml",
+    "grep __version__ sqlmodel/__init__.py | grep 0.0.10",
+    "sed -i \"s/version = \\\"0\\\"/version = \\\"0.0.10\\\"/\" pyproject.toml",
     "PYTHON -m pip install . -vv"
    ]
   },
@@ -31,7 +31,7 @@
   },
   "package": {
    "name": "sqlmodel",
-   "version": "0.0.9"
+   "version": "0.0.10"
   },
   "requirements": {
    "host": [
@@ -42,13 +42,13 @@
    "run": [
     "python >=3.7,<4.0",
     "sqlalchemy >=1.4.36,<2.0.0",
-    "pydantic >=1.8.2,<2.0.0",
+    "pydantic >=1.9.0,<2.0.0",
     "sqlalchemy2-stubs"
    ]
   },
   "source": {
-   "sha256": "7e8bd40d6322a56dec3efe0ca05371c7c1dfd7aa0bc6826d45d0f16f2c72a4dc",
-   "url": "https://pypi.io/packages/source/s/sqlmodel/sqlmodel-0.0.9.tar.gz"
+   "sha256": "632f7f82d67f007161412e7c18279ba0f2b0ecacd5922a65aff89231ebc324ca",
+   "url": "https://pypi.io/packages/source/s/sqlmodel/sqlmodel-0.0.10.tar.gz"
   },
   "test": {
    "commands": [
@@ -108,8 +108,8 @@
    "noarch": "python",
    "number": "0",
    "script": [
-    "grep __version__ sqlmodel/__init__.py | grep 0.0.9",
-    "sed -i \"s/version = \\\"0\\\"/version = \\\"0.0.9\\\"/\" pyproject.toml",
+    "grep __version__ sqlmodel/__init__.py | grep 0.0.10",
+    "sed -i \"s/version = \\\"0\\\"/version = \\\"0.0.10\\\"/\" pyproject.toml",
     "PYTHON -m pip install . -vv"
    ]
   },
@@ -122,7 +122,7 @@
   },
   "package": {
    "name": "sqlmodel",
-   "version": "0.0.9"
+   "version": "0.0.10"
   },
   "requirements": {
    "host": [
@@ -133,13 +133,13 @@
    "run": [
     "python >=3.7,<4.0",
     "sqlalchemy >=1.4.36,<2.0.0",
-    "pydantic >=1.8.2,<2.0.0",
+    "pydantic >=1.9.0,<2.0.0",
     "sqlalchemy2-stubs"
    ]
   },
   "source": {
-   "sha256": "7e8bd40d6322a56dec3efe0ca05371c7c1dfd7aa0bc6826d45d0f16f2c72a4dc",
-   "url": "https://pypi.io/packages/source/s/sqlmodel/sqlmodel-0.0.9.tar.gz"
+   "sha256": "632f7f82d67f007161412e7c18279ba0f2b0ecacd5922a65aff89231ebc324ca",
+   "url": "https://pypi.io/packages/source/s/sqlmodel/sqlmodel-0.0.10.tar.gz"
   },
   "test": {
    "commands": [
@@ -171,7 +171,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/sqlmodel.json"
  },
- "raw_meta_yaml": "{% set name = \"sqlmodel\" %}\n{% set version = \"0.0.9\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sqlmodel-{{ version }}.tar.gz\n  sha256: 7e8bd40d6322a56dec3efe0ca05371c7c1dfd7aa0bc6826d45d0f16f2c72a4dc\n\nbuild:\n  number: 0\n  noarch: python\n  script:\n    # Unfortunately sqlmodel relies on a custom plugin called \"poetry-version-plugin\"\n    # which relies on the development version of poetry, which is annoying to install\n    # on conda-forge. But why install some weird plugin when we can just use a simple\n    # Bash hack? ;)\n\n    # Verify that the version is correctly set in __init__.py\n    - grep __version__ sqlmodel/__init__.py | grep {{ version }}\n    # Replace the version number in the pyproject.toml with the one we extracted\n    - sed -i \"s/version = \\\"0\\\"/version = \\\"{{ version }}\\\"/\" pyproject.toml\n    # Install\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - python >=3.7,<4.0\n    - pip\n    - poetry-core\n  run:\n    - python >=3.7,<4.0\n    - sqlalchemy >=1.4.36,<2.0.0\n    - pydantic >=1.8.2,<2.0.0\n    - sqlalchemy2-stubs\n\ntest:\n  imports:\n    - sqlmodel\n    - sqlmodel.engine\n  commands:\n    - pip check\n    # Extract the version of the built package\n    - VERSION=$(python -c 'from importlib import metadata; print(metadata.version(\"sqlmodel\"))')\n    - echo \"sqlmodel version $VERSION\"\n    # Ensure that version is not 0. (This conditional looks redundant, but YAML thinks\n    # that [...] denotes a list.)\n    - if [ \"0\" == \"$VERSION\" ]; then false; fi\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/tiangolo/sqlmodel\n  summary: SQL databases in Python, designed for simplicity, compatibility, and robustness.\n  doc_url: https://sqlmodel.tiangolo.com/\n  license: MIT\n  license_file: LICENSE\n  description: |\n    SQLModel is designed to simplify interacting with SQL databases in FastAPI\n     applications, it was created by the same author. It combines SQLAlchemy\n     and Pydantic and tries to simplify the code you write as much as possible,\n     allowing you to reduce the code duplication to a minimum, but while getting\n     the best developer experience possible. SQLModel is, in fact, a thin layer\n     on top of Pydantic and SQLAlchemy, carefully designed to be compatible with\n     both.\n\nextra:\n  recipe-maintainers:\n    - tiangolo\n    - maresb\n    - thewchan\n",
+ "raw_meta_yaml": "{% set name = \"sqlmodel\" %}\n{% set version = \"0.0.10\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sqlmodel-{{ version }}.tar.gz\n  sha256: 632f7f82d67f007161412e7c18279ba0f2b0ecacd5922a65aff89231ebc324ca\n\nbuild:\n  number: 0\n  noarch: python\n  script:\n    # Unfortunately sqlmodel relies on a custom plugin called \"poetry-version-plugin\"\n    # which relies on the development version of poetry, which is annoying to install\n    # on conda-forge. But why install some weird plugin when we can just use a simple\n    # Bash hack? ;)\n\n    # Verify that the version is correctly set in __init__.py\n    - grep __version__ sqlmodel/__init__.py | grep {{ version }}\n    # Replace the version number in the pyproject.toml with the one we extracted\n    - sed -i \"s/version = \\\"0\\\"/version = \\\"{{ version }}\\\"/\" pyproject.toml\n    # Install\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - python >=3.7,<4.0\n    - pip\n    - poetry-core\n  run:\n    - python >=3.7,<4.0\n    - sqlalchemy >=1.4.36,<2.0.0\n    - pydantic >=1.9.0,<2.0.0\n    - sqlalchemy2-stubs\n\ntest:\n  imports:\n    - sqlmodel\n    - sqlmodel.engine\n  commands:\n    - pip check\n    # Extract the version of the built package\n    - VERSION=$(python -c 'from importlib import metadata; print(metadata.version(\"sqlmodel\"))')\n    - echo \"sqlmodel version $VERSION\"\n    # Ensure that version is not 0. (This conditional looks redundant, but YAML thinks\n    # that [...] denotes a list.)\n    - if [ \"0\" == \"$VERSION\" ]; then false; fi\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/tiangolo/sqlmodel\n  summary: SQL databases in Python, designed for simplicity, compatibility, and robustness.\n  doc_url: https://sqlmodel.tiangolo.com/\n  license: MIT\n  license_file: LICENSE\n  description: |\n    SQLModel is designed to simplify interacting with SQL databases in FastAPI\n     applications, it was created by the same author. It combines SQLAlchemy\n     and Pydantic and tries to simplify the code you write as much as possible,\n     allowing you to reduce the code duplication to a minimum, but while getting\n     the best developer experience possible. SQLModel is, in fact, a thin layer\n     on top of Pydantic and SQLAlchemy, carefully designed to be compatible with\n     both.\n\nextra:\n  recipe-maintainers:\n    - tiangolo\n    - maresb\n    - thewchan\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -229,7 +229,7 @@
   "run": {
    "__set__": true,
    "elements": [
-    "pydantic >=1.8.2,<2.0.0",
+    "pydantic >=1.9.0,<2.0.0",
     "python >=3.7,<4.0",
     "sqlalchemy >=1.4.36,<2.0.0",
     "sqlalchemy2-stubs"
@@ -242,8 +242,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/s/sqlmodel/sqlmodel-0.0.9.tar.gz",
- "version": "0.0.9",
+ "url": "https://pypi.io/packages/source/s/sqlmodel/sqlmodel-0.0.10.tar.gz",
+ "version": "0.0.10",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/sqlmodel.json"
  }
