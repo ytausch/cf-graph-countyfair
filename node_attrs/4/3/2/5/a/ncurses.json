@@ -25,7 +25,7 @@
     "libstdcxx-ng",
     "libcxx"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ncurses"
    ]
@@ -171,7 +171,8 @@
     "pkg-config ncurses --libs | grep \"^-L${PREFIX}/lib .*-lncurses -ltinfo$\"",
     "pkg-config tinfo --libs | grep \"^-L${PREFIX}/lib .*-ltinfo$\"",
     "pkg-config ncursesw --libs | grep \"^-L${PREFIX}/lib .*-lncursesw -ltinfow$\"",
-    "pkg-config tinfow --libs | grep \"^-L${PREFIX}/lib .*-ltinfow$\""
+    "pkg-config tinfow --libs | grep \"^-L${PREFIX}/lib .*-ltinfow$\"",
+    "test ! -d ${PREFIX}/share/terminfo/P"
    ],
    "requires": [
     "pkg-config"
@@ -222,7 +223,7 @@
     "libstdcxx-ng",
     "libcxx"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ncurses"
    ]
@@ -419,7 +420,7 @@
     "libstdcxx-ng",
     "libcxx"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ncurses"
    ]
@@ -624,7 +625,7 @@
     "libstdcxx-ng",
     "libcxx"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ncurses",
     "ncurses",
@@ -815,6 +816,7 @@
     "pkg-config tinfo --libs | grep \"^-L${PREFIX}/lib .*-ltinfo$\"",
     "pkg-config ncursesw --libs | grep \"^-L${PREFIX}/lib .*-lncursesw -ltinfow$\"",
     "pkg-config tinfow --libs | grep \"^-L${PREFIX}/lib .*-ltinfow$\"",
+    "test ! -d ${PREFIX}/share/terminfo/P",
     "test ! -f ${PREFIX}/lib/libncurses.a",
     "test ! -f ${PREFIX}/lib/libncursesw.a",
     "test -f ${PREFIX}/lib/libncurses.so",
@@ -1285,7 +1287,7 @@
     "libstdcxx-ng",
     "libcxx"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ncurses"
    ]
@@ -1482,7 +1484,7 @@
     "libstdcxx-ng",
     "libcxx"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ncurses"
    ]
@@ -1681,7 +1683,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ncurses.json"
  },
- "raw_meta_yaml": "{% set version = \"6.4\" %}\n\npackage:\n  name: ncurses\n  version: {{ version }}\n\nsource:\n  fn: ncurses-{{ version }}.tar.gz\n  url: http://ftp.gnu.org/pub/gnu/ncurses/ncurses-{{ version }}.tar.gz\n  sha256: 6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159\n\nbuild:\n  skip: true  # [win]\n  number: 0\n  run_exports:\n    # pretty good compat within major version\n    #  https://abi-laboratory.pro/tracker/timeline/ncurses/\n    - {{ pin_subpackage('ncurses') }}\n  # A C++ compiler is needed so that the cursesapp.h file is installed,\n  # but the library does not need libstdc++/libc++\n  ignore_run_exports:\n    - libstdcxx-ng\n    - libcxx\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - pkg-config\n    - make\n    - libtool\n    - coreutils\n    - ncurses  # [build_platform != target_platform]\n  host:\n    # Need a separate host section so that ncurses doesn't remove -L$PREFIX/lib\n    - libcxx        # [osx]\n    - libstdcxx-ng  # [linux]\n\ntest:\n  requires:\n    - pkg-config\n  # files:\n    # - run_test.sh         # [osx]\n    # Python test will not pass until it is recompiled against ncurses 6.1\n    # - run_test.py         # [osx]\n  commands:\n    # Test libraries\n    {% set ncurses_libraries = [\n        \"libncurses\",\n        \"libtinfo\",\n        \"libform\",\n        \"libmenu\",\n        \"libpanel\",\n    ] %}\n    {% for each_ncurses_library in ncurses_libraries %}\n    - test ! -f ${PREFIX}/lib/{{ each_ncurses_library }}.a\n    - test ! -f ${PREFIX}/lib/{{ each_ncurses_library }}w.a\n    - test -f ${PREFIX}/lib/{{ each_ncurses_library }}.dylib    # [osx]\n    - test -f ${PREFIX}/lib/{{ each_ncurses_library }}w.dylib   # [osx]\n    - test -f ${PREFIX}/lib/{{ each_ncurses_library }}.so       # [linux]\n    - test -f ${PREFIX}/lib/{{ each_ncurses_library }}w.so      # [linux]\n    {% endfor %}\n\n    # Test include directories\n    - test -d ${PREFIX}/include/ncurses\n    - test -d ${PREFIX}/include/ncursesw\n\n    # Test headers\n    {% set ncurses_headers = [\n        \"curses.h\",\n        \"cursesapp.h\",\n        \"cursesf.h\",\n        \"cursesm.h\",\n        \"cursesp.h\",\n        \"cursesw.h\",\n        \"cursslk.h\",\n        \"eti.h\",\n        \"etip.h\",\n        \"form.h\",\n        \"menu.h\",\n        \"nc_tparm.h\",\n        \"ncurses.h\",\n        \"ncurses_dll.h\",\n        \"panel.h\",\n        \"term.h\",\n        \"term_entry.h\",\n        \"termcap.h\",\n        \"tic.h\",\n        \"unctrl.h\"\n    ] %}\n    {% for each_ncurses_header in ncurses_headers %}\n    - test -L ${PREFIX}/include/ncurses/{{ each_ncurses_header }}\n    - test -L ${PREFIX}/include/ncursesw/{{ each_ncurses_header }}\n    - test -f ${PREFIX}/include/{{ each_ncurses_header }}\n    {% endfor %}\n\n    # Test pkg-config files\n    {% set ncurses_pc_files = [\n        \"form\",\n        \"menu\",\n        \"ncurses++\",\n        \"ncurses\",\n        \"panel\",\n        \"tinfo\"\n    ] %}\n    {% for each_ncurses_pc_file in ncurses_pc_files %}\n    - test -f ${PREFIX}/lib/pkgconfig/{{ each_ncurses_pc_file }}.pc\n    - cat ${PREFIX}/lib/pkgconfig/{{ each_ncurses_pc_file }}.pc\n    - test -f ${PREFIX}/lib/pkgconfig/{{ each_ncurses_pc_file }}w.pc\n    - cat ${PREFIX}/lib/pkgconfig/{{ each_ncurses_pc_file }}w.pc\n    {% endfor %}\n\n    # Test ncurses library arguments.\n    - pkg-config ncurses --libs\n    - pkg-config ncurses --libs | grep \"^-L${PREFIX}/lib .*-lncurses -ltinfo$\"\n    - pkg-config tinfo --libs | grep \"^-L${PREFIX}/lib .*-ltinfo$\"\n    - pkg-config ncursesw --libs | grep \"^-L${PREFIX}/lib .*-lncursesw -ltinfow$\"\n    - pkg-config tinfow --libs | grep \"^-L${PREFIX}/lib .*-ltinfow$\"\n\n    # Usage tests\n    # - bash run_test.sh    # [osx]\n    # Python test will not pass until it is recompiled against ncurses 6.1\n    # - python run_test.py  # [osx]\n\nabout:\n  home: http://www.gnu.org/software/ncurses/\n  # See https://github.com/mirror/ncurses/blob/3ef920d65fb2d4046096131d868ae8d4bba79d46/package/debian/copyright\n  license: X11 AND BSD-3-Clause\n  license_file: COPYING\n  summary: Library for text-based user interfaces\n  description: |\n    The ncurses (new curses) library is a free software\n    emulation of curses in System V Release 4.0 (SVr4),\n    and more. It uses terminfo format, supports pads and\n    color and multiple highlights and forms characters and\n    function-key mapping, and has all the other SVr4-curses\n    enhancements over BSD curses. SVr4 curses is better\n    known today as X/Open Curses\n  doc_url: http://invisible-island.net/ncurses/NCURSES-Programming-HOWTO.html\n  dev_url: http://invisible-island.net/ncurses/\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - mingwandroid\n    - fhoehle\n",
+ "raw_meta_yaml": "{% set version = \"6.4\" %}\n\npackage:\n  name: ncurses\n  version: {{ version }}\n\nsource:\n  fn: ncurses-{{ version }}.tar.gz\n  url: http://ftp.gnu.org/pub/gnu/ncurses/ncurses-{{ version }}.tar.gz\n  sha256: 6931283d9ac87c5073f30b6290c4c75f21632bb4fc3603ac8100812bed248159\n\nbuild:\n  skip: true  # [win]\n  number: 1\n  run_exports:\n    # pretty good compat within major version\n    #  https://abi-laboratory.pro/tracker/timeline/ncurses/\n    - {{ pin_subpackage('ncurses') }}\n  # A C++ compiler is needed so that the cursesapp.h file is installed,\n  # but the library does not need libstdc++/libc++\n  ignore_run_exports:\n    - libstdcxx-ng\n    - libcxx\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - pkg-config\n    - make\n    - libtool\n    - coreutils\n    - ncurses  # [build_platform != target_platform]\n  host:\n    # Need a separate host section so that ncurses doesn't remove -L$PREFIX/lib\n    - libcxx        # [osx]\n    - libstdcxx-ng  # [linux]\n\ntest:\n  requires:\n    - pkg-config\n  # files:\n    # - run_test.sh         # [osx]\n    # Python test will not pass until it is recompiled against ncurses 6.1\n    # - run_test.py         # [osx]\n  commands:\n    # Test libraries\n    {% set ncurses_libraries = [\n        \"libncurses\",\n        \"libtinfo\",\n        \"libform\",\n        \"libmenu\",\n        \"libpanel\",\n    ] %}\n    {% for each_ncurses_library in ncurses_libraries %}\n    - test ! -f ${PREFIX}/lib/{{ each_ncurses_library }}.a\n    - test ! -f ${PREFIX}/lib/{{ each_ncurses_library }}w.a\n    - test -f ${PREFIX}/lib/{{ each_ncurses_library }}.dylib    # [osx]\n    - test -f ${PREFIX}/lib/{{ each_ncurses_library }}w.dylib   # [osx]\n    - test -f ${PREFIX}/lib/{{ each_ncurses_library }}.so       # [linux]\n    - test -f ${PREFIX}/lib/{{ each_ncurses_library }}w.so      # [linux]\n    {% endfor %}\n\n    # Test include directories\n    - test -d ${PREFIX}/include/ncurses\n    - test -d ${PREFIX}/include/ncursesw\n\n    # Test headers\n    {% set ncurses_headers = [\n        \"curses.h\",\n        \"cursesapp.h\",\n        \"cursesf.h\",\n        \"cursesm.h\",\n        \"cursesp.h\",\n        \"cursesw.h\",\n        \"cursslk.h\",\n        \"eti.h\",\n        \"etip.h\",\n        \"form.h\",\n        \"menu.h\",\n        \"nc_tparm.h\",\n        \"ncurses.h\",\n        \"ncurses_dll.h\",\n        \"panel.h\",\n        \"term.h\",\n        \"term_entry.h\",\n        \"termcap.h\",\n        \"tic.h\",\n        \"unctrl.h\"\n    ] %}\n    {% for each_ncurses_header in ncurses_headers %}\n    - test -L ${PREFIX}/include/ncurses/{{ each_ncurses_header }}\n    - test -L ${PREFIX}/include/ncursesw/{{ each_ncurses_header }}\n    - test -f ${PREFIX}/include/{{ each_ncurses_header }}\n    {% endfor %}\n\n    # Test pkg-config files\n    {% set ncurses_pc_files = [\n        \"form\",\n        \"menu\",\n        \"ncurses++\",\n        \"ncurses\",\n        \"panel\",\n        \"tinfo\"\n    ] %}\n    {% for each_ncurses_pc_file in ncurses_pc_files %}\n    - test -f ${PREFIX}/lib/pkgconfig/{{ each_ncurses_pc_file }}.pc\n    - cat ${PREFIX}/lib/pkgconfig/{{ each_ncurses_pc_file }}.pc\n    - test -f ${PREFIX}/lib/pkgconfig/{{ each_ncurses_pc_file }}w.pc\n    - cat ${PREFIX}/lib/pkgconfig/{{ each_ncurses_pc_file }}w.pc\n    {% endfor %}\n\n    # Test ncurses library arguments.\n    - pkg-config ncurses --libs\n    - pkg-config ncurses --libs | grep \"^-L${PREFIX}/lib .*-lncurses -ltinfo$\"\n    - pkg-config tinfo --libs | grep \"^-L${PREFIX}/lib .*-ltinfo$\"\n    - pkg-config ncursesw --libs | grep \"^-L${PREFIX}/lib .*-lncursesw -ltinfow$\"\n    - pkg-config tinfow --libs | grep \"^-L${PREFIX}/lib .*-ltinfow$\"\n\n    # test absence of terminfo symlinks that require case-sensitivity (see #73)\n    - test ! -d ${PREFIX}/share/terminfo/P  # [linux64]\n\n    # Usage tests\n    # - bash run_test.sh    # [osx]\n    # Python test will not pass until it is recompiled against ncurses 6.1\n    # - python run_test.py  # [osx]\n\nabout:\n  home: http://www.gnu.org/software/ncurses/\n  # See https://github.com/mirror/ncurses/blob/3ef920d65fb2d4046096131d868ae8d4bba79d46/package/debian/copyright\n  license: X11 AND BSD-3-Clause\n  license_file: COPYING\n  summary: Library for text-based user interfaces\n  description: |\n    The ncurses (new curses) library is a free software\n    emulation of curses in System V Release 4.0 (SVr4),\n    and more. It uses terminfo format, supports pads and\n    color and multiple highlights and forms characters and\n    function-key mapping, and has all the other SVr4-curses\n    enhancements over BSD curses. SVr4 curses is better\n    known today as X/Open Curses\n  doc_url: http://invisible-island.net/ncurses/NCURSES-Programming-HOWTO.html\n  dev_url: http://invisible-island.net/ncurses/\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - mingwandroid\n    - fhoehle\n",
  "req": {
   "__set__": true,
   "elements": [
