@@ -1,7 +1,18 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
+   "osx_arm64": "osx_64"
+  },
+  "provider": {
+   "linux_aarch64": "default",
+   "linux_ppc64le": "azure",
+   "win": "azure"
+  }
+ },
  "feedstock_name": "hipace",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -16,7 +27,7 @@
    "summary": "Highly efficient Plasma Accelerator Emulation, quasistatic particle-in-cell code"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -34,23 +45,27 @@
    "build": [
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "ccache",
     "cmake",
     "make",
+    "libgomp",
     "pkgconfig"
    ],
    "host": [
+    "amrex >=23.10",
     "fftw =*=nompi_*",
     "openpmd-api =*=nompi_*"
    ]
   },
   "source": {
+   "patches": [
+    "1031.patch"
+   ],
    "sha256": "1c740c925294bacec2b7c27778339d71528a4bd1a81e051a9cc47e44b4cd0cdf",
    "url": "https://github.com/Hi-PACE/hipace/archive/v23.10.tar.gz"
   },
   "test": {
    "commands": [
-    "test -f ${PREFIX}/bin/hipace.NOMPI.NOACC.DP.LF",
+    "test -f ${PREFIX}/bin/hipace.NOMPI.OMP.DP.LF",
     "./test.sh"
    ],
    "files": [
@@ -78,9 +93,9 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "ccache",
     "cmake",
     "cxx_compiler_stub",
+    "libgomp",
     "make",
     "pkgconfig"
    ]
@@ -88,6 +103,229 @@
   "host": {
    "__set__": true,
    "elements": [
+    "amrex",
+    "fftw",
+    "openpmd-api"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "bash",
+    "numpy",
+    "openpmd-api",
+    "openpmd-viewer",
+    "pandas",
+    "pytest",
+    "python",
+    "scipy"
+   ]
+  }
+ },
+ "linux_aarch64_meta_yaml": {
+  "about": {
+   "description": "HiPACE++ is an open-source portable GPU-capable quasistatic\nparticle-in-cell code for wakefield acceleration written in C++. It is a\nfull re-writing of the legacy code HiPACE, the Highly efficient Plasma\nACcelerator Emulator.\n",
+   "dev_url": "https://github.com/Hi-PACE/hipace",
+   "doc_url": "https://hipace.readthedocs.io",
+   "home": "https://hipace.readthedocs.io",
+   "license": "BSD-3-Clause-LBNL",
+   "license_family": "BSD",
+   "license_file": "license.txt",
+   "summary": "Highly efficient Plasma Accelerator Emulation, quasistatic particle-in-cell code"
+  },
+  "build": {
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "AlexanderSinn",
+    "ax3l",
+    "MaxThevenet",
+    "SeverinDiederichs"
+   ]
+  },
+  "package": {
+   "name": "hipace",
+   "version": "23.10"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "libgomp",
+    "pkgconfig"
+   ],
+   "host": [
+    "amrex >=23.10",
+    "fftw =*=nompi_*",
+    "openpmd-api =*=nompi_*"
+   ]
+  },
+  "source": {
+   "patches": [
+    "1031.patch"
+   ],
+   "sha256": "1c740c925294bacec2b7c27778339d71528a4bd1a81e051a9cc47e44b4cd0cdf",
+   "url": "https://github.com/Hi-PACE/hipace/archive/v23.10.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f ${PREFIX}/bin/hipace.NOMPI.OMP.DP.LF",
+    "./test.sh"
+   ],
+   "files": [
+    "test.sh"
+   ],
+   "requires": [
+    "bash",
+    "python",
+    "numpy",
+    "openpmd-api =*=nompi_*",
+    "openpmd-viewer",
+    "pandas",
+    "pytest",
+    "python",
+    "scipy"
+   ],
+   "source_files": [
+    "examples/",
+    "tests/"
+   ]
+  }
+ },
+ "linux_aarch64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "libgomp",
+    "make",
+    "pkgconfig"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "amrex",
+    "fftw",
+    "openpmd-api"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "bash",
+    "numpy",
+    "openpmd-api",
+    "openpmd-viewer",
+    "pandas",
+    "pytest",
+    "python",
+    "scipy"
+   ]
+  }
+ },
+ "linux_ppc64le_meta_yaml": {
+  "about": {
+   "description": "HiPACE++ is an open-source portable GPU-capable quasistatic\nparticle-in-cell code for wakefield acceleration written in C++. It is a\nfull re-writing of the legacy code HiPACE, the Highly efficient Plasma\nACcelerator Emulator.\n",
+   "dev_url": "https://github.com/Hi-PACE/hipace",
+   "doc_url": "https://hipace.readthedocs.io",
+   "home": "https://hipace.readthedocs.io",
+   "license": "BSD-3-Clause-LBNL",
+   "license_family": "BSD",
+   "license_file": "license.txt",
+   "summary": "Highly efficient Plasma Accelerator Emulation, quasistatic particle-in-cell code"
+  },
+  "build": {
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "AlexanderSinn",
+    "ax3l",
+    "MaxThevenet",
+    "SeverinDiederichs"
+   ]
+  },
+  "package": {
+   "name": "hipace",
+   "version": "23.10"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "libgomp",
+    "pkgconfig"
+   ],
+   "host": [
+    "amrex >=23.10",
+    "fftw =*=nompi_*",
+    "openpmd-api =*=nompi_*"
+   ]
+  },
+  "source": {
+   "patches": [
+    "1031.patch"
+   ],
+   "sha256": "1c740c925294bacec2b7c27778339d71528a4bd1a81e051a9cc47e44b4cd0cdf",
+   "url": "https://github.com/Hi-PACE/hipace/archive/v23.10.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f ${PREFIX}/bin/hipace.NOMPI.OMP.DP.LF",
+    "./test.sh"
+   ],
+   "files": [
+    "test.sh"
+   ],
+   "requires": [
+    "bash",
+    "python",
+    "numpy",
+    "openpmd-api =*=nompi_*",
+    "openpmd-viewer",
+    "pandas",
+    "pytest",
+    "python",
+    "scipy"
+   ],
+   "source_files": [
+    "examples/",
+    "tests/"
+   ]
+  }
+ },
+ "linux_ppc64le_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "libgomp",
+    "make",
+    "pkgconfig"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "amrex",
     "fftw",
     "openpmd-api"
    ]
@@ -122,10 +360,22 @@
    "summary": "Highly efficient Plasma Accelerator Emulation, quasistatic particle-in-cell code"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "AlexanderSinn",
+    "ax3l",
+    "MaxThevenet",
+    "SeverinDiederichs",
+    "AlexanderSinn",
+    "ax3l",
+    "MaxThevenet",
+    "SeverinDiederichs",
+    "AlexanderSinn",
+    "ax3l",
+    "MaxThevenet",
+    "SeverinDiederichs",
     "AlexanderSinn",
     "ax3l",
     "MaxThevenet",
@@ -148,53 +398,127 @@
    "build": [
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "ccache",
     "cmake",
     "make",
+    "libgomp",
     "pkgconfig",
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "ccache",
     "cmake",
     "make",
+    "libgomp",
+    "pkgconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "libgomp",
+    "pkgconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "llvm-openmp",
+    "pkgconfig",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "llvm-openmp",
     "pkgconfig",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "clang",
     "cmake",
     "lld",
-    "libxml2",
     "ninja",
+    "intel-openmp",
     "pkgconfig"
    ],
    "host": [
+    "amrex >=23.10",
     "fftw =*=nompi_*",
     "openpmd-api =*=nompi_*",
+    "amrex >=23.10",
     "fftw =*=nompi_*",
     "openpmd-api =*=nompi_*",
+    "amrex >=23.10",
+    "fftw =*=nompi_*",
+    "openpmd-api =*=nompi_*",
+    "amrex >=23.10",
+    "fftw =*=nompi_*",
+    "openpmd-api =*=nompi_*",
+    "amrex >=23.10",
+    "fftw =*=nompi_*",
+    "openpmd-api =*=nompi_*",
+    "amrex >=23.10",
     "fftw =*=nompi_*",
     "openpmd-api =*=nompi_*"
    ]
   },
   "source": {
+   "patches": [
+    "1031.patch",
+    "1031.patch",
+    "1031.patch",
+    "1031.patch",
+    "1031.patch",
+    "1031.patch"
+   ],
    "sha256": "1c740c925294bacec2b7c27778339d71528a4bd1a81e051a9cc47e44b4cd0cdf",
    "url": "https://github.com/Hi-PACE/hipace/archive/v23.10.tar.gz"
   },
   "test": {
    "commands": [
-    "test -f ${PREFIX}/bin/hipace.NOMPI.NOACC.DP.LF",
+    "test -f ${PREFIX}/bin/hipace.NOMPI.OMP.DP.LF",
     "./test.sh",
-    "test -f ${PREFIX}/bin/hipace.NOMPI.NOACC.DP.LF",
+    "test -f ${PREFIX}/bin/hipace.NOMPI.OMP.DP.LF",
     "./test.sh",
-    "if not exist %LIBRARY_PREFIX%\\bin\\hipace.NOMPI.NOACC.DP.LF.exe exit 1",
+    "test -f ${PREFIX}/bin/hipace.NOMPI.OMP.DP.LF",
+    "./test.sh",
+    "test -f ${PREFIX}/bin/hipace.NOMPI.OMP.DP.LF",
+    "./test.sh",
+    "test -f ${PREFIX}/bin/hipace.NOMPI.OMP.DP.LF",
+    "./test.sh",
+    "if not exist %LIBRARY_PREFIX%\\bin\\hipace.NOMPI.OMP.DP.LF.exe exit 1",
     "call test.bat"
    ],
    "files": [
     "test.sh",
     "test.sh",
+    "test.sh",
+    "test.sh",
+    "test.sh",
     "test.bat"
    ],
    "requires": [
+    "bash",
+    "python",
+    "numpy",
+    "openpmd-api =*=nompi_*",
+    "openpmd-viewer",
+    "pandas",
+    "pytest",
+    "python",
+    "scipy",
+    "bash",
+    "python",
+    "numpy",
+    "openpmd-api =*=nompi_*",
+    "openpmd-viewer",
+    "pandas",
+    "pytest",
+    "python",
+    "scipy",
+    "bash",
+    "python",
+    "numpy",
+    "openpmd-api =*=nompi_*",
+    "openpmd-viewer",
+    "pandas",
+    "pytest",
+    "python",
+    "scipy",
     "bash",
     "python",
     "numpy",
@@ -228,6 +552,12 @@
     "examples/",
     "tests/",
     "examples/",
+    "tests/",
+    "examples/",
+    "tests/",
+    "examples/",
+    "tests/",
+    "examples/",
     "tests/"
    ]
   }
@@ -245,7 +575,7 @@
    "summary": "Highly efficient Plasma Accelerator Emulation, quasistatic particle-in-cell code"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -263,23 +593,27 @@
    "build": [
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "ccache",
     "cmake",
     "make",
+    "llvm-openmp",
     "pkgconfig"
    ],
    "host": [
+    "amrex >=23.10",
     "fftw =*=nompi_*",
     "openpmd-api =*=nompi_*"
    ]
   },
   "source": {
+   "patches": [
+    "1031.patch"
+   ],
    "sha256": "1c740c925294bacec2b7c27778339d71528a4bd1a81e051a9cc47e44b4cd0cdf",
    "url": "https://github.com/Hi-PACE/hipace/archive/v23.10.tar.gz"
   },
   "test": {
    "commands": [
-    "test -f ${PREFIX}/bin/hipace.NOMPI.NOACC.DP.LF",
+    "test -f ${PREFIX}/bin/hipace.NOMPI.OMP.DP.LF",
     "./test.sh"
    ],
    "files": [
@@ -307,9 +641,9 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "ccache",
     "cmake",
     "cxx_compiler_stub",
+    "llvm-openmp",
     "make",
     "pkgconfig"
    ]
@@ -317,6 +651,118 @@
   "host": {
    "__set__": true,
    "elements": [
+    "amrex",
+    "fftw",
+    "openpmd-api"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "bash",
+    "numpy",
+    "openpmd-api",
+    "openpmd-viewer",
+    "pandas",
+    "pytest",
+    "python",
+    "scipy"
+   ]
+  }
+ },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "HiPACE++ is an open-source portable GPU-capable quasistatic\nparticle-in-cell code for wakefield acceleration written in C++. It is a\nfull re-writing of the legacy code HiPACE, the Highly efficient Plasma\nACcelerator Emulator.\n",
+   "dev_url": "https://github.com/Hi-PACE/hipace",
+   "doc_url": "https://hipace.readthedocs.io",
+   "home": "https://hipace.readthedocs.io",
+   "license": "BSD-3-Clause-LBNL",
+   "license_family": "BSD",
+   "license_file": "license.txt",
+   "summary": "Highly efficient Plasma Accelerator Emulation, quasistatic particle-in-cell code"
+  },
+  "build": {
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "AlexanderSinn",
+    "ax3l",
+    "MaxThevenet",
+    "SeverinDiederichs"
+   ]
+  },
+  "package": {
+   "name": "hipace",
+   "version": "23.10"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "llvm-openmp",
+    "pkgconfig"
+   ],
+   "host": [
+    "amrex >=23.10",
+    "fftw =*=nompi_*",
+    "openpmd-api =*=nompi_*"
+   ]
+  },
+  "source": {
+   "patches": [
+    "1031.patch"
+   ],
+   "sha256": "1c740c925294bacec2b7c27778339d71528a4bd1a81e051a9cc47e44b4cd0cdf",
+   "url": "https://github.com/Hi-PACE/hipace/archive/v23.10.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f ${PREFIX}/bin/hipace.NOMPI.OMP.DP.LF",
+    "./test.sh"
+   ],
+   "files": [
+    "test.sh"
+   ],
+   "requires": [
+    "bash",
+    "python",
+    "numpy",
+    "openpmd-api =*=nompi_*",
+    "openpmd-viewer",
+    "pandas",
+    "pytest",
+    "python",
+    "scipy"
+   ],
+   "source_files": [
+    "examples/",
+    "tests/"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "llvm-openmp",
+    "make",
+    "pkgconfig"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "amrex",
     "fftw",
     "openpmd-api"
    ]
@@ -348,24 +794,29 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
+  "linux_aarch64",
+  "linux_ppc64le",
   "osx_64",
+  "osx_arm64",
   "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/hipace.json"
  },
- "raw_meta_yaml": "{% set name = \"hipace\" %}\n{% set version = \"23.10\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/Hi-PACE/hipace/archive/v{{ version }}.tar.gz\n  sha256: 1c740c925294bacec2b7c27778339d71528a4bd1a81e051a9cc47e44b4cd0cdf\n\nbuild:\n  # Prevent conda-build from deciding to build for each python version when hipace doesn't depend on python\n  skip: true  # [py != 310]\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - ccache        # [unix]\n    - clang         # [win]\n    - cmake\n    - lld           # [win]\n    # TODO: add libxml2 dep in lld-feedstock\n    - libxml2       # [win]\n    - make          # [unix]\n    - ninja         # [win]\n    # TODO: later compile for -DHiPACE_COMPUTE=OMP\n    # - libgomp       # [linux]\n    # - llvm-openmp   # [osx or win]\n    - pkgconfig\n  host:\n    - fftw =*=nompi_*\n    - openpmd-api =*=nompi_*\n\ntest:\n  requires:\n    - bash  # [not win]\n    - python\n    - numpy\n    - openpmd-api =*=nompi_*\n    - openpmd-viewer\n    - pandas\n    - pytest\n    - python\n    - scipy\n  source_files:\n    - examples/\n    - tests/\n  files:\n    - test.sh   # [unix]\n    - test.bat  # [win]\n  commands:\n    - test -f ${PREFIX}/bin/hipace.NOMPI.NOACC.DP.LF  # [unix]\n    - if not exist %LIBRARY_PREFIX%\\bin\\hipace.NOMPI.NOACC.DP.LF.exe exit 1  # [win]\n    # smoke tests: execute\n    - ./test.sh      # [unix and build_platform == target_platform]\n    - call test.bat  # [win]\n\nabout:\n  home: https://hipace.readthedocs.io\n  license: BSD-3-Clause-LBNL\n  license_family: BSD\n  license_file: license.txt\n  summary: Highly efficient Plasma Accelerator Emulation, quasistatic particle-in-cell code\n\n  description: |\n    HiPACE++ is an open-source portable GPU-capable quasistatic\n    particle-in-cell code for wakefield acceleration written in C++. It is a\n    full re-writing of the legacy code HiPACE, the Highly efficient Plasma\n    ACcelerator Emulator.\n\n  doc_url: https://hipace.readthedocs.io\n  dev_url: https://github.com/Hi-PACE/hipace\n\nextra:\n  recipe-maintainers:\n    - AlexanderSinn\n    - ax3l\n    - MaxThevenet\n    - SeverinDiederichs\n",
+ "raw_meta_yaml": "{% set name = \"hipace\" %}\n{% set version = \"23.10\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/Hi-PACE/hipace/archive/v{{ version }}.tar.gz\n  sha256: 1c740c925294bacec2b7c27778339d71528a4bd1a81e051a9cc47e44b4cd0cdf\n  patches:\n    # Fix External AMReX & pyAMReX Builds\n    - 1031.patch\n\nbuild:\n  # Prevent conda-build from deciding to build for each python version when hipace doesn't depend on python\n  skip: true  # [py != 310]\n  number: 1\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - clang         # [win]\n    - cmake\n    - lld           # [win]\n    - make          # [unix]\n    - ninja         # [win]\n    - libgomp       # [linux]\n    - llvm-openmp   # [osx]\n    - intel-openmp  # [win]\n    - pkgconfig\n  host:\n    - amrex >={{ version }}\n    - fftw =*=nompi_*\n    - openpmd-api =*=nompi_*\n\ntest:\n  requires:\n    - bash    # [build_platform == target_platform and not win]\n    - python  # [build_platform == target_platform]\n    - numpy   # [build_platform == target_platform]\n    - openpmd-api =*=nompi_*  # [build_platform == target_platform]\n    - openpmd-viewer          # [build_platform == target_platform]\n    - pandas  # [build_platform == target_platform]\n    - pytest  # [build_platform == target_platform]\n    - python  # [build_platform == target_platform]\n    - scipy   # [build_platform == target_platform]\n  source_files:\n    - examples/\n    - tests/\n  files:\n    - test.sh   # [unix]\n    - test.bat  # [win]\n  commands:\n    - test -f ${PREFIX}/bin/hipace.NOMPI.OMP.DP.LF  # [unix]\n    - if not exist %LIBRARY_PREFIX%\\bin\\hipace.NOMPI.OMP.DP.LF.exe exit 1  # [win]\n    # smoke tests: execute\n    - ./test.sh      # [unix and build_platform == target_platform]\n    - call test.bat  # [win]\n\nabout:\n  home: https://hipace.readthedocs.io\n  license: BSD-3-Clause-LBNL\n  license_family: BSD\n  license_file: license.txt\n  summary: Highly efficient Plasma Accelerator Emulation, quasistatic particle-in-cell code\n\n  description: |\n    HiPACE++ is an open-source portable GPU-capable quasistatic\n    particle-in-cell code for wakefield acceleration written in C++. It is a\n    full re-writing of the legacy code HiPACE, the Highly efficient Plasma\n    ACcelerator Emulator.\n\n  doc_url: https://hipace.readthedocs.io\n  dev_url: https://github.com/Hi-PACE/hipace\n\nextra:\n  recipe-maintainers:\n    - AlexanderSinn\n    - ax3l\n    - MaxThevenet\n    - SeverinDiederichs\n",
  "req": {
   "__set__": true,
   "elements": [
+   "amrex",
    "c_compiler_stub",
-   "ccache",
    "clang",
    "cmake",
    "cxx_compiler_stub",
    "fftw",
-   "libxml2",
+   "intel-openmp",
+   "libgomp",
    "lld",
+   "llvm-openmp",
    "make",
    "ninja",
    "openpmd-api",
@@ -377,12 +828,13 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "ccache",
     "clang",
     "cmake",
     "cxx_compiler_stub",
-    "libxml2",
+    "intel-openmp",
+    "libgomp",
     "lld",
+    "llvm-openmp",
     "make",
     "ninja",
     "pkgconfig"
@@ -391,9 +843,12 @@
   "host": {
    "__set__": true,
    "elements": [
+    "amrex",
     "c_compiler_stub",
+    "ctng-compilers",
     "cxx_compiler_stub",
     "fftw",
+    "openmp",
     "openpmd-api"
    ]
   },
@@ -401,7 +856,9 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "ctng-compilers",
+    "cxx_compiler_stub",
+    "openmp"
    ]
   },
   "test": {
@@ -424,12 +881,13 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "ccache",
     "clang",
     "cmake",
     "cxx_compiler_stub",
-    "libxml2",
+    "intel-openmp",
+    "libgomp",
     "lld",
+    "llvm-openmp",
     "make",
     "ninja",
     "pkgconfig"
@@ -438,6 +896,7 @@
   "host": {
    "__set__": true,
    "elements": [
+    "amrex >=23.10",
     "fftw =*=nompi_*",
     "openpmd-api =*=nompi_*"
    ]
@@ -477,7 +936,7 @@
    "summary": "Highly efficient Plasma Accelerator Emulation, quasistatic particle-in-cell code"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -498,22 +957,26 @@
     "clang",
     "cmake",
     "lld",
-    "libxml2",
     "ninja",
+    "intel-openmp",
     "pkgconfig"
    ],
    "host": [
+    "amrex >=23.10",
     "fftw =*=nompi_*",
     "openpmd-api =*=nompi_*"
    ]
   },
   "source": {
+   "patches": [
+    "1031.patch"
+   ],
    "sha256": "1c740c925294bacec2b7c27778339d71528a4bd1a81e051a9cc47e44b4cd0cdf",
    "url": "https://github.com/Hi-PACE/hipace/archive/v23.10.tar.gz"
   },
   "test": {
    "commands": [
-    "if not exist %LIBRARY_PREFIX%\\bin\\hipace.NOMPI.NOACC.DP.LF.exe exit 1",
+    "if not exist %LIBRARY_PREFIX%\\bin\\hipace.NOMPI.OMP.DP.LF.exe exit 1",
     "call test.bat"
    ],
    "files": [
@@ -543,7 +1006,7 @@
     "clang",
     "cmake",
     "cxx_compiler_stub",
-    "libxml2",
+    "intel-openmp",
     "lld",
     "ninja",
     "pkgconfig"
@@ -552,6 +1015,7 @@
   "host": {
    "__set__": true,
    "elements": [
+    "amrex",
     "fftw",
     "openpmd-api"
    ]
