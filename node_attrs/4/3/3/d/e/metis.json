@@ -30,7 +30,7 @@
    "ignore_run_exports": [
     "libstdcxx-ng"
    ],
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "metis"
    ]
@@ -68,6 +68,9 @@
    },
    {
     "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
     "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
     "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
    }
@@ -129,7 +132,7 @@
    "ignore_run_exports": [
     "libstdcxx-ng"
    ],
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "metis"
    ]
@@ -167,6 +170,9 @@
    },
    {
     "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
     "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
     "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
    }
@@ -211,6 +217,108 @@
    "elements": []
   }
  },
+ "linux_ppc64le_meta_yaml": {
+  "about": {
+   "description": "METIS is a set of serial programs for partitioning graphs, partitioning\nfinite element meshes, and producing fill reducing orderings for sparse\nmatrices. The algorithms implemented in METIS are based on the multilevel\nrecursive-bisection, multilevel k-way, and multi-constraint partitioning\nschemes developed in our lab.\n",
+   "doc_url": "http://glaros.dtc.umn.edu/gkhome/metis/metis/faq",
+   "home": "http://glaros.dtc.umn.edu/gkhome/metis/metis/overview",
+   "license": "Apache-2.0",
+   "license_file": [
+    "LICENSE",
+    "GKlib/LICENSE.txt"
+   ],
+   "summary": "METIS - Serial Graph Partitioning and Fill-reducing Matrix Ordering"
+  },
+  "build": {
+   "binary_relocation": true,
+   "ignore_run_exports": [
+    "libstdcxx-ng"
+   ],
+   "number": "2",
+   "run_exports": [
+    "metis"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "basnijholt",
+    "SylvainCorlay",
+    "mikemhenry"
+   ]
+  },
+  "package": {
+   "name": "metis",
+   "version": "5.1.1"
+  },
+  "requirements": {
+   "build": [
+    "cmake",
+    "make",
+    "c_compiler_stub",
+    "cxx_compiler_stub"
+   ],
+   "host": [],
+   "run": []
+  },
+  "source": [
+   {
+    "patches": [
+     "patches/0001.patch",
+     "patches/0002.patch",
+     "patches/0003-fix-version-number.patch"
+    ],
+    "sha256": "cedf0b32d32a8496bac7eb078b2b8260fb00ddb8d50c27e4082968a01bc33331",
+    "url": "https://github.com/KarypisLab/METIS/archive/v5.1.1-DistDGL-v0.5.tar.gz"
+   },
+   {
+    "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
+    "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
+    "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
+   }
+  ],
+  "test": {
+   "commands": [
+    "graphchk",
+    "cmpfillin -h",
+    "mpmetis -h",
+    "gpmetis -h",
+    "ndmetis -h",
+    "gpmetis -h",
+    "m2gmetis -h",
+    "test -f $PREFIX/include/metis.h",
+    "test -f $PREFIX/lib/libmetis.so"
+   ],
+   "source_files": [
+    "graphs"
+   ]
+  }
+ },
+ "linux_ppc64le_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "meta_yaml": {
   "about": {
    "description": "METIS is a set of serial programs for partitioning graphs, partitioning\nfinite element meshes, and producing fill reducing orderings for sparse\nmatrices. The algorithms implemented in METIS are based on the multilevel\nrecursive-bisection, multilevel k-way, and multi-constraint partitioning\nschemes developed in our lab.\n",
@@ -225,20 +333,21 @@
     "LICENSE",
     "GKlib/LICENSE.txt",
     "LICENSE",
+    "GKlib/LICENSE.txt",
+    "LICENSE",
+    "GKlib/LICENSE.txt",
+    "LICENSE",
     "GKlib/LICENSE.txt"
    ],
    "summary": "METIS - Serial Graph Partitioning and Fill-reducing Matrix Ordering"
   },
   "build": {
    "binary_relocation": true,
-   "ignore_run_exports": [
-    "libstdcxx-ng",
-    "libstdcxx-ng",
-    "libcxx",
-    "libcxx"
-   ],
-   "number": "1",
+   "ignore_run_exports": null,
+   "number": "2",
    "run_exports": [
+    "metis",
+    "metis",
     "metis",
     "metis",
     "metis",
@@ -247,6 +356,12 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "basnijholt",
+    "SylvainCorlay",
+    "mikemhenry",
+    "basnijholt",
+    "SylvainCorlay",
+    "mikemhenry",
     "basnijholt",
     "SylvainCorlay",
     "mikemhenry",
@@ -282,6 +397,14 @@
     "cmake",
     "make",
     "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "c_compiler_stub",
     "cxx_compiler_stub"
    ],
    "host": [],
@@ -299,6 +422,9 @@
    },
    {
     "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
     "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
     "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
    },
@@ -313,6 +439,9 @@
    },
    {
     "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
     "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
     "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
    },
@@ -327,6 +456,9 @@
    },
    {
     "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
     "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
     "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
    },
@@ -341,12 +473,59 @@
    },
    {
     "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
+    "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
+    "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
+   },
+   {
+    "patches": [
+     "patches/0001.patch",
+     "patches/0002.patch",
+     "patches/0003-fix-version-number.patch"
+    ],
+    "sha256": "cedf0b32d32a8496bac7eb078b2b8260fb00ddb8d50c27e4082968a01bc33331",
+    "url": "https://github.com/KarypisLab/METIS/archive/v5.1.1-DistDGL-v0.5.tar.gz"
+   },
+   {
+    "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
+    "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
+    "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
+   },
+   {
+    "patches": [
+     "patches/0001.patch",
+     "patches/0002.patch",
+     "patches/0003-fix-version-number.patch",
+     "patches/0004-uncomment-width-variables.patch"
+    ],
+    "sha256": "cedf0b32d32a8496bac7eb078b2b8260fb00ddb8d50c27e4082968a01bc33331",
+    "url": "https://github.com/KarypisLab/METIS/archive/v5.1.1-DistDGL-v0.5.tar.gz"
+   },
+   {
+    "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
     "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
     "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
    }
   ],
   "test": {
    "commands": [
+    "graphchk",
+    "cmpfillin -h",
+    "mpmetis -h",
+    "gpmetis -h",
+    "ndmetis -h",
+    "gpmetis -h",
+    "m2gmetis -h",
+    "test -f $PREFIX/include/metis.h",
+    "test -f $PREFIX/lib/libmetis.so",
     "graphchk",
     "cmpfillin -h",
     "mpmetis -h",
@@ -382,9 +561,20 @@
     "gpmetis -h",
     "m2gmetis -h",
     "test -f $PREFIX/include/metis.h",
-    "test -f $PREFIX/lib/libmetis.dylib"
+    "test -f $PREFIX/lib/libmetis.dylib",
+    "if not exist \"%LIBRARY_LIB%\\\\metis.lib\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\graphchk.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\cmpfillin.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\mpmetis.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\gpmetis.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\ndmetis.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\gpmetis.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\m2gmetis.exe\" exit 1",
+    "if not exist \"%LIBRARY_INC%\\\\metis.h\" exit 1"
    ],
    "source_files": [
+    "graphs",
+    "graphs",
     "graphs",
     "graphs",
     "graphs",
@@ -410,7 +600,7 @@
    "ignore_run_exports": [
     "libcxx"
    ],
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "metis"
    ]
@@ -448,6 +638,9 @@
    },
    {
     "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
     "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
     "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
    }
@@ -509,7 +702,7 @@
    "ignore_run_exports": [
     "libcxx"
    ],
-   "number": "1",
+   "number": "2",
    "run_exports": [
     "metis"
    ]
@@ -547,6 +740,9 @@
    },
    {
     "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
     "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
     "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
    }
@@ -601,13 +797,15 @@
  "platforms": [
   "linux_64",
   "linux_aarch64",
+  "linux_ppc64le",
   "osx_64",
-  "osx_arm64"
+  "osx_arm64",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/metis.json"
  },
- "raw_meta_yaml": "{% set name = \"metis\" %}\n{% set version = \"5.1.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/KarypisLab/METIS/archive/v{{ version }}-DistDGL-v0.5.tar.gz\n    sha256: cedf0b32d32a8496bac7eb078b2b8260fb00ddb8d50c27e4082968a01bc33331\n    patches:\n      - patches/0001.patch\n      - patches/0002.patch\n      - patches/0003-fix-version-number.patch\n\n  - url: https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip\n    sha256: e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3\n    folder: GKlib\n\n# While Metis is a pure C library, it is built with cmake, which assumes C++\n# by defaults and attempts to locate the C++ compiler. Hence the recipe has a\n# build dependency on {{ compiler('cxx') }}. The `ignore_run_exports` entry is\n# added so that the package does not depend on the C++ runtime due to the\n# dependency to the C++ compiler.\n#\n# Another fix to this would be to have metis' cmake specify `project(METIS C)`\n# instead of `project(METIS)`.\n\nbuild:\n  number: 1\n  binary_relocation: true\n  ignore_run_exports:        # Cf comment above\n    - libstdcxx-ng           # [linux]\n    - libcxx                 # [osx]\n  run_exports:\n    - {{ pin_subpackage('metis', max_pin='x.x.x') }}\n  skip: true  # [win or ppc64le]\n\nrequirements:\n  build:\n    - cmake\n    - make\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}  # Cf comment above\n  host:\n  run:\n\ntest:\n  commands:\n    - graphchk  # [unix]\n    - cmpfillin -h  # [unix]\n    - mpmetis -h  # [unix]\n    - gpmetis -h  # [unix]\n    - ndmetis -h  # [unix]\n    - gpmetis -h  # [unix]\n    - m2gmetis -h  # [unix]\n    - test -f $PREFIX/include/metis.h  # [unix]\n    - test -f $PREFIX/lib/libmetis.dylib  # [osx]\n    - test -f $PREFIX/lib/libmetis.so  # [linux]\n    - if not exist \"%LIBRARY_LIB%\\\\metis.lib\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\graphchk.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\cmpfillin.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\mpmetis.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\gpmetis.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\ndmetis.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\gpmetis.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\m2gmetis.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_INC%\\\\metis.h\" exit 1  # [win]\n  source_files:\n    - graphs\n\nabout:\n  home: http://glaros.dtc.umn.edu/gkhome/metis/metis/overview\n  license: Apache-2.0\n  license_file: \n    - LICENSE\n    - GKlib/LICENSE.txt\n  summary: 'METIS - Serial Graph Partitioning and Fill-reducing Matrix Ordering'\n  description: |\n    METIS is a set of serial programs for partitioning graphs, partitioning\n    finite element meshes, and producing fill reducing orderings for sparse\n    matrices. The algorithms implemented in METIS are based on the multilevel\n    recursive-bisection, multilevel k-way, and multi-constraint partitioning\n    schemes developed in our lab.\n  doc_url: http://glaros.dtc.umn.edu/gkhome/metis/metis/faq\n\nextra:\n  recipe-maintainers:\n    - basnijholt\n    - SylvainCorlay\n    - mikemhenry\n",
+ "raw_meta_yaml": "{% set name = \"metis\" %}\n{% set version = \"5.1.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/KarypisLab/METIS/archive/v{{ version }}-DistDGL-v0.5.tar.gz\n    sha256: cedf0b32d32a8496bac7eb078b2b8260fb00ddb8d50c27e4082968a01bc33331\n    patches:\n      - patches/0001.patch\n      - patches/0002.patch\n      - patches/0003-fix-version-number.patch\n      - patches/0004-uncomment-width-variables.patch  # [win]\n\n  - url: https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip\n    sha256: e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3\n    folder: GKlib\n    patches:\n      - patches/1001-remove-march-native-and-werror.patch\n\n# While Metis is a pure C library, it is built with cmake, which assumes C++\n# by defaults and attempts to locate the C++ compiler. Hence the recipe has a\n# build dependency on {{ compiler('cxx') }}. The `ignore_run_exports` entry is\n# added so that the package does not depend on the C++ runtime due to the\n# dependency to the C++ compiler.\n#\n# Another fix to this would be to have metis' cmake specify `project(METIS C)`\n# instead of `project(METIS)`.\n\nbuild:\n  number: 2\n  binary_relocation: true\n  ignore_run_exports:        # Cf comment above\n    - libstdcxx-ng           # [linux]\n    - libcxx                 # [osx]\n  run_exports:\n    - {{ pin_subpackage('metis', max_pin='x.x.x') }}\n\nrequirements:\n  build:\n    - cmake\n    - make\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}  # Cf comment above\n  host:\n  run:\n\ntest:\n  commands:\n    - graphchk  # [unix]\n    - cmpfillin -h  # [unix]\n    - mpmetis -h  # [unix]\n    - gpmetis -h  # [unix]\n    - ndmetis -h  # [unix]\n    - gpmetis -h  # [unix]\n    - m2gmetis -h  # [unix]\n    - test -f $PREFIX/include/metis.h  # [unix]\n    - test -f $PREFIX/lib/libmetis.dylib  # [osx]\n    - test -f $PREFIX/lib/libmetis.so  # [linux]\n    - if not exist \"%LIBRARY_LIB%\\\\metis.lib\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\graphchk.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\cmpfillin.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\mpmetis.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\gpmetis.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\ndmetis.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\gpmetis.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_BIN%\\\\m2gmetis.exe\" exit 1  # [win]\n    - if not exist \"%LIBRARY_INC%\\\\metis.h\" exit 1  # [win]\n  source_files:\n    - graphs\n\nabout:\n  home: http://glaros.dtc.umn.edu/gkhome/metis/metis/overview\n  license: Apache-2.0\n  license_file: \n    - LICENSE\n    - GKlib/LICENSE.txt\n  summary: 'METIS - Serial Graph Partitioning and Fill-reducing Matrix Ordering'\n  description: |\n    METIS is a set of serial programs for partitioning graphs, partitioning\n    finite element meshes, and producing fill reducing orderings for sparse\n    matrices. The algorithms implemented in METIS are based on the multilevel\n    recursive-bisection, multilevel k-way, and multi-constraint partitioning\n    schemes developed in our lab.\n  doc_url: http://glaros.dtc.umn.edu/gkhome/metis/metis/faq\n\nextra:\n  recipe-maintainers:\n    - basnijholt\n    - SylvainCorlay\n    - mikemhenry\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -674,5 +872,106 @@
  "version": "5.1.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/metis.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "description": "METIS is a set of serial programs for partitioning graphs, partitioning\nfinite element meshes, and producing fill reducing orderings for sparse\nmatrices. The algorithms implemented in METIS are based on the multilevel\nrecursive-bisection, multilevel k-way, and multi-constraint partitioning\nschemes developed in our lab.\n",
+   "doc_url": "http://glaros.dtc.umn.edu/gkhome/metis/metis/faq",
+   "home": "http://glaros.dtc.umn.edu/gkhome/metis/metis/overview",
+   "license": "Apache-2.0",
+   "license_file": [
+    "LICENSE",
+    "GKlib/LICENSE.txt"
+   ],
+   "summary": "METIS - Serial Graph Partitioning and Fill-reducing Matrix Ordering"
+  },
+  "build": {
+   "binary_relocation": true,
+   "ignore_run_exports": null,
+   "number": "2",
+   "run_exports": [
+    "metis"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "basnijholt",
+    "SylvainCorlay",
+    "mikemhenry"
+   ]
+  },
+  "package": {
+   "name": "metis",
+   "version": "5.1.1"
+  },
+  "requirements": {
+   "build": [
+    "cmake",
+    "make",
+    "c_compiler_stub",
+    "cxx_compiler_stub"
+   ],
+   "host": [],
+   "run": []
+  },
+  "source": [
+   {
+    "patches": [
+     "patches/0001.patch",
+     "patches/0002.patch",
+     "patches/0003-fix-version-number.patch",
+     "patches/0004-uncomment-width-variables.patch"
+    ],
+    "sha256": "cedf0b32d32a8496bac7eb078b2b8260fb00ddb8d50c27e4082968a01bc33331",
+    "url": "https://github.com/KarypisLab/METIS/archive/v5.1.1-DistDGL-v0.5.tar.gz"
+   },
+   {
+    "folder": "GKlib",
+    "patches": [
+     "patches/1001-remove-march-native-and-werror.patch"
+    ],
+    "sha256": "e75693a69957445171843a767430db7270de57fa431a415cc3f8e9ed472700e3",
+    "url": "https://github.com/KarypisLab/GKlib/archive/3eabb216ac97e11ce7e7a9b90f4c90778d9e7c18.zip"
+   }
+  ],
+  "test": {
+   "commands": [
+    "if not exist \"%LIBRARY_LIB%\\\\metis.lib\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\graphchk.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\cmpfillin.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\mpmetis.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\gpmetis.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\ndmetis.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\gpmetis.exe\" exit 1",
+    "if not exist \"%LIBRARY_BIN%\\\\m2gmetis.exe\" exit 1",
+    "if not exist \"%LIBRARY_INC%\\\\metis.h\" exit 1"
+   ],
+   "source_files": [
+    "graphs"
+   ]
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
  }
 }
