@@ -15,8 +15,8 @@
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
   "about": {
-   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the\nchip allows transferring the raw I/Q samples to the host, which is officially used\nfor DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric\nFry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\n",
-   "dev_url": "https://osmocom.org/projects/rtl-sdr/repository",
+   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the chip allows transferring the raw I/Q samples to the host, which is officially used for DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric Fry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\nFor Linux users of `rtl-sdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n    sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/rtl-sdr.rules /etc/udev/rules.d/\n    sudo udevadm control --reload\n    sudo udevadm trigger\n\nYou may have to restart for this change to take effect.\nEven though the Linux kernel's built-in DVB-T module that would normally claim the device should be unloaded automatically, you might also want to blacklist the DVB-T module by running:\n\n    sudo ln -s $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf /etc/modprobe.d/\n    sudo modprobe -r $(cat $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf | sed -n -e 's/^blacklist //p')\n",
+   "dev_url": "https://gitea.osmocom.org/sdr/rtl-sdr",
    "doc_url": "https://osmocom.org/projects/rtl-sdr/wiki",
    "home": "https://osmocom.org/projects/rtl-sdr/wiki",
    "license": "GPL-2.0-or-later AND LGPL-2.1-or-later",
@@ -26,6 +26,7 @@
   },
   "build": {
    "number": "0",
+   "post-link": "post-link",
    "run_exports": [
     "rtl-sdr"
    ]
@@ -37,38 +38,32 @@
   },
   "package": {
    "name": "rtl-sdr",
-   "version": "0.6.0.post20231004"
+   "version": "2.0.0"
   },
   "requirements": {
    "build": [
     "c_compiler_stub",
     "cmake",
-    "cdt_stub",
     "make",
     "pkg-config"
    ],
    "host": [
-    "libusb",
-    "libusb-cos6"
+    "libusb"
    ],
    "run": []
   },
   "source": {
    "patches": [
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch"
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch"
    ],
-   "sha256": "ee10a76fe0c6601102367d4cdf5c26271e9442d0491aa8df27e5a9bf639cff7c",
-   "url": "https://github.com/osmocom/rtl-sdr/archive/0.6.0.tar.gz"
+   "sha256": "eadc993877fd4278763b475890b8cd18bc59d8edee7f59fd045863d5c459ea25",
+   "url": "https://github.com/osmocom/rtl-sdr/archive/v2.0.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -91,7 +86,6 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cdt_stub",
     "cmake",
     "make",
     "pkg-config"
@@ -100,8 +94,7 @@
   "host": {
    "__set__": true,
    "elements": [
-    "libusb",
-    "libusb-cos6"
+    "libusb"
    ]
   },
   "run": {
@@ -115,8 +108,8 @@
  },
  "linux_aarch64_meta_yaml": {
   "about": {
-   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the\nchip allows transferring the raw I/Q samples to the host, which is officially used\nfor DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric\nFry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\n",
-   "dev_url": "https://osmocom.org/projects/rtl-sdr/repository",
+   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the chip allows transferring the raw I/Q samples to the host, which is officially used for DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric Fry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\nFor Linux users of `rtl-sdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n    sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/rtl-sdr.rules /etc/udev/rules.d/\n    sudo udevadm control --reload\n    sudo udevadm trigger\n\nYou may have to restart for this change to take effect.\nEven though the Linux kernel's built-in DVB-T module that would normally claim the device should be unloaded automatically, you might also want to blacklist the DVB-T module by running:\n\n    sudo ln -s $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf /etc/modprobe.d/\n    sudo modprobe -r $(cat $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf | sed -n -e 's/^blacklist //p')\n",
+   "dev_url": "https://gitea.osmocom.org/sdr/rtl-sdr",
    "doc_url": "https://osmocom.org/projects/rtl-sdr/wiki",
    "home": "https://osmocom.org/projects/rtl-sdr/wiki",
    "license": "GPL-2.0-or-later AND LGPL-2.1-or-later",
@@ -126,6 +119,7 @@
   },
   "build": {
    "number": "0",
+   "post-link": "post-link",
    "run_exports": [
     "rtl-sdr"
    ]
@@ -137,7 +131,7 @@
   },
   "package": {
    "name": "rtl-sdr",
-   "version": "0.6.0.post20231004"
+   "version": "2.0.0"
   },
   "requirements": {
    "build": [
@@ -153,20 +147,16 @@
   },
   "source": {
    "patches": [
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch"
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch"
    ],
-   "sha256": "ee10a76fe0c6601102367d4cdf5c26271e9442d0491aa8df27e5a9bf639cff7c",
-   "url": "https://github.com/osmocom/rtl-sdr/archive/0.6.0.tar.gz"
+   "sha256": "eadc993877fd4278763b475890b8cd18bc59d8edee7f59fd045863d5c459ea25",
+   "url": "https://github.com/osmocom/rtl-sdr/archive/v2.0.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -211,8 +201,8 @@
  },
  "linux_ppc64le_meta_yaml": {
   "about": {
-   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the\nchip allows transferring the raw I/Q samples to the host, which is officially used\nfor DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric\nFry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\n",
-   "dev_url": "https://osmocom.org/projects/rtl-sdr/repository",
+   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the chip allows transferring the raw I/Q samples to the host, which is officially used for DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric Fry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\nFor Linux users of `rtl-sdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n    sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/rtl-sdr.rules /etc/udev/rules.d/\n    sudo udevadm control --reload\n    sudo udevadm trigger\n\nYou may have to restart for this change to take effect.\nEven though the Linux kernel's built-in DVB-T module that would normally claim the device should be unloaded automatically, you might also want to blacklist the DVB-T module by running:\n\n    sudo ln -s $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf /etc/modprobe.d/\n    sudo modprobe -r $(cat $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf | sed -n -e 's/^blacklist //p')\n",
+   "dev_url": "https://gitea.osmocom.org/sdr/rtl-sdr",
    "doc_url": "https://osmocom.org/projects/rtl-sdr/wiki",
    "home": "https://osmocom.org/projects/rtl-sdr/wiki",
    "license": "GPL-2.0-or-later AND LGPL-2.1-or-later",
@@ -222,6 +212,7 @@
   },
   "build": {
    "number": "0",
+   "post-link": "post-link",
    "run_exports": [
     "rtl-sdr"
    ]
@@ -233,7 +224,7 @@
   },
   "package": {
    "name": "rtl-sdr",
-   "version": "0.6.0.post20231004"
+   "version": "2.0.0"
   },
   "requirements": {
    "build": [
@@ -249,20 +240,16 @@
   },
   "source": {
    "patches": [
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch"
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch"
    ],
-   "sha256": "ee10a76fe0c6601102367d4cdf5c26271e9442d0491aa8df27e5a9bf639cff7c",
-   "url": "https://github.com/osmocom/rtl-sdr/archive/0.6.0.tar.gz"
+   "sha256": "eadc993877fd4278763b475890b8cd18bc59d8edee7f59fd045863d5c459ea25",
+   "url": "https://github.com/osmocom/rtl-sdr/archive/v2.0.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -307,8 +294,8 @@
  },
  "meta_yaml": {
   "about": {
-   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the\nchip allows transferring the raw I/Q samples to the host, which is officially used\nfor DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric\nFry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\n",
-   "dev_url": "https://osmocom.org/projects/rtl-sdr/repository",
+   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the chip allows transferring the raw I/Q samples to the host, which is officially used for DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric Fry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\nFor Linux users of `rtl-sdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n    sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/rtl-sdr.rules /etc/udev/rules.d/\n    sudo udevadm control --reload\n    sudo udevadm trigger\n\nYou may have to restart for this change to take effect.\nEven though the Linux kernel's built-in DVB-T module that would normally claim the device should be unloaded automatically, you might also want to blacklist the DVB-T module by running:\n\n    sudo ln -s $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf /etc/modprobe.d/\n    sudo modprobe -r $(cat $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf | sed -n -e 's/^blacklist //p')\n",
+   "dev_url": "https://gitea.osmocom.org/sdr/rtl-sdr",
    "doc_url": "https://osmocom.org/projects/rtl-sdr/wiki",
    "home": "https://osmocom.org/projects/rtl-sdr/wiki",
    "license": "GPL-2.0-or-later AND LGPL-2.1-or-later",
@@ -318,6 +305,7 @@
   },
   "build": {
    "number": "0",
+   "post-link": "post-link",
    "run_exports": [
     "rtl-sdr",
     "rtl-sdr",
@@ -339,13 +327,12 @@
   },
   "package": {
    "name": "rtl-sdr",
-   "version": "0.6.0.post20231004"
+   "version": "2.0.0"
   },
   "requirements": {
    "build": [
     "c_compiler_stub",
     "cmake",
-    "cdt_stub",
     "make",
     "pkg-config",
     "c_compiler_stub",
@@ -371,7 +358,6 @@
    ],
    "host": [
     "libusb",
-    "libusb-cos6",
     "libusb",
     "libusb",
     "libusb",
@@ -385,75 +371,51 @@
   },
   "source": {
    "patches": [
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch",
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch",
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch",
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch",
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch",
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch"
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch"
    ],
-   "sha256": "ee10a76fe0c6601102367d4cdf5c26271e9442d0491aa8df27e5a9bf639cff7c",
-   "url": "https://github.com/osmocom/rtl-sdr/archive/0.6.0.tar.gz"
+   "sha256": "eadc993877fd4278763b475890b8cd18bc59d8edee7f59fd045863d5c459ea25",
+   "url": "https://github.com/osmocom/rtl-sdr/archive/v2.0.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -531,8 +493,8 @@
  "name": "rtl-sdr",
  "osx_64_meta_yaml": {
   "about": {
-   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the\nchip allows transferring the raw I/Q samples to the host, which is officially used\nfor DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric\nFry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\n",
-   "dev_url": "https://osmocom.org/projects/rtl-sdr/repository",
+   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the chip allows transferring the raw I/Q samples to the host, which is officially used for DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric Fry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\nFor Linux users of `rtl-sdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n    sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/rtl-sdr.rules /etc/udev/rules.d/\n    sudo udevadm control --reload\n    sudo udevadm trigger\n\nYou may have to restart for this change to take effect.\nEven though the Linux kernel's built-in DVB-T module that would normally claim the device should be unloaded automatically, you might also want to blacklist the DVB-T module by running:\n\n    sudo ln -s $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf /etc/modprobe.d/\n    sudo modprobe -r $(cat $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf | sed -n -e 's/^blacklist //p')\n",
+   "dev_url": "https://gitea.osmocom.org/sdr/rtl-sdr",
    "doc_url": "https://osmocom.org/projects/rtl-sdr/wiki",
    "home": "https://osmocom.org/projects/rtl-sdr/wiki",
    "license": "GPL-2.0-or-later AND LGPL-2.1-or-later",
@@ -553,7 +515,7 @@
   },
   "package": {
    "name": "rtl-sdr",
-   "version": "0.6.0.post20231004"
+   "version": "2.0.0"
   },
   "requirements": {
    "build": [
@@ -569,20 +531,16 @@
   },
   "source": {
    "patches": [
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch"
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch"
    ],
-   "sha256": "ee10a76fe0c6601102367d4cdf5c26271e9442d0491aa8df27e5a9bf639cff7c",
-   "url": "https://github.com/osmocom/rtl-sdr/archive/0.6.0.tar.gz"
+   "sha256": "eadc993877fd4278763b475890b8cd18bc59d8edee7f59fd045863d5c459ea25",
+   "url": "https://github.com/osmocom/rtl-sdr/archive/v2.0.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -627,8 +585,8 @@
  },
  "osx_arm64_meta_yaml": {
   "about": {
-   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the\nchip allows transferring the raw I/Q samples to the host, which is officially used\nfor DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric\nFry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\n",
-   "dev_url": "https://osmocom.org/projects/rtl-sdr/repository",
+   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the chip allows transferring the raw I/Q samples to the host, which is officially used for DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric Fry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\nFor Linux users of `rtl-sdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n    sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/rtl-sdr.rules /etc/udev/rules.d/\n    sudo udevadm control --reload\n    sudo udevadm trigger\n\nYou may have to restart for this change to take effect.\nEven though the Linux kernel's built-in DVB-T module that would normally claim the device should be unloaded automatically, you might also want to blacklist the DVB-T module by running:\n\n    sudo ln -s $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf /etc/modprobe.d/\n    sudo modprobe -r $(cat $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf | sed -n -e 's/^blacklist //p')\n",
+   "dev_url": "https://gitea.osmocom.org/sdr/rtl-sdr",
    "doc_url": "https://osmocom.org/projects/rtl-sdr/wiki",
    "home": "https://osmocom.org/projects/rtl-sdr/wiki",
    "license": "GPL-2.0-or-later AND LGPL-2.1-or-later",
@@ -649,7 +607,7 @@
   },
   "package": {
    "name": "rtl-sdr",
-   "version": "0.6.0.post20231004"
+   "version": "2.0.0"
   },
   "requirements": {
    "build": [
@@ -665,20 +623,16 @@
   },
   "source": {
    "patches": [
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch"
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch"
    ],
-   "sha256": "ee10a76fe0c6601102367d4cdf5c26271e9442d0491aa8df27e5a9bf639cff7c",
-   "url": "https://github.com/osmocom/rtl-sdr/archive/0.6.0.tar.gz"
+   "sha256": "eadc993877fd4278763b475890b8cd18bc59d8edee7f59fd045863d5c459ea25",
+   "url": "https://github.com/osmocom/rtl-sdr/archive/v2.0.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -739,15 +693,13 @@
  "pr_info": {
   "__lazy_json__": "pr_info/rtl-sdr.json"
  },
- "raw_meta_yaml": "{% set name = \"rtl-sdr\" %}\n{% set version = \"0.6.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}.post20231004\n\nsource:\n  url: https://github.com/osmocom/{{ name }}/archive/{{ version }}.tar.gz\n  sha256: ee10a76fe0c6601102367d4cdf5c26271e9442d0491aa8df27e5a9bf639cff7c\n  patches:\n    - 0001-Add-commits-since-0.6.0-through-2023-08-21.patch\n    - 0002-count-live-transfers-before-close.patch\n    - 0003-add-libusb-lib-directories-in-cmake-for-macos.patch\n    - 0004-call-interrupt_event_handler-in-cancel_async.patch\n    - 0005-open-with-file-descriptor.patch\n    - 0006-l-band-lock-optimizations.patch\n    - 0007-Add-rtl-sdr-blog-features.patch\n    - 0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch\n    - 0009-fix-rtl_tcp-on-macos.patch\n    - 0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch\n    - 0011-Set-version-for-conda-forge.patch\n\nbuild:\n  number: 0\n  run_exports:\n    - {{ pin_subpackage('rtl-sdr', max_pin='x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - cmake\n    # libudev CDT needed to link against libusb through uhd on linux CentOS 6\n    # libusb uses the conda-forge libudev package for CentOS 7\n    - {{ cdt('libudev-devel') }}  # [linux and cdt_name=='cos6']\n    - make  # [not win]\n    - ninja  # [win]\n    - pkg-config\n  host:\n    - libusb\n    # restrict to cos6-compatible libusb (and libudev)\n    - libusb-cos6  # [linux and cdt_name=='cos6']\n    - pthreads-win32  # [win]\n  run:\n    - pthreads-win32  # [win]\n\ntest:\n  commands:\n    # make it possible to check !ERRORLEVEL! after || on Windows\n    - setlocal EnableDelayedExpansion  # [win]\n\n    # verify that executables get installed\n    {% set cmds = [\"rtl_adsb\", \"rtl_biast\", \"rtl_eeprom\", \"rtl_fm\", \"rtl_power\"] %}\n    {% set cmds = cmds + [\"rtl_sdr\", \"rtl_tcp\", \"rtl_test\"] %}\n    {% for cmd in cmds %}\n    - {{ cmd }} -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi  # [not win]\n    - {{ cmd }} -h || if !ERRORLEVEL! LEQ 1 cmd /c \"exit /b 0\"  # [win]\n    {% endfor %}\n\n    # verify that headers get installed\n    - test -f $PREFIX/include/rtl-sdr.h  # [not win]\n    - test -f $PREFIX/include/rtl-sdr_export.h  # [not win]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\rtl-sdr.h exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\rtl-sdr_export.h exit 1  # [win]\n\n    # verify that libraries get installed\n    - test -f $PREFIX/lib/librtlsdr${SHLIB_EXT}  # [not win]\n    - if not exist %PREFIX%\\\\Library\\\\bin\\\\rtlsdr.dll exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\rtlsdr.lib exit 1  # [win]\n\nabout:\n  home: https://osmocom.org/projects/rtl-sdr/wiki\n  license: GPL-2.0-or-later AND LGPL-2.1-or-later\n  license_family: GPL\n  license_file: COPYING\n  summary: 'Library for using an Realtek RTL2832-based DVB dongle as an SDR receiver'\n  description: |\n    DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the\n    chip allows transferring the raw I/Q samples to the host, which is officially used\n    for DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric\n    Fry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\n  doc_url: https://osmocom.org/projects/rtl-sdr/wiki\n  dev_url: https://osmocom.org/projects/rtl-sdr/repository\n\nextra:\n  recipe-maintainers:\n    - ryanvolz\n",
+ "raw_meta_yaml": "{% set name = \"rtl-sdr\" %}\n{% set version = \"2.0.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/osmocom/{{ name }}/archive/v{{ version }}.tar.gz\n  sha256: eadc993877fd4278763b475890b8cd18bc59d8edee7f59fd045863d5c459ea25\n  patches:\n    - 0001-count-live-transfers-before-close.patch\n    - 0002-add-libusb-lib-directories-in-cmake-for-macos.patch\n    - 0003-call-interrupt_event_handler-in-cancel_async.patch\n    - 0004-open-with-file-descriptor.patch\n    - 0005-l-band-lock-optimizations.patch\n    - 0006-Add-rtl-sdr-blog-features.patch\n    - 0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch\n\nbuild:\n  number: 0\n  run_exports:\n    - {{ pin_subpackage('rtl-sdr', max_pin='x') }}\n  # instructions for manually linking udev rules\n  post-link: post-link  # [linux]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - cmake\n    - make  # [not win]\n    - ninja  # [win]\n    - pkg-config\n  host:\n    - libusb\n    - pthreads-win32  # [win]\n  run:\n    - pthreads-win32  # [win]\n\ntest:\n  commands:\n    # make it possible to check !ERRORLEVEL! after || on Windows\n    - setlocal EnableDelayedExpansion  # [win]\n\n    # verify that executables get installed\n    {% set cmds = [\"rtl_adsb\", \"rtl_biast\", \"rtl_eeprom\", \"rtl_fm\", \"rtl_power\"] %}\n    {% set cmds = cmds + [\"rtl_sdr\", \"rtl_tcp\", \"rtl_test\"] %}\n    {% for cmd in cmds %}\n    - {{ cmd }} -h || ec=$?; if [ $ec -gt 1 ]; then exit $ec; fi  # [not win]\n    - {{ cmd }} -h || if !ERRORLEVEL! LEQ 1 cmd /c \"exit /b 0\"  # [win]\n    {% endfor %}\n\n    # verify that headers get installed\n    - test -f $PREFIX/include/rtl-sdr.h  # [not win]\n    - test -f $PREFIX/include/rtl-sdr_export.h  # [not win]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\rtl-sdr.h exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\rtl-sdr_export.h exit 1  # [win]\n\n    # verify that libraries get installed\n    - test -f $PREFIX/lib/librtlsdr${SHLIB_EXT}  # [not win]\n    - if not exist %PREFIX%\\\\Library\\\\bin\\\\rtlsdr.dll exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\rtlsdr.lib exit 1  # [win]\n\nabout:\n  home: https://osmocom.org/projects/rtl-sdr/wiki\n  license: GPL-2.0-or-later AND LGPL-2.1-or-later\n  license_family: GPL\n  license_file: COPYING\n  summary: 'Library for using an Realtek RTL2832-based DVB dongle as an SDR receiver'\n  description: >\n    DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the chip allows transferring the raw I/Q samples to the host, which is officially used for DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric Fry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\n\n    For Linux users of `rtl-sdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n        sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/rtl-sdr.rules /etc/udev/rules.d/\n        sudo udevadm control --reload\n        sudo udevadm trigger\n\n    You may have to restart for this change to take effect.\n\n    Even though the Linux kernel's built-in DVB-T module that would normally claim the device should be unloaded automatically, you might also want to blacklist the DVB-T module by running:\n\n        sudo ln -s $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf /etc/modprobe.d/\n        sudo modprobe -r $(cat $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf | sed -n -e 's/^blacklist //p')\n  doc_url: https://osmocom.org/projects/rtl-sdr/wiki\n  dev_url: https://gitea.osmocom.org/sdr/rtl-sdr\n\nextra:\n  recipe-maintainers:\n    - ryanvolz\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
-   "cdt_stub",
    "cmake",
    "libusb",
-   "libusb-cos6",
    "make",
    "ninja",
    "pkg-config",
@@ -759,7 +711,6 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cdt_stub",
     "cmake",
     "make",
     "ninja",
@@ -771,7 +722,6 @@
    "elements": [
     "c_compiler_stub",
     "libusb",
-    "libusb-cos6",
     "pthreads-win32"
    ]
   },
@@ -793,7 +743,6 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cdt_stub",
     "cmake",
     "make",
     "ninja",
@@ -804,7 +753,6 @@
    "__set__": true,
    "elements": [
     "libusb",
-    "libusb-cos6",
     "pthreads-win32"
    ]
   },
@@ -819,15 +767,15 @@
    "elements": []
   }
  },
- "url": "https://github.com/osmocom/rtl-sdr/archive/0.6.0.tar.gz",
- "version": "0.6.0.post20231004",
+ "url": "https://github.com/osmocom/rtl-sdr/archive/v2.0.0.tar.gz",
+ "version": "2.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/rtl-sdr.json"
  },
  "win_64_meta_yaml": {
   "about": {
-   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the\nchip allows transferring the raw I/Q samples to the host, which is officially used\nfor DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric\nFry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\n",
-   "dev_url": "https://osmocom.org/projects/rtl-sdr/repository",
+   "description": "DVB-T dongles based on the Realtek RTL2832U can be used as a cheap SDR, since the chip allows transferring the raw I/Q samples to the host, which is officially used for DAB/DAB+/FM demodulation. The possibility of this has been discovered by Eric Fry (http://rtlsdr.org/#history_and_discovery_of_rtlsdr).\nFor Linux users of `rtl-sdr`, you will likely want to link the provided udev rule into your system installation in order for the hardware to have the correct permissions:\n\n    sudo ln -s $CONDA_PREFIX/lib/udev/rules.d/rtl-sdr.rules /etc/udev/rules.d/\n    sudo udevadm control --reload\n    sudo udevadm trigger\n\nYou may have to restart for this change to take effect.\nEven though the Linux kernel's built-in DVB-T module that would normally claim the device should be unloaded automatically, you might also want to blacklist the DVB-T module by running:\n\n    sudo ln -s $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf /etc/modprobe.d/\n    sudo modprobe -r $(cat $CONDA_PREFIX/etc/modprobe.d/rtl-sdr-blacklist.conf | sed -n -e 's/^blacklist //p')\n",
+   "dev_url": "https://gitea.osmocom.org/sdr/rtl-sdr",
    "doc_url": "https://osmocom.org/projects/rtl-sdr/wiki",
    "home": "https://osmocom.org/projects/rtl-sdr/wiki",
    "license": "GPL-2.0-or-later AND LGPL-2.1-or-later",
@@ -848,7 +796,7 @@
   },
   "package": {
    "name": "rtl-sdr",
-   "version": "0.6.0.post20231004"
+   "version": "2.0.0"
   },
   "requirements": {
    "build": [
@@ -867,20 +815,16 @@
   },
   "source": {
    "patches": [
-    "0001-Add-commits-since-0.6.0-through-2023-08-21.patch",
-    "0002-count-live-transfers-before-close.patch",
-    "0003-add-libusb-lib-directories-in-cmake-for-macos.patch",
-    "0004-call-interrupt_event_handler-in-cancel_async.patch",
-    "0005-open-with-file-descriptor.patch",
-    "0006-l-band-lock-optimizations.patch",
-    "0007-Add-rtl-sdr-blog-features.patch",
-    "0008-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch",
-    "0009-fix-rtl_tcp-on-macos.patch",
-    "0010-fix-rtl_tcp-error-on-windows-when-hints-not-initiali.patch",
-    "0011-Set-version-for-conda-forge.patch"
+    "0001-count-live-transfers-before-close.patch",
+    "0002-add-libusb-lib-directories-in-cmake-for-macos.patch",
+    "0003-call-interrupt_event_handler-in-cancel_async.patch",
+    "0004-open-with-file-descriptor.patch",
+    "0005-l-band-lock-optimizations.patch",
+    "0006-Add-rtl-sdr-blog-features.patch",
+    "0007-follow-keenerd-and-don-t-stop-the-i2c-repeater-on-tu.patch"
    ],
-   "sha256": "ee10a76fe0c6601102367d4cdf5c26271e9442d0491aa8df27e5a9bf639cff7c",
-   "url": "https://github.com/osmocom/rtl-sdr/archive/0.6.0.tar.gz"
+   "sha256": "eadc993877fd4278763b475890b8cd18bc59d8edee7f59fd045863d5c459ea25",
+   "url": "https://github.com/osmocom/rtl-sdr/archive/v2.0.0.tar.gz"
   },
   "test": {
    "commands": [
