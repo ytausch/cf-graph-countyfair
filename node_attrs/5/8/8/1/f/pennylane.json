@@ -45,10 +45,153 @@
     "BastianZim",
     "leofang",
     "vincentmr",
+    "BastianZim",
+    "leofang",
+    "vincentmr",
     "BastianZim"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "pl-device-test=pennylane.devices.tests:cli"
+     ],
+     "number": "2",
+     "run_exports": [
+      "pennylane-core"
+     ],
+     "script": "cd \"${SRC_DIR}/pennylane\" && PYTHON -m pip install . --no-deps -vv"
+    },
+    "name": "pennylane-core",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python"
+     ],
+     "run": [
+      "appdirs",
+      "autograd",
+      "autoray >=0.6.1",
+      "cachetools",
+      "networkx",
+      "numpy",
+      "python",
+      "requests",
+      "rustworkx",
+      "scipy",
+      "semantic_version >=2.7",
+      "toml",
+      "typing_extensions"
+     ],
+     "run_constrained": [
+      "pennylane >=0.30.0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2",
+     "run_exports": [
+      "pennylane-lightning-core"
+     ],
+     "script": [
+      "cd \"${SRC_DIR}/pennylane-lightning\"",
+      "PYTHON setup.py build_ext --define=\"ENABLE_BLAS=ON;ENABLE_OPENMP=ON\"",
+      "PYTHON setup.py bdist_wheel",
+      "PYTHON -m pip install . --no-deps -vv"
+     ]
+    },
+    "name": "pennylane-lightning-core",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja",
+      "make"
+     ],
+     "host": [
+      "libcblas",
+      "libgomp",
+      "kokkos >=4.0.0,<5",
+      "kokkos-kernels >=4.0.0,<5",
+      "pip",
+      "pybind11",
+      "python",
+      "setuptools",
+      "ninja"
+     ],
+     "run": [
+      "ninja",
+      "numpy",
+      "python",
+      "pennylane-core",
+      "kokkos",
+      "kokkos-kernels"
+     ],
+     "run_constrained": [
+      "pennylane-lightning <0.0a0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2"
+    },
+    "name": "pennylane",
+    "requirements": {
+     "host": [
+      "python"
+     ],
+     "run": [
+      "python",
+      "pennylane-core",
+      "pennylane-lightning-core"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pypy --version 2> /dev/null || echo Using Python to run tests",
+      "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+      "python -c \"import pennylane as qml; qml.about()\"",
+      "pip check",
+      "pl-device-test --help",
+      "pl-device-test --device lightning.qubit --shots None --skip-ops",
+      "pl-device-test --device lightning.qubit --shots 10000 --skip-ops"
+     ],
+     "imports": [
+      "pennylane",
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "flaky",
+      "pip",
+      "pytest",
+      "pytest-mock"
+     ]
+    }
+   },
    {
     "build": {
      "entry_points": [
@@ -765,10 +908,22 @@
     "pip",
     "python",
     "pip",
+    "python",
+    "pip",
     "python"
    ]
   },
   "source": [
+   {
+    "folder": "pennylane",
+    "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
+    "url": "https://github.com/PennyLaneAI/pennylane/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane-lightning",
+    "sha256": "c4cab4a8a1a53edc0990a2a429805dca1c6a46a7ffcc6f77c985b88cd6ff6247",
+    "url": "https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v0.33.0.tar.gz"
+   },
    {
     "folder": "pennylane",
     "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
@@ -908,10 +1063,153 @@
     "BastianZim",
     "leofang",
     "vincentmr",
+    "BastianZim",
+    "leofang",
+    "vincentmr",
     "BastianZim"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "pl-device-test=pennylane.devices.tests:cli"
+     ],
+     "number": "2",
+     "run_exports": [
+      "pennylane-core"
+     ],
+     "script": "cd \"${SRC_DIR}/pennylane\" && PYTHON -m pip install . --no-deps -vv"
+    },
+    "name": "pennylane-core",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python"
+     ],
+     "run": [
+      "appdirs",
+      "autograd",
+      "autoray >=0.6.1",
+      "cachetools",
+      "networkx",
+      "numpy",
+      "python",
+      "requests",
+      "rustworkx",
+      "scipy",
+      "semantic_version >=2.7",
+      "toml",
+      "typing_extensions"
+     ],
+     "run_constrained": [
+      "pennylane >=0.30.0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2",
+     "run_exports": [
+      "pennylane-lightning-core"
+     ],
+     "script": [
+      "cd \"${SRC_DIR}/pennylane-lightning\"",
+      "PYTHON setup.py build_ext --define=\"ENABLE_BLAS=ON;ENABLE_OPENMP=ON\"",
+      "PYTHON setup.py bdist_wheel",
+      "PYTHON -m pip install . --no-deps -vv"
+     ]
+    },
+    "name": "pennylane-lightning-core",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja",
+      "make"
+     ],
+     "host": [
+      "libcblas",
+      "libgomp",
+      "kokkos >=4.0.0,<5",
+      "kokkos-kernels >=4.0.0,<5",
+      "pip",
+      "pybind11",
+      "python",
+      "setuptools",
+      "ninja"
+     ],
+     "run": [
+      "ninja",
+      "numpy",
+      "python",
+      "pennylane-core",
+      "kokkos",
+      "kokkos-kernels"
+     ],
+     "run_constrained": [
+      "pennylane-lightning <0.0a0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2"
+    },
+    "name": "pennylane",
+    "requirements": {
+     "host": [
+      "python"
+     ],
+     "run": [
+      "python",
+      "pennylane-core",
+      "pennylane-lightning-core"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pypy --version 2> /dev/null || echo Using Python to run tests",
+      "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+      "python -c \"import pennylane as qml; qml.about()\"",
+      "pip check",
+      "pl-device-test --help",
+      "pl-device-test --device lightning.qubit --shots None --skip-ops",
+      "pl-device-test --device lightning.qubit --shots 10000 --skip-ops"
+     ],
+     "imports": [
+      "pennylane",
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "flaky",
+      "pip",
+      "pytest",
+      "pytest-mock"
+     ]
+    }
+   },
    {
     "build": {
      "entry_points": [
@@ -1628,10 +1926,22 @@
     "pip",
     "python",
     "pip",
+    "python",
+    "pip",
     "python"
    ]
   },
   "source": [
+   {
+    "folder": "pennylane",
+    "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
+    "url": "https://github.com/PennyLaneAI/pennylane/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane-lightning",
+    "sha256": "c4cab4a8a1a53edc0990a2a429805dca1c6a46a7ffcc6f77c985b88cd6ff6247",
+    "url": "https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v0.33.0.tar.gz"
+   },
    {
     "folder": "pennylane",
     "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
@@ -1771,10 +2081,153 @@
     "BastianZim",
     "leofang",
     "vincentmr",
+    "BastianZim",
+    "leofang",
+    "vincentmr",
     "BastianZim"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "pl-device-test=pennylane.devices.tests:cli"
+     ],
+     "number": "2",
+     "run_exports": [
+      "pennylane-core"
+     ],
+     "script": "cd \"${SRC_DIR}/pennylane\" && PYTHON -m pip install . --no-deps -vv"
+    },
+    "name": "pennylane-core",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python"
+     ],
+     "run": [
+      "appdirs",
+      "autograd",
+      "autoray >=0.6.1",
+      "cachetools",
+      "networkx",
+      "numpy",
+      "python",
+      "requests",
+      "rustworkx",
+      "scipy",
+      "semantic_version >=2.7",
+      "toml",
+      "typing_extensions"
+     ],
+     "run_constrained": [
+      "pennylane >=0.30.0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2",
+     "run_exports": [
+      "pennylane-lightning-core"
+     ],
+     "script": [
+      "cd \"${SRC_DIR}/pennylane-lightning\"",
+      "PYTHON setup.py build_ext --define=\"ENABLE_BLAS=ON;ENABLE_OPENMP=ON\"",
+      "PYTHON setup.py bdist_wheel",
+      "PYTHON -m pip install . --no-deps -vv"
+     ]
+    },
+    "name": "pennylane-lightning-core",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja",
+      "make"
+     ],
+     "host": [
+      "libcblas",
+      "libgomp",
+      "kokkos >=4.0.0,<5",
+      "kokkos-kernels >=4.0.0,<5",
+      "pip",
+      "pybind11",
+      "python",
+      "setuptools",
+      "ninja"
+     ],
+     "run": [
+      "ninja",
+      "numpy",
+      "python",
+      "pennylane-core",
+      "kokkos",
+      "kokkos-kernels"
+     ],
+     "run_constrained": [
+      "pennylane-lightning <0.0a0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2"
+    },
+    "name": "pennylane",
+    "requirements": {
+     "host": [
+      "python"
+     ],
+     "run": [
+      "python",
+      "pennylane-core",
+      "pennylane-lightning-core"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pypy --version 2> /dev/null || echo Using Python to run tests",
+      "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+      "python -c \"import pennylane as qml; qml.about()\"",
+      "pip check",
+      "pl-device-test --help",
+      "pl-device-test --device lightning.qubit --shots None --skip-ops",
+      "pl-device-test --device lightning.qubit --shots 10000 --skip-ops"
+     ],
+     "imports": [
+      "pennylane",
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "flaky",
+      "pip",
+      "pytest",
+      "pytest-mock"
+     ]
+    }
+   },
    {
     "build": {
      "entry_points": [
@@ -2491,10 +2944,22 @@
     "pip",
     "python",
     "pip",
+    "python",
+    "pip",
     "python"
    ]
   },
   "source": [
+   {
+    "folder": "pennylane",
+    "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
+    "url": "https://github.com/PennyLaneAI/pennylane/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane-lightning",
+    "sha256": "c4cab4a8a1a53edc0990a2a429805dca1c6a46a7ffcc6f77c985b88cd6ff6247",
+    "url": "https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v0.33.0.tar.gz"
+   },
    {
     "folder": "pennylane",
     "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
@@ -2691,6 +3156,21 @@
     "BastianZim",
     "leofang",
     "vincentmr",
+    "BastianZim",
+    "leofang",
+    "vincentmr",
+    "BastianZim",
+    "leofang",
+    "vincentmr",
+    "BastianZim",
+    "leofang",
+    "vincentmr",
+    "BastianZim",
+    "leofang",
+    "vincentmr",
+    "BastianZim",
+    "leofang",
+    "vincentmr",
     "BastianZim"
    ]
   },
@@ -4866,6 +5346,706 @@
      ],
      "host": [
       "libcblas",
+      "libgomp",
+      "kokkos >=4.0.0,<5",
+      "kokkos-kernels >=4.0.0,<5",
+      "pip",
+      "pybind11",
+      "python",
+      "setuptools",
+      "ninja"
+     ],
+     "run": [
+      "ninja",
+      "numpy",
+      "python",
+      "pennylane-core",
+      "kokkos",
+      "kokkos-kernels"
+     ],
+     "run_constrained": [
+      "pennylane-lightning <0.0a0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2"
+    },
+    "name": "pennylane",
+    "requirements": {
+     "host": [
+      "python"
+     ],
+     "run": [
+      "python",
+      "pennylane-core",
+      "pennylane-lightning-core"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pypy --version 2> /dev/null || echo Using Python to run tests",
+      "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+      "python -c \"import pennylane as qml; qml.about()\"",
+      "pip check",
+      "pl-device-test --help",
+      "pl-device-test --device lightning.qubit --shots None --skip-ops",
+      "pl-device-test --device lightning.qubit --shots 10000 --skip-ops"
+     ],
+     "imports": [
+      "pennylane",
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "flaky",
+      "pip",
+      "pytest",
+      "pytest-mock"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "pl-device-test=pennylane.devices.tests:cli"
+     ],
+     "number": "2",
+     "run_exports": [
+      "pennylane-core"
+     ],
+     "script": "cd \"${SRC_DIR}/pennylane\" && PYTHON -m pip install . --no-deps -vv"
+    },
+    "name": "pennylane-core",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python"
+     ],
+     "run": [
+      "appdirs",
+      "autograd",
+      "autoray >=0.6.1",
+      "cachetools",
+      "networkx",
+      "numpy",
+      "python",
+      "requests",
+      "rustworkx",
+      "scipy",
+      "semantic_version >=2.7",
+      "toml",
+      "typing_extensions"
+     ],
+     "run_constrained": [
+      "pennylane >=0.30.0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2",
+     "run_exports": [
+      "pennylane-lightning-core"
+     ],
+     "script": [
+      "cd \"${SRC_DIR}/pennylane-lightning\"",
+      "PYTHON setup.py build_ext --define=\"ENABLE_BLAS=ON;ENABLE_OPENMP=ON\"",
+      "PYTHON setup.py bdist_wheel",
+      "PYTHON -m pip install . --no-deps -vv"
+     ]
+    },
+    "name": "pennylane-lightning-core",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja",
+      "make"
+     ],
+     "host": [
+      "libcblas",
+      "libgomp",
+      "kokkos >=4.0.0,<5",
+      "kokkos-kernels >=4.0.0,<5",
+      "pip",
+      "pybind11",
+      "python",
+      "setuptools",
+      "ninja"
+     ],
+     "run": [
+      "ninja",
+      "numpy",
+      "python",
+      "pennylane-core",
+      "kokkos",
+      "kokkos-kernels"
+     ],
+     "run_constrained": [
+      "pennylane-lightning <0.0a0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2"
+    },
+    "name": "pennylane",
+    "requirements": {
+     "host": [
+      "python"
+     ],
+     "run": [
+      "python",
+      "pennylane-core",
+      "pennylane-lightning-core"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pypy --version 2> /dev/null || echo Using Python to run tests",
+      "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+      "python -c \"import pennylane as qml; qml.about()\"",
+      "pip check",
+      "pl-device-test --help",
+      "pl-device-test --device lightning.qubit --shots None --skip-ops",
+      "pl-device-test --device lightning.qubit --shots 10000 --skip-ops"
+     ],
+     "imports": [
+      "pennylane",
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "flaky",
+      "pip",
+      "pytest",
+      "pytest-mock"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "pl-device-test=pennylane.devices.tests:cli"
+     ],
+     "number": "2",
+     "run_exports": [
+      "pennylane-core"
+     ],
+     "script": "cd \"${SRC_DIR}/pennylane\" && PYTHON -m pip install . --no-deps -vv"
+    },
+    "name": "pennylane-core",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python"
+     ],
+     "run": [
+      "appdirs",
+      "autograd",
+      "autoray >=0.6.1",
+      "cachetools",
+      "networkx",
+      "numpy",
+      "python",
+      "requests",
+      "rustworkx",
+      "scipy",
+      "semantic_version >=2.7",
+      "toml",
+      "typing_extensions"
+     ],
+     "run_constrained": [
+      "pennylane >=0.30.0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2",
+     "run_exports": [
+      "pennylane-lightning-core"
+     ],
+     "script": [
+      "cd \"${SRC_DIR}/pennylane-lightning\"",
+      "PYTHON setup.py build_ext --define=\"ENABLE_BLAS=ON;ENABLE_OPENMP=ON\"",
+      "PYTHON setup.py bdist_wheel",
+      "PYTHON -m pip install . --no-deps -vv"
+     ]
+    },
+    "name": "pennylane-lightning-core",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja",
+      "make"
+     ],
+     "host": [
+      "libcblas",
+      "libgomp",
+      "kokkos >=4.0.0,<5",
+      "kokkos-kernels >=4.0.0,<5",
+      "pip",
+      "pybind11",
+      "python",
+      "setuptools",
+      "ninja"
+     ],
+     "run": [
+      "ninja",
+      "numpy",
+      "python",
+      "pennylane-core",
+      "kokkos",
+      "kokkos-kernels"
+     ],
+     "run_constrained": [
+      "pennylane-lightning <0.0a0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2"
+    },
+    "name": "pennylane",
+    "requirements": {
+     "host": [
+      "python"
+     ],
+     "run": [
+      "python",
+      "pennylane-core",
+      "pennylane-lightning-core"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pypy --version 2> /dev/null || echo Using Python to run tests",
+      "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+      "python -c \"import pennylane as qml; qml.about()\"",
+      "pip check",
+      "pl-device-test --help",
+      "pl-device-test --device lightning.qubit --shots None --skip-ops",
+      "pl-device-test --device lightning.qubit --shots 10000 --skip-ops"
+     ],
+     "imports": [
+      "pennylane",
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "flaky",
+      "pip",
+      "pytest",
+      "pytest-mock"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "pl-device-test=pennylane.devices.tests:cli"
+     ],
+     "number": "2",
+     "run_exports": [
+      "pennylane-core"
+     ],
+     "script": "cd \"${SRC_DIR}/pennylane\" && PYTHON -m pip install . --no-deps -vv"
+    },
+    "name": "pennylane-core",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python"
+     ],
+     "run": [
+      "appdirs",
+      "autograd",
+      "autoray >=0.6.1",
+      "cachetools",
+      "networkx",
+      "numpy",
+      "python",
+      "requests",
+      "rustworkx",
+      "scipy",
+      "semantic_version >=2.7",
+      "toml",
+      "typing_extensions"
+     ],
+     "run_constrained": [
+      "pennylane >=0.30.0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2",
+     "run_exports": [
+      "pennylane-lightning-core"
+     ],
+     "script": [
+      "cd \"${SRC_DIR}/pennylane-lightning\"",
+      "PYTHON setup.py build_ext --define=\"ENABLE_BLAS=ON;ENABLE_OPENMP=ON\"",
+      "PYTHON setup.py bdist_wheel",
+      "PYTHON -m pip install . --no-deps -vv"
+     ]
+    },
+    "name": "pennylane-lightning-core",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja",
+      "make"
+     ],
+     "host": [
+      "libcblas",
+      "llvm-openmp >=16.0.3",
+      "kokkos >=4.0.0,<5",
+      "kokkos-kernels >=4.0.0,<5",
+      "pip",
+      "pybind11",
+      "python",
+      "setuptools",
+      "ninja"
+     ],
+     "run": [
+      "ninja",
+      "numpy",
+      "python",
+      "pennylane-core",
+      "kokkos",
+      "kokkos-kernels"
+     ],
+     "run_constrained": [
+      "pennylane-lightning <0.0a0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2"
+    },
+    "name": "pennylane",
+    "requirements": {
+     "host": [
+      "python"
+     ],
+     "run": [
+      "python",
+      "pennylane-core",
+      "pennylane-lightning-core"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pypy --version 2> /dev/null || echo Using Python to run tests",
+      "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+      "python -c \"import pennylane as qml; qml.about()\"",
+      "pip check",
+      "pl-device-test --help",
+      "pl-device-test --device lightning.qubit --shots None --skip-ops",
+      "pl-device-test --device lightning.qubit --shots 10000 --skip-ops"
+     ],
+     "imports": [
+      "pennylane",
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "flaky",
+      "pip",
+      "pytest",
+      "pytest-mock"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "pl-device-test=pennylane.devices.tests:cli"
+     ],
+     "number": "2",
+     "run_exports": [
+      "pennylane-core"
+     ],
+     "script": "cd \"${SRC_DIR}/pennylane\" && PYTHON -m pip install . --no-deps -vv"
+    },
+    "name": "pennylane-core",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python"
+     ],
+     "run": [
+      "appdirs",
+      "autograd",
+      "autoray >=0.6.1",
+      "cachetools",
+      "networkx",
+      "numpy",
+      "python",
+      "requests",
+      "rustworkx",
+      "scipy",
+      "semantic_version >=2.7",
+      "toml",
+      "typing_extensions"
+     ],
+     "run_constrained": [
+      "pennylane >=0.30.0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2",
+     "run_exports": [
+      "pennylane-lightning-core"
+     ],
+     "script": [
+      "cd \"${SRC_DIR}/pennylane-lightning\"",
+      "PYTHON setup.py build_ext --define=\"ENABLE_BLAS=ON;ENABLE_OPENMP=ON\"",
+      "PYTHON setup.py bdist_wheel",
+      "PYTHON -m pip install . --no-deps -vv"
+     ]
+    },
+    "name": "pennylane-lightning-core",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja",
+      "make"
+     ],
+     "host": [
+      "libcblas",
+      "llvm-openmp >=16.0.3",
+      "kokkos >=4.0.0,<5",
+      "kokkos-kernels >=4.0.0,<5",
+      "pip",
+      "pybind11",
+      "python",
+      "setuptools",
+      "ninja"
+     ],
+     "run": [
+      "ninja",
+      "numpy",
+      "python",
+      "pennylane-core",
+      "kokkos",
+      "kokkos-kernels"
+     ],
+     "run_constrained": [
+      "pennylane-lightning <0.0a0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2"
+    },
+    "name": "pennylane",
+    "requirements": {
+     "host": [
+      "python"
+     ],
+     "run": [
+      "python",
+      "pennylane-core",
+      "pennylane-lightning-core"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pypy --version 2> /dev/null || echo Using Python to run tests",
+      "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+      "python -c \"import pennylane as qml; qml.about()\"",
+      "pip check",
+      "pl-device-test --help",
+      "pl-device-test --device lightning.qubit --shots None --skip-ops",
+      "pl-device-test --device lightning.qubit --shots 10000 --skip-ops"
+     ],
+     "imports": [
+      "pennylane",
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "flaky",
+      "pip",
+      "pytest",
+      "pytest-mock"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "pl-device-test=pennylane.devices.tests:cli"
+     ],
+     "number": "2",
+     "run_exports": [
+      "pennylane-core"
+     ],
+     "script": "cd \"${SRC_DIR}/pennylane\" && PYTHON -m pip install . --no-deps -vv"
+    },
+    "name": "pennylane-core",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python"
+     ],
+     "run": [
+      "appdirs",
+      "autograd",
+      "autoray >=0.6.1",
+      "cachetools",
+      "networkx",
+      "numpy",
+      "python",
+      "requests",
+      "rustworkx",
+      "scipy",
+      "semantic_version >=2.7",
+      "toml",
+      "typing_extensions"
+     ],
+     "run_constrained": [
+      "pennylane >=0.30.0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2",
+     "run_exports": [
+      "pennylane-lightning-core"
+     ],
+     "script": [
+      "cd \"${SRC_DIR}/pennylane-lightning\"",
+      "PYTHON setup.py build_ext --define=\"ENABLE_BLAS=ON;ENABLE_OPENMP=ON\"",
+      "PYTHON setup.py bdist_wheel",
+      "PYTHON -m pip install . --no-deps -vv"
+     ]
+    },
+    "name": "pennylane-lightning-core",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja",
+      "make"
+     ],
+     "host": [
+      "libcblas",
       "llvm-openmp >=16.0.3",
       "kokkos >=4.0.0,<5",
       "kokkos-kernels >=4.0.0,<5",
@@ -6109,10 +7289,70 @@
     "pip",
     "python",
     "pip",
+    "python",
+    "pip",
+    "python",
+    "pip",
+    "python",
+    "pip",
+    "python",
+    "pip",
+    "python",
+    "pip",
     "python"
    ]
   },
   "source": [
+   {
+    "folder": "pennylane",
+    "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
+    "url": "https://github.com/PennyLaneAI/pennylane/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane-lightning",
+    "sha256": "c4cab4a8a1a53edc0990a2a429805dca1c6a46a7ffcc6f77c985b88cd6ff6247",
+    "url": "https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane",
+    "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
+    "url": "https://github.com/PennyLaneAI/pennylane/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane-lightning",
+    "sha256": "c4cab4a8a1a53edc0990a2a429805dca1c6a46a7ffcc6f77c985b88cd6ff6247",
+    "url": "https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane",
+    "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
+    "url": "https://github.com/PennyLaneAI/pennylane/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane-lightning",
+    "sha256": "c4cab4a8a1a53edc0990a2a429805dca1c6a46a7ffcc6f77c985b88cd6ff6247",
+    "url": "https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane",
+    "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
+    "url": "https://github.com/PennyLaneAI/pennylane/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane-lightning",
+    "sha256": "c4cab4a8a1a53edc0990a2a429805dca1c6a46a7ffcc6f77c985b88cd6ff6247",
+    "url": "https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane",
+    "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
+    "url": "https://github.com/PennyLaneAI/pennylane/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane-lightning",
+    "sha256": "c4cab4a8a1a53edc0990a2a429805dca1c6a46a7ffcc6f77c985b88cd6ff6247",
+    "url": "https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v0.33.0.tar.gz"
+   },
    {
     "folder": "pennylane",
     "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
@@ -6384,10 +7624,153 @@
     "BastianZim",
     "leofang",
     "vincentmr",
+    "BastianZim",
+    "leofang",
+    "vincentmr",
     "BastianZim"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "pl-device-test=pennylane.devices.tests:cli"
+     ],
+     "number": "2",
+     "run_exports": [
+      "pennylane-core"
+     ],
+     "script": "cd \"${SRC_DIR}/pennylane\" && PYTHON -m pip install . --no-deps -vv"
+    },
+    "name": "pennylane-core",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python"
+     ],
+     "run": [
+      "appdirs",
+      "autograd",
+      "autoray >=0.6.1",
+      "cachetools",
+      "networkx",
+      "numpy",
+      "python",
+      "requests",
+      "rustworkx",
+      "scipy",
+      "semantic_version >=2.7",
+      "toml",
+      "typing_extensions"
+     ],
+     "run_constrained": [
+      "pennylane >=0.30.0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2",
+     "run_exports": [
+      "pennylane-lightning-core"
+     ],
+     "script": [
+      "cd \"${SRC_DIR}/pennylane-lightning\"",
+      "PYTHON setup.py build_ext --define=\"ENABLE_BLAS=ON;ENABLE_OPENMP=ON\"",
+      "PYTHON setup.py bdist_wheel",
+      "PYTHON -m pip install . --no-deps -vv"
+     ]
+    },
+    "name": "pennylane-lightning-core",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja",
+      "make"
+     ],
+     "host": [
+      "libcblas",
+      "llvm-openmp >=16.0.3",
+      "kokkos >=4.0.0,<5",
+      "kokkos-kernels >=4.0.0,<5",
+      "pip",
+      "pybind11",
+      "python",
+      "setuptools",
+      "ninja"
+     ],
+     "run": [
+      "ninja",
+      "numpy",
+      "python",
+      "pennylane-core",
+      "kokkos",
+      "kokkos-kernels"
+     ],
+     "run_constrained": [
+      "pennylane-lightning <0.0a0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2"
+    },
+    "name": "pennylane",
+    "requirements": {
+     "host": [
+      "python"
+     ],
+     "run": [
+      "python",
+      "pennylane-core",
+      "pennylane-lightning-core"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pypy --version 2> /dev/null || echo Using Python to run tests",
+      "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+      "python -c \"import pennylane as qml; qml.about()\"",
+      "pip check",
+      "pl-device-test --help",
+      "pl-device-test --device lightning.qubit --shots None --skip-ops",
+      "pl-device-test --device lightning.qubit --shots 10000 --skip-ops"
+     ],
+     "imports": [
+      "pennylane",
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "flaky",
+      "pip",
+      "pytest",
+      "pytest-mock"
+     ]
+    }
+   },
    {
     "build": {
      "entry_points": [
@@ -7104,10 +8487,22 @@
     "pip",
     "python",
     "pip",
+    "python",
+    "pip",
     "python"
    ]
   },
   "source": [
+   {
+    "folder": "pennylane",
+    "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
+    "url": "https://github.com/PennyLaneAI/pennylane/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane-lightning",
+    "sha256": "c4cab4a8a1a53edc0990a2a429805dca1c6a46a7ffcc6f77c985b88cd6ff6247",
+    "url": "https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v0.33.0.tar.gz"
+   },
    {
     "folder": "pennylane",
     "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
@@ -7244,10 +8639,153 @@
     "BastianZim",
     "leofang",
     "vincentmr",
+    "BastianZim",
+    "leofang",
+    "vincentmr",
     "BastianZim"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "pl-device-test=pennylane.devices.tests:cli"
+     ],
+     "number": "2",
+     "run_exports": [
+      "pennylane-core"
+     ],
+     "script": "cd \"${SRC_DIR}/pennylane\" && PYTHON -m pip install . --no-deps -vv"
+    },
+    "name": "pennylane-core",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python"
+     ],
+     "run": [
+      "appdirs",
+      "autograd",
+      "autoray >=0.6.1",
+      "cachetools",
+      "networkx",
+      "numpy",
+      "python",
+      "requests",
+      "rustworkx",
+      "scipy",
+      "semantic_version >=2.7",
+      "toml",
+      "typing_extensions"
+     ],
+     "run_constrained": [
+      "pennylane >=0.30.0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2",
+     "run_exports": [
+      "pennylane-lightning-core"
+     ],
+     "script": [
+      "cd \"${SRC_DIR}/pennylane-lightning\"",
+      "PYTHON setup.py build_ext --define=\"ENABLE_BLAS=ON;ENABLE_OPENMP=ON\"",
+      "PYTHON setup.py bdist_wheel",
+      "PYTHON -m pip install . --no-deps -vv"
+     ]
+    },
+    "name": "pennylane-lightning-core",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja",
+      "make"
+     ],
+     "host": [
+      "libcblas",
+      "llvm-openmp >=16.0.3",
+      "kokkos >=4.0.0,<5",
+      "kokkos-kernels >=4.0.0,<5",
+      "pip",
+      "pybind11",
+      "python",
+      "setuptools",
+      "ninja"
+     ],
+     "run": [
+      "ninja",
+      "numpy",
+      "python",
+      "pennylane-core",
+      "kokkos",
+      "kokkos-kernels"
+     ],
+     "run_constrained": [
+      "pennylane-lightning <0.0a0"
+     ]
+    },
+    "test": {
+     "imports": [
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "number": "2"
+    },
+    "name": "pennylane",
+    "requirements": {
+     "host": [
+      "python"
+     ],
+     "run": [
+      "python",
+      "pennylane-core",
+      "pennylane-lightning-core"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pypy --version 2> /dev/null || echo Using Python to run tests",
+      "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+      "python -c \"import pennylane as qml; qml.about()\"",
+      "pip check",
+      "pl-device-test --help",
+      "pl-device-test --device lightning.qubit --shots None --skip-ops",
+      "pl-device-test --device lightning.qubit --shots 10000 --skip-ops"
+     ],
+     "imports": [
+      "pennylane",
+      "pennylane_lightning"
+     ],
+     "requires": [
+      "setuptools",
+      "flaky",
+      "pip",
+      "pytest",
+      "pytest-mock"
+     ]
+    }
+   },
    {
     "build": {
      "entry_points": [
@@ -7822,10 +9360,22 @@
     "pip",
     "python",
     "pip",
+    "python",
+    "pip",
     "python"
    ]
   },
   "source": [
+   {
+    "folder": "pennylane",
+    "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
+    "url": "https://github.com/PennyLaneAI/pennylane/archive/refs/tags/v0.33.0.tar.gz"
+   },
+   {
+    "folder": "pennylane-lightning",
+    "sha256": "c4cab4a8a1a53edc0990a2a429805dca1c6a46a7ffcc6f77c985b88cd6ff6247",
+    "url": "https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v0.33.0.tar.gz"
+   },
    {
     "folder": "pennylane",
     "sha256": "b41c843a432c5869fc63dc35c9e9d53bec64d296ca0e0eeb1c9b83d95a68c3f1",
