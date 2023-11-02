@@ -233,6 +233,7 @@
    "recipe-maintainers": [
     "adibbley",
     "adibbley",
+    "adibbley",
     "adibbley"
    ]
   },
@@ -247,9 +248,12 @@
    "host": [
     "cuda-version 12.0",
     "cuda-version 12.0",
+    "cuda-version 12.0",
     "cuda-version 12.0"
    ],
    "run": [
+    "cuda-version",
+    "cuda-cudart-dev",
     "cuda-version",
     "cuda-cudart-dev",
     "cuda-version",
@@ -260,7 +264,7 @@
    "run_constrained": null
   },
   "source": {
-   "sha256": "211513a8a194557a2b838a46700a820af6f38932fac5a82fa229c162779d9a25",
+   "sha256": "e8bccbfda35abc7076ba6623578d11d05966a9c7fed817cbfe7d4dea9627057e",
    "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/windows-x86_64/cuda_profiler_api-windows-x86_64-12.0.76-archive.zip"
   },
   "test": {
@@ -270,7 +274,9 @@
     "test -f $PREFIX/targets/x64/include/cuda_profiler_api.h",
     "test -f $PREFIX/targets/x64/include/cudaProfiler.h",
     "test -f $PREFIX/targets/x64/include/cuda_profiler_api.h",
-    "test -f $PREFIX/targets/x64/include/cudaProfiler.h"
+    "test -f $PREFIX/targets/x64/include/cudaProfiler.h",
+    "if not exist %LIBRARY_INC%\\cuda_profiler_api.h exit 1",
+    "if not exist %LIBRARY_INC%\\cudaProfiler.h exit 1"
    ]
   }
  },
@@ -285,12 +291,13 @@
  "platforms": [
   "linux_64",
   "linux_aarch64",
-  "linux_ppc64le"
+  "linux_ppc64le",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/cuda-profiler-api.json"
  },
- "raw_meta_yaml": "{% set name = \"cuda-profiler-api\" %}\n{% set version = \"12.0.76\" %}\n{% set cuda_version = \"12.0\" %}\n{% set platform = \"linux-x86_64\" %}  # [linux64]\n{% set platform = \"linux-ppc64le\" %}  # [ppc64le]\n{% set platform = \"linux-sbsa\" %}  # [aarch64]\n{% set platform = \"windows-x86_64\" %}  # [win]\n{% set target_name = \"x86_64-linux\" %}  # [linux64]\n{% set target_name = \"ppc64le-linux\" %}  # [ppc64le]\n{% set target_name = \"sbsa-linux\" %}  # [aarch64]\n{% set target_name = \"x64\" %}  # [win]\n{% set extension = \"tar.xz\" %}  # [not win]\n{% set extension = \"zip\" %}  # [win]\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/{{ platform }}/cuda_profiler_api-{{ platform }}-{{ version }}-archive.{{ extension }}\n  sha256: 0fb470a3065ad39666dd231c12f8c8a9a94f34c4ac8494e5a399ea8e6ad69346  # [linux64]\n  sha256: 211513a8a194557a2b838a46700a820af6f38932fac5a82fa229c162779d9a25  # [ppc64le]\n  sha256: b93d4e99077c31e7034eeaea09068b43abc0dd2868a01d489ebcd1e51ceab816  # [aarch64]\n  sha256: e8bccbfda35abc7076ba6623578d11d05966a9c7fed817cbfe7d4dea9627057e  # [win]\n\nbuild:\n  number: 0\n  skip: true  # [osx or win]\n\nrequirements:\n  build:\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n  host:\n    - cuda-version {{ cuda_version }}\n  run:\n    - {{ pin_compatible(\"cuda-version\", max_pin=\"x.x\") }}\n    - cuda-cudart-dev\n  run_constrained:\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n\ntest:\n  commands:\n    - test -f $PREFIX/targets/{{ target_name }}/include/cuda_profiler_api.h  # [linux]\n    - test -f $PREFIX/targets/{{ target_name }}/include/cudaProfiler.h       # [linux]\n    - if not exist %LIBRARY_INC%\\cuda_profiler_api.h exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\cudaProfiler.h exit 1       # [win]\n\nabout:\n  home: https://developer.nvidia.com/cuda-toolkit\n  license_file: LICENSE\n  license: LicenseRef-NVIDIA-End-User-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/eula/index.html\n  summary: CUDA Profiler API Headers.\n  description: |\n    CUDA Profiler API Headers.\n  doc_url: https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#range-replay-define-range\n\nextra:\n  recipe-maintainers:\n    - adibbley\n",
+ "raw_meta_yaml": "{% set name = \"cuda-profiler-api\" %}\n{% set version = \"12.0.76\" %}\n{% set cuda_version = \"12.0\" %}\n{% set platform = \"linux-x86_64\" %}  # [linux64]\n{% set platform = \"linux-ppc64le\" %}  # [ppc64le]\n{% set platform = \"linux-sbsa\" %}  # [aarch64]\n{% set platform = \"windows-x86_64\" %}  # [win]\n{% set target_name = \"x86_64-linux\" %}  # [linux64]\n{% set target_name = \"ppc64le-linux\" %}  # [ppc64le]\n{% set target_name = \"sbsa-linux\" %}  # [aarch64]\n{% set target_name = \"x64\" %}  # [win]\n{% set extension = \"tar.xz\" %}  # [not win]\n{% set extension = \"zip\" %}  # [win]\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/{{ platform }}/cuda_profiler_api-{{ platform }}-{{ version }}-archive.{{ extension }}\n  sha256: 0fb470a3065ad39666dd231c12f8c8a9a94f34c4ac8494e5a399ea8e6ad69346  # [linux64]\n  sha256: 211513a8a194557a2b838a46700a820af6f38932fac5a82fa229c162779d9a25  # [ppc64le]\n  sha256: b93d4e99077c31e7034eeaea09068b43abc0dd2868a01d489ebcd1e51ceab816  # [aarch64]\n  sha256: e8bccbfda35abc7076ba6623578d11d05966a9c7fed817cbfe7d4dea9627057e  # [win]\n\nbuild:\n  number: 0\n  skip: true  # [osx]\n\nrequirements:\n  build:\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n  host:\n    - cuda-version {{ cuda_version }}\n  run:\n    - {{ pin_compatible(\"cuda-version\", max_pin=\"x.x\") }}\n    - cuda-cudart-dev\n  run_constrained:\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n\ntest:\n  commands:\n    - test -f $PREFIX/targets/{{ target_name }}/include/cuda_profiler_api.h  # [linux]\n    - test -f $PREFIX/targets/{{ target_name }}/include/cudaProfiler.h       # [linux]\n    - if not exist %LIBRARY_INC%\\cuda_profiler_api.h exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\cudaProfiler.h exit 1       # [win]\n\nabout:\n  home: https://developer.nvidia.com/cuda-toolkit\n  license_file: LICENSE\n  license: LicenseRef-NVIDIA-End-User-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/eula/index.html\n  summary: CUDA Profiler API Headers.\n  description: |\n    CUDA Profiler API Headers.\n  doc_url: https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#range-replay-define-range\n\nextra:\n  recipe-maintainers:\n    - adibbley\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -354,5 +361,72 @@
  "version": "12.0.76",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cuda-profiler-api.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "description": "CUDA Profiler API Headers.\n",
+   "doc_url": "https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html#range-replay-define-range",
+   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+   "license_file": "LICENSE",
+   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "summary": "CUDA Profiler API Headers."
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "adibbley"
+   ]
+  },
+  "package": {
+   "name": "cuda-profiler-api",
+   "version": "12.0.76"
+  },
+  "requirements": {
+   "build": [],
+   "host": [
+    "cuda-version 12.0"
+   ],
+   "run": [
+    "cuda-version",
+    "cuda-cudart-dev"
+   ],
+   "run_constrained": null
+  },
+  "source": {
+   "sha256": "e8bccbfda35abc7076ba6623578d11d05966a9c7fed817cbfe7d4dea9627057e",
+   "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_profiler_api/windows-x86_64/cuda_profiler_api-windows-x86_64-12.0.76-archive.zip"
+  },
+  "test": {
+   "commands": [
+    "if not exist %LIBRARY_INC%\\cuda_profiler_api.h exit 1",
+    "if not exist %LIBRARY_INC%\\cudaProfiler.h exit 1"
+   ]
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": []
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "cuda-version"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "cuda-cudart-dev",
+    "cuda-version"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
  }
 }
