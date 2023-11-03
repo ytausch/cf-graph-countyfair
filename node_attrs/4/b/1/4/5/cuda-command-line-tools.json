@@ -3,7 +3,8 @@
  "branch": "main",
  "conda-forge.yml": {
   "provider": {
-   "linux_aarch64": "default"
+   "linux_aarch64": "default",
+   "linux_ppc64le": "default"
   }
  },
  "feedstock_name": "cuda-command-line-tools",
@@ -140,6 +141,71 @@
    "elements": []
   }
  },
+ "linux_ppc64le_meta_yaml": {
+  "about": {
+   "description": "Meta-package containing the command line tools to debug CUDA applications\n",
+   "doc_url": "https://docs.nvidia.com/cuda/index.html",
+   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+   "license_file": "LICENSE.txt",
+   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "summary": "Meta-package containing the command line tools to debug CUDA applications"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "adibbley"
+   ]
+  },
+  "package": {
+   "name": "cuda-command-line-tools",
+   "version": "12.0.0"
+  },
+  "requirements": {
+   "run": [
+    "cuda-cupti-dev 12.0.90",
+    "cuda-nvdisasm 12.0.76",
+    "cuda-nvprof 12.0.90",
+    "cuda-nvtx 12.0.76",
+    "cuda-sanitizer-api 12.0.90"
+   ]
+  },
+  "source": {
+   "sha256": "5db25d4fd138013b563f9a3d1d87f7de7df1dac014fd4cccdfbb3435a5cff761",
+   "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_documentation/LICENSE.txt"
+  },
+  "test": {
+   "commands": [
+    "exit 0"
+   ]
+  }
+ },
+ "linux_ppc64le_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": []
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "cuda-cupti-dev",
+    "cuda-nvdisasm",
+    "cuda-nvprof",
+    "cuda-nvtx",
+    "cuda-sanitizer-api"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "meta_yaml": {
   "about": {
    "description": "Meta-package containing the command line tools to debug CUDA applications\n",
@@ -155,6 +221,8 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "adibbley",
+    "adibbley",
     "adibbley",
     "adibbley"
    ]
@@ -175,6 +243,15 @@
     "cuda-gdb 12.0.90",
     "cuda-nvdisasm 12.0.76",
     "cuda-nvtx 12.0.76",
+    "cuda-sanitizer-api 12.0.90",
+    "cuda-cupti-dev 12.0.90",
+    "cuda-nvdisasm 12.0.76",
+    "cuda-nvprof 12.0.90",
+    "cuda-nvtx 12.0.76",
+    "cuda-sanitizer-api 12.0.90",
+    "cuda-cupti-dev 12.0.90",
+    "cuda-nvdisasm 12.0.76",
+    "cuda-nvprof 12.0.90",
     "cuda-sanitizer-api 12.0.90"
    ]
   },
@@ -184,6 +261,8 @@
   },
   "test": {
    "commands": [
+    "exit 0",
+    "exit 0",
     "exit 0",
     "exit 0"
    ]
@@ -199,12 +278,14 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
-  "linux_aarch64"
+  "linux_aarch64",
+  "linux_ppc64le",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/cuda-command-line-tools.json"
  },
- "raw_meta_yaml": "{% set version = \"12.0.0\" %}\n\npackage:\n  name: cuda-command-line-tools\n  version: {{ version }}\n\nsource:\n  url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_documentation/LICENSE.txt\n  sha256: 5db25d4fd138013b563f9a3d1d87f7de7df1dac014fd4cccdfbb3435a5cff761\n\nbuild:\n  number: 0\n  skip: true  # [osx or win]\n\nrequirements:\n  run:\n    - cuda-cupti-dev 12.0.90\n    - cuda-gdb 12.0.90\n    - cuda-nvdisasm 12.0.76\n    - cuda-nvprof 12.0.90         # [not aarch64]\n    - cuda-nvtx 12.0.76\n    - cuda-sanitizer-api 12.0.90\n\ntest:\n  commands:\n    - exit 0\n\nabout:\n  home: https://developer.nvidia.com/cuda-toolkit\n  license_file: LICENSE.txt\n  license: LicenseRef-NVIDIA-End-User-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/eula/index.html\n  summary: Meta-package containing the command line tools to debug CUDA applications\n  description: |\n    Meta-package containing the command line tools to debug CUDA applications\n  doc_url: https://docs.nvidia.com/cuda/index.html\n\nextra:\n  recipe-maintainers:\n    - adibbley\n",
+ "raw_meta_yaml": "{% set version = \"12.0.0\" %}\n\npackage:\n  name: cuda-command-line-tools\n  version: {{ version }}\n\nsource:\n  url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_documentation/LICENSE.txt\n  sha256: 5db25d4fd138013b563f9a3d1d87f7de7df1dac014fd4cccdfbb3435a5cff761\n\nbuild:\n  number: 0\n  skip: true  # [osx]\n\nrequirements:\n  run:\n    - cuda-cupti-dev 12.0.90\n    # There is no `cuda-gdb` support on Windows so it is skipped.\n    # Also `cuda-gdb` should be supported on `ppc64le`, but is currently broken.\n    # xref: https://github.com/conda-forge/cuda-command-line-tools-feedstock/issues/6\n    - cuda-gdb 12.0.90       # [linux and not ppc64le]\n    - cuda-nvdisasm 12.0.76\n    - cuda-nvprof 12.0.90    # [not aarch64]\n    - cuda-nvtx 12.0.76      # [linux]\n    - cuda-sanitizer-api 12.0.90\n\ntest:\n  commands:\n    - exit 0\n\nabout:\n  home: https://developer.nvidia.com/cuda-toolkit\n  license_file: LICENSE.txt\n  license: LicenseRef-NVIDIA-End-User-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/eula/index.html\n  summary: Meta-package containing the command line tools to debug CUDA applications\n  description: |\n    Meta-package containing the command line tools to debug CUDA applications\n  doc_url: https://docs.nvidia.com/cuda/index.html\n\nextra:\n  recipe-maintainers:\n    - adibbley\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -271,5 +352,68 @@
  "version": "12.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cuda-command-line-tools.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "description": "Meta-package containing the command line tools to debug CUDA applications\n",
+   "doc_url": "https://docs.nvidia.com/cuda/index.html",
+   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+   "license_file": "LICENSE.txt",
+   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "summary": "Meta-package containing the command line tools to debug CUDA applications"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "adibbley"
+   ]
+  },
+  "package": {
+   "name": "cuda-command-line-tools",
+   "version": "12.0.0"
+  },
+  "requirements": {
+   "run": [
+    "cuda-cupti-dev 12.0.90",
+    "cuda-nvdisasm 12.0.76",
+    "cuda-nvprof 12.0.90",
+    "cuda-sanitizer-api 12.0.90"
+   ]
+  },
+  "source": {
+   "sha256": "5db25d4fd138013b563f9a3d1d87f7de7df1dac014fd4cccdfbb3435a5cff761",
+   "url": "https://developer.download.nvidia.com/compute/cuda/redist/cuda_documentation/LICENSE.txt"
+  },
+  "test": {
+   "commands": [
+    "exit 0"
+   ]
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": []
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "cuda-cupti-dev",
+    "cuda-nvdisasm",
+    "cuda-nvprof",
+    "cuda-sanitizer-api"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
  }
 }
