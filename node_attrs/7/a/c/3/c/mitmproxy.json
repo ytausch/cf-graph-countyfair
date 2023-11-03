@@ -47,9 +47,11 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech",
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech"
@@ -372,27 +374,35 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech",
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech",
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech",
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech",
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech",
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech",
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech",
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech"
@@ -965,9 +975,11 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech",
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech"
@@ -1220,9 +1232,11 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech",
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech"
@@ -1450,7 +1464,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/mitmproxy.json"
  },
- "raw_meta_yaml": "{% set version = \"10.1.0\" %}\n{% set aioquic_mitmproxy_version = \"0.9.20.3\" %}\n{% set urwid_mitmproxy_version = \"2.1.2.1\" %}\n{% set mitmproxy_rs_version = \"0.3.7\" %}\n\npackage:\n  name: mitmproxy\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/mitmproxy/mitmproxy/archive/{{ version }}.tar.gz\n    sha256: b243509a55aedf54badefc5d1f49450c37fb254f95e6891c53c1e5782147bcf9\n    folder: mitmproxy\n  - url: https://github.com/meitinger/aioquic_mitmproxy/archive/{{ aioquic_mitmproxy_version }}.tar.gz\n    sha256: 63902a08fcc2a5e89f0faa3b4f918db30b45d1a613941530a7342e747c9f5df3\n    folder: aioquic_mitmproxy\n  - url: https://github.com/mitmproxy/urwid-mitmproxy/archive/{{ urwid_mitmproxy_version }}.tar.gz\n    sha256: e13544f6f6deb5d276696760ec022d656a95415e70e06c77c452461e5f062675\n    folder: urwid-mitmproxy\n  - url: https://github.com/mitmproxy/mitmproxy_rs/archive/{{ mitmproxy_rs_version }}.tar.gz\n    sha256: faf4ff0a1f03fa4f732f27a658d386d7623573aa4f70c968856b862270eecbf5\n    folder: mitmproxy-rs\n\nbuild:\n  number: 0\n  skip: true  # [py<310]\n  script:\n    {% set _pip_cmd = PYTHON + \" -m pip install -vv --no-deps --no-build-isolation\" %}\n    - {{ _pip_cmd }} ./aioquic_mitmproxy\n    - {{ _pip_cmd }} ./urwid-mitmproxy\n    - {{ _pip_cmd }} ./mitmproxy-rs/mitmproxy-macos    # [osx]\n    - {{ _pip_cmd }} ./mitmproxy-rs/mitmproxy-windows  # [win]\n    - {{ _pip_cmd }} ./mitmproxy-rs/mitmproxy-rs\n    - {{ _pip_cmd }} ./mitmproxy\n  entry_points:\n    - mitmproxy = mitmproxy.tools.main:mitmproxy\n    - mitmdump = mitmproxy.tools.main:mitmdump\n    - mitmweb = mitmproxy.tools.main:mitmweb\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('rust') }}\n    - {{ compiler('c') }}                    # [unix]\n    - python >=3.10\n    - pip\n    - maturin >=1.2.3,<2                      # [build_platform != target_platform]\n    - hatchling                              # [build_platform != target_platform]\n    - cargo-bundle-licenses\n  host:\n    - pip\n    - python\n    - hatchling\n    - python >=3.10\n    - maturin >=1.2.3,<2\n  run:\n    - asgiref >=3.2.10,<3.8\n    - brotli-python >=1.0,<1.1\n    - certifi >=2019.9.11\n    - cryptography >=38,<41.1\n    - flask >=1.1.1,<2.4\n    - h11 >=0.11,<0.15\n    - h2 >=4.1,<5\n    - hyperframe >=6.0,<7\n    - kaitaistruct >=0.10,<0.11\n    - ldap3 >=2.8,<2.10\n    - msgpack-python >=1.0.0,<1.1.0\n    - passlib >=1.6.5,<1.8\n    - protobuf >=3.14,<5\n    - publicsuffix2 >=2.20190812,<3\n    - pydivert >=2.0.3,<2.2          # [win]\n    - pylsqpack >=0.3.3,<0.4.0       # for aioquic_mitmproxy\n    - pyopenssl >=22.1,<23.2\n    - pyparsing >=2.4.2,<3.2\n    - pyperclip >=1.6.0,<1.9\n    - python\n    - ruamel.yaml >=0.16,<0.18\n    - sortedcontainers >=2.3,<2.5\n    - tornado >=6.2,<7\n    - typing-extensions >=4.3,<4.5   # [py<311]\n    - wsproto >=1.0,<1.3\n    - zstandard >=0.11,<0.22\n\ntest:\n  imports:\n    - mitmproxy_rs\n    - mitmproxy_windows  # [win]\n    - mitmproxy_macos    # [osx]\n    - mitmproxy\n  commands:\n    - pip check\n    - mitmproxy --version\n    - mitmdump --version\n    - mitmweb --version\n  requires:\n    - pip\n\nabout:\n  home: http://mitmproxy.org\n  summary: An interactive TLS-capable intercepting HTTP proxy for penetration testers and software developers.\n  license: >-\n    MIT AND BSD-3-Clause AND LGPL-2.0-only\n    AND (LGPL-3.0-only OR GPL-2.0-only)  # [win]\n  license_file:\n    - mitmproxy/LICENSE\n    - aioquic_mitmproxy/LICENSE\n    - urwid-mitmproxy/COPYING\n    - mitmproxy-rs/LICENSE\n    - mitmproxy-rs/mitmproxy-windows/mitmproxy_windows/LICENSE  # [win]\n\nextra:\n  recipe-maintainers:\n    - jonashaag\n    - AdrianFreundQC\n    - freundTech\n",
+ "raw_meta_yaml": "{% set version = \"10.1.0\" %}\n{% set aioquic_mitmproxy_version = \"0.9.20.3\" %}\n{% set urwid_mitmproxy_version = \"2.1.2.1\" %}\n{% set mitmproxy_rs_version = \"0.3.7\" %}\n\npackage:\n  name: mitmproxy\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/mitmproxy/mitmproxy/archive/{{ version }}.tar.gz\n    sha256: b243509a55aedf54badefc5d1f49450c37fb254f95e6891c53c1e5782147bcf9\n    folder: mitmproxy\n  - url: https://github.com/meitinger/aioquic_mitmproxy/archive/{{ aioquic_mitmproxy_version }}.tar.gz\n    sha256: 63902a08fcc2a5e89f0faa3b4f918db30b45d1a613941530a7342e747c9f5df3\n    folder: aioquic_mitmproxy\n  - url: https://github.com/mitmproxy/urwid-mitmproxy/archive/{{ urwid_mitmproxy_version }}.tar.gz\n    sha256: e13544f6f6deb5d276696760ec022d656a95415e70e06c77c452461e5f062675\n    folder: urwid-mitmproxy\n  - url: https://github.com/mitmproxy/mitmproxy_rs/archive/{{ mitmproxy_rs_version }}.tar.gz\n    sha256: faf4ff0a1f03fa4f732f27a658d386d7623573aa4f70c968856b862270eecbf5\n    folder: mitmproxy-rs\n\nbuild:\n  number: 0\n  skip: true  # [py<310]\n  script:\n    {% set _pip_cmd = PYTHON + \" -m pip install -vv --no-deps --no-build-isolation\" %}\n    - {{ _pip_cmd }} ./aioquic_mitmproxy\n    - {{ _pip_cmd }} ./urwid-mitmproxy\n    - {{ _pip_cmd }} ./mitmproxy-rs/mitmproxy-macos    # [osx]\n    - {{ _pip_cmd }} ./mitmproxy-rs/mitmproxy-windows  # [win]\n    - {{ _pip_cmd }} ./mitmproxy-rs/mitmproxy-rs\n    - {{ _pip_cmd }} ./mitmproxy\n  entry_points:\n    - mitmproxy = mitmproxy.tools.main:mitmproxy\n    - mitmdump = mitmproxy.tools.main:mitmdump\n    - mitmweb = mitmproxy.tools.main:mitmweb\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('rust') }}\n    - {{ compiler('c') }}                    # [unix]\n    - python >=3.10\n    - pip\n    - maturin >=1.2.3,<2                      # [build_platform != target_platform]\n    - hatchling                              # [build_platform != target_platform]\n    - cargo-bundle-licenses\n  host:\n    - pip\n    - python\n    - hatchling\n    - python >=3.10\n    - maturin >=1.2.3,<2\n  run:\n    - asgiref >=3.2.10,<3.8\n    - brotli-python >=1.0,<1.1\n    - certifi >=2019.9.11\n    - cryptography >=38,<41.1\n    - flask >=1.1.1,<2.4\n    - h11 >=0.11,<0.15\n    - h2 >=4.1,<5\n    - hyperframe >=6.0,<7\n    - kaitaistruct >=0.10,<0.11\n    - ldap3 >=2.8,<2.10\n    - msgpack-python >=1.0.0,<1.1.0\n    - passlib >=1.6.5,<1.8\n    - protobuf >=3.14,<5\n    - publicsuffix2 >=2.20190812,<3\n    - pydivert >=2.0.3,<2.2          # [win]\n    - pylsqpack >=0.3.3,<0.4.0       # for aioquic_mitmproxy\n    - pyopenssl >=22.1,<23.2\n    - pyparsing >=2.4.2,<3.2\n    - pyperclip >=1.6.0,<1.9\n    - python\n    - ruamel.yaml >=0.16,<0.18\n    - sortedcontainers >=2.3,<2.5\n    - tornado >=6.2,<7\n    - typing-extensions >=4.3,<4.5   # [py<311]\n    - wsproto >=1.0,<1.3\n    - zstandard >=0.11,<0.22\n\ntest:\n  imports:\n    - mitmproxy_rs\n    - mitmproxy_windows  # [win]\n    - mitmproxy_macos    # [osx]\n    - mitmproxy\n  commands:\n    - pip check\n    - mitmproxy --version\n    - mitmdump --version\n    - mitmweb --version\n  requires:\n    - pip\n\nabout:\n  home: http://mitmproxy.org\n  summary: An interactive TLS-capable intercepting HTTP proxy for penetration testers and software developers.\n  license: >-\n    MIT AND BSD-3-Clause AND LGPL-2.0-only\n    AND (LGPL-3.0-only OR GPL-2.0-only)  # [win]\n  license_file:\n    - mitmproxy/LICENSE\n    - aioquic_mitmproxy/LICENSE\n    - urwid-mitmproxy/COPYING\n    - mitmproxy-rs/LICENSE\n    - mitmproxy-rs/mitmproxy-windows/mitmproxy_windows/LICENSE  # [win]\n\nextra:\n  recipe-maintainers:\n    - wolfv\n    - jonashaag\n    - AdrianFreundQC\n    - freundTech\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1656,9 +1670,11 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech",
+    "wolfv",
     "jonashaag",
     "AdrianFreundQC",
     "freundTech"
