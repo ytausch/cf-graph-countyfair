@@ -12,8 +12,8 @@
    "summary": "GTP engine and self-play learning in Go"
   },
   "build": {
-   "number": "2",
-   "string": "cpu_h1234567_2"
+   "number": "0",
+   "string": "cpu_h1234567_0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -24,7 +24,7 @@
   },
   "package": {
    "name": "katago",
-   "version": "1.11.0"
+   "version": "1.13.2"
   },
   "requirements": {
    "build": [
@@ -73,7 +73,7 @@
    ]
   },
   "source": {
-   "git_rev": "v1.11.0",
+   "git_rev": "v1.13.2",
    "git_url": "https://github.com/lightvector/KataGo.git"
   },
   "test": {
@@ -97,12 +97,12 @@
     "cd cpp",
     "mkdir tests/scratch",
     "katago runoutputtests",
-    "katago runtinynntests tests/scratch"
+    "katago runtinynntests tests/scratch 1.0"
    ],
    "source_files": [
-    "cpp/tests/data",
-    "cpp/tests/data",
-    "cpp/tests/data"
+    "cpp/tests/",
+    "cpp/tests/",
+    "cpp/tests/"
    ]
   }
  },
@@ -150,8 +150,8 @@
    "summary": "GTP engine and self-play learning in Go"
   },
   "build": {
-   "number": "2",
-   "string": "cpu_h1234567_2"
+   "number": "0",
+   "string": "cpu_h1234567_0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -164,7 +164,7 @@
   },
   "package": {
    "name": "katago",
-   "version": "1.11.0"
+   "version": "1.13.2"
   },
   "requirements": {
    "build": [
@@ -233,7 +233,7 @@
    ]
   },
   "source": {
-   "git_rev": "v1.11.0",
+   "git_rev": "v1.13.2",
    "git_url": "https://github.com/lightvector/KataGo.git"
   },
   "test": {
@@ -257,29 +257,28 @@
     "cd cpp",
     "mkdir tests/scratch",
     "katago runoutputtests",
-    "katago runtinynntests tests/scratch",
+    "katago runtinynntests tests/scratch 1.0",
     "katago",
     "katago version",
     "katago runnnlayertests",
     "cd cpp",
     "mkdir tests/scratch",
     "katago runoutputtests",
-    "katago runtinynntests tests/scratch",
+    "katago runtinynntests tests/scratch 1.0",
     "katago",
     "katago version",
     "katago runtests",
     "katago runnnlayertests",
     "cd cpp",
     "mkdir tests\\scratch",
-    "katago runoutputtests",
-    "katago runtinynntests tests/scratch"
+    "katago runtinynntests tests/scratch 1.0"
    ],
    "source_files": [
-    "cpp/tests/data",
-    "cpp/tests/data",
-    "cpp/tests/data",
-    "cpp/tests/data",
-    "cpp/tests/data"
+    "cpp/tests/",
+    "cpp/tests/",
+    "cpp/tests/",
+    "cpp/tests/",
+    "cpp/tests/"
    ]
   }
  },
@@ -293,8 +292,8 @@
    "summary": "GTP engine and self-play learning in Go"
   },
   "build": {
-   "number": "2",
-   "string": "cpu_h1234567_2"
+   "number": "0",
+   "string": "cpu_h1234567_0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -303,7 +302,7 @@
   },
   "package": {
    "name": "katago",
-   "version": "1.11.0"
+   "version": "1.13.2"
   },
   "requirements": {
    "build": [
@@ -323,7 +322,7 @@
    "run": []
   },
   "source": {
-   "git_rev": "v1.11.0",
+   "git_rev": "v1.13.2",
    "git_url": "https://github.com/lightvector/KataGo.git"
   },
   "test": {
@@ -334,10 +333,10 @@
     "cd cpp",
     "mkdir tests/scratch",
     "katago runoutputtests",
-    "katago runtinynntests tests/scratch"
+    "katago runtinynntests tests/scratch 1.0"
    ],
    "source_files": [
-    "cpp/tests/data"
+    "cpp/tests/"
    ]
   }
  },
@@ -386,7 +385,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/katago.json"
  },
- "raw_meta_yaml": "{% set version = \"1.11.0\" %}\n\npackage:\n  name: katago\n  version: {{ version }}\n\nsource:\n  # use git_url, because katago needs a git repo to compile BUILD_DISTRIBUTED support;\n  # this cannot (or rather: should not) be patch out, or even patched at all (-> dirty tag),\n  # compare the exceedingly clear instructions/pleas here:\n  # https://github.com/lightvector/KataGo/blob/master/Compiling.md#building-for-distributed\n  git_url: https://github.com/lightvector/KataGo.git\n  git_rev: v{{ version }}\n\nbuild:\n  number: 2\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == \"None\"]\n  # windows+CUDA needs to be fixed more comprehensively, see PR #1; skip for now\n  skip: true  # [win and cuda_compiler_version != \"None\"]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n    - cmake\n    - ninja\n    - curl\n  host:\n    - cudnn  # [cuda_compiler_version != \"None\"]\n    - nccl   # [linux and cuda_compiler_version != \"None\"]\n    - zlib\n    - libzip\n    - eigen\n    # necessary for BUILD_DISTRIBUTED\n    - openssl\n    - git\n  run:\n    - {{ pin_compatible('cudnn') }}  # [cuda_compiler_version != \"None\"]\n\ntest:\n  source_files:\n    - cpp/tests/data\n  commands:\n    - katago\n    - katago version\n    # fails some accuracy tests on osx\n    - katago runtests                      # [not osx]\n    - katago runnnlayertests               # [cuda_compiler_version == \"None\"]\n    # run some tests that hopefully exercise the distributed code a bit as well\n    # (based on searching \"distributed\" under cpp/tests and running the right portion)\n    - cd cpp\n    - mkdir tests/scratch                  # [unix]\n    - mkdir tests\\scratch                  # [win]\n    - katago runoutputtests\n    - katago runtinynntests tests/scratch  # [cuda_compiler_version == \"None\"]\n\nabout:\n  home: https://github.com/lightvector/KataGo\n  summary: 'GTP engine and self-play learning in Go'\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - hadim\n",
+ "raw_meta_yaml": "{% set version = \"1.13.2\" %}\n\npackage:\n  name: katago\n  version: {{ version }}\n\nsource:\n  # use git_url, because katago needs a git repo to compile BUILD_DISTRIBUTED support;\n  # this cannot (or rather: should not) be patch out, or even patched at all (-> dirty tag),\n  # compare the exceedingly clear instructions/pleas here:\n  # https://github.com/lightvector/KataGo/blob/master/Compiling.md#building-for-distributed\n  git_url: https://github.com/lightvector/KataGo.git\n  git_rev: v{{ version }}\n\nbuild:\n  number: 0\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version == \"None\"]\n  # windows+CUDA needs to be fixed more comprehensively, see PR #1; skip for now\n  skip: true  # [win and cuda_compiler_version != \"None\"]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n    - cmake\n    - ninja\n    - curl\n  host:\n    - cudnn  # [cuda_compiler_version != \"None\"]\n    - nccl   # [linux and cuda_compiler_version != \"None\"]\n    - zlib\n    - libzip\n    - eigen\n    # necessary for BUILD_DISTRIBUTED\n    - openssl\n    - git\n  run:\n    - {{ pin_compatible('cudnn') }}  # [cuda_compiler_version != \"None\"]\n\ntest:\n  source_files:\n    - cpp/tests/\n  commands:\n    - katago\n    - katago version\n    # fails some accuracy tests on osx\n    - katago runtests                      # [not osx]\n    - katago runnnlayertests               # [cuda_compiler_version == \"None\"]\n    # run some tests that hopefully exercise the distributed code a bit as well\n    # (based on searching \"distributed\" under cpp/tests and running the right portion)\n    - cd cpp\n    - mkdir tests/scratch                  # [unix]\n    - mkdir tests\\scratch                  # [win]\n    - katago runoutputtests                # [unix]\n    - katago runtinynntests tests/scratch 1.0  # [cuda_compiler_version == \"None\"]\n\nabout:\n  home: https://github.com/lightvector/KataGo\n  summary: 'GTP engine and self-play learning in Go'\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - hadim\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -483,7 +482,7 @@
   }
  },
  "url": null,
- "version": "1.11.0",
+ "version": "1.13.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/katago.json"
  },
@@ -496,8 +495,8 @@
    "summary": "GTP engine and self-play learning in Go"
   },
   "build": {
-   "number": "2",
-   "string": "cpu_h1234567_2"
+   "number": "0",
+   "string": "cpu_h1234567_0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -506,7 +505,7 @@
   },
   "package": {
    "name": "katago",
-   "version": "1.11.0"
+   "version": "1.13.2"
   },
   "requirements": {
    "build": [
@@ -526,7 +525,7 @@
    "run": []
   },
   "source": {
-   "git_rev": "v1.11.0",
+   "git_rev": "v1.13.2",
    "git_url": "https://github.com/lightvector/KataGo.git"
   },
   "test": {
@@ -537,11 +536,10 @@
     "katago runnnlayertests",
     "cd cpp",
     "mkdir tests\\scratch",
-    "katago runoutputtests",
-    "katago runtinynntests tests/scratch"
+    "katago runtinynntests tests/scratch 1.0"
    ],
    "source_files": [
-    "cpp/tests/data"
+    "cpp/tests/"
    ]
   }
  },
