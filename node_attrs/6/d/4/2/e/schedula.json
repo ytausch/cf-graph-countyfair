@@ -6,31 +6,256 @@
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
   "about": {
-   "doc_source_url": "https://github.com/vinci1it2000/schedula/tree/v1.4.9/doc",
-   "doc_url": "https://schedula.readthedocs.io/en/v1.4.9",
+   "doc_source_url": "https://github.com/vinci1it2000/schedula/tree/v1.5.1/doc",
+   "doc_url": "https://schedula.readthedocs.io/en/v1.5.1",
    "home": "https://github.com/vinci1it2000/schedula",
    "license": "EUPL-1.1",
    "license_family": "OTHER",
    "license_file": "src/LICENSE.txt",
-   "summary": "An intelligent function scheduler, which selects and executes functions."
+   "summary": "Produce a plan that dispatches calls based on a graph of functions, satisfying\ndata dependencies."
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "cd dist && PYTHON -m pip install . --no-deps -vv"
+   "number": "0"
   },
   "extra": {
+   "feedstock-name": "schedula-split",
    "recipe-maintainers": [
     "bollwyvl"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": [
+      "cd dist && PYTHON -m pip install . --no-deps -vv --no-build-isolation"
+     ]
+    },
+    "name": "schedula",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-io",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula",
+      "dill !=0.2.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-web",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula",
+      "flask",
+      "regex",
+      "requests"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-parallel",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula",
+      "multiprocess"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-plot",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula-with-web",
+      "schedula",
+      "python-graphviz >=0.17",
+      "pygments",
+      "jinja2",
+      "docutils"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-form",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula-with-web",
+      "schedula",
+      "flask-babel",
+      "flask-mail",
+      "flask-principal",
+      "flask-security-too",
+      "flask-sqlalchemy",
+      "flask-wtf",
+      "itsdangerous",
+      "rst2txt",
+      "sqlalchemy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-all",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula-with-form",
+      "schedula-with-io",
+      "schedula-with-parallel",
+      "schedula-with-plot",
+      "schedula-with-web",
+      "schedula"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "python -c \"__import__('pathlib').Path('src/tests/utils/test_form.py').unlink()\"",
+      "coverage run --source=schedula --branch -m unittest discover --start-directory src/tests --pattern 'test_*.py'",
+      "coverage report --show-missing --skip-covered --fail-under=\"77\""
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip",
+      "python <3.12",
+      "coverage",
+      "cryptography",
+      "ddt"
+     ],
+     "source_files": [
+      "src/examples",
+      "src/tests/test_dispatcher.py",
+      "src/tests/test_import.py",
+      "src/tests/utils",
+      "src/setup.cfg"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "schedula",
-   "version": "1.4.9"
+   "name": "schedula-split",
+   "version": "1.5.1"
   },
   "requirements": {
    "host": [
-    "pip",
     "python >=3.6"
    ],
    "run": [
@@ -40,47 +265,17 @@
   "source": [
    {
     "folder": "dist",
-    "sha256": "921657937370761e92d3b02837094cea93b611f5ca63fab9c1dfa4e4eee1697e",
-    "url": "https://pypi.io/packages/source/s/schedula/schedula-1.4.9.tar.gz"
+    "sha256": "f906eaa3a4dc7e0fb531d879d553cb0a3b38257ba119ab52fe74ee611e3b5622",
+    "url": "https://pypi.io/packages/source/s/schedula/schedula-1.5.1.tar.gz"
    },
    {
     "folder": "src",
-    "sha256": "55470f2dbea56b5309b67fd2ba930b38cb44b77087ceac9cfa287090fd811d6e",
-    "url": "https://github.com/vinci1it2000/schedula/archive/v1.4.9.tar.gz"
+    "sha256": "a2cb2def989259be751d5026a934ce316d44f65daa268bec4e4e72dd62466558",
+    "url": "https://github.com/vinci1it2000/schedula/archive/v1.5.1.tar.gz"
    }
   ],
   "test": {
-   "commands": [
-    "pip check",
-    "cd src && nosetests -e \"test_(errors|long_path|view|plot|form|map_dispatch)\""
-   ],
-   "imports": [
-    "schedula"
-   ],
-   "requires": [
-    "beautifulsoup4",
-    "ddt",
-    "dill",
-    "docutils",
-    "flask",
-    "gevent",
-    "jinja2",
-    "lxml",
-    "multiprocess",
-    "nose",
-    "pip",
-    "pygments",
-    "python-graphviz",
-    "regex",
-    "requests"
-   ],
-   "source_files": [
-    "src/examples",
-    "src/tests/test_dispatcher.py",
-    "src/tests/test_import.py",
-    "src/tests/utils",
-    "src/setup.cfg"
-   ]
+   "commands": "echo tests in subpackages"
   }
  },
  "linux_64_requirements": {
@@ -98,57 +293,296 @@
   "run": {
    "__set__": true,
    "elements": [
-    "python"
+    "dill",
+    "docutils",
+    "flask",
+    "flask-babel",
+    "flask-mail",
+    "flask-principal",
+    "flask-security-too",
+    "flask-sqlalchemy",
+    "flask-wtf",
+    "itsdangerous",
+    "jinja2",
+    "multiprocess",
+    "pygments",
+    "python",
+    "python-graphviz",
+    "regex",
+    "requests",
+    "rst2txt",
+    "schedula",
+    "schedula-with-form",
+    "schedula-with-io",
+    "schedula-with-parallel",
+    "schedula-with-plot",
+    "schedula-with-web",
+    "sqlalchemy"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "beautifulsoup4",
+    "coverage",
+    "cryptography",
     "ddt",
-    "dill",
-    "docutils",
-    "flask",
-    "gevent",
-    "jinja2",
-    "lxml",
-    "multiprocess",
-    "nose",
     "pip",
-    "pygments",
-    "python-graphviz",
-    "regex",
-    "requests"
+    "python"
    ]
   }
  },
  "meta_yaml": {
   "about": {
-   "doc_source_url": "https://github.com/vinci1it2000/schedula/tree/v1.4.9/doc",
-   "doc_url": "https://schedula.readthedocs.io/en/v1.4.9",
+   "doc_source_url": "https://github.com/vinci1it2000/schedula/tree/v1.5.1/doc",
+   "doc_url": "https://schedula.readthedocs.io/en/v1.5.1",
    "home": "https://github.com/vinci1it2000/schedula",
    "license": "EUPL-1.1",
    "license_family": "OTHER",
    "license_file": "src/LICENSE.txt",
-   "summary": "An intelligent function scheduler, which selects and executes functions."
+   "summary": "Produce a plan that dispatches calls based on a graph of functions, satisfying\ndata dependencies."
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "cd dist && PYTHON -m pip install . --no-deps -vv"
+   "number": "0"
   },
   "extra": {
+   "feedstock-name": "schedula-split",
    "recipe-maintainers": [
     "bollwyvl"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": [
+      "cd dist && PYTHON -m pip install . --no-deps -vv --no-build-isolation"
+     ]
+    },
+    "name": "schedula",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-io",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula",
+      "dill !=0.2.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-web",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula",
+      "flask",
+      "regex",
+      "requests"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-parallel",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula",
+      "multiprocess"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-plot",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula-with-web",
+      "schedula",
+      "python-graphviz >=0.17",
+      "pygments",
+      "jinja2",
+      "docutils"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-form",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula-with-web",
+      "schedula",
+      "flask-babel",
+      "flask-mail",
+      "flask-principal",
+      "flask-security-too",
+      "flask-sqlalchemy",
+      "flask-wtf",
+      "itsdangerous",
+      "rst2txt",
+      "sqlalchemy"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "schedula-with-all",
+    "requirements": {
+     "host": [
+      "python >=3.6"
+     ],
+     "run": [
+      "python >=3.6",
+      "schedula-with-form",
+      "schedula-with-io",
+      "schedula-with-parallel",
+      "schedula-with-plot",
+      "schedula-with-web",
+      "schedula"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "python -c \"__import__('pathlib').Path('src/tests/utils/test_form.py').unlink()\"",
+      "coverage run --source=schedula --branch -m unittest discover --start-directory src/tests --pattern 'test_*.py'",
+      "coverage report --show-missing --skip-covered --fail-under=\"77\""
+     ],
+     "imports": [
+      "schedula"
+     ],
+     "requires": [
+      "pip",
+      "python <3.12",
+      "coverage",
+      "cryptography",
+      "ddt"
+     ],
+     "source_files": [
+      "src/examples",
+      "src/tests/test_dispatcher.py",
+      "src/tests/test_import.py",
+      "src/tests/utils",
+      "src/setup.cfg"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "schedula",
-   "version": "1.4.9"
+   "name": "schedula-split",
+   "version": "1.5.1"
   },
   "requirements": {
    "host": [
-    "pip",
     "python >=3.6"
    ],
    "run": [
@@ -158,54 +592,31 @@
   "source": [
    {
     "folder": "dist",
-    "sha256": "921657937370761e92d3b02837094cea93b611f5ca63fab9c1dfa4e4eee1697e",
-    "url": "https://pypi.io/packages/source/s/schedula/schedula-1.4.9.tar.gz"
+    "sha256": "f906eaa3a4dc7e0fb531d879d553cb0a3b38257ba119ab52fe74ee611e3b5622",
+    "url": "https://pypi.io/packages/source/s/schedula/schedula-1.5.1.tar.gz"
    },
    {
     "folder": "src",
-    "sha256": "55470f2dbea56b5309b67fd2ba930b38cb44b77087ceac9cfa287090fd811d6e",
-    "url": "https://github.com/vinci1it2000/schedula/archive/v1.4.9.tar.gz"
+    "sha256": "a2cb2def989259be751d5026a934ce316d44f65daa268bec4e4e72dd62466558",
+    "url": "https://github.com/vinci1it2000/schedula/archive/v1.5.1.tar.gz"
    }
   ],
   "test": {
-   "commands": [
-    "pip check",
-    "cd src && nosetests -e \"test_(errors|long_path|view|plot|form|map_dispatch)\""
-   ],
-   "imports": [
-    "schedula"
-   ],
-   "requires": [
-    "beautifulsoup4",
-    "ddt",
-    "dill",
-    "docutils",
-    "flask",
-    "gevent",
-    "jinja2",
-    "lxml",
-    "multiprocess",
-    "nose",
-    "pip",
-    "pygments",
-    "python-graphviz",
-    "regex",
-    "requests"
-   ],
-   "source_files": [
-    "src/examples",
-    "src/tests/test_dispatcher.py",
-    "src/tests/test_import.py",
-    "src/tests/utils",
-    "src/setup.cfg"
-   ]
+   "commands": "echo tests in subpackages"
   }
  },
- "name": "schedula",
+ "name": "schedula-split",
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "schedula"
+   "schedula",
+   "schedula-split",
+   "schedula-with-all",
+   "schedula-with-form",
+   "schedula-with-io",
+   "schedula-with-parallel",
+   "schedula-with-plot",
+   "schedula-with-web"
   ]
  },
  "parsing_error": false,
@@ -215,12 +626,36 @@
  "pr_info": {
   "__lazy_json__": "pr_info/schedula.json"
  },
- "raw_meta_yaml": "{% set version = \"1.4.9\" %}\n\npackage:\n  name: schedula\n  version: {{ version }}\n\nsource:\n  - url: https://pypi.io/packages/source/s/schedula/schedula-{{ version }}.tar.gz\n    sha256: 921657937370761e92d3b02837094cea93b611f5ca63fab9c1dfa4e4eee1697e\n    folder: dist\n  - url: https://github.com/vinci1it2000/schedula/archive/v{{ version }}.tar.gz\n    sha256: 55470f2dbea56b5309b67fd2ba930b38cb44b77087ceac9cfa287090fd811d6e\n    folder: src\n\nbuild:\n  noarch: python\n  number: 0\n  script: cd dist && {{ PYTHON }} -m pip install . --no-deps -vv\n\nrequirements:\n  host:\n    - pip\n    - python >=3.6\n  run:\n    - python >=3.6\n\ntest:\n  source_files:\n    - src/examples\n    - src/tests/test_dispatcher.py\n    - src/tests/test_import.py\n    - src/tests/utils\n    - src/setup.cfg\n  requires:\n    - beautifulsoup4\n    - ddt\n    - dill\n    - docutils\n    - flask\n    - gevent\n    - jinja2\n    - lxml\n    - multiprocess\n    - nose\n    - pip\n    - pygments\n    - python-graphviz\n    - regex\n    - requests\n  imports:\n    - schedula\n  commands:\n    - pip check\n    - cd src && nosetests -e \"test_(errors|long_path|view|plot|form|map_dispatch)\"\n\nabout:\n  home: https://github.com/vinci1it2000/schedula\n  license: EUPL-1.1\n  license_family: OTHER\n  license_file: src/LICENSE.txt\n  summary: An intelligent function scheduler, which selects and executes functions.\n  doc_url: https://schedula.readthedocs.io/en/v{{ version }}\n  doc_source_url: https://github.com/vinci1it2000/schedula/tree/v{{ version }}/doc\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"1.5.1\" %}\n{% set min_python = \"python >=3.6\" %}\n\n\npackage:\n  name: schedula-split\n  version: {{ version }}\n\nsource:\n  - url: https://pypi.io/packages/source/s/schedula/schedula-{{ version }}.tar.gz\n    sha256: f906eaa3a4dc7e0fb531d879d553cb0a3b38257ba119ab52fe74ee611e3b5622\n    folder: dist\n  - url: https://github.com/vinci1it2000/schedula/archive/v{{ version }}.tar.gz\n    sha256: a2cb2def989259be751d5026a934ce316d44f65daa268bec4e4e72dd62466558\n    folder: src\n\nbuild:\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    - {{ min_python }}\n  run:\n    - {{ min_python }}\n\ntest:\n  commands:\n    echo tests in subpackages\n\noutputs:\n  - name: schedula\n    build:\n      noarch: python\n      script:\n        - cd dist && {{ PYTHON }} -m pip install . --no-deps -vv --no-build-isolation\n    requirements:\n      host:\n        - pip\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n    test:\n      requires:\n        - pip\n      imports:\n        - schedula\n      commands:\n        - pip check\n\n  - name: schedula-with-io\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage('schedula', exact=True) }}\n        - dill !=0.2.7\n    test:\n      requires:\n        - pip\n      imports:\n        - schedula\n      commands:\n        - pip check\n\n  - name: schedula-with-web\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage('schedula', exact=True) }}\n        - flask\n        - regex\n        - requests\n    test:\n      requires:\n        - pip\n      imports:\n        - schedula\n      commands:\n        - pip check\n\n  - name: schedula-with-parallel\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage('schedula', exact=True) }}\n        - multiprocess\n    test:\n      requires:\n        - pip\n      imports:\n        - schedula\n      commands:\n        - pip check\n\n  - name: schedula-with-plot\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage('schedula-with-web', exact=True) }}\n        - {{ pin_subpackage('schedula', exact=True) }}\n        - python-graphviz >=0.17\n        - pygments\n        - jinja2\n        - docutils\n    test:\n      requires:\n        - pip\n      imports:\n        - schedula\n      commands:\n        - pip check\n\n  - name: schedula-with-form\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage('schedula-with-web', exact=True) }}\n        - {{ pin_subpackage('schedula', exact=True) }}\n        - flask-babel\n        - flask-mail\n        - flask-principal\n        - flask-security-too\n        - flask-sqlalchemy\n        - flask-wtf\n        - itsdangerous\n        - rst2txt\n        - sqlalchemy\n    test:\n      requires:\n        - pip\n      imports:\n        - schedula\n      commands:\n        - pip check\n\n  - name: schedula-with-all\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage('schedula-with-form', exact=True) }}\n        - {{ pin_subpackage('schedula-with-io', exact=True) }}\n        - {{ pin_subpackage('schedula-with-parallel', exact=True) }}\n        - {{ pin_subpackage('schedula-with-plot', exact=True) }}\n        - {{ pin_subpackage('schedula-with-web', exact=True) }}\n        - {{ pin_subpackage('schedula', exact=True) }}\n    test:\n      source_files:\n        - src/examples\n        - src/tests/test_dispatcher.py\n        - src/tests/test_import.py\n        - src/tests/utils\n        - src/setup.cfg\n      requires:\n        - pip\n        # some weird issue\n        - python <3.12\n        # tests-require\n        - coverage\n        - cryptography\n        - ddt\n      imports:\n        - schedula\n      commands:\n        {% set cov_fail_under = 77 %}\n        - pip check\n        # doesn't import without chromedriver stuff\n        - python -c \"__import__('pathlib').Path('src/tests/utils/test_form.py').unlink()\"\n        - coverage run --source=schedula --branch -m unittest discover --start-directory src/tests --pattern 'test_*.py'\n        - coverage report --show-missing --skip-covered --fail-under=\"{{ cov_fail_under }}\"\n\nabout:\n  home: https://github.com/vinci1it2000/schedula\n  license: EUPL-1.1\n  license_family: OTHER\n  license_file: src/LICENSE.txt\n  summary: |-\n    Produce a plan that dispatches calls based on a graph of functions, satisfying\n    data dependencies.\n  doc_url: https://schedula.readthedocs.io/en/v{{ version }}\n  doc_source_url: https://github.com/vinci1it2000/schedula/tree/v{{ version }}/doc\n\nextra:\n  feedstock-name: schedula-split\n  recipe-maintainers:\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
+   "dill",
+   "docutils",
+   "flask",
+   "flask-babel",
+   "flask-mail",
+   "flask-principal",
+   "flask-security-too",
+   "flask-sqlalchemy",
+   "flask-wtf",
+   "itsdangerous",
+   "jinja2",
+   "multiprocess",
    "pip",
-   "python"
+   "pygments",
+   "python",
+   "python-graphviz",
+   "regex",
+   "requests",
+   "rst2txt",
+   "schedula",
+   "schedula-with-form",
+   "schedula-with-io",
+   "schedula-with-parallel",
+   "schedula-with-plot",
+   "schedula-with-web",
+   "sqlalchemy"
   ]
  },
  "requirements": {
@@ -238,27 +673,41 @@
   "run": {
    "__set__": true,
    "elements": [
-    "python"
+    "dill",
+    "docutils",
+    "flask",
+    "flask-babel",
+    "flask-mail",
+    "flask-principal",
+    "flask-security-too",
+    "flask-sqlalchemy",
+    "flask-wtf",
+    "itsdangerous",
+    "jinja2",
+    "multiprocess",
+    "pygments",
+    "python",
+    "python-graphviz",
+    "regex",
+    "requests",
+    "rst2txt",
+    "schedula",
+    "schedula-with-form",
+    "schedula-with-io",
+    "schedula-with-parallel",
+    "schedula-with-plot",
+    "schedula-with-web",
+    "sqlalchemy"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "beautifulsoup4",
+    "coverage",
+    "cryptography",
     "ddt",
-    "dill",
-    "docutils",
-    "flask",
-    "gevent",
-    "jinja2",
-    "lxml",
-    "multiprocess",
-    "nose",
     "pip",
-    "pygments",
-    "python-graphviz",
-    "regex",
-    "requests"
+    "python"
    ]
   }
  },
@@ -278,32 +727,46 @@
   "run": {
    "__set__": true,
    "elements": [
-    "python >=3.6"
+    "dill !=0.2.7",
+    "docutils",
+    "flask",
+    "flask-babel",
+    "flask-mail",
+    "flask-principal",
+    "flask-security-too",
+    "flask-sqlalchemy",
+    "flask-wtf",
+    "itsdangerous",
+    "jinja2",
+    "multiprocess",
+    "pygments",
+    "python >=3.6",
+    "python-graphviz >=0.17",
+    "regex",
+    "requests",
+    "rst2txt",
+    "schedula",
+    "schedula-with-form",
+    "schedula-with-io",
+    "schedula-with-parallel",
+    "schedula-with-plot",
+    "schedula-with-web",
+    "sqlalchemy"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "beautifulsoup4",
+    "coverage",
+    "cryptography",
     "ddt",
-    "dill",
-    "docutils",
-    "flask",
-    "gevent",
-    "jinja2",
-    "lxml",
-    "multiprocess",
-    "nose",
     "pip",
-    "pygments",
-    "python-graphviz",
-    "regex",
-    "requests"
+    "python <3.12"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/s/schedula/schedula-1.4.9.tar.gz",
- "version": "1.4.9",
+ "url": "https://pypi.io/packages/source/s/schedula/schedula-1.5.1.tar.gz",
+ "version": "1.5.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/schedula.json"
  }
