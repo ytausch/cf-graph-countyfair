@@ -47,7 +47,8 @@
   },
   "test": {
    "commands": [
-    "test -f $PREFIX/lib/libluajit${SHLIB_EXT}"
+    "test -f $PREFIX/lib/libluajit${SHLIB_EXT}",
+    "luajit -e \"print('hello world')\""
    ]
   }
  },
@@ -105,7 +106,8 @@
   },
   "test": {
    "commands": [
-    "test -f $PREFIX/lib/libluajit${SHLIB_EXT}"
+    "test -f $PREFIX/lib/libluajit${SHLIB_EXT}",
+    "luajit -e \"print('hello world')\""
    ]
   }
  },
@@ -147,6 +149,7 @@
     "danielnachun",
     "danielnachun",
     "danielnachun",
+    "danielnachun",
     "danielnachun"
    ]
   },
@@ -163,7 +166,8 @@
     "c_compiler_stub",
     "make",
     "c_compiler_stub",
-    "make"
+    "make",
+    "c_compiler_stub"
    ]
   },
   "source": {
@@ -173,9 +177,14 @@
   "test": {
    "commands": [
     "test -f $PREFIX/lib/libluajit${SHLIB_EXT}",
+    "luajit -e \"print('hello world')\"",
     "test -f $PREFIX/lib/libluajit${SHLIB_EXT}",
+    "luajit -e \"print('hello world')\"",
     "test -f $PREFIX/lib/libluajit${SHLIB_EXT}",
-    "test -f $PREFIX/lib/libluajit${SHLIB_EXT}"
+    "luajit -e \"print('hello world')\"",
+    "test -f $PREFIX/lib/libluajit${SHLIB_EXT}",
+    "luajit -e \"print('hello world')\"",
+    "luajit -e \"print('hello world')\""
    ]
   }
  },
@@ -213,7 +222,8 @@
   },
   "test": {
    "commands": [
-    "test -f $PREFIX/lib/libluajit${SHLIB_EXT}"
+    "test -f $PREFIX/lib/libluajit${SHLIB_EXT}",
+    "luajit -e \"print('hello world')\""
    ]
   }
  },
@@ -271,7 +281,8 @@
   },
   "test": {
    "commands": [
-    "test -f $PREFIX/lib/libluajit${SHLIB_EXT}"
+    "test -f $PREFIX/lib/libluajit${SHLIB_EXT}",
+    "luajit -e \"print('hello world')\""
    ]
   }
  },
@@ -307,12 +318,13 @@
   "linux_64",
   "linux_aarch64",
   "osx_64",
-  "osx_arm64"
+  "osx_arm64",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/luajit-openresty.json"
  },
- "raw_meta_yaml": "{% set name = \"luajit-openresty\" %}\n{% set version = \"2.1-20231006\" %}\n{% set version_under = version.replace(\"-\", \"_\") %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version_under }}\n\nsource:\n  url: https://github.com/openresty/luajit2/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 41530b3f00d3f284e771cfd09add2a0c672f1214f8780644ca9261da9e4d9310\n\nbuild:\n  number: 0\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - make\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libluajit${SHLIB_EXT}\n\nabout:\n  home: https://github.com/openresty/luajit2\n  license: MIT\n  license_family: MIT\n  license_file: COPYRIGHT\n  summary: OpenResty's Branch of LuaJIT 2\n  dev_url: https://github.com/openresty/luajit2\n\nextra:\n  recipe-maintainers:\n    - danielnachun\n",
+ "raw_meta_yaml": "{% set name = \"luajit-openresty\" %}\n{% set version = \"2.1-20231006\" %}\n{% set version_under = version.replace(\"-\", \"_\") %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version_under }}\n\nsource:\n  url: https://github.com/openresty/luajit2/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 41530b3f00d3f284e771cfd09add2a0c672f1214f8780644ca9261da9e4d9310\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - make  # [unix]\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libluajit${SHLIB_EXT}  # [unix]\n    - luajit -e \"print('hello world')\"\n\nabout:\n  home: https://github.com/openresty/luajit2\n  license: MIT\n  license_family: MIT\n  license_file: COPYRIGHT\n  summary: OpenResty's Branch of LuaJIT 2\n  dev_url: https://github.com/openresty/luajit2\n\nextra:\n  recipe-maintainers:\n    - danielnachun\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -371,5 +383,61 @@
  "version": "2.1_20231006",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/luajit-openresty.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "dev_url": "https://github.com/openresty/luajit2",
+   "home": "https://github.com/openresty/luajit2",
+   "license": "MIT",
+   "license_family": "MIT",
+   "license_file": "COPYRIGHT",
+   "summary": "OpenResty's Branch of LuaJIT 2"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "danielnachun"
+   ]
+  },
+  "package": {
+   "name": "luajit-openresty",
+   "version": "2.1_20231006"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub"
+   ]
+  },
+  "source": {
+   "sha256": "41530b3f00d3f284e771cfd09add2a0c672f1214f8780644ca9261da9e4d9310",
+   "url": "https://github.com/openresty/luajit2/archive/refs/tags/v2.1-20231006.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "luajit -e \"print('hello world')\""
+   ]
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
  }
 }
