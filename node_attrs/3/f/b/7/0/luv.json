@@ -176,6 +176,7 @@
     "danielnachun",
     "danielnachun",
     "danielnachun",
+    "danielnachun",
     "danielnachun"
    ]
   },
@@ -200,9 +201,15 @@
     "c_compiler_stub",
     "cmake",
     "lua-compat-5.3-c",
-    "make"
+    "make",
+    "c_compiler_stub",
+    "cmake",
+    "lua-compat-5.3-c",
+    "ninja"
    ],
    "host": [
+    "libuv",
+    "luajit-openresty",
     "libuv",
     "luajit-openresty",
     "libuv",
@@ -216,7 +223,9 @@
     "libuv",
     "libuv",
     "libuv",
-    "libuv"
+    "libuv",
+    "libuv",
+    "luajit-openresty"
    ]
   },
   "source": {
@@ -224,12 +233,7 @@
    "url": "https://github.com/luvit/luv/archive/1.44.2-1.tar.gz"
   },
   "test": {
-   "commands": [
-    "test -f $PREFIX/lib/libluv${SHLIB_EXT}",
-    "test -f $PREFIX/lib/libluv${SHLIB_EXT}",
-    "test -f $PREFIX/lib/libluv${SHLIB_EXT}",
-    "test -f $PREFIX/lib/libluv${SHLIB_EXT}"
-   ]
+   "commands": null
   }
  },
  "name": "luv",
@@ -390,12 +394,13 @@
   "linux_64",
   "linux_aarch64",
   "osx_64",
-  "osx_arm64"
+  "osx_arm64",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/luv.json"
  },
- "raw_meta_yaml": "{% set name = \"luv\" %}\n{% set version = \"1.44.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/luvit/{{ name }}/archive/{{ version }}-1.tar.gz\n  sha256: f8c69908e17ec8ab370253d1508e23deaecfc0c4752d2efb77e427e579501104\n\n\nbuild:\n  number: 0\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - cmake\n    - lua-compat-5.3-c\n    - make\n  host:\n    - libuv\n    - luajit-openresty\n  run:\n    - libuv\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libluv${SHLIB_EXT}\n\nabout:\n  home: https://github.com/luvit/{{ name }}\n  license: Apache-2.0\n  license_file: LICENSE.txt\n  summary: Bare libuv bindings for lua\n  dev_url: https://github.com/luvit/{{ name }}\n\nextra:\n  recipe-maintainers:\n    - danielnachun\n",
+ "raw_meta_yaml": "{% set name = \"luv\" %}\n{% set version = \"1.44.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/luvit/{{ name }}/archive/{{ version }}-1.tar.gz\n  sha256: f8c69908e17ec8ab370253d1508e23deaecfc0c4752d2efb77e427e579501104\n\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - cmake\n    - lua-compat-5.3-c\n    - make  # [unix]\n    - ninja  # [win]\n  host:\n    - libuv\n    - luajit-openresty\n  run:\n    - libuv\n    - luajit-openresty  # [win]\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libluv${SHLIB_EXT}  # [unix]\n\nabout:\n  home: https://github.com/luvit/{{ name }}\n  license: Apache-2.0\n  license_file: LICENSE.txt\n  summary: Bare libuv bindings for lua\n  dev_url: https://github.com/luvit/{{ name }}\n\nextra:\n  recipe-maintainers:\n    - danielnachun\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -404,7 +409,8 @@
    "libuv",
    "lua-compat-5.3-c",
    "luajit-openresty",
-   "make"
+   "make",
+   "ninja"
   ]
  },
  "requirements": {
@@ -414,7 +420,8 @@
     "c_compiler_stub",
     "cmake",
     "lua-compat-5.3-c",
-    "make"
+    "make",
+    "ninja"
    ]
   },
   "host": {
@@ -429,7 +436,8 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "libuv"
+    "libuv",
+    "luajit-openresty"
    ]
   },
   "test": {
@@ -445,7 +453,8 @@
     "c_compiler_stub",
     "cmake",
     "lua-compat-5.3-c",
-    "make"
+    "make",
+    "ninja"
    ]
   },
   "host": {
@@ -458,7 +467,8 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libuv"
+    "libuv",
+    "luajit-openresty"
    ]
   },
   "test": {
@@ -470,5 +480,78 @@
  "version": "1.44.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/luv.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "dev_url": "https://github.com/luvit/luv",
+   "home": "https://github.com/luvit/luv",
+   "license": "Apache-2.0",
+   "license_file": "LICENSE.txt",
+   "summary": "Bare libuv bindings for lua"
+  },
+  "build": {
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "danielnachun"
+   ]
+  },
+  "package": {
+   "name": "luv",
+   "version": "1.44.2"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cmake",
+    "lua-compat-5.3-c",
+    "ninja"
+   ],
+   "host": [
+    "libuv",
+    "luajit-openresty"
+   ],
+   "run": [
+    "libuv",
+    "luajit-openresty"
+   ]
+  },
+  "source": {
+   "sha256": "f8c69908e17ec8ab370253d1508e23deaecfc0c4752d2efb77e427e579501104",
+   "url": "https://github.com/luvit/luv/archive/1.44.2-1.tar.gz"
+  },
+  "test": {
+   "commands": null
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "lua-compat-5.3-c",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "libuv",
+    "luajit-openresty"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libuv",
+    "luajit-openresty"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
  }
 }
