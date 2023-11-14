@@ -20,7 +20,6 @@
    "dev_url": "http://www.leonerd.org.uk/code/libtermkey/",
    "home": "http://www.leonerd.org.uk/code/libtermkey/",
    "license": "MIT",
-   "license_family": "MIT",
    "license_file": "LICENSE",
    "summary": "Library for processing keyboard entry from the terminal"
   },
@@ -92,7 +91,6 @@
    "dev_url": "http://www.leonerd.org.uk/code/libtermkey/",
    "home": "http://www.leonerd.org.uk/code/libtermkey/",
    "license": "MIT",
-   "license_family": "MIT",
    "license_file": "LICENSE",
    "summary": "Library for processing keyboard entry from the terminal"
   },
@@ -164,7 +162,6 @@
    "dev_url": "http://www.leonerd.org.uk/code/libtermkey/",
    "home": "http://www.leonerd.org.uk/code/libtermkey/",
    "license": "MIT",
-   "license_family": "MIT",
    "license_file": "LICENSE",
    "summary": "Library for processing keyboard entry from the terminal"
   },
@@ -236,7 +233,6 @@
    "dev_url": "http://www.leonerd.org.uk/code/libtermkey/",
    "home": "http://www.leonerd.org.uk/code/libtermkey/",
    "license": "MIT",
-   "license_family": "MIT",
    "license_file": "LICENSE",
    "summary": "Library for processing keyboard entry from the terminal"
   },
@@ -245,6 +241,7 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "danielnachun",
     "danielnachun",
     "danielnachun",
     "danielnachun",
@@ -272,7 +269,10 @@
     "pkg-config",
     "c_compiler_stub",
     "make",
-    "pkg-config"
+    "pkg-config",
+    "c_compiler_stub",
+    "cmake",
+    "ninja"
    ],
    "host": [
     "libtool",
@@ -284,9 +284,11 @@
     "libtool",
     "unibilium",
     "libtool",
+    "unibilium",
     "unibilium"
    ],
    "run": [
+    "unibilium",
     "unibilium",
     "unibilium",
     "unibilium",
@@ -299,13 +301,7 @@
    "url": "https://www.leonerd.org.uk/code/libtermkey/libtermkey-0.22.tar.gz"
   },
   "test": {
-   "commands": [
-    "test -f ${PREFIX}/lib/libtermkey${SHLIB_EXT}",
-    "test -f ${PREFIX}/lib/libtermkey${SHLIB_EXT}",
-    "test -f ${PREFIX}/lib/libtermkey${SHLIB_EXT}",
-    "test -f ${PREFIX}/lib/libtermkey${SHLIB_EXT}",
-    "test -f ${PREFIX}/lib/libtermkey${SHLIB_EXT}"
-   ]
+   "commands": null
   }
  },
  "name": "libtermkey",
@@ -314,7 +310,6 @@
    "dev_url": "http://www.leonerd.org.uk/code/libtermkey/",
    "home": "http://www.leonerd.org.uk/code/libtermkey/",
    "license": "MIT",
-   "license_family": "MIT",
    "license_file": "LICENSE",
    "summary": "Library for processing keyboard entry from the terminal"
   },
@@ -386,7 +381,6 @@
    "dev_url": "http://www.leonerd.org.uk/code/libtermkey/",
    "home": "http://www.leonerd.org.uk/code/libtermkey/",
    "license": "MIT",
-   "license_family": "MIT",
    "license_file": "LICENSE",
    "summary": "Library for processing keyboard entry from the terminal"
   },
@@ -465,18 +459,21 @@
   "linux_aarch64",
   "linux_ppc64le",
   "osx_64",
-  "osx_arm64"
+  "osx_arm64",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/libtermkey.json"
  },
- "raw_meta_yaml": "{% set name = \"libtermkey\" %}\n{% set version = \"0.22\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://www.leonerd.org.uk/code/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 6945bd3c4aaa83da83d80a045c5563da4edd7d0374c62c0d35aec09eb3014600\n\nbuild:\n  number: 1\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - make\n    - pkg-config\n  host:\n    - libtool\n    - unibilium\n  run: \n    - unibilium\n\ntest:\n  commands:\n    - test -f ${PREFIX}/lib/libtermkey${SHLIB_EXT}\n\nabout:\n  home: http://www.leonerd.org.uk/code/libtermkey/\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: Library for processing keyboard entry from the terminal\n  dev_url: http://www.leonerd.org.uk/code/libtermkey/\n\nextra:\n  recipe-maintainers:\n    - danielnachun\n",
+ "raw_meta_yaml": "{% set name = \"libtermkey\" %}\n{% set version = \"0.22\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://www.leonerd.org.uk/code/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 6945bd3c4aaa83da83d80a045c5563da4edd7d0374c62c0d35aec09eb3014600\n\nbuild:\n  number: 1\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - cmake  # [win]\n    - make  # [unix]\n    - ninja  # [win]\n    - pkg-config  # [unix]\n  host:\n    - libtool  # [unix]\n    - unibilium\n  run: \n    - unibilium\n\ntest:\n  commands:\n    - test -f ${PREFIX}/lib/libtermkey${SHLIB_EXT}  # [unix]\n\nabout:\n  home: http://www.leonerd.org.uk/code/libtermkey/\n  license: MIT\n  license_file: LICENSE\n  summary: Library for processing keyboard entry from the terminal\n  dev_url: http://www.leonerd.org.uk/code/libtermkey/\n\nextra:\n  recipe-maintainers:\n    - danielnachun\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
+   "cmake",
    "libtool",
    "make",
+   "ninja",
    "pkg-config",
    "unibilium"
   ]
@@ -486,7 +483,9 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "cmake",
     "make",
+    "ninja",
     "pkg-config"
    ]
   },
@@ -516,7 +515,9 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "cmake",
     "make",
+    "ninja",
     "pkg-config"
    ]
   },
@@ -542,5 +543,72 @@
  "version": "0.22",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/libtermkey.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "dev_url": "http://www.leonerd.org.uk/code/libtermkey/",
+   "home": "http://www.leonerd.org.uk/code/libtermkey/",
+   "license": "MIT",
+   "license_file": "LICENSE",
+   "summary": "Library for processing keyboard entry from the terminal"
+  },
+  "build": {
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "danielnachun"
+   ]
+  },
+  "package": {
+   "name": "libtermkey",
+   "version": "0.22"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cmake",
+    "ninja"
+   ],
+   "host": [
+    "unibilium"
+   ],
+   "run": [
+    "unibilium"
+   ]
+  },
+  "source": {
+   "sha256": "6945bd3c4aaa83da83d80a045c5563da4edd7d0374c62c0d35aec09eb3014600",
+   "url": "https://www.leonerd.org.uk/code/libtermkey/libtermkey-0.22.tar.gz"
+  },
+  "test": {
+   "commands": null
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "unibilium"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "unibilium"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
  }
 }
