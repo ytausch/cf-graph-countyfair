@@ -20,7 +20,6 @@
    "dev_url": "https://github.com/neovim/unibilium",
    "home": "https://www.vim.org/",
    "license": "LGPL-3.0-or-later",
-   "license_family": "GPL3",
    "license_file": "LICENSE",
    "summary": "A terminfo parsing library"
   },
@@ -83,7 +82,6 @@
    "dev_url": "https://github.com/neovim/unibilium",
    "home": "https://www.vim.org/",
    "license": "LGPL-3.0-or-later",
-   "license_family": "GPL3",
    "license_file": "LICENSE",
    "summary": "A terminfo parsing library"
   },
@@ -146,7 +144,6 @@
    "dev_url": "https://github.com/neovim/unibilium",
    "home": "https://www.vim.org/",
    "license": "LGPL-3.0-or-later",
-   "license_family": "GPL3",
    "license_file": "LICENSE",
    "summary": "A terminfo parsing library"
   },
@@ -209,7 +206,6 @@
    "dev_url": "https://github.com/neovim/unibilium",
    "home": "https://www.vim.org/",
    "license": "LGPL-3.0-or-later",
-   "license_family": "GPL3",
    "license_file": "LICENSE",
    "summary": "A terminfo parsing library"
   },
@@ -218,6 +214,7 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "danielnachun",
     "danielnachun",
     "danielnachun",
     "danielnachun",
@@ -240,7 +237,10 @@
     "c_compiler_stub",
     "make",
     "c_compiler_stub",
-    "make"
+    "make",
+    "c_compiler_stub",
+    "cmake",
+    "ninja"
    ],
    "host": [
     "libtool",
@@ -255,13 +255,7 @@
    "url": "https://github.com/neovim/unibilium/archive/v2.1.1.tar.gz"
   },
   "test": {
-   "commands": [
-    "test -f $PREFIX/lib/libunibilium${SHLIB_EXT}",
-    "test -f $PREFIX/lib/libunibilium${SHLIB_EXT}",
-    "test -f $PREFIX/lib/libunibilium${SHLIB_EXT}",
-    "test -f $PREFIX/lib/libunibilium${SHLIB_EXT}",
-    "test -f $PREFIX/lib/libunibilium${SHLIB_EXT}"
-   ]
+   "commands": null
   }
  },
  "name": "unibilium",
@@ -270,7 +264,6 @@
    "dev_url": "https://github.com/neovim/unibilium",
    "home": "https://www.vim.org/",
    "license": "LGPL-3.0-or-later",
-   "license_family": "GPL3",
    "license_file": "LICENSE",
    "summary": "A terminfo parsing library"
   },
@@ -333,7 +326,6 @@
    "dev_url": "https://github.com/neovim/unibilium",
    "home": "https://www.vim.org/",
    "license": "LGPL-3.0-or-later",
-   "license_family": "GPL3",
    "license_file": "LICENSE",
    "summary": "A terminfo parsing library"
   },
@@ -403,18 +395,21 @@
   "linux_aarch64",
   "linux_ppc64le",
   "osx_64",
-  "osx_arm64"
+  "osx_arm64",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/unibilium.json"
  },
- "raw_meta_yaml": "{% set name = \"unibilium\" %}\n{% set version = \"2.1.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/neovim/{{ name }}/archive/v{{ version }}.tar.gz\n  sha256: 6f0ee21c8605340cfbb458cbd195b4d074e6d16dd0c0e12f2627ca773f3cabf1\n\nbuild:\n  number: 1\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - make\n  host:\n    - libtool\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libunibilium${SHLIB_EXT}\n\nabout:\n  home: https://www.vim.org/\n  license: LGPL-3.0-or-later\n  license_family: GPL3\n  license_file: LICENSE\n  summary: A terminfo parsing library\n  dev_url: https://github.com/neovim/{{ name }}\n\nextra:\n  recipe-maintainers:\n    - danielnachun\n",
+ "raw_meta_yaml": "{% set name = \"unibilium\" %}\n{% set version = \"2.1.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/neovim/{{ name }}/archive/v{{ version }}.tar.gz\n  sha256: 6f0ee21c8605340cfbb458cbd195b4d074e6d16dd0c0e12f2627ca773f3cabf1\n\nbuild:\n  number: 1\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - cmake  # [win]\n    - make  # [unix]\n    - ninja  # [win]\n  host:\n    - libtool  # [unix]\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libunibilium${SHLIB_EXT}  # [unix]\n\nabout:\n  home: https://www.vim.org/\n  license: LGPL-3.0-or-later\n  license_file: LICENSE\n  summary: A terminfo parsing library\n  dev_url: https://github.com/neovim/{{ name }}\n\nextra:\n  recipe-maintainers:\n    - danielnachun\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
+   "cmake",
    "libtool",
-   "make"
+   "make",
+   "ninja"
   ]
  },
  "requirements": {
@@ -422,7 +417,9 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "make"
+    "cmake",
+    "make",
+    "ninja"
    ]
   },
   "host": {
@@ -449,7 +446,9 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "make"
+    "cmake",
+    "make",
+    "ninja"
    ]
   },
   "host": {
@@ -471,5 +470,63 @@
  "version": "2.1.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/unibilium.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "dev_url": "https://github.com/neovim/unibilium",
+   "home": "https://www.vim.org/",
+   "license": "LGPL-3.0-or-later",
+   "license_file": "LICENSE",
+   "summary": "A terminfo parsing library"
+  },
+  "build": {
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "danielnachun"
+   ]
+  },
+  "package": {
+   "name": "unibilium",
+   "version": "2.1.1"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cmake",
+    "ninja"
+   ],
+   "host": []
+  },
+  "source": {
+   "sha256": "6f0ee21c8605340cfbb458cbd195b4d074e6d16dd0c0e12f2627ca773f3cabf1",
+   "url": "https://github.com/neovim/unibilium/archive/v2.1.1.tar.gz"
+  },
+  "test": {
+   "commands": null
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
  }
 }
