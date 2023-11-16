@@ -20,8 +20,8 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1",
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -39,19 +39,15 @@
   "requirements": {
    "host": [
     "python >=3.8",
-    "pip",
-    "setuptools_scm"
+    "setuptools >=42",
+    "setuptools-scm >=3.4",
+    "pip"
    ],
    "run": [
-    "dask-core",
     "python >=3.8",
-    "zarr >=2.11",
+    "dask-core",
     "mypy_extensions",
-    "dask",
-    "numpy >=1.21",
-    "bokeh >=2.4.2, <3",
-    "jinja2 >=2.10.3",
-    "xarray >=2022.3"
+    "zarr >=2.11"
    ]
   },
   "source": {
@@ -80,20 +76,16 @@
    "elements": [
     "pip",
     "python",
-    "setuptools_scm"
+    "setuptools",
+    "setuptools-scm"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "bokeh",
-    "dask",
     "dask-core",
-    "jinja2",
     "mypy_extensions",
-    "numpy",
     "python",
-    "xarray",
     "zarr"
    ]
   },
@@ -116,8 +108,8 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1",
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -135,19 +127,15 @@
   "requirements": {
    "host": [
     "python >=3.8",
-    "pip",
-    "setuptools_scm"
+    "setuptools >=42",
+    "setuptools-scm >=3.4",
+    "pip"
    ],
    "run": [
-    "dask-core",
     "python >=3.8",
-    "zarr >=2.11",
+    "dask-core",
     "mypy_extensions",
-    "dask",
-    "numpy >=1.21",
-    "bokeh >=2.4.2, <3",
-    "jinja2 >=2.10.3",
-    "xarray >=2022.3"
+    "zarr >=2.11"
    ]
   },
   "source": {
@@ -180,20 +168,16 @@
  "pr_info": {
   "__lazy_json__": "pr_info/rechunker.json"
  },
- "raw_meta_yaml": "{% set name = \"rechunker\" %}\n{% set version = \"0.5.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 18c610cc65854b3627c4d511138a7b962281f8e00838f78148cbf765e1ba2fb2\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - python >=3.8\n    - pip\n    - setuptools_scm\n  run:\n    - dask-core\n    - python >=3.8\n    - zarr >=2.11\n    - mypy_extensions\n    - dask\n    # dask[array]\n    - numpy >=1.21\n    # dask[diagnostics]\n    - bokeh >=2.4.2, <3\n    - jinja2 >=2.10.3\n    # extras but not all of the complete!?\n    - xarray >=2022.3\n\ntest:\n  imports:\n    - rechunker\n  requires:\n    - pip\n  commands:\n    - pip check\n\nabout:\n  home: https://rechunker.readthedocs.io\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: Disk-to-disk chunk transformation for chunked arrays.\n  description: |\n    Rechunker is a Python package which enables efficient and scalable\n    manipulation of the chunk structure of chunked array formats such as Zarr\n    and TileDB. Rechunker takes an input array (or group of arrays) stored in a\n    persistent storage device (such as a filesystem or a cloud storage bucket)\n    and writes out an array (or group of arrays) with the same data, but\n    different chunking scheme, to a new location.\n    Rechunker is designed to be used within a parallel execution framework such as Dask.\n  dev_url: https://github.com/pangeo-data/rechunker\n\nextra:\n  recipe-maintainers:\n    - davidbrochart\n    - TomAugspurger\n    - rabernat\n    - ocefpaf\n    - rsignell-usgs\n",
+ "raw_meta_yaml": "{% set name = \"rechunker\" %}\n{% set version = \"0.5.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 18c610cc65854b3627c4d511138a7b962281f8e00838f78148cbf765e1ba2fb2\n\nbuild:\n  noarch: python\n  number: 1\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n\nrequirements:\n  host:\n    - python >=3.8\n    - setuptools >=42\n    - setuptools-scm >=3.4\n    - pip\n  run:\n    - python >=3.8\n    - dask-core\n    - mypy_extensions\n    - zarr >=2.11\n\ntest:\n  imports:\n    - rechunker\n  requires:\n    - pip\n  commands:\n    - pip check\n\nabout:\n  home: https://rechunker.readthedocs.io\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: Disk-to-disk chunk transformation for chunked arrays.\n  description: |\n    Rechunker is a Python package which enables efficient and scalable\n    manipulation of the chunk structure of chunked array formats such as Zarr\n    and TileDB. Rechunker takes an input array (or group of arrays) stored in a\n    persistent storage device (such as a filesystem or a cloud storage bucket)\n    and writes out an array (or group of arrays) with the same data, but\n    different chunking scheme, to a new location.\n    Rechunker is designed to be used within a parallel execution framework such as Dask.\n  dev_url: https://github.com/pangeo-data/rechunker\n\nextra:\n  recipe-maintainers:\n    - davidbrochart\n    - TomAugspurger\n    - rabernat\n    - ocefpaf\n    - rsignell-usgs\n",
  "req": {
   "__set__": true,
   "elements": [
-   "bokeh",
-   "dask",
    "dask-core",
-   "jinja2",
    "mypy_extensions",
-   "numpy",
    "pip",
    "python",
-   "setuptools_scm",
-   "xarray",
+   "setuptools",
+   "setuptools-scm",
    "zarr"
   ]
  },
@@ -207,20 +191,16 @@
    "elements": [
     "pip",
     "python",
-    "setuptools_scm"
+    "setuptools",
+    "setuptools-scm"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "bokeh",
-    "dask",
     "dask-core",
-    "jinja2",
     "mypy_extensions",
-    "numpy",
     "python",
-    "xarray",
     "zarr"
    ]
   },
@@ -242,20 +222,16 @@
    "elements": [
     "pip",
     "python >=3.8",
-    "setuptools_scm"
+    "setuptools >=42",
+    "setuptools-scm >=3.4"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "bokeh >=2.4.2, <3",
-    "dask",
     "dask-core",
-    "jinja2 >=2.10.3",
     "mypy_extensions",
-    "numpy >=1.21",
     "python >=3.8",
-    "xarray >=2022.3",
     "zarr >=2.11"
    ]
   },
