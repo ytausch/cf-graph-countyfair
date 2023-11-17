@@ -1,7 +1,11 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "bot": {
+   "inspection": "hint-all"
+  }
+ },
  "feedstock_name": "pyodide-lock",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -13,49 +17,153 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+   "number": "0"
   },
   "extra": {
+   "feedstock-name": "pyodide-lock",
    "recipe-maintainers": [
     "bollwyvl"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+    },
+    "name": "pyodide-lock",
+    "requirements": {
+     "host": [
+      "python >=3.10",
+      "hatch-vcs",
+      "hatchling",
+      "pip"
+     ],
+     "run": [
+      "python >=3.10",
+      "pydantic >=1.10.2,<2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "pyodide_lock"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "pyodide-lock-with-wheel",
+    "requirements": {
+     "host": [
+      "python >=3.10"
+     ],
+     "run": [
+      "python >=3.10",
+      "pyodide-lock",
+      "packaging",
+      "pkginfo"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "pyodide_lock"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "pyodide-lock-with-cli",
+    "requirements": {
+     "host": [
+      "python >=3.10"
+     ],
+     "run": [
+      "python >=3.10",
+      "pyodide-lock",
+      "typer"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "pyodide_lock.cli"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "pyodide-lock-with-all",
+    "requirements": {
+     "host": [
+      "python >=3.10"
+     ],
+     "run": [
+      "python >=3.10",
+      "pyodide-lock",
+      "pyodide-lock-with-cli",
+      "pyodide-lock-with-wheel"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "coverage run --source=pyodide_lock --branch -m pytest -vv --color=yes",
+      "coverage report --show-missing --skip-covered --fail-under=92"
+     ],
+     "imports": [
+      "pyodide_lock",
+      "pyodide_lock.cli"
+     ],
+     "requires": [
+      "coverage",
+      "pip",
+      "pytest",
+      "python-build"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "pyodide-lock",
-   "version": "0.1.0a3"
+   "name": "pyodide-lock-split",
+   "version": "0.1.0a4"
   },
   "requirements": {
    "host": [
-    "python >=3.10",
-    "hatchling",
-    "hatch-vcs",
-    "pip"
+    "python >=3.10"
    ],
    "run": [
-    "python >=3.10",
-    "pydantic"
+    "python >=3.10"
    ]
   },
   "source": {
-   "sha256": "58820b96ff0fad312e55a0bdcf41c504990168f638898bd7ea84bfe1a759801b",
-   "url": "https://pypi.io/packages/source/p/pyodide-lock/pyodide_lock-0.1.0a3.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "pip check",
-    "pytest -vv --cov=pyodide_lock --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=81"
-   ],
-   "imports": [
-    "pyodide_lock"
-   ],
-   "requires": [
-    "pip",
-    "pytest-cov"
-   ],
-   "source_files": [
-    "tests"
-   ]
+   "sha256": "d24d98d1e72c38faa6f573e559e84541fb8d3d38bf1b3da05da65a1d4e027d49",
+   "url": "https://pypi.io/packages/source/p/pyodide-lock/pyodide_lock-0.1.0a4.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -75,15 +183,23 @@
   "run": {
    "__set__": true,
    "elements": [
+    "packaging",
+    "pkginfo",
     "pydantic",
-    "python"
+    "pyodide-lock",
+    "pyodide-lock-with-cli",
+    "pyodide-lock-with-wheel",
+    "python",
+    "typer"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
+    "coverage",
     "pip",
-    "pytest-cov"
+    "pytest",
+    "python-build"
    ]
   }
  },
@@ -96,56 +212,164 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+   "number": "0"
   },
   "extra": {
+   "feedstock-name": "pyodide-lock",
    "recipe-maintainers": [
     "bollwyvl"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+    },
+    "name": "pyodide-lock",
+    "requirements": {
+     "host": [
+      "python >=3.10",
+      "hatch-vcs",
+      "hatchling",
+      "pip"
+     ],
+     "run": [
+      "python >=3.10",
+      "pydantic >=1.10.2,<2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "pyodide_lock"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "pyodide-lock-with-wheel",
+    "requirements": {
+     "host": [
+      "python >=3.10"
+     ],
+     "run": [
+      "python >=3.10",
+      "pyodide-lock",
+      "packaging",
+      "pkginfo"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "pyodide_lock"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "pyodide-lock-with-cli",
+    "requirements": {
+     "host": [
+      "python >=3.10"
+     ],
+     "run": [
+      "python >=3.10",
+      "pyodide-lock",
+      "typer"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check"
+     ],
+     "imports": [
+      "pyodide_lock.cli"
+     ],
+     "requires": [
+      "pip"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "pyodide-lock-with-all",
+    "requirements": {
+     "host": [
+      "python >=3.10"
+     ],
+     "run": [
+      "python >=3.10",
+      "pyodide-lock",
+      "pyodide-lock-with-cli",
+      "pyodide-lock-with-wheel"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "coverage run --source=pyodide_lock --branch -m pytest -vv --color=yes",
+      "coverage report --show-missing --skip-covered --fail-under=92"
+     ],
+     "imports": [
+      "pyodide_lock",
+      "pyodide_lock.cli"
+     ],
+     "requires": [
+      "coverage",
+      "pip",
+      "pytest",
+      "python-build"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   }
+  ],
   "package": {
-   "name": "pyodide-lock",
-   "version": "0.1.0a3"
+   "name": "pyodide-lock-split",
+   "version": "0.1.0a4"
   },
   "requirements": {
    "host": [
-    "python >=3.10",
-    "hatchling",
-    "hatch-vcs",
-    "pip"
+    "python >=3.10"
    ],
    "run": [
-    "python >=3.10",
-    "pydantic"
+    "python >=3.10"
    ]
   },
   "source": {
-   "sha256": "58820b96ff0fad312e55a0bdcf41c504990168f638898bd7ea84bfe1a759801b",
-   "url": "https://pypi.io/packages/source/p/pyodide-lock/pyodide_lock-0.1.0a3.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "pip check",
-    "pytest -vv --cov=pyodide_lock --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=81"
-   ],
-   "imports": [
-    "pyodide_lock"
-   ],
-   "requires": [
-    "pip",
-    "pytest-cov"
-   ],
-   "source_files": [
-    "tests"
-   ]
+   "sha256": "d24d98d1e72c38faa6f573e559e84541fb8d3d38bf1b3da05da65a1d4e027d49",
+   "url": "https://pypi.io/packages/source/p/pyodide-lock/pyodide_lock-0.1.0a4.tar.gz"
   }
  },
- "name": "pyodide-lock",
+ "name": "pyodide-lock-split",
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "pyodide-lock"
+   "pyodide-lock",
+   "pyodide-lock-split",
+   "pyodide-lock-with-all",
+   "pyodide-lock-with-cli",
+   "pyodide-lock-with-wheel"
   ]
  },
  "parsing_error": false,
@@ -155,15 +379,21 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pyodide-lock.json"
  },
- "raw_meta_yaml": "{% set version = \"0.1.0a3\" %}\n\npackage:\n  name: pyodide-lock\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/p/pyodide-lock/pyodide_lock-{{ version }}.tar.gz\n  sha256: 58820b96ff0fad312e55a0bdcf41c504990168f638898bd7ea84bfe1a759801b\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.10\n    - hatchling\n    - hatch-vcs\n    - pip\n  run:\n    - python >=3.10\n    - pydantic\n\ntest:\n  source_files:\n    - tests\n  imports:\n    - pyodide_lock\n  commands:\n    - pip check\n    - pytest -vv --cov=pyodide_lock --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=81\n  requires:\n    - pip\n    - pytest-cov\n\nabout:\n  home: https://github.com/pyodide/pyodide-lock\n  summary: Tooling to manage the `pyodide-lock.json` file\n  license: BSD-3-Clause\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"0.1.0a4\" %}\n{% set min_python = \"python >=3.10\" %}\n\npackage:\n  name: pyodide-lock-split\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/p/pyodide-lock/pyodide_lock-{{ version }}.tar.gz\n  sha256: d24d98d1e72c38faa6f573e559e84541fb8d3d38bf1b3da05da65a1d4e027d49\n\nbuild:\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    - {{ min_python }}\n  run:\n    - {{ min_python }}\n\noutputs:\n  - name: pyodide-lock\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    requirements:\n      host:\n        - {{ min_python }}\n        - hatch-vcs\n        - hatchling\n        - pip\n      run:\n        - {{ min_python }}\n        - pydantic >=1.10.2,<2\n    test:\n      imports:\n        - pyodide_lock\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: pyodide-lock-with-wheel\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage(\"pyodide-lock\", exact=True) }}\n        - packaging\n        - pkginfo\n    test:\n      imports:\n        - pyodide_lock\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: pyodide-lock-with-cli\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage(\"pyodide-lock\", exact=True) }}\n        - typer\n    test:\n      imports:\n        - pyodide_lock.cli\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: pyodide-lock-with-all\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage(\"pyodide-lock\", exact=True) }}\n        - {{ pin_subpackage(\"pyodide-lock-with-cli\", exact=True) }}\n        - {{ pin_subpackage(\"pyodide-lock-with-wheel\", exact=True) }}\n    test:\n      source_files:\n        - tests\n      imports:\n        - pyodide_lock\n        - pyodide_lock.cli\n      commands:\n        - pip check\n        - coverage run --source=pyodide_lock --branch -m pytest -vv --color=yes\n        - coverage report --show-missing --skip-covered --fail-under=92\n      requires:\n        - coverage\n        - pip\n        - pytest\n        - python-build\n\nabout:\n  home: https://github.com/pyodide/pyodide-lock\n  summary: Tooling to manage the `pyodide-lock.json` file\n  license: BSD-3-Clause\n  license_file: LICENSE\n\nextra:\n  feedstock-name: pyodide-lock\n  recipe-maintainers:\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
    "hatch-vcs",
    "hatchling",
+   "packaging",
    "pip",
+   "pkginfo",
    "pydantic",
-   "python"
+   "pyodide-lock",
+   "pyodide-lock-with-cli",
+   "pyodide-lock-with-wheel",
+   "python",
+   "typer"
   ]
  },
  "requirements": {
@@ -183,15 +413,23 @@
   "run": {
    "__set__": true,
    "elements": [
+    "packaging",
+    "pkginfo",
     "pydantic",
-    "python"
+    "pyodide-lock",
+    "pyodide-lock-with-cli",
+    "pyodide-lock-with-wheel",
+    "python",
+    "typer"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
+    "coverage",
     "pip",
-    "pytest-cov"
+    "pytest",
+    "python-build"
    ]
   }
  },
@@ -213,20 +451,28 @@
   "run": {
    "__set__": true,
    "elements": [
-    "pydantic",
-    "python >=3.10"
+    "packaging",
+    "pkginfo",
+    "pydantic >=1.10.2,<2",
+    "pyodide-lock",
+    "pyodide-lock-with-cli",
+    "pyodide-lock-with-wheel",
+    "python >=3.10",
+    "typer"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
+    "coverage",
     "pip",
-    "pytest-cov"
+    "pytest",
+    "python-build"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/p/pyodide-lock/pyodide_lock-0.1.0a3.tar.gz",
- "version": "0.1.0a3",
+ "url": "https://pypi.io/packages/source/p/pyodide-lock/pyodide_lock-0.1.0a4.tar.gz",
+ "version": "0.1.0a4",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/pyodide-lock.json"
  }
