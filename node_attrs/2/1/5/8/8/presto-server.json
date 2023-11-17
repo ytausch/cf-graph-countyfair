@@ -21,15 +21,7 @@
     "/lib64/libc.so.6"
    ],
    "noarch": "generic",
-   "number": "0",
-   "script": [
-    "sed -i'' -e 's@<module>presto-docs</module>@@g' pom.xml",
-    "./mvnw clean install -DskipTests -T$CPU_COUNT -Dmaven.repo.local=$SRC_DIR/m2",
-    "./mvnw org.codehaus.mojo:license-maven-plugin:aggregate-add-third-party -Dmaven.repo.local=$SRC_DIR/m2",
-    "mv presto-server/target/presto-server-*/presto-server-* $PREFIX/opt/presto-server",
-    "echo \"exec \\\"$PREFIX/opt/presto-server/bin/launcher\\\" \\\"\\$@\\\"\" > $PREFIX/bin/presto-server && chmod +x $PREFIX/bin/presto-server",
-    "rm -rf $SRC_DIR/m2"
-   ]
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -43,11 +35,11 @@
   "requirements": {
    "build": [
     "git-lfs",
-    "openjdk >=8,<18",
+    "openjdk =8",
     "maven >=3.3.9"
    ],
    "run": [
-    "openjdk",
+    "openjdk =8",
     "python >=2.4",
     "__unix"
    ]
@@ -106,15 +98,7 @@
     "/lib64/libc.so.6"
    ],
    "noarch": "generic",
-   "number": "0",
-   "script": [
-    "sed -i'' -e 's@<module>presto-docs</module>@@g' pom.xml",
-    "./mvnw clean install -DskipTests -T$CPU_COUNT -Dmaven.repo.local=$SRC_DIR/m2",
-    "./mvnw org.codehaus.mojo:license-maven-plugin:aggregate-add-third-party -Dmaven.repo.local=$SRC_DIR/m2",
-    "mv presto-server/target/presto-server-*/presto-server-* $PREFIX/opt/presto-server",
-    "echo \"exec \\\"$PREFIX/opt/presto-server/bin/launcher\\\" \\\"\\$@\\\"\" > $PREFIX/bin/presto-server && chmod +x $PREFIX/bin/presto-server",
-    "rm -rf $SRC_DIR/m2"
-   ]
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -128,11 +112,11 @@
   "requirements": {
    "build": [
     "git-lfs",
-    "openjdk >=8,<18",
+    "openjdk =8",
     "maven >=3.3.9"
    ],
    "run": [
-    "openjdk",
+    "openjdk =8",
     "python >=2.4",
     "__unix"
    ]
@@ -161,7 +145,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/presto-server.json"
  },
- "raw_meta_yaml": "{% set name = \"presto-server\" %}\n{% set version = \"0.284\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: \"{{ version }}\"\n\nsource:\n  # Build needs a proper Git checkout.\n  git_url: https://github.com/prestodb/presto\n  git_rev: \"{{ version }}\"\n\nbuild:\n  number: 0\n  noarch: generic\n  script:\n    - sed -i'' -e 's@<module>presto-docs</module>@@g' pom.xml\n    - ./mvnw clean install -DskipTests -T$CPU_COUNT -Dmaven.repo.local=$SRC_DIR/m2\n    - ./mvnw org.codehaus.mojo:license-maven-plugin:aggregate-add-third-party -Dmaven.repo.local=$SRC_DIR/m2\n    - mv presto-server/target/presto-server-*/presto-server-* $PREFIX/opt/presto-server\n    - echo \"exec \\\"$PREFIX/opt/presto-server/bin/launcher\\\" \\\"\\$@\\\"\" > $PREFIX/bin/presto-server && chmod +x $PREFIX/bin/presto-server\n    - rm -rf $SRC_DIR/m2\n  missing_dso_whitelist:\n    # From libprocname, which is shipped as part of Presto\n    - /lib64/libc.so.6  # [linux]\n\nrequirements:\n  build:\n    - git-lfs\n    - openjdk >=8,<18\n    - maven >=3.3.9\n  run:\n    - openjdk\n    - python >=2.4\n    - __unix\n\ntest:\n  commands:\n    - presto-server --help\n\nabout:\n  home: https://prestodb.io\n  summary: Fast and Reliable SQL Engine for Data Analytics and the Open Lakehouse\n  description: |\n    Presto is a distributed SQL query engine designed to query large data sets distributed over one or more heterogeneous data sources.\n  license: Apache-2.0\n  license_file:\n    - LICENSE\n    - target/generated-sources/license/THIRD-PARTY.txt\n  doc_url: http://prestodb.github.io/docs/current/index.html\n  dev_url: https://github.com/prestodb/presto\n\nextra:\n  recipe-maintainers:\n    - jonashaag\n",
+ "raw_meta_yaml": "{% set name = \"presto-server\" %}\n{% set version = \"0.284\" %}\n{% set java_version = 8 %}\n\npackage:\n  name: {{ name|lower }}\n  version: \"{{ version }}\"\n\nsource:\n  # Build needs a proper Git checkout.\n  git_url: https://github.com/prestodb/presto\n  git_rev: \"{{ version }}\"\n\nbuild:\n  number: 1\n  noarch: generic\n  missing_dso_whitelist:\n    # From libprocname, which is shipped as part of Presto\n    - /lib64/libc.so.6  # [linux]\n\nrequirements:\n  build:\n    - git-lfs\n    - openjdk ={{ java_version }}\n    - maven >=3.3.9\n  run:\n    - openjdk ={{ java_version }}\n    - python >=2.4\n    - __unix\n\ntest:\n  commands:\n    - presto-server --help\n\nabout:\n  home: https://prestodb.io\n  summary: Fast and Reliable SQL Engine for Data Analytics and the Open Lakehouse\n  description: |\n    Presto is a distributed SQL query engine designed to query large data sets distributed over one or more heterogeneous data sources.\n  license: Apache-2.0\n  license_file:\n    - LICENSE\n    - target/generated-sources/license/THIRD-PARTY.txt\n  doc_url: http://prestodb.github.io/docs/current/index.html\n  dev_url: https://github.com/prestodb/presto\n\nextra:\n  recipe-maintainers:\n    - jonashaag\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -205,7 +189,7 @@
    "elements": [
     "git-lfs",
     "maven >=3.3.9",
-    "openjdk >=8,<18"
+    "openjdk =8"
    ]
   },
   "host": {
@@ -216,7 +200,7 @@
    "__set__": true,
    "elements": [
     "__unix",
-    "openjdk",
+    "openjdk =8",
     "python >=2.4"
    ]
   },
