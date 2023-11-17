@@ -23,7 +23,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": [
     "PYTHON -m pip install --find-links . --no-index --ignore-installed --no-deps pydata-sphinx-theme",
     "cd RECIPE_DIR && PYTHON collect_licenses.py"
@@ -54,7 +54,8 @@
     "packaging",
     "pygments >=2.7",
     "python >=3.8",
-    "sphinx >=5.0"
+    "sphinx >=5.0",
+    "typing-extensions"
    ]
   },
   "source": [
@@ -118,7 +119,8 @@
     "packaging",
     "pygments",
     "python",
-    "sphinx"
+    "sphinx",
+    "typing-extensions"
    ]
   },
   "test": {
@@ -153,7 +155,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": [
     "PYTHON -m pip install --find-links . --no-index --ignore-installed --no-deps pydata-sphinx-theme",
     "cd RECIPE_DIR && PYTHON collect_licenses.py"
@@ -184,7 +186,8 @@
     "packaging",
     "pygments >=2.7",
     "python >=3.8",
-    "sphinx >=5.0"
+    "sphinx >=5.0",
+    "typing-extensions"
    ]
   },
   "source": [
@@ -239,7 +242,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pydata-sphinx-theme.json"
  },
- "raw_meta_yaml": "{% set version = \"0.14.3\" %}\n{% set cov_fail_under = \"87\" %}\n{% set min_sphinx = \"5.0\" %}\n\npackage:\n  name: pydata-sphinx-theme\n  version: {{ version }}\n\nsource:\n  - url: https://pypi.io/packages/py3/p/pydata-sphinx-theme/pydata_sphinx_theme-{{ version }}-py3-none-any.whl\n    sha256: b7e40cd75a20449adfe2d7525be379b9fe92f6d31e5233e449fa34ddcd4398d9\n  - folder: src\n    url: https://github.com/pydata/pydata-sphinx-theme/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: 2ca3d012ad8bebe234a498467f73ff0b43935015881ef33e33ef61c1187f8e23\n\nbuild:\n  number: 0\n  noarch: python\n  script:\n    - {{ PYTHON }} -m pip install --find-links . --no-index --ignore-installed --no-deps pydata-sphinx-theme\n    - cd {{ RECIPE_DIR }} && {{ PYTHON }} collect_licenses.py\n\nrequirements:\n  host:\n    - pip\n    - python >=3.8\n    - sphinx-theme-builder >=0.2.0a7\n  run:\n    - accessible-pygments\n    - babel\n    - beautifulsoup4\n    - docutils !=0.17.0\n    - packaging\n    - pygments >=2.7\n    - python >=3.8\n    - sphinx >={{ min_sphinx }}\n\ntest:\n  source_files:\n    - src/tests\n  imports:\n    - pydata_sphinx_theme\n  commands:\n    - pip check\n    - cd src/tests\n    - pytest -vv --cov=pydata_sphinx_theme --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under={{ cov_fail_under }}\n  requires:\n    - sphinx {{ min_sphinx }}.*\n    - jupyter_sphinx\n    - numpydoc\n    - pandas\n    - pip\n    - plotly\n    - pytest-cov\n    - pytest-regressions\n    - recommonmark\n    - sphinx-thebe\n    - xarray\n\nabout:\n  home: https://github.com/pydata/pydata-sphinx-theme\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file:\n    - src/LICENSE\n    - third-party-licenses/font-awesome-LICENSE.txt\n  summary: Bootstrap-based Sphinx theme from the PyData community\n  doc_url: https://pydata-sphinx-theme.readthedocs.io/\n  dev_url: https://github.com/pydata/pydata-sphinx-theme\n\nextra:\n  recipe-maintainers:\n    - jorisvandenbossche\n    - bollwyvl\n    - michaelweinold\n",
+ "raw_meta_yaml": "{% set version = \"0.14.3\" %}\n{% set cov_fail_under = \"87\" %}\n{% set min_sphinx = \"5.0\" %}\n\npackage:\n  name: pydata-sphinx-theme\n  version: {{ version }}\n\nsource:\n  - url: https://pypi.io/packages/py3/p/pydata-sphinx-theme/pydata_sphinx_theme-{{ version }}-py3-none-any.whl\n    sha256: b7e40cd75a20449adfe2d7525be379b9fe92f6d31e5233e449fa34ddcd4398d9\n  - folder: src\n    url: https://github.com/pydata/pydata-sphinx-theme/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: 2ca3d012ad8bebe234a498467f73ff0b43935015881ef33e33ef61c1187f8e23\n\nbuild:\n  number: 1\n  noarch: python\n  script:\n    - {{ PYTHON }} -m pip install --find-links . --no-index --ignore-installed --no-deps pydata-sphinx-theme\n    - cd {{ RECIPE_DIR }} && {{ PYTHON }} collect_licenses.py\n\nrequirements:\n  host:\n    - pip\n    - python >=3.8\n    - sphinx-theme-builder >=0.2.0a7\n  run:\n    - accessible-pygments\n    - babel\n    - beautifulsoup4\n    - docutils !=0.17.0\n    - packaging\n    - pygments >=2.7\n    - python >=3.8\n    - sphinx >={{ min_sphinx }}\n    - typing-extensions\n\ntest:\n  source_files:\n    - src/tests\n  imports:\n    - pydata_sphinx_theme\n  commands:\n    - pip check\n    - cd src/tests\n    - pytest -vv --cov=pydata_sphinx_theme --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under={{ cov_fail_under }}\n  requires:\n    - sphinx {{ min_sphinx }}.*\n    - jupyter_sphinx\n    - numpydoc\n    - pandas\n    - pip\n    - plotly\n    - pytest-cov\n    - pytest-regressions\n    - recommonmark\n    - sphinx-thebe\n    - xarray\n\nabout:\n  home: https://github.com/pydata/pydata-sphinx-theme\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file:\n    - src/LICENSE\n    - third-party-licenses/font-awesome-LICENSE.txt\n  summary: Bootstrap-based Sphinx theme from the PyData community\n  doc_url: https://pydata-sphinx-theme.readthedocs.io/\n  dev_url: https://github.com/pydata/pydata-sphinx-theme\n\nextra:\n  recipe-maintainers:\n    - jorisvandenbossche\n    - bollwyvl\n    - michaelweinold\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -252,7 +255,8 @@
    "pygments",
    "python",
    "sphinx",
-   "sphinx-theme-builder"
+   "sphinx-theme-builder",
+   "typing-extensions"
   ]
  },
  "requirements": {
@@ -278,7 +282,8 @@
     "packaging",
     "pygments",
     "python",
-    "sphinx"
+    "sphinx",
+    "typing-extensions"
    ]
   },
   "test": {
@@ -322,7 +327,8 @@
     "packaging",
     "pygments >=2.7",
     "python >=3.8",
-    "sphinx >=5.0"
+    "sphinx >=5.0",
+    "typing-extensions"
    ]
   },
   "test": {
