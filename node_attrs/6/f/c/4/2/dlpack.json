@@ -23,7 +23,7 @@
    "summary": "DLPack - Open In Memory Tensor Structure"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -41,7 +41,7 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
-    "make"
+    "ninja"
    ]
   },
   "source": {
@@ -63,7 +63,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -90,7 +90,7 @@
    "summary": "DLPack - Open In Memory Tensor Structure"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -108,7 +108,7 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
-    "make"
+    "ninja"
    ]
   },
   "source": {
@@ -130,7 +130,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -157,7 +157,7 @@
    "summary": "DLPack - Open In Memory Tensor Structure"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -175,7 +175,7 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
-    "make"
+    "ninja"
    ]
   },
   "source": {
@@ -197,7 +197,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -224,10 +224,13 @@
    "summary": "DLPack - Open In Memory Tensor Structure"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
+    "marcelotrevisani",
+    "kkraus14",
+    "jakirkham",
     "marcelotrevisani",
     "kkraus14",
     "jakirkham",
@@ -254,23 +257,27 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
-    "make",
+    "ninja",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
-    "make",
+    "ninja",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
-    "make",
+    "ninja",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
-    "make",
+    "ninja",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
-    "make"
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
    ]
   },
   "source": {
@@ -293,7 +300,10 @@
     "test -d ${PREFIX}/lib/cmake/dlpack",
     "test -d ${PREFIX}/include/dlpack",
     "test -f ${PREFIX}/include/dlpack/dlpack.h",
-    "test -d ${PREFIX}/lib/cmake/dlpack"
+    "test -d ${PREFIX}/lib/cmake/dlpack",
+    "if not exist %LIBRARY_INC%/dlpack exit 1",
+    "if not exist %LIBRARY_INC%/dlpack/dlpack.h exit 1",
+    "if not exist %LIBRARY_LIB%/cmake/dlpack exit 1"
    ]
   }
  },
@@ -309,7 +319,7 @@
    "summary": "DLPack - Open In Memory Tensor Structure"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -327,7 +337,7 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
-    "make"
+    "ninja"
    ]
   },
   "source": {
@@ -349,7 +359,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -376,7 +386,7 @@
    "summary": "DLPack - Open In Memory Tensor Structure"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -394,7 +404,7 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
-    "make"
+    "ninja"
    ]
   },
   "source": {
@@ -416,7 +426,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -444,19 +454,20 @@
   "linux_aarch64",
   "linux_ppc64le",
   "osx_64",
-  "osx_arm64"
+  "osx_arm64",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/dlpack.json"
  },
- "raw_meta_yaml": "{% set name = \"dlpack\" %}\n{% set version = \"0.8\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/dmlc/dlpack/archive/v{{ version }}.tar.gz\n  sha256: cf965c26a5430ba4cc53d61963f288edddcd77443aa4c85ce722aaf1e2f29513\n\nbuild:\n  number: 2\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make\n\ntest:\n  commands:\n    - test -d ${PREFIX}/include/dlpack  # [unix]\n    - test -f ${PREFIX}/include/dlpack/dlpack.h  # [unix]\n    - test -d ${PREFIX}/lib/cmake/dlpack  # [unix]\n\nabout:\n  home: https://github.com/dmlc/dlpack\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: DLPack - Open In Memory Tensor Structure\n  description: |\n    DLPack is an open in-memory tensor structure to for sharing tensor among frameworks\n  dev_url: https://github.com/dmlc/dlpack\n\nextra:\n  recipe-maintainers:\n    - marcelotrevisani\n    - kkraus14\n    - jakirkham\n",
+ "raw_meta_yaml": "{% set name = \"dlpack\" %}\n{% set version = \"0.8\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/dmlc/dlpack/archive/v{{ version }}.tar.gz\n  sha256: cf965c26a5430ba4cc53d61963f288edddcd77443aa4c85ce722aaf1e2f29513\n\nbuild:\n  number: 3\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n\ntest:\n  commands:\n    - test -d ${PREFIX}/include/dlpack  # [unix]\n    - test -f ${PREFIX}/include/dlpack/dlpack.h  # [unix]\n    - test -d ${PREFIX}/lib/cmake/dlpack  # [unix]\n    - if not exist %LIBRARY_INC%/dlpack exit 1  # [win]\n    - if not exist %LIBRARY_INC%/dlpack/dlpack.h exit 1  # [win]\n    - if not exist %LIBRARY_LIB%/cmake/dlpack exit 1  # [win]\n\nabout:\n  home: https://github.com/dmlc/dlpack\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: DLPack - Open In Memory Tensor Structure\n  description: |\n    DLPack is an open in-memory tensor structure to for sharing tensor among frameworks\n  dev_url: https://github.com/dmlc/dlpack\n\nextra:\n  recipe-maintainers:\n    - marcelotrevisani\n    - kkraus14\n    - jakirkham\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
    "cmake",
    "cxx_compiler_stub",
-   "make"
+   "ninja"
   ]
  },
  "requirements": {
@@ -466,7 +477,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -496,7 +507,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -516,5 +527,72 @@
  "version": "0.8",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/dlpack.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "description": "DLPack is an open in-memory tensor structure to for sharing tensor among frameworks\n",
+   "dev_url": "https://github.com/dmlc/dlpack",
+   "home": "https://github.com/dmlc/dlpack",
+   "license": "MIT",
+   "license_family": "MIT",
+   "license_file": "LICENSE",
+   "summary": "DLPack - Open In Memory Tensor Structure"
+  },
+  "build": {
+   "number": "3"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "marcelotrevisani",
+    "kkraus14",
+    "jakirkham"
+   ]
+  },
+  "package": {
+   "name": "dlpack",
+   "version": "0.8"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "source": {
+   "sha256": "cf965c26a5430ba4cc53d61963f288edddcd77443aa4c85ce722aaf1e2f29513",
+   "url": "https://github.com/dmlc/dlpack/archive/v0.8.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "if not exist %LIBRARY_INC%/dlpack exit 1",
+    "if not exist %LIBRARY_INC%/dlpack/dlpack.h exit 1",
+    "if not exist %LIBRARY_LIB%/cmake/dlpack exit 1"
+   ]
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
  }
 }
