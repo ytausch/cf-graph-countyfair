@@ -59,7 +59,7 @@
   },
   "package": {
    "name": "ipython",
-   "version": "8.17.2"
+   "version": "8.18.0"
   },
   "requirements": {
    "host": [
@@ -84,8 +84,8 @@
    ]
   },
   "source": {
-   "sha256": "126bb57e1895594bb0d91ea3090bbd39384f6fe87c3d57fd558d0670f50339bb",
-   "url": "https://pypi.io/packages/source/i/ipython/ipython-8.17.2.tar.gz"
+   "sha256": "4feb61210160f75e229ce932dbf8b719bff37af123c0b985fd038b14233daa16",
+   "url": "https://pypi.io/packages/source/i/ipython/ipython-8.18.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -262,7 +262,7 @@
   },
   "package": {
    "name": "ipython",
-   "version": "8.17.2"
+   "version": "8.18.0"
   },
   "requirements": {
    "host": [
@@ -320,8 +320,8 @@
    ]
   },
   "source": {
-   "sha256": "126bb57e1895594bb0d91ea3090bbd39384f6fe87c3d57fd558d0670f50339bb",
-   "url": "https://pypi.io/packages/source/i/ipython/ipython-8.17.2.tar.gz"
+   "sha256": "4feb61210160f75e229ce932dbf8b719bff37af123c0b985fd038b14233daa16",
+   "url": "https://pypi.io/packages/source/i/ipython/ipython-8.18.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -497,7 +497,7 @@
   },
   "package": {
    "name": "ipython",
-   "version": "8.17.2"
+   "version": "8.18.0"
   },
   "requirements": {
    "host": [
@@ -523,8 +523,8 @@
    ]
   },
   "source": {
-   "sha256": "126bb57e1895594bb0d91ea3090bbd39384f6fe87c3d57fd558d0670f50339bb",
-   "url": "https://pypi.io/packages/source/i/ipython/ipython-8.17.2.tar.gz"
+   "sha256": "4feb61210160f75e229ce932dbf8b719bff37af123c0b985fd038b14233daa16",
+   "url": "https://pypi.io/packages/source/i/ipython/ipython-8.18.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -646,7 +646,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ipython.json"
  },
- "raw_meta_yaml": "{% set version = \"8.17.2\" %}\n\n{% set migrating = false %}\n\npackage:\n  name: ipython\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/i/ipython/ipython-{{ version }}.tar.gz\n  sha256: 126bb57e1895594bb0d91ea3090bbd39384f6fe87c3d57fd558d0670f50339bb\n\nbuild:\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv --no-deps\n\n  noarch: python\n  script_env:\n    - MIGRATING={{ migrating }}\n    # TODO: investigate removing when some pypy/coverage speed issues are resolved\n    - IPYTHON_TESTING_TIMEOUT_SCALE=10\n    - COV_THRESHOLD=71  # [unix]\n    - COV_THRESHOLD=70  # [win]\n  entry_points:\n    - ipython = IPython:start_ipython\n    - ipython3 = IPython:start_ipython\n\nrequirements:\n  host:\n    - pip\n    - python >=3.9\n    - setuptools >=51.0.0\n  run:\n    - __{{ noarch_platform }}\n    - python >=3.9\n    {% if noarch_platform == \"osx\" %}\n    - appnope\n    {% endif %}\n    {% if noarch_platform == \"win\" %}\n    - colorama\n    {% endif %}\n    - decorator\n    - exceptiongroup\n    - jedi >=0.16\n    - matplotlib-inline\n    {% if noarch_platform != \"win\" %}\n    - pexpect >4.3\n    {% endif %}\n    - pickleshare\n    - prompt_toolkit >=3.0.30,<3.1.0,!=3.0.37\n    - pygments >=2.4.0\n    - stack_data\n    - traitlets >=5\n    - typing_extensions\n\ntest:\n  source_files:\n    - pyproject.toml\n  requires:\n    - pip\n    - m2-grep  # [win]\n    {% if not migrating %}\n    - black\n    - curio\n    - matplotlib-base !=3.2.0\n    - nbformat\n    - numpy >=1.21\n    - pandas\n    - pickleshare\n    - pygments\n    - pytest <7.1\n    - pytest-asyncio <0.22\n    - pytest-cov\n    - testpath\n    - trio\n    # mypy\n    - mypy\n    - types-decorator\n    {% endif %}\n\n  imports:\n    - IPython\n    - IPython.core\n    - IPython.core.magics\n    - IPython.core.tests\n    - IPython.extensions\n    - IPython.extensions.tests\n    - IPython.external\n    - IPython.lib\n    - IPython.lib.tests\n    - IPython.sphinxext\n    - IPython.terminal\n    - IPython.terminal.pt_inputhooks\n    - IPython.terminal.tests\n    - IPython.testing\n    - IPython.testing.plugin\n    - IPython.testing.tests\n    - IPython.utils\n    - IPython.utils.tests\n  commands:\n    - pip check\n    - pygmentize -L | grep ipython\n    - ipython -h\n    - ipython3 -h\n    {% if not migrating %}\n    - mypy -p IPython || exit 0\n    {% endif %}\n\nabout:\n  home: https://ipython.org\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: 'IPython: Productive Interactive Computing'\n  description: |\n    IPython provides a rich architecture for interactive computing with\n    a powerful interactive shell, a kernel for Jupyter, high performance\n    tools for parallel computing, and more.\n  doc_url: https://ipython.readthedocs.io\n  dev_url: https://github.com/ipython/ipython\n\nextra:\n  recipe-maintainers:\n    - Carreau\n    - jakirkham\n    - fperez\n    - ellisonbg\n    - minrk\n    - ocefpaf\n    - pelson\n    - takluyver\n    - bollwyvl\n    - blink1073\n",
+ "raw_meta_yaml": "{% set version = \"8.18.0\" %}\n\n{% set migrating = false %}\n\npackage:\n  name: ipython\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/i/ipython/ipython-{{ version }}.tar.gz\n  sha256: 4feb61210160f75e229ce932dbf8b719bff37af123c0b985fd038b14233daa16\n\nbuild:\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv --no-deps\n\n  noarch: python\n  script_env:\n    - MIGRATING={{ migrating }}\n    # TODO: investigate removing when some pypy/coverage speed issues are resolved\n    - IPYTHON_TESTING_TIMEOUT_SCALE=10\n    - COV_THRESHOLD=71  # [unix]\n    - COV_THRESHOLD=70  # [win]\n  entry_points:\n    - ipython = IPython:start_ipython\n    - ipython3 = IPython:start_ipython\n\nrequirements:\n  host:\n    - pip\n    - python >=3.9\n    - setuptools >=51.0.0\n  run:\n    - __{{ noarch_platform }}\n    - python >=3.9\n    {% if noarch_platform == \"osx\" %}\n    - appnope\n    {% endif %}\n    {% if noarch_platform == \"win\" %}\n    - colorama\n    {% endif %}\n    - decorator\n    - exceptiongroup\n    - jedi >=0.16\n    - matplotlib-inline\n    {% if noarch_platform != \"win\" %}\n    - pexpect >4.3\n    {% endif %}\n    - pickleshare\n    - prompt_toolkit >=3.0.30,<3.1.0,!=3.0.37\n    - pygments >=2.4.0\n    - stack_data\n    - traitlets >=5\n    - typing_extensions\n\ntest:\n  source_files:\n    - pyproject.toml\n  requires:\n    - pip\n    - m2-grep  # [win]\n    {% if not migrating %}\n    - black\n    - curio\n    - matplotlib-base !=3.2.0\n    - nbformat\n    - numpy >=1.21\n    - pandas\n    - pickleshare\n    - pygments\n    - pytest <7.1\n    - pytest-asyncio <0.22\n    - pytest-cov\n    - testpath\n    - trio\n    # mypy\n    - mypy\n    - types-decorator\n    {% endif %}\n\n  imports:\n    - IPython\n    - IPython.core\n    - IPython.core.magics\n    - IPython.core.tests\n    - IPython.extensions\n    - IPython.extensions.tests\n    - IPython.external\n    - IPython.lib\n    - IPython.lib.tests\n    - IPython.sphinxext\n    - IPython.terminal\n    - IPython.terminal.pt_inputhooks\n    - IPython.terminal.tests\n    - IPython.testing\n    - IPython.testing.plugin\n    - IPython.testing.tests\n    - IPython.utils\n    - IPython.utils.tests\n  commands:\n    - pip check\n    - pygmentize -L | grep ipython\n    - ipython -h\n    - ipython3 -h\n    {% if not migrating %}\n    - mypy -p IPython || exit 0\n    {% endif %}\n\nabout:\n  home: https://ipython.org\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: 'IPython: Productive Interactive Computing'\n  description: |\n    IPython provides a rich architecture for interactive computing with\n    a powerful interactive shell, a kernel for Jupyter, high performance\n    tools for parallel computing, and more.\n  doc_url: https://ipython.readthedocs.io\n  dev_url: https://github.com/ipython/ipython\n\nextra:\n  recipe-maintainers:\n    - Carreau\n    - jakirkham\n    - fperez\n    - ellisonbg\n    - minrk\n    - ocefpaf\n    - pelson\n    - takluyver\n    - bollwyvl\n    - blink1073\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -788,8 +788,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/i/ipython/ipython-8.17.2.tar.gz",
- "version": "8.17.2",
+ "url": "https://pypi.io/packages/source/i/ipython/ipython-8.18.0.tar.gz",
+ "version": "8.18.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/ipython.json"
  },
@@ -834,7 +834,7 @@
   },
   "package": {
    "name": "ipython",
-   "version": "8.17.2"
+   "version": "8.18.0"
   },
   "requirements": {
    "host": [
@@ -859,8 +859,8 @@
    ]
   },
   "source": {
-   "sha256": "126bb57e1895594bb0d91ea3090bbd39384f6fe87c3d57fd558d0670f50339bb",
-   "url": "https://pypi.io/packages/source/i/ipython/ipython-8.17.2.tar.gz"
+   "sha256": "4feb61210160f75e229ce932dbf8b719bff37af123c0b985fd038b14233daa16",
+   "url": "https://pypi.io/packages/source/i/ipython/ipython-8.18.0.tar.gz"
   },
   "test": {
    "commands": [
