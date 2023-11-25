@@ -12,7 +12,7 @@
    "summary": "The Open Source Modelica Suite - OpenModelica Compiler"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -36,11 +36,14 @@
     "cxx_compiler_stub"
    ],
    "host": [
+    "expat",
     "openjdk",
     "libblas",
     "liblapack",
     "libcurl",
-    "boost-cpp"
+    "libboost-headers",
+    "libiconv",
+    "libuuid"
    ],
    "run": [
     "openjdk",
@@ -88,10 +91,13 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
+    "expat",
     "libblas",
+    "libboost-headers",
     "libcurl",
+    "libiconv",
     "liblapack",
+    "libuuid",
     "openjdk"
    ]
   },
@@ -120,7 +126,7 @@
    "summary": "The Open Source Modelica Suite - OpenModelica Compiler"
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -144,11 +150,14 @@
     "cxx_compiler_stub"
    ],
    "host": [
+    "expat",
     "openjdk",
     "libblas",
     "liblapack",
     "libcurl",
-    "boost-cpp"
+    "libboost-headers",
+    "libiconv",
+    "libuuid"
    ],
    "run": [
     "openjdk",
@@ -192,21 +201,24 @@
  "pr_info": {
   "__lazy_json__": "pr_info/omcompiler.json"
  },
- "raw_meta_yaml": "{% set version = \"1.21.0\" %}\n\npackage:\n  name: omcompiler\n  version: {{ version }}\n\nsource:\n  # use git because no tarball including submodules is available\n  git_url: https://github.com/OpenModelica/OpenModelica.git\n  git_tag: v{{ version }}\n\nbuild:\n  number: 2\n  skip: true  # [not linux]\n\nrequirements:\n  build:\n    - cmake\n    - autoconf\n    - automake\n    - make\n    - libtool\n    - pkg-config\n    - {{ compiler('fortran') }}\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n  host:\n    - openjdk\n    - libblas\n    - liblapack\n    - libcurl\n    - boost-cpp\n  run:\n    - openjdk\n    - cmake\n    - make\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - zip\n\ntest:\n  source_files:\n    - OMCompiler/Examples/Circle.mo\n  commands:\n    - omc --version\n    - echo 'loadFile(\"OMCompiler/Examples/Circle.mo\"); getErrorString(); buildModelFMU(Circle); getErrorString();' > export.mos\n    - omc export.mos\n    - ls Circle.fmu\n    - echo 'loadFile(\"OMCompiler/Examples/Circle.mo\"); getErrorString(); buildModelFMU(Circle, platforms={\"dynamic\"}); getErrorString();' > export.mos\n    - omc --fmuCMakeBuild=true --fmuRuntimeDepends=modelica export.mos\n    - ls Circle.fmu\n\nabout:\n   home: https://openmodelica.org/\n   license: OSMC-PL\n   license_family: GPL\n   license_file: OSMC-License.txt\n   summary: The Open Source Modelica Suite - OpenModelica Compiler\n\nextra:\n  recipe-maintainers:\n    - jschueller\n",
+ "raw_meta_yaml": "{% set version = \"1.21.0\" %}\n\npackage:\n  name: omcompiler\n  version: {{ version }}\n\nsource:\n  # use git because no tarball including submodules is available\n  git_url: https://github.com/OpenModelica/OpenModelica.git\n  git_tag: v{{ version }}\n\nbuild:\n  number: 3\n  skip: true  # [not linux]\n\nrequirements:\n  build:\n    - cmake\n    - autoconf\n    - automake\n    - make\n    - libtool\n    - pkg-config\n    - {{ compiler('fortran') }}\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n  host:\n    - expat\n    - openjdk\n    - libblas\n    - liblapack\n    - libcurl\n    - libboost-headers\n    - libiconv\n    - libuuid\n  run:\n    - openjdk\n    - cmake\n    - make\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - zip\n\ntest:\n  source_files:\n    - OMCompiler/Examples/Circle.mo\n  commands:\n    - omc --version\n    - echo 'loadFile(\"OMCompiler/Examples/Circle.mo\"); getErrorString(); buildModelFMU(Circle); getErrorString();' > export.mos\n    - omc export.mos\n    - ls Circle.fmu\n    - echo 'loadFile(\"OMCompiler/Examples/Circle.mo\"); getErrorString(); buildModelFMU(Circle, platforms={\"dynamic\"}); getErrorString();' > export.mos\n    - omc --fmuCMakeBuild=true --fmuRuntimeDepends=modelica export.mos\n    - ls Circle.fmu\n\nabout:\n   home: https://openmodelica.org/\n   license: OSMC-PL\n   license_family: GPL\n   license_file: OSMC-License.txt\n   summary: The Open Source Modelica Suite - OpenModelica Compiler\n\nextra:\n  recipe-maintainers:\n    - jschueller\n",
  "req": {
   "__set__": true,
   "elements": [
    "autoconf",
    "automake",
-   "boost-cpp",
    "c_compiler_stub",
    "cmake",
    "cxx_compiler_stub",
+   "expat",
    "fortran_compiler_stub",
    "libblas",
+   "libboost-headers",
    "libcurl",
+   "libiconv",
    "liblapack",
    "libtool",
+   "libuuid",
    "make",
    "openjdk",
    "pkg-config",
@@ -231,13 +243,16 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "expat",
     "fortran_compiler_stub",
     "libblas",
+    "libboost-headers",
     "libcurl",
+    "libiconv",
     "liblapack",
+    "libuuid",
     "openjdk"
    ]
   },
@@ -278,10 +293,13 @@
   "host": {
    "__set__": true,
    "elements": [
-    "boost-cpp",
+    "expat",
     "libblas",
+    "libboost-headers",
     "libcurl",
+    "libiconv",
     "liblapack",
+    "libuuid",
     "openjdk"
    ]
   },
