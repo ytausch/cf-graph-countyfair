@@ -13,12 +13,12 @@
   },
   "build": {
    "entry_points": [
-    "brainreg = brainreg.cli:main"
+    "brainreg = brainreg.core.cli:main"
    ],
    "noarch": "python",
    "number": "0",
    "script": [
-    "rm -r src/brainreg/bin",
+    "rm -r brainreg/core/bin",
     "PYTHON -m pip install . -vv"
    ]
   },
@@ -29,32 +29,33 @@
   },
   "package": {
    "name": "brainreg",
-   "version": "0.5.1"
+   "version": "1.0.0"
   },
   "requirements": {
    "host": [
-    "python >=3.7",
+    "python >=3.9",
     "pip"
    ],
    "run": [
-    "python >=3.7",
+    "python >=3.9",
     "bg-atlasapi",
     "bg-space",
-    "niftyreg",
-    "numpy",
-    "configparser",
-    "scikit-image",
-    "imio",
+    "brainglobe-napari-io",
+    "brainglobe-segmentation >=1.0.0",
+    "brainglobe-utils >=0.2.7",
     "fancylog",
-    "brainglobe-utils",
-    "scipy",
-    "pandas",
-    "tqdm"
+    "imio",
+    "magicgui",
+    "napari-plugin-engine >=0.1.4",
+    "numpy",
+    "pooch >1",
+    "qtpy",
+    "scikit-image"
    ]
   },
   "source": {
-   "sha256": "3ef15fbebb835738f8aa918616d653f51fc0aab7f0a005937330078f5121c656",
-   "url": "https://pypi.io/packages/source/b/brainreg/brainreg-0.5.1.tar.gz"
+   "sha256": "703457275974c4de63e1c9a1836c1b59856334f85fd95b3c2b3767f12a0085f8",
+   "url": "https://pypi.io/packages/source/b/brainreg/brainreg-1.0.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -86,17 +87,18 @@
    "elements": [
     "bg-atlasapi",
     "bg-space",
+    "brainglobe-napari-io",
+    "brainglobe-segmentation",
     "brainglobe-utils",
-    "configparser",
     "fancylog",
     "imio",
-    "niftyreg",
+    "magicgui",
+    "napari-plugin-engine",
     "numpy",
-    "pandas",
+    "pooch",
     "python",
-    "scikit-image",
-    "scipy",
-    "tqdm"
+    "qtpy",
+    "scikit-image"
    ]
   },
   "test": {
@@ -115,12 +117,12 @@
   },
   "build": {
    "entry_points": [
-    "brainreg = brainreg.cli:main"
+    "brainreg = brainreg.core.cli:main"
    ],
    "noarch": "python",
    "number": "0",
    "script": [
-    "rm -r src/brainreg/bin",
+    "rm -r brainreg/core/bin",
     "PYTHON -m pip install . -vv"
    ]
   },
@@ -131,32 +133,33 @@
   },
   "package": {
    "name": "brainreg",
-   "version": "0.5.1"
+   "version": "1.0.0"
   },
   "requirements": {
    "host": [
-    "python >=3.7",
+    "python >=3.9",
     "pip"
    ],
    "run": [
-    "python >=3.7",
+    "python >=3.9",
     "bg-atlasapi",
     "bg-space",
-    "niftyreg",
-    "numpy",
-    "configparser",
-    "scikit-image",
-    "imio",
+    "brainglobe-napari-io",
+    "brainglobe-segmentation >=1.0.0",
+    "brainglobe-utils >=0.2.7",
     "fancylog",
-    "brainglobe-utils",
-    "scipy",
-    "pandas",
-    "tqdm"
+    "imio",
+    "magicgui",
+    "napari-plugin-engine >=0.1.4",
+    "numpy",
+    "pooch >1",
+    "qtpy",
+    "scikit-image"
    ]
   },
   "source": {
-   "sha256": "3ef15fbebb835738f8aa918616d653f51fc0aab7f0a005937330078f5121c656",
-   "url": "https://pypi.io/packages/source/b/brainreg/brainreg-0.5.1.tar.gz"
+   "sha256": "703457275974c4de63e1c9a1836c1b59856334f85fd95b3c2b3767f12a0085f8",
+   "url": "https://pypi.io/packages/source/b/brainreg/brainreg-1.0.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -185,24 +188,25 @@
  "pr_info": {
   "__lazy_json__": "pr_info/brainreg.json"
  },
- "raw_meta_yaml": "{% set name = \"brainreg\" %}\n{% set version = \"0.5.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/brainreg-{{ version }}.tar.gz\n  sha256: 3ef15fbebb835738f8aa918616d653f51fc0aab7f0a005937330078f5121c656\n\nbuild:\n  entry_points:\n    - brainreg = brainreg.cli:main\n  noarch: python\n  script:\n    # Remove niftyreg binaries in the PyPI distribution as we should depend on\n    # niftyreg as already packaged in conda-forge\n    - rm -r src/brainreg/bin  # [not win]\n    - rd /s /q \"src/brainreg/bin\"  # [win]\n    - {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - python >=3.7\n    - bg-atlasapi\n    - bg-space\n    - niftyreg\n    - numpy\n    - configparser\n    - scikit-image\n    - imio\n    - fancylog\n    - brainglobe-utils\n    - scipy\n    - pandas\n    - tqdm\n\ntest:\n  imports:\n    - brainreg\n  commands:\n    - pip check\n    - brainreg --help\n  requires:\n    - pip\n\nabout:\n  summary: Automated 3D brain registration\n  license: BSD-3-Clause\n  license_file: LICENSE\n  home: https://docs.brainglobe.info/brainreg/introduction\n\nextra:\n  recipe-maintainers:\n    - adamltyson\n",
+ "raw_meta_yaml": "{% set name = \"brainreg\" %}\n{% set version = \"1.0.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/brainreg-{{ version }}.tar.gz\n  sha256: 703457275974c4de63e1c9a1836c1b59856334f85fd95b3c2b3767f12a0085f8\n\nbuild:\n  entry_points:\n    - brainreg = brainreg.core.cli:main\n  noarch: python\n  script:\n    # Remove niftyreg binaries in the PyPI distribution as we should depend on\n    # niftyreg as already packaged in conda-forge\n    - rm -r brainreg/core/bin  # [not win]\n    - rd /s /q \"brainreg/core/bin\"  # [win]\n    - {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.9\n    - pip\n  run:\n    - python >=3.9\n    - bg-atlasapi\n    - bg-space\n    - brainglobe-napari-io\n    - brainglobe-segmentation >=1.0.0\n    - brainglobe-utils >=0.2.7\n    - fancylog\n    - imio\n    - magicgui\n    - napari-plugin-engine >=0.1.4\n    - napari[pyqt5]\n    - numpy\n    - pooch >1\n    - qtpy\n    - scikit-image\n\ntest:\n  imports:\n    - brainreg\n  commands:\n    - pip check\n    - brainreg --help\n  requires:\n    - pip\n\nabout:\n  summary: Automated 3D brain registration\n  license: BSD-3-Clause\n  license_file: LICENSE\n  home: https://docs.brainglobe.info/brainreg/introduction\n\nextra:\n  recipe-maintainers:\n    - adamltyson\n",
  "req": {
   "__set__": true,
   "elements": [
    "bg-atlasapi",
    "bg-space",
+   "brainglobe-napari-io",
+   "brainglobe-segmentation",
    "brainglobe-utils",
-   "configparser",
    "fancylog",
    "imio",
-   "niftyreg",
+   "magicgui",
+   "napari-plugin-engine",
    "numpy",
-   "pandas",
    "pip",
+   "pooch",
    "python",
-   "scikit-image",
-   "scipy",
-   "tqdm"
+   "qtpy",
+   "scikit-image"
   ]
  },
  "requirements": {
@@ -222,17 +226,18 @@
    "elements": [
     "bg-atlasapi",
     "bg-space",
+    "brainglobe-napari-io",
+    "brainglobe-segmentation",
     "brainglobe-utils",
-    "configparser",
     "fancylog",
     "imio",
-    "niftyreg",
+    "magicgui",
+    "napari-plugin-engine",
     "numpy",
-    "pandas",
+    "pooch",
     "python",
-    "scikit-image",
-    "scipy",
-    "tqdm"
+    "qtpy",
+    "scikit-image"
    ]
   },
   "test": {
@@ -252,7 +257,7 @@
    "__set__": true,
    "elements": [
     "pip",
-    "python >=3.7"
+    "python >=3.9"
    ]
   },
   "run": {
@@ -260,17 +265,18 @@
    "elements": [
     "bg-atlasapi",
     "bg-space",
-    "brainglobe-utils",
-    "configparser",
+    "brainglobe-napari-io",
+    "brainglobe-segmentation >=1.0.0",
+    "brainglobe-utils >=0.2.7",
     "fancylog",
     "imio",
-    "niftyreg",
+    "magicgui",
+    "napari-plugin-engine >=0.1.4",
     "numpy",
-    "pandas",
-    "python >=3.7",
-    "scikit-image",
-    "scipy",
-    "tqdm"
+    "pooch >1",
+    "python >=3.9",
+    "qtpy",
+    "scikit-image"
    ]
   },
   "test": {
@@ -280,8 +286,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/b/brainreg/brainreg-0.5.1.tar.gz",
- "version": "0.5.1",
+ "url": "https://pypi.io/packages/source/b/brainreg/brainreg-1.0.0.tar.gz",
+ "version": "1.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/brainreg.json"
  }
