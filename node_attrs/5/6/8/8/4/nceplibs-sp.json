@@ -12,7 +12,7 @@
    "summary": "The spectral transform library (splib) contains FORTRAN subprograms to be used for a variety of spectral transform functions."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -33,7 +33,8 @@
    ],
    "host": [
     "llvm-openmp"
-   ]
+   ],
+   "run": []
   },
   "source": {
    "sha256": "aec475ccb5ccf7c5a758dfb699626f2be78a22729a9d8d5e0a286db6a3213a51",
@@ -41,7 +42,7 @@
   },
   "test": {
    "commands": [
-    "test -f ${PREFIX}/lib/libsp_4${SHLIB_EXT} -o -f ${PREFIX}/lib/libsp_d${SHLIB_EXT}"
+    "test -f ${PREFIX}/lib/libsp_4${SHLIB_EXT} -a -f ${PREFIX}/lib/libsp_d${SHLIB_EXT}"
    ]
   }
  },
@@ -78,10 +79,12 @@
    "summary": "The spectral transform library (splib) contains FORTRAN subprograms to be used for a variety of spectral transform functions."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "EricEngle-NOAA",
+    "timcera",
     "EricEngle-NOAA",
     "timcera",
     "EricEngle-NOAA",
@@ -101,11 +104,21 @@
     "fortran_compiler_stub",
     "cmake",
     "pkg-config >=0.21",
-    "make"
+    "make",
+    "m2w64-gcc-fortran",
+    "cmake",
+    "pkg-config >=0.21",
+    "ninja"
    ],
    "host": [
     "llvm-openmp",
-    "llvm-openmp"
+    "llvm-openmp",
+    "llvm-openmp",
+    "m2w64-gcc-fortran"
+   ],
+   "run": [
+    "m2w64-gcc-libgfortran",
+    "m2w64-gcc-libs"
    ]
   },
   "source": {
@@ -114,8 +127,10 @@
   },
   "test": {
    "commands": [
-    "test -f ${PREFIX}/lib/libsp_4${SHLIB_EXT} -o -f ${PREFIX}/lib/libsp_d${SHLIB_EXT}",
-    "test -f ${PREFIX}/lib/libsp_4${SHLIB_EXT} -o -f ${PREFIX}/lib/libsp_d${SHLIB_EXT}"
+    "test -f ${PREFIX}/lib/libsp_4${SHLIB_EXT} -a -f ${PREFIX}/lib/libsp_d${SHLIB_EXT}",
+    "test -f ${PREFIX}/lib/libsp_4${SHLIB_EXT} -a -f ${PREFIX}/lib/libsp_d${SHLIB_EXT}",
+    "if not exist %LIBRARY_BIN%\\\\libsp_4.dll exit 1",
+    "if not exist %LIBRARY_BIN%\\\\libsp_d.dll exit 1"
    ]
   }
  },
@@ -128,7 +143,7 @@
    "summary": "The spectral transform library (splib) contains FORTRAN subprograms to be used for a variety of spectral transform functions."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -149,7 +164,8 @@
    ],
    "host": [
     "llvm-openmp"
-   ]
+   ],
+   "run": []
   },
   "source": {
    "sha256": "aec475ccb5ccf7c5a758dfb699626f2be78a22729a9d8d5e0a286db6a3213a51",
@@ -157,7 +173,7 @@
   },
   "test": {
    "commands": [
-    "test -f ${PREFIX}/lib/libsp_4${SHLIB_EXT} -o -f ${PREFIX}/lib/libsp_d${SHLIB_EXT}"
+    "test -f ${PREFIX}/lib/libsp_4${SHLIB_EXT} -a -f ${PREFIX}/lib/libsp_d${SHLIB_EXT}"
    ]
   }
  },
@@ -195,19 +211,24 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
-  "osx_64"
+  "osx_64",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/nceplibs-sp.json"
  },
- "raw_meta_yaml": "{% set name = \"nceplibs-sp\" %}\n{% set version = \"2.5.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/NOAA-EMC/NCEPLIBS-sp/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: aec475ccb5ccf7c5a758dfb699626f2be78a22729a9d8d5e0a286db6a3213a51\n\nbuild:\n  skip: true  # [win]\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}\n    - cmake\n    - pkg-config >=0.21\n    - make                  # [not win]\n    - ninja                 # [win]\n  host:\n    - llvm-openmp\n\ntest:\n  commands:\n    - test -f ${PREFIX}/lib/libsp_4${SHLIB_EXT} -o -f ${PREFIX}/lib/libsp_d${SHLIB_EXT}  # [not win]\n\nabout:\n  home: https://github.com/NOAA-EMC/NCEPLIBS-sp\n  summary: The spectral transform library (splib) contains FORTRAN subprograms to be used for a variety of spectral transform functions.\n  license: LGPL-3.0-only\n  license_file: LICENSE.md\n\nextra:\n  recipe-maintainers:\n    - EricEngle-NOAA\n    - timcera\n",
+ "raw_meta_yaml": "{% set name = \"nceplibs-sp\" %}\n{% set version = \"2.5.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/NOAA-EMC/NCEPLIBS-sp/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: aec475ccb5ccf7c5a758dfb699626f2be78a22729a9d8d5e0a286db6a3213a51\n\nbuild:\n  number: 1\n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}   # [not win]\n    - m2w64-gcc-fortran           # [win]\n    - cmake\n    - pkg-config >=0.21\n    - make                  # [not win]\n    - ninja                 # [win]\n  host:\n    - llvm-openmp\n    - m2w64-gcc-fortran           # [win]\n  run:\n    - m2w64-gcc-libgfortran       # [win]\n    - m2w64-gcc-libs              # [win]\n\ntest:\n  commands:\n    - test -f ${PREFIX}/lib/libsp_4${SHLIB_EXT} -a -f ${PREFIX}/lib/libsp_d${SHLIB_EXT}  # [not win]\n    - if not exist %LIBRARY_BIN%\\\\libsp_4.dll exit 1  # [win]\n    - if not exist %LIBRARY_BIN%\\\\libsp_d.dll exit 1  # [win]\n\nabout:\n  home: https://github.com/NOAA-EMC/NCEPLIBS-sp\n  summary: The spectral transform library (splib) contains FORTRAN subprograms to be used for a variety of spectral transform functions.\n  license: LGPL-3.0-only\n  license_file: LICENSE.md\n\nextra:\n  recipe-maintainers:\n    - EricEngle-NOAA\n    - timcera\n",
  "req": {
   "__set__": true,
   "elements": [
    "cmake",
    "fortran_compiler_stub",
    "llvm-openmp",
+   "m2w64-gcc-fortran",
+   "m2w64-gcc-libgfortran",
+   "m2w64-gcc-libs",
    "make",
+   "ninja",
    "pkg-config"
   ]
  },
@@ -217,7 +238,9 @@
    "elements": [
     "cmake",
     "fortran_compiler_stub",
+    "m2w64-gcc-fortran",
     "make",
+    "ninja",
     "pkg-config"
    ]
   },
@@ -226,6 +249,7 @@
    "elements": [
     "fortran_compiler_stub",
     "llvm-openmp",
+    "m2w64-gcc-fortran",
     "openmp"
    ]
   },
@@ -233,6 +257,8 @@
    "__set__": true,
    "elements": [
     "fortran_compiler_stub",
+    "m2w64-gcc-libgfortran",
+    "m2w64-gcc-libs",
     "openmp"
    ]
   },
@@ -248,19 +274,25 @@
    "elements": [
     "cmake",
     "fortran_compiler_stub",
+    "m2w64-gcc-fortran",
     "make",
+    "ninja",
     "pkg-config >=0.21"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
-    "llvm-openmp"
+    "llvm-openmp",
+    "m2w64-gcc-fortran"
    ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "m2w64-gcc-libgfortran",
+    "m2w64-gcc-libs"
+   ]
   },
   "test": {
    "__set__": true,
@@ -271,5 +303,81 @@
  "version": "2.5.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/nceplibs-sp.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/NOAA-EMC/NCEPLIBS-sp",
+   "license": "LGPL-3.0-only",
+   "license_file": "LICENSE.md",
+   "summary": "The spectral transform library (splib) contains FORTRAN subprograms to be used for a variety of spectral transform functions."
+  },
+  "build": {
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "EricEngle-NOAA",
+    "timcera"
+   ]
+  },
+  "package": {
+   "name": "nceplibs-sp",
+   "version": "2.5.0"
+  },
+  "requirements": {
+   "build": [
+    "m2w64-gcc-fortran",
+    "cmake",
+    "pkg-config >=0.21",
+    "ninja"
+   ],
+   "host": [
+    "llvm-openmp",
+    "m2w64-gcc-fortran"
+   ],
+   "run": [
+    "m2w64-gcc-libgfortran",
+    "m2w64-gcc-libs"
+   ]
+  },
+  "source": {
+   "sha256": "aec475ccb5ccf7c5a758dfb699626f2be78a22729a9d8d5e0a286db6a3213a51",
+   "url": "https://github.com/NOAA-EMC/NCEPLIBS-sp/archive/refs/tags/v2.5.0.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "if not exist %LIBRARY_BIN%\\\\libsp_4.dll exit 1",
+    "if not exist %LIBRARY_BIN%\\\\libsp_d.dll exit 1"
+   ]
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "cmake",
+    "m2w64-gcc-fortran",
+    "ninja",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "llvm-openmp",
+    "m2w64-gcc-fortran"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "m2w64-gcc-libgfortran",
+    "m2w64-gcc-libs"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
  }
 }
