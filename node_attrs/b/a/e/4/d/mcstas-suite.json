@@ -1,7 +1,12 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "build_platform": {
+   "linux_aarch64": "linux_64",
+   "osx_arm64": "osx_64"
+  }
+ },
  "feedstock_name": "mcstas-suite",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -16,7 +21,7 @@
    "summary": "McStas is a general tool for simulating neutron scattering instruments and experiments."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -200,6 +205,202 @@
    ]
   }
  },
+ "linux_aarch64_meta_yaml": {
+  "about": {
+   "description": "McStas is a general tool for simulating neutron scattering instruments and\nexperiments.\n",
+   "dev_url": "https://github.com/McStasMcXtrace/McCode",
+   "doc_url": "https://mcstas.org/",
+   "home": "https://mcstas.org/",
+   "license": "GPL-3.0-only",
+   "license_family": "GPL3",
+   "license_file": "src/COPYING",
+   "summary": "McStas is a general tool for simulating neutron scattering instruments and experiments."
+  },
+  "build": {
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "willend",
+    "tkittel"
+   ]
+  },
+  "outputs": [
+   {
+    "name": "mcstas-core",
+    "requirements": {
+     "build": [
+      "cmake",
+      "make",
+      "c_compiler_stub"
+     ],
+     "host": [
+      "flex",
+      "bison"
+     ],
+     "run": [
+      "python",
+      "c_compiler_stub",
+      "bash",
+      "pyaml",
+      "ply"
+     ]
+    },
+    "script": "install-files-core.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py core"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "source_files": [
+      "src/mcstas-comps/examples/BNL_H8.instr",
+      "src/mcstas-comps/examples/Union_manual_example.instr"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "generic"
+    },
+    "name": "mcstas-data",
+    "script": "install-files-data.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py data"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": [
+      "python"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-mcgui",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "pyqt",
+      "qscintilla2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py mcgui"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-vis",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "matplotlib-base",
+      "numpy",
+      "tornado >=5",
+      "scipy",
+      "pillow",
+      "pyqtgraph",
+      "pyqt >=5.10"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py vis"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "name": "mcstas",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "mcstas-data",
+      "mcstas-mcgui",
+      "mcstas-vis",
+      "ncrystal",
+      "mcpl"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python test_pkg.py mcstas"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": null
+    }
+   }
+  ],
+  "package": {
+   "name": "mcstas-suite",
+   "version": "3.4.7"
+  },
+  "source": {
+   "folder": "src",
+   "sha256": "e6114c0daa24b77dd69c84846da1505ed8c96b0bc46a91049450ccec21322266",
+   "url": "https://github.com/McStasMcXtrace/McCode/archive/mcstas-3.4.7.tar.gz"
+  }
+ },
+ "linux_aarch64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "bison",
+    "flex"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "bash",
+    "c_compiler_stub",
+    "matplotlib-base",
+    "mcpl",
+    "mcstas-core",
+    "mcstas-data",
+    "mcstas-mcgui",
+    "mcstas-vis",
+    "ncrystal",
+    "numpy",
+    "pillow",
+    "ply",
+    "pyaml",
+    "pyqt",
+    "pyqtgraph",
+    "python",
+    "qscintilla2",
+    "scipy",
+    "tornado"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "python"
+   ]
+  }
+ },
  "meta_yaml": {
   "about": {
    "description": "McStas is a general tool for simulating neutron scattering instruments and\nexperiments.\n",
@@ -212,10 +413,14 @@
    "summary": "McStas is a general tool for simulating neutron scattering instruments and experiments."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
+    "willend",
+    "tkittel",
+    "willend",
+    "tkittel",
     "willend",
     "tkittel",
     "willend",
@@ -223,6 +428,240 @@
    ]
   },
   "outputs": [
+   {
+    "name": "mcstas-core",
+    "requirements": {
+     "build": [
+      "cmake",
+      "make",
+      "c_compiler_stub"
+     ],
+     "host": [
+      "flex",
+      "bison"
+     ],
+     "run": [
+      "python",
+      "c_compiler_stub",
+      "bash",
+      "pyaml",
+      "ply"
+     ]
+    },
+    "script": "install-files-core.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py core"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "source_files": [
+      "src/mcstas-comps/examples/BNL_H8.instr",
+      "src/mcstas-comps/examples/Union_manual_example.instr"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "generic"
+    },
+    "name": "mcstas-data",
+    "script": "install-files-data.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py data"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": [
+      "python"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-mcgui",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "pyqt",
+      "qscintilla2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py mcgui"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-vis",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "matplotlib-base",
+      "numpy",
+      "tornado >=5",
+      "scipy",
+      "pillow",
+      "pyqtgraph",
+      "pyqt >=5.10"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py vis"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "name": "mcstas",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "mcstas-data",
+      "mcstas-mcgui",
+      "mcstas-vis",
+      "ncrystal",
+      "mcpl"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python test_pkg.py mcstas"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": null
+    }
+   },
+   {
+    "name": "mcstas-core",
+    "requirements": {
+     "build": [
+      "cmake",
+      "make",
+      "c_compiler_stub"
+     ],
+     "host": [
+      "flex",
+      "bison"
+     ],
+     "run": [
+      "python",
+      "c_compiler_stub",
+      "bash",
+      "pyaml",
+      "ply"
+     ]
+    },
+    "script": "install-files-core.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py core"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "source_files": [
+      "src/mcstas-comps/examples/BNL_H8.instr",
+      "src/mcstas-comps/examples/Union_manual_example.instr"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "generic"
+    },
+    "name": "mcstas-data",
+    "script": "install-files-data.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py data"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": [
+      "python"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-mcgui",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "pyqt",
+      "qscintilla2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py mcgui"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-vis",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "matplotlib-base",
+      "numpy",
+      "tornado >=5",
+      "scipy",
+      "pillow",
+      "pyqtgraph",
+      "pyqt >=5.10"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py vis"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "name": "mcstas",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "mcstas-data",
+      "mcstas-mcgui",
+      "mcstas-vis",
+      "ncrystal",
+      "mcpl"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python test_pkg.py mcstas"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": null
+    }
+   },
    {
     "name": "mcstas-core",
     "requirements": {
@@ -481,7 +920,7 @@
    "summary": "McStas is a general tool for simulating neutron scattering instruments and experiments."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -665,6 +1104,202 @@
    ]
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "McStas is a general tool for simulating neutron scattering instruments and\nexperiments.\n",
+   "dev_url": "https://github.com/McStasMcXtrace/McCode",
+   "doc_url": "https://mcstas.org/",
+   "home": "https://mcstas.org/",
+   "license": "GPL-3.0-only",
+   "license_family": "GPL3",
+   "license_file": "src/COPYING",
+   "summary": "McStas is a general tool for simulating neutron scattering instruments and experiments."
+  },
+  "build": {
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "willend",
+    "tkittel"
+   ]
+  },
+  "outputs": [
+   {
+    "name": "mcstas-core",
+    "requirements": {
+     "build": [
+      "cmake",
+      "make",
+      "c_compiler_stub"
+     ],
+     "host": [
+      "flex",
+      "bison"
+     ],
+     "run": [
+      "python",
+      "c_compiler_stub",
+      "bash",
+      "pyaml",
+      "ply"
+     ]
+    },
+    "script": "install-files-core.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py core"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "source_files": [
+      "src/mcstas-comps/examples/BNL_H8.instr",
+      "src/mcstas-comps/examples/Union_manual_example.instr"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "generic"
+    },
+    "name": "mcstas-data",
+    "script": "install-files-data.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py data"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": [
+      "python"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-mcgui",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "pyqt",
+      "qscintilla2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py mcgui"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-vis",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "matplotlib-base",
+      "numpy",
+      "tornado >=5",
+      "scipy",
+      "pillow",
+      "pyqtgraph",
+      "pyqt >=5.10"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py vis"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "name": "mcstas",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "mcstas-data",
+      "mcstas-mcgui",
+      "mcstas-vis",
+      "ncrystal",
+      "mcpl"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python test_pkg.py mcstas"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": null
+    }
+   }
+  ],
+  "package": {
+   "name": "mcstas-suite",
+   "version": "3.4.7"
+  },
+  "source": {
+   "folder": "src",
+   "sha256": "e6114c0daa24b77dd69c84846da1505ed8c96b0bc46a91049450ccec21322266",
+   "url": "https://github.com/McStasMcXtrace/McCode/archive/mcstas-3.4.7.tar.gz"
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "bison",
+    "flex"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "bash",
+    "c_compiler_stub",
+    "matplotlib-base",
+    "mcpl",
+    "mcstas-core",
+    "mcstas-data",
+    "mcstas-mcgui",
+    "mcstas-vis",
+    "ncrystal",
+    "numpy",
+    "pillow",
+    "ply",
+    "pyaml",
+    "pyqt",
+    "pyqtgraph",
+    "python",
+    "qscintilla2",
+    "scipy",
+    "tornado"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "python"
+   ]
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -678,12 +1313,14 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
-  "osx_64"
+  "linux_aarch64",
+  "osx_64",
+  "osx_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/mcstas-suite.json"
  },
- "raw_meta_yaml": "{% set version = \"3.4.7\" %}\n{% set sha_value = \"e6114c0daa24b77dd69c84846da1505ed8c96b0bc46a91049450ccec21322266\" %}\n#NB get sha256 with: curl -sL <URL> | openssl sha256\n\npackage:\n  name: mcstas-suite\n  version: {{ version }}\n\nsource:\n  url: https://github.com/McStasMcXtrace/McCode/archive/mcstas-{{ version }}.tar.gz\n  sha256: {{ sha_value }}\n  folder: src\n\nbuild:\n  number: 0\n\noutputs:\n\n  - name: mcstas-core\n    script: install-files-core.sh\n    build:  # [win]\n      skip: True  # [win]\n    requirements:\n      build:\n        - cmake\n        - make  # [not win]\n        - {{ compiler('c') }}\n      host:\n        - flex  # [not win]\n        - bison  # [not win]\n        - winflexbison  # [win]\n        - dirent  # [win]\n      run:\n        - python\n        - {{ compiler('c') }}\n        - bash # for mcrun, and maybe others\n        - pyaml # for mcrun\n        - ply # for traces from mcrun\n    test:\n      files:\n        - test_pkg.py\n      commands:\n        - python test_pkg.py core\n      source_files:\n        - src/mcstas-comps/examples/BNL_H8.instr\n        - src/mcstas-comps/examples/Union_manual_example.instr\n\n  - name: mcstas-data\n    build:\n      noarch: generic\n    script: install-files-data.sh  # [not win]\n    script: install-files-data.bat  # [win]\n    test:\n      files:\n        - test_pkg.py\n      requires:\n        - python\n      commands:\n        - python test_pkg.py data\n\n  - name: mcstas-mcgui\n    build:\n      skip: True  # [win]\n    requirements:\n      run:\n        - mcstas-core\n        - pyqt\n        - qscintilla2\n    test:\n      files:\n        - test_pkg.py\n      commands:\n        - python ${SRC_DIR}/test_pkg.py mcgui\n\n  - name: mcstas-vis\n    build:\n      skip: True  # [win]\n    requirements:\n      run:\n        - mcstas-core\n        #  Note: conda-forge linter wants matplotlib-base and not matplotlib. It\n        #  actually makes no difference (as per October 2023) since we anyway\n        #  install tornado+pyqt.\n        - matplotlib-base\n        - numpy\n        - tornado >=5\n        - scipy\n        - pillow\n        - pyqtgraph\n        - pyqt >=5.10\n    test:\n      files:\n        - test_pkg.py\n      commands:\n        - python ${SRC_DIR}/test_pkg.py vis\n\n  - name: mcstas\n    build:  # [win]\n      skip: True  # [win]\n    test:\n      files:\n        - test_pkg.py\n      requires:\n      commands:\n        - python test_pkg.py mcstas\n    requirements:\n      run:\n        - {{ pin_subpackage('mcstas-core', max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage('mcstas-data', max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage('mcstas-mcgui', max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage('mcstas-vis', max_pin=\"x.x.x\") }}\n        - ncrystal  # [unix]\n        - mcpl  # [unix]\n\nabout:\n  home: https://mcstas.org/\n  summary: McStas is a general tool for simulating neutron scattering instruments and experiments.\n  description: |\n    McStas is a general tool for simulating neutron scattering instruments and\n    experiments.\n  license: GPL-3.0-only\n  license_family: GPL3\n  license_file: src/COPYING\n  doc_url: https://mcstas.org/\n  dev_url: https://github.com/McStasMcXtrace/McCode\n\nextra:\n  recipe-maintainers:\n    - willend\n    - tkittel\n",
+ "raw_meta_yaml": "{% set version = \"3.4.7\" %}\n{% set sha_value = \"e6114c0daa24b77dd69c84846da1505ed8c96b0bc46a91049450ccec21322266\" %}\n#NB get sha256 with: curl -sL <URL> | openssl sha256\n\npackage:\n  name: mcstas-suite\n  version: {{ version }}\n\nsource:\n  url: https://github.com/McStasMcXtrace/McCode/archive/mcstas-{{ version }}.tar.gz\n  sha256: {{ sha_value }}\n  folder: src\n\nbuild:\n  number: 1\n\noutputs:\n\n  - name: mcstas-core\n    script: install-files-core.sh\n    build:  # [win]\n      skip: True  # [win]\n    requirements:\n      build:\n        - cmake\n        - make  # [not win]\n        - {{ compiler('c') }}\n      host:\n        - flex  # [not win]\n        - bison  # [not win]\n        - winflexbison  # [win]\n        - dirent  # [win]\n      run:\n        - python\n        - {{ compiler('c') }}\n        - bash # for mcrun, and maybe others\n        - pyaml # for mcrun\n        - ply # for traces from mcrun\n    test:\n      files:\n        - test_pkg.py\n      commands:\n        - python test_pkg.py core\n      source_files:\n        - src/mcstas-comps/examples/BNL_H8.instr\n        - src/mcstas-comps/examples/Union_manual_example.instr\n\n  - name: mcstas-data\n    build:\n      noarch: generic\n    script: install-files-data.sh  # [not win]\n    script: install-files-data.bat  # [win]\n    test:\n      files:\n        - test_pkg.py\n      requires:\n        - python\n      commands:\n        - python test_pkg.py data\n\n  - name: mcstas-mcgui\n    build:\n      skip: True  # [win]\n    requirements:\n      run:\n        - mcstas-core\n        - pyqt\n        - qscintilla2\n    test:\n      files:\n        - test_pkg.py\n      commands:\n        - python ${SRC_DIR}/test_pkg.py mcgui\n\n  - name: mcstas-vis\n    build:\n      skip: True  # [win]\n    requirements:\n      run:\n        - mcstas-core\n        #  Note: conda-forge linter wants matplotlib-base and not matplotlib. It\n        #  actually makes no difference (as per October 2023) since we anyway\n        #  install tornado+pyqt.\n        - matplotlib-base\n        - numpy\n        - tornado >=5\n        - scipy\n        - pillow\n        - pyqtgraph\n        - pyqt >=5.10\n    test:\n      files:\n        - test_pkg.py\n      commands:\n        - python ${SRC_DIR}/test_pkg.py vis\n\n  - name: mcstas\n    build:  # [win]\n      skip: True  # [win]\n    test:\n      files:\n        - test_pkg.py\n      requires:\n      commands:\n        - python test_pkg.py mcstas\n    requirements:\n      run:\n        - {{ pin_subpackage('mcstas-core', max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage('mcstas-data', max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage('mcstas-mcgui', max_pin=\"x.x.x\") }}\n        - {{ pin_subpackage('mcstas-vis', max_pin=\"x.x.x\") }}\n        - ncrystal  # [unix]\n        - mcpl  # [unix]\n\nabout:\n  home: https://mcstas.org/\n  summary: McStas is a general tool for simulating neutron scattering instruments and experiments.\n  description: |\n    McStas is a general tool for simulating neutron scattering instruments and\n    experiments.\n  license: GPL-3.0-only\n  license_family: GPL3\n  license_file: src/COPYING\n  doc_url: https://mcstas.org/\n  dev_url: https://github.com/McStasMcXtrace/McCode\n\nextra:\n  recipe-maintainers:\n    - willend\n    - tkittel\n",
  "req": {
   "__set__": true,
   "elements": [
