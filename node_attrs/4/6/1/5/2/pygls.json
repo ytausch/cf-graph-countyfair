@@ -54,7 +54,7 @@
      "commands": [
       "pip check",
       "pip list",
-      "pip list | grep -iE 'pygls\\s+1.2.0$'"
+      "pip list | grep -iE 'pygls\\s+1.2.1$'"
      ],
      "imports": [
       "pygls"
@@ -106,7 +106,7 @@
   ],
   "package": {
    "name": "pygls",
-   "version": "1.2.0"
+   "version": "1.2.1"
   },
   "requirements": {
    "host": [
@@ -119,13 +119,13 @@
   "source": [
    {
     "folder": "dist",
-    "sha256": "72ec4a3532741be1a933c686ed1e138b9948af174213745527a7c3ed3147a573",
-    "url": "https://pypi.io/packages/source/p/pygls/pygls-1.2.0.tar.gz"
+    "sha256": "04f9b9c115b622dcc346fb390289066565343d60245a424eca77cb429b911ed8",
+    "url": "https://pypi.io/packages/source/p/pygls/pygls-1.2.1.tar.gz"
    },
    {
     "folder": "src",
-    "sha256": "8850591afb58a6a1e5e077676f6d3918c7773117409081be3cb97737768f951f",
-    "url": "https://github.com/openlawlibrary/pygls/archive/refs/tags/v1.2.0.tar.gz"
+    "sha256": "66d93dbc7cc33591c5490fce9aac68f7a83979fa26e2e0f578046c32b0389eab",
+    "url": "https://github.com/openlawlibrary/pygls/archive/refs/tags/v1.2.1.tar.gz"
    }
   ]
  },
@@ -208,7 +208,7 @@
      "commands": [
       "pip check",
       "pip list",
-      "pip list | grep -iE 'pygls\\s+1.2.0$'"
+      "pip list | grep -iE 'pygls\\s+1.2.1$'"
      ],
      "imports": [
       "pygls"
@@ -260,7 +260,7 @@
   ],
   "package": {
    "name": "pygls",
-   "version": "1.2.0"
+   "version": "1.2.1"
   },
   "requirements": {
    "host": [
@@ -273,13 +273,13 @@
   "source": [
    {
     "folder": "dist",
-    "sha256": "72ec4a3532741be1a933c686ed1e138b9948af174213745527a7c3ed3147a573",
-    "url": "https://pypi.io/packages/source/p/pygls/pygls-1.2.0.tar.gz"
+    "sha256": "04f9b9c115b622dcc346fb390289066565343d60245a424eca77cb429b911ed8",
+    "url": "https://pypi.io/packages/source/p/pygls/pygls-1.2.1.tar.gz"
    },
    {
     "folder": "src",
-    "sha256": "8850591afb58a6a1e5e077676f6d3918c7773117409081be3cb97737768f951f",
-    "url": "https://github.com/openlawlibrary/pygls/archive/refs/tags/v1.2.0.tar.gz"
+    "sha256": "66d93dbc7cc33591c5490fce9aac68f7a83979fa26e2e0f578046c32b0389eab",
+    "url": "https://github.com/openlawlibrary/pygls/archive/refs/tags/v1.2.1.tar.gz"
    }
   ]
  },
@@ -298,7 +298,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pygls.json"
  },
- "raw_meta_yaml": "{% set version = \"1.2.0\" %}\n{% set cov_fail_under = \"66\" %}\n{% set pytest_skip = \"test_code_actions or test_completion or test_diagnostics or test_inline_value or test_progress or test_request_error_reporting\" %}\n\npackage:\n  name: pygls\n  version: {{ version }}\n\nsource:\n  - folder: dist\n    url: https://pypi.io/packages/source/p/pygls/pygls-{{ version }}.tar.gz\n    sha256: 72ec4a3532741be1a933c686ed1e138b9948af174213745527a7c3ed3147a573\n  - folder: src\n    url: https://github.com/openlawlibrary/pygls/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: 8850591afb58a6a1e5e077676f6d3918c7773117409081be3cb97737768f951f\n\nbuild:\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.7.9\n  run:\n    - python >=3.7.9\n\noutputs:\n  - name: pygls\n    build:\n      noarch: python\n      script: cd dist && {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    requirements:\n      host:\n        - pip\n        - python >=3.7.9\n        - poetry-core\n      run:\n        - python >=3.7.9\n        - lsprotocol ==2023.0.0\n    test:\n      requires:\n        - m2-grep  # [win]\n        - pip\n      imports:\n        - pygls\n      commands:\n        - pip check\n        - pip list\n        - pip list | grep -iE 'pygls\\s+{{ version.replace(\"\\\\\", \"\\\\\\\\\") }}$'\n\n  - name: pygls-with-ws\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7.9\n      run:\n        - {{ pin_subpackage(\"pygls\", max_pin=\"x.x.x\") }}\n        - python >=3.7.9\n        - websockets >=11.0.3,<12.0.0\n    test:\n      source_files:\n        - src/tests\n      requires:\n        - coverage\n        - pip\n        - pytest\n        - pytest-asyncio\n        - pytest-timeout\n      imports:\n        - pygls\n      commands:\n        - pip check\n        - cd src\n        - pytest --color=yes --collect-only -k \"not ({{ pytest_skip }})\"\n        - coverage run --source=pygls --parallel --branch -m pytest -ra -vv --color=yes --timeout=20 --asyncio-mode=auto -k \"not ({{ pytest_skip }})\"\n        - coverage combine\n        - coverage report --show-missing --skip-covered --fail-under={{ cov_fail_under }}\nabout:\n  home: https://pygls.readthedocs.io\n  license: Apache-2.0\n  license_family: APACHE\n  license_file:\n    - dist/LICENSE.txt\n    - src/ThirdPartyNotices.txt\n  summary: a pythonic generic language server (pronounced like \"pie glass\").\n  description: |\n    pygls (pronounced like \"pie glass\") is a pythonic generic implementation of\n    the Language Server Protocol for use as a foundation for writing language\n    servers using Python (e.g. Python, XML, etc.). It allows you to write your\n    own language server in just a few lines of code.\n  dev_url: https://github.com/openlawlibrary/pygls\n  doc_url: https://pygls.readthedocs.io\n  doc_source_url: https://github.com/openlawlibrary/pygls/tree/master/docs/source\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"1.2.1\" %}\n{% set cov_fail_under = \"66\" %}\n{% set pytest_skip = \"test_code_actions or test_completion or test_diagnostics or test_inline_value or test_progress or test_request_error_reporting\" %}\n\npackage:\n  name: pygls\n  version: {{ version }}\n\nsource:\n  - folder: dist\n    url: https://pypi.io/packages/source/p/pygls/pygls-{{ version }}.tar.gz\n    sha256: 04f9b9c115b622dcc346fb390289066565343d60245a424eca77cb429b911ed8\n  - folder: src\n    url: https://github.com/openlawlibrary/pygls/archive/refs/tags/v{{ version }}.tar.gz\n    sha256: 66d93dbc7cc33591c5490fce9aac68f7a83979fa26e2e0f578046c32b0389eab\n\nbuild:\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.7.9\n  run:\n    - python >=3.7.9\n\noutputs:\n  - name: pygls\n    build:\n      noarch: python\n      script: cd dist && {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    requirements:\n      host:\n        - pip\n        - python >=3.7.9\n        - poetry-core\n      run:\n        - python >=3.7.9\n        - lsprotocol ==2023.0.0\n    test:\n      requires:\n        - m2-grep  # [win]\n        - pip\n      imports:\n        - pygls\n      commands:\n        - pip check\n        - pip list\n        - pip list | grep -iE 'pygls\\s+{{ version.replace(\"\\\\\", \"\\\\\\\\\") }}$'\n\n  - name: pygls-with-ws\n    build:\n      noarch: python\n    requirements:\n      host:\n        - python >=3.7.9\n      run:\n        - {{ pin_subpackage(\"pygls\", max_pin=\"x.x.x\") }}\n        - python >=3.7.9\n        - websockets >=11.0.3,<12.0.0\n    test:\n      source_files:\n        - src/tests\n      requires:\n        - coverage\n        - pip\n        - pytest\n        - pytest-asyncio\n        - pytest-timeout\n      imports:\n        - pygls\n      commands:\n        - pip check\n        - cd src\n        - pytest --color=yes --collect-only -k \"not ({{ pytest_skip }})\"\n        - coverage run --source=pygls --parallel --branch -m pytest -ra -vv --color=yes --timeout=20 --asyncio-mode=auto -k \"not ({{ pytest_skip }})\"\n        - coverage combine\n        - coverage report --show-missing --skip-covered --fail-under={{ cov_fail_under }}\nabout:\n  home: https://pygls.readthedocs.io\n  license: Apache-2.0\n  license_family: APACHE\n  license_file:\n    - dist/LICENSE.txt\n    - src/ThirdPartyNotices.txt\n  summary: a pythonic generic language server (pronounced like \"pie glass\").\n  description: |\n    pygls (pronounced like \"pie glass\") is a pythonic generic implementation of\n    the Language Server Protocol for use as a foundation for writing language\n    servers using Python (e.g. Python, XML, etc.). It allows you to write your\n    own language server in just a few lines of code.\n  dev_url: https://github.com/openlawlibrary/pygls\n  doc_url: https://pygls.readthedocs.io\n  doc_source_url: https://github.com/openlawlibrary/pygls/tree/master/docs/source\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -377,8 +377,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/p/pygls/pygls-1.2.0.tar.gz",
- "version": "1.2.0",
+ "url": "https://pypi.io/packages/source/p/pygls/pygls-1.2.1.tar.gz",
+ "version": "1.2.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/pygls.json"
  }
