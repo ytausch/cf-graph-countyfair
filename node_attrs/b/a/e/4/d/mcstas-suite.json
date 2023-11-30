@@ -1,7 +1,11 @@
 {
  "archived": false,
  "branch": "main",
- "conda-forge.yml": {},
+ "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  }
+ },
  "feedstock_name": "mcstas-suite",
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
@@ -217,10 +221,128 @@
     "willend",
     "tkittel",
     "willend",
+    "tkittel",
+    "willend",
     "tkittel"
    ]
   },
   "outputs": [
+   {
+    "name": "mcstas-core",
+    "requirements": {
+     "build": [
+      "cmake",
+      "make",
+      "c_compiler_stub",
+      "flex",
+      "bison"
+     ],
+     "host": [],
+     "run": [
+      "python",
+      "c_compiler_stub",
+      "bash",
+      "pyaml",
+      "ply"
+     ]
+    },
+    "script": "install-files-core.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py core"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "source_files": [
+      "src/mcstas-comps/examples/BNL_H8.instr",
+      "src/mcstas-comps/examples/Union_manual_example.instr"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "generic"
+    },
+    "name": "mcstas-data",
+    "script": "install-files-data.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py data"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": [
+      "python"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-mcgui",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "pyqt",
+      "qscintilla2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py mcgui"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-vis",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "matplotlib-base",
+      "numpy",
+      "tornado >=5",
+      "scipy",
+      "pillow",
+      "pyqtgraph",
+      "pyqt >=5.10"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py vis"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "name": "mcstas",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "mcstas-data",
+      "mcstas-mcgui",
+      "mcstas-vis",
+      "ncrystal",
+      "mcpl"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python test_pkg.py mcstas"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": null
+    }
+   },
    {
     "name": "mcstas-core",
     "requirements": {
@@ -659,6 +781,200 @@
    ]
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "McStas is a general tool for simulating neutron scattering instruments and\nexperiments.\n",
+   "dev_url": "https://github.com/McStasMcXtrace/McCode",
+   "doc_url": "https://mcstas.org/",
+   "home": "https://mcstas.org/",
+   "license": "GPL-3.0-only",
+   "license_family": "GPL3",
+   "license_file": "src/COPYING",
+   "summary": "McStas is a general tool for simulating neutron scattering instruments and experiments."
+  },
+  "build": {
+   "number": "3"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "willend",
+    "tkittel"
+   ]
+  },
+  "outputs": [
+   {
+    "name": "mcstas-core",
+    "requirements": {
+     "build": [
+      "cmake",
+      "make",
+      "c_compiler_stub",
+      "flex",
+      "bison"
+     ],
+     "host": [],
+     "run": [
+      "python",
+      "c_compiler_stub",
+      "bash",
+      "pyaml",
+      "ply"
+     ]
+    },
+    "script": "install-files-core.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py core"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "source_files": [
+      "src/mcstas-comps/examples/BNL_H8.instr",
+      "src/mcstas-comps/examples/Union_manual_example.instr"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "generic"
+    },
+    "name": "mcstas-data",
+    "script": "install-files-data.sh",
+    "test": {
+     "commands": [
+      "python test_pkg.py data"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": [
+      "python"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-mcgui",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "pyqt",
+      "qscintilla2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py mcgui"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "mcstas-vis",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "matplotlib-base",
+      "numpy",
+      "tornado >=5",
+      "scipy",
+      "pillow",
+      "pyqtgraph",
+      "pyqt >=5.10"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python ${SRC_DIR}/test_pkg.py vis"
+     ],
+     "files": [
+      "test_pkg.py"
+     ]
+    }
+   },
+   {
+    "name": "mcstas",
+    "requirements": {
+     "run": [
+      "mcstas-core",
+      "mcstas-data",
+      "mcstas-mcgui",
+      "mcstas-vis",
+      "ncrystal",
+      "mcpl"
+     ]
+    },
+    "test": {
+     "commands": [
+      "python test_pkg.py mcstas"
+     ],
+     "files": [
+      "test_pkg.py"
+     ],
+     "requires": null
+    }
+   }
+  ],
+  "package": {
+   "name": "mcstas-suite",
+   "version": "3.4.7"
+  },
+  "source": {
+   "folder": "src",
+   "sha256": "e6114c0daa24b77dd69c84846da1505ed8c96b0bc46a91049450ccec21322266",
+   "url": "https://github.com/McStasMcXtrace/McCode/archive/mcstas-3.4.7.tar.gz"
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "bison",
+    "c_compiler_stub",
+    "cmake",
+    "flex",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "bash",
+    "c_compiler_stub",
+    "matplotlib-base",
+    "mcpl",
+    "mcstas-core",
+    "mcstas-data",
+    "mcstas-mcgui",
+    "mcstas-vis",
+    "ncrystal",
+    "numpy",
+    "pillow",
+    "ply",
+    "pyaml",
+    "pyqt",
+    "pyqtgraph",
+    "python",
+    "qscintilla2",
+    "scipy",
+    "tornado"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "python"
+   ]
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -672,7 +988,8 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
-  "osx_64"
+  "osx_64",
+  "osx_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/mcstas-suite.json"
