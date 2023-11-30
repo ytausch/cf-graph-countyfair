@@ -50,6 +50,7 @@
       "graphql-ws ==0.4.4",
       "jupyter_server >=2.7",
       "traitlets >=5.2.1",
+      "psutil",
       "pyzmq",
       "graphene",
       "graphql-core",
@@ -150,7 +151,7 @@
   ],
   "package": {
    "name": "cylc-uiserver",
-   "version": "1.4.1"
+   "version": "1.4.2"
   },
   "requirements": {
    "host": [
@@ -164,8 +165,8 @@
    ]
   },
   "source": {
-   "sha256": "30e5f50331bb0af53bc3cd7545b33f9d95f4c999f42004d33a68a0569ab5efd5",
-   "url": "https://pypi.io/packages/source/c/cylc-uiserver/cylc-uiserver-1.4.1.tar.gz"
+   "sha256": "d9b99c843b18f5c0b928877474ab65b9bca06d4277d97f29455d8780a37cf823",
+   "url": "https://pypi.io/packages/source/c/cylc-uiserver/cylc-uiserver-1.4.2.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -195,6 +196,7 @@
     "jupyter_server",
     "jupyterhub",
     "jupyterhub-base",
+    "psutil",
     "python",
     "pyzmq",
     "requests",
@@ -254,6 +256,7 @@
       "graphql-ws ==0.4.4",
       "jupyter_server >=2.7",
       "traitlets >=5.2.1",
+      "psutil",
       "pyzmq",
       "graphene",
       "graphql-core",
@@ -354,7 +357,7 @@
   ],
   "package": {
    "name": "cylc-uiserver",
-   "version": "1.4.1"
+   "version": "1.4.2"
   },
   "requirements": {
    "host": [
@@ -368,8 +371,8 @@
    ]
   },
   "source": {
-   "sha256": "30e5f50331bb0af53bc3cd7545b33f9d95f4c999f42004d33a68a0569ab5efd5",
-   "url": "https://pypi.io/packages/source/c/cylc-uiserver/cylc-uiserver-1.4.1.tar.gz"
+   "sha256": "d9b99c843b18f5c0b928877474ab65b9bca06d4277d97f29455d8780a37cf823",
+   "url": "https://pypi.io/packages/source/c/cylc-uiserver/cylc-uiserver-1.4.2.tar.gz"
   }
  },
  "name": "cylc-uiserver",
@@ -388,7 +391,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cylc-uiserver.json"
  },
- "raw_meta_yaml": "{% set name = \"cylc-uiserver\" %}\n{% set version = \"1.4.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 30e5f50331bb0af53bc3cd7545b33f9d95f4c999f42004d33a68a0569ab5efd5\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - __unix\n    - python >=3.8,<3.10\n    - pip\n  run:\n    - __unix\n    - python >=3.8,<3.10\n\noutputs:\n  # base package with only required dependencies\n  # (e.g. for single-user setups)\n  - name: {{ name }}-base\n    build:\n      script: python -m pip install . --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - python >=3.8,<3.10\n        - pip\n      run:\n        - __unix\n        - python >=3.8,<3.10\n        - cylc-flow-base >=8.2,<8.3\n        - ansimarkup >=1\n        - tornado >=6.1\n        - graphene-tornado >=2.6.0,<2.7\n        - graphql-ws ==0.4.4\n        - jupyter_server >=2.7\n        - traitlets >=5.2.1\n\n        # Transitive dependencies that we directly (lightly) use:\n        - pyzmq\n        - graphene\n        - graphql-core\n        - requests\n\n        # Fix lack of upper pin for rx in graphql-core<2.3.0 (remove when\n        # upgrading graphene to 3.0):\n        - rx >=1.6,<2\n\n    test:\n      files:\n        - tests/test_packaging.py\n      imports:\n        - cylc.flow\n        - cylc.uiserver\n      commands:\n        - cylc version --long\n        - cylc gui --help\n        - command -v jupyter-cylc\n        - ./tests/test_packaging.py ui\n        - ./tests/test_packaging.py py.typed\n\n  # UIS with the JupyterHub \"base\" package\n  # (e.g. for sites that provide their own configurable HTTP proxy)\n  - name: {{ name }}-hub-base\n    build:\n      script: python -m pip install .[hub] --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - python >=3.8,<3.10\n        - pip\n      run:\n        - {{ pin_subpackage(name + \"-base\", exact=True) }}\n        - jupyterhub-base >=4.0.0\n    test:\n      files:\n        - tests/test_packaging.py\n      imports:\n        - cylc.flow\n        - cylc.uiserver\n      commands:\n        - cylc version --long\n        - cylc gui --help\n        - cylc hubapp --help\n        - command -v jupyter-cylc\n        - command -v jupyter-cylchubapp\n        - ./tests/test_packaging.py ui\n        - ./tests/test_packaging.py py.typed\n\n  # UIS with the full JupyterHub package\n  # (recommended)\n  - name: {{ name }}\n    build:\n      script: python -m pip install .[hub] --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - python >=3.8,<3.10\n        - pip\n      run:\n        - {{ pin_subpackage(name + \"-base\", exact=True) }}\n        - jupyterhub >=4.0.0\n    test:\n      files:\n        - tests/test_packaging.py\n      imports:\n        - cylc.flow\n        - cylc.uiserver\n      commands:\n        - cylc version --long\n        - cylc gui --help\n        - cylc hubapp --help\n        - configurable-http-proxy --help\n        - command -v jupyter-cylc\n        - command -v jupyter-cylchubapp\n        - ./tests/test_packaging.py ui\n        - ./tests/test_packaging.py py.typed\n\nabout:\n  home: https://github.com/cylc/cylc-uiserver\n  license: GPL-3.0-only\n  license_family: GPL\n  license_file: COPYING\n  summary: Cylc UI Server\n  description: |\n    This project contains the Cylc UI Server.\n    A JupyterHub-compatible application, used to display\n    the Cylc UI (or simply UI) to users, and to communicate\n    with Workflow Services (WFS).\n  doc_url: https://github.com/cylc/cylc-uiserver\n  dev_url: https://github.com/cylc/cylc-uiserver\n\nextra:\n  recipe-maintainers:\n    - hjoliver\n    - oliver-sanders\n    - MetRonnie\n    - wxtim\n",
+ "raw_meta_yaml": "{% set name = \"cylc-uiserver\" %}\n{% set version = \"1.4.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: d9b99c843b18f5c0b928877474ab65b9bca06d4277d97f29455d8780a37cf823\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - __unix\n    - python >=3.8,<3.10\n    - pip\n  run:\n    - __unix\n    - python >=3.8,<3.10\n\noutputs:\n  # base package with only required dependencies\n  # (e.g. for single-user setups)\n  - name: {{ name }}-base\n    build:\n      script: python -m pip install . --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - python >=3.8,<3.10\n        - pip\n      run:\n        - __unix\n        - python >=3.8,<3.10\n        - cylc-flow-base >=8.2,<8.3\n        - ansimarkup >=1\n        - tornado >=6.1\n        - graphene-tornado >=2.6.0,<2.7\n        - graphql-ws ==0.4.4\n        - jupyter_server >=2.7\n        - traitlets >=5.2.1\n        - psutil\n\n        # Transitive dependencies that we directly (lightly) use:\n        - pyzmq\n        - graphene\n        - graphql-core\n        - requests\n\n        # Fix lack of upper pin for rx in graphql-core<2.3.0 (remove when\n        # upgrading graphene to 3.0):\n        - rx >=1.6,<2\n\n    test:\n      files:\n        - tests/test_packaging.py\n      imports:\n        - cylc.flow\n        - cylc.uiserver\n      commands:\n        - cylc version --long\n        - cylc gui --help\n        - command -v jupyter-cylc\n        - ./tests/test_packaging.py ui\n        - ./tests/test_packaging.py py.typed\n\n  # UIS with the JupyterHub \"base\" package\n  # (e.g. for sites that provide their own configurable HTTP proxy)\n  - name: {{ name }}-hub-base\n    build:\n      script: python -m pip install .[hub] --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - python >=3.8,<3.10\n        - pip\n      run:\n        - {{ pin_subpackage(name + \"-base\", exact=True) }}\n        - jupyterhub-base >=4.0.0\n    test:\n      files:\n        - tests/test_packaging.py\n      imports:\n        - cylc.flow\n        - cylc.uiserver\n      commands:\n        - cylc version --long\n        - cylc gui --help\n        - cylc hubapp --help\n        - command -v jupyter-cylc\n        - command -v jupyter-cylchubapp\n        - ./tests/test_packaging.py ui\n        - ./tests/test_packaging.py py.typed\n\n  # UIS with the full JupyterHub package\n  # (recommended)\n  - name: {{ name }}\n    build:\n      script: python -m pip install .[hub] --no-deps --ignore-installed -vv\n      noarch: python\n    requirements:\n      host:\n        - __unix\n        - python >=3.8,<3.10\n        - pip\n      run:\n        - {{ pin_subpackage(name + \"-base\", exact=True) }}\n        - jupyterhub >=4.0.0\n    test:\n      files:\n        - tests/test_packaging.py\n      imports:\n        - cylc.flow\n        - cylc.uiserver\n      commands:\n        - cylc version --long\n        - cylc gui --help\n        - cylc hubapp --help\n        - configurable-http-proxy --help\n        - command -v jupyter-cylc\n        - command -v jupyter-cylchubapp\n        - ./tests/test_packaging.py ui\n        - ./tests/test_packaging.py py.typed\n\nabout:\n  home: https://github.com/cylc/cylc-uiserver\n  license: GPL-3.0-only\n  license_family: GPL\n  license_file: COPYING\n  summary: Cylc UI Server\n  description: |\n    This project contains the Cylc UI Server.\n    A JupyterHub-compatible application, used to display\n    the Cylc UI (or simply UI) to users, and to communicate\n    with Workflow Services (WFS).\n  doc_url: https://github.com/cylc/cylc-uiserver\n  dev_url: https://github.com/cylc/cylc-uiserver\n\nextra:\n  recipe-maintainers:\n    - hjoliver\n    - oliver-sanders\n    - MetRonnie\n    - wxtim\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -404,6 +407,7 @@
    "jupyterhub",
    "jupyterhub-base",
    "pip",
+   "psutil",
    "python",
    "pyzmq",
    "requests",
@@ -439,6 +443,7 @@
     "jupyter_server",
     "jupyterhub",
     "jupyterhub-base",
+    "psutil",
     "python",
     "pyzmq",
     "requests",
@@ -480,6 +485,7 @@
     "jupyter_server >=2.7",
     "jupyterhub >=4.0.0",
     "jupyterhub-base >=4.0.0",
+    "psutil",
     "python >=3.8,<3.10",
     "pyzmq",
     "requests",
@@ -493,8 +499,8 @@
    "elements": []
   }
  },
- "url": "https://pypi.io/packages/source/c/cylc-uiserver/cylc-uiserver-1.4.1.tar.gz",
- "version": "1.4.1",
+ "url": "https://pypi.io/packages/source/c/cylc-uiserver/cylc-uiserver-1.4.2.tar.gz",
+ "version": "1.4.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cylc-uiserver.json"
  }
