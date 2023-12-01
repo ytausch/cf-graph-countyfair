@@ -30,7 +30,6 @@
   "extra": {
    "recipe-maintainers": [
     "wolfv",
-    "lesteve",
     "seanyen",
     "brianv0",
     "mwittgen"
@@ -133,7 +132,6 @@
   "extra": {
    "recipe-maintainers": [
     "wolfv",
-    "lesteve",
     "seanyen",
     "brianv0",
     "mwittgen"
@@ -240,27 +238,22 @@
   "extra": {
    "recipe-maintainers": [
     "wolfv",
-    "lesteve",
     "seanyen",
     "brianv0",
     "mwittgen",
     "wolfv",
-    "lesteve",
     "seanyen",
     "brianv0",
     "mwittgen",
     "wolfv",
-    "lesteve",
     "seanyen",
     "brianv0",
     "mwittgen",
     "wolfv",
-    "lesteve",
     "seanyen",
     "brianv0",
     "mwittgen",
     "wolfv",
-    "lesteve",
     "seanyen",
     "brianv0",
     "mwittgen"
@@ -428,7 +421,6 @@
   "extra": {
    "recipe-maintainers": [
     "wolfv",
-    "lesteve",
     "seanyen",
     "brianv0",
     "mwittgen"
@@ -529,7 +521,6 @@
   "extra": {
    "recipe-maintainers": [
     "wolfv",
-    "lesteve",
     "seanyen",
     "brianv0",
     "mwittgen"
@@ -629,7 +620,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/log4cxx.json"
  },
- "raw_meta_yaml": "#--------------------------------------------------------------------------------\n# MetTools - A Collection of Software for Meteorology and Remote Sensing\n# Copyright (C) 2018  EUMETSAT\n#\n# This program is free software; you can redistribute it and/or\n# modify it under the terms of the GNU General Public License\n# as published by the Free Software Foundation; either version 2\n# of the License, or (at your option) any later version.\n#\n# This program is distributed in the hope that it will be useful,\n# but WITHOUT ANY WARRANTY; without even the implied warranty of\n# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n# GNU General Public License for more details.\n#--------------------------------------------------------------------------------\n\n{% set name = \"log4cxx\" %}\n{% set version = \"1.1.0\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  - url: http://archive.apache.org/dist/logging/{{ name }}/{{ version }}/apache-{{ name }}-{{ version }}.tar.gz\n    fn: apache-{{ name }}-{{ version }}.tar.gz\n    sha256: 1fc7d82697534184bc0f757348d969d24852b948f63d6b17283fd1ee29c2c28a\n  - path: CMakeLists.txt\n\nbuild:\n  number: 0\n  skip: true  # [win and vc<14]\n  run_exports:\n    # no ABI lab data, soname is changing with each release\n    - {{ pin_subpackage(\"log4cxx\", max_pin=\"x.x.x\") }}\n\nrequirements:\n  build:\n    - gnuconfig  # [unix]\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - cmake\n    - make\n    - zip  # [linux]\n    - m2-sed  # [win]\n    - m2-zip  # [win]\n    - m2-gzip  # [win]\n  host:\n    - expat\n    - apr\n    - libiconv\n    - fmt\n  run:\n    - expat\n    - apr\n    - libaprutil\n    - libapr\n\n\ntest:\n  commands:\n    - test -f $PREFIX/include/log4cxx/appender.h  # [unix]\n    - test -f $PREFIX/include/log4cxx/logmanager.h  # [unix]\n    - test -f $PREFIX/lib/liblog4cxx.so  # [linux]\n    - test -f $PREFIX/lib/liblog4cxx.dylib  # [osx]\n    - if not exist %LIBRARY_INC%\\\\log4cxx\\\\log4cxx.h exit 1  # [win]\n    - if not exist %LIBRARY_BIN%\\\\log4cxx.dll exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\\\log4cxx.lib exit 1  # [win]\n\nabout:\n  home: https://logging.apache.org/log4cxx\n  license: Apache-2.0\n  license_file: LICENSE\n  summary:\n    A logging framework for C++ patterned after Apache log4j.\n  description: |\n    Apache log4cxx is a logging framework for C++ patterned after Apache log4j,\n    which uses Apache Portable Runtime for most platform-specific code and should be\n    usable on any platform supported by APR. Apache log4cxx is licensed under the\n    Apache License, an open source license certified by the Open Source Initiative.\n  doc_url: https://logging.apache.org/log4cxx\n\nextra:\n  recipe-maintainers:\n    - wolfv\n    - lesteve\n    - seanyen\n    - brianv0\n    - mwittgen\n",
+ "raw_meta_yaml": "#--------------------------------------------------------------------------------\n# MetTools - A Collection of Software for Meteorology and Remote Sensing\n# Copyright (C) 2018  EUMETSAT\n#\n# This program is free software; you can redistribute it and/or\n# modify it under the terms of the GNU General Public License\n# as published by the Free Software Foundation; either version 2\n# of the License, or (at your option) any later version.\n#\n# This program is distributed in the hope that it will be useful,\n# but WITHOUT ANY WARRANTY; without even the implied warranty of\n# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n# GNU General Public License for more details.\n#--------------------------------------------------------------------------------\n\n{% set name = \"log4cxx\" %}\n{% set version = \"1.1.0\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  - url: http://archive.apache.org/dist/logging/{{ name }}/{{ version }}/apache-{{ name }}-{{ version }}.tar.gz\n    fn: apache-{{ name }}-{{ version }}.tar.gz\n    sha256: 1fc7d82697534184bc0f757348d969d24852b948f63d6b17283fd1ee29c2c28a\n  - path: CMakeLists.txt\n\nbuild:\n  number: 0\n  skip: true  # [win and vc<14]\n  run_exports:\n    # no ABI lab data, soname is changing with each release\n    - {{ pin_subpackage(\"log4cxx\", max_pin=\"x.x.x\") }}\n\nrequirements:\n  build:\n    - gnuconfig  # [unix]\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - cmake\n    - make\n    - zip  # [linux]\n    - m2-sed  # [win]\n    - m2-zip  # [win]\n    - m2-gzip  # [win]\n  host:\n    - expat\n    - apr\n    - libiconv\n    - fmt\n  run:\n    - expat\n    - apr\n    - libaprutil\n    - libapr\n\n\ntest:\n  commands:\n    - test -f $PREFIX/include/log4cxx/appender.h  # [unix]\n    - test -f $PREFIX/include/log4cxx/logmanager.h  # [unix]\n    - test -f $PREFIX/lib/liblog4cxx.so  # [linux]\n    - test -f $PREFIX/lib/liblog4cxx.dylib  # [osx]\n    - if not exist %LIBRARY_INC%\\\\log4cxx\\\\log4cxx.h exit 1  # [win]\n    - if not exist %LIBRARY_BIN%\\\\log4cxx.dll exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\\\log4cxx.lib exit 1  # [win]\n\nabout:\n  home: https://logging.apache.org/log4cxx\n  license: Apache-2.0\n  license_file: LICENSE\n  summary:\n    A logging framework for C++ patterned after Apache log4j.\n  description: |\n    Apache log4cxx is a logging framework for C++ patterned after Apache log4j,\n    which uses Apache Portable Runtime for most platform-specific code and should be\n    usable on any platform supported by APR. Apache log4cxx is licensed under the\n    Apache License, an open source license certified by the Open Source Initiative.\n  doc_url: https://logging.apache.org/log4cxx\n\nextra:\n  recipe-maintainers:\n    - wolfv\n    - seanyen\n    - brianv0\n    - mwittgen\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -755,7 +746,6 @@
   "extra": {
    "recipe-maintainers": [
     "wolfv",
-    "lesteve",
     "seanyen",
     "brianv0",
     "mwittgen"
