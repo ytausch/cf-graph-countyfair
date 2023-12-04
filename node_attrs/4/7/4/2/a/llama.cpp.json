@@ -13,18 +13,24 @@
    "summary": "Port of Facebook's LLaMA model in C/C++"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
+    "CMAKE_LLAMA_ARGS=\"-DLLAMA_NATIVE=on\"",
+    "CMAKE_LLAMA_ARGS=\"${CMAKE_LLAMA_ARGS} -DLLAMA_CUBLAS=on\"",
+    "cmake -S . -B build -G Ninja -DCMAKE_PREFIX_PATH=PREFIX ${CMAKE_LLAMA_ARGS}",
+    "cmake --build build --config Release",
+    "cmake --install build --prefix=PREFIX",
     "CMAKE_LLAMA_ARGS=\"-DLLAMA_NATIVE=on\"",
     "CMAKE_LLAMA_ARGS=\"${CMAKE_LLAMA_ARGS} -DLLAMA_CUBLAS=on\"",
     "cmake -S . -B build -G Ninja -DCMAKE_PREFIX_PATH=PREFIX ${CMAKE_LLAMA_ARGS}",
     "cmake --build build --config Release",
     "cmake --install build --prefix=PREFIX"
    ],
-   "string": "cuda112_h1234567_0"
+   "string": "cuda118_h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
+    "sodre",
     "sodre"
    ]
   },
@@ -39,10 +45,17 @@
     "cuda_compiler_stub",
     "cmake",
     "git",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "git",
     "ninja"
    ],
    "run": [
-    "cudatoolkit 11.2"
+    "cudatoolkit 11.2",
+    "cudatoolkit 11.8"
    ]
   },
   "source": {
@@ -52,6 +65,8 @@
   },
   "test": {
    "commands": [
+    "main --help",
+    "server --help",
     "main --help",
     "server --help"
    ]
@@ -93,18 +108,24 @@
    "summary": "Port of Facebook's LLaMA model in C/C++"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
+    "CMAKE_LLAMA_ARGS=\"-DLLAMA_NATIVE=on\"",
+    "CMAKE_LLAMA_ARGS=\"${CMAKE_LLAMA_ARGS} -DLLAMA_CUBLAS=on\"",
+    "cmake -S . -B build -G Ninja -DCMAKE_PREFIX_PATH=PREFIX ${CMAKE_LLAMA_ARGS}",
+    "cmake --build build --config Release",
+    "cmake --install build --prefix=PREFIX",
     "CMAKE_LLAMA_ARGS=\"-DLLAMA_NATIVE=on\"",
     "CMAKE_LLAMA_ARGS=\"${CMAKE_LLAMA_ARGS} -DLLAMA_CUBLAS=on\"",
     "cmake -S . -B build -G Ninja -DCMAKE_PREFIX_PATH=PREFIX ${CMAKE_LLAMA_ARGS}",
     "cmake --build build --config Release",
     "cmake --install build --prefix=PREFIX"
    ],
-   "string": "cuda112_h1234567_0"
+   "string": "cuda118_h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
+    "sodre",
     "sodre"
    ]
   },
@@ -119,10 +140,17 @@
     "cuda_compiler_stub",
     "cmake",
     "git",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "git",
     "ninja"
    ],
    "run": [
-    "cudatoolkit 11.2"
+    "cudatoolkit 11.2",
+    "cudatoolkit 11.8"
    ]
   },
   "source": {
@@ -132,6 +160,8 @@
   },
   "test": {
    "commands": [
+    "main --help",
+    "server --help",
     "main --help",
     "server --help"
    ]
@@ -151,7 +181,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/llama.cpp.json"
  },
- "raw_meta_yaml": "{% set name = \"llama.cpp\" %}\n{% set version = \"1601\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: 0.0.{{ version }}\n\nsource:\n  url: https://github.com/ggerganov/llama.cpp/archive/refs/tags/b{{ version }}.tar.gz\n  sha256: 829f7c3696fb9da15faf0b70e7d33a174d3de5111ac797511ca0974eb42cf572\n  patches:\n    - osx-64-pick-discrete.patch  # [osx and x86_64]\n\nbuild:\n  skip: True  # [win]\n  skip: True  # [osx]\n  skip: True  # [linux and cuda_compiler_version == \"None\"]\n  number: 0\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == \"None\"]\n\n  script:\n    - CMAKE_LLAMA_ARGS=\"-DLLAMA_NATIVE=on\"\n    - CMAKE_LLAMA_ARGS=\"${CMAKE_LLAMA_ARGS} -DLLAMA_CUBLAS=on\"                                 # [cuda_compiler_version != \"None\"]\n    - CMAKE_LLAMA_ARGS=\"${CMAKE_LLAMA_ARGS} -DLLAMA_ACCELERATE=on -DLLAMA_METAL=on\"            # [osx]\n    - cmake -S . -B build -G Ninja -DCMAKE_PREFIX_PATH={{ PREFIX }} ${CMAKE_LLAMA_ARGS}\n    - cmake --build build --config Release\n    - cmake --install build --prefix={{ PREFIX }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n    - cmake\n    - git\n    - ninja\n    - macosx_deployment_target_osx-64 {{ MACOSX_DEPLOYMENT_TARGET }}  # [osx and x86_64]\n  run:\n    # llama.cpp *really* depends on the version it compiled against\n    - cudatoolkit {{ cuda_compiler_version }}  # [cuda_compiler_version != \"None\"]\n    - macosx_deployment_target_osx-64 >={{ MACOSX_DEPLOYMENT_TARGET }}  # [osx and x86_64]\n\ntest:\n  commands:\n    - main --help\n    - server --help\n\nabout:\n  home: https://github.com/ggerganov/llama.cpp\n  summary: Port of Facebook's LLaMA model in C/C++\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - sodre\n",
+ "raw_meta_yaml": "{% set name = \"llama.cpp\" %}\n{% set version = \"1601\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: 0.0.{{ version }}\n\nsource:\n  url: https://github.com/ggerganov/llama.cpp/archive/refs/tags/b{{ version }}.tar.gz\n  sha256: 829f7c3696fb9da15faf0b70e7d33a174d3de5111ac797511ca0974eb42cf572\n  patches:\n    - osx-64-pick-discrete.patch  # [osx and x86_64]\n\nbuild:\n  skip: True  # [win]\n  skip: True  # [osx]\n  skip: True  # [linux and cuda_compiler_version == \"None\"]\n  number: 1\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == \"None\"]\n\n  script:\n    - CMAKE_LLAMA_ARGS=\"-DLLAMA_NATIVE=on\"\n    - CMAKE_LLAMA_ARGS=\"${CMAKE_LLAMA_ARGS} -DLLAMA_CUBLAS=on\"                                 # [cuda_compiler_version != \"None\"]\n    - CMAKE_LLAMA_ARGS=\"${CMAKE_LLAMA_ARGS} -DLLAMA_ACCELERATE=on -DLLAMA_METAL=on\"            # [osx]\n    - cmake -S . -B build -G Ninja -DCMAKE_PREFIX_PATH={{ PREFIX }} ${CMAKE_LLAMA_ARGS}\n    - cmake --build build --config Release\n    - cmake --install build --prefix={{ PREFIX }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n    - cmake\n    - git\n    - ninja\n    - macosx_deployment_target_osx-64 {{ MACOSX_DEPLOYMENT_TARGET }}  # [osx and x86_64]\n  run:\n    # llama.cpp *really* depends on the version it compiled against\n    - cudatoolkit {{ cuda_compiler_version }}  # [cuda_compiler_version != \"None\"]\n    - macosx_deployment_target_osx-64 >={{ MACOSX_DEPLOYMENT_TARGET }}  # [osx and x86_64]\n\ntest:\n  commands:\n    - main --help\n    - server --help\n\nabout:\n  home: https://github.com/ggerganov/llama.cpp\n  summary: Port of Facebook's LLaMA model in C/C++\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - sodre\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -218,7 +248,8 @@
   "run": {
    "__set__": true,
    "elements": [
-    "cudatoolkit 11.2"
+    "cudatoolkit 11.2",
+    "cudatoolkit 11.8"
    ]
   },
   "test": {
