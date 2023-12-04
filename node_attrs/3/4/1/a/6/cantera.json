@@ -27,7 +27,7 @@
   },
   "build": {
    "include_recipe": true,
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "feedstock-name": "cantera",
@@ -43,10 +43,193 @@
     "matthiasdiener",
     "inducer",
     "bryanwweber",
+    "matthiasdiener",
+    "inducer",
+    "bryanwweber",
     "matthiasdiener"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.sh",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json",
+      "test -f $PREFIX/lib/libcantera${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json",
+      "test -f $PREFIX/include/cantera/transport.h",
+      "./test-lib/test-samples.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "make",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/cantera-*.json",
+      "uname -a",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help",
+      "./test-lib/test-extensiblerate.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
+      "make",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
    {
     "build": {
      "ignore_run_exports_from": [
@@ -789,9 +972,24 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
     "setuptools"
    ],
    "host": [
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "libblas",
+    "liblapack",
     "python >=3.8",
     "libboost-devel",
     "numpy",
@@ -839,7 +1037,18 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff"
+   ],
    "sha256": "6d17cdef21dae9deaf91351260b68ccf7e264c37c6030c9d4bf26a2cefb2b905",
    "url": "https://github.com/Cantera/cantera/archive/v3.0.0.tar.gz"
   }
@@ -921,7 +1130,7 @@
   },
   "build": {
    "include_recipe": true,
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "feedstock-name": "cantera",
@@ -937,10 +1146,193 @@
     "matthiasdiener",
     "inducer",
     "bryanwweber",
+    "matthiasdiener",
+    "inducer",
+    "bryanwweber",
     "matthiasdiener"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.sh",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json",
+      "test -f $PREFIX/lib/libcantera${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json",
+      "test -f $PREFIX/include/cantera/transport.h",
+      "./test-lib/test-samples.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "make",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/cantera-*.json",
+      "uname -a",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help",
+      "./test-lib/test-extensiblerate.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
+      "make",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
    {
     "build": {
      "ignore_run_exports_from": [
@@ -1683,9 +2075,24 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
     "setuptools"
    ],
    "host": [
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "libblas",
+    "liblapack",
     "python >=3.8",
     "libboost-devel",
     "numpy",
@@ -1733,7 +2140,18 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff"
+   ],
    "sha256": "6d17cdef21dae9deaf91351260b68ccf7e264c37c6030c9d4bf26a2cefb2b905",
    "url": "https://github.com/Cantera/cantera/archive/v3.0.0.tar.gz"
   }
@@ -1815,7 +2233,7 @@
   },
   "build": {
    "include_recipe": true,
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "feedstock-name": "cantera",
@@ -1831,10 +2249,193 @@
     "matthiasdiener",
     "inducer",
     "bryanwweber",
+    "matthiasdiener",
+    "inducer",
+    "bryanwweber",
     "matthiasdiener"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.sh",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json",
+      "test -f $PREFIX/lib/libcantera${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json",
+      "test -f $PREFIX/include/cantera/transport.h",
+      "./test-lib/test-samples.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "make",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/cantera-*.json",
+      "uname -a",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python -k \"not test_fluxes\"",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help",
+      "./test-lib/test-extensiblerate.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
+      "make",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
    {
     "build": {
      "ignore_run_exports_from": [
@@ -2577,9 +3178,24 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
     "setuptools"
    ],
    "host": [
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "libblas",
+    "liblapack",
     "python >=3.8",
     "libboost-devel",
     "numpy",
@@ -2627,7 +3243,18 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff"
+   ],
    "sha256": "6d17cdef21dae9deaf91351260b68ccf7e264c37c6030c9d4bf26a2cefb2b905",
    "url": "https://github.com/Cantera/cantera/archive/v3.0.0.tar.gz"
   }
@@ -2709,11 +3336,29 @@
   },
   "build": {
    "include_recipe": true,
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "feedstock-name": "cantera",
    "recipe-maintainers": [
+    "inducer",
+    "bryanwweber",
+    "matthiasdiener",
+    "inducer",
+    "bryanwweber",
+    "matthiasdiener",
+    "inducer",
+    "bryanwweber",
+    "matthiasdiener",
+    "inducer",
+    "bryanwweber",
+    "matthiasdiener",
+    "inducer",
+    "bryanwweber",
+    "matthiasdiener",
+    "inducer",
+    "bryanwweber",
+    "matthiasdiener",
     "inducer",
     "bryanwweber",
     "matthiasdiener",
@@ -4379,6 +5024,546 @@
       "cat ${CONDA_PREFIX}/conda-meta/cantera-*.json",
       "uname -a",
       "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help",
+      "./test-lib/test-extensiblerate.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
+      "make",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.sh",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json",
+      "test -f $PREFIX/lib/libcantera${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json",
+      "test -f $PREFIX/include/cantera/transport.h",
+      "./test-lib/test-samples.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "make",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/cantera-*.json",
+      "uname -a",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help",
+      "./test-lib/test-extensiblerate.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
+      "make",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.sh",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json",
+      "test -f $PREFIX/lib/libcantera${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json",
+      "test -f $PREFIX/include/cantera/transport.h",
+      "./test-lib/test-samples.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "make",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/cantera-*.json",
+      "uname -a",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python -k \"not test_fluxes\"",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help",
+      "./test-lib/test-extensiblerate.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
+      "make",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.sh",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json",
+      "test -f $PREFIX/lib/libcantera${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json",
+      "test -f $PREFIX/include/cantera/transport.h",
+      "./test-lib/test-samples.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "make",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/cantera-*.json",
+      "uname -a",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
       "python -m pytest -vv test/python -k \"not test_fluxes\"",
       "cti2yaml --help",
       "ck2yaml --help",
@@ -5819,8 +7004,7 @@
       "cti2yaml --help",
       "ck2yaml --help",
       "ctml2yaml --help",
-      "yaml2ck --help",
-      "./test-lib/test-extensiblerate.sh"
+      "yaml2ck --help"
      ],
      "files": [
       "test-lib"
@@ -6374,6 +7558,544 @@
       "libcantera-devel 3.0.0",
       "cmake",
       "make",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.sh",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json",
+      "test -f $PREFIX/lib/libcantera${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json",
+      "test -f $PREFIX/include/cantera/transport.h",
+      "./test-lib/test-samples.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "make",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/cantera-*.json",
+      "uname -a",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help",
+      "./test-lib/test-extensiblerate.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
+      "make",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.sh",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json",
+      "test -f $PREFIX/lib/libcantera${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json",
+      "test -f $PREFIX/include/cantera/transport.h",
+      "./test-lib/test-samples.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "make",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/cantera-*.json",
+      "uname -a",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help",
+      "./test-lib/test-extensiblerate.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
+      "make",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "pywin32",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.bat",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "type %CONDA_PREFIX%\\conda-meta\\libcantera-3.*.json"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "pywin32",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.bat",
+    "test": {
+     "commands": [
+      "type %CONDA_PREFIX%\\conda-meta\\libcantera-devel-*.json",
+      "call test-lib\\test-samples.bat"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "pywin32",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.bat",
+    "test": {
+     "commands": [
+      "type %CONDA_PREFIX%\\conda-meta\\cantera-*.json",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help",
+      "call test-lib\\test-extensiblerate.bat"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
       "scons",
       "c_compiler_stub",
       "cxx_compiler_stub"
@@ -7199,6 +8921,30 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
     "setuptools"
    ],
    "host": [
@@ -7420,6 +9166,73 @@
     "sundials ==6.6.2",
     "hdf5 >=1.14",
     "highfive >=2.7",
+    "libblas",
+    "liblapack",
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "libblas",
+    "liblapack",
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "libblas",
+    "liblapack",
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "libblas",
+    "liblapack",
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "libblas",
+    "liblapack",
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "libblas",
+    "liblapack",
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "pywin32",
     "libblas",
     "liblapack",
     "python >=3.8",
@@ -7473,7 +9286,73 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "iomp5-macos.patch",
+    "1604.diff",
+    "ver.diff",
+    "iomp5-macos.patch",
+    "1604.diff",
+    "ver.diff",
+    "iomp5-macos.patch",
+    "1604.diff",
+    "ver.diff",
+    "iomp5-macos.patch",
+    "1604.diff",
+    "ver.diff",
+    "iomp5-macos.patch",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff"
+   ],
    "sha256": "6d17cdef21dae9deaf91351260b68ccf7e264c37c6030c9d4bf26a2cefb2b905",
    "url": "https://github.com/Cantera/cantera/archive/v3.0.0.tar.gz"
   }
@@ -7492,7 +9371,7 @@
   },
   "build": {
    "include_recipe": true,
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "feedstock-name": "cantera",
@@ -7508,10 +9387,192 @@
     "matthiasdiener",
     "inducer",
     "bryanwweber",
+    "matthiasdiener",
+    "inducer",
+    "bryanwweber",
     "matthiasdiener"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.sh",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json",
+      "test -f $PREFIX/lib/libcantera${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json",
+      "test -f $PREFIX/include/cantera/transport.h",
+      "./test-lib/test-samples.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "make",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/cantera-*.json",
+      "uname -a",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
+      "make",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
    {
     "build": {
      "ignore_run_exports_from": [
@@ -8250,9 +10311,24 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
     "setuptools"
    ],
    "host": [
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "libblas",
+    "liblapack",
     "python >=3.8",
     "libboost-devel",
     "numpy",
@@ -8302,9 +10378,20 @@
   "source": {
    "patches": [
     "iomp5-macos.patch",
+    "1604.diff",
+    "ver.diff",
     "iomp5-macos.patch",
+    "1604.diff",
+    "ver.diff",
     "iomp5-macos.patch",
-    "iomp5-macos.patch"
+    "1604.diff",
+    "ver.diff",
+    "iomp5-macos.patch",
+    "1604.diff",
+    "ver.diff",
+    "iomp5-macos.patch",
+    "1604.diff",
+    "ver.diff"
    ],
    "sha256": "6d17cdef21dae9deaf91351260b68ccf7e264c37c6030c9d4bf26a2cefb2b905",
    "url": "https://github.com/Cantera/cantera/archive/v3.0.0.tar.gz"
@@ -8387,7 +10474,7 @@
   },
   "build": {
    "include_recipe": true,
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "feedstock-name": "cantera",
@@ -8403,10 +10490,193 @@
     "matthiasdiener",
     "inducer",
     "bryanwweber",
+    "matthiasdiener",
+    "inducer",
+    "bryanwweber",
     "matthiasdiener"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.sh",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json",
+      "test -f $PREFIX/lib/libcantera${SHLIB_EXT}"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json",
+      "test -f $PREFIX/include/cantera/transport.h",
+      "./test-lib/test-samples.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "make",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.sh",
+    "test": {
+     "commands": [
+      "cat ${CONDA_PREFIX}/conda-meta/cantera-*.json",
+      "uname -a",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help",
+      "./test-lib/test-extensiblerate.sh"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
+      "make",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
    {
     "build": {
      "ignore_run_exports_from": [
@@ -9149,9 +11419,24 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
     "setuptools"
    ],
    "host": [
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "libblas",
+    "liblapack",
     "python >=3.8",
     "libboost-devel",
     "numpy",
@@ -9199,7 +11484,18 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff"
+   ],
    "sha256": "6d17cdef21dae9deaf91351260b68ccf7e264c37c6030c9d4bf26a2cefb2b905",
    "url": "https://github.com/Cantera/cantera/archive/v3.0.0.tar.gz"
   }
@@ -9288,7 +11584,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cantera.json"
  },
- "raw_meta_yaml": "{% set version = \"3.0.0\" %}\n\npackage:\n  name: cantera-recipe\n  version: {{ version }}\n\nsource:\n  url: https://github.com/Cantera/cantera/archive/v{{ version }}.tar.gz\n  sha256: 6d17cdef21dae9deaf91351260b68ccf7e264c37c6030c9d4bf26a2cefb2b905\n  patches:\n  # https://github.com/conda-forge/cantera-feedstock/pull/13#issuecomment-809382526\n  - cross-compile.patch  # [build_platform != target_platform]\n  - iomp5-macos.patch  # [osx and not arm64]\n  - configure-hdf5.patch  # [build_platform != target_platform]\n\nbuild:\n  number: 3\n  include_recipe: True\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - scons >=4.1\n    - setuptools\n  host:\n    - python >=3.8\n    - libboost-devel\n    - numpy\n    - fmt\n    - eigen\n    - yaml-cpp\n    # TODO: Relax version constraint after a SUNDIALS release that includes\n    # https://github.com/LLNL/sundials/pull/343 is available\n    - sundials ==6.6.2\n    - hdf5 >=1.14\n    - highfive >=2.7\n    - pywin32  # [win]\n    - libblas\n    - liblapack\n\noutputs:\n  - name: libcantera\n    script: build_lib.sh  # [not win]\n    script: build_lib.bat  # [win]\n    build:\n      ignore_run_exports_from:\n        # only the header part of these libraries are used\n        - libboost-headers\n        - python\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - scons >=4.1\n        - setuptools\n      host:\n        - python >=3.8\n        - libboost-headers\n        - numpy\n        - fmt\n        - eigen\n        - yaml-cpp\n        # TODO: Relax version constraint after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available\n        - sundials ==6.6.2\n        - hdf5 >=1.14\n        - highfive >=2.7\n        - pywin32  # [win]\n        - libblas\n        - liblapack\n      run:\n        - hdf5 >=1.14\n        # TODO: Remove after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available (will be correctly\n        # handled by the sundials recipe)\n        - sundials ==6.6.2\n    test:\n      commands:\n        - echo \"STARTING TESTS\"\n        - cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json  # [not win]\n        - type %CONDA_PREFIX%\\conda-meta\\libcantera-3.*.json  # [win]\n        - test -f $PREFIX/lib/libcantera${SHLIB_EXT}  # [not win]\n\n  - name: libcantera-devel\n    script: build_devel.sh  # [not win]\n    script: build_devel.bat  # [win]\n    build:\n      ignore_run_exports_from:\n        # only the header part of these libraries are used\n        - libboost-headers\n        - python\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - scons >=4.1\n        - setuptools\n      host:\n        - python >=3.8\n        - setuptools\n        - pip\n        - libboost-headers\n        - numpy\n        - fmt\n        - eigen\n        - yaml-cpp\n        # TODO: Relax version constraint after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available\n        - sundials ==6.6.2\n        - pywin32  # [win]\n        - libcantera {{ version }}\n        - libblas\n        - liblapack\n      run:\n        - eigen\n        - fmt\n        - libcantera {{ version }}\n        # TODO: Remove after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available (will be correctly\n        # handled by the sundials recipe)\n        - sundials ==6.6.2\n    test:\n      requires:\n        - cmake\n        - make  # [not win]\n        - scons\n        - pkgconfig\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - numpy\n        - python {{ python }}\n      files:\n        - test-lib\n      commands:\n        - cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json  # [not win]\n        - type %CONDA_PREFIX%\\conda-meta\\libcantera-devel-*.json  # [win]\n        - test -f $PREFIX/include/cantera/transport.h  # [not win]\n        - ./test-lib/test-samples.sh  # [not win and build_platform == target_platform]\n        - call test-lib\\test-samples.bat  # [win]\n\n  - name: cantera\n    script: build_py.sh  # [not win]\n    script: build_py.bat  # [win]\n    build:\n      ignore_run_exports_from:\n        # only the header part of these libraries are used\n        - libboost-headers\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - scons >=4.1\n        - setuptools\n        - numpy                                  # [build_platform != target_platform]\n        - cython                                 # [build_platform != target_platform]\n        - pip\n      host:\n        - python {{ python }}\n        - pip\n        - setuptools\n        - libboost-headers\n        - numpy\n        - fmt\n        - eigen\n        - yaml-cpp\n        # TODO: Relax version constraint after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available\n        - sundials ==6.6.2\n        - pywin32  # [win]\n        - cython\n        # These two are added here so that conda-build doesn't package their files into cantera too\n        - libcantera-devel {{ version }}\n        - libcantera {{ version }}\n        - libblas\n        - liblapack\n      run:\n        - python\n        - setuptools\n        - {{ pin_compatible('numpy') }}\n        # TODO: Remove after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available (will be correctly\n        # handled by the sundials recipe)\n        - sundials ==6.6.2\n        - ruamel.yaml\n        - libcantera {{ version }}\n    build:\n      entry_points:\n        - ck2yaml = cantera.ck2yaml:script_entry_point\n        - cti2yaml = cantera.cti2yaml:main\n        - ctml2yaml = cantera.ctml2yaml:main\n        - yaml2ck = cantera.yaml2ck:main\n      include_recipe: True\n    test:\n      requires:\n        - pytest\n        - pint\n        - libcantera-devel {{ version }}\n        - cmake\n        - make  # [not win]\n        - scons\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n      imports:\n        - cantera\n      source_files:\n        - test/python\n        - test/data\n        - data\n      files:\n        - test-lib\n      commands:\n        - cat ${CONDA_PREFIX}/conda-meta/cantera-*.json  # [not win]\n        - type %CONDA_PREFIX%\\conda-meta\\cantera-*.json  # [win]\n        - uname -a  # [not win]\n        - python -c \"import platform; print('Python platform:', platform.platform())\"\n        - python -m pytest -vv test/python  # [not ppc64le]\n        # \"test_fluxes\" fails on ppc64le for unknown reasons\n        - python -m pytest -vv test/python -k \"not test_fluxes\"  # [ppc64le]\n        - cti2yaml --help\n        - ck2yaml --help\n        - ctml2yaml --help\n        - yaml2ck --help\n        - ./test-lib/test-extensiblerate.sh  # [not win and build_platform == target_platform and not (osx and x86_64 and py == 310)]\n        - call test-lib\\test-extensiblerate.bat  # [win]\n\nabout:\n  home: https://cantera.org\n  summary: \"Chemical kinetics, thermodynamics, and transport tool suite\"\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: License.txt\n  dev_url: https://github.com/cantera/cantera\n  description: Cantera is an open-source suite of tools for problems involving chemical kinetics, thermodynamics, and transport processes\n  doc_url: https://cantera.org/documentation\n\nextra:\n  feedstock-name: cantera\n  recipe-maintainers:\n    - inducer\n    - bryanwweber\n    - matthiasdiener\n",
+ "raw_meta_yaml": "{% set version = \"3.0.0\" %}\n\npackage:\n  name: cantera-recipe\n  version: {{ version }}\n\nsource:\n  url: https://github.com/Cantera/cantera/archive/v{{ version }}.tar.gz\n  sha256: 6d17cdef21dae9deaf91351260b68ccf7e264c37c6030c9d4bf26a2cefb2b905\n  patches:\n  # https://github.com/conda-forge/cantera-feedstock/pull/13#issuecomment-809382526\n  - cross-compile.patch  # [build_platform != target_platform]\n  - iomp5-macos.patch  # [osx and not arm64]\n  - configure-hdf5.patch  # [build_platform != target_platform]\n  - 1604.diff\n  - ver.diff\n\nbuild:\n  number: 4\n  include_recipe: True\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - scons >=4.1\n    - setuptools\n  host:\n    - python >=3.8\n    - libboost-devel\n    - numpy\n    - fmt\n    - eigen\n    - yaml-cpp\n    # TODO: Relax version constraint after a SUNDIALS release that includes\n    # https://github.com/LLNL/sundials/pull/343 is available\n    - sundials ==6.6.2\n    - hdf5 >=1.14\n    - highfive >=2.7\n    - pywin32  # [win]\n    - libblas\n    - liblapack\n\noutputs:\n  - name: libcantera\n    script: build_lib.sh  # [not win]\n    script: build_lib.bat  # [win]\n    build:\n      ignore_run_exports_from:\n        # only the header part of these libraries are used\n        - libboost-headers\n        - python\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - scons >=4.1\n        - setuptools\n      host:\n        - python >=3.8\n        - libboost-headers\n        - numpy\n        - fmt\n        - eigen\n        - yaml-cpp\n        # TODO: Relax version constraint after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available\n        - sundials ==6.6.2\n        - hdf5 >=1.14\n        - highfive >=2.7\n        - pywin32  # [win]\n        - libblas\n        - liblapack\n      run:\n        - hdf5 >=1.14\n        # TODO: Remove after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available (will be correctly\n        # handled by the sundials recipe)\n        - sundials ==6.6.2\n    test:\n      commands:\n        - echo \"STARTING TESTS\"\n        - cat ${CONDA_PREFIX}/conda-meta/libcantera-3.*.json  # [not win]\n        - type %CONDA_PREFIX%\\conda-meta\\libcantera-3.*.json  # [win]\n        - test -f $PREFIX/lib/libcantera${SHLIB_EXT}  # [not win]\n\n  - name: libcantera-devel\n    script: build_devel.sh  # [not win]\n    script: build_devel.bat  # [win]\n    build:\n      ignore_run_exports_from:\n        # only the header part of these libraries are used\n        - libboost-headers\n        - python\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - scons >=4.1\n        - setuptools\n      host:\n        - python >=3.8\n        - setuptools\n        - pip\n        - libboost-headers\n        - numpy\n        - fmt\n        - eigen\n        - yaml-cpp\n        # TODO: Relax version constraint after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available\n        - sundials ==6.6.2\n        - pywin32  # [win]\n        - libcantera {{ version }}\n        - libblas\n        - liblapack\n      run:\n        - eigen\n        - fmt\n        - libcantera {{ version }}\n        # TODO: Remove after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available (will be correctly\n        # handled by the sundials recipe)\n        - sundials ==6.6.2\n    test:\n      requires:\n        - cmake\n        - make  # [not win]\n        - scons\n        - pkgconfig\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - numpy\n        - python {{ python }}\n      files:\n        - test-lib\n      commands:\n        - cat ${CONDA_PREFIX}/conda-meta/libcantera-devel-*.json  # [not win]\n        - type %CONDA_PREFIX%\\conda-meta\\libcantera-devel-*.json  # [win]\n        - test -f $PREFIX/include/cantera/transport.h  # [not win]\n        - ./test-lib/test-samples.sh  # [not win and build_platform == target_platform]\n        - call test-lib\\test-samples.bat  # [win]\n\n  - name: cantera\n    script: build_py.sh  # [not win]\n    script: build_py.bat  # [win]\n    build:\n      ignore_run_exports_from:\n        # only the header part of these libraries are used\n        - libboost-headers\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - scons >=4.1\n        - setuptools\n        - numpy                                  # [build_platform != target_platform]\n        - cython                                 # [build_platform != target_platform]\n        - pip\n      host:\n        - python {{ python }}\n        - pip\n        - setuptools\n        - libboost-headers\n        - numpy\n        - fmt\n        - eigen\n        - yaml-cpp\n        # TODO: Relax version constraint after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available\n        - sundials ==6.6.2\n        - pywin32  # [win]\n        - cython\n        # These two are added here so that conda-build doesn't package their files into cantera too\n        - libcantera-devel {{ version }}\n        - libcantera {{ version }}\n        - libblas\n        - liblapack\n      run:\n        - python\n        - setuptools\n        - {{ pin_compatible('numpy') }}\n        # TODO: Remove after a SUNDIALS release that includes\n        # https://github.com/LLNL/sundials/pull/343 is available (will be correctly\n        # handled by the sundials recipe)\n        - sundials ==6.6.2\n        - ruamel.yaml\n        - libcantera {{ version }}\n    build:\n      entry_points:\n        - ck2yaml = cantera.ck2yaml:script_entry_point\n        - cti2yaml = cantera.cti2yaml:main\n        - ctml2yaml = cantera.ctml2yaml:main\n        - yaml2ck = cantera.yaml2ck:main\n      include_recipe: True\n    test:\n      requires:\n        - pytest\n        - pint\n        - libcantera-devel {{ version }}\n        - cmake\n        - make  # [not win]\n        - scons\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n      imports:\n        - cantera\n      source_files:\n        - test/python\n        - test/data\n        - data\n      files:\n        - test-lib\n      commands:\n        - cat ${CONDA_PREFIX}/conda-meta/cantera-*.json  # [not win]\n        - type %CONDA_PREFIX%\\conda-meta\\cantera-*.json  # [win]\n        - uname -a  # [not win]\n        - python -c \"import platform; print('Python platform:', platform.platform())\"\n        - python -m pytest -vv test/python  # [not ppc64le]\n        # \"test_fluxes\" fails on ppc64le for unknown reasons\n        - python -m pytest -vv test/python -k \"not test_fluxes\"  # [ppc64le]\n        - cti2yaml --help\n        - ck2yaml --help\n        - ctml2yaml --help\n        - yaml2ck --help\n        - ./test-lib/test-extensiblerate.sh  # [not win and build_platform == target_platform and not (osx and x86_64 and py == 310)]\n        - call test-lib\\test-extensiblerate.bat  # [win]\n\nabout:\n  home: https://cantera.org\n  summary: \"Chemical kinetics, thermodynamics, and transport tool suite\"\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: License.txt\n  dev_url: https://github.com/cantera/cantera\n  description: Cantera is an open-source suite of tools for problems involving chemical kinetics, thermodynamics, and transport processes\n  doc_url: https://cantera.org/documentation\n\nextra:\n  feedstock-name: cantera\n  recipe-maintainers:\n    - inducer\n    - bryanwweber\n    - matthiasdiener\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -9470,7 +11766,7 @@
   },
   "build": {
    "include_recipe": true,
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "feedstock-name": "cantera",
@@ -9486,10 +11782,191 @@
     "matthiasdiener",
     "inducer",
     "bryanwweber",
+    "matthiasdiener",
+    "inducer",
+    "bryanwweber",
     "matthiasdiener"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "hdf5 >=1.14",
+      "highfive >=2.7",
+      "pywin32",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "hdf5 >=1.14",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_lib.bat",
+    "test": {
+     "commands": [
+      "echo \"STARTING TESTS\"",
+      "type %CONDA_PREFIX%\\conda-meta\\libcantera-3.*.json"
+     ]
+    }
+   },
+   {
+    "build": {
+     "ignore_run_exports_from": [
+      "libboost-headers",
+      "python"
+     ]
+    },
+    "name": "libcantera-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools"
+     ],
+     "host": [
+      "python >=3.8",
+      "setuptools",
+      "pip",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "pywin32",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "eigen",
+      "fmt",
+      "libcantera 3.0.0",
+      "sundials ==6.6.2"
+     ]
+    },
+    "script": "build_devel.bat",
+    "test": {
+     "commands": [
+      "type %CONDA_PREFIX%\\conda-meta\\libcantera-devel-*.json",
+      "call test-lib\\test-samples.bat"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "requires": [
+      "cmake",
+      "scons",
+      "pkgconfig",
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "numpy",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "entry_points": [
+      "ck2yaml = cantera.ck2yaml:script_entry_point",
+      "cti2yaml = cantera.cti2yaml:main",
+      "ctml2yaml = cantera.ctml2yaml:main",
+      "yaml2ck = cantera.yaml2ck:main"
+     ],
+     "include_recipe": true
+    },
+    "name": "cantera",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "scons >=4.1",
+      "setuptools",
+      "pip"
+     ],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "libboost-headers",
+      "numpy",
+      "fmt",
+      "eigen",
+      "yaml-cpp",
+      "sundials ==6.6.2",
+      "pywin32",
+      "cython",
+      "libcantera-devel 3.0.0",
+      "libcantera 3.0.0",
+      "libblas",
+      "liblapack"
+     ],
+     "run": [
+      "python",
+      "setuptools",
+      "numpy",
+      "sundials ==6.6.2",
+      "ruamel.yaml",
+      "libcantera 3.0.0"
+     ]
+    },
+    "script": "build_py.bat",
+    "test": {
+     "commands": [
+      "type %CONDA_PREFIX%\\conda-meta\\cantera-*.json",
+      "python -c \"import platform; print('Python platform:', platform.platform())\"",
+      "python -m pytest -vv test/python",
+      "cti2yaml --help",
+      "ck2yaml --help",
+      "ctml2yaml --help",
+      "yaml2ck --help",
+      "call test-lib\\test-extensiblerate.bat"
+     ],
+     "files": [
+      "test-lib"
+     ],
+     "imports": [
+      "cantera"
+     ],
+     "requires": [
+      "pytest",
+      "pint",
+      "libcantera-devel 3.0.0",
+      "cmake",
+      "scons",
+      "c_compiler_stub",
+      "cxx_compiler_stub"
+     ],
+     "source_files": [
+      "test/python",
+      "test/data",
+      "data"
+     ]
+    }
+   },
    {
     "build": {
      "ignore_run_exports_from": [
@@ -10224,9 +12701,25 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "scons >=4.1",
+    "setuptools",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "scons >=4.1",
     "setuptools"
    ],
    "host": [
+    "python >=3.8",
+    "libboost-devel",
+    "numpy",
+    "fmt",
+    "eigen",
+    "yaml-cpp",
+    "sundials ==6.6.2",
+    "hdf5 >=1.14",
+    "highfive >=2.7",
+    "pywin32",
+    "libblas",
+    "liblapack",
     "python >=3.8",
     "libboost-devel",
     "numpy",
@@ -10278,7 +12771,18 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff",
+    "1604.diff",
+    "ver.diff"
+   ],
    "sha256": "6d17cdef21dae9deaf91351260b68ccf7e264c37c6030c9d4bf26a2cefb2b905",
    "url": "https://github.com/Cantera/cantera/archive/v3.0.0.tar.gz"
   }

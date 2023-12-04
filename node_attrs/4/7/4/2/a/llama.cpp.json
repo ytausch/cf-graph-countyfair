@@ -13,7 +13,7 @@
    "summary": "Port of Facebook's LLaMA model in C/C++"
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script": [
     "CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_TESTS=OFF\"",
     "CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_EXAMPLES=OFF\"",
@@ -34,7 +34,7 @@
     "cmake --build build --config Release",
     "cmake --install build --prefix=PREFIX"
    ],
-   "string": "cuda120_h1234567_2"
+   "string": "cuda120_h1234567_3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -131,7 +131,7 @@
    "summary": "Port of Facebook's LLaMA model in C/C++"
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "script": [
     "CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_TESTS=OFF\"",
     "CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_EXAMPLES=OFF\"",
@@ -150,12 +150,18 @@
     "CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_CUBLAS=ON\"",
     "cmake -S . -B build -G Ninja",
     "cmake --build build --config Release",
+    "cmake --install build --prefix=PREFIX",
+    "CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_TESTS=OFF\"",
+    "CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_EXAMPLES=OFF\"",
+    "cmake -S . -B build -G Ninja",
+    "cmake --build build --config Release",
     "cmake --install build --prefix=PREFIX"
    ],
-   "string": "cuda120_h1234567_2"
+   "string": "cpu_h1234567_3"
   },
   "extra": {
    "recipe-maintainers": [
+    "sodre",
     "sodre",
     "sodre",
     "sodre"
@@ -184,6 +190,11 @@
     "cuda_compiler_stub",
     "cmake",
     "git",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "git",
     "ninja"
    ],
    "host": [
@@ -196,7 +207,9 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "osx-64-pick-discrete.patch"
+   ],
    "sha256": "829f7c3696fb9da15faf0b70e7d33a174d3de5111ac797511ca0974eb42cf572",
    "url": "https://github.com/ggerganov/llama.cpp/archive/refs/tags/b1601.tar.gz"
   },
@@ -207,11 +220,90 @@
     "main --help",
     "server --help",
     "main --help",
+    "server --help",
+    "main --help",
     "server --help"
    ]
   }
  },
  "name": "llama.cpp",
+ "osx_64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/ggerganov/llama.cpp",
+   "license": "MIT",
+   "license_family": "MIT",
+   "license_file": "LICENSE",
+   "summary": "Port of Facebook's LLaMA model in C/C++"
+  },
+  "build": {
+   "number": "3",
+   "script": [
+    "CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_TESTS=OFF\"",
+    "CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_EXAMPLES=OFF\"",
+    "cmake -S . -B build -G Ninja",
+    "cmake --build build --config Release",
+    "cmake --install build --prefix=PREFIX"
+   ],
+   "string": "cpu_h1234567_3"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "sodre"
+   ]
+  },
+  "package": {
+   "name": "llama.cpp",
+   "version": "0.0.1601"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "git",
+    "ninja"
+   ],
+   "host": [],
+   "run": []
+  },
+  "source": {
+   "patches": [
+    "osx-64-pick-discrete.patch"
+   ],
+   "sha256": "829f7c3696fb9da15faf0b70e7d33a174d3de5111ac797511ca0974eb42cf572",
+   "url": "https://github.com/ggerganov/llama.cpp/archive/refs/tags/b1601.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "main --help",
+    "server --help"
+   ]
+  }
+ },
+ "osx_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "git",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -220,12 +312,13 @@
  },
  "parsing_error": false,
  "platforms": [
-  "linux_64"
+  "linux_64",
+  "osx_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/llama.cpp.json"
  },
- "raw_meta_yaml": "{% set name = \"llama.cpp\" %}\n{% set version = \"1601\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: 0.0.{{ version }}\n\nsource:\n  url: https://github.com/ggerganov/llama.cpp/archive/refs/tags/b{{ version }}.tar.gz\n  sha256: 829f7c3696fb9da15faf0b70e7d33a174d3de5111ac797511ca0974eb42cf572\n  patches:\n    - osx-64-pick-discrete.patch  # [osx and x86_64]\n\nbuild:\n  skip: True  # [win]\n  skip: True  # [osx]\n  skip: True  # [linux and cuda_compiler_version == \"None\"]\n  number: 2\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == \"None\"]\n\n  script:\n    - CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_TESTS=OFF\"\n    - CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_EXAMPLES=OFF\"\n    - CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_CUBLAS=ON\"                                 # [cuda_compiler_version != \"None\"]\n    - CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_ACCELERATE=ON -DLLAMA_METAL=ON\"            # [osx]\n    - cmake -S . -B build -G Ninja\n    - cmake --build build --config Release\n    - cmake --install build --prefix={{ PREFIX }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n    - cmake\n    - git\n    - ninja\n  host:\n    - libcublas-dev  # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  run:\n    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != \"None\"]\n\ntest:\n  commands:\n    - main --help\n    - server --help\n\nabout:\n  home: https://github.com/ggerganov/llama.cpp\n  summary: Port of Facebook's LLaMA model in C/C++\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - sodre\n",
+ "raw_meta_yaml": "{% set name = \"llama.cpp\" %}\n{% set version = \"1601\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: 0.0.{{ version }}\n\nsource:\n  url: https://github.com/ggerganov/llama.cpp/archive/refs/tags/b{{ version }}.tar.gz\n  sha256: 829f7c3696fb9da15faf0b70e7d33a174d3de5111ac797511ca0974eb42cf572\n  patches:\n    - osx-64-pick-discrete.patch  # [osx and x86_64]\n\nbuild:\n  skip: True  # [win]\n  skip: True  # [linux and cuda_compiler_version == \"None\"]\n  number: 3\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == \"None\"]\n\n  script:\n    - CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_TESTS=OFF\"\n    - CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_BUILD_EXAMPLES=OFF\"\n    - CMAKE_ARGS=\"${CMAKE_ARGS} -DLLAMA_CUBLAS=ON\"                                                  # [cuda_compiler_version != \"None\"]\n    - cmake -S . -B build -G Ninja\n    - cmake --build build --config Release\n    - cmake --install build --prefix={{ PREFIX }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n    - cmake\n    - git\n    - ninja\n  host:\n    - libcublas-dev  # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  run:\n    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != \"None\"]\n\ntest:\n  commands:\n    - main --help\n    - server --help\n\nabout:\n  home: https://github.com/ggerganov/llama.cpp\n  summary: Port of Facebook's LLaMA model in C/C++\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - sodre\n",
  "req": {
   "__set__": true,
   "elements": [
