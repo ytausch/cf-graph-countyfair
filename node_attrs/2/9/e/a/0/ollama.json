@@ -13,13 +13,19 @@
     "LICENSE",
     "licenses/",
     "LICENSE",
+    "licenses/",
+    "LICENSE",
     "licenses/"
    ],
    "summary": "Get up and running with Llama 2 and other large language models locally"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": [
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "go generate ./...",
+    "go install .",
+    "go-licenses save --save_path licenses ./...",
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
@@ -29,10 +35,11 @@
     "go install .",
     "go-licenses save --save_path licenses ./..."
    ],
-   "string": "cuda112_h1234567_1"
+   "string": "cuda118_h1234567_2"
   },
   "extra": {
    "recipe-maintainers": [
+    "sodre",
     "sodre",
     "sodre"
    ]
@@ -54,14 +61,23 @@
     "make",
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "go_compiler_stub 1.20",
+    "go-licenses",
+    "cmake",
+    "make",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
     "go_compiler_stub 1.20",
     "go-licenses"
    ],
    "host": [
-    "cuda-version 11.2"
+    "cuda-version 11.2",
+    "cuda-version 11.8"
    ],
    "run": [
-    "cuda-version 11.2"
+    "cuda-version 11.2",
+    "cuda-version 11.8"
    ]
   },
   "source": {
@@ -70,6 +86,8 @@
   },
   "test": {
    "commands": [
+    "ollama --version",
+    "ollama --help",
     "ollama --version",
     "ollama --help",
     "ollama --version",
@@ -117,13 +135,19 @@
     "LICENSE",
     "licenses/",
     "LICENSE",
+    "licenses/",
+    "LICENSE",
     "licenses/"
    ],
    "summary": "Get up and running with Llama 2 and other large language models locally"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": [
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "go generate ./...",
+    "go install .",
+    "go-licenses save --save_path licenses ./...",
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
@@ -133,10 +157,11 @@
     "go install .",
     "go-licenses save --save_path licenses ./..."
    ],
-   "string": "cuda112_h1234567_1"
+   "string": "cuda118_h1234567_2"
   },
   "extra": {
    "recipe-maintainers": [
+    "sodre",
     "sodre",
     "sodre"
    ]
@@ -158,14 +183,23 @@
     "make",
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "go_compiler_stub 1.20",
+    "go-licenses",
+    "cmake",
+    "make",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
     "go_compiler_stub 1.20",
     "go-licenses"
    ],
    "host": [
-    "cuda-version 11.2"
+    "cuda-version 11.2",
+    "cuda-version 11.8"
    ],
    "run": [
-    "cuda-version 11.2"
+    "cuda-version 11.2",
+    "cuda-version 11.8"
    ]
   },
   "source": {
@@ -174,6 +208,8 @@
   },
   "test": {
    "commands": [
+    "ollama --version",
+    "ollama --help",
     "ollama --version",
     "ollama --help",
     "ollama --version",
@@ -195,7 +231,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ollama.json"
  },
- "raw_meta_yaml": "{% set name = \"ollama\" %}\n{% set goname = \"github.com/jmorganca/ollama\" %}\n{% set version = \"0.1.11\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  #url: https://{{ goname }}/archive/v{{ version }}.tar.gz\n  #sha256: 881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26\n  git_url: https://github.com/jmorganca/ollama.git\n  git_rev: v{{ version }}\n\nbuild:\n  number: 1\n  skip: True  # [not linux]\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  script:\n    - export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version={{ version }} -X=github.com/jmorganca/ollama/server.mode=release'\"\n    - go generate ./...\n    - go install .\n    - go-licenses save --save_path licenses ./...\n\nrequirements:\n  build:\n    - cmake\n    - make\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version not in (undefined, \"None\")]\n    - {{ compiler('go') }} 1.20\n    - go-licenses\n  host:\n    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, \"None\")]\n  run:\n    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, \"None\")]\n\ntest:\n  commands:\n    - ollama --version\n    - ollama --help\n\nabout:\n  home: https://ollama.ai\n  summary: Get up and running with Llama 2 and other large language models locally\n  license: MIT\n  license_family: MIT\n  license_file:\n    - LICENSE\n    - licenses/\n  dev_url: https://{{ goname }}\n\nextra:\n  recipe-maintainers:\n    - sodre\n",
+ "raw_meta_yaml": "{% set name = \"ollama\" %}\n{% set goname = \"github.com/jmorganca/ollama\" %}\n{% set version = \"0.1.11\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  #url: https://{{ goname }}/archive/v{{ version }}.tar.gz\n  #sha256: 881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26\n  git_url: https://github.com/jmorganca/ollama.git\n  git_rev: v{{ version }}\n\nbuild:\n  number: 2\n  skip: True  # [not linux]\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  script:\n    - export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version={{ version }} -X=github.com/jmorganca/ollama/server.mode=release'\"\n    - go generate ./...\n    - go install .\n    - go-licenses save --save_path licenses ./...\n\nrequirements:\n  build:\n    - cmake\n    - make\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version not in (undefined, \"None\")]\n    - {{ compiler('go') }} 1.20\n    - go-licenses\n  host:\n    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, \"None\")]\n  run:\n    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, \"None\")]\n\ntest:\n  commands:\n    - ollama --version\n    - ollama --help\n\nabout:\n  home: https://ollama.ai\n  summary: Get up and running with Llama 2 and other large language models locally\n  license: MIT\n  license_family: MIT\n  license_file:\n    - LICENSE\n    - licenses/\n  dev_url: https://{{ goname }}\n\nextra:\n  recipe-maintainers:\n    - sodre\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -262,13 +298,15 @@
   "host": {
    "__set__": true,
    "elements": [
-    "cuda-version 11.2"
+    "cuda-version 11.2",
+    "cuda-version 11.8"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "cuda-version 11.2"
+    "cuda-version 11.2",
+    "cuda-version 11.8"
    ]
   },
   "test": {
