@@ -17,7 +17,7 @@
    "summary": "a standalone CSS2 parsing and manipulation library"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -44,7 +44,9 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "libxml2-212.patch"
+   ],
    "sha256": "767ec234ae7aa684695b3a735548224888132e063f92db585759b422570621d4",
    "url": "https://download.gnome.org/sources/libcroco/0.6/libcroco-0.6.13.tar.xz"
   },
@@ -97,7 +99,7 @@
    "summary": "a standalone CSS2 parsing and manipulation library"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -124,7 +126,9 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "libxml2-212.patch"
+   ],
    "sha256": "767ec234ae7aa684695b3a735548224888132e063f92db585759b422570621d4",
    "url": "https://download.gnome.org/sources/libcroco/0.6/libcroco-0.6.13.tar.xz"
   },
@@ -177,7 +181,7 @@
    "summary": "a standalone CSS2 parsing and manipulation library"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -204,7 +208,9 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "libxml2-212.patch"
+   ],
    "sha256": "767ec234ae7aa684695b3a735548224888132e063f92db585759b422570621d4",
    "url": "https://download.gnome.org/sources/libcroco/0.6/libcroco-0.6.13.tar.xz"
   },
@@ -257,7 +263,7 @@
    "summary": "a standalone CSS2 parsing and manipulation library"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -316,6 +322,11 @@
   },
   "source": {
    "patches": [
+    "libxml2-212.patch",
+    "libxml2-212.patch",
+    "libxml2-212.patch",
+    "libxml2-212.patch",
+    "libxml2-212.patch",
     "vs16-overlay.patch"
    ],
    "sha256": "767ec234ae7aa684695b3a735548224888132e063f92db585759b422570621d4",
@@ -363,7 +374,7 @@
    "summary": "a standalone CSS2 parsing and manipulation library"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -390,7 +401,9 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "libxml2-212.patch"
+   ],
    "sha256": "767ec234ae7aa684695b3a735548224888132e063f92db585759b422570621d4",
    "url": "https://download.gnome.org/sources/libcroco/0.6/libcroco-0.6.13.tar.xz"
   },
@@ -452,7 +465,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/libcroco.json"
  },
- "raw_meta_yaml": "{% set version = \"0.6.13\" %}\n{% set version_major = version.rsplit('.', 1)[0] %}\n{% set sha256 = \"767ec234ae7aa684695b3a735548224888132e063f92db585759b422570621d4\" %}\n\npackage:\n  name: libcroco\n  version: {{ version }}\n\nsource:\n  url: https://download.gnome.org/sources/libcroco/{{ version_major }}/libcroco-{{ version }}.tar.xz\n  sha256: {{ sha256 }}\n  patches:\n    - vs16-overlay.patch  # [win]\n\nbuild:\n  number: 3\n\nrequirements:\n  build:\n    - make  # [unix]\n    - pkg-config  # [unix]\n    - python  # [win]\n    - {{ compiler('c') }}\n  host:\n    - glib\n    - libxml2\n  run:\n    - libxml2\n\ntest:\n  requires:\n    - pkg-config\n  commands:\n    {% set name = \"libcroco\" %}\n    {% set libname = \"croco-\" + version_major %}\n    # test that headers get installed\n    - test -f $PREFIX/include/lib{{ libname }}/{{ name }}/{{ name }}.h  # [unix]\n    - if not exist %PREFIX%\\Library\\include\\lib{{ libname }}\\{{ name }}\\{{ name }}.h exit 1  # [win]\n\n    # test that library gets installed\n    - test -f $PREFIX/lib/lib{{ libname }}$SHLIB_EXT  # [unix]\n    - if not exist %PREFIX%\\Library\\bin\\{{ libname }}-vs16.dll exit 1  # [win]\n    - if not exist %PREFIX%\\Library\\lib\\{{ libname }}.lib exit 1  # [win]\n\n    # test that pkg-config points to the correct prefix by finding library through it\n    - test -f `pkg-config --variable=libdir --dont-define-prefix lib{{ libname }}`/lib{{ libname }}$SHLIB_EXT  # [unix]\n    - for /f \"usebackq tokens=*\" %%a in (`pkg-config --variable=libdir --dont-define-prefix lib{{ libname }}`) do if not exist \"%%a/{{ libname }}.lib\" exit 1  # [win]\n\n    # test binaries\n    - csslint-{{ version_major }} -v  # [unix]\n    - csslint -v  # [win]\n\n\nabout:\n  home: http://www.linuxfromscratch.org/blfs/view/svn/general/libcroco.html\n  license: LGPL-2.1-only\n  license_file: COPYING\n  summary: a standalone CSS2 parsing and manipulation library\n\nextra:\n  recipe-maintainers:\n    - jenzopr\n    - pkgw\n",
+ "raw_meta_yaml": "{% set version = \"0.6.13\" %}\n{% set version_major = version.rsplit('.', 1)[0] %}\n{% set sha256 = \"767ec234ae7aa684695b3a735548224888132e063f92db585759b422570621d4\" %}\n\npackage:\n  name: libcroco\n  version: {{ version }}\n\nsource:\n  url: https://download.gnome.org/sources/libcroco/{{ version_major }}/libcroco-{{ version }}.tar.xz\n  sha256: {{ sha256 }}\n  patches:\n    - libxml2-212.patch\n    - vs16-overlay.patch  # [win]\n\nbuild:\n  number: 4\n\nrequirements:\n  build:\n    - make  # [unix]\n    - pkg-config  # [unix]\n    - python  # [win]\n    - {{ compiler('c') }}\n  host:\n    - glib\n    - libxml2\n  run:\n    - libxml2\n\ntest:\n  requires:\n    - pkg-config\n  commands:\n    {% set name = \"libcroco\" %}\n    {% set libname = \"croco-\" + version_major %}\n    # test that headers get installed\n    - test -f $PREFIX/include/lib{{ libname }}/{{ name }}/{{ name }}.h  # [unix]\n    - if not exist %PREFIX%\\Library\\include\\lib{{ libname }}\\{{ name }}\\{{ name }}.h exit 1  # [win]\n\n    # test that library gets installed\n    - test -f $PREFIX/lib/lib{{ libname }}$SHLIB_EXT  # [unix]\n    - if not exist %PREFIX%\\Library\\bin\\{{ libname }}-vs16.dll exit 1  # [win]\n    - if not exist %PREFIX%\\Library\\lib\\{{ libname }}.lib exit 1  # [win]\n\n    # test that pkg-config points to the correct prefix by finding library through it\n    - test -f `pkg-config --variable=libdir --dont-define-prefix lib{{ libname }}`/lib{{ libname }}$SHLIB_EXT  # [unix]\n    - for /f \"usebackq tokens=*\" %%a in (`pkg-config --variable=libdir --dont-define-prefix lib{{ libname }}`) do if not exist \"%%a/{{ libname }}.lib\" exit 1  # [win]\n\n    # test binaries\n    - csslint-{{ version_major }} -v  # [unix]\n    - csslint -v  # [win]\n\n\nabout:\n  home: http://www.linuxfromscratch.org/blfs/view/svn/general/libcroco.html\n  license: LGPL-2.1-only\n  license_file: COPYING\n  summary: a standalone CSS2 parsing and manipulation library\n\nextra:\n  recipe-maintainers:\n    - jenzopr\n    - pkgw\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -540,7 +553,7 @@
    "summary": "a standalone CSS2 parsing and manipulation library"
   },
   "build": {
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -567,6 +580,7 @@
   },
   "source": {
    "patches": [
+    "libxml2-212.patch",
     "vs16-overlay.patch"
    ],
    "sha256": "767ec234ae7aa684695b3a735548224888132e063f92db585759b422570621d4",
