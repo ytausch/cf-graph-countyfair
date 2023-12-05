@@ -23,7 +23,7 @@
    "summary": "Portable Reconstructible (Pseudo) Random Number Generator."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -47,7 +47,7 @@
       "xtensor"
      ],
      "run": [
-      "libboost-headers",
+      "libboost-devel",
       "xtensor"
      ]
     },
@@ -140,7 +140,7 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libboost-headers",
+    "libboost-devel",
     "numpy",
     "python",
     "xtensor"
@@ -165,7 +165,7 @@
    "summary": "Portable Reconstructible (Pseudo) Random Number Generator."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -192,7 +192,7 @@
       "xtensor"
      ],
      "run": [
-      "libboost-headers",
+      "libboost-devel",
       "xtensor"
      ]
     },
@@ -263,7 +263,7 @@
       "xtensor"
      ],
      "run": [
-      "libboost-headers",
+      "libboost-devel",
       "xtensor"
      ]
     },
@@ -334,7 +334,7 @@
       "xtensor"
      ],
      "run": [
-      "libboost-headers",
+      "libboost-devel",
       "xtensor"
      ]
     },
@@ -404,7 +404,7 @@
       "xtensor"
      ],
      "run": [
-      "libboost-headers",
+      "libboost-devel",
       "xtensor"
      ]
     },
@@ -481,7 +481,7 @@
    "summary": "Portable Reconstructible (Pseudo) Random Number Generator."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -505,7 +505,7 @@
       "xtensor"
      ],
      "run": [
-      "libboost-headers",
+      "libboost-devel",
       "xtensor"
      ]
     },
@@ -598,7 +598,7 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libboost-headers",
+    "libboost-devel",
     "numpy",
     "python",
     "xtensor"
@@ -623,7 +623,7 @@
    "summary": "Portable Reconstructible (Pseudo) Random Number Generator."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -647,7 +647,7 @@
       "xtensor"
      ],
      "run": [
-      "libboost-headers",
+      "libboost-devel",
       "xtensor"
      ]
     },
@@ -740,7 +740,7 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libboost-headers",
+    "libboost-devel",
     "numpy",
     "python",
     "xtensor"
@@ -770,12 +770,13 @@
  "pr_info": {
   "__lazy_json__": "pr_info/prrng.json"
  },
- "raw_meta_yaml": "{% set version = \"1.12.1\" %}\n\npackage:\n  name: prrng-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/tdegeus/prrng/archive/v{{ version }}.tar.gz\n  sha256: e84569f03e38f727d28b69da68e828c050b288dda9e9bc0dc939ee5f4abf2b4c\n\nbuild:\n  number: 0\n\noutputs:\n\n  - name: prrng\n\n    script: install.sh  # [unix]\n    script: install.bat  # [win]\n\n    build:\n      script_env: SETUPTOOLS_SCM_PRETEND_VERSION={{ version }}\n\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n      host:\n        - libboost-headers\n        - xtensor\n      run:\n        - libboost-headers\n        - xtensor\n\n    test:\n      commands:\n        - test -f ${PREFIX}/include/prrng.h                                       # [unix]\n        - test -f ${PREFIX}/lib/cmake/prrng/prrngConfig.cmake                     # [unix]\n        - if not exist %LIBRARY_PREFIX%\\include\\prrng.h exit 1                    # [win]\n        - if not exist %LIBRARY_PREFIX%\\lib\\cmake\\prrng\\prrngConfig.cmake exit 1  # [win]\n\n  - name: python-prrng\n\n    script: install_python.sh  # [unix]\n    script: install_python.bat  # [win]\n\n    build:\n      script_env: SETUPTOOLS_SCM_PRETEND_VERSION={{ version }}\n      skip: true  # [python_impl == 'pypy']\n\n    requirements:\n      build:\n        - python                              # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n        - numpy *                             # [build_platform != target_platform]\n        - setuptools_scm                      # [build_platform != target_platform]\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n        - ninja\n      host:\n        - libboost-headers\n        - numpy *\n        - pip\n        - pybind11\n        - pybind11-abi\n        - python\n        - scikit-build\n        - setuptools_scm\n        - xtensor\n        - xtensor-python\n      run:\n        - numpy *\n        - python\n\n    test:\n      imports:\n        - prrng\n      commands:\n        - pip check\n        - python -c \"import prrng; assert prrng.version() == '{{ version }}'\"\n      requires:\n        - pip\n\nabout:\n  home: https://github.com/tdegeus/prrng\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: Portable Reconstructible (Pseudo) Random Number Generator.\n  description: Portable Reconstructible (Pseudo) Random Number Generator.\n  doc_url: https://tdegeus.github.io/prrng\n  dev_url: https://github.com/tdegeus/prrng\n\nextra:\n  recipe-maintainers:\n    - tdegeus\n",
+ "raw_meta_yaml": "{% set version = \"1.12.1\" %}\n\npackage:\n  name: prrng-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/tdegeus/prrng/archive/v{{ version }}.tar.gz\n  sha256: e84569f03e38f727d28b69da68e828c050b288dda9e9bc0dc939ee5f4abf2b4c\n\nbuild:\n  number: 1\n\noutputs:\n\n  - name: prrng\n\n    script: install.sh  # [unix]\n    script: install.bat  # [win]\n\n    build:\n      script_env: SETUPTOOLS_SCM_PRETEND_VERSION={{ version }}\n\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n      host:\n        - libboost-headers\n        - xtensor\n      run:\n        - libboost-devel  # to include CMake, the library only uses header-only Boost\n        - xtensor\n\n    test:\n      commands:\n        - test -f ${PREFIX}/include/prrng.h                                       # [unix]\n        - test -f ${PREFIX}/lib/cmake/prrng/prrngConfig.cmake                     # [unix]\n        - if not exist %LIBRARY_PREFIX%\\include\\prrng.h exit 1                    # [win]\n        - if not exist %LIBRARY_PREFIX%\\lib\\cmake\\prrng\\prrngConfig.cmake exit 1  # [win]\n\n  - name: python-prrng\n\n    script: install_python.sh  # [unix]\n    script: install_python.bat  # [win]\n\n    build:\n      script_env: SETUPTOOLS_SCM_PRETEND_VERSION={{ version }}\n      skip: true  # [python_impl == 'pypy']\n\n    requirements:\n      build:\n        - python                              # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n        - numpy *                             # [build_platform != target_platform]\n        - setuptools_scm                      # [build_platform != target_platform]\n        - {{ compiler('cxx') }}\n        - cmake\n        - make  # [unix]\n        - ninja\n      host:\n        - libboost-headers\n        - numpy *\n        - pip\n        - pybind11\n        - pybind11-abi\n        - python\n        - scikit-build\n        - setuptools_scm\n        - xtensor\n        - xtensor-python\n      run:\n        - numpy *\n        - python\n\n    test:\n      imports:\n        - prrng\n      commands:\n        - pip check\n        - python -c \"import prrng; assert prrng.version() == '{{ version }}'\"\n      requires:\n        - pip\n\nabout:\n  home: https://github.com/tdegeus/prrng\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: Portable Reconstructible (Pseudo) Random Number Generator.\n  description: Portable Reconstructible (Pseudo) Random Number Generator.\n  doc_url: https://tdegeus.github.io/prrng\n  dev_url: https://github.com/tdegeus/prrng\n\nextra:\n  recipe-maintainers:\n    - tdegeus\n",
  "req": {
   "__set__": true,
   "elements": [
    "cmake",
    "cxx_compiler_stub",
+   "libboost-devel",
    "libboost-headers",
    "make",
    "ninja",
@@ -820,7 +821,7 @@
    "__set__": true,
    "elements": [
     "cxx_compiler_stub",
-    "libboost-headers",
+    "libboost-devel",
     "numpy",
     "python",
     "xtensor"
@@ -862,7 +863,7 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libboost-headers",
+    "libboost-devel",
     "numpy *",
     "python",
     "xtensor"
@@ -892,7 +893,7 @@
    "summary": "Portable Reconstructible (Pseudo) Random Number Generator."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -915,7 +916,7 @@
       "xtensor"
      ],
      "run": [
-      "libboost-headers",
+      "libboost-devel",
       "xtensor"
      ]
     },
@@ -1006,7 +1007,7 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libboost-headers",
+    "libboost-devel",
     "numpy",
     "python",
     "xtensor"
