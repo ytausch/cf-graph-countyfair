@@ -26,36 +26,27 @@
    "summary": "Get up and running with Llama 2 and other large language models locally"
   },
   "build": {
-   "ignore_run_exports_from": [
-    "cxx_compiler_stub",
-    "cxx_compiler_stub",
-    "cxx_compiler_stub",
-    "cxx_compiler_stub"
-   ],
-   "number": "2",
+   "ignore_run_exports_from": null,
+   "number": "3",
    "script": [
-    "export CMAKE_ARGS=\"${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-static-libstdc++\"",
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
-    "export CMAKE_ARGS=\"${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-static-libstdc++\"",
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
-    "export CMAKE_ARGS=\"${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-static-libstdc++\"",
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
-    "export CMAKE_ARGS=\"${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-static-libstdc++\"",
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./..."
    ],
-   "string": "cuda120_h1234567_2"
+   "string": "cuda120_h1234567_3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -105,16 +96,26 @@
     "cuda-cudart-dev",
     "libcublas-dev"
    ],
+   "host": [
+    "cuda-cudart-dev",
+    "libcublas-dev"
+   ],
    "run": [
     "cuda-version 11.2",
     "cuda-version 11.8",
-    "cuda-version 12.0"
+    "cuda-version 12.0",
+    "cuda-cudart"
    ]
   },
   "source": {
    "git_rev": "v0.1.11",
    "git_url": "https://github.com/jmorganca/ollama.git",
-   "patches": null
+   "patches": [
+    "0001-linux_all-do-not-copy-cuda.patch",
+    "0001-linux_all-do-not-copy-cuda.patch",
+    "0001-linux_all-do-not-copy-cuda.patch",
+    "0001-linux_all-do-not-copy-cuda.patch"
+   ]
   },
   "test": {
    "commands": [
@@ -147,11 +148,15 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "cuda-cudart-dev",
+    "libcublas-dev"
+   ]
   },
   "run": {
    "__set__": true,
    "elements": [
+    "cuda-cudart",
     "cuda-version"
    ]
   },
@@ -184,31 +189,22 @@
   },
   "build": {
    "ignore_run_exports_from": [
-    "cxx_compiler_stub",
-    "cxx_compiler_stub",
-    "cxx_compiler_stub",
-    "cxx_compiler_stub",
-    "cxx_compiler_stub",
     "cxx_compiler_stub"
    ],
-   "number": "2",
+   "number": "3",
    "script": [
-    "export CMAKE_ARGS=\"${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-static-libstdc++\"",
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
-    "export CMAKE_ARGS=\"${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-static-libstdc++\"",
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
-    "export CMAKE_ARGS=\"${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-static-libstdc++\"",
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
-    "export CMAKE_ARGS=\"${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-static-libstdc++\"",
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
@@ -222,7 +218,7 @@
     "go install .",
     "go-licenses save --save_path licenses ./..."
    ],
-   "string": "cpu_h1234567_2"
+   "string": "cpu_h1234567_3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -288,16 +284,26 @@
     "cmake",
     "make"
    ],
+   "host": [
+    "cuda-cudart-dev",
+    "libcublas-dev"
+   ],
    "run": [
     "cuda-version 11.2",
     "cuda-version 11.8",
-    "cuda-version 12.0"
+    "cuda-version 12.0",
+    "cuda-cudart"
    ]
   },
   "source": {
    "git_rev": "v0.1.11",
    "git_url": "https://github.com/jmorganca/ollama.git",
    "patches": [
+    "0001-linux_all-do-not-copy-cuda.patch",
+    "0001-linux_all-do-not-copy-cuda.patch",
+    "0001-linux_all-do-not-copy-cuda.patch",
+    "0001-linux_all-do-not-copy-cuda.patch",
+    "0001-darwin_amd64.patch",
     "0001-darwin_arm64.patch"
    ]
   },
@@ -335,14 +341,14 @@
    "ignore_run_exports_from": [
     "cxx_compiler_stub"
    ],
-   "number": "2",
+   "number": "3",
    "script": [
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./..."
    ],
-   "string": "cpu_h1234567_2"
+   "string": "cpu_h1234567_3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -363,6 +369,7 @@
     "cmake",
     "make"
    ],
+   "host": [],
    "run": []
   },
   "source": {
@@ -421,14 +428,14 @@
    "ignore_run_exports_from": [
     "cxx_compiler_stub"
    ],
-   "number": "2",
+   "number": "3",
    "script": [
     "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./..."
    ],
-   "string": "cpu_h1234567_2"
+   "string": "cpu_h1234567_3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -449,6 +456,7 @@
     "cmake",
     "make"
    ],
+   "host": [],
    "run": []
   },
   "source": {
@@ -506,12 +514,13 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ollama.json"
  },
- "raw_meta_yaml": "{% set name = \"ollama\" %}\n{% set goname = \"github.com/jmorganca/ollama\" %}\n{% set version = \"0.1.11\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  #url: https://{{ goname }}/archive/v{{ version }}.tar.gz\n  #sha256: 881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26\n  git_url: https://github.com/jmorganca/ollama.git\n  git_rev: v{{ version }}\n  patches:\n    # Use the same build options from llama.cpp-feedstock\n    - 0001-darwin_amd64.patch  # [osx and x86_64]\n    - 0001-darwin_arm64.patch  # [osx and arm64]\n\nbuild:\n  number: 2\n  skip: True  # [win]\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: mps_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [osx and arm64]\n  string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [(osx and x86_64) or cuda_compiler_version == \"None\"]\n  script:\n    - export CMAKE_ARGS=\"${CMAKE_ARGS} -DCMAKE_EXE_LINKER_FLAGS=-static-libstdc++\"  # [linux]\n    - export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version={{ version }} -X=github.com/jmorganca/ollama/server.mode=release'\"\n    - go generate ./...\n    - go install .                                                                                                            # [build_platform == target_platform]\n    # TODO: This is due to a bug in our go-lang patch \n    #       Error message is go install can't write to GOBIN when cross compiling\n    - unset CONDA_GO_COMPILER; GOPATH=$SRC_DIR/gopath go install .; mkdir -p $PREFIX/bin; cp gopath/bin/*/ollama $PREFIX/bin  # [build_platform != target_platform]\n    - go-licenses save --save_path licenses ./...\n\n  ignore_run_exports_from:\n    # llama.cpp server is staticially linked\n    - {{ compiler('cxx') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}                    # [cuda_compiler_version not in (undefined, \"None\")]\n    - {{ compiler('go') }} 1.20\n    - go-licenses\n\n    - git\n    - cmake\n    - make\n    - cuda-cudart-dev                           # [(cuda_compiler_version or \"\").startswith(\"12\")]\n    - libcublas-dev                             # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  run:\n    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, \"None\")]\n\ntest:\n  commands:\n    - ollama --version\n    - ollama --help\n\nabout:\n  home: https://ollama.ai\n  summary: Get up and running with Llama 2 and other large language models locally\n  license: MIT\n  license_family: MIT\n  license_file:\n    - LICENSE\n    - licenses/\n  dev_url: https://{{ goname }}\n\nextra:\n  recipe-maintainers:\n    - sodre\n",
+ "raw_meta_yaml": "{% set name = \"ollama\" %}\n{% set goname = \"github.com/jmorganca/ollama\" %}\n{% set version = \"0.1.11\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  #url: https://{{ goname }}/archive/v{{ version }}.tar.gz\n  #sha256: 881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26\n  git_url: https://github.com/jmorganca/ollama.git\n  git_rev: v{{ version }}\n  patches:\n    # Use the same build options from llama.cpp-feedstock\n    - 0001-darwin_amd64.patch  # [osx and x86_64]\n    - 0001-darwin_arm64.patch  # [osx and arm64]\n    - 0001-linux_all-do-not-copy-cuda.patch  # [linux]\n\nbuild:\n  number: 3\n  skip: True  # [win]\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: mps_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [osx and arm64]\n  string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [(osx and x86_64) or cuda_compiler_version == \"None\"]\n  script:\n    - export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version={{ version }} -X=github.com/jmorganca/ollama/server.mode=release'\"\n    - go generate ./...\n    - go install .                                                                                                            # [build_platform == target_platform]\n    # TODO: This is due to a bug in our go-lang patch \n    #       Error message is go install can't write to GOBIN when cross compiling\n    - unset CONDA_GO_COMPILER; GOPATH=$SRC_DIR/gopath go install .; mkdir -p $PREFIX/bin; cp gopath/bin/*/ollama $PREFIX/bin  # [build_platform != target_platform]\n    - go-licenses save --save_path licenses ./...\n\n  ignore_run_exports_from:\n    # llama.cpp server is staticially linked on osx\n    - {{ compiler('cxx') }}  # [osx]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}                    # [cuda_compiler_version not in (undefined, \"None\")]\n    - {{ compiler('go') }} 1.20\n    - go-licenses\n\n    - git\n    - cmake\n    - make\n\n    # Tool can't find cudart/cublas in the host-environment\n    - cuda-cudart-dev                           # [(cuda_compiler_version or \"\").startswith(\"12\")]\n    - libcublas-dev                             # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  host:\n    - cuda-cudart-dev                           # [(cuda_compiler_version or \"\").startswith(\"12\")]\n    - libcublas-dev                             # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  run:\n    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, \"None\")]\n    - cuda-cudart                               # [(cuda_compiler_version or \"\").startswith(\"12\")]\n\ntest:\n  commands:\n    - ollama --version\n    - ollama --help\n\nabout:\n  home: https://ollama.ai\n  summary: Get up and running with Llama 2 and other large language models locally\n  license: MIT\n  license_family: MIT\n  license_file:\n    - LICENSE\n    - licenses/\n  dev_url: https://{{ goname }}\n\nextra:\n  recipe-maintainers:\n    - sodre\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
    "cmake",
+   "cuda-cudart",
    "cuda-cudart-dev",
    "cuda-version",
    "cuda_compiler_stub",
@@ -543,14 +552,17 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "cuda-cudart-dev",
     "cuda_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "libcublas-dev"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "cuda-cudart",
     "cuda-version",
     "cuda_compiler_stub",
     "cxx_compiler_stub"
@@ -580,11 +592,15 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "cuda-cudart-dev",
+    "libcublas-dev"
+   ]
   },
   "run": {
    "__set__": true,
    "elements": [
+    "cuda-cudart",
     "cuda-version 11.2",
     "cuda-version 11.8",
     "cuda-version 12.0"

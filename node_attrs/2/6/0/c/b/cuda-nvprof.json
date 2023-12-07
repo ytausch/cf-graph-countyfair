@@ -20,10 +20,11 @@
    "summary": "Tool for collecting and viewing CUDA application profiling data"
   },
   "build": {
+   "binary_relocation": false,
    "missing_dso_whitelist": [
     "*/libcuda.so.1"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -37,7 +38,8 @@
   "requirements": {
    "build": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "patchelf <0.18.0"
    ],
    "host": [
     "cuda-version 12.0",
@@ -68,7 +70,14 @@
     "test -f $PREFIX/targets/sbsa-linux/lib/libaccinj64.so.12.0.90",
     "test -L $PREFIX/targets/sbsa-linux/lib/libcuinj64.so",
     "test -L $PREFIX/targets/sbsa-linux/lib/libcuinj64.so.12.0",
-    "test -f $PREFIX/targets/sbsa-linux/lib/libcuinj64.so.12.0.90"
+    "test -f $PREFIX/targets/sbsa-linux/lib/libcuinj64.so.12.0.90",
+    "bash test-rpath.sh"
+   ],
+   "files": [
+    "test-rpath.sh"
+   ],
+   "requires": [
+    "patchelf"
    ]
   }
  },
@@ -77,7 +86,8 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "patchelf"
    ]
   },
   "host": {
@@ -96,7 +106,9 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "patchelf"
+   ]
   }
  },
  "linux_ppc64le_meta_yaml": {
@@ -110,10 +122,11 @@
    "summary": "Tool for collecting and viewing CUDA application profiling data"
   },
   "build": {
+   "binary_relocation": false,
    "missing_dso_whitelist": [
     "*/libcuda.so.1"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -127,7 +140,8 @@
   "requirements": {
    "build": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "patchelf <0.18.0"
    ],
    "host": [
     "cuda-version 12.0",
@@ -158,7 +172,14 @@
     "test -f $PREFIX/targets/sbsa-linux/lib/libaccinj64.so.12.0.90",
     "test -L $PREFIX/targets/sbsa-linux/lib/libcuinj64.so",
     "test -L $PREFIX/targets/sbsa-linux/lib/libcuinj64.so.12.0",
-    "test -f $PREFIX/targets/sbsa-linux/lib/libcuinj64.so.12.0.90"
+    "test -f $PREFIX/targets/sbsa-linux/lib/libcuinj64.so.12.0.90",
+    "bash test-rpath.sh"
+   ],
+   "files": [
+    "test-rpath.sh"
+   ],
+   "requires": [
+    "patchelf"
    ]
   }
  },
@@ -167,7 +188,8 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "patchelf"
    ]
   },
   "host": {
@@ -186,7 +208,9 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "patchelf"
+   ]
   }
  },
  "meta_yaml": {
@@ -200,12 +224,13 @@
    "summary": "Tool for collecting and viewing CUDA application profiling data"
   },
   "build": {
+   "binary_relocation": false,
    "missing_dso_whitelist": [
     "*/libcuda.so.1",
     "*/libcuda.so.1",
     "*/nvcuda.dll"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -222,8 +247,10 @@
    "build": [
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "patchelf <0.18.0",
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "patchelf <0.18.0",
     "c_compiler_stub",
     "cxx_compiler_stub"
    ],
@@ -265,6 +292,7 @@
     "test -L $PREFIX/targets/sbsa-linux/lib/libcuinj64.so",
     "test -L $PREFIX/targets/sbsa-linux/lib/libcuinj64.so.12.0",
     "test -f $PREFIX/targets/sbsa-linux/lib/libcuinj64.so.12.0.90",
+    "bash test-rpath.sh",
     "test -f $PREFIX/bin/nvprof",
     "test -f $PREFIX/lib/pkgconfig/cuinj64*.pc",
     "test -f $PREFIX/lib/pkgconfig/accinj64*.pc",
@@ -280,9 +308,16 @@
     "test -L $PREFIX/targets/sbsa-linux/lib/libcuinj64.so",
     "test -L $PREFIX/targets/sbsa-linux/lib/libcuinj64.so.12.0",
     "test -f $PREFIX/targets/sbsa-linux/lib/libcuinj64.so.12.0.90",
+    "bash test-rpath.sh",
     "if not exist %LIBRARY_BIN%\\nvprof.exe exit 1",
     "if not exist %LIBRARY_BIN%\\cuinj64_*.dll exit 1"
-   ]
+   ],
+   "files": [
+    "test-rpath.sh",
+    "test-rpath.sh",
+    "test-rpath.sh"
+   ],
+   "requires": null
   }
  },
  "name": "cuda-nvprof",
@@ -301,14 +336,15 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cuda-nvprof.json"
  },
- "raw_meta_yaml": "{% set name = \"cuda-nvprof\" %}\n{% set version = \"12.0.90\" %}\n{% set cuda_version = \"12.0\" %}\n{% set platform = \"linux-x86_64\" %}  # [linux64]\n{% set platform = \"linux-ppc64le\" %}  # [ppc64le]\n{% set platform = \"windows-x86_64\" %}  # [win]\n{% set target_name = \"x86_64-linux\" %}  # [linux64]\n{% set target_name = \"ppc64le-linux\" %}  # [ppc64le]\n{% set target_name = \"sbsa-linux\" %}  # [aarch64]\n{% set extension = \"tar.xz\" %}  # [not win]\n{% set extension = \"zip\" %}  # [win]\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvprof/{{ platform }}/cuda_nvprof-{{ platform }}-{{ version }}-archive.{{ extension }}\n  sha256: e3313459ff03f17836fc43e53fa7bc1d3ba4079e6089c48ac9d91009c762f196  # [linux64]\n  sha256: b1067e82bbf4ce592fd94c8b654d91a72e5b70c2ec407348ce7f7cf462acd6a4  # [ppc64le]\n  sha256: d509046b6670105bc11a6a31e412a07c7ceb2f76f5248d1d5699be1544dc6221  # [win]\n\nbuild:\n  number: 0\n  skip: true  # [osx or aarch64]\n  missing_dso_whitelist:\n    # This is a driver file, might be able to use cuda-compat to remove this\n    - '*/libcuda.so.1'  # [linux]\n    - '*/nvcuda.dll'    # [win]\n\nrequirements:\n  build:\n    - {{ compiler(\"c\") }}\n    - {{ compiler(\"cxx\") }}\n  host:\n    - cuda-version {{ cuda_version }}\n    - cuda-cupti\n  run:\n    - {{ pin_compatible(\"cuda-version\", max_pin=\"x.x\") }}\n    - cuda-cupti\n\ntest:\n  commands:\n    - test -f $PREFIX/bin/nvprof                                                                                            # [linux]\n    - test -f $PREFIX/lib/pkgconfig/cuinj64*.pc                                                                             # [linux]\n    - test -f $PREFIX/lib/pkgconfig/accinj64*.pc                                                                            # [linux]\n    - test -L $PREFIX/lib/libaccinj64.so                                                                                    # [linux]\n    - test -L $PREFIX/lib/libaccinj64.so.{{ version.split(\".\")[0] }}.{{ version.split(\".\")[1] }}                            # [linux]\n    - test -L $PREFIX/lib/libaccinj64.so.{{ version }}                                                                      # [linux]\n    - test -L $PREFIX/lib/libcuinj64.so                                                                                     # [linux]\n    - test -L $PREFIX/lib/libcuinj64.so.{{ version.split(\".\")[0] }}.{{ version.split(\".\")[1] }}                             # [linux]\n    - test -L $PREFIX/lib/libcuinj64.so.{{ version }}                                                                       # [linux]\n    - test -L $PREFIX/targets/{{ target_name }}/lib/libaccinj64.so                                                          # [linux]\n    - test -L $PREFIX/targets/{{ target_name }}/lib/libaccinj64.so.{{ version.split(\".\")[0] }}.{{ version.split(\".\")[1] }}  # [linux]\n    - test -f $PREFIX/targets/{{ target_name }}/lib/libaccinj64.so.{{ version }}                                            # [linux]\n    - test -L $PREFIX/targets/{{ target_name }}/lib/libcuinj64.so                                                           # [linux]\n    - test -L $PREFIX/targets/{{ target_name }}/lib/libcuinj64.so.{{ version.split(\".\")[0] }}.{{ version.split(\".\")[1] }}   # [linux]\n    - test -f $PREFIX/targets/{{ target_name }}/lib/libcuinj64.so.{{ version }}                                             # [linux]\n    - if not exist %LIBRARY_BIN%\\nvprof.exe exit 1     # [win]\n    - if not exist %LIBRARY_BIN%\\cuinj64_*.dll exit 1  # [win]\n\nabout:\n  home: https://developer.nvidia.com/cuda-toolkit\n  license_file: LICENSE\n  license: LicenseRef-NVIDIA-End-User-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/eula/index.html\n  summary: Tool for collecting and viewing CUDA application profiling data\n  description: |\n    Tool for collecting and viewing CUDA application profiling data from\n    the command-line.\n  doc_url: https://docs.nvidia.com/cuda/index.html\n\nextra:\n  recipe-maintainers:\n    - adibbley\n",
+ "raw_meta_yaml": "{% set name = \"cuda-nvprof\" %}\n{% set version = \"12.0.90\" %}\n{% set cuda_version = \"12.0\" %}\n{% set platform = \"linux-x86_64\" %}  # [linux64]\n{% set platform = \"linux-ppc64le\" %}  # [ppc64le]\n{% set platform = \"windows-x86_64\" %}  # [win]\n{% set target_name = \"x86_64-linux\" %}  # [linux64]\n{% set target_name = \"ppc64le-linux\" %}  # [ppc64le]\n{% set target_name = \"sbsa-linux\" %}  # [aarch64]\n{% set extension = \"tar.xz\" %}  # [not win]\n{% set extension = \"zip\" %}  # [win]\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://developer.download.nvidia.com/compute/cuda/redist/cuda_nvprof/{{ platform }}/cuda_nvprof-{{ platform }}-{{ version }}-archive.{{ extension }}\n  sha256: e3313459ff03f17836fc43e53fa7bc1d3ba4079e6089c48ac9d91009c762f196  # [linux64]\n  sha256: b1067e82bbf4ce592fd94c8b654d91a72e5b70c2ec407348ce7f7cf462acd6a4  # [ppc64le]\n  sha256: d509046b6670105bc11a6a31e412a07c7ceb2f76f5248d1d5699be1544dc6221  # [win]\n\nbuild:\n  number: 1\n  binary_relocation: false\n  skip: true  # [osx or aarch64]\n  missing_dso_whitelist:\n    # This is a driver file, might be able to use cuda-compat to remove this\n    - '*/libcuda.so.1'  # [linux]\n    - '*/nvcuda.dll'    # [win]\n\nrequirements:\n  build:\n    - {{ compiler(\"c\") }}\n    - {{ compiler(\"cxx\") }}\n    - patchelf <0.18.0  # [linux]\n  host:\n    - cuda-version {{ cuda_version }}\n    - cuda-cupti\n  run:\n    - {{ pin_compatible(\"cuda-version\", max_pin=\"x.x\") }}\n    - cuda-cupti\n\ntest:\n  requires:\n    - patchelf  # [linux]\n  files:\n    - test-rpath.sh\n  commands:\n    - test -f $PREFIX/bin/nvprof                                                                                            # [linux]\n    - test -f $PREFIX/lib/pkgconfig/cuinj64*.pc                                                                             # [linux]\n    - test -f $PREFIX/lib/pkgconfig/accinj64*.pc                                                                            # [linux]\n    - test -L $PREFIX/lib/libaccinj64.so                                                                                    # [linux]\n    - test -L $PREFIX/lib/libaccinj64.so.{{ version.split(\".\")[0] }}.{{ version.split(\".\")[1] }}                            # [linux]\n    - test -L $PREFIX/lib/libaccinj64.so.{{ version }}                                                                      # [linux]\n    - test -L $PREFIX/lib/libcuinj64.so                                                                                     # [linux]\n    - test -L $PREFIX/lib/libcuinj64.so.{{ version.split(\".\")[0] }}.{{ version.split(\".\")[1] }}                             # [linux]\n    - test -L $PREFIX/lib/libcuinj64.so.{{ version }}                                                                       # [linux]\n    - test -L $PREFIX/targets/{{ target_name }}/lib/libaccinj64.so                                                          # [linux]\n    - test -L $PREFIX/targets/{{ target_name }}/lib/libaccinj64.so.{{ version.split(\".\")[0] }}.{{ version.split(\".\")[1] }}  # [linux]\n    - test -f $PREFIX/targets/{{ target_name }}/lib/libaccinj64.so.{{ version }}                                            # [linux]\n    - test -L $PREFIX/targets/{{ target_name }}/lib/libcuinj64.so                                                           # [linux]\n    - test -L $PREFIX/targets/{{ target_name }}/lib/libcuinj64.so.{{ version.split(\".\")[0] }}.{{ version.split(\".\")[1] }}   # [linux]\n    - test -f $PREFIX/targets/{{ target_name }}/lib/libcuinj64.so.{{ version }}                                             # [linux]\n    - bash test-rpath.sh                                                                                                    # [linux]\n    - if not exist %LIBRARY_BIN%\\nvprof.exe exit 1     # [win]\n    - if not exist %LIBRARY_BIN%\\cuinj64_*.dll exit 1  # [win]\n\nabout:\n  home: https://developer.nvidia.com/cuda-toolkit\n  license_file: LICENSE\n  license: LicenseRef-NVIDIA-End-User-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/eula/index.html\n  summary: Tool for collecting and viewing CUDA application profiling data\n  description: |\n    Tool for collecting and viewing CUDA application profiling data from\n    the command-line.\n  doc_url: https://docs.nvidia.com/cuda/index.html\n\nextra:\n  recipe-maintainers:\n    - adibbley\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
    "cuda-cupti",
    "cuda-version",
-   "cxx_compiler_stub"
+   "cxx_compiler_stub",
+   "patchelf"
   ]
  },
  "requirements": {
@@ -316,7 +352,8 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "patchelf"
    ]
   },
   "host": {
@@ -348,7 +385,8 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub"
+    "cxx_compiler_stub",
+    "patchelf <0.18.0"
    ]
   },
   "host": {
@@ -386,10 +424,11 @@
    "summary": "Tool for collecting and viewing CUDA application profiling data"
   },
   "build": {
+   "binary_relocation": false,
    "missing_dso_whitelist": [
     "*/nvcuda.dll"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -422,7 +461,11 @@
    "commands": [
     "if not exist %LIBRARY_BIN%\\nvprof.exe exit 1",
     "if not exist %LIBRARY_BIN%\\cuinj64_*.dll exit 1"
-   ]
+   ],
+   "files": [
+    "test-rpath.sh"
+   ],
+   "requires": null
   }
  },
  "win_64_requirements": {
