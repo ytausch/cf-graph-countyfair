@@ -47,7 +47,7 @@
     "vlx=veloxchem.main:main",
     "vlx=veloxchem.main:main"
    ],
-   "number": "5",
+   "number": "6",
    "script_env": [
     "OMPI_MCA_plm_rsh_agent=",
     "OMPI_MCA_plm_rsh_agent=",
@@ -594,7 +594,7 @@
     "vlx=veloxchem.main:main",
     "vlx=veloxchem.main:main"
    ],
-   "number": "5",
+   "number": "6",
    "script_env": null
   },
   "extra": {
@@ -1861,7 +1861,7 @@
     "vlx=veloxchem.main:main",
     "vlx=veloxchem.main:main"
    ],
-   "number": "5",
+   "number": "6",
    "script_env": null
   },
   "extra": {
@@ -2339,7 +2339,7 @@
     "vlx=veloxchem.main:main",
     "vlx=veloxchem.main:main"
    ],
-   "number": "5",
+   "number": "6",
    "script_env": null
   },
   "extra": {
@@ -2794,7 +2794,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/veloxchem.json"
  },
- "raw_meta_yaml": "{% set name = \"veloxchem\" %}\n{% set version = \"1.0\" %}\n{% set pre = \"rc3\" %}\n{% set sha256 = \"ed22aeb72d832f0daccffa393a1a349dab65fc85cefbb6a069933d3b51ad7ffd\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://gitlab.com/veloxchem/veloxchem/-/archive/v{{ version }}-{{ pre }}/veloxchem-v{{ version }}-{{ pre }}.tar.gz\n  sha256: {{ sha256 }}\n  patches:\n    - patches/geometric-as-posix.patch\n    - patches/xtb-check.patch  # [build_platform != target_platform]\n\nbuild:\n  number: 5\n  script_env:\n    - OMPI_MCA_plm_rsh_agent=  # [mpi == 'openmpi' and linux]\n  entry_points:\n    - vlx=veloxchem.main:main\n\nrequirements:\n  build:\n    - python  # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n    - numpy  # [build_platform != target_platform]\n    - pybind11  # [build_platform != target_platform]\n    - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]\n    - cmake >=3.18\n    - {{ compiler('cxx') }}\n    - libgomp  # [linux]\n    - llvm-openmp  # [osx or win]\n    - ninja\n  host:\n    - pybind11\n    - python\n    - pybind11-abi\n    - {{ mpi }}\n    - mpi4py\n    - libcblas\n    - liblapacke\n    - numpy\n    - xtb  # [unix]\n  run:\n    - psutil\n    - geometric\n    - cppe  # [unix]\n    - h5py\n    - python\n    - {{ pin_compatible('mpi4py') }}\n    - {{ pin_compatible('numpy') }}\n  run_constrained:\n    - libopenblas * openmp*  # [unix]\n\ntest:\n  requires:\n    - pytest\n    - libopenblas  # [unix]   \n    - mkl  # [win]\n    - pip\n    - scipy\n    - openmm\n    - matplotlib\n    - rdkit  # [not aarch64 and not ppc64le]\n    - k3d\n    - mdanalysis  # [not aarch64 and not ppc64le]\n    - m2w64-binutils  # [win]   # provides objdump.exe\n  imports:\n    - veloxchem\n  commands:\n    - pip check\n    # verify we can execute the CLI\n    - vlx --version\n    - vlx --help\n    # Inspect linkage\n    - ldd -v $SP_DIR/veloxchem/veloxchemlib*.so  # [linux]\n    - otool -L $SP_DIR/veloxchem/veloxchemlib*.so  # [osx]\n    - objdump.exe -p %SP_DIR%\\\\veloxchem\\\\veloxchemlib.*.pyd | findstr /i \"dll\"  # [win]\n    # run integration tests\n    - export OMPI_ALLOW_RUN_AS_ROOT=1  # [mpi == 'openmpi']\n    - export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1  # [mpi == 'openmpi']\n    - export OMP_NUM_THREADS=$CPU_COUNT  # [unix]\n    - mpiexec -n 1 $PYTHON -m pytest --capture=no --log-cli-level=INFO --pyargs veloxchem -m solvers  # [unix]\n    - export MPI_NUM_PROCS=2  # [unix]\n    - export OMP_NUM_THREADS=$(($CPU_COUNT/$MPI_NUM_PROCS))  # [unix]\n    - mpiexec -n $MPI_NUM_PROCS $PYTHON -m pytest --capture=no --log-cli-level=INFO --pyargs veloxchem -m solvers  # [unix]\n    - set OMP_NUM_THREADS=%CPU_COUNT%  # [win]\n    - mpiexec -n 1 %PYTHON% -m pytest --capture=no --log-cli-level=INFO --pyargs veloxchem -m solvers  # [win]\n    - set MPI_NUM_PROCS=2  # [win]\n    - set /A OMP_NUM_THREADS=\"%CPU_COUNT%/%MPI_NUM_PROCS%\"  # [win]\n    - mpiexec -n %MPI_NUM_PROCS% %PYTHON% -m pytest --capture=no --log-cli-level=INFO --pyargs veloxchem -m solvers  # [win]\n\nabout:\n  home: https://veloxchem.org\n  dev_url: https://gitlab.com/veloxchem/veloxchem\n  doc_url: https://veloxchem.org\n  license: LGPL-3.0-or-later\n  license_url: https://opensource.org/licenses/LGPL-3.0\n  license_file:\n    - COPYING\n    - COPYING.LESSER\n  license_family: LGPL\n  summary: A Python-based, open source quantum chemistry program package\n\nextra:\n  recipe-maintainers:\n    - robertodr\n",
+ "raw_meta_yaml": "{% set name = \"veloxchem\" %}\n{% set version = \"1.0\" %}\n{% set pre = \"rc3\" %}\n{% set sha256 = \"ed22aeb72d832f0daccffa393a1a349dab65fc85cefbb6a069933d3b51ad7ffd\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://gitlab.com/veloxchem/veloxchem/-/archive/v{{ version }}-{{ pre }}/veloxchem-v{{ version }}-{{ pre }}.tar.gz\n  sha256: {{ sha256 }}\n  patches:\n    - patches/geometric-as-posix.patch\n    - patches/xtb-check.patch  # [build_platform != target_platform]\n\nbuild:\n  number: 6\n  script_env:\n    - OMPI_MCA_plm_rsh_agent=  # [mpi == 'openmpi' and linux]\n  entry_points:\n    - vlx=veloxchem.main:main\n\nrequirements:\n  build:\n    - python  # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}  # [build_platform != target_platform]\n    - numpy  # [build_platform != target_platform]\n    - pybind11  # [build_platform != target_platform]\n    - {{ mpi }}  # [mpi == 'openmpi' and build_platform != target_platform]\n    - cmake >=3.18\n    - {{ compiler('cxx') }}\n    - libgomp  # [linux]\n    - llvm-openmp  # [osx or win]\n    - ninja\n  host:\n    - pybind11\n    - python\n    - pybind11-abi\n    - {{ mpi }}\n    - mpi4py\n    - libcblas\n    - liblapacke\n    - numpy\n    - xtb  # [unix]\n  run:\n    - psutil\n    - geometric\n    - cppe  # [unix]\n    - h5py\n    - python\n    - {{ pin_compatible('mpi4py') }}\n    - {{ pin_compatible('numpy') }}\n  run_constrained:\n    - libopenblas * openmp*  # [unix]\n\ntest:\n  requires:\n    - pytest\n    - libopenblas  # [unix]   \n    - mkl  # [win]\n    - pip\n    - scipy\n    - openmm\n    - matplotlib\n    - rdkit  # [not aarch64 and not ppc64le]\n    - k3d\n    - mdanalysis  # [not aarch64 and not ppc64le]\n    - m2w64-binutils  # [win]   # provides objdump.exe\n  imports:\n    - veloxchem\n  commands:\n    - pip check\n    # verify we can execute the CLI\n    - vlx --version\n    - vlx --help\n    # Inspect linkage\n    - ldd -v $SP_DIR/veloxchem/veloxchemlib*.so  # [linux]\n    - otool -L $SP_DIR/veloxchem/veloxchemlib*.so  # [osx]\n    - objdump.exe -p %SP_DIR%\\\\veloxchem\\\\veloxchemlib.*.pyd | findstr /i \"dll\"  # [win]\n    # run integration tests\n    - export OMPI_ALLOW_RUN_AS_ROOT=1  # [mpi == 'openmpi']\n    - export OMPI_ALLOW_RUN_AS_ROOT_CONFIRM=1  # [mpi == 'openmpi']\n    - export OMP_NUM_THREADS=$CPU_COUNT  # [unix]\n    - mpiexec -n 1 $PYTHON -m pytest --capture=no --log-cli-level=INFO --pyargs veloxchem -m solvers  # [unix]\n    - export MPI_NUM_PROCS=2  # [unix]\n    - export OMP_NUM_THREADS=$(($CPU_COUNT/$MPI_NUM_PROCS))  # [unix]\n    - mpiexec -n $MPI_NUM_PROCS $PYTHON -m pytest --capture=no --log-cli-level=INFO --pyargs veloxchem -m solvers  # [unix]\n    - set OMP_NUM_THREADS=%CPU_COUNT%  # [win]\n    - mpiexec -n 1 %PYTHON% -m pytest --capture=no --log-cli-level=INFO --pyargs veloxchem -m solvers  # [win]\n    - set MPI_NUM_PROCS=2  # [win]\n    - set /A OMP_NUM_THREADS=\"%CPU_COUNT%/%MPI_NUM_PROCS%\"  # [win]\n    - mpiexec -n %MPI_NUM_PROCS% %PYTHON% -m pytest --capture=no --log-cli-level=INFO --pyargs veloxchem -m solvers  # [win]\n\nabout:\n  home: https://veloxchem.org\n  dev_url: https://gitlab.com/veloxchem/veloxchem\n  doc_url: https://veloxchem.org\n  license: LGPL-3.0-or-later\n  license_url: https://opensource.org/licenses/LGPL-3.0\n  license_file:\n    - COPYING\n    - COPYING.LESSER\n  license_family: LGPL\n  summary: A Python-based, open source quantum chemistry program package\n\nextra:\n  recipe-maintainers:\n    - robertodr\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -2968,7 +2968,7 @@
     "vlx=veloxchem.main:main",
     "vlx=veloxchem.main:main"
    ],
-   "number": "5",
+   "number": "6",
    "script_env": null
   },
   "extra": {
