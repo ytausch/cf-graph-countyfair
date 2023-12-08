@@ -23,9 +23,10 @@
    "summary": "Quantum circuit simulators qsim and qsimh."
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . -vvv --no-deps --no-build-isolation",
-   "script_env": null
+   "script_env": null,
+   "string": "cpu_py312h1234567_2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -214,6 +215,7 @@
     "numpy",
     "cuquantum-python",
     "custatevec",
+    "__cuda",
     "python",
     "absl-py",
     "cirq-core",
@@ -222,6 +224,7 @@
     "numpy",
     "cuquantum-python",
     "custatevec",
+    "__cuda",
     "python",
     "absl-py",
     "cirq-core",
@@ -230,6 +233,7 @@
     "numpy",
     "cuquantum-python",
     "custatevec",
+    "__cuda",
     "python",
     "absl-py",
     "cirq-core",
@@ -238,6 +242,7 @@
     "numpy",
     "cuquantum-python",
     "custatevec",
+    "__cuda",
     "python",
     "absl-py",
     "cirq-core",
@@ -246,6 +251,7 @@
     "numpy",
     "cuquantum-python",
     "custatevec",
+    "__cuda",
     "python",
     "absl-py",
     "cirq-core",
@@ -356,6 +362,11 @@
   },
   "test": {
    "commands": [
+    "cd qsimcirq_tests && pytest -vvv .",
+    "cd qsimcirq_tests && pytest -vvv .",
+    "cd qsimcirq_tests && pytest -vvv .",
+    "cd qsimcirq_tests && pytest -vvv .",
+    "cd qsimcirq_tests && pytest -vvv .",
     "pip check",
     "cd qsimcirq_tests && pytest -vvv .",
     "pip check",
@@ -445,6 +456,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "__cuda",
     "absl-py",
     "cirq-core",
     "cuquantum-python",
@@ -487,9 +499,10 @@
    "summary": "Quantum circuit simulators qsim and qsimh."
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . -vvv --no-deps --no-build-isolation",
-   "script_env": null
+   "script_env": null,
+   "string": "cpu_py312h1234567_2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -753,6 +766,7 @@
     "numpy",
     "cuquantum-python",
     "custatevec",
+    "__cuda",
     "python",
     "absl-py",
     "cirq-core",
@@ -761,6 +775,7 @@
     "numpy",
     "cuquantum-python",
     "custatevec",
+    "__cuda",
     "python",
     "absl-py",
     "cirq-core",
@@ -769,6 +784,7 @@
     "numpy",
     "cuquantum-python",
     "custatevec",
+    "__cuda",
     "python",
     "absl-py",
     "cirq-core",
@@ -777,6 +793,7 @@
     "numpy",
     "cuquantum-python",
     "custatevec",
+    "__cuda",
     "python",
     "absl-py",
     "cirq-core",
@@ -785,6 +802,7 @@
     "numpy",
     "cuquantum-python",
     "custatevec",
+    "__cuda",
     "python",
     "absl-py",
     "cirq-core",
@@ -960,6 +978,11 @@
   },
   "test": {
    "commands": [
+    "cd qsimcirq_tests && pytest -vvv .",
+    "cd qsimcirq_tests && pytest -vvv .",
+    "cd qsimcirq_tests && pytest -vvv .",
+    "cd qsimcirq_tests && pytest -vvv .",
+    "cd qsimcirq_tests && pytest -vvv .",
     "pip check",
     "cd qsimcirq_tests && pytest -vvv .",
     "pip check",
@@ -1064,9 +1087,10 @@
    "summary": "Quantum circuit simulators qsim and qsimh."
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . -vvv --no-deps --no-build-isolation",
-   "script_env": null
+   "script_env": null,
+   "string": "cpu_py312h1234567_2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1328,10 +1352,11 @@
  "pr_info": {
   "__lazy_json__": "pr_info/qsimcirq.json"
  },
- "raw_meta_yaml": "{% set name = \"qsimcirq\" %}\n{% set version = \"0.19.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/quantumlib/qsim/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 81101fe9e6356e54125f703956e787aa366717c1e6e77aea794879b53c84ff60\n  patches:\n    - patches/0001-Fix-no-instance-of-constructor-qsim-StateSpaceCUDA-F.patch\n    - patches/0002-Remove-PUBLIC-from-target_link_libraries-with-OpenMP.patch\n    - patches/0003-Set-pybind11_INCLUDE_DIRS-correctly-for-CUDA.patch\n    - patches/0004-Set-PYTHON_INCLUDE_DIR-in-setup.py.patch\n    - patches/0005-Allow-installing-for-Python-3.12.patch\n    - patches/0006-Set-CUDA_ARCHITECTURES-all-cmake-policy-CMP0104.patch\n    - patches/0007-Always-skip-test_cirq_qsim_gpu_amplitudes-because-no.patch\n\nbuild:\n  skip: true  # [win]\n  # For some reason Python 3.12 fails to resolve and gives:\n  # nothing provides _python_rc needed by python-3.12.0rc3-rc3_hab00c5b_1_cpython\n  skip: true  # [cuda_compiler_version != \"None\" and py==312]\n  number: 1\n  script: {{ PYTHON }} -m pip install . -vvv --no-deps --no-build-isolation\n  script_env:\n    - CUQUANTUM_ROOT=$PREFIX  # [cuda_compiler_version != \"None\"]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n    - pybind11-abi\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux]\n    - openmpi\n    - cmake >=3.27\n    - make\n  host:\n    - python\n    - pybind11\n    - setuptools >=45\n    - wheel\n    - pip\n    - numpy\n    - cuquantum-python  # [cuda_compiler_version != \"None\"]\n    - custatevec  # [cuda_compiler_version != \"None\"]\n  run:\n    - python\n    - absl-py\n    - cirq-core\n    - pybind11\n    - typing_extensions\n    - {{ pin_compatible('numpy') }}\n    - cuquantum-python  # [cuda_compiler_version != \"None\"]\n    - custatevec  # [cuda_compiler_version != \"None\"]\n\ntest:\n  imports:\n    - qsimcirq\n  source_files:\n    - qsimcirq_tests\n  commands:\n    # With CUDA `pip cehck` fails with:\n    # cuquantum-python-cu11 23.10.0 requires custatevec-cu11, which is not installed.\n    - pip check  # [cuda_compiler_version == \"None\"]\n    - cd qsimcirq_tests && pytest -vvv .  # [cuda_compiler_version == \"None\"]\n  requires:\n    - pip\n    - pytest\n\nabout:\n  home: https://quantumai.google/qsim\n  summary: Quantum circuit simulators qsim and qsimh.\n  license: Apache-2.0\n  license_file:\n    - LICENSE\n\nextra:\n  recipe-maintainers:\n    - basnijholt\n    - BastianZim\n",
+ "raw_meta_yaml": "{% set name = \"qsimcirq\" %}\n{% set version = \"0.19.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/quantumlib/qsim/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 81101fe9e6356e54125f703956e787aa366717c1e6e77aea794879b53c84ff60\n  patches:\n    - patches/0001-Fix-no-instance-of-constructor-qsim-StateSpaceCUDA-F.patch\n    - patches/0002-Remove-PUBLIC-from-target_link_libraries-with-OpenMP.patch\n    - patches/0003-Set-pybind11_INCLUDE_DIRS-correctly-for-CUDA.patch\n    - patches/0004-Set-PYTHON_INCLUDE_DIR-in-setup.py.patch\n    - patches/0005-Allow-installing-for-Python-3.12.patch\n    - patches/0006-Set-CUDA_ARCHITECTURES-all-cmake-policy-CMP0104.patch\n    - patches/0007-Always-skip-test_cirq_qsim_gpu_amplitudes-because-no.patch\n\nbuild:\n  skip: true  # [win]\n  # For some reason Python 3.12 fails to resolve and gives:\n  # nothing provides _python_rc needed by python-3.12.0rc3-rc3_hab00c5b_1_cpython\n  skip: true  # [cuda_compiler_version != \"None\" and py==312]\n  number: 2\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: cpu_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}                                                 # [cuda_compiler_version == \"None\"]\n  script: {{ PYTHON }} -m pip install . -vvv --no-deps --no-build-isolation\n  script_env:\n    - CUQUANTUM_ROOT=$PREFIX  # [cuda_compiler_version != \"None\"]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version != \"None\"]\n    - pybind11-abi\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux]\n    - openmpi\n    - cmake >=3.27\n    - make\n  host:\n    - python\n    - pybind11\n    - setuptools >=45\n    - wheel\n    - pip\n    - numpy\n    - cuquantum-python  # [cuda_compiler_version != \"None\"]\n    - custatevec  # [cuda_compiler_version != \"None\"]\n  run:\n    - python\n    - absl-py\n    - cirq-core\n    - pybind11\n    - typing_extensions\n    - {{ pin_compatible('numpy') }}\n    - cuquantum-python  # [cuda_compiler_version != \"None\"]\n    - custatevec  # [cuda_compiler_version != \"None\"]\n    # avoid that people without GPUs needlessly download ~0.5-1GB of CUDA packages\n    - __cuda  # [cuda_compiler_version != \"None\"]\n\ntest:\n  imports:\n    - qsimcirq\n  source_files:\n    - qsimcirq_tests\n  commands:\n    # With CUDA `pip check` fails with:\n    # cuquantum-python-cu11 23.10.0 requires custatevec-cu11, which is not installed.\n    - pip check  # [cuda_compiler_version == \"None\"]\n    - cd qsimcirq_tests && pytest -vvv .\n  requires:\n    - pip\n    - pytest\n\nabout:\n  home: https://quantumai.google/qsim\n  summary: Quantum circuit simulators qsim and qsimh.\n  license: Apache-2.0\n  license_file:\n    - LICENSE\n\nextra:\n  recipe-maintainers:\n    - basnijholt\n    - BastianZim\n",
  "req": {
   "__set__": true,
   "elements": [
+   "__cuda",
    "absl-py",
    "c_compiler_stub",
    "cirq-core",
@@ -1390,6 +1415,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "__cuda",
     "absl-py",
     "c_compiler_stub",
     "cirq-core",
@@ -1445,6 +1471,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "__cuda",
     "absl-py",
     "cirq-core",
     "cuquantum-python",
