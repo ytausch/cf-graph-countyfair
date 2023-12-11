@@ -28,14 +28,14 @@
   },
   "build": {
    "ignore_run_exports_from": null,
-   "number": "4",
+   "number": "0",
    "script": [
     "git config --system user.email \"conda-forge@numfocus.org\"",
     "git config --system user.name \"Conda Forge\"",
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
@@ -44,7 +44,7 @@
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
@@ -53,7 +53,7 @@
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
@@ -62,12 +62,12 @@
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./..."
    ],
-   "string": "cpu_h1234567_4"
+   "string": "cuda120_h1234567_0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -79,7 +79,7 @@
   },
   "package": {
    "name": "ollama",
-   "version": "0.1.11"
+   "version": "0.1.12"
   },
   "requirements": {
    "build": [
@@ -101,6 +101,13 @@
     "make",
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "go_compiler_stub 1.20",
+    "go-licenses",
+    "git",
+    "cmake",
+    "make",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
     "cuda_compiler_stub",
     "go_compiler_stub 1.20",
     "go-licenses",
@@ -108,14 +115,7 @@
     "cmake",
     "make",
     "cuda-cudart-dev",
-    "libcublas-dev",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "go_compiler_stub 1.20",
-    "go-licenses",
-    "git",
-    "cmake",
-    "make"
+    "libcublas-dev"
    ],
    "host": [
     "cuda-cudart-dev",
@@ -132,13 +132,13 @@
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -147,19 +147,19 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    },
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -168,19 +168,19 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    },
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -189,19 +189,19 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    },
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -210,8 +210,8 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    }
   ],
   "test": {
@@ -288,14 +288,14 @@
   },
   "build": {
    "ignore_run_exports_from": null,
-   "number": "4",
+   "number": "0",
    "script": [
     "git config --system user.email \"conda-forge@numfocus.org\"",
     "git config --system user.name \"Conda Forge\"",
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
@@ -304,7 +304,7 @@
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
@@ -313,7 +313,7 @@
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
@@ -322,7 +322,7 @@
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
@@ -331,7 +331,7 @@
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
@@ -340,7 +340,7 @@
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./...",
@@ -349,12 +349,12 @@
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "set GOFLAGS='-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./..."
    ],
-   "string": "cpu_h1234567_4"
+   "string": "cpu_h1234567_0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -369,7 +369,7 @@
   },
   "package": {
    "name": "ollama",
-   "version": "0.1.11"
+   "version": "0.1.12"
   },
   "requirements": {
    "build": [
@@ -391,6 +391,13 @@
     "make",
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "go_compiler_stub 1.20",
+    "go-licenses",
+    "git",
+    "cmake",
+    "make",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
     "cuda_compiler_stub",
     "go_compiler_stub 1.20",
     "go-licenses",
@@ -399,13 +406,6 @@
     "make",
     "cuda-cudart-dev",
     "libcublas-dev",
-    "c_compiler_stub",
-    "cxx_compiler_stub",
-    "go_compiler_stub 1.20",
-    "go-licenses",
-    "git",
-    "cmake",
-    "make",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "go_compiler_stub 1.20",
@@ -442,13 +442,13 @@
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -457,19 +457,19 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    },
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -478,19 +478,19 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    },
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -499,19 +499,19 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    },
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -520,19 +520,19 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    },
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -541,19 +541,19 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    },
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -562,19 +562,19 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    },
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -583,8 +583,8 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    }
   ],
   "test": {
@@ -623,19 +623,19 @@
    "ignore_run_exports_from": [
     "cxx_compiler_stub"
    ],
-   "number": "4",
+   "number": "0",
    "script": [
     "git config --system user.email \"conda-forge@numfocus.org\"",
     "git config --system user.name \"Conda Forge\"",
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./..."
    ],
-   "string": "cpu_h1234567_4"
+   "string": "cpu_h1234567_0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -644,7 +644,7 @@
   },
   "package": {
    "name": "ollama",
-   "version": "0.1.11"
+   "version": "0.1.12"
   },
   "requirements": {
    "build": [
@@ -663,13 +663,13 @@
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -678,8 +678,8 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    }
   ],
   "test": {
@@ -731,19 +731,19 @@
    "ignore_run_exports_from": [
     "cxx_compiler_stub"
    ],
-   "number": "4",
+   "number": "0",
    "script": [
     "git config --system user.email \"conda-forge@numfocus.org\"",
     "git config --system user.name \"Conda Forge\"",
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'\"",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./..."
    ],
-   "string": "cpu_h1234567_4"
+   "string": "cpu_h1234567_0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -752,7 +752,7 @@
   },
   "package": {
    "name": "ollama",
-   "version": "0.1.11"
+   "version": "0.1.12"
   },
   "requirements": {
    "build": [
@@ -771,13 +771,13 @@
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -786,8 +786,8 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    }
   ],
   "test": {
@@ -839,7 +839,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ollama.json"
  },
- "raw_meta_yaml": "{% set name = \"ollama\" %}\n{% set goname = \"github.com/jmorganca/ollama\" %}\n# DO NOT AUTO MERGE WITHOUT VERIFYING THE GIT_REVISIONS OF ggml AND gguf\n{% set version = \"0.1.11\" %}\n{% set ggml_version = \"master-9e232f0\" %}\n{% set ggml_sha256 = \"e93334c097c7b6ce17eed47d44934b9354ee29b5ab4f572999547c2d1a2d46ef\" %}\n{% set gguf_version = \"b1412\" %}\n{% set gguf_sha256 = \"9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://{{ goname }}/archive/v{{ version }}.tar.gz\n    sha256: 881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26\n    folder: .\n    patches:\n      # Use the same build options from llama.cpp-feedstock\n      - 0001-darwin_amd64.patch\n      - 0001-darwin_arm64.patch\n      - 0001-remove-submodule.patch\n      - 0001-linux_all-do-not-copy-cuda.patch\n  - url: https://github.com/ggerganov/llama.cpp/archive/{{ ggml_version }}.tar.gz\n    folder: llm/llama.cpp/ggml\n    sha256: {{ ggml_sha256 }}\n  - url: https://github.com/ggerganov/llama.cpp/archive/{{ gguf_version }}.tar.gz\n    folder: llm/llama.cpp/gguf\n    sha256: {{ gguf_sha256 }}\n\nbuild:\n  number: 4\n  skip: True  # [win and cuda_compiler_version != \"None\"]\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: mps_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [osx and arm64]\n  string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [(osx and x86_64) or cuda_compiler_version == \"None\"]\n  script:\n    - git config --system user.email \"conda-forge@numfocus.org\"\n    - git config --system user.name \"Conda Forge\"\n    - git config --global init.defaultBranch main\n    {% for framework in [\"ggml\", \"gguf\"] %}\n    - |\n      pushd llm/llama.cpp/{{ framework }}\n      git init\n      git add .\n      git commit -m \"conda-forge build\"\n      popd\n    {% endfor %}\n    - export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version={{ version }} -X=github.com/jmorganca/ollama/server.mode=release'\"\n    - go generate ./...\n    - go install .                                                                                                            # [build_platform == target_platform]\n    # TODO: This is due to a bug in our go-lang patch \n    #       Error message is go install can't write to GOBIN when cross compiling\n    - unset CONDA_GO_COMPILER; GOPATH=$SRC_DIR/gopath go install .; mkdir -p $PREFIX/bin; cp gopath/bin/*/ollama $PREFIX/bin  # [build_platform != target_platform]\n    - go-licenses save --save_path licenses ./...\n\n  ignore_run_exports_from:\n    # llama.cpp server is staticially linked on osx\n    - {{ compiler('cxx') }}  # [osx]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}                    # [cuda_compiler_version not in (undefined, \"None\")]\n    - {{ compiler('go') }} 1.20\n    - go-licenses\n\n    - git\n    - cmake\n    - make                                      # [unix]\n\n    # Tool can't find cudart/cublas in the host-environment\n    - cuda-cudart-dev                           # [(cuda_compiler_version or \"\").startswith(\"12\")]\n    - libcublas-dev                             # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  host:\n    - cuda-cudart-dev                           # [(cuda_compiler_version or \"\").startswith(\"12\")]\n    - libcublas-dev                             # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  run:\n    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, \"None\")]\n    - cuda-cudart                               # [(cuda_compiler_version or \"\").startswith(\"12\")]\n\ntest:\n  commands:\n    - ollama --version\n    - ollama --help\n\nabout:\n  home: https://ollama.ai\n  summary: Get up and running with Llama 2 and other large language models locally\n  license: MIT\n  license_family: MIT\n  license_file:\n    - LICENSE\n    - licenses/\n  dev_url: https://{{ goname }}\n\nextra:\n  recipe-maintainers:\n    - sodre\n",
+ "raw_meta_yaml": "{% set name = \"ollama\" %}\n{% set goname = \"github.com/jmorganca/ollama\" %}\n# DO NOT AUTO MERGE WITHOUT VERIFYING THE GIT_REVISIONS OF ggml AND gguf\n{% set version = \"0.1.12\" %}\n{% set ggml_version = \"master-9e232f0\" %}\n{% set ggml_sha256 = \"e93334c097c7b6ce17eed47d44934b9354ee29b5ab4f572999547c2d1a2d46ef\" %}\n{% set gguf_version = \"b1567\" %}\n{% set gguf_sha256 = \"f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://{{ goname }}/archive/v{{ version }}.tar.gz \n    sha256: cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f\n    folder: .\n    patches:\n      # Use the same build options from llama.cpp-feedstock\n      - 0001-remove-submodule.patch\n      - 0001-linux_all-do-not-copy-cuda.patch\n      - 0001-darwin_all-metal-pick-device.patch\n      - 0002-darwin_all-cmake-flags.patch\n  - url: https://github.com/ggerganov/llama.cpp/archive/{{ ggml_version }}.tar.gz\n    folder: llm/llama.cpp/ggml\n    sha256: {{ ggml_sha256 }}\n  - url: https://github.com/ggerganov/llama.cpp/archive/{{ gguf_version }}.tar.gz\n    folder: llm/llama.cpp/gguf\n    sha256: {{ gguf_sha256 }}\n\nbuild:\n  number: 0\n  skip: True  # [win and cuda_compiler_version not in (\"None\", )]\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  string: mps_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [osx and arm64]\n  string: cpu_h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [(osx and x86_64) or cuda_compiler_version == \"None\"]\n  script:\n    - git config --system user.email \"conda-forge@numfocus.org\"\n    - git config --system user.name \"Conda Forge\"\n    - git config --global init.defaultBranch main\n    {% for framework in [\"ggml\", \"gguf\"] %}\n    - |\n      pushd llm/llama.cpp/{{ framework }}\n      git init\n      git add .\n      git commit -m \"conda-forge build\"\n      popd\n    {% endfor %}\n\n    - export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version={{ version }} -X=github.com/jmorganca/ollama/server.mode=release'\"  # [unix]\n    - set GOFLAGS='-ldflags=-X=github.com/jmorganca/ollama/version.Version={{ version }} -X=github.com/jmorganca/ollama/server.mode=release'  # [win]\n\n    - go generate ./...\n    - go install .                                                                                                            # [build_platform == target_platform]\n    # TODO: This is due to a bug in our go-lang patch \n    #       Error message is go install can't write to GOBIN when cross compiling\n    - unset CONDA_GO_COMPILER; GOPATH=$SRC_DIR/gopath go install .; mkdir -p $PREFIX/bin; cp gopath/bin/*/ollama $PREFIX/bin  # [build_platform != target_platform]\n    - go-licenses save --save_path licenses ./...\n\n  ignore_run_exports_from:\n    # llama.cpp server is staticially linked on osx\n    - {{ compiler('cxx') }}  # [osx]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}                    # [cuda_compiler_version not in (undefined, \"None\")]\n    - {{ compiler('go') }} 1.20\n    - go-licenses\n\n    - git\n    - cmake\n    - make  # [unix]\n\n    # Tool can't find cudart/cublas in the host-environment\n    - cuda-cudart-dev                           # [(cuda_compiler_version or \"\").startswith(\"12\")]\n    - libcublas-dev                             # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  host:\n    - cuda-cudart-dev                           # [(cuda_compiler_version or \"\").startswith(\"12\")]\n    - libcublas-dev                             # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  run:\n    - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version not in (undefined, \"None\")]\n    - cuda-cudart                               # [(cuda_compiler_version or \"\").startswith(\"12\")]\n\ntest:\n  commands:\n    - ollama --version\n    - ollama --help\n\nabout:\n  home: https://ollama.ai\n  summary: Get up and running with Llama 2 and other large language models locally\n  license: MIT\n  license_family: MIT\n  license_file:\n    - LICENSE\n    - licenses/\n  dev_url: https://{{ goname }}\n\nextra:\n  recipe-maintainers:\n    - sodre\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -936,8 +936,8 @@
    "elements": []
   }
  },
- "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz",
- "version": "0.1.11",
+ "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz",
+ "version": "0.1.12",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/ollama.json"
  },
@@ -955,19 +955,19 @@
   },
   "build": {
    "ignore_run_exports_from": null,
-   "number": "4",
+   "number": "0",
    "script": [
     "git config --system user.email \"conda-forge@numfocus.org\"",
     "git config --system user.name \"Conda Forge\"",
     "git config --global init.defaultBranch main",
     "pushd llm/llama.cpp/ggml\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
     "pushd llm/llama.cpp/gguf\ngit init\ngit add .\ngit commit -m \"conda-forge build\"\npopd\n",
-    "export GOFLAGS=\"'-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.11 -X=github.com/jmorganca/ollama/server.mode=release'\"",
+    "set GOFLAGS='-ldflags=-X=github.com/jmorganca/ollama/version.Version=0.1.12 -X=github.com/jmorganca/ollama/server.mode=release'",
     "go generate ./...",
     "go install .",
     "go-licenses save --save_path licenses ./..."
    ],
-   "string": "cpu_h1234567_4"
+   "string": "cpu_h1234567_0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -976,7 +976,7 @@
   },
   "package": {
    "name": "ollama",
-   "version": "0.1.11"
+   "version": "0.1.12"
   },
   "requirements": {
    "build": [
@@ -994,13 +994,13 @@
    {
     "folder": ".",
     "patches": [
-     "0001-darwin_amd64.patch",
-     "0001-darwin_arm64.patch",
      "0001-remove-submodule.patch",
-     "0001-linux_all-do-not-copy-cuda.patch"
+     "0001-linux_all-do-not-copy-cuda.patch",
+     "0001-darwin_all-metal-pick-device.patch",
+     "0002-darwin_all-cmake-flags.patch"
     ],
-    "sha256": "881d81d6a113f5361fc1648ee3f07f596b96a25ff9c9e6b243c2386adb8a0b26",
-    "url": "https://github.com/jmorganca/ollama/archive/v0.1.11.tar.gz"
+    "sha256": "cb1b89dced501023352658da144f1bc0bc67b30c5db49502bbb92f24a65e0e6f",
+    "url": "https://github.com/jmorganca/ollama/archive/v0.1.12.tar.gz"
    },
    {
     "folder": "llm/llama.cpp/ggml",
@@ -1009,8 +1009,8 @@
    },
    {
     "folder": "llm/llama.cpp/gguf",
-    "sha256": "9c127ec8a6c54e7c03e2a246a41382ce7df7c4e46543bc7fec685600d6e2e6d9",
-    "url": "https://github.com/ggerganov/llama.cpp/archive/b1412.tar.gz"
+    "sha256": "f10c98c3c60d5ddaa4b06e1e7922c9698b426f23734ade0bb20d330d1cd7e427",
+    "url": "https://github.com/ggerganov/llama.cpp/archive/b1567.tar.gz"
    }
   ],
   "test": {
