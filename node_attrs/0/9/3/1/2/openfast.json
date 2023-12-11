@@ -19,15 +19,14 @@
   },
   "build": {
    "missing_dso_whitelist": null,
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
-    "rafmudaf",
     "openfast",
-    "andrew-platt",
     "deslaughter",
-    "gbarter"
+    "gbarter",
+    "andrew-platt"
    ]
   },
   "package": {
@@ -39,16 +38,14 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "fortran_compiler_stub",
-    "make",
-    "cmake"
+    "cmake",
+    "make"
    ],
    "host": [
-    "openblas",
-    "libgomp"
+    "libgomp",
+    "openblas"
    ],
-   "run": [
-    "libgomp"
-   ]
+   "run": []
   },
   "source": {
    "git_depth": "1",
@@ -87,9 +84,7 @@
   },
   "run": {
    "__set__": true,
-   "elements": [
-    "libgomp"
-   ]
+   "elements": []
   },
   "test": {
    "__set__": true,
@@ -108,32 +103,29 @@
   },
   "build": {
    "missing_dso_whitelist": [
-    "*/libopenfastlib.dll"
+    "*/libopenfastlib.dll",
+    "*/libiomp5md.dll"
    ],
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
-    "rafmudaf",
     "openfast",
-    "andrew-platt",
     "deslaughter",
     "gbarter",
-    "rafmudaf",
-    "openfast",
     "andrew-platt",
+    "openfast",
     "deslaughter",
     "gbarter",
-    "rafmudaf",
-    "openfast",
     "andrew-platt",
+    "openfast",
     "deslaughter",
     "gbarter",
-    "rafmudaf",
-    "openfast",
     "andrew-platt",
+    "openfast",
     "deslaughter",
-    "gbarter"
+    "gbarter",
+    "andrew-platt"
    ]
   },
   "package": {
@@ -145,36 +137,31 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "fortran_compiler_stub",
-    "make",
     "cmake",
+    "make",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "fortran_compiler_stub",
-    "make",
     "cmake",
-    "llvm-openmp",
+    "make",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "fortran_compiler_stub",
-    "make",
     "cmake",
-    "llvm-openmp",
-    "cmake"
+    "make",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
    ],
    "host": [
-    "openblas",
     "libgomp",
     "openblas",
     "openblas",
-    "openblas",
-    "ucrt",
-    "libgomp"
+    "openblas"
    ],
    "run": [
-    "libgomp",
-    "libopenblas",
-    "ucrt",
-    "libgomp"
+    "intel-openmp  =2024.0.0"
    ]
   },
   "source": {
@@ -228,15 +215,14 @@
   },
   "build": {
    "missing_dso_whitelist": null,
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
-    "rafmudaf",
     "openfast",
-    "andrew-platt",
     "deslaughter",
-    "gbarter"
+    "gbarter",
+    "andrew-platt"
    ]
   },
   "package": {
@@ -248,9 +234,8 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "fortran_compiler_stub",
-    "make",
     "cmake",
-    "llvm-openmp"
+    "make"
    ],
    "host": [
     "openblas"
@@ -282,7 +267,6 @@
     "cmake",
     "cxx_compiler_stub",
     "fortran_compiler_stub",
-    "llvm-openmp",
     "make"
    ]
   },
@@ -313,15 +297,14 @@
   },
   "build": {
    "missing_dso_whitelist": null,
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
-    "rafmudaf",
     "openfast",
-    "andrew-platt",
     "deslaughter",
-    "gbarter"
+    "gbarter",
+    "andrew-platt"
    ]
   },
   "package": {
@@ -333,9 +316,8 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "fortran_compiler_stub",
-    "make",
     "cmake",
-    "llvm-openmp"
+    "make"
    ],
    "host": [
     "openblas"
@@ -367,7 +349,6 @@
     "cmake",
     "cxx_compiler_stub",
     "fortran_compiler_stub",
-    "llvm-openmp",
     "make"
    ]
   },
@@ -402,7 +383,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/openfast.json"
  },
- "raw_meta_yaml": "{% set name = \"openfast\" %}\n{% set version = \"3.5.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  git_url: https://github.com/openfast/openfast.git\n  git_rev: v{{ version }}\n  git_depth: 1 # (Defaults to -1/not shallow)\n\nbuild:\n  number: 2\n  missing_dso_whitelist:\n    - \"*/libopenfastlib.dll\"   # [win]\n    \nrequirements:\n  build:\n    - {{ compiler('c') }}  # [not win]\n    - {{ compiler('cxx') }}  # [not win]\n    - {{ compiler('fortran') }}  # [not win]\n    - make  # [not win]\n    - cmake\n    - llvm-openmp  # [osx]\n  host:\n    - openblas\n    - ucrt  # [win]\n    - libgomp  # [linux or win]\n  run:\n    - libopenblas  # [win]\n    - ucrt  # [win]\n    - libgomp  # [linux or win]\n\ntest:\n  commands:\n    - openfast -h\n    - FAST.Farm -h\n    - aerodyn_driver -h\n    - hydrodyn_driver -h\n    - moordyn_driver -h\n    - servodyn_driver -h\n    - turbsim -h\n\nabout:\n  home: https://github.com/openfast/openfast\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: OpenFAST whole turbine simulation tool\n  description: NREL-supported OpenFAST whole-turbine simulation code\n  doc_url: http://openfast.readthedocs.io\n  dev_url: https://github.com/openfast/openfast\n\nextra:\n  recipe-maintainers:\n    - rafmudaf\n    - openfast\n    - andrew-platt\n    - deslaughter\n    - gbarter\n",
+ "raw_meta_yaml": "{% set name = \"openfast\" %}\n{% set version = \"3.5.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  git_url: https://github.com/openfast/openfast.git\n  git_rev: v{{ version }}\n  git_depth: 1 # (Defaults to -1/not shallow)\n\nbuild:\n  number: 3\n  missing_dso_whitelist:\n    - \"*/libopenfastlib.dll\"   # [win]\n    - \"*/libiomp5md.dll\"  # [win]\n    \nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('fortran') }}  # [not win]\n    - cmake\n    - make  # [not win]\n    - ninja  # [win]\n  host:\n    - libgomp  # [linux]\n    - openblas  # [not win]\n  run:\n    - intel-openmp  =2024.0.0  # [win]\n\ntest:\n  commands:\n    - openfast -h\n    - FAST.Farm -h\n    - aerodyn_driver -h\n    - hydrodyn_driver -h\n    - moordyn_driver -h\n    - servodyn_driver -h\n    - turbsim -h\n\nabout:\n  home: https://github.com/openfast/openfast\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: OpenFAST whole turbine simulation tool\n  description: NREL-supported OpenFAST whole-turbine simulation code\n  doc_url: http://openfast.readthedocs.io\n  dev_url: https://github.com/openfast/openfast\n\nextra:\n  recipe-maintainers:\n    - openfast\n    - deslaughter\n    - gbarter\n    - andrew-platt\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -410,12 +391,11 @@
    "cmake",
    "cxx_compiler_stub",
    "fortran_compiler_stub",
+   "intel-openmp",
    "libgomp",
-   "libopenblas",
-   "llvm-openmp",
    "make",
-   "openblas",
-   "ucrt"
+   "ninja",
+   "openblas"
   ]
  },
  "requirements": {
@@ -426,8 +406,8 @@
     "cmake",
     "cxx_compiler_stub",
     "fortran_compiler_stub",
-    "llvm-openmp",
-    "make"
+    "make",
+    "ninja"
    ]
   },
   "host": {
@@ -438,9 +418,7 @@
     "cxx_compiler_stub",
     "fortran_compiler_stub",
     "libgomp",
-    "openblas",
-    "openmp",
-    "ucrt"
+    "openblas"
    ]
   },
   "run": {
@@ -450,10 +428,7 @@
     "ctng-compilers",
     "cxx_compiler_stub",
     "fortran_compiler_stub",
-    "libgomp",
-    "libopenblas",
-    "openmp",
-    "ucrt"
+    "intel-openmp"
    ]
   },
   "test": {
@@ -470,24 +445,21 @@
     "cmake",
     "cxx_compiler_stub",
     "fortran_compiler_stub",
-    "llvm-openmp",
-    "make"
+    "make",
+    "ninja"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "libgomp",
-    "openblas",
-    "ucrt"
+    "openblas"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "libgomp",
-    "libopenblas",
-    "ucrt"
+    "intel-openmp  =2024.0.0"
    ]
   },
   "test": {
@@ -512,17 +484,17 @@
   },
   "build": {
    "missing_dso_whitelist": [
-    "*/libopenfastlib.dll"
+    "*/libopenfastlib.dll",
+    "*/libiomp5md.dll"
    ],
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
-    "rafmudaf",
     "openfast",
-    "andrew-platt",
     "deslaughter",
-    "gbarter"
+    "gbarter",
+    "andrew-platt"
    ]
   },
   "package": {
@@ -531,17 +503,14 @@
   },
   "requirements": {
    "build": [
-    "cmake"
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja"
    ],
-   "host": [
-    "openblas",
-    "ucrt",
-    "libgomp"
-   ],
+   "host": [],
    "run": [
-    "libopenblas",
-    "ucrt",
-    "libgomp"
+    "intel-openmp  =2024.0.0"
    ]
   },
   "source": {
@@ -565,23 +534,20 @@
   "build": {
    "__set__": true,
    "elements": [
-    "cmake"
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
    ]
   },
   "host": {
    "__set__": true,
-   "elements": [
-    "libgomp",
-    "openblas",
-    "ucrt"
-   ]
+   "elements": []
   },
   "run": {
    "__set__": true,
    "elements": [
-    "libgomp",
-    "libopenblas",
-    "ucrt"
+    "intel-openmp"
    ]
   },
   "test": {
