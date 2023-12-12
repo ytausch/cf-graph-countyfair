@@ -21,7 +21,7 @@
    "summary": "Python DBI driver for DB2 (LUW, zOS, i5) and IDS"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -158,7 +158,7 @@
    "summary": "Python DBI driver for DB2 (LUW, zOS, i5) and IDS"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -295,7 +295,7 @@
    "summary": "Python DBI driver for DB2 (LUW, zOS, i5) and IDS"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -496,7 +496,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ibm_db.json"
  },
- "raw_meta_yaml": "{% set name = \"ibm_db\" %}\n{% set version = \"3.2.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 1e11551c460adb841aa62c781f5ff96b18b3d2826f8b1c96a579c94a9dd61113\n  patches:\n    - 0001-Omit-GCC-check.patch\n\nbuild:\n  number: 0\n  # The macOS binary is built using GCC and thus incompatible with libcxx\n  # otool -L $SP_DIR/clidriver/lib/libdb2.dylib|grep gcc\n  # See also\n  # * https://github.com/ibmdb/python-ibmdb/issues/835\n  # * https://github.com/ibmdb/python-ibmdb/issues/804\n  # * https://github.com/ibmdb/python-ibmdb/issues/824\n  skip: true  # [osx]\n  skip: true  # [win and py==311]\n  script: {{ PYTHON }} -m pip install . -vv  # [win]\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - sysroot_linux-64 2.17  # [linux64]\n    - {{ cdt('numactl-devel') }}  # [ppc64le]\n  host:\n    - python\n    - pip\n    - setuptools\n    - libxml2\n  run:\n    - python\n    - setuptools\n    - libxml2\n\ntest:\n  commands:\n    - python -c \"import os; os.add_dll_directory(os.environ['SP_DIR'] + '\\\\clidriver\\\\bin'); import ibm_db; import ibm_db_dbi\"  # [win]\n  imports:\n    - ibm_db  # [not win]\n    - ibm_db_dbi  # [not win]\n\nabout:\n  home: https://pypi.org/project/ibm-db/\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Python DBI driver for DB2 (LUW, zOS, i5) and IDS\n\n  description: |\n    This extension is the implementation of Python Database API Specification v2.0\n    The extension supports DB2 (LUW, zOS, i5) and IDS (Informix Dynamic Server)\n  doc_url: https://github.com/ibmdb/python-ibmdb/wiki\n  dev_url: https://github.com/ibmdb/python-ibmdb\n\nextra:\n  recipe-maintainers:\n    - SabaKauser\n    - xhochy\n    - amukherjee28\n",
+ "raw_meta_yaml": "{% set name = \"ibm_db\" %}\n{% set version = \"3.2.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 1e11551c460adb841aa62c781f5ff96b18b3d2826f8b1c96a579c94a9dd61113\n  patches:\n    - 0001-Omit-GCC-check.patch\n\nbuild:\n  number: 1\n  # The macOS binary is built using GCC and thus incompatible with libcxx\n  # otool -L $SP_DIR/clidriver/lib/libdb2.dylib|grep gcc\n  # See also\n  # * https://github.com/ibmdb/python-ibmdb/issues/835\n  # * https://github.com/ibmdb/python-ibmdb/issues/804\n  # * https://github.com/ibmdb/python-ibmdb/issues/824\n  skip: true  # [osx]\n  skip: true  # [win and py==311]\n  script: {{ PYTHON }} -m pip install . -vv  # [win]\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - sysroot_linux-64 2.17  # [linux64]\n    - {{ cdt('numactl-devel') }}  # [ppc64le]\n  host:\n    - python\n    - pip\n    - setuptools\n    - libxml2\n  run:\n    - python\n    - setuptools\n    - libxml2\n\ntest:\n  commands:\n    - python -c \"import os; os.add_dll_directory(os.environ['SP_DIR'] + '\\\\clidriver\\\\bin'); import ibm_db; import ibm_db_dbi\"  # [win]\n  imports:\n    - ibm_db  # [not win]\n    - ibm_db_dbi  # [not win]\n\nabout:\n  home: https://pypi.org/project/ibm-db/\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Python DBI driver for DB2 (LUW, zOS, i5) and IDS\n\n  description: |\n    This extension is the implementation of Python Database API Specification v2.0\n    The extension supports DB2 (LUW, zOS, i5) and IDS (Informix Dynamic Server)\n  doc_url: https://github.com/ibmdb/python-ibmdb/wiki\n  dev_url: https://github.com/ibmdb/python-ibmdb\n\nextra:\n  recipe-maintainers:\n    - SabaKauser\n    - xhochy\n    - amukherjee28\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -596,7 +596,7 @@
    "summary": "Python DBI driver for DB2 (LUW, zOS, i5) and IDS"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
