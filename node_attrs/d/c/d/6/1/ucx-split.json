@@ -20,7 +20,7 @@
    "summary": "Unified Communication X."
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -56,7 +56,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -79,7 +79,7 @@
       "rdma-core"
      ],
      "run": [
-      "rdma-core >=48.0"
+      "rdma-core >=49"
      ],
      "run_constrained": [
       "cuda-version >=11.2,<12"
@@ -110,7 +110,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -135,7 +135,7 @@
       "rdma-core"
      ],
      "run": [
-      "rdma-core >=48.0"
+      "rdma-core >=49"
      ],
      "run_constrained": [
       "cuda-version >=12,<13"
@@ -204,7 +204,7 @@
    "summary": "Unified Communication X."
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -240,7 +240,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -291,7 +291,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -379,7 +379,7 @@
    "summary": "Unified Communication X."
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -415,7 +415,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -466,7 +466,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -554,7 +554,7 @@
    "summary": "Unified Communication X."
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -614,7 +614,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -637,7 +637,7 @@
       "rdma-core"
      ],
      "run": [
-      "rdma-core >=48.0"
+      "rdma-core >=49"
      ],
      "run_constrained": [
       "cuda-version >=11.2,<12"
@@ -668,7 +668,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -693,7 +693,7 @@
       "rdma-core"
      ],
      "run": [
-      "rdma-core >=48.0"
+      "rdma-core >=49"
      ],
      "run_constrained": [
       "cuda-version >=12,<13"
@@ -724,7 +724,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -775,7 +775,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -828,7 +828,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -879,7 +879,7 @@
      "ignore_run_exports_from": [
       "cuda_compiler_stub"
      ],
-     "number": "1",
+     "number": "2",
      "run_exports": [
       "ucx"
      ]
@@ -940,7 +940,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ucx-split.json"
  },
- "raw_meta_yaml": "{% set ucx_version = \"1.15.0\" %}\n{% set number = \"1\" %}\n\n\npackage:\n  name: ucx-split\n\nsource:\n  url: https://github.com/openucx/ucx/archive/v{{ ucx_version }}.tar.gz\n  sha256: e3082101dd61b2482390e7917b390f0fe9ecf399a839d97ee025ee559e6cb12d\n\nbuild:\n  skip: true  # [not linux or cuda_compiler_version in (\"None\", \"11.2\")]\n  number: {{ number }}\n\noutputs:\n  - name: ucx\n    version: {{ ucx_version }}\n    build:\n      number: {{ number }}\n      run_exports:\n        - {{ pin_subpackage(\"ucx\", max_pin=\"x.x\") }}\n      ignore_run_exports:\n        - rdma-core\n      ignore_run_exports_from:\n        - {{ compiler(\"cuda\") }}\n    requirements:\n      build:\n        - {{ compiler(\"c\") }}\n        - {{ compiler(\"cxx\") }}\n        - {{ compiler(\"cuda\") }}\n        - {{ cdt(\"libnl\") }}             # [cdt_name == \"cos6\"]\n        - {{ cdt(\"libnl3\") }}            # [cdt_name == \"cos7\"]\n        - automake\n        - autoconf\n        - libtool\n        - make\n        - pkg-config\n      host:\n        - cuda-cudart-dev ={{ cuda_compiler_version }}     # [(cuda_compiler_version or \"None\").startswith(\"12\")]\n        - cuda-nvml-dev ={{ cuda_compiler_version }}       # [(cuda_compiler_version or \"None\").startswith(\"12\")]\n        - libnuma\n        - rdma-core  # [linux64]\n      run:\n        - rdma-core >={{ rdma_core }}  # [linux64]\n      run_constrained:\n        - cuda-version >=11.2,<12  # [(cuda_compiler_version or \"None\").startswith(\"11\")]\n        - cuda-version >=12,<13    # [(cuda_compiler_version or \"None\").startswith(\"12\")]\n\n    script: install_ucx.sh\n    test:\n      commands:\n        - test -f \"${PREFIX}/bin/ucx_info\"\n        # Requires driver for GPU test.\n        # Crashes qemu on ppc64le.\n        - ${PREFIX}/bin/ucx_info -v         # [cuda_compiler_version == \"None\" and not ppc64le]\n    about:\n      home: https://openucx.org\n      license: BSD-3-Clause\n      license_family: BSD\n      license_file: LICENSE\n      summary: Unified Communication X.\n      dev_url: https://github.com/openucx/ucx\n      doc_url: https://openucx.readthedocs.io/\n\nabout:\n  home: https://github.com/openucx/ucx\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Unified Communication X.\n  dev_url: https://github.com/openucx/ucx\n  doc_url: https://openucx.readthedocs.io/\n\nextra:\n  recipe-maintainers:\n    - Akshay-Venkatesh\n    - jakirkham\n    - quasiben\n    - TomAugspurger\n    - leofang\n    - matthiasdiener\n",
+ "raw_meta_yaml": "{% set ucx_version = \"1.15.0\" %}\n{% set number = \"2\" %}\n\n\npackage:\n  name: ucx-split\n\nsource:\n  url: https://github.com/openucx/ucx/archive/v{{ ucx_version }}.tar.gz\n  sha256: e3082101dd61b2482390e7917b390f0fe9ecf399a839d97ee025ee559e6cb12d\n\nbuild:\n  skip: true  # [not linux or cuda_compiler_version in (\"None\", \"11.2\")]\n  number: {{ number }}\n\noutputs:\n  - name: ucx\n    version: {{ ucx_version }}\n    build:\n      number: {{ number }}\n      run_exports:\n        - {{ pin_subpackage(\"ucx\", max_pin=\"x.x\") }}\n      ignore_run_exports:\n        - rdma-core\n      ignore_run_exports_from:\n        - {{ compiler(\"cuda\") }}\n    requirements:\n      build:\n        - {{ compiler(\"c\") }}\n        - {{ compiler(\"cxx\") }}\n        - {{ compiler(\"cuda\") }}\n        - {{ cdt(\"libnl\") }}             # [cdt_name == \"cos6\"]\n        - {{ cdt(\"libnl3\") }}            # [cdt_name == \"cos7\"]\n        - automake\n        - autoconf\n        - libtool\n        - make\n        - pkg-config\n      host:\n        - cuda-cudart-dev ={{ cuda_compiler_version }}     # [(cuda_compiler_version or \"None\").startswith(\"12\")]\n        - cuda-nvml-dev ={{ cuda_compiler_version }}       # [(cuda_compiler_version or \"None\").startswith(\"12\")]\n        - libnuma\n        - rdma-core  # [linux64]\n      run:\n        - rdma-core >={{ rdma_core }}  # [linux64]\n      run_constrained:\n        - cuda-version >=11.2,<12  # [(cuda_compiler_version or \"None\").startswith(\"11\")]\n        - cuda-version >=12,<13    # [(cuda_compiler_version or \"None\").startswith(\"12\")]\n\n    script: install_ucx.sh\n    test:\n      commands:\n        - test -f \"${PREFIX}/bin/ucx_info\"\n        # Requires driver for GPU test.\n        # Crashes qemu on ppc64le.\n        - ${PREFIX}/bin/ucx_info -v         # [cuda_compiler_version == \"None\" and not ppc64le]\n    about:\n      home: https://openucx.org\n      license: BSD-3-Clause\n      license_family: BSD\n      license_file: LICENSE\n      summary: Unified Communication X.\n      dev_url: https://github.com/openucx/ucx\n      doc_url: https://openucx.readthedocs.io/\n\nabout:\n  home: https://github.com/openucx/ucx\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: Unified Communication X.\n  dev_url: https://github.com/openucx/ucx\n  doc_url: https://openucx.readthedocs.io/\n\nextra:\n  recipe-maintainers:\n    - Akshay-Venkatesh\n    - jakirkham\n    - quasiben\n    - TomAugspurger\n    - leofang\n    - matthiasdiener\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1028,7 +1028,7 @@
   "run": {
    "__set__": true,
    "elements": [
-    "rdma-core >=48.0"
+    "rdma-core >=49"
    ]
   },
   "test": {
