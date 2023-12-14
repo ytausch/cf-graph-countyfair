@@ -11,7 +11,6 @@
  "linux_64_meta_yaml": {
   "about": {
    "description": "Mesa is an Apache2 licensed agent-based modeling (or ABM)\nframework in Python. It allows users to quickly create agent-based\nmodels using built-in core components (such as spatial grids and\nagent schedulers) or customized implementations; visualize them\nusing a browser-based interface; and analyze their results using\nPython's data analysis tools. Its goal is to be the Python 3-based\nalternative to NetLogo, Repast, or MASON.\n",
-   "dev_url": "https://github.com/projectmesa/mesa",
    "doc_url": "https://mesa.readthedocs.io",
    "home": "https://github.com/projectmesa/mesa",
    "license": "Apache-2.0",
@@ -25,7 +24,7 @@
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . --no-deps -vv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -36,7 +35,7 @@
   },
   "package": {
    "name": "mesa",
-   "version": "2.1.1"
+   "version": "2.1.5"
   },
   "requirements": {
    "host": [
@@ -49,21 +48,28 @@
     "networkx",
     "numpy",
     "pandas",
-    "python >=3",
+    "python >=3.8",
     "tornado",
-    "tqdm"
+    "tqdm",
+    "matplotlib-base",
+    "solara",
+    "mesa-viz-tornado~ =0.1.0,>=0.1.3"
    ]
   },
   "source": {
-   "sha256": "d70c979dd07bc50cb58e77c7b08a8c420b2f9866148630ee48107633419c5c2e",
-   "url": "https://pypi.io/packages/source/m/mesa/Mesa-2.1.1.tar.gz"
+   "sha256": "50c7f7cf56c4125ca07eac2063ae6a84e10ae22f4af601f8da6b887779995236",
+   "url": "https://pypi.io/packages/source/m/mesa/Mesa-2.1.5.tar.gz"
   },
   "test": {
    "commands": [
+    "pip check",
     "mesa --help"
    ],
    "imports": [
     "mesa"
+   ],
+   "requires": [
+    "pip"
    ]
   }
  },
@@ -84,23 +90,27 @@
    "elements": [
     "click",
     "cookiecutter",
+    "matplotlib-base",
+    "mesa-viz-tornado~",
     "networkx",
     "numpy",
     "pandas",
     "python",
+    "solara",
     "tornado",
     "tqdm"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "meta_yaml": {
   "about": {
    "description": "Mesa is an Apache2 licensed agent-based modeling (or ABM)\nframework in Python. It allows users to quickly create agent-based\nmodels using built-in core components (such as spatial grids and\nagent schedulers) or customized implementations; visualize them\nusing a browser-based interface; and analyze their results using\nPython's data analysis tools. Its goal is to be the Python 3-based\nalternative to NetLogo, Repast, or MASON.\n",
-   "dev_url": "https://github.com/projectmesa/mesa",
    "doc_url": "https://mesa.readthedocs.io",
    "home": "https://github.com/projectmesa/mesa",
    "license": "Apache-2.0",
@@ -114,7 +124,7 @@
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . --no-deps -vv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -125,7 +135,7 @@
   },
   "package": {
    "name": "mesa",
-   "version": "2.1.1"
+   "version": "2.1.5"
   },
   "requirements": {
    "host": [
@@ -138,21 +148,28 @@
     "networkx",
     "numpy",
     "pandas",
-    "python >=3",
+    "python >=3.8",
     "tornado",
-    "tqdm"
+    "tqdm",
+    "matplotlib-base",
+    "solara",
+    "mesa-viz-tornado~ =0.1.0,>=0.1.3"
    ]
   },
   "source": {
-   "sha256": "d70c979dd07bc50cb58e77c7b08a8c420b2f9866148630ee48107633419c5c2e",
-   "url": "https://pypi.io/packages/source/m/mesa/Mesa-2.1.1.tar.gz"
+   "sha256": "50c7f7cf56c4125ca07eac2063ae6a84e10ae22f4af601f8da6b887779995236",
+   "url": "https://pypi.io/packages/source/m/mesa/Mesa-2.1.5.tar.gz"
   },
   "test": {
    "commands": [
+    "pip check",
     "mesa --help"
    ],
    "imports": [
     "mesa"
+   ],
+   "requires": [
+    "pip"
    ]
   }
  },
@@ -170,17 +187,20 @@
  "pr_info": {
   "__lazy_json__": "pr_info/mesa.json"
  },
- "raw_meta_yaml": "{% set name = \"mesa\" %}\n{% set version = \"2.1.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/m/mesa/Mesa-{{ version }}.tar.gz\n  sha256: d70c979dd07bc50cb58e77c7b08a8c420b2f9866148630ee48107633419c5c2e\n\nbuild:\n  number: 0\n  noarch: python\n  entry_points:\n    - mesa=mesa.main:cli\n  script: {{ PYTHON }} -m pip install . --no-deps -vv\n\nrequirements:\n  host:\n    - pip\n    - python >=3\n  run:\n    - click\n    - cookiecutter\n    - networkx\n    - numpy\n    - pandas\n    - python >=3\n    - tornado\n    - tqdm\n\ntest:\n  imports:\n    - mesa\n  commands:\n    - mesa --help\n\nabout:\n  home: https://github.com/projectmesa/mesa\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Agent-based modeling (ABM) in Python 3+\n  description: |\n    Mesa is an Apache2 licensed agent-based modeling (or ABM) \n    framework in Python. It allows users to quickly create agent-based \n    models using built-in core components (such as spatial grids and \n    agent schedulers) or customized implementations; visualize them \n    using a browser-based interface; and analyze their results using \n    Python's data analysis tools. Its goal is to be the Python 3-based \n    alternative to NetLogo, Repast, or MASON.\n  doc_url: https://mesa.readthedocs.io\n  dev_url: https://github.com/projectmesa/mesa\n\nextra:\n  recipe-maintainers:\n    - estshorter\n    - jackiekazil\n    - dmasad\n",
+ "raw_meta_yaml": "{% set name = \"mesa\" %}\n{% set version = \"2.1.5\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/m/mesa/Mesa-{{ version }}.tar.gz\n  sha256: 50c7f7cf56c4125ca07eac2063ae6a84e10ae22f4af601f8da6b887779995236\n\nbuild:\n  number: 0\n  noarch: python\n  entry_points:\n    - mesa=mesa.main:cli\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n\nrequirements:\n  host:\n    - pip\n    - python >=3\n  run:\n    - click\n    - cookiecutter\n    - networkx\n    - numpy\n    - pandas\n    - python >=3.8\n    - tornado\n    - tqdm\n    - matplotlib-base\n    - solara\n    - mesa-viz-tornado~ =0.1.0,>=0.1.3\n\ntest:\n  imports:\n    - mesa\n  commands:\n    - pip check\n    - mesa --help\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/projectmesa/mesa\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Agent-based modeling (ABM) in Python 3+\n  description: |\n    Mesa is an Apache2 licensed agent-based modeling (or ABM) \n    framework in Python. It allows users to quickly create agent-based \n    models using built-in core components (such as spatial grids and \n    agent schedulers) or customized implementations; visualize them \n    using a browser-based interface; and analyze their results using \n    Python's data analysis tools. Its goal is to be the Python 3-based \n    alternative to NetLogo, Repast, or MASON.\n  doc_url: https://mesa.readthedocs.io\n\nextra:\n  recipe-maintainers:\n    - estshorter\n    - jackiekazil\n    - dmasad\n",
  "req": {
   "__set__": true,
   "elements": [
    "click",
    "cookiecutter",
+   "matplotlib-base",
+   "mesa-viz-tornado~",
    "networkx",
    "numpy",
    "pandas",
    "pip",
    "python",
+   "solara",
    "tornado",
    "tqdm"
   ]
@@ -202,17 +222,22 @@
    "elements": [
     "click",
     "cookiecutter",
+    "matplotlib-base",
+    "mesa-viz-tornado~",
     "networkx",
     "numpy",
     "pandas",
     "python",
+    "solara",
     "tornado",
     "tqdm"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "strong_exports": false,
@@ -233,21 +258,26 @@
    "elements": [
     "click",
     "cookiecutter",
+    "matplotlib-base",
+    "mesa-viz-tornado~ =0.1.0,>=0.1.3",
     "networkx",
     "numpy",
     "pandas",
-    "python >=3",
+    "python >=3.8",
+    "solara",
     "tornado",
     "tqdm"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
- "url": "https://pypi.io/packages/source/m/mesa/Mesa-2.1.1.tar.gz",
- "version": "2.1.1",
+ "url": "https://pypi.io/packages/source/m/mesa/Mesa-2.1.5.tar.gz",
+ "version": "2.1.5",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/mesa.json"
  }
