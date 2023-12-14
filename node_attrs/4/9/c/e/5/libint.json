@@ -13,14 +13,21 @@
    "dev_url": "https://github.com/evaleev/libint",
    "doc_url": "https://github.com/evaleev/libint/wiki",
    "home": "https://github.com/evaleev/libint",
-   "license": "LGPL-3.0+",
+   "license": "LGPL-3.0-only",
    "license_family": "LGPL",
-   "license_file": "LICENSE",
-   "license_url": "https://opensource.org/licenses/LGPL-3.0+",
-   "summary": "Libint is a high-performance library for computing Gaussian integrals in quantum mechanics"
+   "license_file": [
+    "LICENSE",
+    "COPYING.LESSER"
+   ],
+   "license_url": "https://opensource.org/license/lgpl-3-0/",
+   "summary": "Libint is E. Valeev's library for the evaluation of molecular integrals of many-body operators over Gaussian functions"
   },
   "build": {
-   "number": "2"
+   "binary_relocation": true,
+   "number": "0",
+   "run_exports": [
+    "libint"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -30,14 +37,14 @@
   },
   "package": {
    "name": "libint",
-   "version": "2.7.2"
+   "version": "2.8.0"
   },
   "requirements": {
    "build": [
     "cxx_compiler_stub",
     "c_compiler_stub",
     "cmake",
-    "make"
+    "ninja"
    ],
    "host": [
     "libboost-headers",
@@ -46,14 +53,43 @@
    ]
   },
   "source": {
-   "sha256": "a7306f1998a4c0a0babc13d480c62de2631674918e3562c78fb602c77efe0b94",
-   "url": "https://github.com/evaleev/libint/releases/download/v2.7.2/libint-2.7.2.tgz"
+   "sha256": "8e39eb455d52166979f290b4dba5890c3b1276b78301d92bffea37e17f216250",
+   "url": "https://github.com/loriab/libint/releases/download/v0.1/libint-2.8.0-5-4-3-6-5-4_mm10f12ob2_0.tgz"
   },
   "test": {
    "commands": [
-    "test -f \"${PREFIX}/lib/libint2${SHLIB_EXT}\"",
-    "ldd -r -u \"${PREFIX}/lib/libint2${SHLIB_EXT}\" && return 0",
-    "ldd -v \"${PREFIX}/lib/libint2${SHLIB_EXT}\""
+    "ls -l $PREFIX/lib",
+    "ls -l $PREFIX/lib/cmake/libint2",
+    "test -f $PREFIX/lib/libint2$SHLIB_EXT",
+    "test ! -f $PREFIX/lib/libint2.a",
+    "test -f $PREFIX/include/libint2.h",
+    "test -f $PREFIX/include/libint2/engine.h",
+    "test ! -f $PREFIX/include/libint2/boost/preprocessor.hpp",
+    "test -f $PREFIX/share/libint/2.8.0/basis/sto-6g.g94",
+    "test -f $PREFIX/lib/cmake/libint2/libint2-config.cmake",
+    "test -f $PREFIX/lib/pkgconfig/libint2.pc",
+    "ldd -v $PREFIX/lib/libint2$SHLIB_EXT",
+    "cd tests/hartree-fock",
+    "cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH=\"${PREFIX}\"",
+    "cmake --build build",
+    "./build/hf++ h2o_rotated.xyz | python hartree-fock++-validate.py ../../MakeVars.features"
+   ],
+   "files": [
+    "tests/hartree-fock/CMakeLists.txt"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "python 3.10",
+    "eigen",
+    "libboost-headers"
+   ],
+   "source_files": [
+    "MakeVars.features",
+    "tests/hartree-fock/h2o_rotated.xyz",
+    "tests/hartree-fock/hartree-fock++.cc",
+    "tests/hartree-fock/hartree-fock++-validate.py"
    ]
   }
  },
@@ -64,7 +100,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -81,7 +117,14 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "eigen",
+    "libboost-headers",
+    "ninja",
+    "python"
+   ]
   }
  },
  "meta_yaml": {
@@ -89,17 +132,35 @@
    "dev_url": "https://github.com/evaleev/libint",
    "doc_url": "https://github.com/evaleev/libint/wiki",
    "home": "https://github.com/evaleev/libint",
-   "license": "LGPL-3.0+",
+   "license": "LGPL-3.0-only",
    "license_family": "LGPL",
-   "license_file": "LICENSE",
-   "license_url": "https://opensource.org/licenses/LGPL-3.0+",
-   "summary": "Libint is a high-performance library for computing Gaussian integrals in quantum mechanics"
+   "license_file": [
+    "LICENSE",
+    "COPYING.LESSER",
+    "LICENSE",
+    "COPYING.LESSER",
+    "LICENSE",
+    "COPYING.LESSER",
+    "LICENSE",
+    "COPYING.LESSER"
+   ],
+   "license_url": "https://opensource.org/license/lgpl-3-0/",
+   "summary": "Libint is E. Valeev's library for the evaluation of molecular integrals of many-body operators over Gaussian functions"
   },
   "build": {
-   "number": "2"
+   "binary_relocation": true,
+   "number": "0",
+   "run_exports": [
+    "libint",
+    "libint",
+    "libint",
+    "libint"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
+    "felipeZ",
+    "loriab",
     "felipeZ",
     "loriab",
     "felipeZ",
@@ -110,22 +171,26 @@
   },
   "package": {
    "name": "libint",
-   "version": "2.7.2"
+   "version": "2.8.0"
   },
   "requirements": {
    "build": [
     "cxx_compiler_stub",
     "c_compiler_stub",
     "cmake",
-    "make",
+    "ninja",
     "cxx_compiler_stub",
     "c_compiler_stub",
     "cmake",
-    "make",
+    "ninja",
     "cxx_compiler_stub",
     "c_compiler_stub",
     "cmake",
-    "make"
+    "ninja",
+    "cxx_compiler_stub",
+    "c_compiler_stub",
+    "cmake",
+    "ninja"
    ],
    "host": [
     "libboost-headers",
@@ -135,20 +200,126 @@
     "eigen",
     "openmp",
     "libboost-headers",
+    "eigen",
+    "libboost-headers",
     "eigen"
    ]
   },
   "source": {
-   "sha256": "a7306f1998a4c0a0babc13d480c62de2631674918e3562c78fb602c77efe0b94",
-   "url": "https://github.com/evaleev/libint/releases/download/v2.7.2/libint-2.7.2.tgz"
+   "sha256": "4f6cd9524f2c68dc25aadde130086db67fe8c2fce6d26e9be17744dc7e037776",
+   "url": "https://github.com/loriab/libint/releases/download/v0.1/libint-2.8.0-5-4-6-5_mm10f12ob2_0.tgz"
   },
   "test": {
    "commands": [
-    "test -f \"${PREFIX}/lib/libint2${SHLIB_EXT}\"",
-    "ldd -r -u \"${PREFIX}/lib/libint2${SHLIB_EXT}\" && return 0",
-    "ldd -v \"${PREFIX}/lib/libint2${SHLIB_EXT}\"",
-    "test -f \"${PREFIX}/lib/libint2${SHLIB_EXT}\"",
-    "test -f \"${PREFIX}/lib/libint2${SHLIB_EXT}\""
+    "ls -l $PREFIX/lib",
+    "ls -l $PREFIX/lib/cmake/libint2",
+    "test -f $PREFIX/lib/libint2$SHLIB_EXT",
+    "test ! -f $PREFIX/lib/libint2.a",
+    "test -f $PREFIX/include/libint2.h",
+    "test -f $PREFIX/include/libint2/engine.h",
+    "test ! -f $PREFIX/include/libint2/boost/preprocessor.hpp",
+    "test -f $PREFIX/share/libint/2.8.0/basis/sto-6g.g94",
+    "test -f $PREFIX/lib/cmake/libint2/libint2-config.cmake",
+    "test -f $PREFIX/lib/pkgconfig/libint2.pc",
+    "ldd -v $PREFIX/lib/libint2$SHLIB_EXT",
+    "cd tests/hartree-fock",
+    "cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH=\"${PREFIX}\"",
+    "cmake --build build",
+    "./build/hf++ h2o_rotated.xyz | python hartree-fock++-validate.py ../../MakeVars.features",
+    "ls -l $PREFIX/lib",
+    "ls -l $PREFIX/lib/cmake/libint2",
+    "test -f $PREFIX/lib/libint2$SHLIB_EXT",
+    "test ! -f $PREFIX/lib/libint2.a",
+    "test -f $PREFIX/include/libint2.h",
+    "test -f $PREFIX/include/libint2/engine.h",
+    "test ! -f $PREFIX/include/libint2/boost/preprocessor.hpp",
+    "test -f $PREFIX/share/libint/2.8.0/basis/sto-6g.g94",
+    "test -f $PREFIX/lib/cmake/libint2/libint2-config.cmake",
+    "test -f $PREFIX/lib/pkgconfig/libint2.pc",
+    "otool -L $PREFIX/lib/libint2$SHLIB_EXT",
+    "cd tests/hartree-fock",
+    "cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH=\"${PREFIX}\"",
+    "cmake --build build",
+    "./build/hf++ h2o_rotated.xyz | python hartree-fock++-validate.py ../../MakeVars.features",
+    "ls -l $PREFIX/lib",
+    "ls -l $PREFIX/lib/cmake/libint2",
+    "test -f $PREFIX/lib/libint2$SHLIB_EXT",
+    "test ! -f $PREFIX/lib/libint2.a",
+    "test -f $PREFIX/include/libint2.h",
+    "test -f $PREFIX/include/libint2/engine.h",
+    "test ! -f $PREFIX/include/libint2/boost/preprocessor.hpp",
+    "test -f $PREFIX/share/libint/2.8.0/basis/sto-6g.g94",
+    "test -f $PREFIX/lib/cmake/libint2/libint2-config.cmake",
+    "test -f $PREFIX/lib/pkgconfig/libint2.pc",
+    "otool -L $PREFIX/lib/libint2$SHLIB_EXT",
+    "cd tests/hartree-fock",
+    "cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH=\"${PREFIX}\"",
+    "cmake --build build",
+    "./build/hf++ h2o_rotated.xyz | python hartree-fock++-validate.py ../../MakeVars.features",
+    "dir %PREFIX%\\\\Library",
+    "dir %PREFIX%\\\\Library\\\\include",
+    "if not exist %PREFIX%\\\\Library\\\\lib\\\\int2.lib exit 1",
+    "if exist %PREFIX%\\\\Library\\\\bin\\\\int2.dll exit 1",
+    "if not exist %PREFIX%\\\\Library\\\\include\\\\libint2.h exit 1",
+    "if not exist %PREFIX%\\\\Library\\\\include\\\\libint2\\\\engine.h exit 1",
+    "if exist %PREFIX%\\\\Library\\\\include\\\\libint2\\\\boost\\\\preprocessor.hpp exit 1",
+    "if not exist %PREFIX%\\\\Library\\\\share\\\\libint\\\\2.8.0\\\\basis\\\\sto-6g.g94 exit 1",
+    "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\libint2\\\\libint2-config.cmake exit 1",
+    "if not exist %PREFIX%\\\\Library\\\\lib\\\\pkgconfig\\\\libint2.pc exit 1",
+    "cd tests/hartree-fock",
+    "cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH=\"%LIBRARY_PREFIX%\" -DCMAKE_C_COMPILER=clang-cl -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_BUILD_TYPE=Release",
+    "cmake --build build",
+    "build\\\\hf++.exe h2o_rotated.xyz | python hartree-fock++-validate.py ..\\\\..\\\\MakeVars.features"
+   ],
+   "files": [
+    "tests/hartree-fock/CMakeLists.txt",
+    "tests/hartree-fock/CMakeLists.txt",
+    "tests/hartree-fock/CMakeLists.txt",
+    "tests/hartree-fock/CMakeLists.txt"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "python 3.10",
+    "eigen",
+    "libboost-headers",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "python 3.10",
+    "eigen",
+    "libboost-headers",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "python 3.10",
+    "eigen",
+    "libboost-headers",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "python 3.10",
+    "eigen",
+    "libboost-headers"
+   ],
+   "source_files": [
+    "MakeVars.features",
+    "tests/hartree-fock/h2o_rotated.xyz",
+    "tests/hartree-fock/hartree-fock++.cc",
+    "tests/hartree-fock/hartree-fock++-validate.py",
+    "MakeVars.features",
+    "tests/hartree-fock/h2o_rotated.xyz",
+    "tests/hartree-fock/hartree-fock++.cc",
+    "tests/hartree-fock/hartree-fock++-validate.py",
+    "MakeVars.features",
+    "tests/hartree-fock/h2o_rotated.xyz",
+    "tests/hartree-fock/hartree-fock++.cc",
+    "tests/hartree-fock/hartree-fock++-validate.py",
+    "MakeVars.features",
+    "tests/hartree-fock/h2o_rotated.xyz",
+    "tests/hartree-fock/hartree-fock++.cc",
+    "tests/hartree-fock/hartree-fock++-validate.py"
    ]
   }
  },
@@ -158,14 +329,21 @@
    "dev_url": "https://github.com/evaleev/libint",
    "doc_url": "https://github.com/evaleev/libint/wiki",
    "home": "https://github.com/evaleev/libint",
-   "license": "LGPL-3.0+",
+   "license": "LGPL-3.0-only",
    "license_family": "LGPL",
-   "license_file": "LICENSE",
-   "license_url": "https://opensource.org/licenses/LGPL-3.0+",
-   "summary": "Libint is a high-performance library for computing Gaussian integrals in quantum mechanics"
+   "license_file": [
+    "LICENSE",
+    "COPYING.LESSER"
+   ],
+   "license_url": "https://opensource.org/license/lgpl-3-0/",
+   "summary": "Libint is E. Valeev's library for the evaluation of molecular integrals of many-body operators over Gaussian functions"
   },
   "build": {
-   "number": "2"
+   "binary_relocation": true,
+   "number": "0",
+   "run_exports": [
+    "libint"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -175,14 +353,14 @@
   },
   "package": {
    "name": "libint",
-   "version": "2.7.2"
+   "version": "2.8.0"
   },
   "requirements": {
    "build": [
     "cxx_compiler_stub",
     "c_compiler_stub",
     "cmake",
-    "make"
+    "ninja"
    ],
    "host": [
     "libboost-headers",
@@ -191,12 +369,43 @@
    ]
   },
   "source": {
-   "sha256": "a7306f1998a4c0a0babc13d480c62de2631674918e3562c78fb602c77efe0b94",
-   "url": "https://github.com/evaleev/libint/releases/download/v2.7.2/libint-2.7.2.tgz"
+   "sha256": "8e39eb455d52166979f290b4dba5890c3b1276b78301d92bffea37e17f216250",
+   "url": "https://github.com/loriab/libint/releases/download/v0.1/libint-2.8.0-5-4-3-6-5-4_mm10f12ob2_0.tgz"
   },
   "test": {
    "commands": [
-    "test -f \"${PREFIX}/lib/libint2${SHLIB_EXT}\""
+    "ls -l $PREFIX/lib",
+    "ls -l $PREFIX/lib/cmake/libint2",
+    "test -f $PREFIX/lib/libint2$SHLIB_EXT",
+    "test ! -f $PREFIX/lib/libint2.a",
+    "test -f $PREFIX/include/libint2.h",
+    "test -f $PREFIX/include/libint2/engine.h",
+    "test ! -f $PREFIX/include/libint2/boost/preprocessor.hpp",
+    "test -f $PREFIX/share/libint/2.8.0/basis/sto-6g.g94",
+    "test -f $PREFIX/lib/cmake/libint2/libint2-config.cmake",
+    "test -f $PREFIX/lib/pkgconfig/libint2.pc",
+    "otool -L $PREFIX/lib/libint2$SHLIB_EXT",
+    "cd tests/hartree-fock",
+    "cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH=\"${PREFIX}\"",
+    "cmake --build build",
+    "./build/hf++ h2o_rotated.xyz | python hartree-fock++-validate.py ../../MakeVars.features"
+   ],
+   "files": [
+    "tests/hartree-fock/CMakeLists.txt"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "python 3.10",
+    "eigen",
+    "libboost-headers"
+   ],
+   "source_files": [
+    "MakeVars.features",
+    "tests/hartree-fock/h2o_rotated.xyz",
+    "tests/hartree-fock/hartree-fock++.cc",
+    "tests/hartree-fock/hartree-fock++-validate.py"
    ]
   }
  },
@@ -207,7 +416,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -224,7 +433,14 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "eigen",
+    "libboost-headers",
+    "ninja",
+    "python"
+   ]
   }
  },
  "osx_arm64_meta_yaml": {
@@ -232,14 +448,21 @@
    "dev_url": "https://github.com/evaleev/libint",
    "doc_url": "https://github.com/evaleev/libint/wiki",
    "home": "https://github.com/evaleev/libint",
-   "license": "LGPL-3.0+",
+   "license": "LGPL-3.0-only",
    "license_family": "LGPL",
-   "license_file": "LICENSE",
-   "license_url": "https://opensource.org/licenses/LGPL-3.0+",
-   "summary": "Libint is a high-performance library for computing Gaussian integrals in quantum mechanics"
+   "license_file": [
+    "LICENSE",
+    "COPYING.LESSER"
+   ],
+   "license_url": "https://opensource.org/license/lgpl-3-0/",
+   "summary": "Libint is E. Valeev's library for the evaluation of molecular integrals of many-body operators over Gaussian functions"
   },
   "build": {
-   "number": "2"
+   "binary_relocation": true,
+   "number": "0",
+   "run_exports": [
+    "libint"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -249,14 +472,14 @@
   },
   "package": {
    "name": "libint",
-   "version": "2.7.2"
+   "version": "2.8.0"
   },
   "requirements": {
    "build": [
     "cxx_compiler_stub",
     "c_compiler_stub",
     "cmake",
-    "make"
+    "ninja"
    ],
    "host": [
     "libboost-headers",
@@ -264,12 +487,43 @@
    ]
   },
   "source": {
-   "sha256": "a7306f1998a4c0a0babc13d480c62de2631674918e3562c78fb602c77efe0b94",
-   "url": "https://github.com/evaleev/libint/releases/download/v2.7.2/libint-2.7.2.tgz"
+   "sha256": "8e39eb455d52166979f290b4dba5890c3b1276b78301d92bffea37e17f216250",
+   "url": "https://github.com/loriab/libint/releases/download/v0.1/libint-2.8.0-5-4-3-6-5-4_mm10f12ob2_0.tgz"
   },
   "test": {
    "commands": [
-    "test -f \"${PREFIX}/lib/libint2${SHLIB_EXT}\""
+    "ls -l $PREFIX/lib",
+    "ls -l $PREFIX/lib/cmake/libint2",
+    "test -f $PREFIX/lib/libint2$SHLIB_EXT",
+    "test ! -f $PREFIX/lib/libint2.a",
+    "test -f $PREFIX/include/libint2.h",
+    "test -f $PREFIX/include/libint2/engine.h",
+    "test ! -f $PREFIX/include/libint2/boost/preprocessor.hpp",
+    "test -f $PREFIX/share/libint/2.8.0/basis/sto-6g.g94",
+    "test -f $PREFIX/lib/cmake/libint2/libint2-config.cmake",
+    "test -f $PREFIX/lib/pkgconfig/libint2.pc",
+    "otool -L $PREFIX/lib/libint2$SHLIB_EXT",
+    "cd tests/hartree-fock",
+    "cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH=\"${PREFIX}\"",
+    "cmake --build build",
+    "./build/hf++ h2o_rotated.xyz | python hartree-fock++-validate.py ../../MakeVars.features"
+   ],
+   "files": [
+    "tests/hartree-fock/CMakeLists.txt"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "python 3.10",
+    "eigen",
+    "libboost-headers"
+   ],
+   "source_files": [
+    "MakeVars.features",
+    "tests/hartree-fock/h2o_rotated.xyz",
+    "tests/hartree-fock/hartree-fock++.cc",
+    "tests/hartree-fock/hartree-fock++-validate.py"
    ]
   }
  },
@@ -280,7 +534,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -296,7 +550,14 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "eigen",
+    "libboost-headers",
+    "ninja",
+    "python"
+   ]
   }
  },
  "outputs_names": {
@@ -309,12 +570,13 @@
  "platforms": [
   "linux_64",
   "osx_64",
-  "osx_arm64"
+  "osx_arm64",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/libint.json"
  },
- "raw_meta_yaml": "{% set name = \"libint\" %}\n{% set version = \"2.7.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/evaleev/{{ name }}/releases/download/v{{ version }}/{{ name }}-{{ version }}.tgz\n  sha256: a7306f1998a4c0a0babc13d480c62de2631674918e3562c78fb602c77efe0b94\n\nbuild:\n  number: 2\n  skip: true  # [win]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - cmake\n    - make\n  host:\n    - libboost-headers\n    - eigen\n    - openmp  # [not (osx and arm64)]\n\ntest:\n  commands:\n    # Verify library\n    - test -f \"${PREFIX}/lib/libint2${SHLIB_EXT}\"\n    # Inspect linkage\n    - ldd -r -u \"${PREFIX}/lib/libint2${SHLIB_EXT}\" && return 0  # [linux]\n    - ldd -v \"${PREFIX}/lib/libint2${SHLIB_EXT}\"                 # [linux]\n\nabout:\n  home: https://github.com/evaleev/libint\n  dev_url: https://github.com/evaleev/libint\n  doc_url: https://github.com/evaleev/libint/wiki\n  license: LGPL-3.0+\n  license_url: https://opensource.org/licenses/LGPL-3.0+\n  license_file: LICENSE\n  license_family: LGPL\n  summary: Libint is a high-performance library for computing Gaussian integrals in quantum mechanics\n\nextra:\n  recipe-maintainers:\n    - felipeZ\n    - loriab\n",
+ "raw_meta_yaml": "{% set name = \"libint\" %}\n{% set version = \"2.8.0\" %}\n{% set version_src = \"2.8.0\" %}\n\n# toy-sized source tarball for recipe testing\n{% set url_toy = \"https://github.com/loriab/libint/releases/download/v0.1/libint-2.8.0-2-2-3-2_0.tgz\" %}\n{% set sha256_toy = \"cb0ae94ad44a98f53203c4e88d2c5e0834ce76e631c1c7ab6ab1ba61600ad80d\" %}\n\n# production source tarball: L/M build w/i 3h but W hangs\n{% set url_bells = \"https://github.com/loriab/libint/releases/download/v0.1/libint-2.8.0-5-4-3-6-5-4_mm10f12ob2_0.tgz\" %}\n{% set sha256_bells = \"8e39eb455d52166979f290b4dba5890c3b1276b78301d92bffea37e17f216250\" %}\n\n# production source tarball: no Hessian ERIs but works for W\n{% set url_basic = \"https://github.com/loriab/libint/releases/download/v0.1/libint-2.8.0-5-4-6-5_mm10f12ob2_0.tgz\" %}\n{% set sha256_basic = \"4f6cd9524f2c68dc25aadde130086db67fe8c2fce6d26e9be17744dc7e037776\" %}\n\n# source tarball pattern for upstream\n# {% set url = \"https://github.com/evaleev/{{ name }}/releases/download/v{{ version }}/{{ name }}-{{ version }}.tgz\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  # url: {{ url_toy }}\n  url: {{ url_bells }}        # [unix]\n  url: {{ url_basic }}        # [win]\n  # sha256: {{ sha256_toy }}\n  sha256: {{ sha256_bells }}  # [unix]\n  sha256: {{ sha256_basic }}  # [win]\n  # note: source/url above is a tarball of generated library source code.\n  # * the upstream generator project is: https://github.com/evaleev/libint\n  # * tarballs aren't upstream release artifacts but have been generated with\n  #   different configuration from upstream release tag. See NOTES file.\n\nbuild:\n  number: 0\n  binary_relocation: true\n  run_exports:\n    - {{ pin_subpackage('libint', max_pin='x') }}\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - {{ compiler('c') }}\n    - cmake\n    - ninja\n  host:\n    # note: alternately, could withhold boost here so that a vendored subset of boost headers gets installed\n    #   at include/libint2/boost/ . Then downstream builds against libint2 don't need a Boost dependency.\n    - libboost-headers\n    - eigen\n    - openmp  # [linux or (osx and not arm64)]\n\ntest:\n  requires:\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n    - python 3.10  # only for running a validation script, so suppress all but one Py version. update as necessary.\n    - eigen\n    - libboost-headers\n  files:\n    - tests/hartree-fock/CMakeLists.txt\n  source_files:\n    - MakeVars.features\n    - tests/hartree-fock/h2o_rotated.xyz\n    - tests/hartree-fock/hartree-fock++.cc\n    - tests/hartree-fock/hartree-fock++-validate.py\n  commands:\n    - ls -l $PREFIX/lib                                                  # [unix]\n    - ls -l $PREFIX/lib/cmake/libint2                                    # [unix]\n    - dir %PREFIX%\\\\Library                                              # [win]\n    - dir %PREFIX%\\\\Library\\\\include                                     # [win]\n    # Verify library\n    # - test -L $PREFIX/lib/libint2$SHLIB_EXT                              # [unix]\n    - test -f $PREFIX/lib/libint2$SHLIB_EXT                              # [unix]\n    - test ! -f $PREFIX/lib/libint2.a                                    # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\int2.lib exit 1               # [win]\n    - if exist %PREFIX%\\\\Library\\\\bin\\\\int2.dll exit 1                   # [win]\n    # Verify accessories\n    - test -f $PREFIX/include/libint2.h                                  # [unix]\n    - test -f $PREFIX/include/libint2/engine.h                           # [unix]\n    - test ! -f $PREFIX/include/libint2/boost/preprocessor.hpp           # [unix]\n    - test -f $PREFIX/share/libint/{{ version_src }}/basis/sto-6g.g94    # [unix]\n    - test -f $PREFIX/lib/cmake/libint2/libint2-config.cmake             # [unix]\n    - test -f $PREFIX/lib/pkgconfig/libint2.pc                           # [unix]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\libint2.h exit 1          # [win]\n    - if not exist %PREFIX%\\\\Library\\\\include\\\\libint2\\\\engine.h exit 1  # [win]\n    - if exist %PREFIX%\\\\Library\\\\include\\\\libint2\\\\boost\\\\preprocessor.hpp exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\share\\\\libint\\\\{{ version_src }}\\\\basis\\\\sto-6g.g94 exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\libint2\\\\libint2-config.cmake exit 1  # [win]\n    - if not exist %PREFIX%\\\\Library\\\\lib\\\\pkgconfig\\\\libint2.pc exit 1  # [win]\n    # Inspect linkage\n    - ldd -v $PREFIX/lib/libint2$SHLIB_EXT                               # [linux and build_platform == target_platform]\n    - otool -L $PREFIX/lib/libint2$SHLIB_EXT                             # [osx]\n    # Actually test\n    - cd tests/hartree-fock\n    - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH=\"${PREFIX}\"          # [unix]\n    - cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH=\"%LIBRARY_PREFIX%\" -DCMAKE_C_COMPILER=clang-cl -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_BUILD_TYPE=Release  # [win]\n    - cmake --build build\n    - ./build/hf++ h2o_rotated.xyz | python hartree-fock++-validate.py ../../MakeVars.features  # [unix]\n    - build\\\\hf++.exe h2o_rotated.xyz | python hartree-fock++-validate.py ..\\\\..\\\\MakeVars.features  # [win]\n\nabout:\n  home: https://github.com/evaleev/libint\n  dev_url: https://github.com/evaleev/libint\n  doc_url: https://github.com/evaleev/libint/wiki\n  license: LGPL-3.0-only\n  license_url: https://opensource.org/license/lgpl-3-0/\n  license_file:\n    - LICENSE\n    - COPYING.LESSER\n  license_family: LGPL\n  summary: \"Libint is E. Valeev's library for the evaluation of molecular integrals of many-body operators over Gaussian functions\"\n\nextra:\n  recipe-maintainers:\n    - felipeZ\n    - loriab\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -323,7 +585,7 @@
    "cxx_compiler_stub",
    "eigen",
    "libboost-headers",
-   "make",
+   "ninja",
    "openmp"
   ]
  },
@@ -334,7 +596,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -357,7 +619,14 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "eigen",
+    "libboost-headers",
+    "ninja",
+    "python"
+   ]
   }
  },
  "strong_exports": false,
@@ -368,7 +637,7 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "ninja"
    ]
   },
   "host": {
@@ -385,12 +654,135 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "eigen",
+    "libboost-headers",
+    "ninja",
+    "python 3.10"
+   ]
   }
  },
- "url": "https://github.com/evaleev/libint/releases/download/v2.7.2/libint-2.7.2.tgz",
- "version": "2.7.2",
+ "url": "https://github.com/loriab/libint/releases/download/v0.1/libint-2.8.0-5-4-6-5_mm10f12ob2_0.tgz",
+ "version": "2.8.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/libint.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "dev_url": "https://github.com/evaleev/libint",
+   "doc_url": "https://github.com/evaleev/libint/wiki",
+   "home": "https://github.com/evaleev/libint",
+   "license": "LGPL-3.0-only",
+   "license_family": "LGPL",
+   "license_file": [
+    "LICENSE",
+    "COPYING.LESSER"
+   ],
+   "license_url": "https://opensource.org/license/lgpl-3-0/",
+   "summary": "Libint is E. Valeev's library for the evaluation of molecular integrals of many-body operators over Gaussian functions"
+  },
+  "build": {
+   "binary_relocation": true,
+   "number": "0",
+   "run_exports": [
+    "libint"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "felipeZ",
+    "loriab"
+   ]
+  },
+  "package": {
+   "name": "libint",
+   "version": "2.8.0"
+  },
+  "requirements": {
+   "build": [
+    "cxx_compiler_stub",
+    "c_compiler_stub",
+    "cmake",
+    "ninja"
+   ],
+   "host": [
+    "libboost-headers",
+    "eigen"
+   ]
+  },
+  "source": {
+   "sha256": "4f6cd9524f2c68dc25aadde130086db67fe8c2fce6d26e9be17744dc7e037776",
+   "url": "https://github.com/loriab/libint/releases/download/v0.1/libint-2.8.0-5-4-6-5_mm10f12ob2_0.tgz"
+  },
+  "test": {
+   "commands": [
+    "dir %PREFIX%\\\\Library",
+    "dir %PREFIX%\\\\Library\\\\include",
+    "if not exist %PREFIX%\\\\Library\\\\lib\\\\int2.lib exit 1",
+    "if exist %PREFIX%\\\\Library\\\\bin\\\\int2.dll exit 1",
+    "if not exist %PREFIX%\\\\Library\\\\include\\\\libint2.h exit 1",
+    "if not exist %PREFIX%\\\\Library\\\\include\\\\libint2\\\\engine.h exit 1",
+    "if exist %PREFIX%\\\\Library\\\\include\\\\libint2\\\\boost\\\\preprocessor.hpp exit 1",
+    "if not exist %PREFIX%\\\\Library\\\\share\\\\libint\\\\2.8.0\\\\basis\\\\sto-6g.g94 exit 1",
+    "if not exist %PREFIX%\\\\Library\\\\lib\\\\cmake\\\\libint2\\\\libint2-config.cmake exit 1",
+    "if not exist %PREFIX%\\\\Library\\\\lib\\\\pkgconfig\\\\libint2.pc exit 1",
+    "cd tests/hartree-fock",
+    "cmake -S. -Bbuild -GNinja -DCMAKE_PREFIX_PATH=\"%LIBRARY_PREFIX%\" -DCMAKE_C_COMPILER=clang-cl -DCMAKE_CXX_COMPILER=clang-cl -DCMAKE_BUILD_TYPE=Release",
+    "cmake --build build",
+    "build\\\\hf++.exe h2o_rotated.xyz | python hartree-fock++-validate.py ..\\\\..\\\\MakeVars.features"
+   ],
+   "files": [
+    "tests/hartree-fock/CMakeLists.txt"
+   ],
+   "requires": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "python 3.10",
+    "eigen",
+    "libboost-headers"
+   ],
+   "source_files": [
+    "MakeVars.features",
+    "tests/hartree-fock/h2o_rotated.xyz",
+    "tests/hartree-fock/hartree-fock++.cc",
+    "tests/hartree-fock/hartree-fock++-validate.py"
+   ]
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "eigen",
+    "libboost-headers"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "eigen",
+    "libboost-headers",
+    "ninja",
+    "python"
+   ]
+  }
  }
 }
