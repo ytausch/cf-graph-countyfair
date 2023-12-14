@@ -25,7 +25,7 @@
     "imageio_remove_bin = imageio.__main__:remove_bin_main"
    ],
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . --no-deps --ignore-installed -vvv"
   },
   "extra": {
@@ -52,10 +52,6 @@
    ]
   },
   "source": {
-   "patches": [
-    "tempfix-pyav-plugin.patch",
-    "xfail-known-issues.patch"
-   ],
    "sha256": "d8e53f9cd4054880276a3dac0a28c85ba7874084856a55a0294a8ae6ed7f3a8e",
    "url": "https://pypi.io/packages/source/i/imageio/imageio-2.31.5.tar.gz"
   },
@@ -63,7 +59,7 @@
    "commands": [
     "imageio_download_bin -h",
     "imageio_remove_bin -h",
-    "pytest -sv tests/ -k \"not test_findlib2\""
+    "pytest -sv tests/ -k \"not test_findlib2 and not test_format_hint and not test_writer_pixelformat_size_verbose and not test_exr_write\""
    ],
    "imports": [
     "imageio"
@@ -72,7 +68,7 @@
     "git",
     "pytest",
     "psutil",
-    "tifffile",
+    "tifffile >=2020.7.4",
     "gdal",
     "astropy",
     "freeimage",
@@ -138,7 +134,7 @@
     "imageio_remove_bin = imageio.__main__:remove_bin_main"
    ],
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . --no-deps --ignore-installed -vvv"
   },
   "extra": {
@@ -165,10 +161,6 @@
    ]
   },
   "source": {
-   "patches": [
-    "tempfix-pyav-plugin.patch",
-    "xfail-known-issues.patch"
-   ],
    "sha256": "d8e53f9cd4054880276a3dac0a28c85ba7874084856a55a0294a8ae6ed7f3a8e",
    "url": "https://pypi.io/packages/source/i/imageio/imageio-2.31.5.tar.gz"
   },
@@ -176,7 +168,7 @@
    "commands": [
     "imageio_download_bin -h",
     "imageio_remove_bin -h",
-    "pytest -sv tests/ -k \"not test_findlib2\""
+    "pytest -sv tests/ -k \"not test_findlib2 and not test_format_hint and not test_writer_pixelformat_size_verbose and not test_exr_write\""
    ],
    "imports": [
     "imageio"
@@ -185,7 +177,7 @@
     "git",
     "pytest",
     "psutil",
-    "tifffile",
+    "tifffile >=2020.7.4",
     "gdal",
     "astropy",
     "freeimage",
@@ -213,7 +205,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/imageio.json"
  },
- "raw_meta_yaml": "{% set version = \"2.31.5\" %}\n\npackage:\n  name: imageio\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/i/imageio/imageio-{{ version }}.tar.gz\n  sha256: d8e53f9cd4054880276a3dac0a28c85ba7874084856a55a0294a8ae6ed7f3a8e\n  patches:\n    - tempfix-pyav-plugin.patch\n    - xfail-known-issues.patch\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv\n  entry_points:\n    - imageio_download_bin = imageio.__main__:download_bin_main\n    - imageio_remove_bin = imageio.__main__:remove_bin_main\n\nrequirements:\n  host:\n    - pip\n    - python >=3\n  run:\n    - python >=3\n    - numpy\n    - pillow >=8.3.2\n\ntest:\n  requires:\n    - git\n    - pytest\n    - psutil\n    - tifffile\n    - gdal\n    - astropy\n    - freeimage\n    - fsspec\n    - requests\n    - av =9.2\n    #- opencv\n    - imageio-ffmpeg\n  imports:\n    - imageio\n  source_files:\n    - tests/\n  commands:\n    - imageio_download_bin -h\n    - imageio_remove_bin -h\n    - pytest -sv tests/ -k \"not test_findlib2\"\n\nabout:\n  home: https://imageio.github.io\n  doc_url: https://imageio.readthedocs.io\n  dev_url: https://github.com/imageio/imageio\n  summary: A Python library for reading and writing image data\n  license: BSD-2-Clause\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - anjos\n    - almarklein\n    - blink1073\n    - jni\n",
+ "raw_meta_yaml": "{% set version = \"2.31.5\" %}\n\npackage:\n  name: imageio\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/i/imageio/imageio-{{ version }}.tar.gz\n  sha256: d8e53f9cd4054880276a3dac0a28c85ba7874084856a55a0294a8ae6ed7f3a8e\n\nbuild:\n  number: 1\n  noarch: python\n  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed -vvv\n  entry_points:\n    - imageio_download_bin = imageio.__main__:download_bin_main\n    - imageio_remove_bin = imageio.__main__:remove_bin_main\n\nrequirements:\n  host:\n    - pip\n    - python >=3\n  run:\n    - python >=3\n    - numpy\n    - pillow >=8.3.2\n\ntest:\n  requires:\n    - git\n    - pytest\n    - psutil\n    # test suite fails with older version on conda-forge\n    - tifffile >=2020.7.4\n    - gdal\n    - astropy\n    - freeimage\n    - fsspec\n    - requests\n    - av =9.2\n    #- opencv\n    - imageio-ffmpeg\n  imports:\n    - imageio\n  source_files:\n    - tests/\n  commands:\n    - imageio_download_bin -h\n    - imageio_remove_bin -h\n    # https://github.com/imageio/imageio/issues/890\n    # https://github.com/imageio/imageio/issues/910\n    # https://github.com/imageio/imageio/issues/911\n    - pytest -sv tests/ -k \"not test_findlib2 and not test_format_hint and not test_writer_pixelformat_size_verbose and not test_exr_write\"\n\nabout:\n  home: https://imageio.github.io\n  doc_url: https://imageio.readthedocs.io\n  dev_url: https://github.com/imageio/imageio\n  summary: A Python library for reading and writing image data\n  license: BSD-2-Clause\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - anjos\n    - almarklein\n    - blink1073\n    - jni\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -294,7 +286,7 @@
     "psutil",
     "pytest",
     "requests",
-    "tifffile"
+    "tifffile >=2020.7.4"
    ]
   }
  },
