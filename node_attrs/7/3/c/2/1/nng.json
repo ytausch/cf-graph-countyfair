@@ -16,7 +16,7 @@
    "summary": "nanomsg-next-generation -- light-weight brokerless messaging"
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -39,7 +39,9 @@
    "host": [
     "mbedtls"
    ],
-   "run": []
+   "run": [
+    "mbedtls"
+   ]
   },
   "source": {
    "patches": [
@@ -50,7 +52,8 @@
   },
   "test": {
    "commands": [
-    "test -f $PREFIX/lib/libnng.a"
+    "test -f $PREFIX/lib/libnng.so",
+    "nngcat -V"
    ]
   }
  },
@@ -73,7 +76,9 @@
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "mbedtls"
+   ]
   },
   "test": {
    "__set__": true,
@@ -92,7 +97,7 @@
    "summary": "nanomsg-next-generation -- light-weight brokerless messaging"
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -131,6 +136,8 @@
     "mbedtls"
    ],
    "run": [
+    "mbedtls",
+    "mbedtls",
     "ucrt"
    ]
   },
@@ -140,7 +147,13 @@
    "url": "https://github.com/nanomsg/nng/archive/v1.6.0.tar.gz"
   },
   "test": {
-   "commands": null
+   "commands": [
+    "test -f $PREFIX/lib/libnng.so",
+    "nngcat -V",
+    "test -f $PREFIX/lib/libnng.dylib",
+    "nngcat -V",
+    "nngcat.exe -V"
+   ]
   }
  },
  "name": "nng",
@@ -156,7 +169,7 @@
    "summary": "nanomsg-next-generation -- light-weight brokerless messaging"
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -179,7 +192,9 @@
    "host": [
     "mbedtls"
    ],
-   "run": []
+   "run": [
+    "mbedtls"
+   ]
   },
   "source": {
    "patches": null,
@@ -188,7 +203,8 @@
   },
   "test": {
    "commands": [
-    "test -f $PREFIX/lib/libnng.a"
+    "test -f $PREFIX/lib/libnng.dylib",
+    "nngcat -V"
    ]
   }
  },
@@ -211,7 +227,9 @@
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "mbedtls"
+   ]
   },
   "test": {
    "__set__": true,
@@ -233,7 +251,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/nng.json"
  },
- "raw_meta_yaml": "{% set name = \"nng\" %}\n{% set version = \"1.6.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/nanomsg/nng/archive/v{{ version }}.tar.gz\n  sha256: f639e77911ef935a13e9779d4a18d45490433ba744f89752a15b84c929ce2725\n  patches:\n    - test.patch  # [linux]\n\nbuild:\n  number: 1\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make\n    - ninja\n  host:\n    - mbedtls  # [not win]\n  run:\n    - ucrt  # [win]\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libnng.a  # [unix]\n\nabout:\n  home: https://nng.nanomsg.org/\n  summary: 'nanomsg-next-generation -- light-weight brokerless messaging'\n  description: |\n    nanomsg-next-generation -- light-weight brokerless messaging\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE.txt\n  doc_url: https://nng.nanomsg.org/man/\n  dev_url: https://github.com/nanomsg/nng\n\nextra:\n  recipe-maintainers:\n    - jan-janssen\n    - carlodri\n",
+ "raw_meta_yaml": "{% set name = \"nng\" %}\n{% set version = \"1.6.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/nanomsg/nng/archive/v{{ version }}.tar.gz\n  sha256: f639e77911ef935a13e9779d4a18d45490433ba744f89752a15b84c929ce2725\n  patches:\n    - test.patch  # [linux]\n\nbuild:\n  number: 2\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make\n    - ninja\n  host:\n    - mbedtls  # [not win]\n  run:\n    - ucrt  # [win]\n    - mbedtls  # [not win]\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libnng.so  # [linux]\n    - test -f $PREFIX/lib/libnng.dylib  # [osx]\n    - nngcat -V  # [unix]\n    - nngcat.exe -V  # [win]\n\nabout:\n  home: https://nng.nanomsg.org/\n  summary: 'nanomsg-next-generation -- light-weight brokerless messaging'\n  description: |\n    nanomsg-next-generation -- light-weight brokerless messaging\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE.txt\n  doc_url: https://nng.nanomsg.org/man/\n  dev_url: https://github.com/nanomsg/nng\n\nextra:\n  recipe-maintainers:\n    - jan-janssen\n    - carlodri\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -270,6 +288,7 @@
    "elements": [
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "mbedtls",
     "ucrt"
    ]
   },
@@ -299,6 +318,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "mbedtls",
     "ucrt"
    ]
   },
@@ -324,7 +344,7 @@
    "summary": "nanomsg-next-generation -- light-weight brokerless messaging"
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -355,7 +375,9 @@
    "url": "https://github.com/nanomsg/nng/archive/v1.6.0.tar.gz"
   },
   "test": {
-   "commands": null
+   "commands": [
+    "nngcat.exe -V"
+   ]
   }
  },
  "win_64_requirements": {
