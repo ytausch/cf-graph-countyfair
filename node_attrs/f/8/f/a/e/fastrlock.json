@@ -28,7 +28,7 @@
    "summary": "This is a C-level implementation of a fast, re-entrant, optimistic lock for CPython"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --global-option=\"--with-cython\" -vv"
   },
   "extra": {
@@ -142,7 +142,7 @@
    "summary": "This is a C-level implementation of a fast, re-entrant, optimistic lock for CPython"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --global-option=\"--with-cython\" -vv"
   },
   "extra": {
@@ -256,7 +256,7 @@
    "summary": "This is a C-level implementation of a fast, re-entrant, optimistic lock for CPython"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --global-option=\"--with-cython\" -vv"
   },
   "extra": {
@@ -370,7 +370,7 @@
    "summary": "This is a C-level implementation of a fast, re-entrant, optimistic lock for CPython"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --global-option=\"--with-cython\" -vv"
   },
   "extra": {
@@ -690,7 +690,7 @@
    "summary": "This is a C-level implementation of a fast, re-entrant, optimistic lock for CPython"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --global-option=\"--with-cython\" -vv"
   },
   "extra": {
@@ -804,7 +804,7 @@
    "summary": "This is a C-level implementation of a fast, re-entrant, optimistic lock for CPython"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --global-option=\"--with-cython\" -vv"
   },
   "extra": {
@@ -917,7 +917,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/fastrlock.json"
  },
- "raw_meta_yaml": "{% set name = \"fastrlock\" %}\n{% set version = \"0.8.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 644ec9215cf9c4df8028d8511379a15d9c1af3e16d80e47f1b6fdc6ba118356a\n\nbuild:\n  number: 1\n  # We need to pass --with-cython to force cython to regenerate the .c file\n  script: {{ PYTHON }} -m pip install . --global-option=\"--with-cython\" -vv\n\nrequirements:\n  build:\n    - {{ compiler(\"c\") }}\n    - {{ compiler(\"cxx\") }}\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n  host:\n    - python\n    - pip\n    - cython\n  run:\n    - python\n\ntest:\n  imports:\n    - fastrlock\n\nabout:\n  home: https://github.com/scoder/fastrlock\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: This is a C-level implementation of a fast, re-entrant, optimistic lock for CPython\n  description: |\n    This is a C-level implementation of a fast, re-entrant,\n    optimistic lock for CPython. It is a drop-in replacement for\n    threading.RLock. FastRLock is implemented in Cython and also provides a\n    C-API for direct use from Cython code via from fastrlock cimport rlock.\n\n    Under normal conditions, it is about 10x faster than threading.RLock in\n    Python 2.7 because it avoids all locking unless two or more threads try to\n    acquire it at the same time. Under congestion, it is still about 10% faster\n    than RLock due to being implemented in Cython.\n\n    This is mostly equivalent to the revised RLock implementation in Python\n    3.2, but still faster due to being implemented in Cython. Note that the\n    threading.RLock implementation in Python 3.4 and later tends to be as fast\n    or even faster than the lock provided by this package, when called through\n    the Python API. FastRLock is still faster also on these systems when called\n    through its Cython API.\n  dev_url: https://github.com/scoder/fastrlock\n\nextra:\n  recipe-maintainers:\n    - hmaarrfk\n",
+ "raw_meta_yaml": "{% set name = \"fastrlock\" %}\n{% set version = \"0.8.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 644ec9215cf9c4df8028d8511379a15d9c1af3e16d80e47f1b6fdc6ba118356a\n\nbuild:\n  number: 2\n  # We need to pass --with-cython to force cython to regenerate the .c file\n  script: {{ PYTHON }} -m pip install . --global-option=\"--with-cython\" -vv\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - cython                                 # [build_platform != target_platform]\n    - {{ compiler(\"c\") }}\n    - {{ compiler(\"cxx\") }}\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n  host:\n    - python\n    - pip\n    - cython\n  run:\n    - python\n\ntest:\n  imports:\n    - fastrlock\n\nabout:\n  home: https://github.com/scoder/fastrlock\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: This is a C-level implementation of a fast, re-entrant, optimistic lock for CPython\n  description: |\n    This is a C-level implementation of a fast, re-entrant,\n    optimistic lock for CPython. It is a drop-in replacement for\n    threading.RLock. FastRLock is implemented in Cython and also provides a\n    C-API for direct use from Cython code via from fastrlock cimport rlock.\n\n    Under normal conditions, it is about 10x faster than threading.RLock in\n    Python 2.7 because it avoids all locking unless two or more threads try to\n    acquire it at the same time. Under congestion, it is still about 10% faster\n    than RLock due to being implemented in Cython.\n\n    This is mostly equivalent to the revised RLock implementation in Python\n    3.2, but still faster due to being implemented in Cython. Note that the\n    threading.RLock implementation in Python 3.4 and later tends to be as fast\n    or even faster than the lock provided by this package, when called through\n    the Python API. FastRLock is still faster also on these systems when called\n    through its Cython API.\n  dev_url: https://github.com/scoder/fastrlock\n\nextra:\n  recipe-maintainers:\n    - hmaarrfk\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1003,7 +1003,7 @@
    "summary": "This is a C-level implementation of a fast, re-entrant, optimistic lock for CPython"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script": "PYTHON -m pip install . --global-option=\"--with-cython\" -vv"
   },
   "extra": {
