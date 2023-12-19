@@ -22,13 +22,13 @@
    "summary": "Direct Accelerated Geometry Toolkit"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "dagmc * mpi_openmpi_*",
     "dagmc * mpi_openmpi_*",
     "dagmc * mpi_openmpi_*"
    ],
-   "string": "mpi_openmpi_py310h1234567_0"
+   "string": "mpi_openmpi_py310h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -172,7 +172,7 @@
    "summary": "Direct Accelerated Geometry Toolkit"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "dagmc * mpi_openmpi_*",
     "dagmc * mpi_openmpi_*",
@@ -181,7 +181,7 @@
     "dagmc * mpi_openmpi_*",
     "dagmc * mpi_openmpi_*"
    ],
-   "string": "mpi_openmpi_py310h1234567_0"
+   "string": "mpi_openmpi_py310h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -363,13 +363,13 @@
    "summary": "Direct Accelerated Geometry Toolkit"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "dagmc * mpi_openmpi_*",
     "dagmc * mpi_openmpi_*",
     "dagmc * mpi_openmpi_*"
    ],
-   "string": "mpi_openmpi_py310h1234567_0"
+   "string": "mpi_openmpi_py310h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -517,7 +517,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/dagmc.json"
  },
- "raw_meta_yaml": "{% set name = \"dagmc\" %}\n{% set version = \"3.2.3\" %}\n{% set build = 0 %}\n\n# ensure mpi is defined (needed for conda-smithy recipe-lint)\n{% set mpi = mpi or 'nompi' %}\n\n{% if mpi == 'nompi' %}\n# prioritize nompi variant via build number\n{% set build = build + 100 %}\n{% endif %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  git_url: https://github.com/svalinn/DAGMC.git\n  git_rev: v{{ version }}\n\n\nbuild:\n  number: {{ build }}\n\n  # add build string so packages can depend on\n  # mpi or nompi variants explicitly:\n  # `dagmc * mpi_mpich_*` for mpich\n  # `dagmc * mpi_openmpi_*` for openmpi\n  # `dagmc * nompi_*` for no mpi\n\n  {% if mpi != 'nompi' %}\n  {% set mpi_prefix = \"mpi_\" + mpi %}\n  {% else %}\n  {% set mpi_prefix = \"nompi\" %}\n  {% endif %}\n  string: {{ mpi_prefix }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build }}\n\n  {% if mpi != 'nompi' %}\n  run_exports:\n    - {{ name }} * {{ mpi_prefix }}_*\n  {% endif %}\n\n  skip: True  # [win]\n\nrequirements:\n  build:\n    - cmake\n    - make\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ mpi }}  # [mpi != 'nompi']\n  host:\n    - eigen\n    # matching MOAB HDF5 host requirements to ensure matched pinning of HDF5 versions\n    - hdf5\n    - hdf5 * {{ mpi_prefix }}_*\n    - moab * {{ mpi_prefix }}_tempest_*\n    - {{ mpi }}  # [mpi != 'nompi']\n  run:\n    - eigen\n    - hdf5 * {{ mpi_prefix }}_*\n    - moab * {{ mpi_prefix }}_tempest_*\n    - zlib\n    - {{ mpi }}  # [mpi != 'nompi']\n\ntest:\n   commands:\n     - test -f \"${PREFIX}/bin/make_watertight\"\n     - make_watertight --help\n\nabout:\n  home: https://svalinn.github.io/DAGMC/\n  license: BSD-2-Clause\n  license_file: LICENSE.txt\n  summary: 'Direct Accelerated Geometry Toolkit'\n  description: |\n    Direct Accelerated Geometry Monte Carlo (DAGMC) is a software package that\n    allows users to perform Monte Carlo radiation transport directly on CAD\n    models.\n  dev_url: https://github.com/svalinn/DAGMC\n\nextra:\n  recipe-maintainers:\n    - gonuke\n    - pshriwise\n    - ljacobson64\n    - kkiesling\n    - bam241\n    - ngranda\n    - shimwell\n",
+ "raw_meta_yaml": "{% set name = \"dagmc\" %}\n{% set version = \"3.2.3\" %}\n{% set build = 1 %}\n\n# ensure mpi is defined (needed for conda-smithy recipe-lint)\n{% set mpi = mpi or 'nompi' %}\n\n{% if mpi == 'nompi' %}\n# prioritize nompi variant via build number\n{% set build = build + 100 %}\n{% endif %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  git_url: https://github.com/svalinn/DAGMC.git\n  git_rev: v{{ version }}\n\n\nbuild:\n  number: {{ build }}\n\n  # add build string so packages can depend on\n  # mpi or nompi variants explicitly:\n  # `dagmc * mpi_mpich_*` for mpich\n  # `dagmc * mpi_openmpi_*` for openmpi\n  # `dagmc * nompi_*` for no mpi\n\n  {% if mpi != 'nompi' %}\n  {% set mpi_prefix = \"mpi_\" + mpi %}\n  {% else %}\n  {% set mpi_prefix = \"nompi\" %}\n  {% endif %}\n  string: {{ mpi_prefix }}_py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ build }}\n\n  {% if mpi != 'nompi' %}\n  run_exports:\n    - {{ name }} * {{ mpi_prefix }}_*\n  {% endif %}\n\n  skip: True  # [win]\n\nrequirements:\n  build:\n    - cmake\n    - make\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ mpi }}  # [mpi != 'nompi']\n  host:\n    - eigen\n    # matching MOAB HDF5 host requirements to ensure matched pinning of HDF5 versions\n    - hdf5\n    - hdf5 * {{ mpi_prefix }}_*\n    - moab * {{ mpi_prefix }}_tempest_*\n    - {{ mpi }}  # [mpi != 'nompi']\n  run:\n    - eigen\n    - hdf5 * {{ mpi_prefix }}_*\n    - moab * {{ mpi_prefix }}_tempest_*\n    - zlib\n    - {{ mpi }}  # [mpi != 'nompi']\n\ntest:\n   commands:\n     - test -f \"${PREFIX}/bin/make_watertight\"\n     - make_watertight --help\n\nabout:\n  home: https://svalinn.github.io/DAGMC/\n  license: BSD-2-Clause\n  license_file: LICENSE.txt\n  summary: 'Direct Accelerated Geometry Toolkit'\n  description: |\n    Direct Accelerated Geometry Monte Carlo (DAGMC) is a software package that\n    allows users to perform Monte Carlo radiation transport directly on CAD\n    models.\n  dev_url: https://github.com/svalinn/DAGMC\n\nextra:\n  recipe-maintainers:\n    - gonuke\n    - pshriwise\n    - ljacobson64\n    - kkiesling\n    - bam241\n    - ngranda\n    - shimwell\n",
  "req": {
   "__set__": true,
   "elements": [
