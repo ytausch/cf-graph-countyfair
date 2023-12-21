@@ -25,7 +25,7 @@
    "summary": "Open-source many-body perturbation theory and time-dependent density functional theory"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -44,22 +44,47 @@
     "make",
     "m4",
     "libgomp",
-    "wget"
+    "wget",
+    "openmpi",
+    "libblas",
+    "liblapack",
+    "fftw * *openmpi*",
+    "hdf5 1.10 *openmpi*",
+    "libnetcdf 4.7 *openmpi*",
+    "netcdf-fortran 4.5 *openmpi*",
+    "zlib",
+    "scalapack",
+    "libxc * *cpu*",
+    "petsc * *complex*",
+    "slepc * *complex*"
    ],
    "host": [
     "openmpi",
-    "fftw",
     "libblas",
     "liblapack",
-    "hdf5 * *openmpi*",
-    "libnetcdf * *openmpi*",
-    "netcdf-fortran * *openmpi*"
+    "fftw * *openmpi*",
+    "hdf5 1.10 *openmpi*",
+    "libnetcdf 4.7 *openmpi*",
+    "netcdf-fortran 4.5 *openmpi*",
+    "zlib",
+    "scalapack",
+    "libxc * *cpu*",
+    "petsc * *complex*",
+    "slepc * *complex*"
    ],
    "run": [
     "openmpi",
     "fftw",
     "zlib",
-    "libcurl"
+    "libcurl",
+    "scalapack",
+    "libblas",
+    "liblapack",
+    "hdf5",
+    "libnetcdf",
+    "netcdf-fortran",
+    "petsc",
+    "slepc"
    ]
   },
   "source": {
@@ -77,11 +102,23 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "fftw",
     "fortran_compiler_stub",
+    "hdf5",
+    "libblas",
     "libgomp",
+    "liblapack",
+    "libnetcdf",
+    "libxc",
     "m4",
     "make",
-    "wget"
+    "netcdf-fortran",
+    "openmpi",
+    "petsc",
+    "scalapack",
+    "slepc",
+    "wget",
+    "zlib"
    ]
   },
   "host": {
@@ -92,16 +129,29 @@
     "libblas",
     "liblapack",
     "libnetcdf",
+    "libxc",
     "netcdf-fortran",
-    "openmpi"
+    "openmpi",
+    "petsc",
+    "scalapack",
+    "slepc",
+    "zlib"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "fftw",
+    "hdf5",
+    "libblas",
     "libcurl",
+    "liblapack",
+    "libnetcdf",
+    "netcdf-fortran",
     "openmpi",
+    "petsc",
+    "scalapack",
+    "slepc",
     "zlib"
    ]
   },
@@ -122,7 +172,7 @@
    "summary": "Open-source many-body perturbation theory and time-dependent density functional theory"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -141,22 +191,47 @@
     "make",
     "m4",
     "libgomp",
-    "wget"
+    "wget",
+    "openmpi",
+    "libblas",
+    "liblapack",
+    "fftw * *openmpi*",
+    "hdf5 1.10 *openmpi*",
+    "libnetcdf 4.7 *openmpi*",
+    "netcdf-fortran 4.5 *openmpi*",
+    "zlib",
+    "scalapack",
+    "libxc * *cpu*",
+    "petsc * *complex*",
+    "slepc * *complex*"
    ],
    "host": [
     "openmpi",
-    "fftw",
     "libblas",
     "liblapack",
-    "hdf5 * *openmpi*",
-    "libnetcdf * *openmpi*",
-    "netcdf-fortran * *openmpi*"
+    "fftw * *openmpi*",
+    "hdf5 1.10 *openmpi*",
+    "libnetcdf 4.7 *openmpi*",
+    "netcdf-fortran 4.5 *openmpi*",
+    "zlib",
+    "scalapack",
+    "libxc * *cpu*",
+    "petsc * *complex*",
+    "slepc * *complex*"
    ],
    "run": [
     "openmpi",
     "fftw",
     "zlib",
-    "libcurl"
+    "libcurl",
+    "scalapack",
+    "libblas",
+    "liblapack",
+    "hdf5",
+    "libnetcdf",
+    "netcdf-fortran",
+    "petsc",
+    "slepc"
    ]
   },
   "source": {
@@ -183,7 +258,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/yambo.json"
  },
- "raw_meta_yaml": "{% set name = \"yambo\" %}\n{% set version = \"5.2.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/yambo-code/yambo/archive/refs/tags/{{ version }}.tar.gz\n  sha256: eb41e83df716eb87261cf130ffe7f930e7dc2e123343d47b73d5a3c69fea7316\n\nbuild:\n  number: 0\n  skip: true  # [not linux]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('fortran') }}\n    - make\n    - m4\n    - libgomp  # [linux]\n    - llvm-openmp  # [osx]\n    - wget\n  host:\n    - openmpi\n    - fftw\n    - libblas\n    - liblapack\n    - hdf5 * *openmpi*\n    - libnetcdf * *openmpi*\n    - netcdf-fortran * *openmpi*\n    # re-enable after complex variants of libraries are available\n    # https://github.com/conda-forge/petsc-feedstock/issues/17\n    # - slepc\n    # - petsc\n  run:\n    - openmpi\n    - fftw\n    - zlib\n    - libcurl\n\ntest:\n  commands:\n    - yambo --help\n\nabout:\n  home: http://www.yambo-code.org/\n  license: GPL-2.0-or-later\n  license_family: GPL\n  license_file: LICENSE\n  summary: Open-source many-body perturbation theory and time-dependent density functional theory\n  description: |\n    YAMBO implements Many-Body Perturbation Theory (MBPT) methods (such as GW and BSE) and Time-Dependent Density Functional Theory (TDDFT), which allows for accurate prediction of fundamental properties as band gaps of semiconductors, band alignments, defect quasi-particle energies, optics and out-of-equilibrium properties of materials.\n    The code resorts to previously computed electronic structure, usually at the Density Functional Theory (DFT) level and for this reason it is interfaced with two of the most used planewave DFT codes used in scientific community, Quantum ESPRESSO and Abinit.\n  doc_url: http://www.yambo-code.org/\n  dev_url: http://www.yambo-code.org/\n\nextra:\n  recipe-maintainers:\n    - ltalirz\n    - nicspalla\n",
+ "raw_meta_yaml": "{% set name = \"yambo\" %}\n{% set version = \"5.2.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/yambo-code/yambo/archive/refs/tags/{{ version }}.tar.gz\n  sha256: eb41e83df716eb87261cf130ffe7f930e7dc2e123343d47b73d5a3c69fea7316\n\nbuild:\n  number: 1\n  skip: true  # [not linux]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('fortran') }}\n    - make\n    - m4\n    - libgomp  # [linux]\n    - llvm-openmp  # [osx]\n    - wget\n    - openmpi\n    - libblas\n    - liblapack\n    - fftw * *openmpi*\n    - hdf5 1.10 *openmpi*\n    - libnetcdf 4.7 *openmpi*\n    - netcdf-fortran 4.5 *openmpi*\n    - zlib\n    - scalapack\n    - libxc * *cpu*\n    - petsc * *complex*\n    - slepc * *complex*\n  host:\n    - openmpi\n    - libblas\n    - liblapack\n    - fftw * *openmpi*\n    - hdf5 1.10 *openmpi*\n    - libnetcdf 4.7 *openmpi*\n    - netcdf-fortran 4.5 *openmpi*\n    - zlib\n    - scalapack\n    - libxc * *cpu*\n    - petsc * *complex*\n    - slepc * *complex*\n  run:\n    - openmpi\n    - fftw\n    - zlib\n    - libcurl\n    - scalapack\n    - libblas\n    - liblapack\n    - hdf5\n    - libnetcdf\n    - netcdf-fortran\n    - petsc\n    - slepc\n\ntest:\n  commands:\n    - yambo --help\n\nabout:\n  home: http://www.yambo-code.org/\n  license: GPL-2.0-or-later\n  license_family: GPL\n  license_file: LICENSE\n  summary: Open-source many-body perturbation theory and time-dependent density functional theory\n  description: |\n    YAMBO implements Many-Body Perturbation Theory (MBPT) methods (such as GW and BSE) and Time-Dependent Density Functional Theory (TDDFT), which allows for accurate prediction of fundamental properties as band gaps of semiconductors, band alignments, defect quasi-particle energies, optics and out-of-equilibrium properties of materials.\n    The code resorts to previously computed electronic structure, usually at the Density Functional Theory (DFT) level and for this reason it is interfaced with two of the most used planewave DFT codes used in scientific community, Quantum ESPRESSO and Abinit.\n  doc_url: http://www.yambo-code.org/\n  dev_url: http://www.yambo-code.org/\n\nextra:\n  recipe-maintainers:\n    - ltalirz\n    - nicspalla\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -196,10 +271,14 @@
    "libgomp",
    "liblapack",
    "libnetcdf",
+   "libxc",
    "m4",
    "make",
    "netcdf-fortran",
    "openmpi",
+   "petsc",
+   "scalapack",
+   "slepc",
    "wget",
    "zlib"
   ]
@@ -209,11 +288,23 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "fftw",
     "fortran_compiler_stub",
+    "hdf5",
+    "libblas",
     "libgomp",
+    "liblapack",
+    "libnetcdf",
+    "libxc",
     "m4",
     "make",
-    "wget"
+    "netcdf-fortran",
+    "openmpi",
+    "petsc",
+    "scalapack",
+    "slepc",
+    "wget",
+    "zlib"
    ]
   },
   "host": {
@@ -227,8 +318,13 @@
     "libblas",
     "liblapack",
     "libnetcdf",
+    "libxc",
     "netcdf-fortran",
-    "openmpi"
+    "openmpi",
+    "petsc",
+    "scalapack",
+    "slepc",
+    "zlib"
    ]
   },
   "run": {
@@ -238,8 +334,16 @@
     "ctng-compilers",
     "fftw",
     "fortran_compiler_stub",
+    "hdf5",
+    "libblas",
     "libcurl",
+    "liblapack",
+    "libnetcdf",
+    "netcdf-fortran",
     "openmpi",
+    "petsc",
+    "scalapack",
+    "slepc",
     "zlib"
    ]
   },
@@ -254,31 +358,56 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "fftw * *openmpi*",
     "fortran_compiler_stub",
+    "hdf5 1.10 *openmpi*",
+    "libblas",
     "libgomp",
+    "liblapack",
+    "libnetcdf 4.7 *openmpi*",
+    "libxc * *cpu*",
     "m4",
     "make",
-    "wget"
+    "netcdf-fortran 4.5 *openmpi*",
+    "openmpi",
+    "petsc * *complex*",
+    "scalapack",
+    "slepc * *complex*",
+    "wget",
+    "zlib"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
-    "fftw",
-    "hdf5 * *openmpi*",
+    "fftw * *openmpi*",
+    "hdf5 1.10 *openmpi*",
     "libblas",
     "liblapack",
-    "libnetcdf * *openmpi*",
-    "netcdf-fortran * *openmpi*",
-    "openmpi"
+    "libnetcdf 4.7 *openmpi*",
+    "libxc * *cpu*",
+    "netcdf-fortran 4.5 *openmpi*",
+    "openmpi",
+    "petsc * *complex*",
+    "scalapack",
+    "slepc * *complex*",
+    "zlib"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "fftw",
+    "hdf5",
+    "libblas",
     "libcurl",
+    "liblapack",
+    "libnetcdf",
+    "netcdf-fortran",
     "openmpi",
+    "petsc",
+    "scalapack",
+    "slepc",
     "zlib"
    ]
   },
