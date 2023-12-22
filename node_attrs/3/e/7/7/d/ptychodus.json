@@ -142,11 +142,11 @@
   ],
   "package": {
    "name": "ptychodus-split",
-   "version": "0.6.4"
+   "version": "0.6.5"
   },
   "source": {
-   "sha256": "d74435092355eaef5a6c904e52b1d110fbfb1564bae45f44fdd4eca770b0923d",
-   "url": "https://github.com/AdvancedPhotonSource/ptychodus/releases/download/v0.6.4/ptychodus-v0.6.4.zip"
+   "sha256": "5eeffded565c5f8d1bc40bd115ae87bf1a3742c9b9171f0bf5d02a618c6d51f2",
+   "url": "https://github.com/AdvancedPhotonSource/ptychodus/releases/download/v0.6.5/ptychodus-v0.6.5.zip"
   }
  },
  "linux_64_requirements": {
@@ -325,11 +325,11 @@
   ],
   "package": {
    "name": "ptychodus-split",
-   "version": "0.6.4"
+   "version": "0.6.5"
   },
   "source": {
-   "sha256": "d74435092355eaef5a6c904e52b1d110fbfb1564bae45f44fdd4eca770b0923d",
-   "url": "https://github.com/AdvancedPhotonSource/ptychodus/releases/download/v0.6.4/ptychodus-v0.6.4.zip"
+   "sha256": "5eeffded565c5f8d1bc40bd115ae87bf1a3742c9b9171f0bf5d02a618c6d51f2",
+   "url": "https://github.com/AdvancedPhotonSource/ptychodus/releases/download/v0.6.5/ptychodus-v0.6.5.zip"
   }
  },
  "name": "ptychodus-split",
@@ -348,7 +348,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ptychodus.json"
  },
- "raw_meta_yaml": "{% set name = \"ptychodus\" %}\n{% set version = \"0.6.4\" %}\n\npackage:\n  name: ptychodus-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/AdvancedPhotonSource/ptychodus/releases/download/v{{ version }}/ptychodus-v{{ version }}.zip\n  sha256: d74435092355eaef5a6c904e52b1d110fbfb1564bae45f44fdd4eca770b0923d\n\nbuild:\n  number: 0\n  skip: true  # [cuda_compiler_version != \"11.2\"]\n  skip: true  # [cuda_compiler_version == \"None\"]\n\noutputs:\n  # all optional packages\n  - name: ptychodus-all\n\n    build:\n      noarch: generic\n      ignore_run_exports_from:\n        - {{ compiler('cuda') }}\n\n    requirements:\n      build:\n      # We don't need the compiler, just the __cuda virtual package\n        - {{ compiler('cuda') }}\n      run:\n        - {{ pin_subpackage('ptychodus', exact=True) }}\n        - gladier\n        - gladier-tools\n        - ptychonn\n        - tike\n\n    test:\n      # no import test because tike imports cupy\n      requires:\n        - pip\n      commands:\n        - pip check\n      # no CLI test because tike imports cupy\n\n  # with QT\n  - name: ptychodus\n\n    build:\n      noarch: generic\n\n    requirements:\n      run:\n        - {{ pin_subpackage('ptychodus-core', exact=True) }}\n        - pyqt\n\n    test:\n      imports:\n        - ptychodus\n      requires:\n        - pip\n      commands:\n        - pip check\n        - ptychodus --version\n\n  # ptychodus without QT (headless) without optional packages\n  - name: ptychodus-core\n\n    script: build-core.sh\n\n    build:\n      noarch: python\n      entry_points:\n        - ptychodus = ptychodus.__main__:main\n        - ptychodus-rpc = ptychodus.model.rpc:main\n\n    requirements:\n      host:\n        - pip\n        - python >=3.10\n        - setuptools >=46.4.0\n        - setuptools_scm >=7\n        - setuptools_scm_git_archive\n        - wheel\n      run:\n        - h5py =3.*\n        - hdf5plugin\n        - matplotlib-base =3.*\n        - numpy =1.*\n        - psutil =5.*\n        - python >=3.10\n        - scikit-image =0.*\n        - scipy >=1.6,<2.0\n        - tifffile =2023.*\n        - watchdog =3.*\n      run_constrained:\n        - gladier >=0.9\n        - gladier-tools >=0.5\n        # pytorch is not a direct dependency, but we want to GPU version for ptychonn\n        - pytorch=*=cuda*\n        - ptychonn =0.2.*\n        - pyqt =5.*\n        - tike =0.25.*\n\n    test:\n      imports:\n        - ptychodus\n      requires:\n        - pip\n      commands:\n        - pip check\n        - ptychodus --version\n\nabout:\n  home: https://github.com/AdvancedPhotonSource/ptychodus\n  summary: Ptychodus is a ptychography analysis application.\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  dev_url: https://github.com/AdvancedPhotonSource/ptychodus\n\nextra:\n  recipe-maintainers:\n    - AdvancedPhotonSource/ptychodus\n    - carterbox\n    - stevehenke\n",
+ "raw_meta_yaml": "{% set name = \"ptychodus\" %}\n{% set version = \"0.6.5\" %}\n\npackage:\n  name: ptychodus-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/AdvancedPhotonSource/ptychodus/releases/download/v{{ version }}/ptychodus-v{{ version }}.zip\n  sha256: 5eeffded565c5f8d1bc40bd115ae87bf1a3742c9b9171f0bf5d02a618c6d51f2\n\nbuild:\n  number: 0\n  skip: true  # [cuda_compiler_version != \"11.2\"]\n  skip: true  # [cuda_compiler_version == \"None\"]\n\noutputs:\n  # all optional packages\n  - name: ptychodus-all\n\n    build:\n      noarch: generic\n      ignore_run_exports_from:\n        - {{ compiler('cuda') }}\n\n    requirements:\n      build:\n      # We don't need the compiler, just the __cuda virtual package\n        - {{ compiler('cuda') }}\n      run:\n        - {{ pin_subpackage('ptychodus', exact=True) }}\n        - gladier\n        - gladier-tools\n        - ptychonn\n        - tike\n\n    test:\n      # no import test because tike imports cupy\n      requires:\n        - pip\n      commands:\n        - pip check\n      # no CLI test because tike imports cupy\n\n  # with QT\n  - name: ptychodus\n\n    build:\n      noarch: generic\n\n    requirements:\n      run:\n        - {{ pin_subpackage('ptychodus-core', exact=True) }}\n        - pyqt\n\n    test:\n      imports:\n        - ptychodus\n      requires:\n        - pip\n      commands:\n        - pip check\n        - ptychodus --version\n\n  # ptychodus without QT (headless) without optional packages\n  - name: ptychodus-core\n\n    script: build-core.sh\n\n    build:\n      noarch: python\n      entry_points:\n        - ptychodus = ptychodus.__main__:main\n        - ptychodus-rpc = ptychodus.model.rpc:main\n\n    requirements:\n      host:\n        - pip\n        - python >=3.10\n        - setuptools >=46.4.0\n        - setuptools_scm >=7\n        - setuptools_scm_git_archive\n        - wheel\n      run:\n        - h5py =3.*\n        - hdf5plugin\n        - matplotlib-base =3.*\n        - numpy =1.*\n        - psutil =5.*\n        - python >=3.10\n        - scikit-image =0.*\n        - scipy >=1.6,<2.0\n        - tifffile =2023.*\n        - watchdog =3.*\n      run_constrained:\n        - gladier >=0.9\n        - gladier-tools >=0.5\n        # pytorch is not a direct dependency, but we want to GPU version for ptychonn\n        - pytorch=*=cuda*\n        - ptychonn =0.2.*\n        - pyqt =5.*\n        - tike =0.25.*\n\n    test:\n      imports:\n        - ptychodus\n      requires:\n        - pip\n      commands:\n        - pip check\n        - ptychodus --version\n\nabout:\n  home: https://github.com/AdvancedPhotonSource/ptychodus\n  summary: Ptychodus is a ptychography analysis application.\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  dev_url: https://github.com/AdvancedPhotonSource/ptychodus\n\nextra:\n  recipe-maintainers:\n    - AdvancedPhotonSource/ptychodus\n    - carterbox\n    - stevehenke\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -474,8 +474,8 @@
    ]
   }
  },
- "url": "https://github.com/AdvancedPhotonSource/ptychodus/releases/download/v0.6.4/ptychodus-v0.6.4.zip",
- "version": "0.6.4",
+ "url": "https://github.com/AdvancedPhotonSource/ptychodus/releases/download/v0.6.5/ptychodus-v0.6.5.zip",
+ "version": "0.6.5",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/ptychodus.json"
  }
