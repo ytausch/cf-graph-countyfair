@@ -165,7 +165,7 @@
   ],
   "package": {
    "name": "cyclonedx-python-lib",
-   "version": "6.0.0"
+   "version": "6.1.0"
   },
   "requirements": {
    "host": [
@@ -176,8 +176,8 @@
    ]
   },
   "source": {
-   "sha256": "a848f957aa33ed86c75535a455dbe0bc77d4b5356600470c72d9cc6db63727b6",
-   "url": "https://pypi.io/packages/source/c/cyclonedx-python-lib/cyclonedx_python_lib-6.0.0.tar.gz"
+   "sha256": "e31207631b1c14c87c2ca1b5aab3f1aa1824ed2290d391a5adb28b977eb4a64b",
+   "url": "https://pypi.io/packages/source/c/cyclonedx-python-lib/cyclonedx_python_lib-6.1.0.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -368,7 +368,7 @@
   ],
   "package": {
    "name": "cyclonedx-python-lib",
-   "version": "6.0.0"
+   "version": "6.1.0"
   },
   "requirements": {
    "host": [
@@ -379,8 +379,8 @@
    ]
   },
   "source": {
-   "sha256": "a848f957aa33ed86c75535a455dbe0bc77d4b5356600470c72d9cc6db63727b6",
-   "url": "https://pypi.io/packages/source/c/cyclonedx-python-lib/cyclonedx_python_lib-6.0.0.tar.gz"
+   "sha256": "e31207631b1c14c87c2ca1b5aab3f1aa1824ed2290d391a5adb28b977eb4a64b",
+   "url": "https://pypi.io/packages/source/c/cyclonedx-python-lib/cyclonedx_python_lib-6.1.0.tar.gz"
   }
  },
  "name": "cyclonedx-python-lib",
@@ -400,7 +400,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cyclonedx-python-lib.json"
  },
- "raw_meta_yaml": "{% set version = \"6.0.0\" %}\n{% set min_python = \"python >=3.8\" %}\n\npackage:\n  name: cyclonedx-python-lib\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/c/cyclonedx-python-lib/cyclonedx_python_lib-{{ version }}.tar.gz\n  sha256: a848f957aa33ed86c75535a455dbe0bc77d4b5356600470c72d9cc6db63727b6\n\nbuild:\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    - {{ min_python }}\n  run:\n    - {{ min_python }}\n\noutputs:\n  - name: cyclonedx-python-lib\n    build:\n      noarch: python\n      script:\n        - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n        # TODO: restore after https://github.com/CycloneDX/cyclonedx-python-lib/issues/435\n        # - |-\n        #   {{ PYTHON }} -c \"assert not (__import__('pathlib').Path(__import__('site').getsitepackages()[0]) / 'LICENSE').exists()\"\n        - |-\n          {{ PYTHON }} -c \"import os, pathlib; sp = pathlib.Path(os.environ['SP_DIR']); [(sp / f).unlink() for f in ['README.md', 'LICENSE', 'NOTICE']]\"\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n        - poetry-core >=1.0.0\n      run:\n        - {{ min_python }}\n        # from poetry-generated setup.py\n        - license-expression >=30.0.0,<31.0.0\n        - packageurl-python >=0.11\n        - py-serializable >=0.16.0,<0.17.0\n        - sortedcontainers >=2.4.0,<3.0.0\n    test: &simple_test\n      imports:\n        - cyclonedx\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: cyclonedx-python-lib-with-json-validation\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage(\"cyclonedx-python-lib\", exact=True) }}\n        - jsonschema-with-format >=4.18,<5.0\n    test: *simple_test\n\n  - name: cyclonedx-python-lib-with-xml-validation\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage(\"cyclonedx-python-lib\", exact=True) }}\n        - lxml >=4,<5\n    test: *simple_test\n\n  - name: cyclonedx-python-lib-with-validation\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage(\"cyclonedx-python-lib\", exact=True) }}\n        - {{ pin_subpackage(\"cyclonedx-python-lib-with-json-validation\", exact=True) }}\n        - {{ pin_subpackage(\"cyclonedx-python-lib-with-xml-validation\", exact=True) }}\n    test:\n      imports:\n        - cyclonedx\n      source_files:\n        - tests\n      commands:\n        - pip check\n        - pytest -vv --color=yes --tb=long --cov=cyclonedx --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=93\n      requires:\n        - ddt >=1.6.0,<2.0.0\n        - pip\n        - pytest-cov\n        - tox\n        - xmldiff\n\nabout:\n  home: https://github.com/CycloneDX/cyclonedx-python-lib\n  summary: Python library for CycloneDX\n  license: Apache-2.0\n  license_file:\n    - LICENSE\n    - NOTICE\n\nextra:\n  feedstock-name: cyclonedx-python-lib\n  recipe-maintainers:\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set min_python = \"python >=3.8\" %}\n{% set version = \"6.1.0\" %}\n{% set min_python = \"python >=3.8\" %}\n\npackage:\n  name: cyclonedx-python-lib\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/c/cyclonedx-python-lib/cyclonedx_python_lib-{{ version }}.tar.gz\n  sha256: e31207631b1c14c87c2ca1b5aab3f1aa1824ed2290d391a5adb28b977eb4a64b\n\nbuild:\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    - {{ min_python }}\n  run:\n    - {{ min_python }}\n\noutputs:\n  - name: cyclonedx-python-lib\n    build:\n      noarch: python\n      script:\n        - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n        # TODO: restore after https://github.com/CycloneDX/cyclonedx-python-lib/issues/435\n        # - |-\n        #   {{ PYTHON }} -c \"assert not (__import__('pathlib').Path(__import__('site').getsitepackages()[0]) / 'LICENSE').exists()\"\n        - |-\n          {{ PYTHON }} -c \"import os, pathlib; sp = pathlib.Path(os.environ['SP_DIR']); [(sp / f).unlink() for f in ['README.md', 'LICENSE', 'NOTICE']]\"\n    requirements:\n      host:\n        - {{ min_python }}\n        - pip\n        - poetry-core >=1.0.0\n      run:\n        - {{ min_python }}\n        # from poetry-generated setup.py\n        - license-expression >=30.0.0,<31.0.0\n        - packageurl-python >=0.11\n        - py-serializable >=0.16.0,<0.17.0\n        - sortedcontainers >=2.4.0,<3.0.0\n    test: &simple_test\n      imports:\n        - cyclonedx\n      commands:\n        - pip check\n      requires:\n        - pip\n\n  - name: cyclonedx-python-lib-with-json-validation\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage(\"cyclonedx-python-lib\", exact=True) }}\n        - jsonschema-with-format >=4.18,<5.0\n    test: *simple_test\n\n  - name: cyclonedx-python-lib-with-xml-validation\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage(\"cyclonedx-python-lib\", exact=True) }}\n        - lxml >=4,<5\n    test: *simple_test\n\n  - name: cyclonedx-python-lib-with-validation\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ min_python }}\n        - {{ pin_subpackage(\"cyclonedx-python-lib\", exact=True) }}\n        - {{ pin_subpackage(\"cyclonedx-python-lib-with-json-validation\", exact=True) }}\n        - {{ pin_subpackage(\"cyclonedx-python-lib-with-xml-validation\", exact=True) }}\n    test:\n      imports:\n        - cyclonedx\n      source_files:\n        - tests\n      commands:\n        - pip check\n        - pytest -vv --color=yes --tb=long --cov=cyclonedx --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=93\n      requires:\n        - ddt >=1.6.0,<2.0.0\n        - pip\n        - pytest-cov\n        - tox\n        - xmldiff\n\nabout:\n  home: https://github.com/CycloneDX/cyclonedx-python-lib\n  summary: Python library for CycloneDX\n  license: Apache-2.0\n  license_file:\n    - LICENSE\n    - NOTICE\n\nextra:\n  feedstock-name: cyclonedx-python-lib\n  recipe-maintainers:\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -497,8 +497,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/c/cyclonedx-python-lib/cyclonedx_python_lib-6.0.0.tar.gz",
- "version": "6.0.0",
+ "url": "https://pypi.io/packages/source/c/cyclonedx-python-lib/cyclonedx_python_lib-6.1.0.tar.gz",
+ "version": "6.1.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cyclonedx-python-lib.json"
  }
