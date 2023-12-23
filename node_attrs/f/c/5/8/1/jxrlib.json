@@ -3,6 +3,8 @@
  "branch": "main",
  "conda-forge.yml": {
   "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
    "osx_arm64": "osx_64"
   },
   "conda_build": {
@@ -31,7 +33,7 @@
    "summary": "jxrlib - JPEG XR Library by Microsoft, built from Debian hosted sources."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "run_exports": [
     "jxrlib"
    ]
@@ -55,7 +57,8 @@
   },
   "source": {
    "patches": [
-    "usecmake.patch"
+    "usecmake.patch",
+    "define_byteswap.patch"
    ],
    "sha256": "c7287b86780befa0914f2eeb8be2ac83e672ebd4bd16dc5574a36a59d9708303",
    "url": "http://http.debian.net/debian/pool/main/j/jxrlib/jxrlib_1.1.orig.tar.gz"
@@ -99,7 +102,7 @@
    "summary": "jxrlib - JPEG XR Library by Microsoft, built from Debian hosted sources."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "run_exports": [
     "jxrlib"
    ]
@@ -123,7 +126,8 @@
   },
   "source": {
    "patches": [
-    "usecmake.patch"
+    "usecmake.patch",
+    "define_byteswap.patch"
    ],
    "sha256": "c7287b86780befa0914f2eeb8be2ac83e672ebd4bd16dc5574a36a59d9708303",
    "url": "http://http.debian.net/debian/pool/main/j/jxrlib/jxrlib_1.1.orig.tar.gz"
@@ -167,7 +171,7 @@
    "summary": "jxrlib - JPEG XR Library by Microsoft, built from Debian hosted sources."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "run_exports": [
     "jxrlib"
    ]
@@ -191,7 +195,8 @@
   },
   "source": {
    "patches": [
-    "usecmake.patch"
+    "usecmake.patch",
+    "define_byteswap.patch"
    ],
    "sha256": "c7287b86780befa0914f2eeb8be2ac83e672ebd4bd16dc5574a36a59d9708303",
    "url": "http://http.debian.net/debian/pool/main/j/jxrlib/jxrlib_1.1.orig.tar.gz"
@@ -235,7 +240,7 @@
    "summary": "jxrlib - JPEG XR Library by Microsoft, built from Debian hosted sources."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "run_exports": [
     "jxrlib",
     "jxrlib",
@@ -286,7 +291,19 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "usecmake.patch",
+    "define_byteswap.patch",
+    "usecmake.patch",
+    "define_byteswap.patch",
+    "usecmake.patch",
+    "define_byteswap.patch",
+    "usecmake.patch",
+    "define_byteswap.patch",
+    "usecmake.patch",
+    "define_byteswap.patch",
+    "define_byteswap.patch"
+   ],
    "sha256": "c7287b86780befa0914f2eeb8be2ac83e672ebd4bd16dc5574a36a59d9708303",
    "url": "http://http.debian.net/debian/pool/main/j/jxrlib/jxrlib_1.1.orig.tar.gz"
   },
@@ -318,7 +335,7 @@
    "summary": "jxrlib - JPEG XR Library by Microsoft, built from Debian hosted sources."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "run_exports": [
     "jxrlib"
    ]
@@ -342,7 +359,8 @@
   },
   "source": {
    "patches": [
-    "usecmake.patch"
+    "usecmake.patch",
+    "define_byteswap.patch"
    ],
    "sha256": "c7287b86780befa0914f2eeb8be2ac83e672ebd4bd16dc5574a36a59d9708303",
    "url": "http://http.debian.net/debian/pool/main/j/jxrlib/jxrlib_1.1.orig.tar.gz"
@@ -386,7 +404,7 @@
    "summary": "jxrlib - JPEG XR Library by Microsoft, built from Debian hosted sources."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "run_exports": [
     "jxrlib"
    ]
@@ -410,7 +428,8 @@
   },
   "source": {
    "patches": [
-    "usecmake.patch"
+    "usecmake.patch",
+    "define_byteswap.patch"
    ],
    "sha256": "c7287b86780befa0914f2eeb8be2ac83e672ebd4bd16dc5574a36a59d9708303",
    "url": "http://http.debian.net/debian/pool/main/j/jxrlib/jxrlib_1.1.orig.tar.gz"
@@ -462,7 +481,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/jxrlib.json"
  },
- "raw_meta_yaml": "{% set name = \"jxrlib\" %}\n{% set version = \"1.1\" %}\n{% set sha256 = \"c7287b86780befa0914f2eeb8be2ac83e672ebd4bd16dc5574a36a59d9708303\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: http://http.debian.net/debian/pool/main/{{ name[0] }}/{{ name }}/{{ name }}_{{ version }}.orig.tar.gz\n  sha256: {{ sha256 }}\n  patches:\n    - usecmake.patch  # [unix]\n\nbuild:\n  number: 2\n  run_exports:\n    - {{ pin_subpackage('jxrlib', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - cmake  # [unix]\n    - make  # [unix]\n\ntest:\n  commands:\n    - test -f ${PREFIX}/lib/libjxrglue${SHLIB_EXT}  # [unix]\n    - test -f ${PREFIX}/lib/libjpegxr${SHLIB_EXT}  # [unix]\n    - if not exist %LIBRARY_LIB%\\\\libjxrglue.lib exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\\\libjpegxr.lib exit 1  # [win]\n\nabout:\n  home: https://packages.debian.org/source/sid/jxrlib\n  license: BSD-2-Clause\n  summary: \"jxrlib - JPEG XR Library by Microsoft, built from Debian hosted sources.\"\n  description: \"This package seems to be no longer maintained by the original developer (Microsoft).\"\n  license_family: BSD\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - csachs\n    - hmaarrfk\n",
+ "raw_meta_yaml": "{% set version = \"1.1\" %}\n\npackage:\n  name: jxrlib\n  version: {{ version }}\n\nsource:\n  url: http://http.debian.net/debian/pool/main/j/jxrlib/jxrlib_{{ version }}.orig.tar.gz\n  sha256: c7287b86780befa0914f2eeb8be2ac83e672ebd4bd16dc5574a36a59d9708303\n  patches:\n    - usecmake.patch  # [unix]\n    - define_byteswap.patch\n\nbuild:\n  number: 3\n  run_exports:\n    - {{ pin_subpackage('jxrlib', max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - cmake  # [unix]\n    - make  # [unix]\n\ntest:\n  commands:\n    - test -f ${PREFIX}/lib/libjxrglue${SHLIB_EXT}  # [unix]\n    - test -f ${PREFIX}/lib/libjpegxr${SHLIB_EXT}  # [unix]\n    - if not exist %LIBRARY_LIB%\\\\libjxrglue.lib exit 1  # [win]\n    - if not exist %LIBRARY_LIB%\\\\libjpegxr.lib exit 1  # [win]\n\nabout:\n  home: https://packages.debian.org/source/sid/jxrlib\n  license: BSD-2-Clause\n  summary: \"jxrlib - JPEG XR Library by Microsoft, built from Debian hosted sources.\"\n  description: \"This package seems to be no longer maintained by the original developer (Microsoft).\"\n  license_family: BSD\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - csachs\n    - hmaarrfk\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -535,7 +554,7 @@
    "summary": "jxrlib - JPEG XR Library by Microsoft, built from Debian hosted sources."
   },
   "build": {
-   "number": "2",
+   "number": "3",
    "run_exports": [
     "jxrlib"
    ]
@@ -556,7 +575,9 @@
    ]
   },
   "source": {
-   "patches": null,
+   "patches": [
+    "define_byteswap.patch"
+   ],
    "sha256": "c7287b86780befa0914f2eeb8be2ac83e672ebd4bd16dc5574a36a59d9708303",
    "url": "http://http.debian.net/debian/pool/main/j/jxrlib/jxrlib_1.1.orig.tar.gz"
   },
