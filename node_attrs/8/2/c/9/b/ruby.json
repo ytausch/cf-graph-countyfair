@@ -44,7 +44,7 @@
    "ignore_run_exports": [
     "libstdcxx-ng"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ruby"
    ],
@@ -79,6 +79,7 @@
     "gdbm",
     "gmp",
     "libffi",
+    "libxcrypt",
     "ncurses",
     "openssl",
     "readline",
@@ -138,6 +139,7 @@
     "gdbm",
     "gmp",
     "libffi",
+    "libxcrypt",
     "ncurses",
     "openssl",
     "readline",
@@ -173,7 +175,7 @@
    "ignore_run_exports": [
     "libstdcxx-ng"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ruby"
    ],
@@ -207,6 +209,7 @@
    "host": [
     "gmp",
     "libffi",
+    "libxcrypt",
     "ncurses",
     "openssl",
     "readline",
@@ -265,6 +268,7 @@
    "elements": [
     "gmp",
     "libffi",
+    "libxcrypt",
     "ncurses",
     "openssl",
     "readline",
@@ -300,7 +304,7 @@
    "ignore_run_exports": [
     "libstdcxx-ng"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ruby"
    ],
@@ -334,6 +338,7 @@
    "host": [
     "gmp",
     "libffi",
+    "libxcrypt",
     "ncurses",
     "openssl",
     "readline",
@@ -392,6 +397,7 @@
    "elements": [
     "gmp",
     "libffi",
+    "libxcrypt",
     "ncurses",
     "openssl",
     "readline",
@@ -432,7 +438,7 @@
     "libstdcxx-ng",
     "libstdcxx-ng"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ruby",
     "ruby",
@@ -533,6 +539,7 @@
     "gdbm",
     "gmp",
     "libffi",
+    "libxcrypt",
     "ncurses",
     "openssl",
     "readline",
@@ -540,6 +547,7 @@
     "zlib",
     "gmp",
     "libffi",
+    "libxcrypt",
     "ncurses",
     "openssl",
     "readline",
@@ -547,6 +555,7 @@
     "zlib",
     "gmp",
     "libffi",
+    "libxcrypt",
     "ncurses",
     "openssl",
     "readline",
@@ -708,7 +717,7 @@
    "ignore_run_exports": [
     "libstdcxx-ng"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ruby"
    ],
@@ -844,7 +853,7 @@
    "ignore_run_exports": [
     "libstdcxx-ng"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ruby"
    ],
@@ -980,7 +989,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ruby.json"
  },
- "raw_meta_yaml": "{% set name = \"ruby\" %}\n{% set version = \"3.2.2\" %}\n{% set major_minor = '.'.join(version.split('.')[0:2]) %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://cache.ruby-lang.org/pub/ruby/{{ major_minor }}/ruby-{{ version }}.tar.gz\n  sha256: 96c57558871a6748de5bc9f274e93f4b5aad06cd8f37befa0e8d94e7b8a423bc\n  patches:\n    # Patches/work-arounds for passing make check\n    - disable-backtrace-with-lines.patch\n    - fix-isinf-redefinition-msvc.patch  # [win]\n    - 0001-Dont-t-add-SDKROOT-to-vals.patch\n    - clockid_t.patch  # [osx and x86]\n\nbuild:\n  number: 0\n  track_features:\n    - rb{{ major_minor | replace(\".\", \"\") }}\n  run_exports:\n    - {{ pin_subpackage(name, max_pin='x.x') }}\n  ignore_run_exports:\n    # We need CXX during build time to generate rbconfig.rb\n    - libstdcxx-ng\n\nrequirements:\n  build:\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - autoconf    # [unix]\n    - automake    # [unix]\n    - make        # [unix]\n    - pkg-config\n    # We need all host deps also in build for cross-compiling\n    - gettext     # [build_platform != target_platform]\n    - gmp         # [build_platform != target_platform]\n    - libffi      # [build_platform != target_platform]\n    - ncurses     # [build_platform != target_platform]\n    - openssl     # [build_platform != target_platform]\n    - readline    # [build_platform != target_platform]\n    - yaml        # [build_platform != target_platform]\n    - zlib        # [build_platform != target_platform]\n  host:\n    - gdbm        # [x86 and unix]\n    - gettext     # [osx]\n    - gmp         # [unix]\n    - libffi\n    - ncurses     # [unix]\n    - openssl\n    - readline    # [unix]\n    - yaml        # [unix or win]\n    - zlib\n  run:\n    - gettext     # [osx]\n\ntest:\n  requires:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - make  # [unix]\n  files:\n    - native/hello.c\n    - native/config.rb\n  commands:\n    - ruby --version\n    - gem --version\n    - ruby -e 'puts \"Hi, from Ruby!\"'\n    - ruby -r rubygems -e 'puts \"Has gems.\"; exit 0'\n    - ruby -r fiddle -r openssl -r yaml -r zlib -e 'puts \"Has all dependencies.\"; exit 0'\n    - ruby -r readline -e 'puts \"Has readline.\"; exit 0'  # [unix]\n\n    # Tests it can build libraries with native dependencies\n    - cd native                        # [unix]\n    - ruby config.rb                   # [unix]\n    - make                             # [unix]\n    - ruby -r ./hello.so -e 'hello'    # [unix]\n\nabout:\n  home: https://www.ruby-lang.org/\n  license: BSD-2-Clause\n  license_family: BSD\n  license_file: COPYING\n  summary: A dynamic, open source programming language with a focus on simplicity and productivity.\n  description: |\n    A dynamic, open source programming language with a focus on simplicity and productivity.\n    It has an elegant syntax that is natural to read and easy to write.\n  doc_url: https://www.ruby-lang.org/en/documentation/\n  dev_url: https://svn.ruby-lang.org/cgi-bin/viewvc.cgi/\n\nextra:\n  recipe-maintainers:\n    - scopatz\n    - jimmynguyc\n    - sodre\n    - wolfv\n    - xhochy\n",
+ "raw_meta_yaml": "{% set name = \"ruby\" %}\n{% set version = \"3.2.2\" %}\n{% set major_minor = '.'.join(version.split('.')[0:2]) %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://cache.ruby-lang.org/pub/ruby/{{ major_minor }}/ruby-{{ version }}.tar.gz\n  sha256: 96c57558871a6748de5bc9f274e93f4b5aad06cd8f37befa0e8d94e7b8a423bc\n  patches:\n    # Patches/work-arounds for passing make check\n    - disable-backtrace-with-lines.patch\n    - fix-isinf-redefinition-msvc.patch  # [win]\n    - 0001-Dont-t-add-SDKROOT-to-vals.patch\n    - clockid_t.patch  # [osx and x86]\n\nbuild:\n  number: 1\n  track_features:\n    - rb{{ major_minor | replace(\".\", \"\") }}\n  run_exports:\n    - {{ pin_subpackage(name, max_pin='x.x') }}\n  ignore_run_exports:\n    # We need CXX during build time to generate rbconfig.rb\n    - libstdcxx-ng\n\nrequirements:\n  build:\n    - gnuconfig  # [unix]\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - autoconf    # [unix]\n    - automake    # [unix]\n    - make        # [unix]\n    - pkg-config\n    # We need all host deps also in build for cross-compiling\n    - gettext     # [build_platform != target_platform]\n    - gmp         # [build_platform != target_platform]\n    - libffi      # [build_platform != target_platform]\n    - libxcrypt   # [build_platform != target_platform]\n    - ncurses     # [build_platform != target_platform]\n    - openssl     # [build_platform != target_platform]\n    - readline    # [build_platform != target_platform]\n    - yaml        # [build_platform != target_platform]\n    - zlib        # [build_platform != target_platform]\n  host:\n    - gdbm        # [x86 and unix]\n    - gettext     # [osx]\n    - gmp         # [unix]\n    - libffi\n    - libxcrypt   # [linux]\n    - ncurses     # [unix]\n    - openssl\n    - readline    # [unix]\n    - yaml        # [unix or win]\n    - zlib\n  run:\n    - gettext     # [osx]\n\ntest:\n  requires:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - make  # [unix]\n  files:\n    - native/hello.c\n    - native/config.rb\n  commands:\n    - ruby --version\n    - gem --version\n    - ruby -e 'puts \"Hi, from Ruby!\"'\n    - ruby -r rubygems -e 'puts \"Has gems.\"; exit 0'\n    - ruby -r fiddle -r openssl -r yaml -r zlib -e 'puts \"Has all dependencies.\"; exit 0'\n    - ruby -r readline -e 'puts \"Has readline.\"; exit 0'  # [unix]\n\n    # Tests it can build libraries with native dependencies\n    - cd native                        # [unix]\n    - ruby config.rb                   # [unix]\n    - make                             # [unix]\n    - ruby -r ./hello.so -e 'hello'    # [unix]\n\nabout:\n  home: https://www.ruby-lang.org/\n  license: BSD-2-Clause\n  license_family: BSD\n  license_file: COPYING\n  summary: A dynamic, open source programming language with a focus on simplicity and productivity.\n  description: |\n    A dynamic, open source programming language with a focus on simplicity and productivity.\n    It has an elegant syntax that is natural to read and easy to write.\n  doc_url: https://www.ruby-lang.org/en/documentation/\n  dev_url: https://svn.ruby-lang.org/cgi-bin/viewvc.cgi/\n\nextra:\n  recipe-maintainers:\n    - scopatz\n    - jimmynguyc\n    - sodre\n    - wolfv\n    - xhochy\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -993,6 +1002,7 @@
    "gmp",
    "gnuconfig",
    "libffi",
+   "libxcrypt",
    "make",
    "ncurses",
    "openssl",
@@ -1024,6 +1034,7 @@
     "gettext",
     "gmp",
     "libffi",
+    "libxcrypt",
     "ncurses",
     "openssl",
     "readline",
@@ -1069,6 +1080,7 @@
     "gettext",
     "gmp",
     "libffi",
+    "libxcrypt",
     "ncurses",
     "openssl",
     "readline",
@@ -1111,7 +1123,7 @@
    "ignore_run_exports": [
     "libstdcxx-ng"
    ],
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "ruby"
    ],
