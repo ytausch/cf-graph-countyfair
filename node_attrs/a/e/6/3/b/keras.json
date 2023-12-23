@@ -26,7 +26,7 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install -vv keras-2.15.0-py3-none-any.whl"
+   "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
    "recipe-maintainers": [
@@ -40,30 +40,32 @@
   },
   "package": {
    "name": "keras",
-   "version": "2.15.0"
+   "version": "3.0.2"
   },
   "requirements": {
    "host": [
-    "python >=3.8",
+    "python >=3.9",
     "pip"
    ],
    "run": [
-    "python >=3.8"
+    "python >=3.9",
+    "absl-py",
+    "numpy",
+    "rich",
+    "namex",
+    "h5py",
+    "dm-tree"
    ],
    "run_constrained": [
-    "tensorflow 2.15.*"
+    "tensorflow >=2.15.0,<2.17.0a",
+    "jax 0.4.20",
+    "torch 2.1.0"
    ]
   },
-  "source": [
-   {
-    "sha256": "2dcc6d2e30cf9c951064b63c1f4c404b966c59caf09e01f3549138ec8ee0dd1f",
-    "url": "https://pypi.io/packages/py3/k/keras/keras-2.15.0-py3-none-any.whl"
-   },
-   {
-    "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
-    "url": "https://raw.githubusercontent.com/keras-team/keras/v2.14.0/LICENSE"
-   }
-  ],
+  "source": {
+   "sha256": "84d47841c665f0685912ed759edef965e1c6ba504a5ec2e4c5f04d1307da5f7b",
+   "url": "https://github.com/keras-team/keras/archive/refs/tags/v3.0.2.tar.gz"
+  },
   "test": {
    "commands": [
     "pip check"
@@ -88,7 +90,13 @@
   "run": {
    "__set__": true,
    "elements": [
-    "python"
+    "absl-py",
+    "dm-tree",
+    "h5py",
+    "namex",
+    "numpy",
+    "python",
+    "rich"
    ]
   },
   "test": {
@@ -108,7 +116,7 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install -vv keras-2.15.0-py3-none-any.whl"
+   "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
    "recipe-maintainers": [
@@ -122,30 +130,32 @@
   },
   "package": {
    "name": "keras",
-   "version": "2.15.0"
+   "version": "3.0.2"
   },
   "requirements": {
    "host": [
-    "python >=3.8",
+    "python >=3.9",
     "pip"
    ],
    "run": [
-    "python >=3.8"
+    "python >=3.9",
+    "absl-py",
+    "numpy",
+    "rich",
+    "namex",
+    "h5py",
+    "dm-tree"
    ],
    "run_constrained": [
-    "tensorflow 2.15.*"
+    "tensorflow >=2.15.0,<2.17.0a",
+    "jax 0.4.20",
+    "torch 2.1.0"
    ]
   },
-  "source": [
-   {
-    "sha256": "2dcc6d2e30cf9c951064b63c1f4c404b966c59caf09e01f3549138ec8ee0dd1f",
-    "url": "https://pypi.io/packages/py3/k/keras/keras-2.15.0-py3-none-any.whl"
-   },
-   {
-    "sha256": "58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd",
-    "url": "https://raw.githubusercontent.com/keras-team/keras/v2.14.0/LICENSE"
-   }
-  ],
+  "source": {
+   "sha256": "84d47841c665f0685912ed759edef965e1c6ba504a5ec2e4c5f04d1307da5f7b",
+   "url": "https://github.com/keras-team/keras/archive/refs/tags/v3.0.2.tar.gz"
+  },
   "test": {
    "commands": [
     "pip check"
@@ -169,12 +179,18 @@
  "pr_info": {
   "__lazy_json__": "pr_info/keras.json"
  },
- "raw_meta_yaml": "{% set version = \"2.15.0\" %}\n{% set major_minor = \".\".join(version.split(\".\")[:2]) %}\n\npackage:\n  name: keras\n  version: {{ version }}\n\nsource:\n  - url: https://pypi.io/packages/py3/k/keras/keras-{{ version }}-py3-none-any.whl\n    sha256: 2dcc6d2e30cf9c951064b63c1f4c404b966c59caf09e01f3549138ec8ee0dd1f\n  - url: https://raw.githubusercontent.com/keras-team/keras/v2.14.0/LICENSE\n    sha256: 58d1e17ffe5109a7ae296caafcadfdbe6a7d176f0bc4ab01e12a689b0499d8bd\n\nbuild:\n  script: {{ PYTHON }} -m pip install -vv keras-{{ version }}-py3-none-any.whl\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    # see https://github.com/keras-team/keras/blob/master/oss_setup.py\n    - python >=3.8\n    - pip\n  run:\n    - python >=3.8\n  run_constrained:\n    - tensorflow {{ major_minor }}.*\n\ntest:\n  requires:\n    - pip\n  commands:\n    - pip check\n  # Cyclic dependency with tensorflow\n  # imports:\n  #  - keras\n\nabout:\n  home: https://github.com/keras-team/keras\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Deep Learning for Python\n\nextra:\n  recipe-maintainers:\n    - ngam\n    - mariusvniekerk\n    - croth1\n    - ocefpaf\n    - xhochy\n    - hmaarrfk\n",
+ "raw_meta_yaml": "{% set version = \"3.0.2\" %}\n# Version bump reminder: Must manually check the file constraints to ensure they match those in\n# https://keras.io/getting_started/#compatibility-matrix\n\npackage:\n  name: keras\n  version: {{ version }}\n\nsource:\n  url: https://github.com/keras-team/keras/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 84d47841c665f0685912ed759edef965e1c6ba504a5ec2e4c5f04d1307da5f7b\n\nbuild:\n  script: {{ PYTHON }} -m pip install . -vv\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    # see https://github.com/keras-team/keras/blob/master/oss_setup.py\n    - python >=3.9\n    - pip\n  run:\n    - python >=3.9\n    - absl-py\n    - numpy\n    - rich\n    - namex\n    - h5py\n    - dm-tree\n  run_constrained:\n    - tensorflow >=2.15.0,<2.17.0a\n    - jax 0.4.20\n    - torch 2.1.0\n\ntest:\n  requires:\n    - pip\n  commands:\n    - pip check\n    # even the numpy backend requires jax....\n    # https://github.com/keras-team/keras/issues/18840\n    # - KERAS_BACKEND=numpy python -c \"import keras\"\n\nabout:\n  home: https://github.com/keras-team/keras\n  license: Apache-2.0\n  license_file: LICENSE\n  summary: Deep Learning for Python\n\nextra:\n  recipe-maintainers:\n    - ngam\n    - mariusvniekerk\n    - croth1\n    - ocefpaf\n    - xhochy\n    - hmaarrfk\n",
  "req": {
   "__set__": true,
   "elements": [
+   "absl-py",
+   "dm-tree",
+   "h5py",
+   "namex",
+   "numpy",
    "pip",
-   "python"
+   "python",
+   "rich"
   ]
  },
  "requirements": {
@@ -192,7 +208,13 @@
   "run": {
    "__set__": true,
    "elements": [
-    "python"
+    "absl-py",
+    "dm-tree",
+    "h5py",
+    "namex",
+    "numpy",
+    "python",
+    "rich"
    ]
   },
   "test": {
@@ -212,13 +234,19 @@
    "__set__": true,
    "elements": [
     "pip",
-    "python >=3.8"
+    "python >=3.9"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "python >=3.8"
+    "absl-py",
+    "dm-tree",
+    "h5py",
+    "namex",
+    "numpy",
+    "python >=3.9",
+    "rich"
    ]
   },
   "test": {
@@ -228,8 +256,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/py3/k/keras/keras-2.15.0-py3-none-any.whl",
- "version": "2.15.0",
+ "url": "https://github.com/keras-team/keras/archive/refs/tags/v3.0.2.tar.gz",
+ "version": "3.0.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/keras.json"
  }
