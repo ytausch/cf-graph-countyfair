@@ -58,7 +58,7 @@
     "qt-webengine",
     "qt-webengine"
    ],
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -555,7 +555,7 @@
     "qt-webengine",
     "qt-webengine"
    ],
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1111,7 +1111,7 @@
     "qt-webengine",
     "qt-webengine"
    ],
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -2850,7 +2850,7 @@
     "qt-webengine",
     "qt-webengine"
    ],
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -3261,7 +3261,7 @@
     "qt-webengine",
     "qt-webengine"
    ],
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
@@ -3660,7 +3660,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pyside2.json"
  },
- "raw_meta_yaml": "{% set version = \"5.15.8\" %}\n\npackage:\n  name: pyside2\n  version: {{ version }}\n\nsource:\n  url: https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-{{ version }}-src/pyside-setup-opensource-src-{{ version }}.tar.xz\n  sha256: 23436302c8deb5b4cbc769b205d09604e38ba83b40708efccb7bd8c9af6f6b5d\n  patches:\n    # https://bugreports.qt.io/browse/PYSIDE-1193\n    - patches/pyi.patch\n    - patches/python3.10.patch\n    - patches/windows_dll_shiboken_fix.patch\n    - patches/fix_genererate_pyi.patch  # [win]\n    - patches/pyside2-tools-obsolete.patch\n    - patches/cross_compile_pyi.patch  # [build_platform != target_platform]\n    # https://github.com/conda-forge/pyside2-feedstock/issues/130\n    # https://bugreports.qt.io/browse/PYSIDE-2057\n    - patches/do_not_store_build_time_compiler.patch\n    # Supports Python 3.9+ but only required for Python 3.11\n    - patches/python3.11.patch  # [py>=311]\n\n    # https://bugreports.qt.io/browse/PYSIDE-1775\n    - patches/pymangle.patch\n\n    # https://bugreports.qt.io/browse/PYSIDE-2183\n    - patches/support.patch\n\n    # https://bugreports.qt.io/browse/PYSIDE-2184\n    - patches/install_pyi.patch\n\n    # https://bugreports.qt.io/browse/PYSIDE-2187\n    - patches/gluint.patch\n\n    # https://bugreports.qt.io/browse/PYSIDE-2288\n    # Backport by hmaarrfk\n    # https://code.qt.io/cgit/pyside/pyside-setup.git/commit/?h=dd863857436bbeeba4c0a1077f5ad16653296277\n    # - patches/backport_fix_2288.patch\n\nbuild:\n  number: 3\n  detect_binary_files_with_prefix: true\n  entry_points:\n    - pyside2-designer = PySide2.scripts.pyside_tool:designer\n    - pyside2-rcc = PySide2.scripts.pyside_tool:rcc\n    - pyside2-uic = PySide2.scripts.pyside_tool:uic\n  ignore_run_exports:\n    # make it optional. Use the constraints on qt-main\n    # and qt to ensure that qt-webengine is correctly installed\n    - qt-webengine\n\nrequirements:\n  build:\n    - sysroot_linux-64 2.17                  # [linux64]\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - pyside2  {{ version }}                 # [build_platform != target_platform]\n    - qt-main  {{ version }}                 # [build_platform != target_platform]\n    - qt-webengine  {{ version }}            # [build_platform != target_platform]\n    - cmake\n    - ninja\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288\n    - clangdev >=9, <16\n    - {{ cdt('mesa-libgl-devel') }}      # [linux]\n    - {{ cdt('mesa-libegl-devel') }}     # [linux]\n    - {{ cdt('mesa-dri-drivers') }}      # [linux]\n    - {{ cdt('libdrm-devel') }}          # [linux]\n    - {{ cdt('libglvnd-glx') }}          # [linux]\n    - {{ cdt('libglvnd-egl') }}          # [linux]\n  host:\n    - python\n    - packaging\n    - qt-main       {{ version }}\n    - qt-webengine  {{ version }}\n    - libxml2\n    - libxslt\n    - pip\n    - setuptools\n    # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288\n    - clangdev >=9, <16\n    - libclang\n    - llvmdev  {{ cxx_compiler_version }}  # [osx]\n    - clangdev {{ cxx_compiler_version }}  # [osx]\n    - xcb-util                           # [linux]\n    - xcb-util-wm                        # [linux]\n    - xcb-util-keysyms                   # [linux]\n    - xcb-util-image                     # [linux]\n    - xcb-util-renderutil                # [linux]\n    - xorg-libx11                        # [linux]\n    - xorg-libxext                       # [linux]\n    - xorg-libxdamage                    # [linux]\n    - xorg-libsm                         # [linux]\n    - xorg-libice                        # [linux]\n    - xorg-libxcomposite                 # [linux]\n    - xorg-libxxf86vm                    # [linux]\n    - xorg-xf86vidmodeproto              # [linux]\n  run:\n    - python\n\ntest:\n  imports:\n    - PySide2.QtCharts\n    - PySide2.QtConcurrent\n    - PySide2.QtCore\n    - PySide2.QtDataVisualization\n    - PySide2.QtGui\n    - PySide2.QtHelp\n    - PySide2.QtLocation\n    - PySide2.QtMultimedia\n    - PySide2.QtMultimediaWidgets\n    - PySide2.QtNetwork\n    - PySide2.QtOpenGL\n    - PySide2.QtPositioning\n    - PySide2.QtPrintSupport\n    - PySide2.QtQml\n    - PySide2.QtQuick\n    - PySide2.QtQuickWidgets\n    - PySide2.QtRemoteObjects\n    - PySide2.QtScript\n    - PySide2.QtScriptTools\n    - PySide2.QtScxml\n    - PySide2.QtSensors\n    - PySide2.QtSql\n    - PySide2.QtSvg\n    - PySide2.QtTest\n    - PySide2.QtTextToSpeech\n    - PySide2.QtUiTools\n    - PySide2.QtWebChannel\n    - PySide2.QtWebEngineCore     # [py==310]\n    - PySide2.QtWebEngineWidgets  # [py==310]\n    - PySide2.QtWebSockets\n    - PySide2.QtWidgets\n    - PySide2.QtXml\n    - PySide2.QtXmlPatterns\n    - PySide2.Qt3DAnimation\n    - PySide2.Qt3DCore\n    - PySide2.Qt3DExtras\n    - PySide2.Qt3DInput\n    - PySide2.Qt3DLogic\n    - PySide2.Qt3DRender\n\n  commands:\n    - shiboken2 --help\n    - pyside2-lupdate -help\n    - pyside2-rcc -help\n    - pyside2-uic -help\n    # Ensure installs are registered properly with pip\n    - pip show PySide2\n    - pip show shiboken2\n\n  requires:\n    - pip\n    - qt-webengine   # [py==310]\n\nabout:\n  home: https://wiki.qt.io/PySide2\n  license: LGPL-3.0-only\n  license_file: LICENSE.LGPLv3\n  summary: Python bindings for Qt\n\nextra:\n  recipe-maintainers:\n    - jan-janssen\n    - jschueller\n    - hmaarrfk\n",
+ "raw_meta_yaml": "{% set version = \"5.15.8\" %}\n\npackage:\n  name: pyside2\n  version: {{ version }}\n\nsource:\n  url: https://download.qt.io/official_releases/QtForPython/pyside2/PySide2-{{ version }}-src/pyside-setup-opensource-src-{{ version }}.tar.xz\n  sha256: 23436302c8deb5b4cbc769b205d09604e38ba83b40708efccb7bd8c9af6f6b5d\n  patches:\n    # https://bugreports.qt.io/browse/PYSIDE-1193\n    - patches/pyi.patch\n    - patches/python3.10.patch\n    - patches/windows_dll_shiboken_fix.patch\n    - patches/fix_genererate_pyi.patch  # [win]\n    - patches/pyside2-tools-obsolete.patch\n    - patches/cross_compile_pyi.patch  # [build_platform != target_platform]\n    # https://github.com/conda-forge/pyside2-feedstock/issues/130\n    # https://bugreports.qt.io/browse/PYSIDE-2057\n    - patches/do_not_store_build_time_compiler.patch\n    # Supports Python 3.9+ but only required for Python 3.11\n    - patches/python3.11.patch  # [py>=311]\n\n    # https://bugreports.qt.io/browse/PYSIDE-1775\n    - patches/pymangle.patch\n\n    # https://bugreports.qt.io/browse/PYSIDE-2183\n    - patches/support.patch\n\n    # https://bugreports.qt.io/browse/PYSIDE-2184\n    - patches/install_pyi.patch\n\n    # https://bugreports.qt.io/browse/PYSIDE-2187\n    - patches/gluint.patch\n\n    # https://bugreports.qt.io/browse/PYSIDE-2288\n    # Backport by hmaarrfk\n    # https://code.qt.io/cgit/pyside/pyside-setup.git/commit/?h=dd863857436bbeeba4c0a1077f5ad16653296277\n    # - patches/backport_fix_2288.patch\n\nbuild:\n  number: 4\n  detect_binary_files_with_prefix: true\n  entry_points:\n    - pyside2-designer = PySide2.scripts.pyside_tool:designer\n    - pyside2-rcc = PySide2.scripts.pyside_tool:rcc\n    - pyside2-uic = PySide2.scripts.pyside_tool:uic\n  ignore_run_exports:\n    # make it optional. Use the constraints on qt-main\n    # and qt to ensure that qt-webengine is correctly installed\n    - qt-webengine\n\nrequirements:\n  build:\n    - sysroot_linux-64 2.17                  # [linux64]\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - pyside2  {{ version }}                 # [build_platform != target_platform]\n    - qt-main  {{ version }}                 # [build_platform != target_platform]\n    - qt-webengine  {{ version }}            # [build_platform != target_platform]\n    - cmake\n    - ninja\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288\n    - clangdev >=9, <16\n    - {{ cdt('mesa-libgl-devel') }}      # [linux]\n    - {{ cdt('mesa-libegl-devel') }}     # [linux]\n    - {{ cdt('mesa-dri-drivers') }}      # [linux]\n    - {{ cdt('libdrm-devel') }}          # [linux]\n    - {{ cdt('libglvnd-glx') }}          # [linux]\n    - {{ cdt('libglvnd-egl') }}          # [linux]\n  host:\n    - python\n    - packaging\n    - qt-main       {{ version }}\n    - qt-webengine  {{ version }}\n    - libxml2\n    - libxslt\n    - pip\n    - setuptools\n    # pin llvm<16 because of: https://bugreports.qt.io/browse/PYSIDE-2288\n    - clangdev >=9, <16\n    - libclang\n    - llvmdev  {{ cxx_compiler_version }}  # [osx]\n    - clangdev {{ cxx_compiler_version }}  # [osx]\n    - xcb-util                           # [linux]\n    - xcb-util-wm                        # [linux]\n    - xcb-util-keysyms                   # [linux]\n    - xcb-util-image                     # [linux]\n    - xcb-util-renderutil                # [linux]\n    - xorg-libx11                        # [linux]\n    - xorg-libxext                       # [linux]\n    - xorg-libxdamage                    # [linux]\n    - xorg-libsm                         # [linux]\n    - xorg-libice                        # [linux]\n    - xorg-libxcomposite                 # [linux]\n    - xorg-libxxf86vm                    # [linux]\n    - xorg-xf86vidmodeproto              # [linux]\n  run:\n    - python\n\ntest:\n  imports:\n    - PySide2.QtCharts\n    - PySide2.QtConcurrent\n    - PySide2.QtCore\n    - PySide2.QtDataVisualization\n    - PySide2.QtGui\n    - PySide2.QtHelp\n    - PySide2.QtLocation\n    - PySide2.QtMultimedia\n    - PySide2.QtMultimediaWidgets\n    - PySide2.QtNetwork\n    - PySide2.QtOpenGL\n    - PySide2.QtPositioning\n    - PySide2.QtPrintSupport\n    - PySide2.QtQml\n    - PySide2.QtQuick\n    - PySide2.QtQuickWidgets\n    - PySide2.QtRemoteObjects\n    - PySide2.QtScript\n    - PySide2.QtScriptTools\n    - PySide2.QtScxml\n    - PySide2.QtSensors\n    - PySide2.QtSql\n    - PySide2.QtSvg\n    - PySide2.QtTest\n    - PySide2.QtTextToSpeech\n    - PySide2.QtUiTools\n    - PySide2.QtWebChannel\n    - PySide2.QtWebEngineCore     # [py==310]\n    - PySide2.QtWebEngineWidgets  # [py==310]\n    - PySide2.QtWebSockets\n    - PySide2.QtWidgets\n    - PySide2.QtXml\n    - PySide2.QtXmlPatterns\n    - PySide2.Qt3DAnimation\n    - PySide2.Qt3DCore\n    - PySide2.Qt3DExtras\n    - PySide2.Qt3DInput\n    - PySide2.Qt3DLogic\n    - PySide2.Qt3DRender\n\n  commands:\n    - shiboken2 --help\n    - pyside2-lupdate -help\n    - pyside2-rcc -help\n    - pyside2-uic -help\n    # Ensure installs are registered properly with pip\n    - pip show PySide2\n    - pip show shiboken2\n\n  requires:\n    - pip\n    - qt-webengine   # [py==310]\n\nabout:\n  home: https://wiki.qt.io/PySide2\n  license: LGPL-3.0-only\n  license_file: LICENSE.LGPLv3\n  summary: Python bindings for Qt\n\nextra:\n  recipe-maintainers:\n    - jan-janssen\n    - jschueller\n    - hmaarrfk\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -3848,7 +3848,7 @@
     "qt-webengine",
     "qt-webengine"
    ],
-   "number": "3"
+   "number": "4"
   },
   "extra": {
    "recipe-maintainers": [
