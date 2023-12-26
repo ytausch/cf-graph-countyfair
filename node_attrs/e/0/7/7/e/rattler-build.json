@@ -33,7 +33,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "script": [
     "export OPENSSL_DIR=\"$PREFIX\"",
     "cargo install --locked --bins --root ${PREFIX} --path .",
@@ -45,7 +45,8 @@
   "extra": {
    "recipe-maintainers": [
     "wolfv",
-    "pavelzw"
+    "pavelzw",
+    "0xbe7a"
    ]
   },
   "package": {
@@ -117,7 +118,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "script": [
     "export OPENSSL_DIR=\"$PREFIX\"",
     "cargo install --locked --bins --root ${PREFIX} --path .",
@@ -129,7 +130,8 @@
   "extra": {
    "recipe-maintainers": [
     "wolfv",
-    "pavelzw"
+    "pavelzw",
+    "0xbe7a"
    ]
   },
   "package": {
@@ -213,7 +215,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "script": [
     "export OPENSSL_DIR=\"$PREFIX\"",
     "cargo install --locked --bins --root ${PREFIX} --path .",
@@ -245,14 +247,19 @@
    "recipe-maintainers": [
     "wolfv",
     "pavelzw",
+    "0xbe7a",
     "wolfv",
     "pavelzw",
+    "0xbe7a",
     "wolfv",
     "pavelzw",
+    "0xbe7a",
     "wolfv",
     "pavelzw",
+    "0xbe7a",
     "wolfv",
-    "pavelzw"
+    "pavelzw",
+    "0xbe7a"
    ]
   },
   "package": {
@@ -326,7 +333,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "script": [
     "export OPENSSL_DIR=\"$PREFIX\"",
     "cargo install --locked --bins --root ${PREFIX} --path .",
@@ -338,7 +345,8 @@
   "extra": {
    "recipe-maintainers": [
     "wolfv",
-    "pavelzw"
+    "pavelzw",
+    "0xbe7a"
    ]
   },
   "package": {
@@ -406,7 +414,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "script": [
     "export OPENSSL_DIR=\"$PREFIX\"",
     "cargo install --locked --bins --root ${PREFIX} --path .",
@@ -418,7 +426,8 @@
   "extra": {
    "recipe-maintainers": [
     "wolfv",
-    "pavelzw"
+    "pavelzw",
+    "0xbe7a"
    ]
   },
   "package": {
@@ -488,7 +497,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/rattler-build.json"
  },
- "raw_meta_yaml": "{% set name = \"rattler-build\" %}\n{% set version = \"0.6.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/prefix-dev/rattler-build/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 6bf6b4c6c948cedb16bd419194b9793b4d362f375492a977f031eabf37f209b3\n\nbuild:\n  script:\n    # Unix recipe\n    - export OPENSSL_DIR=\"$PREFIX\"                                            # [unix]\n    - cargo install --locked --bins --root ${PREFIX} --path .                 # [unix]\n    - cargo-bundle-licenses --format yaml --output ${SRC_DIR}/THIRDPARTY.yml  # [unix]\n    - rm $PREFIX/.crates2.json                                                # [unix]\n    - rm $PREFIX/.crates.toml                                                 # [unix]\n    # Win recipe\n    - cargo install --locked --bins --root %PREFIX% --path .                  # [win]\n    - cargo-bundle-licenses --format yaml --output %SRC_DIR%/THIRDPARTY.yml   # [win]\n    - del %PREFIX%\\.crates2.json                                              # [win]\n    - del %PREFIX%\\.crates.toml                                               # [win]\n  number: 0\n  # disable binary prefix detection, because rattler-build encodes the old `anaconda1anaconda2anaconda3` prefix\n  # somewhere to make old packages installable. In other words, conda-build finds a false-positive here.\n  detect_binary_files_with_prefix: false\n\nrequirements:\n  build:\n    - {{ compiler('rust') }}\n    - cargo-bundle-licenses\n    # to compile the libsolv parts\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make  # [unix]\n  host:\n    - openssl  # [linux]\n\ntest:\n  commands:\n    - rattler-build --help\n\nabout:\n  home: https://github.com/prefix-dev/rattler-build\n  summary: rattler-build is the universal conda package builder for Windows, macOS and Linux\n  description: |\n    The rattler-build tooling and library creates cross-platform relocatable binaries / packages \n    from a simple recipe format.\n    The recipe format is heavily inspired by conda-build and boa, and the output of a regular\n    rattler-build run is a package that can be installed using mamba, conda or rattler.\n  license: BSD-3-Clause\n  license_file:\n    - LICENSE\n    - THIRDPARTY.yml\n    - CONDA_BUILD_LICENSE.txt\n  doc_url: https://prefix-dev.github.io/rattler-build\n\nextra:\n  recipe-maintainers:\n    - wolfv\n    - pavelzw\n",
+ "raw_meta_yaml": "{% set name = \"rattler-build\" %}\n{% set version = \"0.6.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/prefix-dev/rattler-build/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 6bf6b4c6c948cedb16bd419194b9793b4d362f375492a977f031eabf37f209b3\n\nbuild:\n  script:\n    # Unix recipe\n    - export OPENSSL_DIR=\"$PREFIX\"                                            # [unix]\n    - cargo install --locked --bins --root ${PREFIX} --path .                 # [unix]\n    - cargo-bundle-licenses --format yaml --output ${SRC_DIR}/THIRDPARTY.yml  # [unix]\n    - rm $PREFIX/.crates2.json                                                # [unix]\n    - rm $PREFIX/.crates.toml                                                 # [unix]\n    # Win recipe\n    - cargo install --locked --bins --root %PREFIX% --path .                  # [win]\n    - cargo-bundle-licenses --format yaml --output %SRC_DIR%/THIRDPARTY.yml   # [win]\n    - del %PREFIX%\\.crates2.json                                              # [win]\n    - del %PREFIX%\\.crates.toml                                               # [win]\n  number: 1\n  # disable binary prefix detection, because rattler-build encodes the old `anaconda1anaconda2anaconda3` prefix\n  # somewhere to make old packages installable. In other words, conda-build finds a false-positive here.\n  detect_binary_files_with_prefix: false\n\nrequirements:\n  build:\n    - {{ compiler('rust') }}\n    - cargo-bundle-licenses\n    # to compile the libsolv parts\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make  # [unix]\n  host:\n    - openssl  # [linux]\n\ntest:\n  commands:\n    - rattler-build --help\n\nabout:\n  home: https://github.com/prefix-dev/rattler-build\n  summary: rattler-build is the universal conda package builder for Windows, macOS and Linux\n  description: |\n    The rattler-build tooling and library creates cross-platform relocatable binaries / packages \n    from a simple recipe format.\n    The recipe format is heavily inspired by conda-build and boa, and the output of a regular\n    rattler-build run is a package that can be installed using mamba, conda or rattler.\n  license: BSD-3-Clause\n  license_file:\n    - LICENSE\n    - THIRDPARTY.yml\n    - CONDA_BUILD_LICENSE.txt\n  doc_url: https://prefix-dev.github.io/rattler-build\n\nextra:\n  recipe-maintainers:\n    - wolfv\n    - pavelzw\n    - '0xbe7a'\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -581,7 +590,7 @@
   },
   "build": {
    "detect_binary_files_with_prefix": false,
-   "number": "0",
+   "number": "1",
    "script": [
     "cargo install --locked --bins --root %PREFIX% --path .",
     "cargo-bundle-licenses --format yaml --output %SRC_DIR%/THIRDPARTY.yml",
@@ -592,7 +601,8 @@
   "extra": {
    "recipe-maintainers": [
     "wolfv",
-    "pavelzw"
+    "pavelzw",
+    "0xbe7a"
    ]
   },
   "package": {
