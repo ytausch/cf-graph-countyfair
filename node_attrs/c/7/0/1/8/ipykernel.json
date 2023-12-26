@@ -59,7 +59,7 @@
   },
   "package": {
    "name": "ipykernel",
-   "version": "6.26.0"
+   "version": "6.28.0"
   },
   "requirements": {
    "host": [
@@ -79,7 +79,7 @@
     "matplotlib-inline >=0.1",
     "nest-asyncio",
     "python >=3.8",
-    "pyzmq >=20",
+    "pyzmq >=24",
     "tornado >=6.1",
     "traitlets >=5.4.0",
     "packaging",
@@ -91,8 +91,8 @@
    ]
   },
   "source": {
-   "sha256": "553856658eb8430bbe9653ea041a41bff63e9606fc4628873fc92a6cf3abd404",
-   "url": "https://pypi.io/packages/source/i/ipykernel/ipykernel-6.26.0.tar.gz"
+   "sha256": "69c11403d26de69df02225916f916b37ea4b9af417da0a8c827f84328d88e5f3",
+   "url": "https://pypi.io/packages/source/i/ipykernel/ipykernel-6.28.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -234,7 +234,7 @@
   },
   "package": {
    "name": "ipykernel",
-   "version": "6.26.0"
+   "version": "6.28.0"
   },
   "requirements": {
    "host": [
@@ -272,7 +272,7 @@
     "matplotlib-inline >=0.1",
     "nest-asyncio",
     "python >=3.8",
-    "pyzmq >=20",
+    "pyzmq >=24",
     "tornado >=6.1",
     "traitlets >=5.4.0",
     "packaging",
@@ -287,7 +287,7 @@
     "matplotlib-inline >=0.1",
     "nest-asyncio",
     "python >=3.8",
-    "pyzmq >=20",
+    "pyzmq >=24",
     "tornado >=6.1",
     "traitlets >=5.4.0",
     "packaging",
@@ -301,7 +301,7 @@
     "matplotlib-inline >=0.1",
     "nest-asyncio",
     "python >=3.8",
-    "pyzmq >=20",
+    "pyzmq >=24",
     "tornado >=6.1",
     "traitlets >=5.4.0",
     "packaging",
@@ -313,8 +313,8 @@
    ]
   },
   "source": {
-   "sha256": "553856658eb8430bbe9653ea041a41bff63e9606fc4628873fc92a6cf3abd404",
-   "url": "https://pypi.io/packages/source/i/ipykernel/ipykernel-6.26.0.tar.gz"
+   "sha256": "69c11403d26de69df02225916f916b37ea4b9af417da0a8c827f84328d88e5f3",
+   "url": "https://pypi.io/packages/source/i/ipykernel/ipykernel-6.28.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -409,7 +409,7 @@
   },
   "package": {
    "name": "ipykernel",
-   "version": "6.26.0"
+   "version": "6.28.0"
   },
   "requirements": {
    "host": [
@@ -430,7 +430,7 @@
     "matplotlib-inline >=0.1",
     "nest-asyncio",
     "python >=3.8",
-    "pyzmq >=20",
+    "pyzmq >=24",
     "tornado >=6.1",
     "traitlets >=5.4.0",
     "packaging",
@@ -442,8 +442,8 @@
    ]
   },
   "source": {
-   "sha256": "553856658eb8430bbe9653ea041a41bff63e9606fc4628873fc92a6cf3abd404",
-   "url": "https://pypi.io/packages/source/i/ipykernel/ipykernel-6.26.0.tar.gz"
+   "sha256": "69c11403d26de69df02225916f916b37ea4b9af417da0a8c827f84328d88e5f3",
+   "url": "https://pypi.io/packages/source/i/ipykernel/ipykernel-6.28.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -542,7 +542,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ipykernel.json"
  },
- "raw_meta_yaml": "{% set version = \"6.26.0\" %}\n\n{% set migrating = false %}\n\n# note: make sure host python and test python don't match\n# to provoke possible cross-version noarch issues\n{% set host_python = \"3.8\" %}\n\npackage:\n  name: ipykernel\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/i/ipykernel/ipykernel-{{ version }}.tar.gz\n  sha256: 553856658eb8430bbe9653ea041a41bff63e9606fc4628873fc92a6cf3abd404\n\nbuild:\n  number: 0\n  noarch: python\n  script:\n    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    - {{ PYTHON }} -m ipykernel install --sys-prefix\n    # TODO: this may be needed/desirable at some point\n    # - cd {{ RECIPE_DIR }} && {{ PYTHON }} fix_kernelspec.py\n  script_env:\n    - MIGRATING={{ migrating }}\n\nrequirements:\n  host:\n    - hatchling >=1.4\n    - pip\n    - python {{ host_python }}\n    # minimum needed to intall kernelspec\n    - &comm_version comm >=0.1.1\n    - &debugpy_version debugpy >=1.6.5\n    - &ipython_version ipython >=7.23.1\n    - &jupyter_client_version jupyter_client >=6.1.12\n    - &packaging_version packaging\n    - &psutil_version psutil\n  run:\n    - __{{ noarch_platform }}\n    {% if noarch_platform == \"osx\" %}\n    - appnope\n    {% endif %}\n    - jupyter_core >=4.12,!=5.0.*\n    - matplotlib-inline >=0.1\n    - nest-asyncio\n    - python >={{ host_python }}\n    - pyzmq >=20\n    - tornado >=6.1\n    - traitlets >=5.4.0\n    # reused from host\n    - *packaging_version\n    - *psutil_version\n    - *comm_version\n    - *debugpy_version\n    - *ipython_version\n    - *jupyter_client_version\n\ntest:\n  source_files:\n    - tests\n  requires:\n    - curio  # [not win]\n    - flaky\n    - numpy\n    - pip\n    - pytest >=6.0\n    - pytest-asyncio\n    - pytest-cov\n    - pytest-timeout\n    - python !={{ host_python }}\n    {% if not migrating %}\n    - ipyparallel\n    - matplotlib-base\n    {% endif %}\n\n  imports:\n    - ipykernel\n  commands:\n    - pip check\n    - jupyter kernelspec list\n\nabout:\n  home: https://ipython.org\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: IPython Kernel for Jupyter\n  description: |\n    A powerful interactive Python shell and a Jupyter kernel to work with\n    Python code in Jupyter notebooks and other interactive frontends.\n  dev_url: https://github.com/ipython/ipykernel\n  doc_url: https://ipython.readthedocs.io\n  doc_source_url: https://github.com/ipython/ipykernel/blob/master/docs/index.rst\n\nextra:\n  recipe-maintainers:\n    - blink1073\n    - bollwyvl\n    - Carreau\n    - jakirkham\n    - minrk\n    - ocefpaf\n    - pelson\n    - davidbrochart\n",
+ "raw_meta_yaml": "{% set version = \"6.28.0\" %}\n\n{% set migrating = false %}\n\n# note: make sure host python and test python don't match\n# to provoke possible cross-version noarch issues\n{% set host_python = \"3.8\" %}\n\npackage:\n  name: ipykernel\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/i/ipykernel/ipykernel-{{ version }}.tar.gz\n  sha256: 69c11403d26de69df02225916f916b37ea4b9af417da0a8c827f84328d88e5f3\n\nbuild:\n  number: 0\n  noarch: python\n  script:\n    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    - {{ PYTHON }} -m ipykernel install --sys-prefix\n    # TODO: this may be needed/desirable at some point\n    # - cd {{ RECIPE_DIR }} && {{ PYTHON }} fix_kernelspec.py\n  script_env:\n    - MIGRATING={{ migrating }}\n\nrequirements:\n  host:\n    - hatchling >=1.4\n    - pip\n    - python {{ host_python }}\n    # minimum needed to intall kernelspec\n    - comm >=0.1.1\n    - debugpy >=1.6.5\n    - ipython >=7.23.1\n    - jupyter_client >=6.1.12\n    - packaging\n    - psutil\n  run:\n    - __{{ noarch_platform }}\n    {% if noarch_platform == \"osx\" %}\n    - appnope\n    {% endif %}\n    - jupyter_core >=4.12,!=5.0.*\n    - matplotlib-inline >=0.1\n    - nest-asyncio\n    - python >={{ host_python }}\n    - pyzmq >=24\n    - tornado >=6.1\n    - traitlets >=5.4.0\n    # reused from host\n    - packaging\n    - psutil\n    - comm >=0.1.1\n    - debugpy >=1.6.5\n    - ipython >=7.23.1\n    - jupyter_client >=6.1.12\n\ntest:\n  source_files:\n    - tests\n  requires:\n    - curio  # [not win]\n    - flaky\n    - numpy\n    - pip\n    - pytest >=6.0\n    - pytest-asyncio\n    - pytest-cov\n    - pytest-timeout\n    - python !={{ host_python }}\n    {% if not migrating %}\n    - ipyparallel\n    - matplotlib-base\n    {% endif %}\n\n  imports:\n    - ipykernel\n  commands:\n    - pip check\n    - jupyter kernelspec list\n\nabout:\n  home: https://ipython.org\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE\n  summary: IPython Kernel for Jupyter\n  description: |\n    A powerful interactive Python shell and a Jupyter kernel to work with\n    Python code in Jupyter notebooks and other interactive frontends.\n  dev_url: https://github.com/ipython/ipykernel\n  doc_url: https://ipython.readthedocs.io\n  doc_source_url: https://github.com/ipython/ipykernel/blob/master/docs/index.rst\n\nextra:\n  recipe-maintainers:\n    - blink1073\n    - bollwyvl\n    - Carreau\n    - jakirkham\n    - minrk\n    - ocefpaf\n    - pelson\n    - davidbrochart\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -662,7 +662,7 @@
     "packaging",
     "psutil",
     "python >=3.8",
-    "pyzmq >=20",
+    "pyzmq >=24",
     "tornado >=6.1",
     "traitlets >=5.4.0"
    ]
@@ -684,8 +684,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/i/ipykernel/ipykernel-6.26.0.tar.gz",
- "version": "6.26.0",
+ "url": "https://pypi.io/packages/source/i/ipykernel/ipykernel-6.28.0.tar.gz",
+ "version": "6.28.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/ipykernel.json"
  },
@@ -726,7 +726,7 @@
   },
   "package": {
    "name": "ipykernel",
-   "version": "6.26.0"
+   "version": "6.28.0"
   },
   "requirements": {
    "host": [
@@ -746,7 +746,7 @@
     "matplotlib-inline >=0.1",
     "nest-asyncio",
     "python >=3.8",
-    "pyzmq >=20",
+    "pyzmq >=24",
     "tornado >=6.1",
     "traitlets >=5.4.0",
     "packaging",
@@ -758,8 +758,8 @@
    ]
   },
   "source": {
-   "sha256": "553856658eb8430bbe9653ea041a41bff63e9606fc4628873fc92a6cf3abd404",
-   "url": "https://pypi.io/packages/source/i/ipykernel/ipykernel-6.26.0.tar.gz"
+   "sha256": "69c11403d26de69df02225916f916b37ea4b9af417da0a8c827f84328d88e5f3",
+   "url": "https://pypi.io/packages/source/i/ipykernel/ipykernel-6.28.0.tar.gz"
   },
   "test": {
    "commands": [
