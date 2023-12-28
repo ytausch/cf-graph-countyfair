@@ -32,7 +32,7 @@
    "summary": "The Ultimate Disassembler"
   },
   "build": {
-   "number": "7"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "capstone",
@@ -128,12 +128,12 @@
   ],
   "package": {
    "name": "capstone-split",
-   "version": "4.0.2"
+   "version": "5.0.1"
   },
   "source": {
    "patches": null,
-   "sha256": "7c81d798022f81e7507f1a60d6817f63aa76e489aa4e7055255f21a22f5e526a",
-   "url": "https://github.com/aquynh/capstone/archive/4.0.2.tar.gz"
+   "sha256": "2b9c66915923fdc42e0e32e2a9d7d83d3534a45bb235e163a70047951890c01a",
+   "url": "https://github.com/aquynh/capstone/archive/5.0.1.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -182,7 +182,7 @@
    "summary": "The Ultimate Disassembler"
   },
   "build": {
-   "number": "7"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "capstone",
@@ -964,12 +964,12 @@
   ],
   "package": {
    "name": "capstone-split",
-   "version": "4.0.2"
+   "version": "5.0.1"
   },
   "source": {
    "patches": null,
-   "sha256": "7c81d798022f81e7507f1a60d6817f63aa76e489aa4e7055255f21a22f5e526a",
-   "url": "https://github.com/aquynh/capstone/archive/4.0.2.tar.gz"
+   "sha256": "2b9c66915923fdc42e0e32e2a9d7d83d3534a45bb235e163a70047951890c01a",
+   "url": "https://github.com/aquynh/capstone/archive/5.0.1.tar.gz"
   }
  },
  "name": "capstone-split",
@@ -985,7 +985,7 @@
    "summary": "The Ultimate Disassembler"
   },
   "build": {
-   "number": "7"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "capstone",
@@ -1081,14 +1081,14 @@
   ],
   "package": {
    "name": "capstone-split",
-   "version": "4.0.2"
+   "version": "5.0.1"
   },
   "source": {
    "patches": [
     "osx.patch"
    ],
-   "sha256": "7c81d798022f81e7507f1a60d6817f63aa76e489aa4e7055255f21a22f5e526a",
-   "url": "https://github.com/aquynh/capstone/archive/4.0.2.tar.gz"
+   "sha256": "2b9c66915923fdc42e0e32e2a9d7d83d3534a45bb235e163a70047951890c01a",
+   "url": "https://github.com/aquynh/capstone/archive/5.0.1.tar.gz"
   }
  },
  "osx_64_requirements": {
@@ -1137,7 +1137,7 @@
    "summary": "The Ultimate Disassembler"
   },
   "build": {
-   "number": "7"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "capstone",
@@ -1233,14 +1233,14 @@
   ],
   "package": {
    "name": "capstone-split",
-   "version": "4.0.2"
+   "version": "5.0.1"
   },
   "source": {
    "patches": [
     "osx.patch"
    ],
-   "sha256": "7c81d798022f81e7507f1a60d6817f63aa76e489aa4e7055255f21a22f5e526a",
-   "url": "https://github.com/aquynh/capstone/archive/4.0.2.tar.gz"
+   "sha256": "2b9c66915923fdc42e0e32e2a9d7d83d3534a45bb235e163a70047951890c01a",
+   "url": "https://github.com/aquynh/capstone/archive/5.0.1.tar.gz"
   }
  },
  "osx_arm64_requirements": {
@@ -1295,7 +1295,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/capstone.json"
  },
- "raw_meta_yaml": "{% set name = \"capstone\" %}\n{% set version = \"4.0.2\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/aquynh/{{ name }}/archive/{{ version }}.tar.gz\n  sha256: 7c81d798022f81e7507f1a60d6817f63aa76e489aa4e7055255f21a22f5e526a\n  patches:\n    - osx.patch  # [osx]\n\nbuild:\n  number: 7\n\noutputs:\n  - name: libcapstone\n    script: install-lib.sh\n    build:\n      skip: true  # [win]\n      run_exports:\n        - {{ pin_subpackage(\"libcapstone\", max_pin=\"x.x.x\") }}\n    requirements:\n      build:\n        - cmake\n        - make\n        - {{ compiler('c') }}\n    test:\n      commands:\n        - test -f $PREFIX/lib/libcapstone${SHLIB_EXT}\n  - name: cstool\n    script: install-lib.sh\n    build:\n      skip: true  # [win]\n      run_exports:\n        - {{ pin_subpackage(\"libcapstone\", max_pin=\"x.x.x\") }}\n    requirements:\n      build:\n        - cmake\n        - make\n        - {{ compiler('c') }}\n      host:\n        - {{ pin_subpackage('libcapstone', exact=True) }}\n      run:\n        - {{ pin_subpackage('libcapstone', exact=True) }}\n    test:\n      commands:\n        - cstool -v\n  - name: capstone\n    script: install-py.sh   # [unix]\n    script: install-py.bat  # [win]\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - cython                                 # [build_platform != target_platform]\n        - {{ compiler('c') }}\n        - make\n        - cmake  # [win]\n      host:\n        - python\n        - pip\n        - cython\n        - pthread-stubs\n        - {{ pin_subpackage('libcapstone', exact=True) }}  # [not win]\n      run:\n        - python\n        - setuptools\n        - {{ pin_subpackage('libcapstone', exact=True) }}  # [not win]\n    test:\n      imports:\n        - capstone\n      requires:\n        - pip\n      commands:\n        - pip check\n\nabout:\n  home: http://www.capstone-engine.org/\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.TXT\n  summary: The Ultimate Disassembler\n  description: |\n    Capstone is a lightweight multi-platform, multi-architecture disassembly framework\n  doc_url: http://www.capstone-engine.org/documentation.html\n  dev_url: https://github.com/aquynh/capstone\n\nextra:\n  feedstock-name: capstone\n  recipe-maintainers:\n    - scopatz\n    - CJ-Wright\n    - thewchan\n    - xhochy\n",
+ "raw_meta_yaml": "{% set name = \"capstone\" %}\n{% set version = \"5.0.1\" %}\n\npackage:\n  name: {{ name|lower }}-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/aquynh/{{ name }}/archive/{{ version }}.tar.gz\n  sha256: 2b9c66915923fdc42e0e32e2a9d7d83d3534a45bb235e163a70047951890c01a\n  patches:\n    - osx.patch  # [osx]\n\nbuild:\n  number: 0\n\noutputs:\n  - name: libcapstone\n    script: install-lib.sh\n    build:\n      skip: true  # [win]\n      run_exports:\n        - {{ pin_subpackage(\"libcapstone\", max_pin=\"x.x.x\") }}\n    requirements:\n      build:\n        - cmake\n        - make\n        - {{ compiler('c') }}\n    test:\n      commands:\n        - test -f $PREFIX/lib/libcapstone${SHLIB_EXT}\n  - name: cstool\n    script: install-lib.sh\n    build:\n      skip: true  # [win]\n      run_exports:\n        - {{ pin_subpackage(\"libcapstone\", max_pin=\"x.x.x\") }}\n    requirements:\n      build:\n        - cmake\n        - make\n        - {{ compiler('c') }}\n      host:\n        - {{ pin_subpackage('libcapstone', exact=True) }}\n      run:\n        - {{ pin_subpackage('libcapstone', exact=True) }}\n    test:\n      commands:\n        - cstool -v\n  - name: capstone\n    script: install-py.sh  # [unix]\n    script: install-py.bat  # [win]\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - cython                                 # [build_platform != target_platform]\n        - {{ compiler('c') }}\n        - make\n        - cmake  # [win]\n      host:\n        - python\n        - pip\n        - cython\n        - pthread-stubs\n        - {{ pin_subpackage('libcapstone', exact=True) }}  # [not win]\n      run:\n        - python\n        - setuptools\n        - {{ pin_subpackage('libcapstone', exact=True) }}  # [not win]\n    test:\n      imports:\n        - capstone\n      requires:\n        - pip\n      commands:\n        - pip check\n\nabout:\n  home: http://www.capstone-engine.org/\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.TXT\n  summary: The Ultimate Disassembler\n  description: |\n    Capstone is a lightweight multi-platform, multi-architecture disassembly framework\n  doc_url: http://www.capstone-engine.org/documentation.html\n  dev_url: https://github.com/aquynh/capstone\n\nextra:\n  feedstock-name: capstone\n  recipe-maintainers:\n    - scopatz\n    - CJ-Wright\n    - thewchan\n    - xhochy\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1381,8 +1381,8 @@
    ]
   }
  },
- "url": "https://github.com/aquynh/capstone/archive/4.0.2.tar.gz",
- "version": "4.0.2",
+ "url": "https://github.com/aquynh/capstone/archive/5.0.1.tar.gz",
+ "version": "5.0.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/capstone.json"
  },
@@ -1398,7 +1398,7 @@
    "summary": "The Ultimate Disassembler"
   },
   "build": {
-   "number": "7"
+   "number": "0"
   },
   "extra": {
    "feedstock-name": "capstone",
@@ -1925,12 +1925,12 @@
   ],
   "package": {
    "name": "capstone-split",
-   "version": "4.0.2"
+   "version": "5.0.1"
   },
   "source": {
    "patches": null,
-   "sha256": "7c81d798022f81e7507f1a60d6817f63aa76e489aa4e7055255f21a22f5e526a",
-   "url": "https://github.com/aquynh/capstone/archive/4.0.2.tar.gz"
+   "sha256": "2b9c66915923fdc42e0e32e2a9d7d83d3534a45bb235e163a70047951890c01a",
+   "url": "https://github.com/aquynh/capstone/archive/5.0.1.tar.gz"
   }
  },
  "win_64_requirements": {
