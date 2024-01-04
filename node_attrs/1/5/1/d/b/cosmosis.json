@@ -99,7 +99,7 @@
   },
   "package": {
    "name": "cosmosis",
-   "version": "3.4.4"
+   "version": "3.5"
   },
   "requirements": {
    "build": [
@@ -590,8 +590,8 @@
    ]
   },
   "source": {
-   "sha256": "461f1e50eca673c051193d5e936ad367d0593b4cf3c85006332e4aba4a56c687",
-   "url": "https://pypi.io/packages/source/c/cosmosis/cosmosis-3.4.4.tar.gz"
+   "sha256": "c6b39c3357b386bcc11f459304b73d2682001745801a84ef05f93fa9634fb23e",
+   "url": "https://pypi.io/packages/source/c/cosmosis/cosmosis-3.5.tar.gz"
   },
   "test": {
    "commands": [
@@ -963,7 +963,7 @@
   },
   "package": {
    "name": "cosmosis",
-   "version": "3.4.4"
+   "version": "3.5"
   },
   "requirements": {
    "build": [
@@ -2414,8 +2414,8 @@
    ]
   },
   "source": {
-   "sha256": "461f1e50eca673c051193d5e936ad367d0593b4cf3c85006332e4aba4a56c687",
-   "url": "https://pypi.io/packages/source/c/cosmosis/cosmosis-3.4.4.tar.gz"
+   "sha256": "c6b39c3357b386bcc11f459304b73d2682001745801a84ef05f93fa9634fb23e",
+   "url": "https://pypi.io/packages/source/c/cosmosis/cosmosis-3.5.tar.gz"
   },
   "test": {
    "commands": [
@@ -2824,7 +2824,7 @@
   },
   "package": {
    "name": "cosmosis",
-   "version": "3.4.4"
+   "version": "3.5"
   },
   "requirements": {
    "build": [
@@ -3315,8 +3315,8 @@
    ]
   },
   "source": {
-   "sha256": "461f1e50eca673c051193d5e936ad367d0593b4cf3c85006332e4aba4a56c687",
-   "url": "https://pypi.io/packages/source/c/cosmosis/cosmosis-3.4.4.tar.gz"
+   "sha256": "c6b39c3357b386bcc11f459304b73d2682001745801a84ef05f93fa9634fb23e",
+   "url": "https://pypi.io/packages/source/c/cosmosis/cosmosis-3.5.tar.gz"
   },
   "test": {
    "commands": [
@@ -3568,7 +3568,7 @@
   },
   "package": {
    "name": "cosmosis",
-   "version": "3.4.4"
+   "version": "3.5"
   },
   "requirements": {
    "build": [
@@ -4059,8 +4059,8 @@
    ]
   },
   "source": {
-   "sha256": "461f1e50eca673c051193d5e936ad367d0593b4cf3c85006332e4aba4a56c687",
-   "url": "https://pypi.io/packages/source/c/cosmosis/cosmosis-3.4.4.tar.gz"
+   "sha256": "c6b39c3357b386bcc11f459304b73d2682001745801a84ef05f93fa9634fb23e",
+   "url": "https://pypi.io/packages/source/c/cosmosis/cosmosis-3.5.tar.gz"
   },
   "test": {
    "commands": [
@@ -4245,7 +4245,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cosmosis.json"
  },
- "raw_meta_yaml": "{% set name = \"cosmosis\" %}\n{% set version = \"3.4.4\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 461f1e50eca673c051193d5e936ad367d0593b4cf3c85006332e4aba4a56c687\n\nbuild:\n  number: 0\n  skip: true  # [( (py < 36) or win )]\n  # OpenMPI fails to cross-compile to arm64 unless this variable is exported\n  script: export OMPI_FC=${FC} && {{ PYTHON }} -m pip install . -vv\n\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('c') }}\n    - {{ compiler('fortran') }}\n    - {{ compiler('cxx') }}\n    - make\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux]\n    #\u00A0needed for cross-compilation\n    - {{ mpi }}                              # [build_platform != target_platform and mpi == \"openmpi\"]\n  host:\n    - python\n    - pip\n    - wheel\n    - {{ mpi }}\n    # needed to force the right pinnings\n    # see https://github.com/conda-forge/conda-smithy/issues/1600\n    - mpich ==3.*          # [mpi == \"mpich ==3.*\"]\n    - mpich ==4.*          # [mpi == \"mpich ==4.*\"]\n    - openmpi             # [mpi == \"openmpi\"]\n    - liblapack\n    - libblas\n    - minuit2_standalone\n  run:\n    # core\n    - python\n    - mpi4py\n    - matplotlib-base\n    - future\n    - numpy\n    - pip\n    - pybind11\n    - pyyaml\n    - scipy\n    - setuptools\n    - threadpoolctl\n    - git\n    # for samplers\n    - emcee\n    - dynesty\n    - minuit2_standalone\n    - zeus-mcmc\n    - dulwich\n    - nautilus-sampler =0.6\n    - astropy\n\ntest:\n  imports:\n    - cosmosis\n  commands:\n    - test -f ${SP_DIR}/cosmosis/samplers/multinest/multinest_src/libnest3.so\n    - test -f ${SP_DIR}/cosmosis/samplers/multinest/multinest_src/libnest3_mpi.so\n    - test -f ${SP_DIR}/cosmosis/samplers/polychord/polychord_src/libchord.so\n    - test -f ${SP_DIR}/cosmosis/samplers/polychord/polychord_src/libchord_mpi.so\n    - source cosmosis-configure && pytest --pyargs cosmosis\n  requires:\n    - pytest\n\nabout:\n  home: https://github.com/joezuntz/cosmosis\n  license: BSD-2-Clause AND LicenseRef-non-commerical-use-only\n  license_family: BSD\n  license_file:\n    - LICENSE\n    - cosmosis/samplers/multinest/multinest_src/LICENCE\n    - cosmosis/samplers/polychord/polychord_src/LICENCE\n\n  summary: The Cosmological Survey Inference System\n  description: |\n    CosmoSIS is a framework designed primarily for cosmological\n    parameter estimation.\n  doc_url: https://cosmosis.readthedocs.io/\n  dev_url: https://github.com/joezuntz/cosmosis\n\nextra:\n  recipe-maintainers:\n    - joezuntz\n",
+ "raw_meta_yaml": "{% set name = \"cosmosis\" %}\n{% set version = \"3.5\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: c6b39c3357b386bcc11f459304b73d2682001745801a84ef05f93fa9634fb23e\n\nbuild:\n  number: 0\n  skip: true  # [( (py < 36) or win )]\n  # OpenMPI fails to cross-compile to arm64 unless this variable is exported\n  script: export OMPI_FC=${FC} && {{ PYTHON }} -m pip install . -vv\n\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('c') }}\n    - {{ compiler('fortran') }}\n    - {{ compiler('cxx') }}\n    - make\n    - llvm-openmp  # [osx]\n    - libgomp      # [linux]\n    #\u00A0needed for cross-compilation\n    - {{ mpi }}                              # [build_platform != target_platform and mpi == \"openmpi\"]\n  host:\n    - python\n    - pip\n    - wheel\n    - {{ mpi }}\n    # needed to force the right pinnings\n    # see https://github.com/conda-forge/conda-smithy/issues/1600\n    - mpich ==3.*          # [mpi == \"mpich ==3.*\"]\n    - mpich ==4.*          # [mpi == \"mpich ==4.*\"]\n    - openmpi             # [mpi == \"openmpi\"]\n    - liblapack\n    - libblas\n    - minuit2_standalone\n  run:\n    # core\n    - python\n    - mpi4py\n    - matplotlib-base\n    - future\n    - numpy\n    - pip\n    - pybind11\n    - pyyaml\n    - scipy\n    - setuptools\n    - threadpoolctl\n    - git\n    # for samplers\n    - emcee\n    - dynesty\n    - minuit2_standalone\n    - zeus-mcmc\n    - dulwich\n    - nautilus-sampler =0.6\n    - astropy\n\ntest:\n  imports:\n    - cosmosis\n  commands:\n    - test -f ${SP_DIR}/cosmosis/samplers/multinest/multinest_src/libnest3.so\n    - test -f ${SP_DIR}/cosmosis/samplers/multinest/multinest_src/libnest3_mpi.so\n    - test -f ${SP_DIR}/cosmosis/samplers/polychord/polychord_src/libchord.so\n    - test -f ${SP_DIR}/cosmosis/samplers/polychord/polychord_src/libchord_mpi.so\n    - source cosmosis-configure && pytest --pyargs cosmosis\n  requires:\n    - pytest\n\nabout:\n  home: https://github.com/joezuntz/cosmosis\n  license: BSD-2-Clause AND LicenseRef-non-commerical-use-only\n  license_family: BSD\n  license_file:\n    - LICENSE\n    - cosmosis/samplers/multinest/multinest_src/LICENCE\n    - cosmosis/samplers/polychord/polychord_src/LICENCE\n\n  summary: The Cosmological Survey Inference System\n  description: |\n    CosmoSIS is a framework designed primarily for cosmological\n    parameter estimation.\n  doc_url: https://cosmosis.readthedocs.io/\n  dev_url: https://github.com/joezuntz/cosmosis\n\nextra:\n  recipe-maintainers:\n    - joezuntz\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -4401,8 +4401,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/c/cosmosis/cosmosis-3.4.4.tar.gz",
- "version": "3.4.4",
+ "url": "https://pypi.io/packages/source/c/cosmosis/cosmosis-3.5.tar.gz",
+ "version": "3.5",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cosmosis.json"
  }
