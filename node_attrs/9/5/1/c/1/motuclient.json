@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "bot": {
+   "inspection": "update-grayskull"
+  },
   "conda_build": {
    "pkg_format": "2"
   },
@@ -22,41 +25,46 @@
   },
   "build": {
    "entry_points": [
-    "motuclient = motuclient:main"
+    "motuclient = motuclient.motuclient:main",
+    "motu-client = motuclient.motuclient:main"
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
-    "raybellwaves"
+    "raybellwaves",
+    "ocefpaf"
    ]
   },
   "package": {
    "name": "motuclient",
-   "version": "1.8.8"
+   "version": "3.0.0"
   },
   "requirements": {
    "host": [
-    "pip",
-    "python >=2.7"
+    "python >=3.7",
+    "pip"
    ],
    "run": [
-    "python >=2.7"
+    "python >=3.7",
+    "python-dateutil"
    ]
   },
   "source": {
-   "sha256": "c89f8dcb348ce8232b7fa5b37d531623fa8dca0263841a09c044e19777202c5d",
-   "url": "https://pypi.io/packages/source/m/motuclient/motuclient-1.8.8.tar.gz"
+   "sha256": "9ef1f34b9866caff760f9b3218b62bd11aaa7b5da5844308a968004752940d8f",
+   "url": "https://pypi.io/packages/source/m/motuclient/motuclient-3.0.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "motuclient --help"
+    "motuclient --help",
+    "motu-client --help"
    ],
    "imports": [
-    "motu_utils"
+    "motu_utils",
+    "motuclient"
    ],
    "requires": [
     "pip"
@@ -78,7 +86,8 @@
   "run": {
    "__set__": true,
    "elements": [
-    "python"
+    "python",
+    "python-dateutil"
    ]
   },
   "test": {
@@ -97,41 +106,46 @@
   },
   "build": {
    "entry_points": [
-    "motuclient = motuclient:main"
+    "motuclient = motuclient.motuclient:main",
+    "motu-client = motuclient.motuclient:main"
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
-    "raybellwaves"
+    "raybellwaves",
+    "ocefpaf"
    ]
   },
   "package": {
    "name": "motuclient",
-   "version": "1.8.8"
+   "version": "3.0.0"
   },
   "requirements": {
    "host": [
-    "pip",
-    "python >=2.7"
+    "python >=3.7",
+    "pip"
    ],
    "run": [
-    "python >=2.7"
+    "python >=3.7",
+    "python-dateutil"
    ]
   },
   "source": {
-   "sha256": "c89f8dcb348ce8232b7fa5b37d531623fa8dca0263841a09c044e19777202c5d",
-   "url": "https://pypi.io/packages/source/m/motuclient/motuclient-1.8.8.tar.gz"
+   "sha256": "9ef1f34b9866caff760f9b3218b62bd11aaa7b5da5844308a968004752940d8f",
+   "url": "https://pypi.io/packages/source/m/motuclient/motuclient-3.0.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "motuclient --help"
+    "motuclient --help",
+    "motu-client --help"
    ],
    "imports": [
-    "motu_utils"
+    "motu_utils",
+    "motuclient"
    ],
    "requires": [
     "pip"
@@ -152,12 +166,13 @@
  "pr_info": {
   "__lazy_json__": "pr_info/motuclient.json"
  },
- "raw_meta_yaml": "{% set name = \"motuclient\" %}\n{% set version = \"1.8.8\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/motuclient-{{ version }}.tar.gz\n  sha256: c89f8dcb348ce8232b7fa5b37d531623fa8dca0263841a09c044e19777202c5d\n\nbuild:\n  number: 0\n  noarch: python\n  entry_points:\n    - motuclient = motuclient:main\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - pip\n    - python >=2.7\n  run:\n    - python >=2.7\n\ntest:\n  imports:\n    - motu_utils\n  commands:\n    - pip check\n    - motuclient --help\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/clstoulouse/motu-client-python\n  summary: Extract and download gridded data through a python command line from Motu web server. Used in CMEMS context http://marine.copernicus.eu/\n  license: LGPL-3.0-or-later\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - raybellwaves\n",
+ "raw_meta_yaml": "{% set name = \"motuclient\" %}\n{% set version = \"3.0.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/motuclient-{{ version }}.tar.gz\n  sha256: 9ef1f34b9866caff760f9b3218b62bd11aaa7b5da5844308a968004752940d8f\n\nbuild:\n  entry_points:\n    - motuclient = motuclient.motuclient:main\n    - motu-client = motuclient.motuclient:main\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - python >=3.7\n    - python-dateutil\n\ntest:\n  imports:\n    - motu_utils\n    - motuclient\n  commands:\n    - pip check\n    - motuclient --help\n    - motu-client --help\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/clstoulouse/motu-client-python\n  summary: Extract and download gridded data through a python command line from Motu web server. Used in CMEMS context http://marine.copernicus.eu/\n  license: LGPL-3.0-or-later\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - raybellwaves\n    - ocefpaf\n",
  "req": {
   "__set__": true,
   "elements": [
    "pip",
-   "python"
+   "python",
+   "python-dateutil"
   ]
  },
  "requirements": {
@@ -175,7 +190,8 @@
   "run": {
    "__set__": true,
    "elements": [
-    "python"
+    "python",
+    "python-dateutil"
    ]
   },
   "test": {
@@ -195,13 +211,14 @@
    "__set__": true,
    "elements": [
     "pip",
-    "python >=2.7"
+    "python >=3.7"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "python >=2.7"
+    "python >=3.7",
+    "python-dateutil"
    ]
   },
   "test": {
@@ -211,8 +228,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/m/motuclient/motuclient-1.8.8.tar.gz",
- "version": "1.8.8",
+ "url": "https://pypi.io/packages/source/m/motuclient/motuclient-3.0.0.tar.gz",
+ "version": "3.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/motuclient.json"
  }
