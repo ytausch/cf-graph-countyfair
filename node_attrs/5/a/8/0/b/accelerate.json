@@ -28,6 +28,7 @@
    "entry_points": [
     "accelerate=accelerate.commands.accelerate_cli:main",
     "accelerate-config=accelerate.commands.config:main",
+    "accelerate-estimate-memory=accelerate.commands.estimate:main",
     "accelerate-launch=accelerate.commands.launch:main"
    ],
    "noarch": "python",
@@ -41,7 +42,7 @@
   },
   "package": {
    "name": "accelerate",
-   "version": "0.25.0"
+   "version": "0.26.0"
   },
   "requirements": {
    "host": [
@@ -49,24 +50,27 @@
     "python >=3.8.0"
    ],
    "run": [
+    "python >=3.8.0",
     "numpy >=1.17",
     "packaging >=20.0",
     "psutil",
+    "pyyaml",
     "pytorch >=1.10.0",
-    "python >=3.8.0",
-    "pyyaml"
+    "huggingface_hub",
+    "safetensors >=0.3.1"
    ]
   },
   "source": {
-   "sha256": "ecf55b0ab278a1dac8539dde0d276977aff04683f07ede73eaf02478538576a1",
-   "url": "https://pypi.io/packages/source/a/accelerate/accelerate-0.25.0.tar.gz"
+   "sha256": "3b98a86b6c2e362d6c98a581346fd57f444b949866dd50f313e552b613784e9e",
+   "url": "https://pypi.io/packages/source/a/accelerate/accelerate-0.26.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
     "accelerate --help",
     "accelerate-config --help",
-    "accelerate-launch --help"
+    "accelerate-launch --help",
+    "accelerate-estimate-memory --help"
    ],
    "imports": [
     "accelerate",
@@ -98,12 +102,14 @@
   "run": {
    "__set__": true,
    "elements": [
+    "huggingface_hub",
     "numpy",
     "packaging",
     "psutil",
     "python",
     "pytorch",
-    "pyyaml"
+    "pyyaml",
+    "safetensors"
    ]
   },
   "test": {
@@ -131,6 +137,7 @@
    "entry_points": [
     "accelerate=accelerate.commands.accelerate_cli:main",
     "accelerate-config=accelerate.commands.config:main",
+    "accelerate-estimate-memory=accelerate.commands.estimate:main",
     "accelerate-launch=accelerate.commands.launch:main"
    ],
    "noarch": "python",
@@ -144,7 +151,7 @@
   },
   "package": {
    "name": "accelerate",
-   "version": "0.25.0"
+   "version": "0.26.0"
   },
   "requirements": {
    "host": [
@@ -152,24 +159,27 @@
     "python >=3.8.0"
    ],
    "run": [
+    "python >=3.8.0",
     "numpy >=1.17",
     "packaging >=20.0",
     "psutil",
+    "pyyaml",
     "pytorch >=1.10.0",
-    "python >=3.8.0",
-    "pyyaml"
+    "huggingface_hub",
+    "safetensors >=0.3.1"
    ]
   },
   "source": {
-   "sha256": "ecf55b0ab278a1dac8539dde0d276977aff04683f07ede73eaf02478538576a1",
-   "url": "https://pypi.io/packages/source/a/accelerate/accelerate-0.25.0.tar.gz"
+   "sha256": "3b98a86b6c2e362d6c98a581346fd57f444b949866dd50f313e552b613784e9e",
+   "url": "https://pypi.io/packages/source/a/accelerate/accelerate-0.26.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
     "accelerate --help",
     "accelerate-config --help",
-    "accelerate-launch --help"
+    "accelerate-launch --help",
+    "accelerate-estimate-memory --help"
    ],
    "imports": [
     "accelerate",
@@ -200,17 +210,19 @@
  "pr_info": {
   "__lazy_json__": "pr_info/accelerate.json"
  },
- "raw_meta_yaml": "{% set name = \"accelerate\" %}\n{% set version = \"0.25.0\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/accelerate-{{ version }}.tar.gz\n  sha256: ecf55b0ab278a1dac8539dde0d276977aff04683f07ede73eaf02478538576a1\n\nbuild:\n  number: 0\n  noarch: python\n  entry_points:\n    - accelerate=accelerate.commands.accelerate_cli:main\n    - accelerate-config=accelerate.commands.config:main\n    - accelerate-launch=accelerate.commands.launch:main\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - pip\n    - python >=3.8.0\n  run:\n    - numpy >=1.17\n    - packaging >=20.0\n    - psutil\n    - pytorch >=1.10.0\n    - python >=3.8.0\n    - pyyaml\n\ntest:\n  imports:\n    - accelerate\n    - accelerate.commands\n  commands:\n    - pip check\n    - accelerate --help\n    - accelerate-config --help\n    - accelerate-launch --help\n  requires:\n    - datasets\n    - evaluate\n    - pip\n    - scipy\n    - scikit-learn\n    - transformers\n    - tqdm\n\nabout:\n  home: https://github.com/huggingface/accelerate\n  doc_url: https://huggingface.co/docs/accelerate\n  summary: Training loop of PyTorch without boilerplate code\n  license: Apache-2.0\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - thewchan\n",
+ "raw_meta_yaml": "{% set name = \"accelerate\" %}\n{% set version = \"0.26.0\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/accelerate-{{ version }}.tar.gz\n  sha256: 3b98a86b6c2e362d6c98a581346fd57f444b949866dd50f313e552b613784e9e\n\nbuild:\n  number: 0\n  noarch: python\n  entry_points:\n    - accelerate=accelerate.commands.accelerate_cli:main\n    - accelerate-config=accelerate.commands.config:main\n    - accelerate-estimate-memory=accelerate.commands.estimate:main\n    - accelerate-launch=accelerate.commands.launch:main\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - pip\n    - python >=3.8.0\n  run:\n    - python >=3.8.0\n    - numpy >=1.17\n    - packaging >=20.0\n    - psutil\n    - pyyaml\n    - pytorch >=1.10.0\n    - huggingface_hub\n    - safetensors >=0.3.1\n    \ntest:\n  imports:\n    - accelerate\n    - accelerate.commands\n  commands:\n    - pip check\n    - accelerate --help\n    - accelerate-config --help\n    - accelerate-launch --help\n    - accelerate-estimate-memory --help\n  requires:\n    - datasets\n    - evaluate\n    - pip\n    - scipy\n    - scikit-learn\n    - transformers\n    - tqdm\n\nabout:\n  home: https://github.com/huggingface/accelerate\n  doc_url: https://huggingface.co/docs/accelerate\n  summary: Training loop of PyTorch without boilerplate code\n  license: Apache-2.0\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - thewchan\n",
  "req": {
   "__set__": true,
   "elements": [
+   "huggingface_hub",
    "numpy",
    "packaging",
    "pip",
    "psutil",
    "python",
    "pytorch",
-   "pyyaml"
+   "pyyaml",
+   "safetensors"
   ]
  },
  "requirements": {
@@ -228,12 +240,14 @@
   "run": {
    "__set__": true,
    "elements": [
+    "huggingface_hub",
     "numpy",
     "packaging",
     "psutil",
     "python",
     "pytorch",
-    "pyyaml"
+    "pyyaml",
+    "safetensors"
    ]
   },
   "test": {
@@ -265,12 +279,14 @@
   "run": {
    "__set__": true,
    "elements": [
+    "huggingface_hub",
     "numpy >=1.17",
     "packaging >=20.0",
     "psutil",
     "python >=3.8.0",
     "pytorch >=1.10.0",
-    "pyyaml"
+    "pyyaml",
+    "safetensors >=0.3.1"
    ]
   },
   "test": {
@@ -286,8 +302,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/a/accelerate/accelerate-0.25.0.tar.gz",
- "version": "0.25.0",
+ "url": "https://pypi.io/packages/source/a/accelerate/accelerate-0.26.0.tar.gz",
+ "version": "0.26.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/accelerate.json"
  }
