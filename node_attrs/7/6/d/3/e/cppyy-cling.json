@@ -2,9 +2,6 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
-  "azure": {
-   "store_build_artifacts": true
-  },
   "build_platform": {
    "osx_arm64": "osx_64"
   },
@@ -62,7 +59,7 @@
     "rootcling = cppyy_backend._rootcling:main",
     "cppyy-generator = cppyy_backend._cppyy_generator:main"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -300,7 +297,7 @@
     "rootcling = cppyy_backend._rootcling:main",
     "cppyy-generator = cppyy_backend._cppyy_generator:main"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -544,7 +541,7 @@
     "rootcling = cppyy_backend._rootcling:main",
     "cppyy-generator = cppyy_backend._cppyy_generator:main"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -874,7 +871,7 @@
     "rootcling = cppyy_backend._rootcling:main",
     "cppyy-generator = cppyy_backend._cppyy_generator:main"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1626,7 +1623,7 @@
     "rootcling = cppyy_backend._rootcling:main",
     "cppyy-generator = cppyy_backend._cppyy_generator:main"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -1866,7 +1863,7 @@
     "rootcling = cppyy_backend._rootcling:main",
     "cppyy-generator = cppyy_backend._cppyy_generator:main"
    ],
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -2065,7 +2062,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cppyy-cling.json"
  },
- "raw_meta_yaml": "{% set name = \"cppyy-cling\" %}\n{% set version = \"6.30.0\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/c/cppyy-cling/cppyy-cling-{{ version }}.tar.gz\n  sha256: 5d9e0551a4cb618eb3392001b3dc2c6294f02257f02fcd4d868999ba04f92af1\n  patches:\n    - use-dumb-setup.py.patch\n    # Disable use of llvm-config, a binary which we cannot install since it pulls in libllvm which breaks the build (also, we cannot use it when cross-compiling)\n    - cross.patch\n    # Use pre-built generated files when we cannot invoke rootcling\n    - rootcling.patch  # [build_platform != target_platform]\n    - clang-cpp.patch\n    - pri.patch\n    - thread.patch\n    # Revert patch for non-macOS https://github.com/conda-forge/cppyy-cling-feedstock/pull/40#issuecomment-975781900\n    - system_dirs.patch  # [osx]\n    # Do not use -march=native on platforms that do not support it yet.\n    - aarch64.patch  # [aarch64]\n    # Fix dependency resolution when building rootcling\n    - clangdriver.patch\n    # Fix https://github.com/conda-forge/cppyy-cling-feedstock/pull/56#issuecomment-1800307065\n    - remove-libLLVM.patch\n\nbuild:\n  number: 1\n  skip: true  # [win]\n  # cross-python does not support pypy yet\n  skip: true  # [build_platform != target_platform and python_impl == \"pypy\"]\n  entry_points:\n    - cling-config = cppyy_backend._cling_config:main\n    - genreflex = cppyy_backend._genreflex:main\n    - rootcling = cppyy_backend._rootcling:main\n    - cppyy-generator = cppyy_backend._cppyy_generator:main\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('cxx') }}\n    - sed\n    - cmake\n    # We need a find that understand -name\n    - findutils\n    - make  # [unix]\n  host:\n    - libboost-headers\n    - python\n    - pip\n    - zlib\n    # There is no root_62701 build of clangdev so we use the latest build before that\n    - clangdev =13.0.1 root_63002*\n  run:\n    # We need a C++ compiler at runtime to compile cppdef snippets and glue\n    # code and also so that all the standard headers are available. We do not\n    # need the exact compiler that was used during the build {{ compiler('cxx') }}\n    # but just any functional C++ compiler.\n    - cxx-compiler\n    - python\n\ntest:\n  commands:\n    - rootcling -h\n    # calling cppyy-generator fails with \"No module named clang\" same happens\n    # with the cppyy from PyPI.\n    # cppyy-generator -h\n    - genreflex -h\n\nabout:\n  home: https://pypi.org/project/cppyy-cling\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.txt\n  summary: A repackaging of Cling for Automatic Python-C++ Bindings\n  description: |\n    A repackaging of Cling, the interactive C++ interpreter, including C/C++\n    wrappers that expose no further external headers or types.\n  doc_url: http://cppyy.readthedocs.io/\n  dev_url: https://bitbucket.org/wlav/cppyy-backend/src/master/cling/\n\nextra:\n  recipe-maintainers:\n    - saraedum\n    - isuruf\n",
+ "raw_meta_yaml": "{% set name = \"cppyy-cling\" %}\n{% set version = \"6.30.0\" %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/c/cppyy-cling/cppyy-cling-{{ version }}.tar.gz\n  sha256: 5d9e0551a4cb618eb3392001b3dc2c6294f02257f02fcd4d868999ba04f92af1\n  patches:\n    - use-dumb-setup.py.patch\n    # Disable use of llvm-config, a binary which we cannot install since it pulls in libllvm which breaks the build (also, we cannot use it when cross-compiling)\n    - cross.patch\n    # Use pre-built generated files when we cannot invoke rootcling\n    - rootcling.patch  # [build_platform != target_platform]\n    - clang-cpp.patch\n    - pri.patch\n    - thread.patch\n    # Revert patch for non-macOS https://github.com/conda-forge/cppyy-cling-feedstock/pull/40#issuecomment-975781900\n    - system_dirs.patch  # [osx]\n    # Do not use -march=native on platforms that do not support it yet.\n    - aarch64.patch  # [aarch64]\n    # Fix dependency resolution when building rootcling\n    - clangdriver.patch\n    # Fix https://github.com/conda-forge/cppyy-cling-feedstock/pull/56#issuecomment-1800307065\n    - remove-libLLVM.patch\n\nbuild:\n  number: 2\n  skip: true  # [win]\n  # cross-python does not support pypy yet\n  skip: true  # [build_platform != target_platform and python_impl == \"pypy\"]\n  entry_points:\n    - cling-config = cppyy_backend._cling_config:main\n    - genreflex = cppyy_backend._genreflex:main\n    - rootcling = cppyy_backend._rootcling:main\n    - cppyy-generator = cppyy_backend._cppyy_generator:main\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - {{ compiler('cxx') }}\n    - sed\n    - cmake\n    # We need a find that understand -name\n    - findutils\n    - make  # [unix]\n  host:\n    - libboost-headers\n    - python\n    - pip\n    - zlib\n    # There is no root_62701 build of clangdev so we use the latest build before that\n    - clangdev =13.0.1 root_63002*\n  run:\n    # We need a C++ compiler at runtime to compile cppdef snippets and glue\n    # code and also so that all the standard headers are available. We do not\n    # need the exact compiler that was used during the build {{ compiler('cxx') }}\n    # but just any functional C++ compiler.\n    - cxx-compiler\n    - python\n\ntest:\n  commands:\n    - rootcling -h\n    # calling cppyy-generator fails with \"No module named clang\" same happens\n    # with the cppyy from PyPI.\n    # cppyy-generator -h\n    - genreflex -h\n\nabout:\n  home: https://pypi.org/project/cppyy-cling\n  license: BSD-3-Clause\n  license_family: BSD\n  license_file: LICENSE.txt\n  summary: A repackaging of Cling for Automatic Python-C++ Bindings\n  description: |\n    A repackaging of Cling, the interactive C++ interpreter, including C/C++\n    wrappers that expose no further external headers or types.\n  doc_url: http://cppyy.readthedocs.io/\n  dev_url: https://bitbucket.org/wlav/cppyy-backend/src/master/cling/\n\nextra:\n  recipe-maintainers:\n    - saraedum\n    - isuruf\n",
  "req": {
   "__set__": true,
   "elements": [
