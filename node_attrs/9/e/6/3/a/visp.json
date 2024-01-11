@@ -24,7 +24,7 @@
    "summary": "A cross-platform library for prototyping and developing applications using visual tracking and visual servoing technic."
   },
   "build": {
-   "number": "3",
+   "number": "4",
    "run_exports": [
     "visp"
    ]
@@ -139,7 +139,7 @@
    "summary": "A cross-platform library for prototyping and developing applications using visual tracking and visual servoing technic."
   },
   "build": {
-   "number": "3",
+   "number": "4",
    "run_exports": [
     "visp",
     "visp",
@@ -268,7 +268,7 @@
    "summary": "A cross-platform library for prototyping and developing applications using visual tracking and visual servoing technic."
   },
   "build": {
-   "number": "3",
+   "number": "4",
    "run_exports": [
     "visp"
    ]
@@ -380,7 +380,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/visp.json"
  },
- "raw_meta_yaml": "{% set name = \"visp\" %}\n{% set version = \"3.6.0\" %}\n{% set major_minor_version = version.split('.')[0] + version.split('.')[1] + version.split('.')[2] %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/lagadic/visp/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: eec93f56b89fd7c0d472b019e01c3fe03a09eda47f3903c38dc53a27cbfae532\n  patches:\n    # Current version of this package do not enable AVX support. The Windows build uses\n    # the Clang-cl compiler wich fails to build the embedded Simd library on AVX instructions\n    # even when AVX flags are not on for some unknown reason, so we have to force\n    # disabling AVX support at the Simd library level.\n    - patches/0002-Disable-AVX-and-AVX2-for-Simd-embedded-lib.patch  # [win]\n\nbuild:\n  number: 3\n  run_exports:\n    - {{ pin_subpackage(name, max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make                           # [not win]\n    - clang                          # [win]\n    - ninja                          # [win]\n    - {{ cdt('mesa-libgl-devel') }}  # [linux]\n    - {{ cdt('mesa-dri-drivers') }}  # [linux]\n    - {{ cdt('libselinux') }}        # [linux]\n    - {{ cdt('libxdamage') }}        # [linux]\n    - {{ cdt('libxxf86vm') }}        # [linux]\n    - {{ cdt('libxext') }}           # [linux]\n    - libgomp                        # [linux]\n  host:\n    - xorg-libx11                    # [unix]\n    - xorg-libxfixes                 # [unix]\n    - libxml2                        # [unix]\n    - libdc1394 >=2.2.6              # [unix]\n    - librealsense                   # [unix]\n    - libopenblas                    # [osx]\n    - llvm-openmp                    # [win or osx]\n    - openmp                         # [win]\n    - pthreads-win32                 # [win]\n    - libgomp                        # [linux]\n    - libopencv\n    - eigen\n    - libjpeg-turbo\n    - libpng\n    - mkl-devel\n\n  run:\n    - libgomp                        # [linux]\n    - pthreads-win32                 # [win]\n    - libcxx                         # [osx]\n    - mkl\n    - eigen\n\ntest:\n  commands:\n    - visp-config --version                                                                  # [unix]\n    - test -f $PREFIX/include/visp3/visp.h                                                   # [unix]\n    - test -f $PREFIX/lib/cmake/visp/VISPConfig.cmake                                        # [unix]\n    - test -f $PREFIX/lib/cmake/visp/VISPConfig-version.cmake                                # [unix]\n    - test -f $PREFIX/lib/lib{{ name }}_core${SHLIB_EXT}                                     # [unix]\n    - call %LIBRARY_PREFIX%\\bin\\visp-config.bat --version                                    # [win]\n    - if not exist %LIBRARY_PREFIX%\\include\\visp3\\visp.h exit 1                              # [win]\n    - if not exist %LIBRARY_PREFIX%\\cmake\\VISPConfig.cmake exit 1                            # [win]\n    - if not exist %LIBRARY_PREFIX%\\cmake\\VISPConfig-version.cmake exit 1                    # [win]\n    - if not exist %LIBRARY_PREFIX%\\lib\\{{ name }}_core{{ major_minor_version }}.lib exit 1  # [win]\n    - if not exist %LIBRARY_PREFIX%\\bin\\{{ name }}_core{{ major_minor_version }}.dll exit 1  # [win]\n\nabout:\n  home: https://visp.inria.fr/\n  summary: 'A cross-platform library for prototyping and developing applications using visual tracking and visual servoing technic.'\n  license: GPL-2.0-only\n  license_family: GPL\n  license_file: LICENSE.txt\n  doc_url: https://visp-doc.inria.fr/doxygen/visp-{{ version }}/\n  dev_url: https://github.com/lagadic/visp\n\nextra:\n  recipe-maintainers:\n    - olivier-roussel\n    - fspindle\n",
+ "raw_meta_yaml": "{% set name = \"visp\" %}\n{% set version = \"3.6.0\" %}\n{% set major_minor_version = version.split('.')[0] + version.split('.')[1] + version.split('.')[2] %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/lagadic/visp/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: eec93f56b89fd7c0d472b019e01c3fe03a09eda47f3903c38dc53a27cbfae532\n  patches:\n    # Current version of this package do not enable AVX support. The Windows build uses\n    # the Clang-cl compiler wich fails to build the embedded Simd library on AVX instructions\n    # even when AVX flags are not on for some unknown reason, so we have to force\n    # disabling AVX support at the Simd library level.\n    - patches/0002-Disable-AVX-and-AVX2-for-Simd-embedded-lib.patch  # [win]\n\nbuild:\n  number: 4\n  run_exports:\n    - {{ pin_subpackage(name, max_pin='x.x') }}\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make                           # [not win]\n    - clang                          # [win]\n    - ninja                          # [win]\n    - {{ cdt('mesa-libgl-devel') }}  # [linux]\n    - {{ cdt('mesa-dri-drivers') }}  # [linux]\n    - {{ cdt('libselinux') }}        # [linux]\n    - {{ cdt('libxdamage') }}        # [linux]\n    - {{ cdt('libxxf86vm') }}        # [linux]\n    - {{ cdt('libxext') }}           # [linux]\n    - libgomp                        # [linux]\n  host:\n    - xorg-libx11                    # [unix]\n    - xorg-libxfixes                 # [unix]\n    - libxml2                        # [unix]\n    - libdc1394 >=2.2.6              # [unix]\n    - librealsense                   # [unix]\n    - libopenblas                    # [osx]\n    - llvm-openmp                    # [win or osx]\n    - openmp                         # [win]\n    - pthreads-win32                 # [win]\n    - libgomp                        # [linux]\n    - libopencv\n    - eigen\n    - libjpeg-turbo\n    - libpng\n    - mkl-devel\n\n  run:\n    - libgomp                        # [linux]\n    - pthreads-win32                 # [win]\n    - libcxx                         # [osx]\n    - mkl\n    - eigen\n\ntest:\n  commands:\n    - visp-config --version                                                                  # [unix]\n    - test -f $PREFIX/include/visp3/visp.h                                                   # [unix]\n    - test -f $PREFIX/lib/cmake/visp/VISPConfig.cmake                                        # [unix]\n    - test -f $PREFIX/lib/cmake/visp/VISPConfig-version.cmake                                # [unix]\n    - test -f $PREFIX/lib/lib{{ name }}_core${SHLIB_EXT}                                     # [unix]\n    - call %LIBRARY_PREFIX%\\bin\\visp-config.bat --version                                    # [win]\n    - if not exist %LIBRARY_PREFIX%\\include\\visp3\\visp.h exit 1                              # [win]\n    - if not exist %LIBRARY_PREFIX%\\cmake\\VISPConfig.cmake exit 1                            # [win]\n    - if not exist %LIBRARY_PREFIX%\\cmake\\VISPConfig-version.cmake exit 1                    # [win]\n    - if not exist %LIBRARY_PREFIX%\\lib\\{{ name }}_core{{ major_minor_version }}.lib exit 1  # [win]\n    - if not exist %LIBRARY_PREFIX%\\bin\\{{ name }}_core{{ major_minor_version }}.dll exit 1  # [win]\n\nabout:\n  home: https://visp.inria.fr/\n  summary: 'A cross-platform library for prototyping and developing applications using visual tracking and visual servoing technic.'\n  license: GPL-2.0-only\n  license_family: GPL\n  license_file: LICENSE.txt\n  doc_url: https://visp-doc.inria.fr/doxygen/visp-{{ version }}/\n  dev_url: https://github.com/lagadic/visp\n\nextra:\n  recipe-maintainers:\n    - olivier-roussel\n    - fspindle\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -532,7 +532,7 @@
    "summary": "A cross-platform library for prototyping and developing applications using visual tracking and visual servoing technic."
   },
   "build": {
-   "number": "3",
+   "number": "4",
    "run_exports": [
     "visp"
    ]
