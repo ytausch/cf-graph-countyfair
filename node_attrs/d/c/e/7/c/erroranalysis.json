@@ -29,7 +29,10 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": [
+    "cp -R RECIPE_DIR/requirements-object-detection.txt SRC_DIR/requirements-object-detection.txt",
+    "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -40,15 +43,15 @@
   },
   "package": {
    "name": "erroranalysis",
-   "version": "0.4.5"
+   "version": "0.5.3"
   },
   "requirements": {
    "host": [
-    "python >=3.6",
+    "python >=3.7",
     "pip"
    ],
    "run": [
-    "python >=3.6",
+    "python >=3.7",
     "numpy >=1.17.2",
     "pandas >=0.25.1,<2.0.0",
     "scipy >=1.4.1",
@@ -58,8 +61,8 @@
    ]
   },
   "source": {
-   "sha256": "c217f205103cc14346e04382e42a587411eb564a130cd2cd768600ec6acf0085",
-   "url": "https://pypi.io/packages/source/e/erroranalysis/erroranalysis-0.4.5.tar.gz"
+   "sha256": "ff2c52a562e692c95046f52724dce65d92dd1a28bfc5d4848946c82744d32120",
+   "url": "https://pypi.io/packages/source/e/erroranalysis/erroranalysis-0.5.3.tar.gz"
   },
   "test": {
    "commands": [
@@ -117,7 +120,10 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": [
+    "cp -R RECIPE_DIR/requirements-object-detection.txt SRC_DIR/requirements-object-detection.txt",
+    "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+   ]
   },
   "extra": {
    "recipe-maintainers": [
@@ -128,15 +134,15 @@
   },
   "package": {
    "name": "erroranalysis",
-   "version": "0.4.5"
+   "version": "0.5.3"
   },
   "requirements": {
    "host": [
-    "python >=3.6",
+    "python >=3.7",
     "pip"
    ],
    "run": [
-    "python >=3.6",
+    "python >=3.7",
     "numpy >=1.17.2",
     "pandas >=0.25.1,<2.0.0",
     "scipy >=1.4.1",
@@ -146,8 +152,8 @@
    ]
   },
   "source": {
-   "sha256": "c217f205103cc14346e04382e42a587411eb564a130cd2cd768600ec6acf0085",
-   "url": "https://pypi.io/packages/source/e/erroranalysis/erroranalysis-0.4.5.tar.gz"
+   "sha256": "ff2c52a562e692c95046f52724dce65d92dd1a28bfc5d4848946c82744d32120",
+   "url": "https://pypi.io/packages/source/e/erroranalysis/erroranalysis-0.5.3.tar.gz"
   },
   "test": {
    "commands": [
@@ -175,7 +181,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/erroranalysis.json"
  },
- "raw_meta_yaml": "{% set name = \"erroranalysis\" %}\n{% set version = \"0.4.5\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/erroranalysis-{{ version }}.tar.gz\n  sha256: c217f205103cc14346e04382e42a587411eb564a130cd2cd768600ec6acf0085\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - python >=3.6\n    - pip\n  run:\n    - python >=3.6\n    - numpy >=1.17.2\n    - pandas >=0.25.1,<2.0.0\n    - scipy >=1.4.1\n    - scikit-learn >=0.22.1\n    - lightgbm >=2.0.11\n    - raiutils >=0.4.0\n\ntest:\n  imports:\n    - erroranalysis\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/microsoft/responsible-ai-widgets\n  summary: Core error analysis APIs\n  license: MIT\n  license_file: LICENSE\n  description: |\n    **Responsible AI Toolbox**: `{{ name | lower }}`\n\n    Responsible AI is an approach to assessing, developing, and deploying AI systems in a safe,\n    trustworthy, and ethical manner, and take responsible decisions and actions.\n\n    Responsible AI Toolbox is a suite of tools providing a collection of model and data exploration\n    and assessment user interfaces and libraries that enable a better understanding of AI systems.\n    These interfaces and libraries empower developers and stakeholders of AI systems to develop and\n    monitor AI more responsibly, and take better data-driven actions.\n\n    - `{{ name | lower }}` is one of the tools of RAI Toolbox.\n\n    PyPI: [https://pypi.org/project/{{ name | lower }}/](https://pypi.org/project/{{ name | lower }}/)\n\n  doc_url: https://responsibleaitoolbox.ai/\n  dev_url: https://github.com/microsoft/responsible-ai-toolbox\n\nextra:\n  recipe-maintainers:\n    - janjagusch\n    - bgalvao\n    - sugatoray\n",
+ "raw_meta_yaml": "{% set name = \"erroranalysis\" %}\n{% set version = \"0.5.3\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/erroranalysis-{{ version }}.tar.gz\n  sha256: ff2c52a562e692c95046f52724dce65d92dd1a28bfc5d4848946c82744d32120\n\nbuild:\n  noarch: python\n  script:\n    - cp -R {{ RECIPE_DIR }}/requirements-object-detection.txt {{ SRC_DIR }}/requirements-object-detection.txt  # [unix]\n    - echo f | xcopy /f /y /S %RECIPE_DIR%\\requirements-object-detection.txt %SRC_DIR%\\requirements-object-detection.txt  # [win]\n    - {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - python >=3.7\n    - numpy >=1.17.2\n    - pandas >=0.25.1,<2.0.0\n    - scipy >=1.4.1\n    - scikit-learn >=0.22.1\n    - lightgbm >=2.0.11\n    - raiutils >=0.4.0\n\ntest:\n  imports:\n    - erroranalysis\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/microsoft/responsible-ai-widgets\n  summary: Core error analysis APIs\n  license: MIT\n  license_file: LICENSE\n  description: |\n    **Responsible AI Toolbox**: `{{ name | lower }}`\n\n    Responsible AI is an approach to assessing, developing, and deploying AI systems in a safe,\n    trustworthy, and ethical manner, and take responsible decisions and actions.\n\n    Responsible AI Toolbox is a suite of tools providing a collection of model and data exploration\n    and assessment user interfaces and libraries that enable a better understanding of AI systems.\n    These interfaces and libraries empower developers and stakeholders of AI systems to develop and\n    monitor AI more responsibly, and take better data-driven actions.\n\n    - `{{ name | lower }}` is one of the tools of RAI Toolbox.\n\n    PyPI: [https://pypi.org/project/{{ name | lower }}/](https://pypi.org/project/{{ name | lower }}/)\n\n  doc_url: https://responsibleaitoolbox.ai/\n  dev_url: https://github.com/microsoft/responsible-ai-toolbox\n\nextra:\n  recipe-maintainers:\n    - janjagusch\n    - bgalvao\n    - sugatoray\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -230,7 +236,7 @@
    "__set__": true,
    "elements": [
     "pip",
-    "python >=3.6"
+    "python >=3.7"
    ]
   },
   "run": {
@@ -239,7 +245,7 @@
     "lightgbm >=2.0.11",
     "numpy >=1.17.2",
     "pandas >=0.25.1,<2.0.0",
-    "python >=3.6",
+    "python >=3.7",
     "raiutils >=0.4.0",
     "scikit-learn >=0.22.1",
     "scipy >=1.4.1"
@@ -252,8 +258,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/e/erroranalysis/erroranalysis-0.4.5.tar.gz",
- "version": "0.4.5",
+ "url": "https://pypi.io/packages/source/e/erroranalysis/erroranalysis-0.5.3.tar.gz",
+ "version": "0.5.3",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/erroranalysis.json"
  }
