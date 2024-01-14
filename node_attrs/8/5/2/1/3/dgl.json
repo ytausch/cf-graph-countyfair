@@ -131,16 +131,22 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope"
    ]
@@ -860,22 +866,31 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope"
    ]
@@ -1695,10 +1710,13 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope",
+    "frozenbugs",
     "mikemhenry",
     "hmacdope"
    ]
@@ -2034,7 +2052,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/dgl.json"
  },
- "raw_meta_yaml": "{% set name = \"dgl\" %}\n{% set version = \"1.1.2\" %}\n{% set torch_proc_type = \"cuda\" if cuda_compiler_version != \"None\" else \"cpu\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/dmlc/dgl/archive/{{ version }}.tar.gz\n    sha256: 5b7ef998d63946e8af29507318507915bc86a77d52d241414ef78eaca74a641a\n    patches:\n      - conda-build.patch\n      - fix_clang_errors.patch\n      - fix_libdgl_sparse_pytorch_location_logic.patch\n\n  - url: https://github.com/pytorch/tensorpipe/archive/6042f1a4cbce8eef997f11ed0012de137b317361.tar.gz\n    sha256: 50bd7ab968e5da9e42f92b429f530eaaadc4becc1b2756c905094711a0036a3b\n    folder: third_party/tensorpipe\n\n  - url: https://github.com/libuv/libuv/archive/1dff88e5161cba5c59276d2070d2e304e4dcb242.tar.gz\n    sha256: c66c8a024bb31c6134347a0d5630f6275c0bfe94d4144504d45099412fd7a054\n    folder: third_party/tensorpipe/third_party/libuv\n\n  - url: https://github.com/google/libnop/archive/910b55815be16109f04f4180e9adee14fb4ce281.tar.gz\n    sha256: ec3604671f8ea11aed9588825f9098057ebfef7a8908e97459835150eea9f63a\n    folder: third_party/tensorpipe/third_party/libnop\n\n  - url: https://github.com/imneme/pcg-cpp/archive/428802d1a5634f96bcd0705fab379ff0113bcf13.tar.gz\n    sha256: 79f23706ed0cbc1bb57ea35d50d0abed66898b8f7b0bcf2aaecdfd234863b060\n    folder: third_party/pcg\n\n  - url: https://github.com/libxsmm/libxsmm/archive/80090603e43f6ddc870cc42e1403dd0af07744cc.tar.gz\n    sha256: 5ee733ccbfe8b79f61e4ea87e5defbbaf51f80a851eb3cf00a0946e4d230d999\n    folder: third_party/libxsmm\n\n  - url: https://github.com/NVIDIA/thrust/archive/1.17.0.tar.gz\n    sha256: b02aca5d2325e9128ed9d46785b8e72366f758b873b95001f905f22afcf31bbf\n    folder: third_party/thrust\n\n  - url: https://github.com/NVIDIA/cub/archive/1.17.0.tar.gz\n    sha256: 16fd4860ae3196bc3eb08bf5754fa2a9697951ddae36dc9721e6614388893618\n    folder: third_party/thrust/dependencies/cub\n\nbuild:\n  skip: true  # [win or py<39]\n  number: 2\n  rpaths:\n    - lib/\n      # PyTorch libs are in site-packages intead of with other shared objects\n    - {{ SP_DIR }}/torch/lib/\n  missing_dso_whitelist:\n    - '*/libcuda.*'  # [linux64]\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  ignore_run_exports:\n    - gklib\n\nrequirements:\n  build:\n    - cmake\n    - git \n    - libgomp      # [linux]\n    - llvm-openmp  # [osx]\n    - make\n    - sysroot_{{ target_platform }} 2.17  # [linux]\n    - {{ compiler('c') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version not in (undefined, 'None')]\n    - {{ compiler('cxx') }}\n  host:\n    - cython <3\n    - dlpack ==0.7\n    - dmlc ==0.5\n    - gklib ==5.1.1\n    - libblas\n    - libcblas\n    - liblapack\n    - liblapacke\n    - libuv ==1.41.1\n    - metis ==5.1.1\n    - nanoflann <=1.4.2\n    - parallel-hashmap\n    - python\n    - pytorch  # duplicate dep to pick up conda-forge pinnings\n    - pytorch =*=*{{ torch_proc_type }}*\n    - setuptools\n  run:\n    - libuv\n    - networkx\n    - numpy\n    - psutil\n    - python\n    - pytorch =*=*{{ torch_proc_type }}*\n    - requests\n    - scipy\n    - tensorflow\n    - tqdm\n\n\ntest:\n  requires:\n    - pip\n  imports:\n    - dgl\n    - dgl.sparse\n  commands:\n    - pip check || true  # Get the output of pip check but don't care if it fails\n\nabout:\n  home: https://github.com/dmlc/dgl\n  license: Apache-2.0\n  license_file: \n    - LICENSE\n    - third_party/tensorpipe/LICENSE.txt\n    - third_party/tensorpipe/third_party/libuv/LICENSE\n    - third_party/tensorpipe/third_party/libuv/LICENSE\n    - third_party/tensorpipe/third_party/libnop/LICENSE\n    - third_party/pcg/LICENSE-APACHE.txt\n    - third_party/pcg/LICENSE-MIT.txt\n    - third_party/libxsmm/LICENSE.md\n    - third_party/thrust/LICENSE\n    - third_party/thrust/dependencies/cub/LICENSE.TXT\n    - HugeCTR_gpu_cache_license.txt\n  summary: A deep graph library\n  description: |\n    DGL is an easy-to-use, high performance and scalable Python package for deep\n     learning on graphs. DGL is framework agnostic, meaning if a deep graph\n     model is a component of an end-to-end application, the rest of the logics\n     can be implemented in any major frameworks, such as PyTorch, Apache MXNet\n     or TensorFlow.\n  doc_url: https://docs.dgl.ai/en/latest/\n\nextra:\n  recipe-maintainers:\n    - mikemhenry\n    - hmacdope\n",
+ "raw_meta_yaml": "{% set name = \"dgl\" %}\n{% set version = \"1.1.2\" %}\n{% set torch_proc_type = \"cuda\" if cuda_compiler_version != \"None\" else \"cpu\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/dmlc/dgl/archive/{{ version }}.tar.gz\n    sha256: 5b7ef998d63946e8af29507318507915bc86a77d52d241414ef78eaca74a641a\n    patches:\n      - conda-build.patch\n      - fix_clang_errors.patch\n      - fix_libdgl_sparse_pytorch_location_logic.patch\n\n  - url: https://github.com/pytorch/tensorpipe/archive/6042f1a4cbce8eef997f11ed0012de137b317361.tar.gz\n    sha256: 50bd7ab968e5da9e42f92b429f530eaaadc4becc1b2756c905094711a0036a3b\n    folder: third_party/tensorpipe\n\n  - url: https://github.com/libuv/libuv/archive/1dff88e5161cba5c59276d2070d2e304e4dcb242.tar.gz\n    sha256: c66c8a024bb31c6134347a0d5630f6275c0bfe94d4144504d45099412fd7a054\n    folder: third_party/tensorpipe/third_party/libuv\n\n  - url: https://github.com/google/libnop/archive/910b55815be16109f04f4180e9adee14fb4ce281.tar.gz\n    sha256: ec3604671f8ea11aed9588825f9098057ebfef7a8908e97459835150eea9f63a\n    folder: third_party/tensorpipe/third_party/libnop\n\n  - url: https://github.com/imneme/pcg-cpp/archive/428802d1a5634f96bcd0705fab379ff0113bcf13.tar.gz\n    sha256: 79f23706ed0cbc1bb57ea35d50d0abed66898b8f7b0bcf2aaecdfd234863b060\n    folder: third_party/pcg\n\n  - url: https://github.com/libxsmm/libxsmm/archive/80090603e43f6ddc870cc42e1403dd0af07744cc.tar.gz\n    sha256: 5ee733ccbfe8b79f61e4ea87e5defbbaf51f80a851eb3cf00a0946e4d230d999\n    folder: third_party/libxsmm\n\n  - url: https://github.com/NVIDIA/thrust/archive/1.17.0.tar.gz\n    sha256: b02aca5d2325e9128ed9d46785b8e72366f758b873b95001f905f22afcf31bbf\n    folder: third_party/thrust\n\n  - url: https://github.com/NVIDIA/cub/archive/1.17.0.tar.gz\n    sha256: 16fd4860ae3196bc3eb08bf5754fa2a9697951ddae36dc9721e6614388893618\n    folder: third_party/thrust/dependencies/cub\n\nbuild:\n  skip: true  # [win or py<39]\n  number: 2\n  rpaths:\n    - lib/\n      # PyTorch libs are in site-packages intead of with other shared objects\n    - {{ SP_DIR }}/torch/lib/\n  missing_dso_whitelist:\n    - '*/libcuda.*'  # [linux64]\n  string: cuda{{ cuda_compiler_version | replace('.', '') }}py{{ CONDA_PY }}h{{ PKG_HASH }}_{{ PKG_BUILDNUM }}  # [cuda_compiler_version != \"None\"]\n  ignore_run_exports:\n    - gklib\n\nrequirements:\n  build:\n    - cmake\n    - git \n    - libgomp      # [linux]\n    - llvm-openmp  # [osx]\n    - make\n    - sysroot_{{ target_platform }} 2.17  # [linux]\n    - {{ compiler('c') }}\n    - {{ compiler('cuda') }}  # [cuda_compiler_version not in (undefined, 'None')]\n    - {{ compiler('cxx') }}\n  host:\n    - cython <3\n    - dlpack ==0.7\n    - dmlc ==0.5\n    - gklib ==5.1.1\n    - libblas\n    - libcblas\n    - liblapack\n    - liblapacke\n    - libuv ==1.41.1\n    - metis ==5.1.1\n    - nanoflann <=1.4.2\n    - parallel-hashmap\n    - python\n    - pytorch  # duplicate dep to pick up conda-forge pinnings\n    - pytorch =*=*{{ torch_proc_type }}*\n    - setuptools\n  run:\n    - libuv\n    - networkx\n    - numpy\n    - psutil\n    - python\n    - pytorch =*=*{{ torch_proc_type }}*\n    - requests\n    - scipy\n    - tensorflow\n    - tqdm\n\n\ntest:\n  requires:\n    - pip\n  imports:\n    - dgl\n    - dgl.sparse\n  commands:\n    - pip check || true  # Get the output of pip check but don't care if it fails\n\nabout:\n  home: https://github.com/dmlc/dgl\n  license: Apache-2.0\n  license_file: \n    - LICENSE\n    - third_party/tensorpipe/LICENSE.txt\n    - third_party/tensorpipe/third_party/libuv/LICENSE\n    - third_party/tensorpipe/third_party/libuv/LICENSE\n    - third_party/tensorpipe/third_party/libnop/LICENSE\n    - third_party/pcg/LICENSE-APACHE.txt\n    - third_party/pcg/LICENSE-MIT.txt\n    - third_party/libxsmm/LICENSE.md\n    - third_party/thrust/LICENSE\n    - third_party/thrust/dependencies/cub/LICENSE.TXT\n    - HugeCTR_gpu_cache_license.txt\n  summary: A deep graph library\n  description: |\n    DGL is an easy-to-use, high performance and scalable Python package for deep\n     learning on graphs. DGL is framework agnostic, meaning if a deep graph\n     model is a component of an end-to-end application, the rest of the logics\n     can be implemented in any major frameworks, such as PyTorch, Apache MXNet\n     or TensorFlow.\n  doc_url: https://docs.dgl.ai/en/latest/\n\nextra:\n  recipe-maintainers:\n    - frozenbugs\n    - mikemhenry\n    - hmacdope\n",
  "req": {
   "__set__": true,
   "elements": [
