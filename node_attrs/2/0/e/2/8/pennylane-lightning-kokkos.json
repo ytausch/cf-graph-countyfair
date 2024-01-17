@@ -32,8 +32,9 @@
    "summary": "The PennyLane-Lightning-Kokkos plugin extends the Pennylane-Lightning state-vector simulator written in C++, and offloads to the Kokkos library for accelerated circuit simulation."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
+    "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
@@ -46,6 +47,7 @@
     "vincentmr",
     "vincentmr",
     "vincentmr",
+    "vincentmr",
     "vincentmr"
    ]
   },
@@ -55,6 +57,9 @@
   },
   "requirements": {
    "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
     "cxx_compiler_stub",
     "cmake",
     "ninja",
@@ -88,9 +93,17 @@
     "kokkos >=4.0.0,<4.2.0",
     "pip",
     "pybind11",
+    "python",
+    "libgomp",
+    "kokkos >=4.0.0,<4.2.0",
+    "pip",
+    "pybind11",
     "python"
    ],
    "run": [
+    "pennylane >=0.34",
+    "python",
+    "kokkos",
     "pennylane >=0.34",
     "python",
     "kokkos",
@@ -108,6 +121,7 @@
     "__cuda <0.0a0",
     "__cuda <0.0a0",
     "__cuda <0.0a0",
+    "__cuda <0.0a0",
     "__cuda <0.0a0"
    ]
   },
@@ -117,6 +131,13 @@
   },
   "test": {
    "commands": [
+    "pypy --version 2> /dev/null || echo Using Python to run tests",
+    "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+    "python -c \"import pennylane as qml; qml.about()\"",
+    "pl-device-test --help",
+    "pl-device-test --device lightning.kokkos --shots None --skip-ops",
+    "pl-device-test --device lightning.kokkos --shots 100000 --skip-ops",
+    "pip check",
     "pypy --version 2> /dev/null || echo Using Python to run tests",
     "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
     "python -c \"import pennylane as qml; qml.about()\"",
@@ -158,9 +179,17 @@
     "pennylane_lightning.lightning_kokkos_ops",
     "pennylane_lightning",
     "pennylane_lightning.lightning_kokkos",
+    "pennylane_lightning.lightning_kokkos_ops",
+    "pennylane_lightning",
+    "pennylane_lightning.lightning_kokkos",
     "pennylane_lightning.lightning_kokkos_ops"
    ],
    "requires": [
+    "flaky",
+    "pip",
+    "pytest",
+    "pytest-benchmark",
+    "pytest-mock",
     "flaky",
     "pip",
     "pytest",
@@ -232,8 +261,9 @@
    "summary": "The PennyLane-Lightning-Kokkos plugin extends the Pennylane-Lightning state-vector simulator written in C++, and offloads to the Kokkos library for accelerated circuit simulation."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
+    "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
@@ -246,6 +276,7 @@
     "vincentmr",
     "vincentmr",
     "vincentmr",
+    "vincentmr",
     "vincentmr"
    ]
   },
@@ -255,6 +286,9 @@
   },
   "requirements": {
    "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
     "cxx_compiler_stub",
     "cmake",
     "ninja",
@@ -288,9 +322,17 @@
     "kokkos >=4.0.0,<4.2.0",
     "pip",
     "pybind11",
+    "python",
+    "libgomp",
+    "kokkos >=4.0.0,<4.2.0",
+    "pip",
+    "pybind11",
     "python"
    ],
    "run": [
+    "pennylane >=0.34",
+    "python",
+    "kokkos",
     "pennylane >=0.34",
     "python",
     "kokkos",
@@ -308,6 +350,7 @@
     "__cuda <0.0a0",
     "__cuda <0.0a0",
     "__cuda <0.0a0",
+    "__cuda <0.0a0",
     "__cuda <0.0a0"
    ]
   },
@@ -317,6 +360,13 @@
   },
   "test": {
    "commands": [
+    "pypy --version 2> /dev/null || echo Using Python to run tests",
+    "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+    "python -c \"import pennylane as qml; qml.about()\"",
+    "pl-device-test --help",
+    "pl-device-test --device lightning.kokkos --shots None --skip-ops",
+    "pl-device-test --device lightning.kokkos --shots 100000 --skip-ops",
+    "pip check",
     "pypy --version 2> /dev/null || echo Using Python to run tests",
     "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
     "python -c \"import pennylane as qml; qml.about()\"",
@@ -358,9 +408,17 @@
     "pennylane_lightning.lightning_kokkos_ops",
     "pennylane_lightning",
     "pennylane_lightning.lightning_kokkos",
+    "pennylane_lightning.lightning_kokkos_ops",
+    "pennylane_lightning",
+    "pennylane_lightning.lightning_kokkos",
     "pennylane_lightning.lightning_kokkos_ops"
    ],
    "requires": [
+    "flaky",
+    "pip",
+    "pytest",
+    "pytest-benchmark",
+    "pytest-mock",
     "flaky",
     "pip",
     "pytest",
@@ -432,8 +490,9 @@
    "summary": "The PennyLane-Lightning-Kokkos plugin extends the Pennylane-Lightning state-vector simulator written in C++, and offloads to the Kokkos library for accelerated circuit simulation."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
+    "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
@@ -446,6 +505,7 @@
     "vincentmr",
     "vincentmr",
     "vincentmr",
+    "vincentmr",
     "vincentmr"
    ]
   },
@@ -455,6 +515,9 @@
   },
   "requirements": {
    "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
     "cxx_compiler_stub",
     "cmake",
     "ninja",
@@ -488,9 +551,17 @@
     "kokkos >=4.0.0,<4.2.0",
     "pip",
     "pybind11",
+    "python",
+    "libgomp",
+    "kokkos >=4.0.0,<4.2.0",
+    "pip",
+    "pybind11",
     "python"
    ],
    "run": [
+    "pennylane >=0.34",
+    "python",
+    "kokkos",
     "pennylane >=0.34",
     "python",
     "kokkos",
@@ -508,6 +579,7 @@
     "__cuda <0.0a0",
     "__cuda <0.0a0",
     "__cuda <0.0a0",
+    "__cuda <0.0a0",
     "__cuda <0.0a0"
    ]
   },
@@ -517,6 +589,13 @@
   },
   "test": {
    "commands": [
+    "pypy --version 2> /dev/null || echo Using Python to run tests",
+    "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+    "python -c \"import pennylane as qml; qml.about()\"",
+    "pl-device-test --help",
+    "pl-device-test --device lightning.kokkos --shots None --skip-ops",
+    "pl-device-test --device lightning.kokkos --shots 100000 --skip-ops",
+    "pip check",
     "pypy --version 2> /dev/null || echo Using Python to run tests",
     "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
     "python -c \"import pennylane as qml; qml.about()\"",
@@ -558,9 +637,17 @@
     "pennylane_lightning.lightning_kokkos_ops",
     "pennylane_lightning",
     "pennylane_lightning.lightning_kokkos",
+    "pennylane_lightning.lightning_kokkos_ops",
+    "pennylane_lightning",
+    "pennylane_lightning.lightning_kokkos",
     "pennylane_lightning.lightning_kokkos_ops"
    ],
    "requires": [
+    "flaky",
+    "pip",
+    "pytest",
+    "pytest-benchmark",
+    "pytest-mock",
     "flaky",
     "pip",
     "pytest",
@@ -632,8 +719,13 @@
    "summary": "The PennyLane-Lightning-Kokkos plugin extends the Pennylane-Lightning state-vector simulator written in C++, and offloads to the Kokkos library for accelerated circuit simulation."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
+    "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
+    "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
+    "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
+    "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
+    "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
@@ -676,6 +768,11 @@
     "vincentmr",
     "vincentmr",
     "vincentmr",
+    "vincentmr",
+    "vincentmr",
+    "vincentmr",
+    "vincentmr",
+    "vincentmr",
     "vincentmr"
    ]
   },
@@ -685,6 +782,21 @@
   },
   "requirements": {
    "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
     "cxx_compiler_stub",
     "cmake",
     "ninja",
@@ -804,6 +916,31 @@
     "pip",
     "pybind11",
     "python",
+    "libgomp",
+    "kokkos >=4.0.0,<4.2.0",
+    "pip",
+    "pybind11",
+    "python",
+    "libgomp",
+    "kokkos >=4.0.0,<4.2.0",
+    "pip",
+    "pybind11",
+    "python",
+    "libgomp",
+    "kokkos >=4.0.0,<4.2.0",
+    "pip",
+    "pybind11",
+    "python",
+    "llvm-openmp",
+    "kokkos >=4.0.0,<4.2.0",
+    "pip",
+    "pybind11",
+    "python",
+    "llvm-openmp",
+    "kokkos >=4.0.0,<4.2.0",
+    "pip",
+    "pybind11",
+    "python",
     "llvm-openmp",
     "kokkos >=4.0.0,<4.2.0",
     "pip",
@@ -897,9 +1034,29 @@
     "kokkos",
     "pennylane >=0.34",
     "python",
+    "kokkos",
+    "pennylane >=0.34",
+    "python",
+    "kokkos",
+    "pennylane >=0.34",
+    "python",
+    "kokkos",
+    "pennylane >=0.34",
+    "python",
+    "kokkos",
+    "pennylane >=0.34",
+    "python",
+    "kokkos",
+    "pennylane >=0.34",
+    "python",
     "kokkos"
    ],
    "run_constrained": [
+    "__cuda <0.0a0",
+    "__cuda <0.0a0",
+    "__cuda <0.0a0",
+    "__cuda <0.0a0",
+    "__cuda <0.0a0",
     "__cuda <0.0a0",
     "__cuda <0.0a0",
     "__cuda <0.0a0",
@@ -927,6 +1084,41 @@
   },
   "test": {
    "commands": [
+    "pypy --version 2> /dev/null || echo Using Python to run tests",
+    "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+    "python -c \"import pennylane as qml; qml.about()\"",
+    "pl-device-test --help",
+    "pl-device-test --device lightning.kokkos --shots None --skip-ops",
+    "pl-device-test --device lightning.kokkos --shots 100000 --skip-ops",
+    "pip check",
+    "pypy --version 2> /dev/null || echo Using Python to run tests",
+    "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+    "python -c \"import pennylane as qml; qml.about()\"",
+    "pl-device-test --help",
+    "pl-device-test --device lightning.kokkos --shots None --skip-ops",
+    "pl-device-test --device lightning.kokkos --shots 100000 --skip-ops",
+    "pip check",
+    "pypy --version 2> /dev/null || echo Using Python to run tests",
+    "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+    "python -c \"import pennylane as qml; qml.about()\"",
+    "pl-device-test --help",
+    "pl-device-test --device lightning.kokkos --shots None --skip-ops",
+    "pl-device-test --device lightning.kokkos --shots 100000 --skip-ops",
+    "pip check",
+    "pypy --version 2> /dev/null || echo Using Python to run tests",
+    "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+    "python -c \"import pennylane as qml; qml.about()\"",
+    "pl-device-test --help",
+    "pl-device-test --device lightning.kokkos --shots None --skip-ops",
+    "pl-device-test --device lightning.kokkos --shots 100000 --skip-ops",
+    "pip check",
+    "pypy --version 2> /dev/null || echo Using Python to run tests",
+    "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+    "python -c \"import pennylane as qml; qml.about()\"",
+    "pl-device-test --help",
+    "pl-device-test --device lightning.kokkos --shots None --skip-ops",
+    "pl-device-test --device lightning.kokkos --shots 100000 --skip-ops",
+    "pip check",
     "pypy --version 2> /dev/null || echo Using Python to run tests",
     "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
     "python -c \"import pennylane as qml; qml.about()\"",
@@ -1118,9 +1310,49 @@
     "pennylane_lightning.lightning_kokkos_ops",
     "pennylane_lightning",
     "pennylane_lightning.lightning_kokkos",
+    "pennylane_lightning.lightning_kokkos_ops",
+    "pennylane_lightning",
+    "pennylane_lightning.lightning_kokkos",
+    "pennylane_lightning.lightning_kokkos_ops",
+    "pennylane_lightning",
+    "pennylane_lightning.lightning_kokkos",
+    "pennylane_lightning.lightning_kokkos_ops",
+    "pennylane_lightning",
+    "pennylane_lightning.lightning_kokkos",
+    "pennylane_lightning.lightning_kokkos_ops",
+    "pennylane_lightning",
+    "pennylane_lightning.lightning_kokkos",
+    "pennylane_lightning.lightning_kokkos_ops",
+    "pennylane_lightning",
+    "pennylane_lightning.lightning_kokkos",
     "pennylane_lightning.lightning_kokkos_ops"
    ],
    "requires": [
+    "flaky",
+    "pip",
+    "pytest",
+    "pytest-benchmark",
+    "pytest-mock",
+    "flaky",
+    "pip",
+    "pytest",
+    "pytest-benchmark",
+    "pytest-mock",
+    "flaky",
+    "pip",
+    "pytest",
+    "pytest-benchmark",
+    "pytest-mock",
+    "flaky",
+    "pip",
+    "pytest",
+    "pytest-benchmark",
+    "pytest-mock",
+    "flaky",
+    "pip",
+    "pytest",
+    "pytest-benchmark",
+    "pytest-mock",
     "flaky",
     "pip",
     "pytest",
@@ -1230,8 +1462,9 @@
    "summary": "The PennyLane-Lightning-Kokkos plugin extends the Pennylane-Lightning state-vector simulator written in C++, and offloads to the Kokkos library for accelerated circuit simulation."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
+    "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
@@ -1244,6 +1477,7 @@
     "vincentmr",
     "vincentmr",
     "vincentmr",
+    "vincentmr",
     "vincentmr"
    ]
   },
@@ -1253,6 +1487,9 @@
   },
   "requirements": {
    "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
     "cxx_compiler_stub",
     "cmake",
     "ninja",
@@ -1286,9 +1523,17 @@
     "kokkos >=4.0.0,<4.2.0",
     "pip",
     "pybind11",
+    "python",
+    "llvm-openmp",
+    "kokkos >=4.0.0,<4.2.0",
+    "pip",
+    "pybind11",
     "python"
    ],
    "run": [
+    "pennylane >=0.34",
+    "python",
+    "kokkos",
     "pennylane >=0.34",
     "python",
     "kokkos",
@@ -1306,6 +1551,7 @@
     "__cuda <0.0a0",
     "__cuda <0.0a0",
     "__cuda <0.0a0",
+    "__cuda <0.0a0",
     "__cuda <0.0a0"
    ]
   },
@@ -1315,6 +1561,13 @@
   },
   "test": {
    "commands": [
+    "pypy --version 2> /dev/null || echo Using Python to run tests",
+    "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+    "python -c \"import pennylane as qml; qml.about()\"",
+    "pl-device-test --help",
+    "pl-device-test --device lightning.kokkos --shots None --skip-ops",
+    "pl-device-test --device lightning.kokkos --shots 100000 --skip-ops",
+    "pip check",
     "pypy --version 2> /dev/null || echo Using Python to run tests",
     "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
     "python -c \"import pennylane as qml; qml.about()\"",
@@ -1356,9 +1609,17 @@
     "pennylane_lightning.lightning_kokkos_ops",
     "pennylane_lightning",
     "pennylane_lightning.lightning_kokkos",
+    "pennylane_lightning.lightning_kokkos_ops",
+    "pennylane_lightning",
+    "pennylane_lightning.lightning_kokkos",
     "pennylane_lightning.lightning_kokkos_ops"
    ],
    "requires": [
+    "flaky",
+    "pip",
+    "pytest",
+    "pytest-benchmark",
+    "pytest-mock",
     "flaky",
     "pip",
     "pytest",
@@ -1430,8 +1691,9 @@
    "summary": "The PennyLane-Lightning-Kokkos plugin extends the Pennylane-Lightning state-vector simulator written in C++, and offloads to the Kokkos library for accelerated circuit simulation."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "script": [
+    "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv",
     "PL_BACKEND=lightning_kokkos PYTHON -m pip install . --no-deps -vv"
@@ -1440,6 +1702,7 @@
   "extra": {
    "feedstock-name": "pennylane-lightning-kokkos",
    "recipe-maintainers": [
+    "vincentmr",
     "vincentmr",
     "vincentmr",
     "vincentmr"
@@ -1451,6 +1714,9 @@
   },
   "requirements": {
    "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "ninja",
     "cxx_compiler_stub",
     "cmake",
     "ninja",
@@ -1476,6 +1742,11 @@
     "kokkos >=4.0.0,<4.2.0",
     "pip",
     "pybind11",
+    "python",
+    "llvm-openmp",
+    "kokkos >=4.0.0,<4.2.0",
+    "pip",
+    "pybind11",
     "python"
    ],
    "run": [
@@ -1487,9 +1758,13 @@
     "kokkos",
     "pennylane >=0.34",
     "python",
+    "kokkos",
+    "pennylane >=0.34",
+    "python",
     "kokkos"
    ],
    "run_constrained": [
+    "__cuda <0.0a0",
     "__cuda <0.0a0",
     "__cuda <0.0a0",
     "__cuda <0.0a0"
@@ -1521,6 +1796,13 @@
     "pl-device-test --help",
     "pl-device-test --device lightning.kokkos --shots None --skip-ops",
     "pl-device-test --device lightning.kokkos --shots 100000 --skip-ops",
+    "pip check",
+    "pypy --version 2> /dev/null || echo Using Python to run tests",
+    "pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found",
+    "python -c \"import pennylane as qml; qml.about()\"",
+    "pl-device-test --help",
+    "pl-device-test --device lightning.kokkos --shots None --skip-ops",
+    "pl-device-test --device lightning.kokkos --shots 100000 --skip-ops",
     "pip check"
    ],
    "imports": [
@@ -1532,9 +1814,17 @@
     "pennylane_lightning.lightning_kokkos_ops",
     "pennylane_lightning",
     "pennylane_lightning.lightning_kokkos",
+    "pennylane_lightning.lightning_kokkos_ops",
+    "pennylane_lightning",
+    "pennylane_lightning.lightning_kokkos",
     "pennylane_lightning.lightning_kokkos_ops"
    ],
    "requires": [
+    "flaky",
+    "pip",
+    "pytest",
+    "pytest-benchmark",
+    "pytest-mock",
     "flaky",
     "pip",
     "pytest",
@@ -1608,7 +1898,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pennylane-lightning-kokkos.json"
  },
- "raw_meta_yaml": "{% set name = \"pennylane-lightning-kokkos\" %}\n{% set version = \"0.34.0\" %}\n{% set build_num = 0 %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 398c3a1d4450a9f3e146204c22329da9adc3f83a1685ae69187f3b25f47824c0\n\nbuild:\n  number: {{ build_num }}\n  skip: true  # [py==38 or win]\n  script:\n    - CMAKE_ARGS=\"-DPL_BACKEND=lightning_kokkos -DCMAKE_CXX_COMPILER_TARGET=arm64-apple-macos11 -DCMAKE_SYSTEM_NAME=Darwin -DCMAKE_SYSTEM_PROCESSOR=ARM64\" {{ PYTHON }} -m pip install . --no-deps -vv  # [osx and build_platform != target_platform]\n    - PL_BACKEND=lightning_kokkos {{ PYTHON }} -m pip install . --no-deps -vv  # [not osx or build_platform == target_platform]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - pybind11                               # [build_platform != target_platform]\n    - cmake\n    - ninja\n  host:\n    - libgomp      # [linux]\n    - llvm-openmp  # [osx]\n    - kokkos >=4.0.0,<4.2.0\n    - pip\n    - pybind11\n    - python\n  run:\n    - pennylane >=0.34\n    - python\n    - {{ pin_compatible('kokkos', min_pin='x.x.x', max_pin='x.x.x') }}\n  run_constrained:\n    - __cuda <0.0a0  # [cuda_compiler_version == \"None\"]\ntest:\n  imports:\n    - pennylane_lightning\n    - pennylane_lightning.lightning_kokkos\n    - pennylane_lightning.lightning_kokkos_ops  # [build_platform == target_platform]\n  commands:\n    - pypy --version 2> /dev/null || echo Using Python to run tests\n    - pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found\n    - python -c \"import pennylane as qml; qml.about()\"\n    - pl-device-test --help\n    - pl-device-test --device lightning.kokkos --shots None --skip-ops\n    - pl-device-test --device lightning.kokkos --shots 100000 --skip-ops\n    - pip check\n  requires:\n    - flaky\n    - pip\n    - pytest\n    - pytest-benchmark\n    - pytest-mock\nabout:\n  home: https://docs.pennylane.ai/projects/lightning-kokkos\n  summary: The PennyLane-Lightning-Kokkos plugin extends the Pennylane-Lightning state-vector simulator written in C++, and offloads to the Kokkos library for accelerated circuit simulation.\n  license: Apache-2.0\n  # MIT is pennylane/grouping/graph_colouring.py\n  license_file: LICENSE\n  doc_url: https://docs.pennylane.ai/projects/lightning-kokkos/en/latest/devices.html\n  dev_url: https://github.com/PennyLaneAI/pennylane-lightning-kokkos\n\nextra:\n  recipe-maintainers:\n    - vincentmr\n  feedstock-name: {{ name }}\n",
+ "raw_meta_yaml": "{% set name = \"pennylane-lightning-kokkos\" %}\n{% set version = \"0.34.0\" %}\n{% set build_num = 1 %}\n\npackage:\n  name: {{ name }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/PennyLaneAI/pennylane-lightning/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 398c3a1d4450a9f3e146204c22329da9adc3f83a1685ae69187f3b25f47824c0\n\nbuild:\n  number: {{ build_num }}\n  skip: true  # [py==38 or win]\n  script:\n    - CMAKE_ARGS=\"-DPL_BACKEND=lightning_kokkos -DCMAKE_CXX_COMPILER_TARGET=arm64-apple-macos11 -DCMAKE_SYSTEM_NAME=Darwin -DCMAKE_SYSTEM_PROCESSOR=ARM64\" {{ PYTHON }} -m pip install . --no-deps -vv  # [osx and build_platform != target_platform]\n    - PL_BACKEND=lightning_kokkos {{ PYTHON }} -m pip install . --no-deps -vv  # [not osx or build_platform == target_platform]\n\nrequirements:\n  build:\n    - {{ compiler('cxx') }}\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - pybind11                               # [build_platform != target_platform]\n    - cmake\n    - ninja\n  host:\n    - libgomp      # [linux]\n    - llvm-openmp  # [osx]\n    - kokkos >=4.0.0,<4.2.0\n    - pip\n    - pybind11\n    - python\n  run:\n    - pennylane >=0.34\n    - python\n    - {{ pin_compatible('kokkos', min_pin='x.x.x', max_pin='x.x.x') }}\n  run_constrained:\n    - __cuda <0.0a0  # [cuda_compiler_version == \"None\"]\ntest:\n  imports:\n    - pennylane_lightning\n    - pennylane_lightning.lightning_kokkos\n    - pennylane_lightning.lightning_kokkos_ops  # [build_platform == target_platform]\n  commands:\n    - pypy --version 2> /dev/null || echo Using Python to run tests\n    - pypy -c \"import pennylane as qml; qml.about()\" 2> /dev/null || echo PyPy not found\n    - python -c \"import pennylane as qml; qml.about()\"\n    - pl-device-test --help\n    - pl-device-test --device lightning.kokkos --shots None --skip-ops\n    - pl-device-test --device lightning.kokkos --shots 100000 --skip-ops\n    - pip check\n  requires:\n    - flaky\n    - pip\n    - pytest\n    - pytest-benchmark\n    - pytest-mock\nabout:\n  home: https://docs.pennylane.ai/projects/lightning-kokkos\n  summary: The PennyLane-Lightning-Kokkos plugin extends the Pennylane-Lightning state-vector simulator written in C++, and offloads to the Kokkos library for accelerated circuit simulation.\n  license: Apache-2.0\n  # MIT is pennylane/grouping/graph_colouring.py\n  license_file: LICENSE\n  doc_url: https://docs.pennylane.ai/projects/lightning-kokkos/en/latest/devices.html\n  dev_url: https://github.com/PennyLaneAI/pennylane-lightning-kokkos\n\nextra:\n  recipe-maintainers:\n    - vincentmr\n  feedstock-name: {{ name }}\n",
  "req": {
   "__set__": true,
   "elements": [
