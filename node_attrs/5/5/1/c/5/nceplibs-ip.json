@@ -2,14 +2,27 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "build_platform": {
+   "linux_64": "linux_64",
+   "osx_64": "osx_64",
+   "osx_arm64": "osx_64",
+   "win_64": "win_64"
+  },
   "conda_build": {
-   "error_overlinking": true
+   "pkg_format": "2"
   },
   "conda_forge_output_validation": true,
   "github": {
    "branch_name": "main",
    "tooling_branch_name": "main"
-  }
+  },
+  "os_version": {
+   "linux_64": "cos7"
+  },
+  "provider": {
+   "osx_arm64": "azure"
+  },
+  "test_on_native_only": true
  },
  "feedstock_name": "nceplibs-ip",
  "hash_type": "sha256",
@@ -21,7 +34,7 @@
    "summary": "The NCEP interpolation library contains Fortran 90 subprograms used for interpolating between nearly all grids used at NCEP."
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -99,10 +112,12 @@
    "summary": "The NCEP interpolation library contains Fortran 90 subprograms used for interpolating between nearly all grids used at NCEP."
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
+    "EricEngle-NOAA",
+    "TimothyCera-NOAA",
     "EricEngle-NOAA",
     "TimothyCera-NOAA",
     "EricEngle-NOAA",
@@ -127,6 +142,11 @@
     "make",
     "cmake",
     "pkg-config >=0.21",
+    "fortran_compiler_stub",
+    "c_compiler_stub",
+    "make",
+    "cmake",
+    "pkg-config >=0.21",
     "m2w64-gcc-fortran",
     "ninja",
     "cmake",
@@ -137,11 +157,15 @@
     "nceplibs-sp >=2.3.0",
     "llvm-openmp",
     "nceplibs-sp >=2.3.0",
+    "llvm-openmp",
+    "nceplibs-sp >=2.3.0",
     "nceplibs-sp >=2.3.0",
     "m2w64-gcc-fortran"
    ],
    "run": [
     "libgomp",
+    "nceplibs-sp >=2.3.0",
+    "llvm-openmp",
     "nceplibs-sp >=2.3.0",
     "llvm-openmp",
     "nceplibs-sp >=2.3.0",
@@ -160,6 +184,8 @@
     "test -f ${PREFIX}/lib/libip_d${SHLIB_EXT}",
     "test -f ${PREFIX}/lib/libip_4${SHLIB_EXT}",
     "test -f ${PREFIX}/lib/libip_d${SHLIB_EXT}",
+    "test -f ${PREFIX}/lib/libip_4${SHLIB_EXT}",
+    "test -f ${PREFIX}/lib/libip_d${SHLIB_EXT}",
     "if not exist %LIBRARY_BIN%\\\\libip_4.dll exit 1",
     "if not exist %LIBRARY_BIN%\\\\libip_d.dll exit 1"
    ]
@@ -174,7 +200,7 @@
    "summary": "The NCEP interpolation library contains Fortran 90 subprograms used for interpolating between nearly all grids used at NCEP."
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
@@ -244,6 +270,84 @@
    "elements": []
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/NOAA-EMC/NCEPLIBS-ip",
+   "license": "LGPL-3.0-only",
+   "license_file": "LICENSE.md",
+   "summary": "The NCEP interpolation library contains Fortran 90 subprograms used for interpolating between nearly all grids used at NCEP."
+  },
+  "build": {
+   "number": "3"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "EricEngle-NOAA",
+    "TimothyCera-NOAA"
+   ]
+  },
+  "package": {
+   "name": "nceplibs-ip",
+   "version": "4.4.0"
+  },
+  "requirements": {
+   "build": [
+    "fortran_compiler_stub",
+    "c_compiler_stub",
+    "make",
+    "cmake",
+    "pkg-config >=0.21"
+   ],
+   "host": [
+    "llvm-openmp",
+    "nceplibs-sp >=2.3.0"
+   ],
+   "run": [
+    "llvm-openmp",
+    "nceplibs-sp >=2.3.0"
+   ]
+  },
+  "source": {
+   "sha256": "858d9201ce0bc4d16b83581ef94a4a0262f498ed1ea1b0535de2e575da7a8b8c",
+   "url": "https://github.com/NOAA-EMC/NCEPLIBS-ip/archive/refs/tags/v4.4.0.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f ${PREFIX}/lib/libip_4${SHLIB_EXT}",
+    "test -f ${PREFIX}/lib/libip_d${SHLIB_EXT}"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "fortran_compiler_stub",
+    "make",
+    "pkg-config"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "llvm-openmp",
+    "nceplibs-sp"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "llvm-openmp",
+    "nceplibs-sp"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -254,12 +358,13 @@
  "platforms": [
   "linux_64",
   "osx_64",
+  "osx_arm64",
   "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/nceplibs-ip.json"
  },
- "raw_meta_yaml": "{% set name = \"nceplibs-ip\" %}\n{% set version = \"4.4.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/NOAA-EMC/NCEPLIBS-ip/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 858d9201ce0bc4d16b83581ef94a4a0262f498ed1ea1b0535de2e575da7a8b8c\n\nbuild:\n  number: 2\n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}  # [not win]\n    - {{ compiler('c') }}        # [not win]\n    - make                       # [not win]\n    - m2w64-gcc-fortran          # [win]\n    - ninja                      # [win]\n    - cmake\n    - pkg-config >=0.21\n  host:\n    - llvm-openmp                # [osx]\n    - libgomp                    # [linux]\n    - nceplibs-sp >=2.3.0\n    - m2w64-gcc-fortran          # [win]\n  run:\n    - llvm-openmp                # [osx]\n    - libgomp                    # [linux]\n    - nceplibs-sp >=2.3.0\n    - m2w64-gcc-libgfortran      # [win]\n    - m2w64-gcc-libs             # [win]\n\ntest:\n  commands:\n    - test -f ${PREFIX}/lib/libip_4${SHLIB_EXT}  # [not win]\n    - test -f ${PREFIX}/lib/libip_d${SHLIB_EXT}  # [not win]\n    - if not exist %LIBRARY_BIN%\\\\libip_4.dll exit 1  # [win]\n    - if not exist %LIBRARY_BIN%\\\\libip_d.dll exit 1  # [win]\n\nabout:\n  home: https://github.com/NOAA-EMC/NCEPLIBS-ip\n  summary: The NCEP interpolation library contains Fortran 90 subprograms used for interpolating between nearly all grids used at NCEP.\n  license: LGPL-3.0-only\n  license_file: LICENSE.md\n\nextra:\n  recipe-maintainers:\n    - EricEngle-NOAA\n    - TimothyCera-NOAA\n",
+ "raw_meta_yaml": "{% set name = \"nceplibs-ip\" %}\n{% set version = \"4.4.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/NOAA-EMC/NCEPLIBS-ip/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: 858d9201ce0bc4d16b83581ef94a4a0262f498ed1ea1b0535de2e575da7a8b8c\n\nbuild:\n  number: 3\n\nrequirements:\n  build:\n    - {{ compiler('fortran') }}  # [not win]\n    - {{ compiler('c') }}        # [not win]\n    - make                       # [not win]\n    - m2w64-gcc-fortran          # [win]\n    - ninja                      # [win]\n    - cmake\n    - pkg-config >=0.21\n  host:\n    - llvm-openmp                # [osx]\n    - libgomp                    # [linux]\n    - nceplibs-sp >=2.3.0\n    - m2w64-gcc-fortran          # [win]\n  run:\n    - llvm-openmp                # [osx]\n    - libgomp                    # [linux]\n    - nceplibs-sp >=2.3.0\n    - m2w64-gcc-libgfortran      # [win]\n    - m2w64-gcc-libs             # [win]\n\ntest:\n  commands:\n    - test -f ${PREFIX}/lib/libip_4${SHLIB_EXT}  # [not win]\n    - test -f ${PREFIX}/lib/libip_d${SHLIB_EXT}  # [not win]\n    - if not exist %LIBRARY_BIN%\\\\libip_4.dll exit 1  # [win]\n    - if not exist %LIBRARY_BIN%\\\\libip_d.dll exit 1  # [win]\n\nabout:\n  home: https://github.com/NOAA-EMC/NCEPLIBS-ip\n  summary: The NCEP interpolation library contains Fortran 90 subprograms used for interpolating between nearly all grids used at NCEP.\n  license: LGPL-3.0-only\n  license_file: LICENSE.md\n\nextra:\n  recipe-maintainers:\n    - EricEngle-NOAA\n    - TimothyCera-NOAA\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -373,7 +478,7 @@
    "summary": "The NCEP interpolation library contains Fortran 90 subprograms used for interpolating between nearly all grids used at NCEP."
   },
   "build": {
-   "number": "2"
+   "number": "3"
   },
   "extra": {
    "recipe-maintainers": [
