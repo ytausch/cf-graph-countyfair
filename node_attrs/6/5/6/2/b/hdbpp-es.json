@@ -28,7 +28,7 @@
     "bin/hdb++es-srv",
     "bin/hdb++es-srv"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -50,6 +50,9 @@
     ],
     "name": "hdbpp-es-dbg",
     "requirements": {
+     "host": [
+      "cpptango"
+     ],
      "run": [
       "hdbpp-es"
      ]
@@ -72,6 +75,9 @@
     ],
     "name": "hdbpp-es-dbg",
     "requirements": {
+     "host": [
+      "cpptango"
+     ],
      "run": [
       "hdbpp-es"
      ]
@@ -94,6 +100,9 @@
     ],
     "name": "hdbpp-es-dbg",
     "requirements": {
+     "host": [
+      "cpptango"
+     ],
      "run": [
       "hdbpp-es"
      ]
@@ -200,7 +209,7 @@
     "bin/hdb++es-srv",
     "bin/hdb++es-srv"
    ],
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -224,6 +233,9 @@
     ],
     "name": "hdbpp-es-dbg",
     "requirements": {
+     "host": [
+      "cpptango"
+     ],
      "run": [
       "hdbpp-es"
      ]
@@ -246,6 +258,9 @@
     ],
     "name": "hdbpp-es-dbg",
     "requirements": {
+     "host": [
+      "cpptango"
+     ],
      "run": [
       "hdbpp-es"
      ]
@@ -268,6 +283,9 @@
     ],
     "name": "hdbpp-es-dbg",
     "requirements": {
+     "host": [
+      "cpptango"
+     ],
      "run": [
       "hdbpp-es"
      ]
@@ -359,7 +377,7 @@
    "summary": "Tango device server for the HDB++ Event Subscriber"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -450,7 +468,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/hdbpp-es.json"
  },
- "raw_meta_yaml": "{% set name = \"hdbpp-es\" %}\n{% set version = \"2.2.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://gitlab.com/tango-controls/hdbpp/hdbpp-es/-/archive/{{ version }}/hdbpp-es-{{ version }}.tar.gz\n  sha256: 8a9f0b79e0d52f64bcc990a96c2d65a94f8367d535337fe42a85374b8bef7e53\n\nbuild:\n  number: 0\n  skip: true  # [win]\n  # Prevent hdb++es-srv.dbg to be modified\n  binary_relocation:     # [linux]\n    - bin/hdb++es-srv    # [linux]\n\nrequirements:\n  build:\n    - cmake\n    - make\n    - {{ compiler('cxx') }}\n    - libtool\n    - pkg-config\n  host:\n    - cppzmq\n    - cpptango\n    - omniorb-libs\n    - libhdbpp >=2.1.0\n\ntest:\n  commands:\n    - hdb++es-srv --help 2>&1 | grep usage\n\noutputs:                                                # [linux]\n  - name: hdbpp-es                                      # [linux]\n    files:                                              # [linux]\n      - bin/hdb++es-srv                                 # [linux]\n\n  - name: hdbpp-es-dbg                                  # [linux]\n    requirements:                                       # [linux]\n      run:                                              # [linux]\n        - {{ pin_subpackage('hdbpp-es', exact=True) }}  # [linux]\n    files:                                              # [linux]\n      - bin/hdb++es-srv.dbg                             # [linux]\n    test:                                               # [linux]\n      commands:                                         # [linux]\n        - test -f ${PREFIX}/bin/hdb++es-srv.dbg         # [linux]\n\nabout:\n  home: https://www.tango-controls.org\n  license: GPL-3.0-or-later\n  license_file: LICENSE\n  summary: Tango device server for the HDB++ Event Subscriber\n  dev_url: https://gitlab.com/tango-controls/hdbpp/hdbpp-es\n  doc_url: https://tango-controls.readthedocs.io/en/latest/tools-and-extensions/archiving/HDB++.html\n\nextra:\n  recipe-maintainers:\n    - beenje\n",
+ "raw_meta_yaml": "{% set name = \"hdbpp-es\" %}\n{% set version = \"2.2.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://gitlab.com/tango-controls/hdbpp/hdbpp-es/-/archive/{{ version }}/hdbpp-es-{{ version }}.tar.gz\n  sha256: 8a9f0b79e0d52f64bcc990a96c2d65a94f8367d535337fe42a85374b8bef7e53\n\nbuild:\n  number: 1\n  skip: true  # [win]\n  # Prevent hdb++es-srv.dbg to be modified\n  binary_relocation:     # [linux]\n    - bin/hdb++es-srv    # [linux]\n\nrequirements:\n  build:\n    - cmake\n    - make\n    - {{ compiler('cxx') }}\n    - libtool\n    - pkg-config\n  host:\n    - cppzmq\n    - cpptango\n    - omniorb-libs\n    - libhdbpp >=2.1.0\n\ntest:\n  commands:\n    - hdb++es-srv --help 2>&1 | grep usage\n\noutputs:                                                # [linux]\n  - name: hdbpp-es                                      # [linux]\n    files:                                              # [linux]\n      - bin/hdb++es-srv                                 # [linux]\n\n  - name: hdbpp-es-dbg                                  # [linux]\n    requirements:                                       # [linux]\n      host:                                             # [linux]\n        # build string must depend on cpptango to have\n        # different versions per cpptango\n        - cpptango                                      # [linux]\n      run:                                              # [linux]\n        - {{ pin_subpackage('hdbpp-es', exact=True) }}  # [linux]\n    files:                                              # [linux]\n      - bin/hdb++es-srv.dbg                             # [linux]\n    test:                                               # [linux]\n      commands:                                         # [linux]\n        - test -f ${PREFIX}/bin/hdb++es-srv.dbg         # [linux]\n\nabout:\n  home: https://www.tango-controls.org\n  license: GPL-3.0-or-later\n  license_file: LICENSE\n  summary: Tango device server for the HDB++ Event Subscriber\n  dev_url: https://gitlab.com/tango-controls/hdbpp/hdbpp-es\n  doc_url: https://tango-controls.readthedocs.io/en/latest/tools-and-extensions/archiving/HDB++.html\n\nextra:\n  recipe-maintainers:\n    - beenje\n",
  "req": {
   "__set__": true,
   "elements": [
