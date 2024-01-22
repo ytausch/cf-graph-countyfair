@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  },
   "conda_build": {
    "pkg_format": "2"
   },
@@ -13,7 +16,8 @@
   "provider": {
    "linux_aarch64": "default",
    "linux_ppc64le": "default"
-  }
+  },
+  "test": "native_and_emulated"
  },
  "feedstock_name": "sqlitecpp",
  "hash_type": "sha256",
@@ -261,11 +265,16 @@
     "sqlitecpp",
     "sqlitecpp",
     "sqlitecpp",
+    "sqlitecpp",
     "sqlitecpp"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "wolfv",
+    "marimeireles",
+    "SylvainCorlay",
+    "JohanMabille",
     "wolfv",
     "marimeireles",
     "SylvainCorlay",
@@ -312,9 +321,15 @@
     "make",
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "cmake",
+    "make",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
     "cmake"
    ],
    "host": [
+    "sqlite",
+    "gtest",
     "sqlite",
     "gtest",
     "sqlite",
@@ -412,6 +427,82 @@
    "elements": []
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "SQLiteC++ offers an encapsulation around the native C APIs of SQLite, with\na few intuitive and well documented C++ classes.\n",
+   "home": "https://github.com/SRombauts/SQLiteCpp",
+   "license": "MIT",
+   "license_family": "MIT",
+   "license_file": "LICENSE.txt",
+   "summary": "SQLiteC++ (SQLiteCpp) is a smart and easy to use C++ SQLite3 wrapper."
+  },
+  "build": {
+   "number": "0",
+   "run_exports": [
+    "sqlitecpp"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "wolfv",
+    "marimeireles",
+    "SylvainCorlay",
+    "JohanMabille"
+   ]
+  },
+  "package": {
+   "name": "sqlitecpp",
+   "version": "3.3.0"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cmake",
+    "make"
+   ],
+   "host": [
+    "sqlite",
+    "gtest"
+   ]
+  },
+  "source": {
+   "sha256": "4a37dd63cf91235ea2ef4494054700c144b3f96e93a330ef61ed53d106353e9c",
+   "url": "https://github.com/SRombauts/SQLiteCpp/archive/3.3.0.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -f $PREFIX/lib/libSQLiteCpp${SHLIB_EXT}",
+    "test -f $PREFIX/include/SQLiteCpp/Database.h"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cxx_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "gtest",
+    "sqlite"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -424,6 +515,7 @@
   "linux_aarch64",
   "linux_ppc64le",
   "osx_64",
+  "osx_arm64",
   "win_64"
  ],
  "pr_info": {
