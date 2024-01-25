@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  },
   "conda_build": {
    "pkg_format": "2"
   },
@@ -99,11 +102,13 @@
    "number": "3",
    "run_exports": [
     "zmqpp",
+    "zmqpp",
     "zmqpp"
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "asafkahlon",
     "asafkahlon",
     "asafkahlon"
    ]
@@ -119,13 +124,18 @@
     "make",
     "cxx_compiler_stub",
     "cmake",
+    "make",
+    "cxx_compiler_stub",
+    "cmake",
     "make"
    ],
    "host": [
     "zeromq",
+    "zeromq",
     "zeromq"
    ],
    "run": [
+    "zeromq",
     "zeromq",
     "zeromq"
    ]
@@ -136,6 +146,9 @@
   },
   "test": {
    "commands": [
+    "test -d ${PREFIX}/include/zmqpp",
+    "test -f ${PREFIX}/include/zmqpp/zmqpp.hpp",
+    "test -f ${PREFIX}/lib/libzmqpp${SHLIB_EXT}",
     "test -d ${PREFIX}/include/zmqpp",
     "test -f ${PREFIX}/include/zmqpp/zmqpp.hpp",
     "test -f ${PREFIX}/lib/libzmqpp${SHLIB_EXT}",
@@ -220,6 +233,80 @@
    "elements": []
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "This C++ binding is a 'high-level' library that hides most of the C-style\ninterface core zeromq provides.\n",
+   "home": "https://github.com/zeromq/zmqpp",
+   "license": "MPL-2.0",
+   "license_file": "LICENSE",
+   "summary": "C++ binding for zeromq"
+  },
+  "build": {
+   "number": "3",
+   "run_exports": [
+    "zmqpp"
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "asafkahlon"
+   ]
+  },
+  "package": {
+   "name": "zmqpp",
+   "version": "4.2.0"
+  },
+  "requirements": {
+   "build": [
+    "cxx_compiler_stub",
+    "cmake",
+    "make"
+   ],
+   "host": [
+    "zeromq"
+   ],
+   "run": [
+    "zeromq"
+   ]
+  },
+  "source": {
+   "sha256": "c1d4587df3562f73849d9e5f8c932ca7dcfc7d8bec31f62d7f35073ef81f4d29",
+   "url": "https://github.com/zeromq/zmqpp/archive/4.2.0/zmqpp-4.2.0.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "test -d ${PREFIX}/include/zmqpp",
+    "test -f ${PREFIX}/include/zmqpp/zmqpp.hpp",
+    "test -f ${PREFIX}/lib/libzmqpp${SHLIB_EXT}"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "cmake",
+    "cxx_compiler_stub",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "zeromq"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "zeromq"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -229,7 +316,8 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
-  "osx_64"
+  "osx_64",
+  "osx_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/zmqpp.json"
