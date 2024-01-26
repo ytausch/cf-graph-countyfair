@@ -2,6 +2,11 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64",
+   "osx_arm64": "osx_64"
+  },
   "conda_build": {
    "pkg_format": "2"
   },
@@ -9,7 +14,20 @@
   "github": {
    "branch_name": "main",
    "tooling_branch_name": "main"
-  }
+  },
+  "noarch_platforms": [
+   "linux_64",
+   "osx_64",
+   "osx_arm64",
+   "win_64",
+   "linux_ppc64le",
+   "linux_aarch64"
+  ],
+  "provider": {
+   "linux_aarch64": "default",
+   "linux_ppc64le": "default"
+  },
+  "test": "native_and_emulated"
  },
  "feedstock_name": "hdmf_zarr",
  "hash_type": "sha256",
@@ -36,36 +54,42 @@
   },
   "package": {
    "name": "hdmf_zarr",
-   "version": "0.3.0"
+   "version": "0.5.0"
   },
   "requirements": {
+   "build": [],
    "host": [
-    "python >=3.7",
-    "pip"
+    "pip",
+    "python",
+    "hatchling",
+    "hatch-vcs"
    ],
    "run": [
-    "python >=3.7",
-    "hdmf ==3.5.4",
-    "numpy <1.24",
+    "python >=3.8",
+    "hdmf >=3.9.0",
     "zarr >=2.11.0",
+    "numpy >=1.24",
     "numcodecs >=0.9.1",
-    "pynwb >=2.0.0",
-    "setuptools"
+    "pynwb >=2.5.0",
+    "threadpoolctl >=3.1.0"
    ]
   },
   "source": {
-   "sha256": "da12419cd5a0616ca73d742c5fdeb5c8f02e2b17dc8a0390494021c25b3de929",
-   "url": "https://pypi.io/packages/source/h/hdmf_zarr/hdmf_zarr-0.3.0.tar.gz"
+   "sha256": "c23a41fb408a9bc3f2da85b347d7bbe0386a922bb8a1df3a89fc6048c8228bf5",
+   "url": "https://pypi.io/packages/source/h/hdmf_zarr/hdmf_zarr-0.5.0.tar.gz"
   },
   "test": {
    "commands": [
-    "pip check"
+    "pytest -v"
    ],
    "imports": [
     "hdmf_zarr"
    ],
    "requires": [
-    "pip"
+    "pytest"
+   ],
+   "source_files": [
+    "tests"
    ]
   }
  },
@@ -77,6 +101,8 @@
   "host": {
    "__set__": true,
    "elements": [
+    "hatch-vcs",
+    "hatchling",
     "pip",
     "python"
    ]
@@ -89,14 +115,14 @@
     "numpy",
     "pynwb",
     "python",
-    "setuptools",
+    "threadpoolctl",
     "zarr"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "pytest"
    ]
   }
  },
@@ -123,36 +149,42 @@
   },
   "package": {
    "name": "hdmf_zarr",
-   "version": "0.3.0"
+   "version": "0.5.0"
   },
   "requirements": {
+   "build": [],
    "host": [
-    "python >=3.7",
-    "pip"
+    "pip",
+    "python",
+    "hatchling",
+    "hatch-vcs"
    ],
    "run": [
-    "python >=3.7",
-    "hdmf ==3.5.4",
-    "numpy <1.24",
+    "python >=3.8",
+    "hdmf >=3.9.0",
     "zarr >=2.11.0",
+    "numpy >=1.24",
     "numcodecs >=0.9.1",
-    "pynwb >=2.0.0",
-    "setuptools"
+    "pynwb >=2.5.0",
+    "threadpoolctl >=3.1.0"
    ]
   },
   "source": {
-   "sha256": "da12419cd5a0616ca73d742c5fdeb5c8f02e2b17dc8a0390494021c25b3de929",
-   "url": "https://pypi.io/packages/source/h/hdmf_zarr/hdmf_zarr-0.3.0.tar.gz"
+   "sha256": "c23a41fb408a9bc3f2da85b347d7bbe0386a922bb8a1df3a89fc6048c8228bf5",
+   "url": "https://pypi.io/packages/source/h/hdmf_zarr/hdmf_zarr-0.5.0.tar.gz"
   },
   "test": {
    "commands": [
-    "pip check"
+    "pytest -v"
    ],
    "imports": [
     "hdmf_zarr"
    ],
    "requires": [
-    "pip"
+    "pytest"
+   ],
+   "source_files": [
+    "tests"
    ]
   }
  },
@@ -170,17 +202,19 @@
  "pr_info": {
   "__lazy_json__": "pr_info/hdmf_zarr.json"
  },
- "raw_meta_yaml": "{% set name = \"hdmf_zarr\" %}\n{% set version = \"0.3.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: da12419cd5a0616ca73d742c5fdeb5c8f02e2b17dc8a0390494021c25b3de929\n\nbuild:\n  script: {{ PYTHON }} -m pip install . -vv\n  noarch: python\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - python >=3.7\n    - hdmf ==3.5.4\n    - numpy <1.24\n    - zarr >=2.11.0\n    - numcodecs >=0.9.1\n    - pynwb >=2.0.0\n    - setuptools\n\ntest:\n  commands:\n    - pip check\n  imports:\n    - hdmf_zarr\n  requires:\n    - pip\n\nabout:\n  home: https://github.com/hdmf-dev/hdmf-zarr\n  summary: Zarr backend for HDMF\n  description: |\n    The hdmf-zarr library implements a Zarr backend for HDMF as well\n    as convenience classes for integration of Zarr with PyNWB to\n    support writing of NWB files to Zarr.\n\n  license: BSD-3-Clause-LBNL\n  license_family: BSD\n  license_file: LICENSE.txt\n  doc_url: https://hdmf-zarr.readthedocs.io/en/latest/\n  dev_url: https://github.com/hdmf-dev/hdmf-zarr/tree/dev/src/hdmf_zarr\n\nextra:\n  recipe-maintainers:\n    - mavaylon1\n",
+ "raw_meta_yaml": "{% set name = \"hdmf_zarr\" %}\n{% set version = \"0.5.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: c23a41fb408a9bc3f2da85b347d7bbe0386a922bb8a1df3a89fc6048c8228bf5\n\nbuild:\n  script: {{ PYTHON }} -m pip install . -vv\n  noarch: python\n  number: 0\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n  host:\n    - pip\n    - python\n    - hatchling\n    - hatch-vcs\n  run:\n    - python >=3.8\n    - hdmf >=3.9.0\n    - zarr >=2.11.0\n    - numpy >=1.24\n    - numcodecs >=0.9.1\n    - pynwb >=2.5.0\n    - threadpoolctl >=3.1.0\n\ntest:\n  source_files:\n    - tests\n  requires:\n    - pytest\n  imports:\n    - hdmf_zarr\n  commands:\n    - pytest -v\n\nabout:\n  home: https://github.com/hdmf-dev/hdmf-zarr\n  summary: Zarr backend for HDMF\n  description: |\n    The hdmf-zarr library implements a Zarr backend for HDMF as well\n    as convenience classes for integration of Zarr with PyNWB to\n    support writing of NWB files to Zarr.\n\n  license: BSD-3-Clause-LBNL\n  license_family: BSD\n  license_file: LICENSE.txt\n  doc_url: https://hdmf-zarr.readthedocs.io/en/latest/\n  dev_url: https://github.com/hdmf-dev/hdmf-zarr/tree/dev/src/hdmf_zarr\n\nextra:\n  recipe-maintainers:\n    - mavaylon1\n",
  "req": {
   "__set__": true,
   "elements": [
+   "hatch-vcs",
+   "hatchling",
    "hdmf",
    "numcodecs",
    "numpy",
    "pip",
    "pynwb",
    "python",
-   "setuptools",
+   "threadpoolctl",
    "zarr"
   ]
  },
@@ -192,6 +226,8 @@
   "host": {
    "__set__": true,
    "elements": [
+    "hatch-vcs",
+    "hatchling",
     "pip",
     "python"
    ]
@@ -204,14 +240,14 @@
     "numpy",
     "pynwb",
     "python",
-    "setuptools",
+    "threadpoolctl",
     "zarr"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "pytest"
    ]
   }
  },
@@ -224,31 +260,33 @@
   "host": {
    "__set__": true,
    "elements": [
+    "hatch-vcs",
+    "hatchling",
     "pip",
-    "python >=3.7"
+    "python"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "hdmf ==3.5.4",
+    "hdmf >=3.9.0",
     "numcodecs >=0.9.1",
-    "numpy <1.24",
-    "pynwb >=2.0.0",
-    "python >=3.7",
-    "setuptools",
+    "numpy >=1.24",
+    "pynwb >=2.5.0",
+    "python >=3.8",
+    "threadpoolctl >=3.1.0",
     "zarr >=2.11.0"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "pytest"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/h/hdmf_zarr/hdmf_zarr-0.3.0.tar.gz",
- "version": "0.3.0",
+ "url": "https://pypi.io/packages/source/h/hdmf_zarr/hdmf_zarr-0.5.0.tar.gz",
+ "version": "0.5.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/hdmf_zarr.json"
  }
