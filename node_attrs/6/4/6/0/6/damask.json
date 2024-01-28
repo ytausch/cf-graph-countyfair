@@ -74,7 +74,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -83,7 +83,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -113,7 +119,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -122,7 +128,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -155,7 +167,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -188,7 +200,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -223,7 +235,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -232,7 +244,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -262,7 +280,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -271,7 +289,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -304,7 +328,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -337,7 +361,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -347,15 +371,15 @@
   ],
   "package": {
    "name": "damask-pkgs",
-   "version": "3.0.0a8"
+   "version": "3.0.0b"
   },
   "source": {
    "patches": [
     "HDF5-Fortran.patch",
     "HDF5-Fortran.patch"
    ],
-   "sha256": "f62c38123213d1c1fe2eb8910b0ffbdc1cac56273c2520f3b64a553363190b9d",
-   "url": "https://damask.mpie.de/download/damask-3.0.0-alpha8.tar.xz"
+   "sha256": "1e25e409ac559fc437d1887c6ca930677a732db89a3a32499d545dd75e93925c",
+   "url": "https://damask.mpie.de/download/damask-3.0.0-beta.tar.xz"
   }
  },
  "linux_64_requirements": {
@@ -505,7 +529,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -514,7 +538,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -544,7 +574,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -553,7 +583,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -586,7 +622,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -619,7 +655,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -654,7 +690,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -663,7 +699,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -693,7 +735,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -702,7 +744,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -735,7 +783,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -768,7 +816,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -804,7 +852,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -813,7 +861,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -844,7 +898,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -853,7 +907,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -878,7 +938,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -911,150 +971,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
-     ],
-     "imports": [
-      "damask"
-     ]
-    }
-   },
-   {
-    "build": null,
-    "name": "damask-grid",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "fortran_compiler_stub",
-      "llvm-openmp",
-      "pkg-config",
-      "cmake",
-      "make"
-     ],
-     "host": [
-      "mpich",
-      "petsc",
-      "petsc * real_*",
-      "hdf5",
-      "hdf5 * mpi_mpich_*",
-      "libfyaml",
-      "fftw",
-      "fftw * mpi_mpich_*"
-     ],
-     "run": [
-      "hypre",
-      "petsc",
-      "hdf5"
-     ],
-     "run_constrained": [
-      "damask ==3.0.0a8"
-     ]
-    },
-    "script": "build_grid.sh",
-    "test": {
-     "commands": [
-      "export OMPI_MCA_plm=isolated",
-      "export OMPI_MCA_btl=tcp,self",
-      "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
-     ]
-    }
-   },
-   {
-    "build": null,
-    "name": "damask-mesh",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "fortran_compiler_stub",
-      "llvm-openmp",
-      "pkg-config",
-      "cmake",
-      "make"
-     ],
-     "host": [
-      "mpich",
-      "petsc",
-      "petsc * real_*",
-      "hdf5",
-      "hdf5 * mpi_mpich_*",
-      "libfyaml"
-     ],
-     "run": [
-      "hypre",
-      "petsc",
-      "hdf5"
-     ],
-     "run_constrained": [
-      "damask ==3.0.0a8"
-     ]
-    },
-    "script": "build_mesh.sh",
-    "test": {
-     "commands": [
-      "export OMPI_MCA_plm=isolated",
-      "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
-      "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
-     ]
-    }
-   },
-   {
-    "build": {
-     "script": "python -m pip install ./python --no-deps -vv"
-    },
-    "name": "python-damask",
-    "requirements": {
-     "build": [],
-     "host": [
-      "python",
-      "pip"
-     ],
-     "run": [
-      "python",
-      "pandas",
-      "scipy",
-      "h5py >=3.3.0",
-      "vtk",
-      "matplotlib-base",
-      "pyyaml"
-     ],
-     "run_constrained": [
-      "damask ==3.0.0a8"
-     ]
-    },
-    "test": {
-     "imports": [
-      "damask"
-     ]
-    }
-   },
-   {
-    "build": {
-     "script": [
-      "echo DAMASK metapackage"
-     ]
-    },
-    "name": "damask",
-    "requirements": {
-     "host": [
-      "python"
-     ],
-     "run": [
-      "python",
-      "mpich",
-      "damask-mesh",
-      "damask-grid",
-      "python-damask"
-     ]
-    },
-    "test": {
-     "commands": [
-      "export OMPI_MCA_plm=isolated",
-      "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
-      "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -1090,7 +1007,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -1099,7 +1016,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -1130,7 +1053,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -1139,7 +1062,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -1164,7 +1093,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -1197,7 +1126,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -1233,7 +1162,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -1242,7 +1171,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -1273,7 +1208,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -1282,7 +1217,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -1307,7 +1248,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -1340,7 +1281,162 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+     ],
+     "imports": [
+      "damask"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "damask-grid",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "fortran_compiler_stub",
+      "llvm-openmp",
+      "pkg-config",
+      "cmake",
+      "make"
+     ],
+     "host": [
+      "mpich",
+      "petsc",
+      "petsc * real_*",
+      "hdf5",
+      "hdf5 * mpi_mpich_*",
+      "libfyaml",
+      "fftw",
+      "fftw * mpi_mpich_*"
+     ],
+     "run": [
+      "hypre",
+      "petsc",
+      "hdf5"
+     ],
+     "run_constrained": [
+      "damask ==3.0.0b"
+     ]
+    },
+    "script": "build_grid.sh",
+    "test": {
+     "commands": [
+      "export OMPI_MCA_plm=isolated",
+      "export OMPI_MCA_btl=tcp,self",
+      "export OMP_NUM_THREADS=2",
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
+     ]
+    }
+   },
+   {
+    "build": null,
+    "name": "damask-mesh",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "fortran_compiler_stub",
+      "llvm-openmp",
+      "pkg-config",
+      "cmake",
+      "make"
+     ],
+     "host": [
+      "mpich",
+      "petsc",
+      "petsc * real_*",
+      "hdf5",
+      "hdf5 * mpi_mpich_*",
+      "libfyaml"
+     ],
+     "run": [
+      "hypre",
+      "petsc",
+      "hdf5"
+     ],
+     "run_constrained": [
+      "damask ==3.0.0b"
+     ]
+    },
+    "script": "build_mesh.sh",
+    "test": {
+     "commands": [
+      "export OMPI_MCA_plm=isolated",
+      "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
+      "export OMP_NUM_THREADS=2",
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
+     ]
+    }
+   },
+   {
+    "build": {
+     "script": "python -m pip install ./python --no-deps -vv"
+    },
+    "name": "python-damask",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip"
+     ],
+     "run": [
+      "python",
+      "pandas",
+      "scipy",
+      "h5py >=3.3.0",
+      "vtk",
+      "matplotlib-base",
+      "pyyaml"
+     ],
+     "run_constrained": [
+      "damask ==3.0.0b"
+     ]
+    },
+    "test": {
+     "imports": [
+      "damask"
+     ]
+    }
+   },
+   {
+    "build": {
+     "script": [
+      "echo DAMASK metapackage"
+     ]
+    },
+    "name": "damask",
+    "requirements": {
+     "host": [
+      "python"
+     ],
+     "run": [
+      "python",
+      "mpich",
+      "damask-mesh",
+      "damask-grid",
+      "python-damask"
+     ]
+    },
+    "test": {
+     "commands": [
+      "export OMPI_MCA_plm=isolated",
+      "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
+      "export OMPI_MCA_rmaps_base_oversubscribe=yes",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -1376,7 +1472,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -1385,7 +1481,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -1416,7 +1518,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -1425,7 +1527,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -1450,7 +1558,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -1484,7 +1592,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -1520,7 +1628,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -1529,7 +1637,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -1560,7 +1674,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -1569,7 +1683,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -1594,7 +1714,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -1628,7 +1748,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -1664,7 +1784,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -1673,7 +1793,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -1704,7 +1830,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -1713,7 +1839,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -1738,7 +1870,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -1772,7 +1904,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -1808,7 +1940,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -1817,7 +1949,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -1848,7 +1986,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -1857,7 +1995,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -1882,7 +2026,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -1916,7 +2060,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -1926,7 +2070,7 @@
   ],
   "package": {
    "name": "damask-pkgs",
-   "version": "3.0.0a8"
+   "version": "3.0.0b"
   },
   "source": {
    "patches": [
@@ -1941,8 +2085,8 @@
     "HDF5-Fortran.patch",
     "HDF5-Fortran.patch"
    ],
-   "sha256": "f62c38123213d1c1fe2eb8910b0ffbdc1cac56273c2520f3b64a553363190b9d",
-   "url": "https://damask.mpie.de/download/damask-3.0.0-alpha8.tar.xz"
+   "sha256": "1e25e409ac559fc437d1887c6ca930677a732db89a3a32499d545dd75e93925c",
+   "url": "https://damask.mpie.de/download/damask-3.0.0-beta.tar.xz"
   }
  },
  "name": "damask-pkgs",
@@ -2004,7 +2148,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -2013,7 +2157,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -2044,7 +2194,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -2053,7 +2203,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -2078,7 +2234,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -2111,7 +2267,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -2147,7 +2303,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -2156,7 +2312,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -2187,7 +2349,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -2196,7 +2358,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -2221,7 +2389,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -2254,7 +2422,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -2264,15 +2432,15 @@
   ],
   "package": {
    "name": "damask-pkgs",
-   "version": "3.0.0a8"
+   "version": "3.0.0b"
   },
   "source": {
    "patches": [
     "HDF5-Fortran.patch",
     "HDF5-Fortran.patch"
    ],
-   "sha256": "f62c38123213d1c1fe2eb8910b0ffbdc1cac56273c2520f3b64a553363190b9d",
-   "url": "https://damask.mpie.de/download/damask-3.0.0-alpha8.tar.xz"
+   "sha256": "1e25e409ac559fc437d1887c6ca930677a732db89a3a32499d545dd75e93925c",
+   "url": "https://damask.mpie.de/download/damask-3.0.0-beta.tar.xz"
   }
  },
  "osx_64_requirements": {
@@ -2382,7 +2550,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -2391,7 +2559,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -2422,7 +2596,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -2431,7 +2605,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -2456,7 +2636,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -2489,7 +2669,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -2525,7 +2705,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -2534,7 +2714,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -2565,7 +2751,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -2574,7 +2760,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -2599,7 +2791,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -2632,7 +2824,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -2642,15 +2834,15 @@
   ],
   "package": {
    "name": "damask-pkgs",
-   "version": "3.0.0a8"
+   "version": "3.0.0b"
   },
   "source": {
    "patches": [
     "HDF5-Fortran.patch",
     "HDF5-Fortran.patch"
    ],
-   "sha256": "f62c38123213d1c1fe2eb8910b0ffbdc1cac56273c2520f3b64a553363190b9d",
-   "url": "https://damask.mpie.de/download/damask-3.0.0-alpha8.tar.xz"
+   "sha256": "1e25e409ac559fc437d1887c6ca930677a732db89a3a32499d545dd75e93925c",
+   "url": "https://damask.mpie.de/download/damask-3.0.0-beta.tar.xz"
   }
  },
  "osx_arm64_requirements": {
@@ -2721,7 +2913,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/damask.json"
  },
- "raw_meta_yaml": "{% set build_number = 0 %}\n{% set version = \"3.0.0-alpha8\" %}\n{% set version_python = \"3.0.0a8\" %}\n{% set sha256 = \"f62c38123213d1c1fe2eb8910b0ffbdc1cac56273c2520f3b64a553363190b9d\" %}\n\n# win: no PETSc, only python\n\npackage:\n  name: damask-pkgs\n  version: {{ version_python }}\n\nsource:\n  url: https://damask.mpie.de/download/damask-{{ version }}.tar.xz\n  sha256: {{ sha256 }}\n  patches:\n    - HDF5-Fortran.patch\n\nbuild:\n  number: {{ build_number }}\n\noutputs:\n  - name: damask-grid\n    script: build_grid.sh\n    build:\n      skip: true  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('fortran') }}\n        - libgomp  # [linux]\n        - llvm-openmp  # [osx]\n        - pkg-config  # [osx]\n        - cmake\n        - make\n        - openmpi  # [mpi == 'openmpi' and build_platform != target_platform]\n      host:\n        - {{ mpi }}\n        - petsc\n        - petsc * real_*\n        - hdf5\n        - hdf5 * mpi_{{ mpi }}_*\n        - libfyaml\n        - fftw\n        - fftw * mpi_{{ mpi }}_*\n      run:\n        - hypre\n        - {{ pin_compatible('petsc', max_pin='x.x') }}\n        - {{ pin_compatible('hdf5', max_pin='x.x') }}\n      run_constrained:\n        - damask =={{ version_python }}\n    test:\n      commands:\n        - export OMPI_MCA_plm=isolated\n        - export OMPI_MCA_btl=tcp,self\n        - export OMP_NUM_THREADS=2\n        - if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi\n\n  - name: damask-mesh\n    script: build_mesh.sh\n    build:\n      skip: true  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('fortran') }}\n        - libgomp  # [linux]\n        - llvm-openmp  # [osx]\n        - pkg-config  # [osx]\n        - cmake\n        - make\n        - openmpi  # [mpi == 'openmpi' and build_platform != target_platform]\n      host:\n        - {{ mpi }}\n        - petsc\n        - petsc * real_*\n        - hdf5\n        - hdf5 * mpi_{{ mpi }}_*\n        - libfyaml\n      run:\n        - hypre\n        - {{ pin_compatible('petsc', max_pin='x.x') }}\n        - {{ pin_compatible('hdf5', max_pin='x.x') }}\n      run_constrained:\n        - damask =={{ version_python }}\n    test:\n      commands:\n        - export OMPI_MCA_plm=isolated\n        - export OMPI_MCA_btl_vader_single_copy_mechanism=none\n        - export OMP_NUM_THREADS=2\n        - if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi\n\n  - name: python-damask\n    build:\n      script: python -m pip install ./python --no-deps -vv\n      skip: true  # [py<38]\n    requirements:\n      build:\n        - {{ cdt('mesa-libgl-devel') }}  # [linux]\n        - {{ cdt('mesa-dri-drivers') }}  # [linux]\n        - {{ cdt('libselinux') }}  # [linux]\n        - {{ cdt('libxdamage') }}  # [linux]\n        - {{ cdt('libxxf86vm') }}  # [linux]\n        - {{ cdt('libxext') }}     # [linux]\n        - python                                 # [build_platform != target_platform]\n        - pip                                    # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - xorg-libxfixes  # [linux]\n        - python\n        - pip\n      run:\n        - python\n        - pandas\n        - scipy\n        - h5py >=3.3.0\n        - vtk\n        - matplotlib-base\n        - pyyaml\n      run_constrained:\n        - damask =={{ version_python }}\n    test:\n      imports:\n        - damask\n\n  - name: damask\n    build:\n      script:\n        - \"echo DAMASK metapackage\"\n      skip: true  # [py<38 or win]\n    requirements:\n      host:\n        - python\n      run:\n        - python\n        - {{ mpi }}\n        - {{ pin_subpackage('damask-mesh', exact=True) }}\n        - {{ pin_subpackage('damask-grid', exact=True) }}\n        - {{ pin_subpackage('python-damask', exact=True) }}\n    test:\n      commands:\n        - export OMPI_MCA_plm=isolated\n        - export OMPI_MCA_btl_vader_single_copy_mechanism=none\n        - export OMPI_MCA_rmaps_base_oversubscribe=yes\n        - if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi\n      imports:\n        - damask\n\nabout:\n  home: https://damask.mpie.de/\n  license: AGPL-3.0-or-later\n  license_file:\n    - LICENSE\n    - COPYING\n  summary: 'Duesseldorf Advanced Material Simulation Kit'\n\n  description: |\n    At the core of DAMASK is a flexible and hierarchically structured\n    model of material point behavior for the solution of elastoplastic\n    boundary value problems along with damage and thermal physics. Its\n    main purpose is the simulation of crystal plasticity within a\n    finite-strain continuum mechanical framework.\n  doc_url: https://damask.mpie.de/documentation\n  dev_url: https://damask.mpie.de/development\n\nextra:\n  recipe-maintainers:\n    - jan-janssen\n    - MarDiehl\n    - yangbai90\n",
+ "raw_meta_yaml": "{% set build_number = 0 %}\n{% set version = \"3.0.0-beta\" %}\n{% set version_python = \"3.0.0b\" %}\n{% set sha256 = \"1e25e409ac559fc437d1887c6ca930677a732db89a3a32499d545dd75e93925c\" %}\n\n# win: no PETSc, only python\n\npackage:\n  name: damask-pkgs\n  version: {{ version_python }}\n\nsource:\n  url: https://damask.mpie.de/download/damask-{{ version }}.tar.xz\n  sha256: {{ sha256 }}\n  patches:\n    - HDF5-Fortran.patch\n\nbuild:\n  number: {{ build_number }}\n\noutputs:\n  - name: damask-grid\n    script: build_grid.sh\n    build:\n      skip: true  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('fortran') }}\n        - libgomp  # [linux]\n        - llvm-openmp  # [osx]\n        - pkg-config  # [osx]\n        - cmake\n        - make\n        - openmpi  # [mpi == 'openmpi' and build_platform != target_platform]\n      host:\n        - {{ mpi }}\n        - petsc\n        - petsc * real_*\n        - hdf5\n        - hdf5 * mpi_{{ mpi }}_*\n        - libfyaml\n        - fftw\n        - fftw * mpi_{{ mpi }}_*\n      run:\n        - hypre\n        - {{ pin_compatible('petsc', max_pin='x.x') }}\n        - {{ pin_compatible('hdf5', max_pin='x.x') }}\n      run_constrained:\n        - damask =={{ version_python }}\n    test:\n      source_files:\n        - examples/grid/tensionX.yaml\n        - examples/grid/20grains16x16x16.vti\n        - examples/grid/material.yaml\n      commands:\n        - export OMPI_MCA_plm=isolated\n        - export OMPI_MCA_btl=tcp,self\n        - export OMP_NUM_THREADS=2\n        - export EXAMPLE_DIR=$(pwd)/examples/grid\n        - if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi\n\n  - name: damask-mesh\n    script: build_mesh.sh\n    build:\n      skip: true  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - {{ compiler('fortran') }}\n        - libgomp  # [linux]\n        - llvm-openmp  # [osx]\n        - pkg-config  # [osx]\n        - cmake\n        - make\n        - openmpi  # [mpi == 'openmpi' and build_platform != target_platform]\n      host:\n        - {{ mpi }}\n        - petsc\n        - petsc * real_*\n        - hdf5\n        - hdf5 * mpi_{{ mpi }}_*\n        - libfyaml\n      run:\n        - hypre\n        - {{ pin_compatible('petsc', max_pin='x.x') }}\n        - {{ pin_compatible('hdf5', max_pin='x.x') }}\n      run_constrained:\n        - damask =={{ version_python }}\n    test:\n      source_files:\n        - examples/mesh/tensionY_mono.yaml\n        - examples/mesh/monocrystal.msh\n        - examples/mesh/material.yaml\n      commands:\n        - export OMPI_MCA_plm=isolated\n        - export OMPI_MCA_btl_vader_single_copy_mechanism=none\n        - export OMP_NUM_THREADS=2\n        - export EXAMPLE_DIR=$(pwd)/examples/mesh\n        - if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi\n\n  - name: python-damask\n    build:\n      script: python -m pip install ./python --no-deps -vv\n      skip: true  # [py<38]\n    requirements:\n      build:\n        - {{ cdt('mesa-libgl-devel') }}  # [linux]\n        - {{ cdt('mesa-dri-drivers') }}  # [linux]\n        - {{ cdt('libselinux') }}  # [linux]\n        - {{ cdt('libxdamage') }}  # [linux]\n        - {{ cdt('libxxf86vm') }}  # [linux]\n        - {{ cdt('libxext') }}     # [linux]\n        - python                                 # [build_platform != target_platform]\n        - pip                                    # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - xorg-libxfixes  # [linux]\n        - python\n        - pip\n      run:\n        - python\n        - pandas\n        - scipy\n        - h5py >=3.3.0\n        - vtk\n        - matplotlib-base\n        - pyyaml\n      run_constrained:\n        - damask =={{ version_python }}\n    test:\n      imports:\n        - damask\n\n  - name: damask\n    build:\n      script:\n        - \"echo DAMASK metapackage\"\n      skip: true  # [py<38 or win]\n    requirements:\n      host:\n        - python\n      run:\n        - python\n        - {{ mpi }}\n        - {{ pin_subpackage('damask-mesh', exact=True) }}\n        - {{ pin_subpackage('damask-grid', exact=True) }}\n        - {{ pin_subpackage('python-damask', exact=True) }}\n    test:\n      commands:\n        - export OMPI_MCA_plm=isolated\n        - export OMPI_MCA_btl_vader_single_copy_mechanism=none\n        - export OMPI_MCA_rmaps_base_oversubscribe=yes\n        - if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi\n      imports:\n        - damask\n\nabout:\n  home: https://damask.mpie.de/\n  license: AGPL-3.0-or-later\n  license_file:\n    - LICENSE\n    - COPYING\n  summary: 'Duesseldorf Advanced Material Simulation Kit'\n\n  description: |\n    At the core of DAMASK is a flexible and hierarchically structured\n    model of material point behavior for the solution of elastoplastic\n    boundary value problems along with damage and thermal physics. Its\n    main purpose is the simulation of crystal plasticity within a\n    finite-strain continuum mechanical framework.\n  doc_url: https://damask.mpie.de/documentation\n  dev_url: https://damask.mpie.de/development\n\nextra:\n  recipe-maintainers:\n    - jan-janssen\n    - MarDiehl\n    - yangbai90\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -2872,8 +3064,8 @@
    "elements": []
   }
  },
- "url": "https://damask.mpie.de/download/damask-3.0.0-alpha8.tar.xz",
- "version": "3.0.0a8",
+ "url": "https://damask.mpie.de/download/damask-3.0.0-beta.tar.xz",
+ "version": "3.0.0b",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/damask.json"
  },
@@ -2945,7 +3137,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -2954,7 +3146,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -2985,7 +3183,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -2994,7 +3192,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -3019,7 +3223,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -3053,7 +3257,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -3089,7 +3293,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -3098,7 +3302,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -3129,7 +3339,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -3138,7 +3348,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -3163,7 +3379,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -3197,7 +3413,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -3233,7 +3449,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -3242,7 +3458,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -3273,7 +3495,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -3282,7 +3504,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -3307,7 +3535,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -3341,7 +3569,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -3377,7 +3605,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_grid.sh",
@@ -3386,7 +3614,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl=tcp,self",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_grid --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/grid",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_grid -w $(mktemp -d) -l ${EXAMPLE_DIR}/tensionX.yaml -g ${EXAMPLE_DIR}/20grains16x16x16.vti -m ${EXAMPLE_DIR}/material.yaml; fi"
+     ],
+     "source_files": [
+      "examples/grid/tensionX.yaml",
+      "examples/grid/20grains16x16x16.vti",
+      "examples/grid/material.yaml"
      ]
     }
    },
@@ -3417,7 +3651,7 @@
       "hdf5"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "script": "build_mesh.sh",
@@ -3426,7 +3660,13 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMP_NUM_THREADS=2",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then mpirun -np 2 DAMASK_mesh --help; fi"
+      "export EXAMPLE_DIR=$(pwd)/examples/mesh",
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then mpirun -np 2 DAMASK_mesh; fi"
+     ],
+     "source_files": [
+      "examples/mesh/tensionY_mono.yaml",
+      "examples/mesh/monocrystal.msh",
+      "examples/mesh/material.yaml"
      ]
     }
    },
@@ -3451,7 +3691,7 @@
       "pyyaml"
      ],
      "run_constrained": [
-      "damask ==3.0.0a8"
+      "damask ==3.0.0b"
      ]
     },
     "test": {
@@ -3485,7 +3725,7 @@
       "export OMPI_MCA_plm=isolated",
       "export OMPI_MCA_btl_vader_single_copy_mechanism=none",
       "export OMPI_MCA_rmaps_base_oversubscribe=yes",
-      "if [ $CONDA_BUILD_CROSS_COMPILATION != '1' ]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
+      "if [[ $CONDA_BUILD_CROSS_COMPILATION != '1' ]]; then DAMASK_grid -h; DAMASK_mesh -h; fi"
      ],
      "imports": [
       "damask"
@@ -3495,7 +3735,7 @@
   ],
   "package": {
    "name": "damask-pkgs",
-   "version": "3.0.0a8"
+   "version": "3.0.0b"
   },
   "source": {
    "patches": [
@@ -3504,8 +3744,8 @@
     "HDF5-Fortran.patch",
     "HDF5-Fortran.patch"
    ],
-   "sha256": "f62c38123213d1c1fe2eb8910b0ffbdc1cac56273c2520f3b64a553363190b9d",
-   "url": "https://damask.mpie.de/download/damask-3.0.0-alpha8.tar.xz"
+   "sha256": "1e25e409ac559fc437d1887c6ca930677a732db89a3a32499d545dd75e93925c",
+   "url": "https://damask.mpie.de/download/damask-3.0.0-beta.tar.xz"
   }
  },
  "win_64_requirements": {
