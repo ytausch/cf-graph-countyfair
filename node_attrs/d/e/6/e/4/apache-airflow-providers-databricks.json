@@ -38,7 +38,7 @@
   },
   "package": {
    "name": "apache-airflow-providers-databricks",
-   "version": "5.0.1"
+   "version": "6.1.0"
   },
   "requirements": {
    "host": [
@@ -49,15 +49,16 @@
    "run": [
     "python >=3.8",
     "aiohttp >=3.6.3,<4",
-    "apache-airflow-providers-common-sql >=1.8.1",
-    "apache-airflow >=2.5.0",
+    "apache-airflow-providers-common-sql >=1.10.0",
+    "apache-airflow >=2.6.0",
     "databricks-sql-connector >=2.0.0,<3.0.0,!=2.9.0",
-    "requests >=2.27,<3"
+    "requests >=2.27,<3",
+    "pendulum <3.0.0"
    ]
   },
   "source": {
-   "sha256": "93fb23ffd0d388835bcb5cf128aa84c7d9aeb4021a059ff5b6e717bddfe351d9",
-   "url": "https://pypi.io/packages/source/a/apache-airflow-providers-databricks/apache_airflow_providers_databricks-5.0.1.tar.gz"
+   "sha256": "848a4782367f83730e3b38a46203d0f134aa90b6f851d280ef56841b05990e0f",
+   "url": "https://pypi.io/packages/source/a/apache-airflow-providers-databricks/apache_airflow_providers_databricks-6.1.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -91,6 +92,7 @@
     "apache-airflow",
     "apache-airflow-providers-common-sql",
     "databricks-sql-connector",
+    "pendulum",
     "python",
     "requests"
    ]
@@ -124,7 +126,7 @@
   },
   "package": {
    "name": "apache-airflow-providers-databricks",
-   "version": "5.0.1"
+   "version": "6.1.0"
   },
   "requirements": {
    "host": [
@@ -135,15 +137,16 @@
    "run": [
     "python >=3.8",
     "aiohttp >=3.6.3,<4",
-    "apache-airflow-providers-common-sql >=1.8.1",
-    "apache-airflow >=2.5.0",
+    "apache-airflow-providers-common-sql >=1.10.0",
+    "apache-airflow >=2.6.0",
     "databricks-sql-connector >=2.0.0,<3.0.0,!=2.9.0",
-    "requests >=2.27,<3"
+    "requests >=2.27,<3",
+    "pendulum <3.0.0"
    ]
   },
   "source": {
-   "sha256": "93fb23ffd0d388835bcb5cf128aa84c7d9aeb4021a059ff5b6e717bddfe351d9",
-   "url": "https://pypi.io/packages/source/a/apache-airflow-providers-databricks/apache_airflow_providers_databricks-5.0.1.tar.gz"
+   "sha256": "848a4782367f83730e3b38a46203d0f134aa90b6f851d280ef56841b05990e0f",
+   "url": "https://pypi.io/packages/source/a/apache-airflow-providers-databricks/apache_airflow_providers_databricks-6.1.0.tar.gz"
   },
   "test": {
    "commands": [
@@ -171,7 +174,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/apache-airflow-providers-databricks.json"
  },
- "raw_meta_yaml": "{% set name = \"apache-airflow-providers-databricks\" %}\n{% set version = \"5.0.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/apache_airflow_providers_databricks-{{ version }}.tar.gz\n  sha256: 93fb23ffd0d388835bcb5cf128aa84c7d9aeb4021a059ff5b6e717bddfe351d9\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.8,<4.dev0\n    - flit-core >=3.2,<4\n    - pip\n  run:\n    - python >=3.8\n    - aiohttp >=3.6.3,<4\n    - apache-airflow-providers-common-sql >=1.8.1\n    - apache-airflow >=2.5.0\n    - databricks-sql-connector >=2.0.0,<3.0.0,!=2.9.0\n    - requests >=2.27,<3\n\ntest:\n  imports:\n    - airflow.providers.databricks\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://airflow.apache.org/\n  summary: Provider package apache-airflow-providers-databricks for Apache Airflow\n  license: Apache-2.0\n  license_file: airflow/providers/databricks/LICENSE\n  license_family: Apache\n  doc_url: https://airflow.apache.org/docs/apache-airflow-providers-databricks/stable/index.html\n  dev_url: https://github.com/apache/airflow/\n\nextra:\n  recipe-maintainers:\n    - xylar\n",
+ "raw_meta_yaml": "{% set name = \"apache-airflow-providers-databricks\" %}\n{% set version = \"6.1.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/apache_airflow_providers_databricks-{{ version }}.tar.gz\n  sha256: 848a4782367f83730e3b38a46203d0f134aa90b6f851d280ef56841b05990e0f\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.8,<4.dev0\n    - flit-core >=3.2,<4\n    - pip\n  run:\n    - python >=3.8\n    - aiohttp >=3.6.3,<4\n    - apache-airflow-providers-common-sql >=1.10.0\n    - apache-airflow >=2.6.0\n    - databricks-sql-connector >=2.0.0,<3.0.0,!=2.9.0\n    - requests >=2.27,<3\n\n    # picking up some older apache-airflow that allow pendulum 3, which doesn't work\n    # (these should ideally be patched)\n    - pendulum <3.0.0\n\ntest:\n  imports:\n    - airflow.providers.databricks\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  home: https://airflow.apache.org/\n  summary: Provider package apache-airflow-providers-databricks for Apache Airflow\n  license: Apache-2.0\n  license_file: airflow/providers/databricks/LICENSE\n  license_family: Apache\n  doc_url: https://airflow.apache.org/docs/apache-airflow-providers-databricks/stable/index.html\n  dev_url: https://github.com/apache/airflow/\n\nextra:\n  recipe-maintainers:\n    - xylar\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -180,6 +183,7 @@
    "apache-airflow-providers-common-sql",
    "databricks-sql-connector",
    "flit-core",
+   "pendulum",
    "pip",
    "python",
    "requests"
@@ -205,6 +209,7 @@
     "apache-airflow",
     "apache-airflow-providers-common-sql",
     "databricks-sql-connector",
+    "pendulum",
     "python",
     "requests"
    ]
@@ -234,9 +239,10 @@
    "__set__": true,
    "elements": [
     "aiohttp >=3.6.3,<4",
-    "apache-airflow >=2.5.0",
-    "apache-airflow-providers-common-sql >=1.8.1",
+    "apache-airflow >=2.6.0",
+    "apache-airflow-providers-common-sql >=1.10.0",
     "databricks-sql-connector >=2.0.0,<3.0.0,!=2.9.0",
+    "pendulum <3.0.0",
     "python >=3.8",
     "requests >=2.27,<3"
    ]
@@ -248,8 +254,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/a/apache-airflow-providers-databricks/apache_airflow_providers_databricks-5.0.1.tar.gz",
- "version": "5.0.1",
+ "url": "https://pypi.io/packages/source/a/apache-airflow-providers-databricks/apache_airflow_providers_databricks-6.1.0.tar.gz",
+ "version": "6.1.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/apache-airflow-providers-databricks.json"
  }
