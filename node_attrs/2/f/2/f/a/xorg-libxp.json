@@ -53,12 +53,12 @@
     "pthread-stubs",
     "xorg-xextproto",
     "xorg-printproto",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext"
    ],
    "run": [
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext"
    ]
@@ -142,12 +142,12 @@
     "pthread-stubs",
     "xorg-xextproto",
     "xorg-printproto",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext"
    ],
    "run": [
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext"
    ]
@@ -231,12 +231,12 @@
     "pthread-stubs",
     "xorg-xextproto",
     "xorg-printproto",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext"
    ],
    "run": [
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext"
    ]
@@ -338,39 +338,39 @@
     "pthread-stubs",
     "xorg-xextproto",
     "xorg-printproto",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext",
     "pthread-stubs",
     "xorg-xextproto",
     "xorg-printproto",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext",
     "pthread-stubs",
     "xorg-xextproto",
     "xorg-printproto",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext",
     "pthread-stubs",
     "xorg-xextproto",
     "xorg-printproto",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext"
    ],
    "run": [
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext"
    ]
@@ -428,12 +428,12 @@
     "pthread-stubs",
     "xorg-xextproto",
     "xorg-printproto",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext"
    ],
    "run": [
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext"
    ]
@@ -501,7 +501,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/xorg-libxp.json"
  },
- "raw_meta_yaml": "{% set xorg_name = \"libXp\" %}\n{% set xorg_category = \"lib\" %}\n{% set name = \"xorg-\" ~ xorg_name %}\n{% set version = \"1.0.3\" %}\n{% set sha256 = \"7f360c9905849c3587d48efc0f0ecbc852c19f61a52b18530d6b005cb9148c57\" %}\n{% set am_version = \"1.15\" %} # keep synchronized with build.sh\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.bz2\n  url: https://www.x.org/releases/individual/{{ xorg_category }}/{{ xorg_name }}-{{ version }}.tar.bz2\n  sha256: {{ sha256 }}\n\nbuild:\n  number: 1003\n  detect_binary_files_with_prefix: true\n\n  # Windows build failing. See https://ci.appveyor.com/project/epruesse/staged-recipes/build/1.0.64/job/p3bt0xipb8cms0hm#L1194\n  # Error:\n  # In file included from XpJob.c:44:0:\n  # $PREFIX/include/X11/extensions/Printstr.h:116:18: error: conflicting types for 'CARD32'\n  # #define PCONTEXT CARD32\n  #                ^\n  # In file included from $PREFIX/include/X11/Xproto.h:72:0,\n  #               from $PREFIX/include/X11/extensions/Printstr.h:64,\n  #               from XpJob.c:44:\n  # $PREFIX/include/X11/Xmd.h:111:23: note: previous declaration of 'CARD32' was here\n  # typedef unsigned long CARD32;\n  skip: True  # [win]\n\nrequirements:\n  build:\n    - m2-autoconf  # [win]\n    - m2-automake{{ am_version }}  # [win]\n    - m2-libtool  # [win]\n    - m2w64-pkg-config  # [win]\n    - gnuconfig  # [unix]\n    - make\n    - pkg-config  # [not win]\n    - posix  # [win]\n    - {{ compiler('c') }}        # [unix]\n    - {{ compiler('m2w64_c') }}  # [win]\n  host:\n    - pthread-stubs\n    - xorg-xextproto\n    - xorg-printproto\n    - xorg-util-macros  # [win]\n    - xorg-libx11 1.6.*\n    - xorg-libxau\n    - xorg-libxext\n  run:\n    - xorg-libx11 1.6.*\n    - xorg-libxau\n    - xorg-libxext\n\ntest:\n  commands:\n    {% set lib_idents = [ \"Xp\" ] %}\n    {% for lib_ident in lib_idents %}\n    - test -f $PREFIX/lib/lib{{ lib_ident }}.dylib  # [osx]\n    - test -f $PREFIX/lib/lib{{ lib_ident }}.so  # [linux]\n    - if not exist %PREFIX%/Library/lib/lib{{ lib_ident }}.dll.a exit /b 1  # [win]\n    - if not exist %PREFIX%/Library/bin/msys-{{ lib_ident }}-*.dll exit /b 1  # [win]\n    {% endfor %}\n    - conda inspect linkages -p $PREFIX $PKG_NAME  # [not win]\n    - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]\n\nabout:\n  home: https://www.x.org/\n  license: MIT\n  license_family: MIT\n  license_file: COPYING\n  summary: 'The X.org print library.'\n\nextra:\n  recipe-maintainers:\n    - pkgw\n    - epruesse\n",
+ "raw_meta_yaml": "{% set xorg_name = \"libXp\" %}\n{% set xorg_category = \"lib\" %}\n{% set name = \"xorg-\" ~ xorg_name %}\n{% set version = \"1.0.3\" %}\n{% set sha256 = \"7f360c9905849c3587d48efc0f0ecbc852c19f61a52b18530d6b005cb9148c57\" %}\n{% set am_version = \"1.15\" %} # keep synchronized with build.sh\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.bz2\n  url: https://www.x.org/releases/individual/{{ xorg_category }}/{{ xorg_name }}-{{ version }}.tar.bz2\n  sha256: {{ sha256 }}\n\nbuild:\n  number: 1003\n  detect_binary_files_with_prefix: true\n\n  # Windows build failing. See https://ci.appveyor.com/project/epruesse/staged-recipes/build/1.0.64/job/p3bt0xipb8cms0hm#L1194\n  # Error:\n  # In file included from XpJob.c:44:0:\n  # $PREFIX/include/X11/extensions/Printstr.h:116:18: error: conflicting types for 'CARD32'\n  # #define PCONTEXT CARD32\n  #                ^\n  # In file included from $PREFIX/include/X11/Xproto.h:72:0,\n  #               from $PREFIX/include/X11/extensions/Printstr.h:64,\n  #               from XpJob.c:44:\n  # $PREFIX/include/X11/Xmd.h:111:23: note: previous declaration of 'CARD32' was here\n  # typedef unsigned long CARD32;\n  skip: True  # [win]\n\nrequirements:\n  build:\n    - m2-autoconf  # [win]\n    - m2-automake{{ am_version }}  # [win]\n    - m2-libtool  # [win]\n    - m2w64-pkg-config  # [win]\n    - gnuconfig  # [unix]\n    - make\n    - pkg-config  # [not win]\n    - posix  # [win]\n    - {{ compiler('c') }}        # [unix]\n    - {{ compiler('m2w64_c') }}  # [win]\n  host:\n    - pthread-stubs\n    - xorg-xextproto\n    - xorg-printproto\n    - xorg-util-macros  # [win]\n    - xorg-libx11 1.8.*\n    - xorg-libxau\n    - xorg-libxext\n  run:\n    - xorg-libx11 1.8.*\n    - xorg-libxau\n    - xorg-libxext\n\ntest:\n  commands:\n    {% set lib_idents = [ \"Xp\" ] %}\n    {% for lib_ident in lib_idents %}\n    - test -f $PREFIX/lib/lib{{ lib_ident }}.dylib  # [osx]\n    - test -f $PREFIX/lib/lib{{ lib_ident }}.so  # [linux]\n    - if not exist %PREFIX%/Library/lib/lib{{ lib_ident }}.dll.a exit /b 1  # [win]\n    - if not exist %PREFIX%/Library/bin/msys-{{ lib_ident }}-*.dll exit /b 1  # [win]\n    {% endfor %}\n    - conda inspect linkages -p $PREFIX $PKG_NAME  # [not win]\n    - conda inspect objects -p $PREFIX $PKG_NAME  # [osx]\n\nabout:\n  home: https://www.x.org/\n  license: MIT\n  license_family: MIT\n  license_file: COPYING\n  summary: 'The X.org print library.'\n\nextra:\n  recipe-maintainers:\n    - pkgw\n    - epruesse\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -568,7 +568,7 @@
    "__set__": true,
    "elements": [
     "pthread-stubs",
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext",
     "xorg-printproto",
@@ -578,7 +578,7 @@
   "run": {
    "__set__": true,
    "elements": [
-    "xorg-libx11 1.6.*",
+    "xorg-libx11 1.8.*",
     "xorg-libxau",
     "xorg-libxext"
    ]
