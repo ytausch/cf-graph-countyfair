@@ -3,6 +3,7 @@
  "branch": "main",
  "conda-forge.yml": {
   "build_platform": {
+   "linux_aarch64": "linux_64",
    "osx_arm64": "osx_64"
   },
   "conda_build": {
@@ -85,11 +86,81 @@
    "elements": []
   }
  },
+ "linux_aarch64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/JuliaLang/juliaup",
+   "license": "MIT",
+   "license_file": [
+    "LICENSE",
+    "THIRDPARTY.yml"
+   ],
+   "summary": "Julia installer and version multiplexer"
+  },
+  "build": {
+   "number": "0",
+   "script": [
+    "cargo-bundle-licenses --format yaml --output THIRDPARTY.yml",
+    "cargo install --locked --root \"$PREFIX\" --path .",
+    "rm -f \"${PREFIX}/.crates.toml\""
+   ]
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "mkitti",
+    "ngam"
+   ]
+  },
+  "package": {
+   "name": "juliaup",
+   "version": "1.13.0"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "rust_compiler_stub",
+    "cargo-bundle-licenses"
+   ],
+   "run": []
+  },
+  "source": {
+   "sha256": "83abdb2d9f8af00623fbed1aafa7294ec78bd172439f7ea14a80d2e56982eb87",
+   "url": "https://github.com/JuliaLang/juliaup/archive/v1.13.0.zip"
+  },
+  "test": {
+   "commands": [
+    "juliaup status"
+   ]
+  }
+ },
+ "linux_aarch64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cargo-bundle-licenses",
+    "rust_compiler_stub"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": []
+  },
+  "run": {
+   "__set__": true,
+   "elements": []
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
  "meta_yaml": {
   "about": {
    "home": "https://github.com/JuliaLang/juliaup",
    "license": "MIT",
    "license_file": [
+    "LICENSE",
+    "THIRDPARTY.yml",
     "LICENSE",
     "THIRDPARTY.yml",
     "LICENSE",
@@ -114,12 +185,17 @@
     "cargo install --locked --root \"$PREFIX\" --path .",
     "rm -f \"${PREFIX}/.crates.toml\"",
     "cargo-bundle-licenses --format yaml --output THIRDPARTY.yml",
+    "cargo install --locked --root \"$PREFIX\" --path .",
+    "rm -f \"${PREFIX}/.crates.toml\"",
+    "cargo-bundle-licenses --format yaml --output THIRDPARTY.yml",
     "cargo install --locked --root \"%LIBRARY_PREFIX%\" --path . || goto :error",
     "del /F /Q \"%LIBRARY_PREFIX%\\.crates.toml\""
    ]
   },
   "extra": {
    "recipe-maintainers": [
+    "mkitti",
+    "ngam",
     "mkitti",
     "ngam",
     "mkitti",
@@ -147,6 +223,9 @@
     "cargo-bundle-licenses",
     "c_compiler_stub",
     "rust_compiler_stub",
+    "cargo-bundle-licenses",
+    "c_compiler_stub",
+    "rust_compiler_stub",
     "cargo-bundle-licenses"
    ],
    "run": [
@@ -160,6 +239,7 @@
   },
   "test": {
    "commands": [
+    "juliaup status",
     "juliaup status",
     "juliaup status",
     "juliaup status",
@@ -321,6 +401,7 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
+  "linux_aarch64",
   "osx_64",
   "osx_arm64",
   "win_64"
