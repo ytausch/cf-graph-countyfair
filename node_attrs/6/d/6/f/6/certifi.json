@@ -39,13 +39,13 @@
   },
   "build": {
    "noarch": "python",
-   "number": "1",
+   "number": "2",
    "script": [
     "cd certifi",
     "PYTHON -m pip install . -vv"
    ],
    "script_env": [
-    "PYTHONPATH=SRC_DIR/pip_wheel:SRC_DIR/setuptools_wheel:SRC_DIR/wheel_wheel:"
+    "PYTHONPATH=SRC_DIR/boostrap_wheels:"
    ]
   },
   "extra": {
@@ -75,17 +75,17 @@
     "url": "https://pypi.io/packages/source/c/certifi/certifi-2023.11.17.tar.gz"
    },
    {
-    "folder": "pip_wheel",
+    "folder": "boostrap_wheels",
     "sha256": "5052d7889c1f9d05224cd41741acb7c5d6fa735ab34e339624a614eaaa7e7d76",
     "url": "https://pypi.io/packages/py3/p/pip/pip-23.3.2-py3-none-any.whl"
    },
    {
-    "folder": "setuptools_wheel",
+    "folder": "boostrap_wheels",
     "sha256": "385eb4edd9c9d5c17540511303e39a147ce2fc04bc55289c322b9e5904fe2c05",
     "url": "https://pypi.io/packages/py3/s/setuptools/setuptools-69.0.3-py3-none-any.whl"
    },
    {
-    "folder": "wheel_wheel",
+    "folder": "boostrap_wheels",
     "sha256": "177f9c9b0d45c47873b619f5b650346d632cdc35fb5e4d25058e09c9e581433d",
     "url": "https://pypi.io/packages/py3/w/wheel/wheel-0.42.0-py3-none-any.whl"
    }
@@ -131,13 +131,13 @@
   },
   "build": {
    "noarch": "python",
-   "number": "1",
+   "number": "2",
    "script": [
     "cd certifi",
     "PYTHON -m pip install . -vv"
    ],
    "script_env": [
-    "PYTHONPATH=SRC_DIR/pip_wheel:SRC_DIR/setuptools_wheel:SRC_DIR/wheel_wheel:"
+    "PYTHONPATH=SRC_DIR/boostrap_wheels:"
    ]
   },
   "extra": {
@@ -167,17 +167,17 @@
     "url": "https://pypi.io/packages/source/c/certifi/certifi-2023.11.17.tar.gz"
    },
    {
-    "folder": "pip_wheel",
+    "folder": "boostrap_wheels",
     "sha256": "5052d7889c1f9d05224cd41741acb7c5d6fa735ab34e339624a614eaaa7e7d76",
     "url": "https://pypi.io/packages/py3/p/pip/pip-23.3.2-py3-none-any.whl"
    },
    {
-    "folder": "setuptools_wheel",
+    "folder": "boostrap_wheels",
     "sha256": "385eb4edd9c9d5c17540511303e39a147ce2fc04bc55289c322b9e5904fe2c05",
     "url": "https://pypi.io/packages/py3/s/setuptools/setuptools-69.0.3-py3-none-any.whl"
    },
    {
-    "folder": "wheel_wheel",
+    "folder": "boostrap_wheels",
     "sha256": "177f9c9b0d45c47873b619f5b650346d632cdc35fb5e4d25058e09c9e581433d",
     "url": "https://pypi.io/packages/py3/w/wheel/wheel-0.42.0-py3-none-any.whl"
    }
@@ -202,7 +202,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/certifi.json"
  },
- "raw_meta_yaml": "{% set version = \"2023.11.17\" %}\n\n# Define bootstrap wheels needed to build to avoid circular dependencies\n{% set bootstrapped_wheels = [\n  {\"name\": \"pip\", \"version\": \"23.3.2\", \"sha256\": \"5052d7889c1f9d05224cd41741acb7c5d6fa735ab34e339624a614eaaa7e7d76\"},\n  {\"name\": \"setuptools\", \"version\": \"69.0.3\", \"sha256\": \"385eb4edd9c9d5c17540511303e39a147ce2fc04bc55289c322b9e5904fe2c05\"},\n  {\"name\": \"wheel\", \"version\": \"0.42.0\", \"sha256\": \"177f9c9b0d45c47873b619f5b650346d632cdc35fb5e4d25058e09c9e581433d\"},\n] %}\n\n# For conda* parsing passes, have `SRC_DIR` fallback to `\".\"`\n{% if SRC_DIR is undefined %}\n{% set SRC_DIR = \".\" %}\n{% endif %}\n\npackage:\n  name: certifi\n  version: {{ version }}\n\nsource:\n  - url: https://pypi.io/packages/source/c/certifi/certifi-{{ version }}.tar.gz\n    sha256: 9b469f3a900bf28dc19b8cfbf8019bf47f7fdd1a65a1d4ffb98fc14166beb4d1\n    folder: certifi\n  # Download bootstrapped wheels into their respective source directories\n  {%- for w in bootstrapped_wheels %}\n  - url: https://pypi.io/packages/py3/{{ w[\"name\"][0] }}/{{ w[\"name\"] }}/{{ w[\"name\"] }}-{{ w[\"version\"] }}-py3-none-any.whl\n    sha256: {{ w[\"sha256\"] }}\n    folder: {{ w[\"name\"] }}_wheel\n  {%- endfor %}\n\nbuild:\n  number: 1\n  noarch: python\n  script_env:\n    # Add bootstrapped wheels to `PYTHONPATH` so Python can find them for the build\n    - >-\n      PYTHONPATH=\n      {%- for w in bootstrapped_wheels -%}\n      {{ os.sep.join([SRC_DIR, w[\"name\"] ~ \"_wheel\"]) ~ os.pathsep }}\n      {%- endfor -%}\n      {{ os.environ.get(\"PYTHONPATH\", \"\") }}\n  script:\n    - cd certifi\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - python >=3.7\n  run:\n    - python >=3.7\n\ntest:\n  imports:\n    - certifi\n\nabout:\n  home: http://certifi.io/\n  license: ISC\n  license_file: certifi/LICENSE\n  summary: Python package for providing Mozilla's CA Bundle.\n  description: |\n    Certifi is a curated collection of Root Certificates for validating the\n    trustworthiness of SSL certificates while verifying the identity of TLS\n    hosts.\n  doc_url: https://pypi.python.org/pypi/certifi\n  dev_url: https://github.com/certifi/python-certifi\n  doc_source_url: https://github.com/certifi/certifi.io/blob/master/README.rst\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - pelson\n    - sigmavirus24\n    - ocefpaf\n",
+ "raw_meta_yaml": "{% set version = \"2023.11.17\" %}\n\n{% set pip_version = \"23.3.2\" %}\n{% set setuptools_version = \"69.0.3\" %}\n{% set wheel_version = \"0.42.0\" %}\n\npackage:\n  name: certifi\n  version: {{ version }}\n\nsource:\n  - url: https://pypi.io/packages/source/c/certifi/certifi-{{ version }}.tar.gz\n    sha256: 9b469f3a900bf28dc19b8cfbf8019bf47f7fdd1a65a1d4ffb98fc14166beb4d1\n    folder: certifi\n  # Download bootstrapped wheels into their respective source directories\n  - url: https://pypi.io/packages/py3/p/pip/pip-{{ pip_version }}-py3-none-any.whl\n    sha256: 5052d7889c1f9d05224cd41741acb7c5d6fa735ab34e339624a614eaaa7e7d76\n    folder: boostrap_wheels\n  - url: https://pypi.io/packages/py3/s/setuptools/setuptools-{{ setuptools_version }}-py3-none-any.whl\n    sha256: 385eb4edd9c9d5c17540511303e39a147ce2fc04bc55289c322b9e5904fe2c05\n    folder: boostrap_wheels\n  - url: https://pypi.io/packages/py3/w/wheel/wheel-{{ wheel_version }}-py3-none-any.whl\n    sha256: 177f9c9b0d45c47873b619f5b650346d632cdc35fb5e4d25058e09c9e581433d\n    folder: boostrap_wheels\n\nbuild:\n  number: 2\n  noarch: python\n  script_env:\n    # Add bootstrapped wheels to `PYTHONPATH` so Python can find them for the build\n    - >-\n      PYTHONPATH=\n      {{- os.sep.join([SRC_DIR|default(\".\"), \"boostrap_wheels\"]) ~ os.pathsep }}\n      {{- os.environ.get(\"PYTHONPATH\", \"\") }}\n  script:\n    - cd certifi\n    - {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - python >=3.7\n  run:\n    - python >=3.7\n\ntest:\n  imports:\n    - certifi\n\nabout:\n  home: http://certifi.io/\n  license: ISC\n  license_file: certifi/LICENSE\n  summary: Python package for providing Mozilla's CA Bundle.\n  description: |\n    Certifi is a curated collection of Root Certificates for validating the\n    trustworthiness of SSL certificates while verifying the identity of TLS\n    hosts.\n  doc_url: https://pypi.python.org/pypi/certifi\n  dev_url: https://github.com/certifi/python-certifi\n  doc_source_url: https://github.com/certifi/certifi.io/blob/master/README.rst\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - pelson\n    - sigmavirus24\n    - ocefpaf\n",
  "req": {
   "__set__": true,
   "elements": [
