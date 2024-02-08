@@ -31,7 +31,7 @@
    "summary": "nanomsg-next-generation -- light-weight brokerless messaging"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -52,7 +52,7 @@
     "ninja"
    ],
    "host": [
-    "mbedtls"
+    "mbedtls >=3.5"
    ],
    "run": [
     "mbedtls"
@@ -112,7 +112,7 @@
    "summary": "nanomsg-next-generation -- light-weight brokerless messaging"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -133,7 +133,7 @@
     "ninja"
    ],
    "host": [
-    "mbedtls"
+    "mbedtls >=3.5"
    ],
    "run": [
     "mbedtls"
@@ -193,7 +193,7 @@
    "summary": "nanomsg-next-generation -- light-weight brokerless messaging"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -214,7 +214,7 @@
     "ninja"
    ],
    "host": [
-    "mbedtls"
+    "mbedtls >=3.5"
    ],
    "run": [
     "mbedtls"
@@ -274,7 +274,7 @@
    "summary": "nanomsg-next-generation -- light-weight brokerless messaging"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -330,11 +330,12 @@
     "ninja"
    ],
    "host": [
-    "mbedtls",
-    "mbedtls",
-    "mbedtls",
-    "mbedtls",
-    "mbedtls"
+    "mbedtls >=3.5",
+    "mbedtls >=3.5",
+    "mbedtls >=3.5",
+    "mbedtls >=3.5",
+    "mbedtls >=3.5",
+    "mbedtls >=3.5"
    ],
    "run": [
     "mbedtls",
@@ -342,7 +343,8 @@
     "mbedtls",
     "mbedtls",
     "mbedtls",
-    "ucrt"
+    "ucrt",
+    "mbedtls"
    ]
   },
   "source": {
@@ -379,7 +381,7 @@
    "summary": "nanomsg-next-generation -- light-weight brokerless messaging"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -400,7 +402,7 @@
     "ninja"
    ],
    "host": [
-    "mbedtls"
+    "mbedtls >=3.5"
    ],
    "run": [
     "mbedtls"
@@ -458,7 +460,7 @@
    "summary": "nanomsg-next-generation -- light-weight brokerless messaging"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -479,7 +481,7 @@
     "ninja"
    ],
    "host": [
-    "mbedtls"
+    "mbedtls >=3.5"
    ],
    "run": [
     "mbedtls"
@@ -543,7 +545,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/nng.json"
  },
- "raw_meta_yaml": "{% set name = \"nng\" %}\n{% set version = \"1.7.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/nanomsg/nng/archive/v{{ version }}.tar.gz\n  sha256: b62b2170d2b4757f9f01fb65e5aa9f078dec726735e9de5ed5d7e332cbbbf2ef\n  patches:\n    - test.patch  # [linux]\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make\n    - ninja\n  host:\n    - mbedtls  # [not win]\n  run:\n    - ucrt  # [win]\n    - mbedtls  # [not win]\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libnng.so  # [linux]\n    - test -f $PREFIX/lib/libnng.dylib  # [osx]\n    - nngcat -V  # [unix]\n    - nngcat.exe -V  # [win]\n\nabout:\n  home: https://nng.nanomsg.org/\n  summary: 'nanomsg-next-generation -- light-weight brokerless messaging'\n  description: |\n    nanomsg-next-generation -- light-weight brokerless messaging\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE.txt\n  doc_url: https://nng.nanomsg.org/man/\n  dev_url: https://github.com/nanomsg/nng\n\nextra:\n  recipe-maintainers:\n    - jan-janssen\n    - carlodri\n",
+ "raw_meta_yaml": "{% set name = \"nng\" %}\n{% set version = \"1.7.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/nanomsg/nng/archive/v{{ version }}.tar.gz\n  sha256: b62b2170d2b4757f9f01fb65e5aa9f078dec726735e9de5ed5d7e332cbbbf2ef\n  patches:\n    - test.patch  # [linux]\n\nbuild:\n  number: 1\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make\n    - ninja\n  host:\n    - mbedtls >=3.5\n  run:\n    - ucrt  # [win]\n    - {{ pin_compatible('mbedtls', max_pin='x.x') }}\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libnng.so  # [linux]\n    - test -f $PREFIX/lib/libnng.dylib  # [osx]\n    - nngcat -V  # [unix]\n    - nngcat.exe -V  # [win]\n\nabout:\n  home: https://nng.nanomsg.org/\n  summary: 'nanomsg-next-generation -- light-weight brokerless messaging'\n  description: |\n    nanomsg-next-generation -- light-weight brokerless messaging\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE.txt\n  doc_url: https://nng.nanomsg.org/man/\n  dev_url: https://github.com/nanomsg/nng\n\nextra:\n  recipe-maintainers:\n    - jan-janssen\n    - carlodri\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -604,7 +606,7 @@
   "host": {
    "__set__": true,
    "elements": [
-    "mbedtls"
+    "mbedtls >=3.5"
    ]
   },
   "run": {
@@ -636,7 +638,7 @@
    "summary": "nanomsg-next-generation -- light-weight brokerless messaging"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -656,9 +658,12 @@
     "make",
     "ninja"
    ],
-   "host": [],
+   "host": [
+    "mbedtls >=3.5"
+   ],
    "run": [
-    "ucrt"
+    "ucrt",
+    "mbedtls"
    ]
   },
   "source": {
@@ -685,11 +690,14 @@
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "mbedtls"
+   ]
   },
   "run": {
    "__set__": true,
    "elements": [
+    "mbedtls",
     "ucrt"
    ]
   },
