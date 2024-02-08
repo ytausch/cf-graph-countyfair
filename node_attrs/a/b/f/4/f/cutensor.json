@@ -77,7 +77,7 @@
   },
   "package": {
    "name": "cutensor",
-   "version": "2.0.0.7"
+   "version": "2.0.1.2"
   },
   "requirements": {
    "build": [
@@ -109,8 +109,8 @@
    ]
   },
   "source": {
-   "sha256": "df6338aed18e5b6ae0c49521053d1606d2a41e187d7f5eccf9180af6bbc4ef68",
-   "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.0.7-archive.zip"
+   "sha256": "ededa12ca622baad706ea0a500a358ea51146535466afabd96e558265dc586a2",
+   "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.1.2-archive.zip"
   },
   "test": {
    "files": [
@@ -221,7 +221,7 @@
   },
   "package": {
    "name": "cutensor",
-   "version": "2.0.0.7"
+   "version": "2.0.1.2"
   },
   "requirements": {
    "build": [
@@ -257,8 +257,8 @@
    ]
   },
   "source": {
-   "sha256": "071f2d6d94a37ca59835b16340038d48e1c1438ea6ca7c0bfd4730473fdb4473",
-   "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.0.7-archive.zip"
+   "sha256": "4214a0f7b44747c738f2b643be06b2b24826bd1bae6af27f29f3c6dec131bdeb",
+   "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.1.2-archive.zip"
   },
   "test": {
    "files": [
@@ -370,7 +370,7 @@
   },
   "package": {
    "name": "cutensor",
-   "version": "2.0.0.7"
+   "version": "2.0.1.2"
   },
   "requirements": {
    "build": [
@@ -402,8 +402,8 @@
    ]
   },
   "source": {
-   "sha256": "46108587bb1e88632457f18f26b17d0dddb6923d161285d42307aca7ada471ca",
-   "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.0.7-archive.zip"
+   "sha256": "7176083a4dad44cb0176771be6efb3775748ad30a39292bf7b4584510f1dd811",
+   "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.1.2-archive.zip"
   },
   "test": {
    "files": [
@@ -588,7 +588,7 @@
   },
   "package": {
    "name": "cutensor",
-   "version": "2.0.0.7"
+   "version": "2.0.1.2"
   },
   "requirements": {
    "build": [
@@ -666,8 +666,8 @@
    "run_constrained": null
   },
   "source": {
-   "sha256": "925a7306fa72f8f59ca9fe765987f0943bbae4ac030f3e8217d53789e0870a35",
-   "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.0.7-archive.zip"
+   "sha256": "6ba9e03ee76dd0a5ace281ce703baf1175e0884b535924c3af88206d8951e33b",
+   "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.1.2-archive.zip"
   },
   "test": {
    "files": null,
@@ -737,7 +737,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cutensor.json"
  },
- "raw_meta_yaml": "{% set version = \"2.0.0.7\" %}\n\n{% if cuda_compiler_version in (None, \"None\", True, False) %}\n{% set cuda_major = 0 %}\n{% else %}\n{% set cuda_major = environ.get(\"cuda_compiler_version\", \"11.2\").split(\".\")[0] | int %}\n{% endif %}\n\n{% set platform = \"linux-x86_64\" %}  # [linux64]\n{% set platform = \"linux-ppc64le\" %}  # [ppc64le]\n{% set platform = \"linux-sbsa\" %}  # [aarch64]\n{% set platform = \"windows-x86_64\" %}  # [win]\n{% set extension = \"tar.xz\" %}  # [not win]\n{% set extension = \"zip\" %}  # [win]\n\npackage:\n  name: cutensor\n  version: {{ version }}\n\nsource:\n  url: https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/{{ platform }}/libcutensor-{{ platform }}-{{ version }}-archive.{{ extension }}\n  sha256: df6338aed18e5b6ae0c49521053d1606d2a41e187d7f5eccf9180af6bbc4ef68  # [linux64]\n  sha256: 46108587bb1e88632457f18f26b17d0dddb6923d161285d42307aca7ada471ca  # [ppc64le]\n  sha256: 071f2d6d94a37ca59835b16340038d48e1c1438ea6ca7c0bfd4730473fdb4473  # [aarch64]\n  sha256: 925a7306fa72f8f59ca9fe765987f0943bbae4ac030f3e8217d53789e0870a35  # [win64]\n\nbuild:\n  number: 0\n  skip: true  # [win32 or osx or cuda_compiler_version not in (\"11.8\", \"12.0\")]\n  script:\n    - mkdir -p $PREFIX/include                                             # [linux]\n    - mv include/* $PREFIX/include/                                        # [linux]\n    - mkdir -p $PREFIX/lib                                                 # [linux]\n    - mv lib/{{ cuda_major }}/*.so* $PREFIX/lib/                           # [linux]\n\n    - copy include\\\\cutensor.h %LIBRARY_INC%\\\\                             # [win64]\n    - copy include\\\\cutensorMg.h %LIBRARY_INC%\\\\                           # [win64]\n    - mkdir %LIBRARY_INC%\\\\cutensor                                        # [win64]\n    - copy include\\\\cutensor\\\\types.h %LIBRARY_INC%\\\\cutensor              # [win64]\n    - del lib\\\\{{ cuda_major }}\\\\*static*                                  # [win64]\n    - copy lib\\\\{{ cuda_major }}\\\\*.dll %LIBRARY_BIN%\\\\                    # [win64]\n    - copy lib\\\\{{ cuda_major }}\\\\*.lib %LIBRARY_LIB%\\\\                    # [win64]\n  run_exports:\n    - {{ pin_subpackage('cutensor') }}\n  ignore_run_exports:\n    - cudatoolkit  # [(cuda_compiler_version or \"\").startswith(\"11\")]\n  missing_dso_whitelist:\n    - \"*/libcuda.so.*\"    # [linux]\n    - \"*/nvcuda.dll\"      # [win]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n    - sysroot_{{ target_platform }} 2.17    # [linux]\n  host:\n    - patchelf >=0.12  # [linux]\n    - cuda-version {{ cuda_major }}.0\n    - libcublas  # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  run:\n    - {{ pin_compatible(\"cuda-version\", max_pin=\"x\") }}\n    - cudatoolkit >=11.1,<12  # [(cuda_compiler_version or \"\").startswith(\"11\")]\n    - libcublas               # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  run_constrained:\n    # Only GLIBC_2.17 or older symbols present\n    - __glibc >=2.17      # [linux]\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n\ntest:\n  requires:\n    - git\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - sysroot_{{ target_platform }} 2.17  # [linux]\n    # make sure we pick up the version matching the docker,\n    # or the linker would complain \n    - cudatoolkit {{ cuda_compiler_version }}  # [(cuda_compiler_version or \"\").startswith(\"11\")]\n    # need the libcuda stub for import test\n    - cuda-driver-dev                          # [linux and (cuda_compiler_version or \"\").startswith(\"12\")]\n  files:\n    - test_load_elf.c        # [linux]\n\nabout:\n  home: https://developer.nvidia.com/cutensor\n  license: LicenseRef-cuTENSOR-Software-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/cutensor/license.html\n  license_file: LICENSE\n  summary: Tensor Linear Algebra on NVIDIA GPUs\n  description: |\n    The cuTENSOR Library is a first-of-its-kind GPU-accelerated tensor linear\n    algebra library providing tensor contraction, reduction and elementwise\n    operations. cuTENSOR is used to accelerate applications in the areas of\n    deep learning training and inference, computer vision, quantum chemistry\n    and computational physics.\n\n    License Agreements:- The packages are governed by the NVIDIA cuTENSOR\n    Software License Agreement (EULA). By downloading and using the packages,\n    you accept the terms and conditions of the NVIDIA cuTENSOR EULA -\n    https://docs.nvidia.com/cuda/cutensor/license.html\n  doc_url: https://docs.nvidia.com/cuda/cutensor/index.html\n  dev_url: https://developer.nvidia.com/cutensor/downloads\n\nextra:\n  recipe-maintainers:\n    - yangcal\n    - JeremyWangNVDA\n    - leofang\n    - jakirkham\n    - mtjrider\n",
+ "raw_meta_yaml": "{% set version = \"2.0.1.2\" %}\n\n{% if cuda_compiler_version in (None, \"None\", True, False) %}\n{% set cuda_major = 0 %}\n{% else %}\n{% set cuda_major = environ.get(\"cuda_compiler_version\", \"11.2\").split(\".\")[0] | int %}\n{% endif %}\n\n{% set platform = \"linux-x86_64\" %}  # [linux64]\n{% set platform = \"linux-ppc64le\" %}  # [ppc64le]\n{% set platform = \"linux-sbsa\" %}  # [aarch64]\n{% set platform = \"windows-x86_64\" %}  # [win]\n{% set extension = \"tar.xz\" %}  # [not win]\n{% set extension = \"zip\" %}  # [win]\n\npackage:\n  name: cutensor\n  version: {{ version }}\n\nsource:\n  url: https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/{{ platform }}/libcutensor-{{ platform }}-{{ version }}-archive.{{ extension }}\n  sha256: ededa12ca622baad706ea0a500a358ea51146535466afabd96e558265dc586a2  # [linux64]\n  sha256: 7176083a4dad44cb0176771be6efb3775748ad30a39292bf7b4584510f1dd811  # [ppc64le]\n  sha256: 4214a0f7b44747c738f2b643be06b2b24826bd1bae6af27f29f3c6dec131bdeb  # [aarch64]\n  sha256: 6ba9e03ee76dd0a5ace281ce703baf1175e0884b535924c3af88206d8951e33b  # [win64]\n\nbuild:\n  number: 0\n  skip: true  # [win32 or osx or cuda_compiler_version not in (\"11.8\", \"12.0\")]\n  script:\n    - mkdir -p $PREFIX/include                                             # [linux]\n    - mv include/* $PREFIX/include/                                        # [linux]\n    - mkdir -p $PREFIX/lib                                                 # [linux]\n    - mv lib/{{ cuda_major }}/*.so* $PREFIX/lib/                           # [linux]\n\n    - copy include\\\\cutensor.h %LIBRARY_INC%\\\\                             # [win64]\n    - copy include\\\\cutensorMg.h %LIBRARY_INC%\\\\                           # [win64]\n    - mkdir %LIBRARY_INC%\\\\cutensor                                        # [win64]\n    - copy include\\\\cutensor\\\\types.h %LIBRARY_INC%\\\\cutensor              # [win64]\n    - del lib\\\\{{ cuda_major }}\\\\*static*                                  # [win64]\n    - copy lib\\\\{{ cuda_major }}\\\\*.dll %LIBRARY_BIN%\\\\                    # [win64]\n    - copy lib\\\\{{ cuda_major }}\\\\*.lib %LIBRARY_LIB%\\\\                    # [win64]\n  run_exports:\n    - {{ pin_subpackage('cutensor') }}\n  ignore_run_exports:\n    - cudatoolkit  # [(cuda_compiler_version or \"\").startswith(\"11\")]\n  missing_dso_whitelist:\n    - \"*/libcuda.so.*\"    # [linux]\n    - \"*/nvcuda.dll\"      # [win]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n    - sysroot_{{ target_platform }} 2.17    # [linux]\n  host:\n    - patchelf >=0.12  # [linux]\n    - cuda-version {{ cuda_major }}.0\n    - libcublas  # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  run:\n    - {{ pin_compatible(\"cuda-version\", max_pin=\"x\") }}\n    - cudatoolkit >=11.1,<12  # [(cuda_compiler_version or \"\").startswith(\"11\")]\n    - libcublas               # [(cuda_compiler_version or \"\").startswith(\"12\")]\n  run_constrained:\n    # Only GLIBC_2.17 or older symbols present\n    - __glibc >=2.17      # [linux]\n    - arm-variant * {{ arm_variant_type }}  # [aarch64]\n\ntest:\n  requires:\n    - git\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - {{ compiler('cuda') }}\n    - sysroot_{{ target_platform }} 2.17  # [linux]\n    # make sure we pick up the version matching the docker,\n    # or the linker would complain \n    - cudatoolkit {{ cuda_compiler_version }}  # [(cuda_compiler_version or \"\").startswith(\"11\")]\n    # need the libcuda stub for import test\n    - cuda-driver-dev                          # [linux and (cuda_compiler_version or \"\").startswith(\"12\")]\n  files:\n    - test_load_elf.c        # [linux]\n\nabout:\n  home: https://developer.nvidia.com/cutensor\n  license: LicenseRef-cuTENSOR-Software-License-Agreement\n  license_url: https://docs.nvidia.com/cuda/cutensor/license.html\n  license_file: LICENSE\n  summary: Tensor Linear Algebra on NVIDIA GPUs\n  description: |\n    The cuTENSOR Library is a first-of-its-kind GPU-accelerated tensor linear\n    algebra library providing tensor contraction, reduction and elementwise\n    operations. cuTENSOR is used to accelerate applications in the areas of\n    deep learning training and inference, computer vision, quantum chemistry\n    and computational physics.\n\n    License Agreements:- The packages are governed by the NVIDIA cuTENSOR\n    Software License Agreement (EULA). By downloading and using the packages,\n    you accept the terms and conditions of the NVIDIA cuTENSOR EULA -\n    https://docs.nvidia.com/cuda/cutensor/license.html\n  doc_url: https://docs.nvidia.com/cuda/cutensor/index.html\n  dev_url: https://developer.nvidia.com/cutensor/downloads\n\nextra:\n  recipe-maintainers:\n    - yangcal\n    - JeremyWangNVDA\n    - leofang\n    - jakirkham\n    - mtjrider\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -849,8 +849,8 @@
    ]
   }
  },
- "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.0.7-archive.zip",
- "version": "2.0.0.7",
+ "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.1.2-archive.zip",
+ "version": "2.0.1.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cutensor.json"
  },
@@ -911,7 +911,7 @@
   },
   "package": {
    "name": "cutensor",
-   "version": "2.0.0.7"
+   "version": "2.0.1.2"
   },
   "requirements": {
    "build": [
@@ -936,8 +936,8 @@
    "run_constrained": null
   },
   "source": {
-   "sha256": "925a7306fa72f8f59ca9fe765987f0943bbae4ac030f3e8217d53789e0870a35",
-   "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.0.7-archive.zip"
+   "sha256": "6ba9e03ee76dd0a5ace281ce703baf1175e0884b535924c3af88206d8951e33b",
+   "url": "https://developer.download.nvidia.com/compute/cutensor/redist/libcutensor/windows-x86_64/libcutensor-windows-x86_64-2.0.1.2-archive.zip"
   },
   "test": {
    "files": null,
