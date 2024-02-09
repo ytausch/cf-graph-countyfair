@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "azure": {
+   "store_build_artifacts": true
+  },
   "build_platform": {
    "osx_arm64": "osx_64"
   },
@@ -36,7 +39,7 @@
    "summary": "Portable Computing Language -- a portable open source implementation of the OpenCL standard"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script_env": [
     "CUDA_HOME",
     "CUDA_HOME"
@@ -438,7 +441,7 @@
    "summary": "Portable Computing Language -- a portable open source implementation of the OpenCL standard"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script_env": [
     "CUDA_HOME",
     "CUDA_HOME"
@@ -840,7 +843,7 @@
    "summary": "Portable Computing Language -- a portable open source implementation of the OpenCL standard"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script_env": [
     "CUDA_HOME",
     "CUDA_HOME"
@@ -934,7 +937,7 @@
       "pocl-core"
      ],
      "run_constrained": [
-      "__cuda >=11"
+      "__cuda >=10.2"
      ]
     },
     "script": "install-pkg.sh",
@@ -1059,7 +1062,7 @@
       "pocl-core"
      ],
      "run_constrained": [
-      "__cuda >=11"
+      "__cuda >=10.2"
      ]
     },
     "script": "install-pkg.sh",
@@ -1261,7 +1264,7 @@
    "summary": "Portable Computing Language -- a portable open source implementation of the OpenCL standard"
   },
   "build": {
-   "number": "1",
+   "number": "2",
    "script_env": [
     "CUDA_HOME",
     "CUDA_HOME"
@@ -1883,7 +1886,7 @@
       "pocl-core"
      ],
      "run_constrained": [
-      "__cuda >=11"
+      "__cuda >=10.2"
      ]
     },
     "script": "install-pkg.sh",
@@ -2008,7 +2011,7 @@
       "pocl-core"
      ],
      "run_constrained": [
-      "__cuda >=11"
+      "__cuda >=10.2"
      ]
     },
     "script": "install-pkg.sh",
@@ -2704,7 +2707,7 @@
    "summary": "Portable Computing Language -- a portable open source implementation of the OpenCL standard"
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "feedstock-name": "pocl",
@@ -3113,7 +3116,7 @@
    "summary": "Portable Computing Language -- a portable open source implementation of the OpenCL standard"
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "feedstock-name": "pocl",
@@ -3373,7 +3376,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pocl.json"
  },
- "raw_meta_yaml": "{% set version = \"5.0\" %}\n{% set build_number = 1 %}\n{% set sha256 = \"fd0bb6e50c2286278c11627b71177991519e1f7ab2576bd8d8742974db414549\" %}\n\n{% set llvm_version = \"15.0.7\" %}\n\npackage:\n  name: pocl-core\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/pocl/pocl/archive/refs/tags/v{{ version.replace(\".rc\", \"-RC\") }}.tar.gz\n    sha256: {{ sha256 }}\n    patches:\n      - patches/gh1392.patch\n      - patches/alignof.diff  # [ppc64le]\n\nbuild:\n  number: {{ build_number }}\n  skip: true  # [win]\n  script_env:   # [enable_cuda]\n    - CUDA_HOME   # [enable_cuda]\n\nrequirements:\n  build:\n    - cmake\n    - make\n    - pkg-config\n    - {{ compiler('cxx') }}                                   # [not osx]\n    - clangxx_{{ target_platform }} {{ llvm_version }}.*      # [osx]\n    - llvmdev {{ llvm_version }}.*       # [build_platform != target_platform]\n    - clangdev {{ llvm_version }}.*      # [build_platform != target_platform]\n  host:\n    - ocl-icd                            # [linux]\n    - khronos-opencl-icd-loader          # [osx]\n    - libhwloc\n    - clhpp\n\n    - llvmdev {{ llvm_version }}.*\n    - clangdev {{ llvm_version }}.*\n    - llvm {{ llvm_version }}.*\n    - libclang-cpp {{ llvm_version }}.*\n    - llvm-spirv-{{ llvm_version.split(\".\")[0] }}\n\n    - zlib                               # [osx]\n    - ld64 >=530                         # [osx]\n  run:\n    - llvm-spirv-{{ llvm_version.split(\".\")[0] }}\n    - ocl-icd                            # [linux]\n    - khronos-opencl-icd-loader          # [osx]\n    - ld64 >=530                         # [osx]\n    - {{ pin_compatible('libhwloc') }}\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.13\") }}  # [osx]\n  run_constrained:\n    - pocl {{ version }}.*\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libpocl${SHLIB_EXT}     # [unix]\n\noutputs:\n  - name: pocl-core\n\n  - name: pocl-cpu-minimal\n    script: install-pkg.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n      host:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - llvm {{ llvm_version }}.*\n        - libhwloc\n      run:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n    test:\n      commands:\n        - test -f $PREFIX/lib/pocl/libpocl-devices-basic.so     # [unix]\n\n  - name: pocl-cpu\n    script: install-pkg.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n      host:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-cpu-minimal\", exact=True) }}\n        - llvm {{ llvm_version }}.*\n        - libhwloc\n      run:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-cpu-minimal\", exact=True) }}\n    test:\n      requires:\n        - pyopencl\n        - curl\n        - pocl-cpu\n      commands:\n        - test -f $PREFIX/lib/pocl/libpocl-devices-pthread.so     # [unix]\n        # Remove apple icd so that only pocl is found\n        - rm -f $PREFIX/etc/OpenCL/vendors/apple.icd     # [osx]\n        - export OCL_ICD_DEBUG=15                     # [linux]\n        - export POCL_DEBUG=1\n        - curl -O https://raw.githubusercontent.com/inducer/pyopencl/main/examples/demo.py\n        - python demo.py\n\n  - name: pocl-cuda\n    build:\n      skip: true  # [not enable_cuda]\n    script: install-pkg.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n      host:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - llvm {{ llvm_version }}.*\n        - libhwloc\n      run:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n      run_constrained:\n        - __cuda >=11\n    test:\n      commands:\n        - test -f $PREFIX/lib/pocl/libpocl-devices-cuda.so      # [unix]\n\n  - name: pocl-remote\n    script: install-pkg.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n      host:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - llvm {{ llvm_version }}.*\n        - libhwloc\n      run:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n    test:\n      commands:\n        - test -f $PREFIX/lib/pocl/libpocl-devices-remote.so      # [unix]\n\n  - name: pocl\n    requirements:\n      run:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-cpu\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-cpu-minimal\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-remote\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-cuda\", exact=True) }}         # [enable_cuda]\n    test:\n      commands:\n        - test -f $PREFIX/lib/pocl/libpocl-devices-pthread.so   # [unix]\n        - test -f $PREFIX/lib/pocl/libpocl-devices-basic.so     # [unix]\n        - test -f $PREFIX/lib/pocl/libpocl-devices-cuda.so      # [enable_cuda]\n\nabout:\n  home: http://portablecl.org/\n  license: MIT\n  license_file:\n    - LICENSE\n    - LLVM-License.txt\n    - LICENSE_THIRDPARTY  # [osx]\n  summary: Portable Computing Language -- a portable open source implementation of the OpenCL standard\n  dev_url: https://github.com/pocl/pocl\n  doc_url: http://portablecl.org/docs/html/\n\nextra:\n  feedstock-name: pocl\n  recipe-maintainers:\n    - inducer\n    - mattwala\n    - isuruf\n    - matthiasdiener\n",
+ "raw_meta_yaml": "{% set version = \"5.0\" %}\n{% set build_number = 2 %}\n{% set sha256 = \"fd0bb6e50c2286278c11627b71177991519e1f7ab2576bd8d8742974db414549\" %}\n\n{% set llvm_version = \"15.0.7\" %}\n\npackage:\n  name: pocl-core\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/pocl/pocl/archive/refs/tags/v{{ version.replace(\".rc\", \"-RC\") }}.tar.gz\n    sha256: {{ sha256 }}\n    patches:\n      - patches/gh1392.patch\n      - patches/alignof.diff  # [ppc64le]\n\nbuild:\n  number: {{ build_number }}\n  skip: true  # [win]\n  script_env:   # [enable_cuda]\n    - CUDA_HOME   # [enable_cuda]\n\nrequirements:\n  build:\n    - cmake\n    - make\n    - pkg-config\n    - {{ compiler('cxx') }}                                   # [not osx]\n    - clangxx_{{ target_platform }} {{ llvm_version }}.*      # [osx]\n    - llvmdev {{ llvm_version }}.*       # [build_platform != target_platform]\n    - clangdev {{ llvm_version }}.*      # [build_platform != target_platform]\n  host:\n    - ocl-icd                            # [linux]\n    - khronos-opencl-icd-loader          # [osx]\n    - libhwloc\n    - clhpp\n\n    - llvmdev {{ llvm_version }}.*\n    - clangdev {{ llvm_version }}.*\n    - llvm {{ llvm_version }}.*\n    - libclang-cpp {{ llvm_version }}.*\n    - llvm-spirv-{{ llvm_version.split(\".\")[0] }}\n\n    - zlib                               # [osx]\n    - ld64 >=530                         # [osx]\n  run:\n    - llvm-spirv-{{ llvm_version.split(\".\")[0] }}\n    - ocl-icd                            # [linux]\n    - khronos-opencl-icd-loader          # [osx]\n    - ld64 >=530                         # [osx]\n    - {{ pin_compatible('libhwloc') }}\n    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.13\") }}  # [osx]\n  run_constrained:\n    - pocl {{ version }}.*\n\ntest:\n  commands:\n    - test -f $PREFIX/lib/libpocl${SHLIB_EXT}     # [unix]\n\noutputs:\n  - name: pocl-core\n\n  - name: pocl-cpu-minimal\n    script: install-pkg.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n      host:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - llvm {{ llvm_version }}.*\n        - libhwloc\n      run:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n    test:\n      commands:\n        - test -f $PREFIX/lib/pocl/libpocl-devices-basic.so     # [unix]\n\n  - name: pocl-cpu\n    script: install-pkg.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n      host:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-cpu-minimal\", exact=True) }}\n        - llvm {{ llvm_version }}.*\n        - libhwloc\n      run:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-cpu-minimal\", exact=True) }}\n    test:\n      requires:\n        - pyopencl\n        - curl\n        - pocl-cpu\n      commands:\n        - test -f $PREFIX/lib/pocl/libpocl-devices-pthread.so     # [unix]\n        # Remove apple icd so that only pocl is found\n        - rm -f $PREFIX/etc/OpenCL/vendors/apple.icd     # [osx]\n        - export OCL_ICD_DEBUG=15                     # [linux]\n        - export POCL_DEBUG=1\n        - curl -O https://raw.githubusercontent.com/inducer/pyopencl/main/examples/demo.py\n        - python demo.py\n\n  - name: pocl-cuda\n    build:\n      skip: true  # [not enable_cuda]\n    script: install-pkg.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n      host:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - llvm {{ llvm_version }}.*\n        - libhwloc\n      run:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n      run_constrained:\n        - __cuda >=11  # [not ppc64le]\n        - __cuda >=10.2  # [ppc64le]\n    test:\n      commands:\n        - test -f $PREFIX/lib/pocl/libpocl-devices-cuda.so      # [unix]\n\n  - name: pocl-remote\n    script: install-pkg.sh\n    requirements:\n      build:\n        - {{ compiler('cxx') }}\n      host:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - llvm {{ llvm_version }}.*\n        - libhwloc\n      run:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n    test:\n      commands:\n        - test -f $PREFIX/lib/pocl/libpocl-devices-remote.so      # [unix]\n\n  - name: pocl\n    requirements:\n      run:\n        - {{ pin_subpackage(\"pocl-core\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-cpu\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-cpu-minimal\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-remote\", exact=True) }}\n        - {{ pin_subpackage(\"pocl-cuda\", exact=True) }}         # [enable_cuda]\n    test:\n      commands:\n        - test -f $PREFIX/lib/pocl/libpocl-devices-pthread.so   # [unix]\n        - test -f $PREFIX/lib/pocl/libpocl-devices-basic.so     # [unix]\n        - test -f $PREFIX/lib/pocl/libpocl-devices-cuda.so      # [enable_cuda]\n\nabout:\n  home: http://portablecl.org/\n  license: MIT\n  license_file:\n    - LICENSE\n    - LLVM-License.txt\n    - LICENSE_THIRDPARTY  # [osx]\n  summary: Portable Computing Language -- a portable open source implementation of the OpenCL standard\n  dev_url: https://github.com/pocl/pocl\n  doc_url: http://portablecl.org/docs/html/\n\nextra:\n  feedstock-name: pocl\n  recipe-maintainers:\n    - inducer\n    - mattwala\n    - isuruf\n    - matthiasdiener\n",
  "req": {
   "__set__": true,
   "elements": [
