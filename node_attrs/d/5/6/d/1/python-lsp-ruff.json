@@ -27,7 +27,7 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -38,7 +38,7 @@
   },
   "package": {
    "name": "python-lsp-ruff",
-   "version": "2.0.2"
+   "version": "2.1.0"
   },
   "requirements": {
    "host": [
@@ -46,29 +46,31 @@
     "python >=3.8"
    ],
    "run": [
-    "lsprotocol >=2022.0.0a1",
+    "lsprotocol >=2023.0.1",
     "cattrs !=23.2.1",
     "python >=3.8",
     "python-lsp-server-base",
-    "ruff >=0.1.5,<0.2.0,!=0.1.9,!=0.1.10,!=0.1.11",
+    "ruff >=0.2.0,<0.3.0",
     "tomli >=1.1.0"
    ]
   },
   "source": {
-   "sha256": "b4a6219119d73d9175ffd88aeacb0db6859ae72f606158fdcc550e105957c8e0",
-   "url": "https://pypi.io/packages/source/p/python-lsp-ruff/python-lsp-ruff-2.0.2.tar.gz"
+   "sha256": "baf4d29a863dad5184aeec58db4c0e3d5811d894c10f36e7e52edc703cf7cc15",
+   "url": "https://pypi.io/packages/source/p/python-lsp-ruff/python-lsp-ruff-2.1.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "pytest -vv --cov=pylsp_ruff --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=84"
+    "coverage run --source=pylsp_ruff --branch -m pytest -vv --color=yes --tb=long",
+    "coverage report --show-missing --skip-covered --fail-under=87"
    ],
    "imports": [
     "pylsp_ruff"
    ],
    "requires": [
+    "coverage",
     "pip",
-    "pytest-cov"
+    "pytest"
    ],
    "source_files": [
     "tests"
@@ -101,8 +103,9 @@
   "test": {
    "__set__": true,
    "elements": [
+    "coverage",
     "pip",
-    "pytest-cov"
+    "pytest"
    ]
   }
  },
@@ -117,7 +120,7 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -128,7 +131,7 @@
   },
   "package": {
    "name": "python-lsp-ruff",
-   "version": "2.0.2"
+   "version": "2.1.0"
   },
   "requirements": {
    "host": [
@@ -136,29 +139,31 @@
     "python >=3.8"
    ],
    "run": [
-    "lsprotocol >=2022.0.0a1",
+    "lsprotocol >=2023.0.1",
     "cattrs !=23.2.1",
     "python >=3.8",
     "python-lsp-server-base",
-    "ruff >=0.1.5,<0.2.0,!=0.1.9,!=0.1.10,!=0.1.11",
+    "ruff >=0.2.0,<0.3.0",
     "tomli >=1.1.0"
    ]
   },
   "source": {
-   "sha256": "b4a6219119d73d9175ffd88aeacb0db6859ae72f606158fdcc550e105957c8e0",
-   "url": "https://pypi.io/packages/source/p/python-lsp-ruff/python-lsp-ruff-2.0.2.tar.gz"
+   "sha256": "baf4d29a863dad5184aeec58db4c0e3d5811d894c10f36e7e52edc703cf7cc15",
+   "url": "https://pypi.io/packages/source/p/python-lsp-ruff/python-lsp-ruff-2.1.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "pytest -vv --cov=pylsp_ruff --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=84"
+    "coverage run --source=pylsp_ruff --branch -m pytest -vv --color=yes --tb=long",
+    "coverage report --show-missing --skip-covered --fail-under=87"
    ],
    "imports": [
     "pylsp_ruff"
    ],
    "requires": [
+    "coverage",
     "pip",
-    "pytest-cov"
+    "pytest"
    ],
    "source_files": [
     "tests"
@@ -179,7 +184,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/python-lsp-ruff.json"
  },
- "raw_meta_yaml": "{% set version = \"2.0.2\" %}\n\npackage:\n  name: python-lsp-ruff\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/p/python-lsp-ruff/python-lsp-ruff-{{ version }}.tar.gz\n  sha256: b4a6219119d73d9175ffd88aeacb0db6859ae72f606158fdcc550e105957c8e0\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - pip\n    - python >=3.8\n  run:\n    - lsprotocol >=2022.0.0a1\n    - cattrs !=23.2.1\n    - python >=3.8\n    - python-lsp-server-base\n    # https://github.com/conda-forge/ruff-feedstock/issues/153\n    - ruff >=0.1.5,<0.2.0,!=0.1.9,!=0.1.10,!=0.1.11\n    - tomli >=1.1.0\n\ntest:\n  source_files:\n    - tests\n  imports:\n    - pylsp_ruff\n  commands:\n    - pip check\n    - pytest -vv --cov=pylsp_ruff --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=84\n  requires:\n    - pip\n    - pytest-cov\n\nabout:\n  home: https://pypi.org/project/python-lsp-ruff\n  summary: Ruff linting plugin for pylsp\n  license: MIT\n  license_file: LICENSE\n  dev_url: https://github.com/python-lsp/python-lsp-ruff\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n    - jhossbach\n    - jonas-w\n",
+ "raw_meta_yaml": "{% set version = \"2.1.0\" %}\n\npackage:\n  name: python-lsp-ruff\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/p/python-lsp-ruff/python-lsp-ruff-{{ version }}.tar.gz\n  sha256: baf4d29a863dad5184aeec58db4c0e3d5811d894c10f36e7e52edc703cf7cc15\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n  number: 0\n\nrequirements:\n  host:\n    - pip\n    - python >=3.8\n  run:\n    - lsprotocol >=2023.0.1\n    - cattrs !=23.2.1\n    - python >=3.8\n    - python-lsp-server-base\n    - ruff >=0.2.0,<0.3.0\n    - tomli >=1.1.0\n\ntest:\n  source_files:\n    - tests\n  imports:\n    - pylsp_ruff\n  commands:\n    - pip check\n    - coverage run --source=pylsp_ruff --branch -m pytest -vv --color=yes --tb=long\n    - coverage report --show-missing --skip-covered --fail-under=87\n  requires:\n    - coverage\n    - pip\n    - pytest\n\nabout:\n  home: https://pypi.org/project/python-lsp-ruff\n  summary: Ruff linting plugin for pylsp\n  license: MIT\n  license_file: LICENSE\n  dev_url: https://github.com/python-lsp/python-lsp-ruff\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n    - jhossbach\n    - jonas-w\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -218,8 +223,9 @@
   "test": {
    "__set__": true,
    "elements": [
+    "coverage",
     "pip",
-    "pytest-cov"
+    "pytest"
    ]
   }
  },
@@ -240,23 +246,24 @@
    "__set__": true,
    "elements": [
     "cattrs !=23.2.1",
-    "lsprotocol >=2022.0.0a1",
+    "lsprotocol >=2023.0.1",
     "python >=3.8",
     "python-lsp-server-base",
-    "ruff >=0.1.5,<0.2.0,!=0.1.9,!=0.1.10,!=0.1.11",
+    "ruff >=0.2.0,<0.3.0",
     "tomli >=1.1.0"
    ]
   },
   "test": {
    "__set__": true,
    "elements": [
+    "coverage",
     "pip",
-    "pytest-cov"
+    "pytest"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/p/python-lsp-ruff/python-lsp-ruff-2.0.2.tar.gz",
- "version": "2.0.2",
+ "url": "https://pypi.io/packages/source/p/python-lsp-ruff/python-lsp-ruff-2.1.0.tar.gz",
+ "version": "2.1.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/python-lsp-ruff.json"
  }
