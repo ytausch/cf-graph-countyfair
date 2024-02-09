@@ -29,7 +29,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -51,7 +51,8 @@
    ],
    "run": [
     "python >=3.7",
-    "google-api-core-grpc >=1.34.0,<3.0.0dev,!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,!=2.10.*",
+    "google-api-core >=1.34.0,<3.0.0dev,!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,!=2.10.*",
+    "google-api-core-grpc",
     "google-auth >=2.14.1,<3.0.0dev",
     "grpc-google-iam-v1 >=0.12.4,<1.0.0dev",
     "grpcio >=1.51.3,<2.0dev",
@@ -88,6 +89,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "google-api-core",
     "google-api-core-grpc",
     "google-auth",
     "grpc-google-iam-v1",
@@ -117,7 +119,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vv"
   },
   "extra": {
@@ -139,7 +141,8 @@
    ],
    "run": [
     "python >=3.7",
-    "google-api-core-grpc >=1.34.0,<3.0.0dev,!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,!=2.10.*",
+    "google-api-core >=1.34.0,<3.0.0dev,!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,!=2.10.*",
+    "google-api-core-grpc",
     "google-auth >=2.14.1,<3.0.0dev",
     "grpc-google-iam-v1 >=0.12.4,<1.0.0dev",
     "grpcio >=1.51.3,<2.0dev",
@@ -175,10 +178,11 @@
  "pr_info": {
   "__lazy_json__": "pr_info/google-cloud-pubsub.json"
  },
- "raw_meta_yaml": "{% set name = \"google-cloud-pubsub\" %}\n{% set version = \"2.19.3\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/google-cloud-pubsub-{{ version }}.tar.gz\n  sha256: 9745ab5fe13270abdfb558c8512933c6a5b73ebbf69565e64b606509d65b1b46\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - python >=3.7\n    - google-api-core-grpc >=1.34.0,<3.0.0dev,!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,!=2.10.*\n    - google-auth >=2.14.1,<3.0.0dev\n    - grpc-google-iam-v1 >=0.12.4,<1.0.0dev\n    - grpcio >=1.51.3,<2.0dev\n    - grpcio-status >=1.33.2\n    # use tighter constraint for py3.11 to stay noarch: python\n    - proto-plus >=1.22.2,<2.0.0dev\n    - protobuf >=3.19.5,<5.0.0dev,!=3.20.0,!=3.20.1,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5\n    # from libcst extra\n    - libcst >=0.3.10\n\ntest:\n  imports:\n    - google.api_core\n    - google.cloud.pubsub\n    - grpc\n\nabout:\n  home: https://pypi.org/project/google-cloud-pubsub/\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Python Client for Google Cloud Pub / Sub\n  dev_url: https://github.com/googleapis/python-pubsub\n  doc_url: https://cloud.google.com/python/docs/reference/pubsub/latest\n  description: |\n    Google Cloud Pub / Sub is a fully-managed real-time messaging service that\n    allows you to send and receive messages between independent applications.\n    You can leverage Cloud Pub/Sub\u2019s flexibility to decouple systems and\n    components hosted on Google Cloud Platform or elsewhere on the Internet. By\n    building on the same technology Google uses, Cloud Pub / Sub is designed to\n    provide \u201Cat least once\u201D delivery at low latency with on-demand scalability\n    to 1 million messages per second (and beyond).\n\n\nextra:\n  recipe-maintainers:\n    - xylar\n    - hmaarrfk\n    - tpdownes\n    - tswast\n",
+ "raw_meta_yaml": "{% set name = \"google-cloud-pubsub\" %}\n{% set version = \"2.19.3\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/google-cloud-pubsub-{{ version }}.tar.gz\n  sha256: 9745ab5fe13270abdfb558c8512933c6a5b73ebbf69565e64b606509d65b1b46\n\nbuild:\n  noarch: python\n  number: 1\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - python >=3.7\n    - pip\n  run:\n    - python >=3.7\n    # expressing the google-api-core-grpc dependency this way enables graybot\n    # autodetection of version updates from upstream library\n    - google-api-core >=1.34.0,<3.0.0dev,!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,!=2.10.*\n    - google-api-core-grpc\n    - google-auth >=2.14.1,<3.0.0dev\n    - grpc-google-iam-v1 >=0.12.4,<1.0.0dev\n    - grpcio >=1.51.3,<2.0dev\n    - grpcio-status >=1.33.2\n    # use tighter constraint for py3.11 to stay noarch: python\n    - proto-plus >=1.22.2,<2.0.0dev\n    - protobuf >=3.19.5,<5.0.0dev,!=3.20.0,!=3.20.1,!=4.21.0,!=4.21.1,!=4.21.2,!=4.21.3,!=4.21.4,!=4.21.5\n    # from libcst extra\n    - libcst >=0.3.10\n\ntest:\n  imports:\n    - google.api_core\n    - google.cloud.pubsub\n    - grpc\n\nabout:\n  home: https://pypi.org/project/google-cloud-pubsub/\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Python Client for Google Cloud Pub / Sub\n  dev_url: https://github.com/googleapis/python-pubsub\n  doc_url: https://cloud.google.com/python/docs/reference/pubsub/latest\n  description: |\n    Google Cloud Pub / Sub is a fully-managed real-time messaging service that\n    allows you to send and receive messages between independent applications.\n    You can leverage Cloud Pub/Sub\u2019s flexibility to decouple systems and\n    components hosted on Google Cloud Platform or elsewhere on the Internet. By\n    building on the same technology Google uses, Cloud Pub / Sub is designed to\n    provide \u201Cat least once\u201D delivery at low latency with on-demand scalability\n    to 1 million messages per second (and beyond).\n\n\nextra:\n  recipe-maintainers:\n    - xylar\n    - hmaarrfk\n    - tpdownes\n    - tswast\n",
  "req": {
   "__set__": true,
   "elements": [
+   "google-api-core",
    "google-api-core-grpc",
    "google-auth",
    "grpc-google-iam-v1",
@@ -206,6 +210,7 @@
   "run": {
    "__set__": true,
    "elements": [
+    "google-api-core",
     "google-api-core-grpc",
     "google-auth",
     "grpc-google-iam-v1",
@@ -238,7 +243,8 @@
   "run": {
    "__set__": true,
    "elements": [
-    "google-api-core-grpc >=1.34.0,<3.0.0dev,!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,!=2.10.*",
+    "google-api-core >=1.34.0,<3.0.0dev,!=2.0.*,!=2.1.*,!=2.2.*,!=2.3.*,!=2.4.*,!=2.5.*,!=2.6.*,!=2.7.*,!=2.8.*,!=2.9.*,!=2.10.*",
+    "google-api-core-grpc",
     "google-auth >=2.14.1,<3.0.0dev",
     "grpc-google-iam-v1 >=0.12.4,<1.0.0dev",
     "grpcio >=1.51.3,<2.0dev",
