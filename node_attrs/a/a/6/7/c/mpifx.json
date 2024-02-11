@@ -36,12 +36,12 @@
    "summary": "Modern Fortran Interface for MPI"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "mpifx mpi_mpich_*",
     "mpifx mpi_mpich_*"
    ],
-   "string": "mpi_mpich_h1234567_0"
+   "string": "mpi_mpich_h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -136,12 +136,12 @@
    "summary": "Modern Fortran Interface for MPI"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "mpifx mpi_mpich_*",
     "mpifx mpi_mpich_*"
    ],
-   "string": "mpi_mpich_h1234567_0"
+   "string": "mpi_mpich_h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -236,12 +236,12 @@
    "summary": "Modern Fortran Interface for MPI"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "mpifx mpi_mpich_*",
     "mpifx mpi_mpich_*"
    ],
-   "string": "mpi_mpich_h1234567_0"
+   "string": "mpi_mpich_h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -344,7 +344,7 @@
    "summary": "Modern Fortran Interface for MPI"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "mpifx mpi_mpich_*",
     "mpifx mpi_mpich_*",
@@ -357,7 +357,7 @@
     "mpifx mpi_mpich_*",
     "mpifx mpi_mpich_*"
    ],
-   "string": "mpi_mpich_h1234567_0"
+   "string": "mpi_mpich_h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -524,12 +524,12 @@
    "summary": "Modern Fortran Interface for MPI"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "mpifx mpi_mpich_*",
     "mpifx mpi_mpich_*"
    ],
-   "string": "mpi_mpich_h1234567_0"
+   "string": "mpi_mpich_h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -627,12 +627,12 @@
    "summary": "Modern Fortran Interface for MPI"
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "mpifx mpi_mpich_*",
     "mpifx mpi_mpich_*"
    ],
-   "string": "mpi_mpich_h1234567_0"
+   "string": "mpi_mpich_h1234567_1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -734,7 +734,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/mpifx.json"
  },
- "raw_meta_yaml": "{% set name = \"mpifx\" %}\n{% set version = \"1.5\" %}\n{% set build = 0 %}\n{% set mpi = mpi or \"nompi\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/dftbplus/{{ name }}/archive/{{ version }}.tar.gz\n  sha256: 3801cbd6134b30f403b59346b40ff5bfb47ebe125892cf483e78b477c20b1b02\n\nbuild:\n  number: {{ build }}\n  skip: true  # [win]\n\n  {% set mpi_prefix = \"mpi_\" + mpi %}\n  string: {{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}\n\n  run_exports:\n    - {{ pin_subpackage(name, max_pin='x.x') }} {{ mpi_prefix }}_*\n\nrequirements:\n  build:\n    - {{ compiler('c') }}  # [osx]\n    - {{ compiler('fortran') }}\n    - cmake\n    - ninja\n    - fypp\n    - {{ mpi }}  # [mpi == \"openmpi\" and build_platform != target_platform]\n  host:\n    - {{ mpi }}\n  run:\n    - {{ mpi }}\n\ntest:\n  requires:\n    - pkg-config\n  commands:\n    - pkg-config {{ name }} --modversion\n    - test -f $PREFIX/lib/libmpifx${SHLIB_EXT}\n\nabout:\n  home: https://github.com/dftbplus/{{ name }}\n  license: BSD-2-Clause\n  license_family: BSD\n  license_file:\n    - LICENSE\n  summary: Modern Fortran Interface for MPI\n  doc_url: https://dftbplus.github.io/{{ name }}/api/\n\nextra:\n  recipe-maintainers:\n    - aradi\n    - awvwgk\n    - bhourahine\n",
+ "raw_meta_yaml": "{% set name = \"mpifx\" %}\n{% set version = \"1.5\" %}\n{% set build = 1 %}\n{% set mpi = mpi or \"nompi\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/dftbplus/{{ name }}/archive/{{ version }}.tar.gz\n  sha256: 3801cbd6134b30f403b59346b40ff5bfb47ebe125892cf483e78b477c20b1b02\n\nbuild:\n  number: {{ build }}\n  skip: true  # [win]\n\n  {% set mpi_prefix = \"mpi_\" + mpi %}\n  string: {{ mpi_prefix }}_h{{ PKG_HASH }}_{{ build }}\n\n  run_exports:\n    # MpiFx uses semantic versioning, it should be enough to pin major version number only.\n    - {{ pin_subpackage(name, max_pin='x') }} {{ mpi_prefix }}_*\n\nrequirements:\n  build:\n    - {{ compiler('c') }}  # [osx]\n    - {{ compiler('fortran') }}\n    - cmake\n    - ninja\n    - fypp\n    - {{ mpi }}  # [mpi == \"openmpi\" and build_platform != target_platform]\n  host:\n    - {{ mpi }}\n  run:\n    - {{ mpi }}\n\ntest:\n  requires:\n    - pkg-config\n  commands:\n    - pkg-config {{ name }} --modversion\n    - test -f $PREFIX/lib/libmpifx${SHLIB_EXT}\n\nabout:\n  home: https://github.com/dftbplus/{{ name }}\n  license: BSD-2-Clause\n  license_family: BSD\n  license_file:\n    - LICENSE\n  summary: Modern Fortran Interface for MPI\n  doc_url: https://dftbplus.github.io/{{ name }}/api/\n\nextra:\n  recipe-maintainers:\n    - aradi\n    - awvwgk\n    - bhourahine\n",
  "req": {
   "__set__": true,
   "elements": [
