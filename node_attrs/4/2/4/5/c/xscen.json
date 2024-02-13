@@ -35,7 +35,7 @@
   },
   "package": {
    "name": "xscen",
-   "version": "0.8.0"
+   "version": "0.8.2"
   },
   "requirements": {
    "host": [
@@ -55,7 +55,7 @@
     "clisops >=0.10.0",
     "dask-core",
     "flox",
-    "fsspec <2023.10.0",
+    "fsspec",
     "geopandas",
     "h5netcdf",
     "h5py",
@@ -64,13 +64,13 @@
     "netCDF4",
     "numcodecs",
     "numpy",
-    "pandas >=2.0",
+    "pandas >=2.0,<2.2",
     "parse",
     "pyyaml",
     "rechunker",
     "scipy",
     "shapely >=2.0",
-    "sparse <=0.14",
+    "sparse",
     "toolz",
     "xarray <2023.11.0",
     "xclim >=0.46",
@@ -81,18 +81,25 @@
    ]
   },
   "source": {
-   "sha256": "08f5545b3082ba9b8ca22bb9c4bda125cb41505391b94f47d9fb6600a2d2ca2b",
-   "url": "https://pypi.io/packages/source/x/xscen/xscen-0.8.0.tar.gz"
+   "sha256": "7b66bfa474b41daafeb187c9f3d42c9fcc4b3bfc9948d129347370be668b4786",
+   "url": "https://pypi.io/packages/source/x/xscen/xscen-0.8.2.tar.gz"
   },
   "test": {
    "commands": [
-    "pip check"
+    "pip check",
+    "pytest tests -m \"not requires_netcdf\" || true"
    ],
    "imports": [
     "xscen"
    ],
    "requires": [
-    "pip"
+    "pip",
+    "pytest",
+    "xdoctest"
+   ],
+   "source_files": [
+    "docs",
+    "tests"
    ]
   }
  },
@@ -151,7 +158,9 @@
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "pip",
+    "pytest",
+    "xdoctest"
    ]
   }
  },
@@ -177,7 +186,7 @@
   },
   "package": {
    "name": "xscen",
-   "version": "0.8.0"
+   "version": "0.8.2"
   },
   "requirements": {
    "host": [
@@ -197,7 +206,7 @@
     "clisops >=0.10.0",
     "dask-core",
     "flox",
-    "fsspec <2023.10.0",
+    "fsspec",
     "geopandas",
     "h5netcdf",
     "h5py",
@@ -206,13 +215,13 @@
     "netCDF4",
     "numcodecs",
     "numpy",
-    "pandas >=2.0",
+    "pandas >=2.0,<2.2",
     "parse",
     "pyyaml",
     "rechunker",
     "scipy",
     "shapely >=2.0",
-    "sparse <=0.14",
+    "sparse",
     "toolz",
     "xarray <2023.11.0",
     "xclim >=0.46",
@@ -223,18 +232,25 @@
    ]
   },
   "source": {
-   "sha256": "08f5545b3082ba9b8ca22bb9c4bda125cb41505391b94f47d9fb6600a2d2ca2b",
-   "url": "https://pypi.io/packages/source/x/xscen/xscen-0.8.0.tar.gz"
+   "sha256": "7b66bfa474b41daafeb187c9f3d42c9fcc4b3bfc9948d129347370be668b4786",
+   "url": "https://pypi.io/packages/source/x/xscen/xscen-0.8.2.tar.gz"
   },
   "test": {
    "commands": [
-    "pip check"
+    "pip check",
+    "pytest tests -m \"not requires_netcdf\" || true"
    ],
    "imports": [
     "xscen"
    ],
    "requires": [
-    "pip"
+    "pip",
+    "pytest",
+    "xdoctest"
+   ],
+   "source_files": [
+    "docs",
+    "tests"
    ]
   }
  },
@@ -252,7 +268,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/xscen.json"
  },
- "raw_meta_yaml": "{% set name = \"xscen\" %}\n{% set version = \"0.8.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xscen-{{ version }}.tar.gz\n  sha256: 08f5545b3082ba9b8ca22bb9c4bda125cb41505391b94f47d9fb6600a2d2ca2b\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.9\n    - babel\n    - pip\n    - setuptools\n    - setuptools_scm\n    - wheel\n  run:\n    - python >=3.9\n    # Main package\n    - babel\n    - cartopy\n    - cftime\n    - cf_xarray >=0.7.6\n    - clisops >=0.10.0\n    - dask-core\n    - flox\n    - fsspec <2023.10.0\n    - geopandas\n    - h5netcdf\n    - h5py\n    - intake-esm >=2023.07.07\n    - matplotlib-base\n    - netCDF4\n    - numcodecs\n    - numpy\n    - pandas >=2.0\n    - parse\n    - pyyaml\n    - rechunker\n    - scipy\n    - shapely >=2.0\n    - sparse <=0.14  # 0.15 breaks xe.SpatialAverager (https://github.com/Ouranosinc/xscen/actions/runs/7463533566/job/20308477398)\n    - toolz\n    - xarray <2023.11.0  # FIXME: Remove when pandas 2.2 is released and xclim is fixed.\n    - xclim >=0.46\n    - xesmf >=0.7\n    - zarr\n    # Opt\n    - nc-time-axis >=1.3.1\n    - pyarrow >=1.0.0  # Used when opening catalogs\n\ntest:\n  imports:\n    - xscen\n  # source_files:\n  #   - tests\n  commands:\n    - pip check\n  #   - pytest tests\n  requires:\n    - pip\n  #   - pytest\n  #   - xdoctest\n\nabout:\n  home: https://github.com/Ouranosinc/xscen\n  summary: A climate change scenario-building analysis framework, built with xclim/xarray.\n  license: Apache-2.0\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - aulemahal\n    - juliettelavoie\n    - RondeauG\n    - Zeitsperre\n",
+ "raw_meta_yaml": "{% set name = \"xscen\" %}\n{% set version = \"0.8.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/xscen-{{ version }}.tar.gz\n  sha256: 7b66bfa474b41daafeb187c9f3d42c9fcc4b3bfc9948d129347370be668b4786\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.9\n    - babel\n    - pip\n    - setuptools\n    - setuptools_scm\n    - wheel\n  run:\n    - python >=3.9\n    # Main package\n    - babel\n    - cartopy\n    - cftime\n    - cf_xarray >=0.7.6\n    - clisops >=0.10.0\n    - dask-core\n    - flox\n    - fsspec\n    - geopandas\n    - h5netcdf\n    - h5py\n    - intake-esm >=2023.07.07\n    - matplotlib-base\n    - netCDF4\n    - numcodecs\n    - numpy\n    - pandas >=2.0,<2.2\n    - parse\n    - pyyaml\n    - rechunker\n    - scipy\n    - shapely >=2.0\n    - sparse\n    - toolz\n    - xarray <2023.11.0  # FIXME: Remove when pandas 2.2 is released and xclim is fixed.\n    - xclim >=0.46\n    - xesmf >=0.7\n    - zarr\n    # Opt\n    - nc-time-axis >=1.3.1\n    - pyarrow >=1.0.0  # Used when opening catalogs\n\ntest:\n  imports:\n    - xscen\n  source_files:\n    - docs\n    - tests\n  commands:\n    - pip check\n    - pytest tests -m \"not requires_netcdf\" || true\n  requires:\n    - pip\n    - pytest\n    - xdoctest\n\nabout:\n  home: https://github.com/Ouranosinc/xscen\n  summary: A climate change scenario-building analysis framework, built with xclim/xarray.\n  license: Apache-2.0\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - aulemahal\n    - juliettelavoie\n    - RondeauG\n    - Zeitsperre\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -348,7 +364,9 @@
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "pip",
+    "pytest",
+    "xdoctest"
    ]
   }
  },
@@ -379,7 +397,7 @@
     "clisops >=0.10.0",
     "dask-core",
     "flox",
-    "fsspec <2023.10.0",
+    "fsspec",
     "geopandas",
     "h5netcdf",
     "h5py",
@@ -389,7 +407,7 @@
     "netCDF4",
     "numcodecs",
     "numpy",
-    "pandas >=2.0",
+    "pandas >=2.0,<2.2",
     "parse",
     "pyarrow >=1.0.0",
     "python >=3.9",
@@ -397,7 +415,7 @@
     "rechunker",
     "scipy",
     "shapely >=2.0",
-    "sparse <=0.14",
+    "sparse",
     "toolz",
     "xarray <2023.11.0",
     "xclim >=0.46",
@@ -408,12 +426,14 @@
   "test": {
    "__set__": true,
    "elements": [
-    "pip"
+    "pip",
+    "pytest",
+    "xdoctest"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/x/xscen/xscen-0.8.0.tar.gz",
- "version": "0.8.0",
+ "url": "https://pypi.io/packages/source/x/xscen/xscen-0.8.2.tar.gz",
+ "version": "0.8.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/xscen.json"
  }
