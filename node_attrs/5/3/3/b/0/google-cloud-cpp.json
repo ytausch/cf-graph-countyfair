@@ -38,7 +38,7 @@
    "summary": "Google Cloud Client Library for C++"
   },
   "build": {
-   "number": "5"
+   "number": "6"
   },
   "extra": {
    "feedstock-name": "google-cloud-cpp",
@@ -52,91 +52,96 @@
   },
   "outputs": [
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0",
+      "libabseil",
       "libgrpc",
       "libprotobuf"
      ],
-     "host": [
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
+     "run": [
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.so.2.12.0",
-      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_storage.pc",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.so.2.12.0",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.so.2.17.0",
+      "test ! -f $PREFIX/include/google/cloud/kms/v1/ekm_client.h",
+      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_kms.pc",
+      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_kms/google_cloud_cpp_kms-config.cmake"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgoogle-cloud"
+      "libgoogle-cloud-all"
      ]
     },
-    "name": "google-cloud-cpp",
+    "name": "libgoogle-cloud-all-devel",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
+      "libgoogle-cloud-devel ==2.17.0"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.sh",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/include/google/cloud/kms/ekm_client.h",
+      "./run_test_feature.sh"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -144,15 +149,15 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    }
   ],
   "package": {
    "name": "google-cloud-cpp-split",
-   "version": "2.12.0"
+   "version": "2.17.0"
   },
   "requirements": {
    "build": [
@@ -161,11 +166,12 @@
     "cmake",
     "ninja",
     "libgrpc",
-    "libprotobuf"
+    "libprotobuf",
+    "zlib"
    ],
    "host": [
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
@@ -175,9 +181,11 @@
    ]
   },
   "source": {
-   "patches": null,
-   "sha256": "8cda870803925c62de8716a765e03eb9d34249977e5cdb7d0d20367e997a55e2",
-   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.12.0.tar.gz"
+   "patches": [
+    "patches/0001-Backport-12911-from-upstream.patch"
+   ],
+   "sha256": "8cb87ec2947e691a7f8631877e78453bcfda51b3d3cd4940794a376741888d37",
+   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.17.0.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -189,16 +197,16 @@
     "cxx_compiler_stub",
     "libgrpc",
     "libprotobuf",
-    "ninja"
+    "ninja",
+    "zlib"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "libabseil",
-    "libcrc32c",
     "libcurl",
-    "libgoogle-cloud",
+    "libgoogle-cloud-devel",
     "libgrpc",
     "libprotobuf",
     "nlohmann_json",
@@ -209,9 +217,40 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libgoogle-cloud",
-    "nlohmann_json",
-    "zlib"
+    "libgoogle-cloud-aiplatform",
+    "libgoogle-cloud-aiplatform-devel",
+    "libgoogle-cloud-all",
+    "libgoogle-cloud-automl",
+    "libgoogle-cloud-automl-devel",
+    "libgoogle-cloud-bigquery",
+    "libgoogle-cloud-bigquery-devel",
+    "libgoogle-cloud-bigtable",
+    "libgoogle-cloud-bigtable-devel",
+    "libgoogle-cloud-compute",
+    "libgoogle-cloud-compute-devel",
+    "libgoogle-cloud-devel",
+    "libgoogle-cloud-dialogflow_cx",
+    "libgoogle-cloud-dialogflow_cx-devel",
+    "libgoogle-cloud-dialogflow_es",
+    "libgoogle-cloud-dialogflow_es-devel",
+    "libgoogle-cloud-discoveryengine",
+    "libgoogle-cloud-discoveryengine-devel",
+    "libgoogle-cloud-dlp",
+    "libgoogle-cloud-dlp-devel",
+    "libgoogle-cloud-iam",
+    "libgoogle-cloud-iam-devel",
+    "libgoogle-cloud-oauth2",
+    "libgoogle-cloud-oauth2-devel",
+    "libgoogle-cloud-policytroubleshooter",
+    "libgoogle-cloud-policytroubleshooter-devel",
+    "libgoogle-cloud-pubsub",
+    "libgoogle-cloud-pubsub-devel",
+    "libgoogle-cloud-spanner",
+    "libgoogle-cloud-spanner-devel",
+    "libgoogle-cloud-speech",
+    "libgoogle-cloud-speech-devel",
+    "libgoogle-cloud-storage",
+    "libgoogle-cloud-storage-devel"
    ]
   },
   "test": {
@@ -232,7 +271,7 @@
    "summary": "Google Cloud Client Library for C++"
   },
   "build": {
-   "number": "5"
+   "number": "6"
   },
   "extra": {
    "feedstock-name": "google-cloud-cpp",
@@ -246,91 +285,96 @@
   },
   "outputs": [
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0",
+      "libabseil",
       "libgrpc",
       "libprotobuf"
      ],
-     "host": [
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
+     "run": [
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.so.2.12.0",
-      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_storage.pc",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.so.2.12.0",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.so.2.17.0",
+      "test ! -f $PREFIX/include/google/cloud/kms/v1/ekm_client.h",
+      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_kms.pc",
+      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_kms/google_cloud_cpp_kms-config.cmake"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgoogle-cloud"
+      "libgoogle-cloud-all"
      ]
     },
-    "name": "google-cloud-cpp",
+    "name": "libgoogle-cloud-all-devel",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
+      "libgoogle-cloud-devel ==2.17.0"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.sh",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/include/google/cloud/kms/ekm_client.h",
+      "./run_test_feature.sh"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -338,15 +382,15 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    }
   ],
   "package": {
    "name": "google-cloud-cpp-split",
-   "version": "2.12.0"
+   "version": "2.17.0"
   },
   "requirements": {
    "build": [
@@ -355,11 +399,12 @@
     "cmake",
     "ninja",
     "libgrpc",
-    "libprotobuf"
+    "libprotobuf",
+    "zlib"
    ],
    "host": [
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
@@ -370,10 +415,10 @@
   },
   "source": {
    "patches": [
-    "patches/0002-disable-aiplatform-feature.patch"
+    "patches/0001-Backport-12911-from-upstream.patch"
    ],
-   "sha256": "8cda870803925c62de8716a765e03eb9d34249977e5cdb7d0d20367e997a55e2",
-   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.12.0.tar.gz"
+   "sha256": "8cb87ec2947e691a7f8631877e78453bcfda51b3d3cd4940794a376741888d37",
+   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.17.0.tar.gz"
   }
  },
  "linux_aarch64_requirements": {
@@ -385,16 +430,16 @@
     "cxx_compiler_stub",
     "libgrpc",
     "libprotobuf",
-    "ninja"
+    "ninja",
+    "zlib"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "libabseil",
-    "libcrc32c",
     "libcurl",
-    "libgoogle-cloud",
+    "libgoogle-cloud-devel",
     "libgrpc",
     "libprotobuf",
     "nlohmann_json",
@@ -405,9 +450,40 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libgoogle-cloud",
-    "nlohmann_json",
-    "zlib"
+    "libgoogle-cloud-aiplatform",
+    "libgoogle-cloud-aiplatform-devel",
+    "libgoogle-cloud-all",
+    "libgoogle-cloud-automl",
+    "libgoogle-cloud-automl-devel",
+    "libgoogle-cloud-bigquery",
+    "libgoogle-cloud-bigquery-devel",
+    "libgoogle-cloud-bigtable",
+    "libgoogle-cloud-bigtable-devel",
+    "libgoogle-cloud-compute",
+    "libgoogle-cloud-compute-devel",
+    "libgoogle-cloud-devel",
+    "libgoogle-cloud-dialogflow_cx",
+    "libgoogle-cloud-dialogflow_cx-devel",
+    "libgoogle-cloud-dialogflow_es",
+    "libgoogle-cloud-dialogflow_es-devel",
+    "libgoogle-cloud-discoveryengine",
+    "libgoogle-cloud-discoveryengine-devel",
+    "libgoogle-cloud-dlp",
+    "libgoogle-cloud-dlp-devel",
+    "libgoogle-cloud-iam",
+    "libgoogle-cloud-iam-devel",
+    "libgoogle-cloud-oauth2",
+    "libgoogle-cloud-oauth2-devel",
+    "libgoogle-cloud-policytroubleshooter",
+    "libgoogle-cloud-policytroubleshooter-devel",
+    "libgoogle-cloud-pubsub",
+    "libgoogle-cloud-pubsub-devel",
+    "libgoogle-cloud-spanner",
+    "libgoogle-cloud-spanner-devel",
+    "libgoogle-cloud-speech",
+    "libgoogle-cloud-speech-devel",
+    "libgoogle-cloud-storage",
+    "libgoogle-cloud-storage-devel"
    ]
   },
   "test": {
@@ -428,7 +504,7 @@
    "summary": "Google Cloud Client Library for C++"
   },
   "build": {
-   "number": "5"
+   "number": "6"
   },
   "extra": {
    "feedstock-name": "google-cloud-cpp",
@@ -442,91 +518,96 @@
   },
   "outputs": [
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0",
+      "libabseil",
       "libgrpc",
       "libprotobuf"
      ],
-     "host": [
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
+     "run": [
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.so.2.12.0",
-      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_storage.pc",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.so.2.12.0",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.so.2.17.0",
+      "test ! -f $PREFIX/include/google/cloud/kms/v1/ekm_client.h",
+      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_kms.pc",
+      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_kms/google_cloud_cpp_kms-config.cmake"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgoogle-cloud"
+      "libgoogle-cloud-all"
      ]
     },
-    "name": "google-cloud-cpp",
+    "name": "libgoogle-cloud-all-devel",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
+      "libgoogle-cloud-devel ==2.17.0"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.sh",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/include/google/cloud/kms/ekm_client.h",
+      "./run_test_feature.sh"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -534,15 +615,15 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    }
   ],
   "package": {
    "name": "google-cloud-cpp-split",
-   "version": "2.12.0"
+   "version": "2.17.0"
   },
   "requirements": {
    "build": [
@@ -551,11 +632,12 @@
     "cmake",
     "ninja",
     "libgrpc",
-    "libprotobuf"
+    "libprotobuf",
+    "zlib"
    ],
    "host": [
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
@@ -566,10 +648,10 @@
   },
   "source": {
    "patches": [
-    "patches/0002-disable-aiplatform-feature.patch"
+    "patches/0001-Backport-12911-from-upstream.patch"
    ],
-   "sha256": "8cda870803925c62de8716a765e03eb9d34249977e5cdb7d0d20367e997a55e2",
-   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.12.0.tar.gz"
+   "sha256": "8cb87ec2947e691a7f8631877e78453bcfda51b3d3cd4940794a376741888d37",
+   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.17.0.tar.gz"
   }
  },
  "linux_ppc64le_requirements": {
@@ -581,16 +663,16 @@
     "cxx_compiler_stub",
     "libgrpc",
     "libprotobuf",
-    "ninja"
+    "ninja",
+    "zlib"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "libabseil",
-    "libcrc32c",
     "libcurl",
-    "libgoogle-cloud",
+    "libgoogle-cloud-devel",
     "libgrpc",
     "libprotobuf",
     "nlohmann_json",
@@ -601,9 +683,40 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libgoogle-cloud",
-    "nlohmann_json",
-    "zlib"
+    "libgoogle-cloud-aiplatform",
+    "libgoogle-cloud-aiplatform-devel",
+    "libgoogle-cloud-all",
+    "libgoogle-cloud-automl",
+    "libgoogle-cloud-automl-devel",
+    "libgoogle-cloud-bigquery",
+    "libgoogle-cloud-bigquery-devel",
+    "libgoogle-cloud-bigtable",
+    "libgoogle-cloud-bigtable-devel",
+    "libgoogle-cloud-compute",
+    "libgoogle-cloud-compute-devel",
+    "libgoogle-cloud-devel",
+    "libgoogle-cloud-dialogflow_cx",
+    "libgoogle-cloud-dialogflow_cx-devel",
+    "libgoogle-cloud-dialogflow_es",
+    "libgoogle-cloud-dialogflow_es-devel",
+    "libgoogle-cloud-discoveryengine",
+    "libgoogle-cloud-discoveryengine-devel",
+    "libgoogle-cloud-dlp",
+    "libgoogle-cloud-dlp-devel",
+    "libgoogle-cloud-iam",
+    "libgoogle-cloud-iam-devel",
+    "libgoogle-cloud-oauth2",
+    "libgoogle-cloud-oauth2-devel",
+    "libgoogle-cloud-policytroubleshooter",
+    "libgoogle-cloud-policytroubleshooter-devel",
+    "libgoogle-cloud-pubsub",
+    "libgoogle-cloud-pubsub-devel",
+    "libgoogle-cloud-spanner",
+    "libgoogle-cloud-spanner-devel",
+    "libgoogle-cloud-speech",
+    "libgoogle-cloud-speech-devel",
+    "libgoogle-cloud-storage",
+    "libgoogle-cloud-storage-devel"
    ]
   },
   "test": {
@@ -624,7 +737,7 @@
    "summary": "Google Cloud Client Library for C++"
   },
   "build": {
-   "number": "5"
+   "number": "6"
   },
   "extra": {
    "feedstock-name": "google-cloud-cpp",
@@ -663,91 +776,96 @@
   },
   "outputs": [
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0",
+      "libabseil",
       "libgrpc",
       "libprotobuf"
      ],
-     "host": [
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
+     "run": [
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.so.2.12.0",
-      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_storage.pc",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.so.2.12.0",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.so.2.17.0",
+      "test ! -f $PREFIX/include/google/cloud/kms/v1/ekm_client.h",
+      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_kms.pc",
+      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_kms/google_cloud_cpp_kms-config.cmake"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgoogle-cloud"
+      "libgoogle-cloud-all"
      ]
     },
-    "name": "google-cloud-cpp",
+    "name": "libgoogle-cloud-all-devel",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
+      "libgoogle-cloud-devel ==2.17.0"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.sh",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/include/google/cloud/kms/ekm_client.h",
+      "./run_test_feature.sh"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -755,97 +873,102 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    },
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
+      "libgoogle-cloud-devel ==2.17.0",
       "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
-     ]
-    },
-    "script": "build-libgoogle-cloud.sh",
-    "test": {
-     "commands": [
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.so.2.12.0",
-      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_storage.pc",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.so.2.12.0",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/bigtable/version.h"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "google-cloud-cpp",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cmake",
-      "ninja",
       "libgrpc",
       "libprotobuf"
-     ],
-     "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.sh",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.so.2.17.0",
+      "test ! -f $PREFIX/include/google/cloud/kms/v1/ekm_client.h",
+      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_kms.pc",
+      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_kms/google_cloud_cpp_kms-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libgoogle-cloud-all"
+     ]
+    },
+    "name": "libgoogle-cloud-all-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0"
+     ],
+     "run": [
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
+     ]
+    },
+    "script": "install-libgoogle-cloud.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/include/google/cloud/kms/ekm_client.h",
+      "./run_test_feature.sh"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -853,97 +976,102 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    },
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
+      "libgoogle-cloud-devel ==2.17.0",
       "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
-     ]
-    },
-    "script": "build-libgoogle-cloud.sh",
-    "test": {
-     "commands": [
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.so.2.12.0",
-      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_storage.pc",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.so.2.12.0",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/bigtable/version.h"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "google-cloud-cpp",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cmake",
-      "ninja",
       "libgrpc",
       "libprotobuf"
-     ],
-     "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.sh",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.so.2.17.0",
+      "test ! -f $PREFIX/include/google/cloud/kms/v1/ekm_client.h",
+      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_kms.pc",
+      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_kms/google_cloud_cpp_kms-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libgoogle-cloud-all"
+     ]
+    },
+    "name": "libgoogle-cloud-all-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0"
+     ],
+     "run": [
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
+     ]
+    },
+    "script": "install-libgoogle-cloud.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/include/google/cloud/kms/ekm_client.h",
+      "./run_test_feature.sh"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -951,97 +1079,102 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    },
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
+      "libgoogle-cloud-devel ==2.17.0",
       "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
-     ]
-    },
-    "script": "build-libgoogle-cloud.sh",
-    "test": {
-     "commands": [
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.2.12.0.dylib",
-      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_storage.pc",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.2.12.0.dylib",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/bigtable/version.h"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "google-cloud-cpp",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cmake",
-      "ninja",
       "libgrpc",
       "libprotobuf"
-     ],
-     "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.sh",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.2.17.0.dylib",
+      "test ! -f $PREFIX/include/google/cloud/kms/v1/ekm_client.h",
+      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_kms.pc",
+      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_kms/google_cloud_cpp_kms-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libgoogle-cloud-all"
+     ]
+    },
+    "name": "libgoogle-cloud-all-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0"
+     ],
+     "run": [
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
+     ]
+    },
+    "script": "install-libgoogle-cloud.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/include/google/cloud/kms/ekm_client.h",
+      "./run_test_feature.sh"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -1049,97 +1182,102 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    },
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
+      "libgoogle-cloud-devel ==2.17.0",
       "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
-     ]
-    },
-    "script": "build-libgoogle-cloud.sh",
-    "test": {
-     "commands": [
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.2.12.0.dylib",
-      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_storage.pc",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.2.12.0.dylib",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/bigtable/version.h"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "google-cloud-cpp",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cmake",
-      "ninja",
       "libgrpc",
       "libprotobuf"
-     ],
-     "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.sh",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.2.17.0.dylib",
+      "test ! -f $PREFIX/include/google/cloud/kms/v1/ekm_client.h",
+      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_kms.pc",
+      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_kms/google_cloud_cpp_kms-config.cmake"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libgoogle-cloud-all"
+     ]
+    },
+    "name": "libgoogle-cloud-all-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0"
+     ],
+     "run": [
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
+     ]
+    },
+    "script": "install-libgoogle-cloud.sh",
+    "test": {
+     "commands": [
+      "test -f $PREFIX/include/google/cloud/kms/ekm_client.h",
+      "./run_test_feature.sh"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -1147,94 +1285,102 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    },
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
+      "libgoogle-cloud-devel ==2.17.0",
       "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
-     ]
-    },
-    "script": "build-libgoogle-cloud.bat",
-    "test": {
-     "commands": [
-      "if exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_storage\\\\google_cloud_cpp_storage-config.cmake exit 1",
-      "if exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\storage\\\\version.h exit 1",
-      "if exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_bigtable\\\\google_cloud_cpp_bigtable-config.cmake exit 1",
-      "if exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\bigtable\\\\version.h exit 1"
-     ]
-    }
-   },
-   {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "google-cloud-cpp",
-    "requirements": {
-     "build": [
-      "c_compiler_stub",
-      "cxx_compiler_stub",
-      "cmake",
-      "ninja",
       "libgrpc",
       "libprotobuf"
-     ],
-     "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.bat",
+    "script": "install-libgoogle-cloud.bat",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.bat",
-      "if not exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_storage\\\\google_cloud_cpp_storage-config.cmake exit 1",
-      "if not exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\storage\\\\version.h exit 1",
-      "if not exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_bigtable\\\\google_cloud_cpp_bigtable-config.cmake exit 1",
-      "if not exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\bigtable\\\\version.h exit 1"
+      "if exist %LIBRARY_LIB%\\google_cloud_cpp_kms.lib exit 1",
+      "if exist %LIBRARY_INC%\\google\\cloud\\kms\\v1\\ekm_client.h exit 1",
+      "if exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_kms\\\\google_cloud_cpp_kms-config.cmake exit 1"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libgoogle-cloud-all"
+     ]
+    },
+    "name": "libgoogle-cloud-all-devel",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "cmake",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0"
+     ],
+     "run": [
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
+     ]
+    },
+    "script": "install-libgoogle-cloud.bat",
+    "test": {
+     "commands": [
+      "if not exist %LIBRARY_INC%\\google\\cloud\\kms\\ekm_client.h exit 1",
+      "if not exist %LIBRARY_LIB%\\google_cloud_cpp_kms.lib exit 1",
+      "./run_test_feature.bat"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -1242,15 +1388,15 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    }
   ],
   "package": {
    "name": "google-cloud-cpp-split",
-   "version": "2.12.0"
+   "version": "2.17.0"
   },
   "requirements": {
    "build": [
@@ -1260,80 +1406,86 @@
     "ninja",
     "libgrpc",
     "libprotobuf",
+    "zlib",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
     "ninja",
     "libgrpc",
     "libprotobuf",
+    "zlib",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
     "ninja",
     "libgrpc",
     "libprotobuf",
+    "zlib",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
     "ninja",
     "libgrpc",
     "libprotobuf",
+    "zlib",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
     "ninja",
     "libgrpc",
     "libprotobuf",
+    "zlib",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "cmake",
     "ninja",
     "libgrpc",
-    "libprotobuf"
+    "libprotobuf",
+    "zlib"
    ],
    "host": [
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
     "openssl",
     "nlohmann_json",
     "zlib",
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
     "openssl",
     "nlohmann_json",
     "zlib",
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
     "openssl",
     "nlohmann_json",
     "zlib",
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
     "openssl",
     "nlohmann_json",
     "zlib",
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
     "openssl",
     "nlohmann_json",
     "zlib",
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
@@ -1344,10 +1496,15 @@
   },
   "source": {
    "patches": [
-    "patches/0002-disable-aiplatform-feature.patch"
+    "patches/0001-Backport-12911-from-upstream.patch",
+    "patches/0001-Backport-12911-from-upstream.patch",
+    "patches/0001-Backport-12911-from-upstream.patch",
+    "patches/0001-Backport-12911-from-upstream.patch",
+    "patches/0001-Backport-12911-from-upstream.patch",
+    "patches/0001-Backport-12911-from-upstream.patch"
    ],
-   "sha256": "8cda870803925c62de8716a765e03eb9d34249977e5cdb7d0d20367e997a55e2",
-   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.12.0.tar.gz"
+   "sha256": "8cb87ec2947e691a7f8631877e78453bcfda51b3d3cd4940794a376741888d37",
+   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.17.0.tar.gz"
   }
  },
  "name": "google-cloud-cpp-split",
@@ -1360,7 +1517,7 @@
    "summary": "Google Cloud Client Library for C++"
   },
   "build": {
-   "number": "5"
+   "number": "6"
   },
   "extra": {
    "feedstock-name": "google-cloud-cpp",
@@ -1374,91 +1531,96 @@
   },
   "outputs": [
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0",
+      "libabseil",
       "libgrpc",
       "libprotobuf"
      ],
-     "host": [
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
+     "run": [
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.2.12.0.dylib",
-      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_storage.pc",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.2.12.0.dylib",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.2.17.0.dylib",
+      "test ! -f $PREFIX/include/google/cloud/kms/v1/ekm_client.h",
+      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_kms.pc",
+      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_kms/google_cloud_cpp_kms-config.cmake"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgoogle-cloud"
+      "libgoogle-cloud-all"
      ]
     },
-    "name": "google-cloud-cpp",
+    "name": "libgoogle-cloud-all-devel",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
+      "libgoogle-cloud-devel ==2.17.0"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.sh",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/include/google/cloud/kms/ekm_client.h",
+      "./run_test_feature.sh"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -1466,15 +1628,15 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    }
   ],
   "package": {
    "name": "google-cloud-cpp-split",
-   "version": "2.12.0"
+   "version": "2.17.0"
   },
   "requirements": {
    "build": [
@@ -1483,11 +1645,12 @@
     "cmake",
     "ninja",
     "libgrpc",
-    "libprotobuf"
+    "libprotobuf",
+    "zlib"
    ],
    "host": [
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
@@ -1497,9 +1660,11 @@
    ]
   },
   "source": {
-   "patches": null,
-   "sha256": "8cda870803925c62de8716a765e03eb9d34249977e5cdb7d0d20367e997a55e2",
-   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.12.0.tar.gz"
+   "patches": [
+    "patches/0001-Backport-12911-from-upstream.patch"
+   ],
+   "sha256": "8cb87ec2947e691a7f8631877e78453bcfda51b3d3cd4940794a376741888d37",
+   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.17.0.tar.gz"
   }
  },
  "osx_64_requirements": {
@@ -1511,16 +1676,16 @@
     "cxx_compiler_stub",
     "libgrpc",
     "libprotobuf",
-    "ninja"
+    "ninja",
+    "zlib"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "libabseil",
-    "libcrc32c",
     "libcurl",
-    "libgoogle-cloud",
+    "libgoogle-cloud-devel",
     "libgrpc",
     "libprotobuf",
     "nlohmann_json",
@@ -1531,9 +1696,40 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libgoogle-cloud",
-    "nlohmann_json",
-    "zlib"
+    "libgoogle-cloud-aiplatform",
+    "libgoogle-cloud-aiplatform-devel",
+    "libgoogle-cloud-all",
+    "libgoogle-cloud-automl",
+    "libgoogle-cloud-automl-devel",
+    "libgoogle-cloud-bigquery",
+    "libgoogle-cloud-bigquery-devel",
+    "libgoogle-cloud-bigtable",
+    "libgoogle-cloud-bigtable-devel",
+    "libgoogle-cloud-compute",
+    "libgoogle-cloud-compute-devel",
+    "libgoogle-cloud-devel",
+    "libgoogle-cloud-dialogflow_cx",
+    "libgoogle-cloud-dialogflow_cx-devel",
+    "libgoogle-cloud-dialogflow_es",
+    "libgoogle-cloud-dialogflow_es-devel",
+    "libgoogle-cloud-discoveryengine",
+    "libgoogle-cloud-discoveryengine-devel",
+    "libgoogle-cloud-dlp",
+    "libgoogle-cloud-dlp-devel",
+    "libgoogle-cloud-iam",
+    "libgoogle-cloud-iam-devel",
+    "libgoogle-cloud-oauth2",
+    "libgoogle-cloud-oauth2-devel",
+    "libgoogle-cloud-policytroubleshooter",
+    "libgoogle-cloud-policytroubleshooter-devel",
+    "libgoogle-cloud-pubsub",
+    "libgoogle-cloud-pubsub-devel",
+    "libgoogle-cloud-spanner",
+    "libgoogle-cloud-spanner-devel",
+    "libgoogle-cloud-speech",
+    "libgoogle-cloud-speech-devel",
+    "libgoogle-cloud-storage",
+    "libgoogle-cloud-storage-devel"
    ]
   },
   "test": {
@@ -1554,7 +1750,7 @@
    "summary": "Google Cloud Client Library for C++"
   },
   "build": {
-   "number": "5"
+   "number": "6"
   },
   "extra": {
    "feedstock-name": "google-cloud-cpp",
@@ -1568,91 +1764,96 @@
   },
   "outputs": [
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0",
+      "libabseil",
       "libgrpc",
       "libprotobuf"
      ],
-     "host": [
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
+     "run": [
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.2.12.0.dylib",
-      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_storage.pc",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.2.12.0.dylib",
-      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test ! -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.2.17.0.dylib",
+      "test ! -f $PREFIX/include/google/cloud/kms/v1/ekm_client.h",
+      "test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_kms.pc",
+      "test ! -f $PREFIX/lib/cmake/google_cloud_cpp_kms/google_cloud_cpp_kms-config.cmake"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgoogle-cloud"
+      "libgoogle-cloud-all"
      ]
     },
-    "name": "google-cloud-cpp",
+    "name": "libgoogle-cloud-all-devel",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
+      "libgoogle-cloud-devel ==2.17.0"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
      ]
     },
-    "script": "build-libgoogle-cloud.sh",
+    "script": "install-libgoogle-cloud.sh",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.sh",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake",
-      "test -f $PREFIX/include/google/cloud/storage/version.h",
-      "test -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake",
-      "test -f $PREFIX/include/google/cloud/bigtable/version.h"
+      "test -f $PREFIX/include/google/cloud/kms/ekm_client.h",
+      "./run_test_feature.sh"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -1660,15 +1861,15 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    }
   ],
   "package": {
    "name": "google-cloud-cpp-split",
-   "version": "2.12.0"
+   "version": "2.17.0"
   },
   "requirements": {
    "build": [
@@ -1677,11 +1878,12 @@
     "cmake",
     "ninja",
     "libgrpc",
-    "libprotobuf"
+    "libprotobuf",
+    "zlib"
    ],
    "host": [
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
@@ -1691,9 +1893,11 @@
    ]
   },
   "source": {
-   "patches": null,
-   "sha256": "8cda870803925c62de8716a765e03eb9d34249977e5cdb7d0d20367e997a55e2",
-   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.12.0.tar.gz"
+   "patches": [
+    "patches/0001-Backport-12911-from-upstream.patch"
+   ],
+   "sha256": "8cb87ec2947e691a7f8631877e78453bcfda51b3d3cd4940794a376741888d37",
+   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.17.0.tar.gz"
   }
  },
  "osx_arm64_requirements": {
@@ -1705,16 +1909,16 @@
     "cxx_compiler_stub",
     "libgrpc",
     "libprotobuf",
-    "ninja"
+    "ninja",
+    "zlib"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "libabseil",
-    "libcrc32c",
     "libcurl",
-    "libgoogle-cloud",
+    "libgoogle-cloud-devel",
     "libgrpc",
     "libprotobuf",
     "nlohmann_json",
@@ -1725,9 +1929,40 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libgoogle-cloud",
-    "nlohmann_json",
-    "zlib"
+    "libgoogle-cloud-aiplatform",
+    "libgoogle-cloud-aiplatform-devel",
+    "libgoogle-cloud-all",
+    "libgoogle-cloud-automl",
+    "libgoogle-cloud-automl-devel",
+    "libgoogle-cloud-bigquery",
+    "libgoogle-cloud-bigquery-devel",
+    "libgoogle-cloud-bigtable",
+    "libgoogle-cloud-bigtable-devel",
+    "libgoogle-cloud-compute",
+    "libgoogle-cloud-compute-devel",
+    "libgoogle-cloud-devel",
+    "libgoogle-cloud-dialogflow_cx",
+    "libgoogle-cloud-dialogflow_cx-devel",
+    "libgoogle-cloud-dialogflow_es",
+    "libgoogle-cloud-dialogflow_es-devel",
+    "libgoogle-cloud-discoveryengine",
+    "libgoogle-cloud-discoveryengine-devel",
+    "libgoogle-cloud-dlp",
+    "libgoogle-cloud-dlp-devel",
+    "libgoogle-cloud-iam",
+    "libgoogle-cloud-iam-devel",
+    "libgoogle-cloud-oauth2",
+    "libgoogle-cloud-oauth2-devel",
+    "libgoogle-cloud-policytroubleshooter",
+    "libgoogle-cloud-policytroubleshooter-devel",
+    "libgoogle-cloud-pubsub",
+    "libgoogle-cloud-pubsub-devel",
+    "libgoogle-cloud-spanner",
+    "libgoogle-cloud-spanner-devel",
+    "libgoogle-cloud-speech",
+    "libgoogle-cloud-speech-devel",
+    "libgoogle-cloud-storage",
+    "libgoogle-cloud-storage-devel"
    ]
   },
   "test": {
@@ -1742,8 +1977,8 @@
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "google-cloud-cpp",
-   "libgoogle-cloud"
+   "libgoogle-cloud-all",
+   "libgoogle-cloud-all-devel"
   ]
  },
  "parsing_error": false,
@@ -1758,7 +1993,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/google-cloud-cpp.json"
  },
- "raw_meta_yaml": "{% set version = \"2.12.0\" %}\n\npackage:\n  name: google-cloud-cpp-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/googleapis/google-cloud-cpp/archive/v{{ version }}.tar.gz\n  sha256: 8cda870803925c62de8716a765e03eb9d34249977e5cdb7d0d20367e997a55e2\n  patches:\n    # Several libraries do not compile under Conda.  Depending on the platform\n    # and compiler, they need a newer version of Protobuf.  That is, they\n    # compile with older versions of Protobuf on some combinations of platform,\n    # compiler, and C++ standard library. For more information, see:\n    #   https://github.com/googleapis/google-cloud-cpp/issues/8125\n    #   https://github.com/googleapis/google-cloud-cpp/issues/8145\n    #   https://github.com/googleapis/google-cloud-cpp/issues/8785\n    - patches/0001-disable-libraries.patch  # [libprotobuf == \"3.21\"]\n    # disable a large new feature in 2.12 due to running into 6h timeout\n    - patches/0002-disable-aiplatform-feature.patch  # [not (linux64 or osx)]\n\nbuild:\n  number: 5\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n    - libgrpc\n    - libprotobuf\n  host:\n    - libabseil\n    - libcrc32c\n    - libcurl\n    - libgrpc\n    - libprotobuf\n    - openssl\n    - nlohmann_json\n    - zlib\n\noutputs:\n  - name: libgoogle-cloud\n    script: build-libgoogle-cloud.sh  # [unix]\n    script: build-libgoogle-cloud.bat  # [win]\n    build:\n      run_exports:\n        # patch versions guaranteed to be ABI-compatible, see\n        # https://github.com/googleapis/google-cloud-cpp/blob/main/doc/adr/2023-05-03-patch-releases-are-ABI-compatible.md\n        - {{ pin_subpackage(\"libgoogle-cloud\", max_pin=\"x.x\") }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n        - libgrpc\n        - libprotobuf\n      host:\n        - libabseil\n        - libcrc32c\n        - libcurl\n        - libgrpc\n        - libprotobuf\n        - openssl\n        - nlohmann_json\n      run_constrained:\n        - google-cloud-cpp {{ version }} *_{{ PKG_BUILDNUM }}\n    test:\n      commands:\n        - test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.{{ version }}.dylib  # [osx]\n        - test -f $PREFIX/lib/libgoogle_cloud_cpp_storage.so.{{ version }}  # [linux]\n        - test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_storage.pc  # [not win]\n        - test ! -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake  # [not win]\n        - test ! -f $PREFIX/include/google/cloud/storage/version.h  # [not win]\n        - test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.{{ version }}.dylib  # [osx]\n        - test -f $PREFIX/lib/libgoogle_cloud_cpp_bigtable.so.{{ version }}  # [linux]\n        - test ! -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake  # [not win]\n        - test ! -f $PREFIX/include/google/cloud/bigtable/version.h  # [not win]\n        # Currently, the windows build is static.\n        #- if not exist %LIBRARY_PREFIX%\\\\bin\\\\libgoogle_cloud_cpp_storage.dll exit 1  # [win]\n        #- if not exist %LIBRARY_PREFIX%\\\\lib\\\\pkgconfig\\\\google_cloud_cpp_storage.pc exit 1  # [win]\n        - if exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_storage\\\\google_cloud_cpp_storage-config.cmake exit 1  # [win]\n        - if exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\storage\\\\version.h exit 1  # [win]\n        #- if not exist %LIBRARY_PREFIX%\\\\bin\\\\libgoogle_cloud_cpp_bigtable.dll exit 1  # [win]\n        - if exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_bigtable\\\\google_cloud_cpp_bigtable-config.cmake exit 1  # [win]\n        - if exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\bigtable\\\\version.h exit 1  # [win]\n\n  - name: google-cloud-cpp\n    script: build-libgoogle-cloud.sh  # [unix]\n    script: build-libgoogle-cloud.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(\"libgoogle-cloud\", max_pin=\"x.x\") }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n        - libgrpc\n        - libprotobuf\n      host:\n        - {{ pin_subpackage(\"libgoogle-cloud\", exact=True) }}\n        - libabseil\n        - libcrc32c\n        - libcurl\n        - libgrpc\n        - libprotobuf\n        - openssl\n        - nlohmann_json\n      run:\n        - {{ pin_subpackage(\"libgoogle-cloud\", exact=True) }}\n        - nlohmann_json\n        # cannot load package without zlib because it's specified\n        # as required; if possible, this should be removed upstream\n        - zlib\n    test:\n      commands:\n        - ./run_test_google_cloud_cpp.sh   # [unix]\n        - ./run_test_google_cloud_cpp.bat  # [win]\n        - test -f $PREFIX/lib/cmake/google_cloud_cpp_storage/google_cloud_cpp_storage-config.cmake  # [not win]\n        - test -f $PREFIX/include/google/cloud/storage/version.h  # [not win]\n        - test -f $PREFIX/lib/cmake/google_cloud_cpp_bigtable/google_cloud_cpp_bigtable-config.cmake  # [not win]\n        - test -f $PREFIX/include/google/cloud/bigtable/version.h  # [not win]\n        - if not exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_storage\\\\google_cloud_cpp_storage-config.cmake exit 1  # [win]\n        - if not exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\storage\\\\version.h exit 1  # [win]\n        - if not exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_bigtable\\\\google_cloud_cpp_bigtable-config.cmake exit 1  # [win]\n        - if not exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\bigtable\\\\version.h exit 1  # [win]\n      requires:\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      files:\n        - run_test_google_cloud_cpp.sh\n        - run_test_google_cloud_cpp.bat\n      source_files:\n        - google/cloud/storage/quickstart/*.cc\n        - google/cloud/storage/quickstart/CMakeLists.txt\n\nabout:\n  home: https://github.com/googleapis/google-cloud-cpp\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Google Cloud Client Library for C++\n\nextra:\n  feedstock-name: google-cloud-cpp\n  recipe-maintainers:\n    - coryan\n    - davidbrochart\n    - dbolduc\n    - h-vetinari\n    - xhochy\n",
+ "raw_meta_yaml": "{% set version = \"2.17.0\" %}\n\npackage:\n  name: google-cloud-cpp-split\n  version: {{ version }}\n\nsource:\n  url: https://github.com/googleapis/google-cloud-cpp/archive/v{{ version }}.tar.gz\n  sha256: 8cb87ec2947e691a7f8631877e78453bcfda51b3d3cd4940794a376741888d37\n  patches:\n    # This is an upstream fix to allow sharding google/cloud/oauth2\n    - patches/0001-Backport-12911-from-upstream.patch\n\nbuild:\n  number: 6\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - ninja\n    - libgrpc\n    - libprotobuf\n    - zlib # Needed by gRPC\n  host:\n    - libgoogle-cloud-devel =={{ version }}\n    - libabseil\n    - libcurl\n    - libgrpc\n    - libprotobuf\n    - openssl\n    - nlohmann_json\n    - zlib # Needed by gRPC\n\noutputs:\n  - name: libgoogle-cloud-all\n    script: install-libgoogle-cloud.sh  # [unix]\n    script: install-libgoogle-cloud.bat  # [win]\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      host:\n        - libgoogle-cloud-devel =={{ version }}\n        - libabseil\n        - libgrpc\n        - libprotobuf\n      run:\n        # From the google-cloud-cpp-core feedstock\n        - libgoogle-cloud-oauth2\n        - libgoogle-cloud-bigtable\n        - libgoogle-cloud-iam\n        - libgoogle-cloud-policytroubleshooter\n        - libgoogle-cloud-pubsub\n        - libgoogle-cloud-spanner\n        - libgoogle-cloud-storage\n        # From the google-cloud-cpp-bigquery feedstock\n        - libgoogle-cloud-bigquery\n        # From the google-cloud-cpp-compute feedstock\n        - libgoogle-cloud-compute\n        # From the google-cloud-cpp-ai feedstock\n        - libgoogle-cloud-aiplatform\n        - libgoogle-cloud-automl\n        - libgoogle-cloud-discoveryengine\n        - libgoogle-cloud-dialogflow_es\n        - libgoogle-cloud-dialogflow_cx\n        - libgoogle-cloud-dlp\n        - libgoogle-cloud-speech\n    test:\n      commands:\n        # We use `kms` as a canary. Any other feature could do the job.\n        #\n        # presence of shared library (unix)\n        - test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.{{ version }}.dylib  # [osx]\n        - test -f $PREFIX/lib/libgoogle_cloud_cpp_kms.so.{{ version }}  # [linux]\n\n        # absence of static library (windows). It belongs only in devel package.\n        - if exist %LIBRARY_LIB%\\google_cloud_cpp_kms.lib exit 1  # [win]\n\n        # absence of headers (they belong in devel package)\n        - test ! -f $PREFIX/include/google/cloud/kms/v1/ekm_client.h  # [unix]\n        - if exist %LIBRARY_INC%\\google\\cloud\\kms\\v1\\ekm_client.h exit 1  # [win]\n\n        # absence of metadata for CMake & pkgconfig (belongs in devel package)\n        - test ! -f $PREFIX/lib/pkgconfig/google_cloud_cpp_kms.pc  # [unix]\n        - test ! -f $PREFIX/lib/cmake/google_cloud_cpp_kms/google_cloud_cpp_kms-config.cmake  # [unix]\n        - if exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_kms\\\\google_cloud_cpp_kms-config.cmake exit 1  # [win]\n\n  - name: libgoogle-cloud-all-devel\n    script: install-libgoogle-cloud.sh  # [unix]\n    script: install-libgoogle-cloud.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage(\"libgoogle-cloud-all\", max_pin=\"x.x\") }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      host:\n        - libgoogle-cloud-devel =={{ version }}\n      run:\n        - {{ pin_subpackage(\"libgoogle-cloud-all\", exact=True) }}\n        # From the google-cloud-cpp-core feedstock\n        - libgoogle-cloud-devel =={{ version }}\n        - libgoogle-cloud-oauth2-devel\n        - libgoogle-cloud-bigtable-devel\n        - libgoogle-cloud-iam-devel\n        - libgoogle-cloud-policytroubleshooter-devel\n        - libgoogle-cloud-pubsub-devel\n        - libgoogle-cloud-spanner-devel\n        - libgoogle-cloud-storage-devel\n        # From the google-cloud-cpp-bigquery feedstock\n        - libgoogle-cloud-bigquery-devel\n        # From the google-cloud-cpp-compute feedstock\n        - libgoogle-cloud-compute-devel\n        # From the google-cloud-cpp-ai feedstock\n        - libgoogle-cloud-aiplatform-devel\n        - libgoogle-cloud-automl-devel\n        - libgoogle-cloud-discoveryengine-devel\n        - libgoogle-cloud-dialogflow_es-devel\n        - libgoogle-cloud-dialogflow_cx-devel\n        - libgoogle-cloud-dlp-devel\n        - libgoogle-cloud-speech-devel\n    test:\n      commands:\n        # presence of headers (they belong in devel package)\n        - test -f $PREFIX/include/google/cloud/kms/ekm_client.h            # [unix]\n        - if not exist %LIBRARY_INC%\\google\\cloud\\kms\\ekm_client.h exit 1  # [win]\n\n        # presence of static library (on Windows)\n        - if not exist %LIBRARY_LIB%\\google_cloud_cpp_kms.lib exit 1  # [win]\n\n        # build an example\n        - ./run_test_feature.sh   # [unix]\n        - ./run_test_feature.bat  # [win]\n      requires:\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n      files:\n        - run_test_feature.sh\n        - run_test_feature.bat\n      source_files:\n        # We use `kms` as a canary. Any other feature could do the job.\n        - google/cloud/kms/quickstart/*.cc\n        - google/cloud/kms/quickstart/CMakeLists.txt\n\nabout:\n  home: https://github.com/googleapis/google-cloud-cpp\n  license: Apache-2.0\n  license_family: Apache\n  license_file: LICENSE\n  summary: Google Cloud Client Library for C++\n\nextra:\n  feedstock-name: google-cloud-cpp\n  recipe-maintainers:\n    - coryan\n    - davidbrochart\n    - dbolduc\n    - h-vetinari\n    - xhochy\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1766,9 +2001,41 @@
    "cmake",
    "cxx_compiler_stub",
    "libabseil",
-   "libcrc32c",
    "libcurl",
-   "libgoogle-cloud",
+   "libgoogle-cloud-aiplatform",
+   "libgoogle-cloud-aiplatform-devel",
+   "libgoogle-cloud-all",
+   "libgoogle-cloud-automl",
+   "libgoogle-cloud-automl-devel",
+   "libgoogle-cloud-bigquery",
+   "libgoogle-cloud-bigquery-devel",
+   "libgoogle-cloud-bigtable",
+   "libgoogle-cloud-bigtable-devel",
+   "libgoogle-cloud-compute",
+   "libgoogle-cloud-compute-devel",
+   "libgoogle-cloud-devel",
+   "libgoogle-cloud-dialogflow_cx",
+   "libgoogle-cloud-dialogflow_cx-devel",
+   "libgoogle-cloud-dialogflow_es",
+   "libgoogle-cloud-dialogflow_es-devel",
+   "libgoogle-cloud-discoveryengine",
+   "libgoogle-cloud-discoveryengine-devel",
+   "libgoogle-cloud-dlp",
+   "libgoogle-cloud-dlp-devel",
+   "libgoogle-cloud-iam",
+   "libgoogle-cloud-iam-devel",
+   "libgoogle-cloud-oauth2",
+   "libgoogle-cloud-oauth2-devel",
+   "libgoogle-cloud-policytroubleshooter",
+   "libgoogle-cloud-policytroubleshooter-devel",
+   "libgoogle-cloud-pubsub",
+   "libgoogle-cloud-pubsub-devel",
+   "libgoogle-cloud-spanner",
+   "libgoogle-cloud-spanner-devel",
+   "libgoogle-cloud-speech",
+   "libgoogle-cloud-speech-devel",
+   "libgoogle-cloud-storage",
+   "libgoogle-cloud-storage-devel",
    "libgrpc",
    "libprotobuf",
    "ninja",
@@ -1786,7 +2053,8 @@
     "cxx_compiler_stub",
     "libgrpc",
     "libprotobuf",
-    "ninja"
+    "ninja",
+    "zlib"
    ]
   },
   "host": {
@@ -1795,9 +2063,8 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "libabseil",
-    "libcrc32c",
     "libcurl",
-    "libgoogle-cloud",
+    "libgoogle-cloud-devel",
     "libgrpc",
     "libprotobuf",
     "nlohmann_json",
@@ -1810,9 +2077,40 @@
    "elements": [
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "libgoogle-cloud",
-    "nlohmann_json",
-    "zlib"
+    "libgoogle-cloud-aiplatform",
+    "libgoogle-cloud-aiplatform-devel",
+    "libgoogle-cloud-all",
+    "libgoogle-cloud-automl",
+    "libgoogle-cloud-automl-devel",
+    "libgoogle-cloud-bigquery",
+    "libgoogle-cloud-bigquery-devel",
+    "libgoogle-cloud-bigtable",
+    "libgoogle-cloud-bigtable-devel",
+    "libgoogle-cloud-compute",
+    "libgoogle-cloud-compute-devel",
+    "libgoogle-cloud-devel",
+    "libgoogle-cloud-dialogflow_cx",
+    "libgoogle-cloud-dialogflow_cx-devel",
+    "libgoogle-cloud-dialogflow_es",
+    "libgoogle-cloud-dialogflow_es-devel",
+    "libgoogle-cloud-discoveryengine",
+    "libgoogle-cloud-discoveryengine-devel",
+    "libgoogle-cloud-dlp",
+    "libgoogle-cloud-dlp-devel",
+    "libgoogle-cloud-iam",
+    "libgoogle-cloud-iam-devel",
+    "libgoogle-cloud-oauth2",
+    "libgoogle-cloud-oauth2-devel",
+    "libgoogle-cloud-policytroubleshooter",
+    "libgoogle-cloud-policytroubleshooter-devel",
+    "libgoogle-cloud-pubsub",
+    "libgoogle-cloud-pubsub-devel",
+    "libgoogle-cloud-spanner",
+    "libgoogle-cloud-spanner-devel",
+    "libgoogle-cloud-speech",
+    "libgoogle-cloud-speech-devel",
+    "libgoogle-cloud-storage",
+    "libgoogle-cloud-storage-devel"
    ]
   },
   "test": {
@@ -1834,16 +2132,16 @@
     "cxx_compiler_stub",
     "libgrpc",
     "libprotobuf",
-    "ninja"
+    "ninja",
+    "zlib"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "libabseil",
-    "libcrc32c",
     "libcurl",
-    "libgoogle-cloud",
+    "libgoogle-cloud-devel ==2.17.0",
     "libgrpc",
     "libprotobuf",
     "nlohmann_json",
@@ -1854,9 +2152,40 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libgoogle-cloud",
-    "nlohmann_json",
-    "zlib"
+    "libgoogle-cloud-aiplatform",
+    "libgoogle-cloud-aiplatform-devel",
+    "libgoogle-cloud-all",
+    "libgoogle-cloud-automl",
+    "libgoogle-cloud-automl-devel",
+    "libgoogle-cloud-bigquery",
+    "libgoogle-cloud-bigquery-devel",
+    "libgoogle-cloud-bigtable",
+    "libgoogle-cloud-bigtable-devel",
+    "libgoogle-cloud-compute",
+    "libgoogle-cloud-compute-devel",
+    "libgoogle-cloud-devel ==2.17.0",
+    "libgoogle-cloud-dialogflow_cx",
+    "libgoogle-cloud-dialogflow_cx-devel",
+    "libgoogle-cloud-dialogflow_es",
+    "libgoogle-cloud-dialogflow_es-devel",
+    "libgoogle-cloud-discoveryengine",
+    "libgoogle-cloud-discoveryengine-devel",
+    "libgoogle-cloud-dlp",
+    "libgoogle-cloud-dlp-devel",
+    "libgoogle-cloud-iam",
+    "libgoogle-cloud-iam-devel",
+    "libgoogle-cloud-oauth2",
+    "libgoogle-cloud-oauth2-devel",
+    "libgoogle-cloud-policytroubleshooter",
+    "libgoogle-cloud-policytroubleshooter-devel",
+    "libgoogle-cloud-pubsub",
+    "libgoogle-cloud-pubsub-devel",
+    "libgoogle-cloud-spanner",
+    "libgoogle-cloud-spanner-devel",
+    "libgoogle-cloud-speech",
+    "libgoogle-cloud-speech-devel",
+    "libgoogle-cloud-storage",
+    "libgoogle-cloud-storage-devel"
    ]
   },
   "test": {
@@ -1868,8 +2197,8 @@
    ]
   }
  },
- "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.12.0.tar.gz",
- "version": "2.12.0",
+ "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.17.0.tar.gz",
+ "version": "2.17.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/google-cloud-cpp.json"
  },
@@ -1882,7 +2211,7 @@
    "summary": "Google Cloud Client Library for C++"
   },
   "build": {
-   "number": "5"
+   "number": "6"
   },
   "extra": {
    "feedstock-name": "google-cloud-cpp",
@@ -1896,88 +2225,96 @@
   },
   "outputs": [
    {
-    "build": {
-     "run_exports": [
-      "libgoogle-cloud"
-     ]
-    },
-    "name": "libgoogle-cloud",
+    "name": "libgoogle-cloud-all",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
+      "ninja"
+     ],
+     "host": [
+      "libgoogle-cloud-devel ==2.17.0",
+      "libabseil",
       "libgrpc",
       "libprotobuf"
      ],
-     "host": [
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
-     ],
-     "run_constrained": [
-      "google-cloud-cpp 2.12.0 *_5"
+     "run": [
+      "libgoogle-cloud-oauth2",
+      "libgoogle-cloud-bigtable",
+      "libgoogle-cloud-iam",
+      "libgoogle-cloud-policytroubleshooter",
+      "libgoogle-cloud-pubsub",
+      "libgoogle-cloud-spanner",
+      "libgoogle-cloud-storage",
+      "libgoogle-cloud-bigquery",
+      "libgoogle-cloud-compute",
+      "libgoogle-cloud-aiplatform",
+      "libgoogle-cloud-automl",
+      "libgoogle-cloud-discoveryengine",
+      "libgoogle-cloud-dialogflow_es",
+      "libgoogle-cloud-dialogflow_cx",
+      "libgoogle-cloud-dlp",
+      "libgoogle-cloud-speech"
      ]
     },
-    "script": "build-libgoogle-cloud.bat",
+    "script": "install-libgoogle-cloud.bat",
     "test": {
      "commands": [
-      "if exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_storage\\\\google_cloud_cpp_storage-config.cmake exit 1",
-      "if exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\storage\\\\version.h exit 1",
-      "if exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_bigtable\\\\google_cloud_cpp_bigtable-config.cmake exit 1",
-      "if exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\bigtable\\\\version.h exit 1"
+      "if exist %LIBRARY_LIB%\\google_cloud_cpp_kms.lib exit 1",
+      "if exist %LIBRARY_INC%\\google\\cloud\\kms\\v1\\ekm_client.h exit 1",
+      "if exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_kms\\\\google_cloud_cpp_kms-config.cmake exit 1"
      ]
     }
    },
    {
     "build": {
      "run_exports": [
-      "libgoogle-cloud"
+      "libgoogle-cloud-all"
      ]
     },
-    "name": "google-cloud-cpp",
+    "name": "libgoogle-cloud-all-devel",
     "requirements": {
      "build": [
       "c_compiler_stub",
       "cxx_compiler_stub",
       "cmake",
-      "ninja",
-      "libgrpc",
-      "libprotobuf"
+      "ninja"
      ],
      "host": [
-      "libgoogle-cloud",
-      "libabseil",
-      "libcrc32c",
-      "libcurl",
-      "libgrpc",
-      "libprotobuf",
-      "openssl",
-      "nlohmann_json"
+      "libgoogle-cloud-devel ==2.17.0"
      ],
      "run": [
-      "libgoogle-cloud",
-      "nlohmann_json",
-      "zlib"
+      "libgoogle-cloud-all",
+      "libgoogle-cloud-devel ==2.17.0",
+      "libgoogle-cloud-oauth2-devel",
+      "libgoogle-cloud-bigtable-devel",
+      "libgoogle-cloud-iam-devel",
+      "libgoogle-cloud-policytroubleshooter-devel",
+      "libgoogle-cloud-pubsub-devel",
+      "libgoogle-cloud-spanner-devel",
+      "libgoogle-cloud-storage-devel",
+      "libgoogle-cloud-bigquery-devel",
+      "libgoogle-cloud-compute-devel",
+      "libgoogle-cloud-aiplatform-devel",
+      "libgoogle-cloud-automl-devel",
+      "libgoogle-cloud-discoveryengine-devel",
+      "libgoogle-cloud-dialogflow_es-devel",
+      "libgoogle-cloud-dialogflow_cx-devel",
+      "libgoogle-cloud-dlp-devel",
+      "libgoogle-cloud-speech-devel"
      ]
     },
-    "script": "build-libgoogle-cloud.bat",
+    "script": "install-libgoogle-cloud.bat",
     "test": {
      "commands": [
-      "./run_test_google_cloud_cpp.bat",
-      "if not exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_storage\\\\google_cloud_cpp_storage-config.cmake exit 1",
-      "if not exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\storage\\\\version.h exit 1",
-      "if not exist %LIBRARY_PREFIX%\\\\lib\\\\cmake\\\\google_cloud_cpp_bigtable\\\\google_cloud_cpp_bigtable-config.cmake exit 1",
-      "if not exist %LIBRARY_PREFIX%\\\\include\\\\google\\\\cloud\\\\bigtable\\\\version.h exit 1"
+      "if not exist %LIBRARY_INC%\\google\\cloud\\kms\\ekm_client.h exit 1",
+      "if not exist %LIBRARY_LIB%\\google_cloud_cpp_kms.lib exit 1",
+      "./run_test_feature.bat"
      ],
      "files": [
-      "run_test_google_cloud_cpp.sh",
-      "run_test_google_cloud_cpp.bat"
+      "run_test_feature.sh",
+      "run_test_feature.bat"
      ],
      "requires": [
       "cxx_compiler_stub",
@@ -1985,15 +2322,15 @@
       "ninja"
      ],
      "source_files": [
-      "google/cloud/storage/quickstart/*.cc",
-      "google/cloud/storage/quickstart/CMakeLists.txt"
+      "google/cloud/kms/quickstart/*.cc",
+      "google/cloud/kms/quickstart/CMakeLists.txt"
      ]
     }
    }
   ],
   "package": {
    "name": "google-cloud-cpp-split",
-   "version": "2.12.0"
+   "version": "2.17.0"
   },
   "requirements": {
    "build": [
@@ -2002,11 +2339,12 @@
     "cmake",
     "ninja",
     "libgrpc",
-    "libprotobuf"
+    "libprotobuf",
+    "zlib"
    ],
    "host": [
+    "libgoogle-cloud-devel ==2.17.0",
     "libabseil",
-    "libcrc32c",
     "libcurl",
     "libgrpc",
     "libprotobuf",
@@ -2017,10 +2355,10 @@
   },
   "source": {
    "patches": [
-    "patches/0002-disable-aiplatform-feature.patch"
+    "patches/0001-Backport-12911-from-upstream.patch"
    ],
-   "sha256": "8cda870803925c62de8716a765e03eb9d34249977e5cdb7d0d20367e997a55e2",
-   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.12.0.tar.gz"
+   "sha256": "8cb87ec2947e691a7f8631877e78453bcfda51b3d3cd4940794a376741888d37",
+   "url": "https://github.com/googleapis/google-cloud-cpp/archive/v2.17.0.tar.gz"
   }
  },
  "win_64_requirements": {
@@ -2032,16 +2370,16 @@
     "cxx_compiler_stub",
     "libgrpc",
     "libprotobuf",
-    "ninja"
+    "ninja",
+    "zlib"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "libabseil",
-    "libcrc32c",
     "libcurl",
-    "libgoogle-cloud",
+    "libgoogle-cloud-devel",
     "libgrpc",
     "libprotobuf",
     "nlohmann_json",
@@ -2052,9 +2390,40 @@
   "run": {
    "__set__": true,
    "elements": [
-    "libgoogle-cloud",
-    "nlohmann_json",
-    "zlib"
+    "libgoogle-cloud-aiplatform",
+    "libgoogle-cloud-aiplatform-devel",
+    "libgoogle-cloud-all",
+    "libgoogle-cloud-automl",
+    "libgoogle-cloud-automl-devel",
+    "libgoogle-cloud-bigquery",
+    "libgoogle-cloud-bigquery-devel",
+    "libgoogle-cloud-bigtable",
+    "libgoogle-cloud-bigtable-devel",
+    "libgoogle-cloud-compute",
+    "libgoogle-cloud-compute-devel",
+    "libgoogle-cloud-devel",
+    "libgoogle-cloud-dialogflow_cx",
+    "libgoogle-cloud-dialogflow_cx-devel",
+    "libgoogle-cloud-dialogflow_es",
+    "libgoogle-cloud-dialogflow_es-devel",
+    "libgoogle-cloud-discoveryengine",
+    "libgoogle-cloud-discoveryengine-devel",
+    "libgoogle-cloud-dlp",
+    "libgoogle-cloud-dlp-devel",
+    "libgoogle-cloud-iam",
+    "libgoogle-cloud-iam-devel",
+    "libgoogle-cloud-oauth2",
+    "libgoogle-cloud-oauth2-devel",
+    "libgoogle-cloud-policytroubleshooter",
+    "libgoogle-cloud-policytroubleshooter-devel",
+    "libgoogle-cloud-pubsub",
+    "libgoogle-cloud-pubsub-devel",
+    "libgoogle-cloud-spanner",
+    "libgoogle-cloud-spanner-devel",
+    "libgoogle-cloud-speech",
+    "libgoogle-cloud-speech-devel",
+    "libgoogle-cloud-storage",
+    "libgoogle-cloud-storage-devel"
    ]
   },
   "test": {
