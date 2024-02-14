@@ -2,6 +2,10 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "build_platform": {
+   "linux_aarch64": "linux_64",
+   "linux_ppc64le": "linux_64"
+  },
   "conda_build": {
    "error_overlinking": true
   },
@@ -31,7 +35,7 @@
    "summary": "CUDA C++ Core Libraries"
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -103,7 +107,7 @@
    "summary": "CUDA C++ Core Libraries"
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -175,7 +179,7 @@
    "summary": "CUDA C++ Core Libraries"
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -256,7 +260,7 @@
    "summary": "CUDA C++ Core Libraries"
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
@@ -382,7 +386,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cccl.json"
  },
- "raw_meta_yaml": "{% set name = \"cccl\" %}\n{% set version = \"2.1.0\" %}\n{% set extension = \"tar.gz\" %}  # [not win]\n{% set extension = \"zip\" %}  # [win]\n\n# CUDA C++ Core Libraries (CCCL) includes thrust, cub, and libcudacxx. These are header-only libraries.\n# The cccl package ships CCCL headers in the environment's include directory for use in downstream recipes that require CCCL. It follows CCCL upstream versioning. Use this package to say, \"I want a specific version of CCCL headers when building my package (which may be newer than the versions shipped in the latest CUDA Toolkit).\"\n# The cuda-cccl_{{ target_platform }} package (e.g. cuda-cccl_linux-64) ships CCCL headers in 'targets/.../include' that can be used by nvcc, the CUDA compiler. It follows CUDA Toolkit versioning. This package should only be a dependency of the cuda-cudart / cuda-nvcc packages that require CCCL to function. It is target-specific to allow for cross-compilation, as a dependency of cuda-nvcc.\n# The cuda-cccl package is a metapackage that depends on cccl and cuda-cccl_{{ target_platform }} to ensure that versions are consistent. Use this package to say, \"I want to build with the thrust headers that shipped with CUDA Toolkit X.Y\" by adding dependencies on `cuda-cccl` and `cuda-version X.Y`.\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/NVIDIA/thrust/archive/refs/tags/{{ version }}.{{ extension }}\n    folder: thrust\n    sha256: ebfa1a31867a95b8b0555ae45fc7c45538edfa5929ec718951eae0bbc7ed3108  # [linux]\n    sha256: 00d0db34bac00c3b079654a997443952ae724142b464c427207b60d853522f1d  # [win]\n  - url: https://github.com/NVIDIA/cub/archive/refs/tags/{{ version }}.{{ extension }}\n    folder: cub\n    sha256: 60f7633c81c8c0e970bcf59fa6d19a0ed136524dbbcd52b94ea42721dde8cd6b  # [linux]\n    sha256: 8ec47307f5e99379ac1cf6722cd5a24fc15b84b0f5361bebd453645a5e4bb34d  # [win]\n  - url: https://github.com/NVIDIA/libcudacxx/archive/refs/tags/{{ version }}.{{ extension }}\n    folder: libcudacxx\n    sha256: 0c140aedd4fbc22e0432badb2a195274c8800f8d8d7d4bc917ea3f8a9810f6ce  # [linux]\n    sha256: f1fb36ac676aabbfd48ba94c5bd038f118f3af4b1bf49063c9c8812bbd30c9eb  # [win]\n\nbuild:\n  number: 1\n  skip: true  # [osx]\n\ntest:\n  commands:\n    - test -d $PREFIX/lib/cmake/thrust      # [linux]\n    - test -d $PREFIX/lib/cmake/cub         # [linux]\n    - test -d $PREFIX/lib/cmake/libcudacxx  # [linux]\n    - test -d $PREFIX/include/thrust        # [linux]\n    - test -d $PREFIX/include/cub           # [linux]\n    - test -d $PREFIX/include/cuda          # [linux]\n    - test -d $PREFIX/include/nv            # [linux]\n    - if not exist %LIBRARY_LIB%\\cmake\\thrust exit 1      # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\cub exit 1         # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\libcudacxx exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\thrust exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\cub exit 1     # [win]\n    - if not exist %LIBRARY_INC%\\cuda exit 1    # [win]\n    - if not exist %LIBRARY_INC%\\nv exit 1      # [win]\n\nabout:\n  home: https://developer.nvidia.com/cuda-toolkit\n  license_file:\n    - cub/LICENSE.TXT\n    - thrust/LICENSE\n    - libcudacxx/LICENSE.TXT\n  license: Apache-2.0 AND BSD-3-Clause AND BSD-2-Clause AND BSL-1.0 AND NCSA AND MIT AND LicenseRef-NVIDIA-Software-License\n  license_url: https://docs.nvidia.com/cuda/eula/index.html\n  summary: CUDA C++ Core Libraries\n  doc_url: https://docs.nvidia.com/cuda/index.html\n\nextra:\n  recipe-maintainers:\n    - conda-forge/cuda\n",
+ "raw_meta_yaml": "{% set name = \"cccl\" %}\n{% set version = \"2.1.0\" %}\n{% set extension = \"tar.gz\" %}  # [not win]\n{% set extension = \"zip\" %}  # [win]\n\n# CUDA C++ Core Libraries (CCCL) includes thrust, cub, and libcudacxx. These are header-only libraries.\n# The cccl package ships CCCL headers in the environment's include directory for use in downstream recipes that require CCCL. It follows CCCL upstream versioning. Use this package to say, \"I want a specific version of CCCL headers when building my package (which may be newer than the versions shipped in the latest CUDA Toolkit).\"\n# The cuda-cccl_{{ target_platform }} package (e.g. cuda-cccl_linux-64) ships CCCL headers in 'targets/.../include' that can be used by nvcc, the CUDA compiler. It follows CUDA Toolkit versioning. This package should only be a dependency of the cuda-cudart / cuda-nvcc packages that require CCCL to function. It is target-specific to allow for cross-compilation, as a dependency of cuda-nvcc.\n# The cuda-cccl package is a metapackage that depends on cccl and cuda-cccl_{{ target_platform }} to ensure that versions are consistent. Use this package to say, \"I want to build with the thrust headers that shipped with CUDA Toolkit X.Y\" by adding dependencies on `cuda-cccl` and `cuda-version X.Y`.\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/NVIDIA/thrust/archive/refs/tags/{{ version }}.{{ extension }}\n    folder: thrust\n    sha256: ebfa1a31867a95b8b0555ae45fc7c45538edfa5929ec718951eae0bbc7ed3108  # [linux]\n    sha256: 00d0db34bac00c3b079654a997443952ae724142b464c427207b60d853522f1d  # [win]\n  - url: https://github.com/NVIDIA/cub/archive/refs/tags/{{ version }}.{{ extension }}\n    folder: cub\n    sha256: 60f7633c81c8c0e970bcf59fa6d19a0ed136524dbbcd52b94ea42721dde8cd6b  # [linux]\n    sha256: 8ec47307f5e99379ac1cf6722cd5a24fc15b84b0f5361bebd453645a5e4bb34d  # [win]\n  - url: https://github.com/NVIDIA/libcudacxx/archive/refs/tags/{{ version }}.{{ extension }}\n    folder: libcudacxx\n    sha256: 0c140aedd4fbc22e0432badb2a195274c8800f8d8d7d4bc917ea3f8a9810f6ce  # [linux]\n    sha256: f1fb36ac676aabbfd48ba94c5bd038f118f3af4b1bf49063c9c8812bbd30c9eb  # [win]\n\nbuild:\n  number: 2\n  skip: true  # [osx]\n\ntest:\n  commands:\n    - test -d $PREFIX/lib/cmake/thrust      # [linux]\n    - test -d $PREFIX/lib/cmake/cub         # [linux]\n    - test -d $PREFIX/lib/cmake/libcudacxx  # [linux]\n    - test -d $PREFIX/include/thrust        # [linux]\n    - test -d $PREFIX/include/cub           # [linux]\n    - test -d $PREFIX/include/cuda          # [linux]\n    - test -d $PREFIX/include/nv            # [linux]\n    - if not exist %LIBRARY_LIB%\\cmake\\thrust exit 1      # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\cub exit 1         # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\libcudacxx exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\thrust exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\cub exit 1     # [win]\n    - if not exist %LIBRARY_INC%\\cuda exit 1    # [win]\n    - if not exist %LIBRARY_INC%\\nv exit 1      # [win]\n\nabout:\n  home: https://developer.nvidia.com/cuda-toolkit\n  license_file:\n    - cub/LICENSE.TXT\n    - thrust/LICENSE\n    - libcudacxx/LICENSE.TXT\n  license: Apache-2.0 AND BSD-3-Clause AND BSD-2-Clause AND BSL-1.0 AND NCSA AND MIT AND LicenseRef-NVIDIA-Software-License\n  license_url: https://docs.nvidia.com/cuda/eula/index.html\n  summary: CUDA C++ Core Libraries\n  doc_url: https://docs.nvidia.com/cuda/index.html\n\nextra:\n  recipe-maintainers:\n    - conda-forge/cuda\n",
  "req": {
   "__set__": true,
   "elements": []
@@ -443,7 +447,7 @@
    "summary": "CUDA C++ Core Libraries"
   },
   "build": {
-   "number": "1"
+   "number": "2"
   },
   "extra": {
    "recipe-maintainers": [
