@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "azure": {
+   "free_disk_space": true
+  },
   "build_platform": {
    "linux_aarch64": "linux_64",
    "linux_ppc64le": "linux_64"
@@ -23,19 +26,20 @@
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
   "about": {
-   "doc_url": "https://docs.nvidia.com/cuda/index.html",
-   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "doc_url": "https://nvidia.github.io/cccl/",
+   "home": "https://github.com/NVIDIA/cccl",
    "license": "Apache-2.0 AND BSD-3-Clause AND BSD-2-Clause AND BSL-1.0 AND NCSA AND MIT AND LicenseRef-NVIDIA-Software-License",
-   "license_file": [
-    "cub/LICENSE.TXT",
-    "thrust/LICENSE",
-    "libcudacxx/LICENSE.TXT"
-   ],
-   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "license_file": "LICENSE",
+   "license_url": "https://github.com/NVIDIA/cccl/blob/main/LICENSE",
    "summary": "CUDA C++ Core Libraries"
   },
   "build": {
-   "number": "2"
+   "ignore_run_exports_from": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub"
+   ],
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -44,41 +48,58 @@
   },
   "package": {
    "name": "cccl",
-   "version": "2.1.0"
+   "version": "2.2.0"
   },
-  "source": [
-   {
-    "folder": "thrust",
-    "sha256": "ebfa1a31867a95b8b0555ae45fc7c45538edfa5929ec718951eae0bbc7ed3108",
-    "url": "https://github.com/NVIDIA/thrust/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "cub",
-    "sha256": "60f7633c81c8c0e970bcf59fa6d19a0ed136524dbbcd52b94ea42721dde8cd6b",
-    "url": "https://github.com/NVIDIA/cub/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "libcudacxx",
-    "sha256": "0c140aedd4fbc22e0432badb2a195274c8800f8d8d7d4bc917ea3f8a9810f6ce",
-    "url": "https://github.com/NVIDIA/libcudacxx/archive/refs/tags/2.1.0.zip"
-   }
-  ],
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "source": {
+   "sha256": "e27678a9d583f9994e591367e864425e722050a9ee1d721b2bd736b442b768d4",
+   "url": "https://github.com/NVIDIA/cccl/archive/refs/tags/v2.2.0.tar.gz"
+  },
   "test": {
    "commands": [
+    "test -d $PREFIX/lib/cmake/cccl",
     "test -d $PREFIX/lib/cmake/thrust",
     "test -d $PREFIX/lib/cmake/cub",
     "test -d $PREFIX/lib/cmake/libcudacxx",
     "test -d $PREFIX/include/thrust",
     "test -d $PREFIX/include/cub",
     "test -d $PREFIX/include/cuda",
-    "test -d $PREFIX/include/nv"
+    "test -d $PREFIX/include/nv",
+    "pushd test_cmake",
+    "cmake -G \"Ninja\" .",
+    "cmake --build . --config Release",
+    "popd"
+   ],
+   "files": [
+    "test_cmake"
+   ],
+   "requires": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja"
    ]
   }
  },
  "linux_64_requirements": {
   "build": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   },
   "host": {
    "__set__": true,
@@ -90,24 +111,31 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   }
  },
  "linux_aarch64_meta_yaml": {
   "about": {
-   "doc_url": "https://docs.nvidia.com/cuda/index.html",
-   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "doc_url": "https://nvidia.github.io/cccl/",
+   "home": "https://github.com/NVIDIA/cccl",
    "license": "Apache-2.0 AND BSD-3-Clause AND BSD-2-Clause AND BSL-1.0 AND NCSA AND MIT AND LicenseRef-NVIDIA-Software-License",
-   "license_file": [
-    "cub/LICENSE.TXT",
-    "thrust/LICENSE",
-    "libcudacxx/LICENSE.TXT"
-   ],
-   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "license_file": "LICENSE",
+   "license_url": "https://github.com/NVIDIA/cccl/blob/main/LICENSE",
    "summary": "CUDA C++ Core Libraries"
   },
   "build": {
-   "number": "2"
+   "ignore_run_exports_from": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub"
+   ],
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -116,41 +144,58 @@
   },
   "package": {
    "name": "cccl",
-   "version": "2.1.0"
+   "version": "2.2.0"
   },
-  "source": [
-   {
-    "folder": "thrust",
-    "sha256": "ebfa1a31867a95b8b0555ae45fc7c45538edfa5929ec718951eae0bbc7ed3108",
-    "url": "https://github.com/NVIDIA/thrust/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "cub",
-    "sha256": "60f7633c81c8c0e970bcf59fa6d19a0ed136524dbbcd52b94ea42721dde8cd6b",
-    "url": "https://github.com/NVIDIA/cub/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "libcudacxx",
-    "sha256": "0c140aedd4fbc22e0432badb2a195274c8800f8d8d7d4bc917ea3f8a9810f6ce",
-    "url": "https://github.com/NVIDIA/libcudacxx/archive/refs/tags/2.1.0.zip"
-   }
-  ],
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "source": {
+   "sha256": "e27678a9d583f9994e591367e864425e722050a9ee1d721b2bd736b442b768d4",
+   "url": "https://github.com/NVIDIA/cccl/archive/refs/tags/v2.2.0.tar.gz"
+  },
   "test": {
    "commands": [
+    "test -d $PREFIX/lib/cmake/cccl",
     "test -d $PREFIX/lib/cmake/thrust",
     "test -d $PREFIX/lib/cmake/cub",
     "test -d $PREFIX/lib/cmake/libcudacxx",
     "test -d $PREFIX/include/thrust",
     "test -d $PREFIX/include/cub",
     "test -d $PREFIX/include/cuda",
-    "test -d $PREFIX/include/nv"
+    "test -d $PREFIX/include/nv",
+    "pushd test_cmake",
+    "cmake -G \"Ninja\" .",
+    "cmake --build . --config Release",
+    "popd"
+   ],
+   "files": [
+    "test_cmake"
+   ],
+   "requires": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja"
    ]
   }
  },
  "linux_aarch64_requirements": {
   "build": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   },
   "host": {
    "__set__": true,
@@ -162,24 +207,31 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   }
  },
  "linux_ppc64le_meta_yaml": {
   "about": {
-   "doc_url": "https://docs.nvidia.com/cuda/index.html",
-   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "doc_url": "https://nvidia.github.io/cccl/",
+   "home": "https://github.com/NVIDIA/cccl",
    "license": "Apache-2.0 AND BSD-3-Clause AND BSD-2-Clause AND BSL-1.0 AND NCSA AND MIT AND LicenseRef-NVIDIA-Software-License",
-   "license_file": [
-    "cub/LICENSE.TXT",
-    "thrust/LICENSE",
-    "libcudacxx/LICENSE.TXT"
-   ],
-   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "license_file": "LICENSE",
+   "license_url": "https://github.com/NVIDIA/cccl/blob/main/LICENSE",
    "summary": "CUDA C++ Core Libraries"
   },
   "build": {
-   "number": "2"
+   "ignore_run_exports_from": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub"
+   ],
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -188,41 +240,58 @@
   },
   "package": {
    "name": "cccl",
-   "version": "2.1.0"
+   "version": "2.2.0"
   },
-  "source": [
-   {
-    "folder": "thrust",
-    "sha256": "ebfa1a31867a95b8b0555ae45fc7c45538edfa5929ec718951eae0bbc7ed3108",
-    "url": "https://github.com/NVIDIA/thrust/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "cub",
-    "sha256": "60f7633c81c8c0e970bcf59fa6d19a0ed136524dbbcd52b94ea42721dde8cd6b",
-    "url": "https://github.com/NVIDIA/cub/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "libcudacxx",
-    "sha256": "0c140aedd4fbc22e0432badb2a195274c8800f8d8d7d4bc917ea3f8a9810f6ce",
-    "url": "https://github.com/NVIDIA/libcudacxx/archive/refs/tags/2.1.0.zip"
-   }
-  ],
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "source": {
+   "sha256": "e27678a9d583f9994e591367e864425e722050a9ee1d721b2bd736b442b768d4",
+   "url": "https://github.com/NVIDIA/cccl/archive/refs/tags/v2.2.0.tar.gz"
+  },
   "test": {
    "commands": [
+    "test -d $PREFIX/lib/cmake/cccl",
     "test -d $PREFIX/lib/cmake/thrust",
     "test -d $PREFIX/lib/cmake/cub",
     "test -d $PREFIX/lib/cmake/libcudacxx",
     "test -d $PREFIX/include/thrust",
     "test -d $PREFIX/include/cub",
     "test -d $PREFIX/include/cuda",
-    "test -d $PREFIX/include/nv"
+    "test -d $PREFIX/include/nv",
+    "pushd test_cmake",
+    "cmake -G \"Ninja\" .",
+    "cmake --build . --config Release",
+    "popd"
+   ],
+   "files": [
+    "test_cmake"
+   ],
+   "requires": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja"
    ]
   }
  },
  "linux_ppc64le_requirements": {
   "build": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   },
   "host": {
    "__set__": true,
@@ -234,33 +303,40 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   }
  },
  "meta_yaml": {
   "about": {
-   "doc_url": "https://docs.nvidia.com/cuda/index.html",
-   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "doc_url": "https://nvidia.github.io/cccl/",
+   "home": "https://github.com/NVIDIA/cccl",
    "license": "Apache-2.0 AND BSD-3-Clause AND BSD-2-Clause AND BSL-1.0 AND NCSA AND MIT AND LicenseRef-NVIDIA-Software-License",
-   "license_file": [
-    "cub/LICENSE.TXT",
-    "thrust/LICENSE",
-    "libcudacxx/LICENSE.TXT",
-    "cub/LICENSE.TXT",
-    "thrust/LICENSE",
-    "libcudacxx/LICENSE.TXT",
-    "cub/LICENSE.TXT",
-    "thrust/LICENSE",
-    "libcudacxx/LICENSE.TXT",
-    "cub/LICENSE.TXT",
-    "thrust/LICENSE",
-    "libcudacxx/LICENSE.TXT"
-   ],
-   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "license_file": "LICENSE",
+   "license_url": "https://github.com/NVIDIA/cccl/blob/main/LICENSE",
    "summary": "CUDA C++ Core Libraries"
   },
   "build": {
-   "number": "2"
+   "ignore_run_exports_from": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub"
+   ],
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -272,72 +348,39 @@
   },
   "package": {
    "name": "cccl",
-   "version": "2.1.0"
+   "version": "2.2.0"
   },
-  "source": [
-   {
-    "folder": "thrust",
-    "sha256": "ebfa1a31867a95b8b0555ae45fc7c45538edfa5929ec718951eae0bbc7ed3108",
-    "url": "https://github.com/NVIDIA/thrust/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "cub",
-    "sha256": "60f7633c81c8c0e970bcf59fa6d19a0ed136524dbbcd52b94ea42721dde8cd6b",
-    "url": "https://github.com/NVIDIA/cub/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "libcudacxx",
-    "sha256": "0c140aedd4fbc22e0432badb2a195274c8800f8d8d7d4bc917ea3f8a9810f6ce",
-    "url": "https://github.com/NVIDIA/libcudacxx/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "thrust",
-    "sha256": "ebfa1a31867a95b8b0555ae45fc7c45538edfa5929ec718951eae0bbc7ed3108",
-    "url": "https://github.com/NVIDIA/thrust/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "cub",
-    "sha256": "60f7633c81c8c0e970bcf59fa6d19a0ed136524dbbcd52b94ea42721dde8cd6b",
-    "url": "https://github.com/NVIDIA/cub/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "libcudacxx",
-    "sha256": "0c140aedd4fbc22e0432badb2a195274c8800f8d8d7d4bc917ea3f8a9810f6ce",
-    "url": "https://github.com/NVIDIA/libcudacxx/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "thrust",
-    "sha256": "ebfa1a31867a95b8b0555ae45fc7c45538edfa5929ec718951eae0bbc7ed3108",
-    "url": "https://github.com/NVIDIA/thrust/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "cub",
-    "sha256": "60f7633c81c8c0e970bcf59fa6d19a0ed136524dbbcd52b94ea42721dde8cd6b",
-    "url": "https://github.com/NVIDIA/cub/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "libcudacxx",
-    "sha256": "0c140aedd4fbc22e0432badb2a195274c8800f8d8d7d4bc917ea3f8a9810f6ce",
-    "url": "https://github.com/NVIDIA/libcudacxx/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "thrust",
-    "sha256": "00d0db34bac00c3b079654a997443952ae724142b464c427207b60d853522f1d",
-    "url": "https://github.com/NVIDIA/thrust/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "cub",
-    "sha256": "8ec47307f5e99379ac1cf6722cd5a24fc15b84b0f5361bebd453645a5e4bb34d",
-    "url": "https://github.com/NVIDIA/cub/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "libcudacxx",
-    "sha256": "f1fb36ac676aabbfd48ba94c5bd038f118f3af4b1bf49063c9c8812bbd30c9eb",
-    "url": "https://github.com/NVIDIA/libcudacxx/archive/refs/tags/2.1.0.zip"
-   }
-  ],
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "source": {
+   "sha256": "e27678a9d583f9994e591367e864425e722050a9ee1d721b2bd736b442b768d4",
+   "url": "https://github.com/NVIDIA/cccl/archive/refs/tags/v2.2.0.tar.gz"
+  },
   "test": {
    "commands": [
+    "test -d $PREFIX/lib/cmake/cccl",
     "test -d $PREFIX/lib/cmake/thrust",
     "test -d $PREFIX/lib/cmake/cub",
     "test -d $PREFIX/lib/cmake/libcudacxx",
@@ -345,6 +388,11 @@
     "test -d $PREFIX/include/cub",
     "test -d $PREFIX/include/cuda",
     "test -d $PREFIX/include/nv",
+    "pushd test_cmake",
+    "cmake -G \"Ninja\" .",
+    "cmake --build . --config Release",
+    "popd",
+    "test -d $PREFIX/lib/cmake/cccl",
     "test -d $PREFIX/lib/cmake/thrust",
     "test -d $PREFIX/lib/cmake/cub",
     "test -d $PREFIX/lib/cmake/libcudacxx",
@@ -352,6 +400,11 @@
     "test -d $PREFIX/include/cub",
     "test -d $PREFIX/include/cuda",
     "test -d $PREFIX/include/nv",
+    "pushd test_cmake",
+    "cmake -G \"Ninja\" .",
+    "cmake --build . --config Release",
+    "popd",
+    "test -d $PREFIX/lib/cmake/cccl",
     "test -d $PREFIX/lib/cmake/thrust",
     "test -d $PREFIX/lib/cmake/cub",
     "test -d $PREFIX/lib/cmake/libcudacxx",
@@ -359,13 +412,50 @@
     "test -d $PREFIX/include/cub",
     "test -d $PREFIX/include/cuda",
     "test -d $PREFIX/include/nv",
+    "pushd test_cmake",
+    "cmake -G \"Ninja\" .",
+    "cmake --build . --config Release",
+    "popd",
+    "if not exist %LIBRARY_LIB%\\cmake\\cccl exit 1",
     "if not exist %LIBRARY_LIB%\\cmake\\thrust exit 1",
     "if not exist %LIBRARY_LIB%\\cmake\\cub exit 1",
     "if not exist %LIBRARY_LIB%\\cmake\\libcudacxx exit 1",
     "if not exist %LIBRARY_INC%\\thrust exit 1",
     "if not exist %LIBRARY_INC%\\cub exit 1",
     "if not exist %LIBRARY_INC%\\cuda exit 1",
-    "if not exist %LIBRARY_INC%\\nv exit 1"
+    "if not exist %LIBRARY_INC%\\nv exit 1",
+    "pushd test_cmake",
+    "cmake -G \"Ninja\" .",
+    "cmake --build . --config Release",
+    "popd"
+   ],
+   "files": [
+    "test_cmake",
+    "test_cmake",
+    "test_cmake",
+    "test_cmake"
+   ],
+   "requires": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja"
    ]
   }
  },
@@ -386,34 +476,66 @@
  "pr_info": {
   "__lazy_json__": "pr_info/cccl.json"
  },
- "raw_meta_yaml": "{% set name = \"cccl\" %}\n{% set version = \"2.1.0\" %}\n{% set extension = \"tar.gz\" %}  # [not win]\n{% set extension = \"zip\" %}  # [win]\n\n# CUDA C++ Core Libraries (CCCL) includes thrust, cub, and libcudacxx. These are header-only libraries.\n# The cccl package ships CCCL headers in the environment's include directory for use in downstream recipes that require CCCL. It follows CCCL upstream versioning. Use this package to say, \"I want a specific version of CCCL headers when building my package (which may be newer than the versions shipped in the latest CUDA Toolkit).\"\n# The cuda-cccl_{{ target_platform }} package (e.g. cuda-cccl_linux-64) ships CCCL headers in 'targets/.../include' that can be used by nvcc, the CUDA compiler. It follows CUDA Toolkit versioning. This package should only be a dependency of the cuda-cudart / cuda-nvcc packages that require CCCL to function. It is target-specific to allow for cross-compilation, as a dependency of cuda-nvcc.\n# The cuda-cccl package is a metapackage that depends on cccl and cuda-cccl_{{ target_platform }} to ensure that versions are consistent. Use this package to say, \"I want to build with the thrust headers that shipped with CUDA Toolkit X.Y\" by adding dependencies on `cuda-cccl` and `cuda-version X.Y`.\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/NVIDIA/thrust/archive/refs/tags/{{ version }}.{{ extension }}\n    folder: thrust\n    sha256: ebfa1a31867a95b8b0555ae45fc7c45538edfa5929ec718951eae0bbc7ed3108  # [linux]\n    sha256: 00d0db34bac00c3b079654a997443952ae724142b464c427207b60d853522f1d  # [win]\n  - url: https://github.com/NVIDIA/cub/archive/refs/tags/{{ version }}.{{ extension }}\n    folder: cub\n    sha256: 60f7633c81c8c0e970bcf59fa6d19a0ed136524dbbcd52b94ea42721dde8cd6b  # [linux]\n    sha256: 8ec47307f5e99379ac1cf6722cd5a24fc15b84b0f5361bebd453645a5e4bb34d  # [win]\n  - url: https://github.com/NVIDIA/libcudacxx/archive/refs/tags/{{ version }}.{{ extension }}\n    folder: libcudacxx\n    sha256: 0c140aedd4fbc22e0432badb2a195274c8800f8d8d7d4bc917ea3f8a9810f6ce  # [linux]\n    sha256: f1fb36ac676aabbfd48ba94c5bd038f118f3af4b1bf49063c9c8812bbd30c9eb  # [win]\n\nbuild:\n  number: 2\n  skip: true  # [osx]\n\ntest:\n  commands:\n    - test -d $PREFIX/lib/cmake/thrust      # [linux]\n    - test -d $PREFIX/lib/cmake/cub         # [linux]\n    - test -d $PREFIX/lib/cmake/libcudacxx  # [linux]\n    - test -d $PREFIX/include/thrust        # [linux]\n    - test -d $PREFIX/include/cub           # [linux]\n    - test -d $PREFIX/include/cuda          # [linux]\n    - test -d $PREFIX/include/nv            # [linux]\n    - if not exist %LIBRARY_LIB%\\cmake\\thrust exit 1      # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\cub exit 1         # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\libcudacxx exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\thrust exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\cub exit 1     # [win]\n    - if not exist %LIBRARY_INC%\\cuda exit 1    # [win]\n    - if not exist %LIBRARY_INC%\\nv exit 1      # [win]\n\nabout:\n  home: https://developer.nvidia.com/cuda-toolkit\n  license_file:\n    - cub/LICENSE.TXT\n    - thrust/LICENSE\n    - libcudacxx/LICENSE.TXT\n  license: Apache-2.0 AND BSD-3-Clause AND BSD-2-Clause AND BSL-1.0 AND NCSA AND MIT AND LicenseRef-NVIDIA-Software-License\n  license_url: https://docs.nvidia.com/cuda/eula/index.html\n  summary: CUDA C++ Core Libraries\n  doc_url: https://docs.nvidia.com/cuda/index.html\n\nextra:\n  recipe-maintainers:\n    - conda-forge/cuda\n",
+ "raw_meta_yaml": "{% set name = \"cccl\" %}\n{% set version = \"2.2.0\" %}\n\n# CUDA C++ Core Libraries (CCCL) includes thrust, cub, and libcudacxx. These are header-only libraries.\n# The cccl package ships CCCL headers in the environment's include directory for use in downstream recipes that require CCCL. It follows CCCL upstream versioning. Use this package to say, \"I want a specific version of CCCL headers when building my package (which may be newer than the versions shipped in the latest CUDA Toolkit).\"\n# The cuda-cccl_{{ target_platform }} package (e.g. cuda-cccl_linux-64) ships CCCL headers in 'targets/.../include' that can be used by nvcc, the CUDA compiler. It follows CUDA Toolkit versioning. This package should only be a dependency of the cuda-cudart / cuda-nvcc packages that require CCCL to function. It is target-specific to allow for cross-compilation, as a dependency of cuda-nvcc.\n# The cuda-cccl package is a metapackage that depends on cccl and cuda-cccl_{{ target_platform }} to ensure that versions are consistent. Use this package to say, \"I want to build with the thrust headers that shipped with CUDA Toolkit X.Y\" by adding dependencies on `cuda-cccl` and `cuda-version X.Y`.\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/NVIDIA/cccl/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: e27678a9d583f9994e591367e864425e722050a9ee1d721b2bd736b442b768d4\n\nbuild:\n  number: 0\n  skip: true  # [osx]\n  skip: true  # [cuda_compiler_version != \"11.8\"]\n  ignore_run_exports_from:\n    - {{ compiler(\"c\") }}\n    - {{ compiler(\"cxx\") }}\n    - {{ compiler(\"cuda\") }}\n\nrequirements:\n  build:\n    - {{ compiler(\"c\") }}\n    - {{ compiler(\"cxx\") }}\n    - {{ compiler(\"cuda\") }}\n    - cmake\n    - ninja\n\ntest:\n  requires:\n    - {{ compiler(\"c\") }}\n    - {{ compiler(\"cxx\") }}\n    - {{ compiler(\"cuda\") }}\n    - cmake\n    - ninja\n  files:\n    - test_cmake\n  commands:\n    # Check CMake and header directories\n    - test -d $PREFIX/lib/cmake/cccl        # [linux]\n    - test -d $PREFIX/lib/cmake/thrust      # [linux]\n    - test -d $PREFIX/lib/cmake/cub         # [linux]\n    - test -d $PREFIX/lib/cmake/libcudacxx  # [linux]\n    - test -d $PREFIX/include/thrust        # [linux]\n    - test -d $PREFIX/include/cub           # [linux]\n    - test -d $PREFIX/include/cuda          # [linux]\n    - test -d $PREFIX/include/nv            # [linux]\n    - if not exist %LIBRARY_LIB%\\cmake\\cccl exit 1        # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\thrust exit 1      # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\cub exit 1         # [win]\n    - if not exist %LIBRARY_LIB%\\cmake\\libcudacxx exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\thrust exit 1  # [win]\n    - if not exist %LIBRARY_INC%\\cub exit 1     # [win]\n    - if not exist %LIBRARY_INC%\\cuda exit 1    # [win]\n    - if not exist %LIBRARY_INC%\\nv exit 1      # [win]\n    # Test CMake build\n    - pushd test_cmake\n    - cmake -G \"Ninja\" .\n    - cmake --build . --config Release\n    - popd\n\nabout:\n  home: https://github.com/NVIDIA/cccl\n  license_file: LICENSE\n  license: Apache-2.0 AND BSD-3-Clause AND BSD-2-Clause AND BSL-1.0 AND NCSA AND MIT AND LicenseRef-NVIDIA-Software-License\n  license_url: https://github.com/NVIDIA/cccl/blob/main/LICENSE\n  summary: CUDA C++ Core Libraries\n  doc_url: https://nvidia.github.io/cccl/\n\nextra:\n  recipe-maintainers:\n    - conda-forge/cuda\n",
  "req": {
   "__set__": true,
-  "elements": []
+  "elements": [
+   "c_compiler_stub",
+   "cmake",
+   "cuda_compiler_stub",
+   "cxx_compiler_stub",
+   "ninja"
+  ]
  },
  "requirements": {
   "build": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   },
   "host": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub"
+   ]
   },
   "run": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub"
+   ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   }
  },
  "strong_exports": false,
  "total_requirements": {
   "build": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   },
   "host": {
    "__set__": true,
@@ -425,29 +547,36 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   }
  },
- "url": "https://github.com/NVIDIA/thrust/archive/refs/tags/2.1.0.zip",
- "version": "2.1.0",
+ "url": "https://github.com/NVIDIA/cccl/archive/refs/tags/v2.2.0.tar.gz",
+ "version": "2.2.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/cccl.json"
  },
  "win_64_meta_yaml": {
   "about": {
-   "doc_url": "https://docs.nvidia.com/cuda/index.html",
-   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "doc_url": "https://nvidia.github.io/cccl/",
+   "home": "https://github.com/NVIDIA/cccl",
    "license": "Apache-2.0 AND BSD-3-Clause AND BSD-2-Clause AND BSL-1.0 AND NCSA AND MIT AND LicenseRef-NVIDIA-Software-License",
-   "license_file": [
-    "cub/LICENSE.TXT",
-    "thrust/LICENSE",
-    "libcudacxx/LICENSE.TXT"
-   ],
-   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "license_file": "LICENSE",
+   "license_url": "https://github.com/NVIDIA/cccl/blob/main/LICENSE",
    "summary": "CUDA C++ Core Libraries"
   },
   "build": {
-   "number": "2"
+   "ignore_run_exports_from": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub"
+   ],
+   "number": "0"
   },
   "extra": {
    "recipe-maintainers": [
@@ -456,41 +585,58 @@
   },
   "package": {
    "name": "cccl",
-   "version": "2.1.0"
+   "version": "2.2.0"
   },
-  "source": [
-   {
-    "folder": "thrust",
-    "sha256": "00d0db34bac00c3b079654a997443952ae724142b464c427207b60d853522f1d",
-    "url": "https://github.com/NVIDIA/thrust/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "cub",
-    "sha256": "8ec47307f5e99379ac1cf6722cd5a24fc15b84b0f5361bebd453645a5e4bb34d",
-    "url": "https://github.com/NVIDIA/cub/archive/refs/tags/2.1.0.zip"
-   },
-   {
-    "folder": "libcudacxx",
-    "sha256": "f1fb36ac676aabbfd48ba94c5bd038f118f3af4b1bf49063c9c8812bbd30c9eb",
-    "url": "https://github.com/NVIDIA/libcudacxx/archive/refs/tags/2.1.0.zip"
-   }
-  ],
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja"
+   ]
+  },
+  "source": {
+   "sha256": "e27678a9d583f9994e591367e864425e722050a9ee1d721b2bd736b442b768d4",
+   "url": "https://github.com/NVIDIA/cccl/archive/refs/tags/v2.2.0.tar.gz"
+  },
   "test": {
    "commands": [
+    "if not exist %LIBRARY_LIB%\\cmake\\cccl exit 1",
     "if not exist %LIBRARY_LIB%\\cmake\\thrust exit 1",
     "if not exist %LIBRARY_LIB%\\cmake\\cub exit 1",
     "if not exist %LIBRARY_LIB%\\cmake\\libcudacxx exit 1",
     "if not exist %LIBRARY_INC%\\thrust exit 1",
     "if not exist %LIBRARY_INC%\\cub exit 1",
     "if not exist %LIBRARY_INC%\\cuda exit 1",
-    "if not exist %LIBRARY_INC%\\nv exit 1"
+    "if not exist %LIBRARY_INC%\\nv exit 1",
+    "pushd test_cmake",
+    "cmake -G \"Ninja\" .",
+    "cmake --build . --config Release",
+    "popd"
+   ],
+   "files": [
+    "test_cmake"
+   ],
+   "requires": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "cuda_compiler_stub",
+    "cmake",
+    "ninja"
    ]
   }
  },
  "win_64_requirements": {
   "build": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   },
   "host": {
    "__set__": true,
@@ -502,7 +648,13 @@
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "cuda_compiler_stub",
+    "cxx_compiler_stub",
+    "ninja"
+   ]
   }
  }
 }
