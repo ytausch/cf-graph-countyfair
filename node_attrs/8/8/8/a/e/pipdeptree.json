@@ -2,6 +2,10 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "bot": {
+   "automerge": true,
+   "inspection": "update-grayskull"
+  },
   "conda_build": {
    "pkg_format": "2"
   },
@@ -26,44 +30,48 @@
   },
   "build": {
    "entry_points": [
-    "pipdeptree = pipdeptree:main"
+    "pipdeptree = pipdeptree.__main__:main"
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
     "dlqqq",
-    "cdiener"
+    "cdiener",
+    "rxn7706"
    ]
   },
   "package": {
    "name": "pipdeptree",
-   "version": "2.9.1"
+   "version": "2.14.0"
   },
   "requirements": {
    "host": [
-    "python >=3.6",
-    "pip",
-    "hatchling",
-    "hatch-vcs"
+    "python >=3.8",
+    "hatch-vcs >=0.4",
+    "hatchling >=1.18",
+    "pip"
    ],
    "run": [
-    "python >=3.6",
-    "pip"
+    "python >=3.8"
    ]
   },
   "source": {
-   "sha256": "ea414a34c06c67e477c9d689961f4228e9b2154f2778087db021ede9341ef336",
-   "url": "https://pypi.io/packages/source/p/pipdeptree/pipdeptree-2.9.1.tar.gz"
+   "sha256": "3296195250e00d37638f2cce70495e3345645b4bbecc1c38ac39339f1511d9b5",
+   "url": "https://pypi.io/packages/source/p/pipdeptree/pipdeptree-2.14.0.tar.gz"
   },
   "test": {
    "commands": [
-    "pipdeptree"
+    "pip check",
+    "pipdeptree --help"
    ],
    "imports": [
     "pipdeptree"
+   ],
+   "requires": [
+    "pip"
    ]
   }
  },
@@ -84,13 +92,14 @@
   "run": {
    "__set__": true,
    "elements": [
-    "pip",
     "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "meta_yaml": {
@@ -106,44 +115,48 @@
   },
   "build": {
    "entry_points": [
-    "pipdeptree = pipdeptree:main"
+    "pipdeptree = pipdeptree.__main__:main"
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
     "dlqqq",
-    "cdiener"
+    "cdiener",
+    "rxn7706"
    ]
   },
   "package": {
    "name": "pipdeptree",
-   "version": "2.9.1"
+   "version": "2.14.0"
   },
   "requirements": {
    "host": [
-    "python >=3.6",
-    "pip",
-    "hatchling",
-    "hatch-vcs"
+    "python >=3.8",
+    "hatch-vcs >=0.4",
+    "hatchling >=1.18",
+    "pip"
    ],
    "run": [
-    "python >=3.6",
-    "pip"
+    "python >=3.8"
    ]
   },
   "source": {
-   "sha256": "ea414a34c06c67e477c9d689961f4228e9b2154f2778087db021ede9341ef336",
-   "url": "https://pypi.io/packages/source/p/pipdeptree/pipdeptree-2.9.1.tar.gz"
+   "sha256": "3296195250e00d37638f2cce70495e3345645b4bbecc1c38ac39339f1511d9b5",
+   "url": "https://pypi.io/packages/source/p/pipdeptree/pipdeptree-2.14.0.tar.gz"
   },
   "test": {
    "commands": [
-    "pipdeptree"
+    "pip check",
+    "pipdeptree --help"
    ],
    "imports": [
     "pipdeptree"
+   ],
+   "requires": [
+    "pip"
    ]
   }
  },
@@ -161,7 +174,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/pipdeptree.json"
  },
- "raw_meta_yaml": "{% set name = \"pipdeptree\" %}\n{% set version = \"2.9.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: ea414a34c06c67e477c9d689961f4228e9b2154f2778087db021ede9341ef336\n\nbuild:\n  noarch: python\n  number: 0\n  script: {{ PYTHON }} -m pip install . -vv\n  entry_points:\n    - pipdeptree = pipdeptree:main\n\nrequirements:\n  host:\n    - python >=3.6\n    - pip\n    - hatchling\n    - hatch-vcs\n  run:\n    - python >=3.6\n    - pip\n\ntest:\n  imports:\n    - pipdeptree\n  commands:\n    - pipdeptree\n\nabout:\n  home: http://github.com/naiquevin/pipdeptree\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: Displays installed python packages in form of a dependency tree.\n  description: |\n    pipdeptree is a command line utility for displaying the\n    installed python packages in form of a dependency tree. It works for packages\n    installed globally on a machine as well as in a virtualenv. Since pip freeze\n    shows all dependencies as a flat list, finding out which are the top level\n    packages and which packages do they depend on requires some effort. It can also\n    be tedious to resolve conflicting dependencies because pip doesn't yet have\n    true dependency resolution (more on this later). This utility tries to solve\n    this problem.\n  doc_url: https://github.com/naiquevin/pipdeptree\n  dev_url: http://github.com/naiquevin/pipdeptree\n\nextra:\n  recipe-maintainers:\n    - dlqqq\n    - cdiener\n",
+ "raw_meta_yaml": "{% set name = \"pipdeptree\" %}\n{% set version = \"2.14.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/pipdeptree-{{ version }}.tar.gz\n  sha256: 3296195250e00d37638f2cce70495e3345645b4bbecc1c38ac39339f1511d9b5\n\nbuild:\n  entry_points:\n    - pipdeptree = pipdeptree.__main__:main\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.8\n    - hatch-vcs >=0.4\n    - hatchling >=1.18\n    - pip\n  run:\n    - python >=3.8\n\ntest:\n  imports:\n    - pipdeptree\n  commands:\n    - pip check\n    - pipdeptree --help\n  requires:\n    - pip\n\nabout:\n  home: http://github.com/naiquevin/pipdeptree\n  license: MIT\n  license_family: MIT\n  license_file: LICENSE\n  summary: Displays installed python packages in form of a dependency tree.\n  description: |\n    pipdeptree is a command line utility for displaying the\n    installed python packages in form of a dependency tree. It works for packages\n    installed globally on a machine as well as in a virtualenv. Since pip freeze\n    shows all dependencies as a flat list, finding out which are the top level\n    packages and which packages do they depend on requires some effort. It can also\n    be tedious to resolve conflicting dependencies because pip doesn't yet have\n    true dependency resolution (more on this later). This utility tries to solve\n    this problem.\n  doc_url: https://github.com/naiquevin/pipdeptree\n  dev_url: http://github.com/naiquevin/pipdeptree\n\nextra:\n  recipe-maintainers:\n    - dlqqq\n    - cdiener\n    - rxn7706\n\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -188,13 +201,14 @@
   "run": {
    "__set__": true,
    "elements": [
-    "pip",
     "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
  "strong_exports": false,
@@ -206,26 +220,27 @@
   "host": {
    "__set__": true,
    "elements": [
-    "hatch-vcs",
-    "hatchling",
+    "hatch-vcs >=0.4",
+    "hatchling >=1.18",
     "pip",
-    "python >=3.6"
+    "python >=3.8"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "pip",
-    "python >=3.6"
+    "python >=3.8"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": []
+   "elements": [
+    "pip"
+   ]
   }
  },
- "url": "https://pypi.io/packages/source/p/pipdeptree/pipdeptree-2.9.1.tar.gz",
- "version": "2.9.1",
+ "url": "https://pypi.io/packages/source/p/pipdeptree/pipdeptree-2.14.0.tar.gz",
+ "version": "2.14.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/pipdeptree.json"
  }
