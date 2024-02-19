@@ -35,7 +35,7 @@
   },
   "package": {
    "name": "openapi-core",
-   "version": "0.18.2"
+   "version": "0.19.0"
   },
   "requirements": {
    "host": [
@@ -44,10 +44,9 @@
     "poetry-core >=1.0.0"
    ],
    "run": [
-    "asgiref >=3.6.0,<4.0.0",
     "isodate",
     "jsonschema >=4.18.0,<5.0.0",
-    "jsonschema-spec >=0.2.3,<0.3.0",
+    "jsonschema-path >=0.3.1,<0.4.0",
     "more-itertools",
     "openapi-schema-validator >=0.6.0,<0.7.0",
     "openapi-spec-validator >=0.7.1,<0.8.0",
@@ -57,27 +56,31 @@
    ]
   },
   "source": {
-   "sha256": "d4cc50f3ee03ae46313c83e97c6fbfe7e7ae9686741135eb0e4ed49e9d8ff08a",
-   "url": "https://pypi.io/packages/source/o/openapi-core/openapi_core-0.18.2.tar.gz"
+   "sha256": "9c0a157ca8e21a1205f95e0495557a45ad2a33bc8f0f9002406d671420b0920a",
+   "url": "https://pypi.io/packages/source/o/openapi-core/openapi_core-0.19.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "pytest -vv --cov=openapi_core --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=91"
+    "coverage run --source=openapi_core --branch -m pytest -vv  -k \"not (test_request_response_error or test_spec_invalid or test_spec_not_detected or test_webhook_request_validator_not_found or test_spec_not_detected or test_spec_not_supported or test_webhook_response_validator_not_found)\"",
+    "coverage report --show-missing --skip-covered --fail-under=91"
    ],
    "imports": [
     "openapi_core"
    ],
    "requires": [
     "aiohttp",
+    "aioitertools",
+    "coverage",
     "django",
     "djangorestframework",
-    "httpx",
     "falcon",
+    "fastapi",
     "flask",
+    "httpx",
     "pip",
+    "pytest",
     "pytest-aiohttp",
-    "pytest-cov",
     "requests",
     "responses",
     "starlette",
@@ -104,10 +107,9 @@
   "run": {
    "__set__": true,
    "elements": [
-    "asgiref",
     "isodate",
     "jsonschema",
-    "jsonschema-spec",
+    "jsonschema-path",
     "more-itertools",
     "openapi-schema-validator",
     "openapi-spec-validator",
@@ -120,14 +122,17 @@
    "__set__": true,
    "elements": [
     "aiohttp",
+    "aioitertools",
+    "coverage",
     "django",
     "djangorestframework",
     "falcon",
+    "fastapi",
     "flask",
     "httpx",
     "pip",
+    "pytest",
     "pytest-aiohttp",
-    "pytest-cov",
     "requests",
     "responses",
     "starlette",
@@ -154,7 +159,7 @@
   },
   "package": {
    "name": "openapi-core",
-   "version": "0.18.2"
+   "version": "0.19.0"
   },
   "requirements": {
    "host": [
@@ -163,10 +168,9 @@
     "poetry-core >=1.0.0"
    ],
    "run": [
-    "asgiref >=3.6.0,<4.0.0",
     "isodate",
     "jsonschema >=4.18.0,<5.0.0",
-    "jsonschema-spec >=0.2.3,<0.3.0",
+    "jsonschema-path >=0.3.1,<0.4.0",
     "more-itertools",
     "openapi-schema-validator >=0.6.0,<0.7.0",
     "openapi-spec-validator >=0.7.1,<0.8.0",
@@ -176,27 +180,31 @@
    ]
   },
   "source": {
-   "sha256": "d4cc50f3ee03ae46313c83e97c6fbfe7e7ae9686741135eb0e4ed49e9d8ff08a",
-   "url": "https://pypi.io/packages/source/o/openapi-core/openapi_core-0.18.2.tar.gz"
+   "sha256": "9c0a157ca8e21a1205f95e0495557a45ad2a33bc8f0f9002406d671420b0920a",
+   "url": "https://pypi.io/packages/source/o/openapi-core/openapi_core-0.19.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "pytest -vv --cov=openapi_core --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=91"
+    "coverage run --source=openapi_core --branch -m pytest -vv  -k \"not (test_request_response_error or test_spec_invalid or test_spec_not_detected or test_webhook_request_validator_not_found or test_spec_not_detected or test_spec_not_supported or test_webhook_response_validator_not_found)\"",
+    "coverage report --show-missing --skip-covered --fail-under=91"
    ],
    "imports": [
     "openapi_core"
    ],
    "requires": [
     "aiohttp",
+    "aioitertools",
+    "coverage",
     "django",
     "djangorestframework",
-    "httpx",
     "falcon",
+    "fastapi",
     "flask",
+    "httpx",
     "pip",
+    "pytest",
     "pytest-aiohttp",
-    "pytest-cov",
     "requests",
     "responses",
     "starlette",
@@ -221,14 +229,13 @@
  "pr_info": {
   "__lazy_json__": "pr_info/openapi-core.json"
  },
- "raw_meta_yaml": "{% set version = \"0.18.2\" %}\n\npackage:\n  name: openapi-core\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/o/openapi-core/openapi_core-{{ version }}.tar.gz\n  sha256: d4cc50f3ee03ae46313c83e97c6fbfe7e7ae9686741135eb0e4ed49e9d8ff08a\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - pip\n    - python >=3.8\n    - poetry-core >=1.0.0\n  run:\n    - asgiref >=3.6.0,<4.0.0\n    - isodate\n    - jsonschema >=4.18.0,<5.0.0\n    - jsonschema-spec >=0.2.3,<0.3.0\n    - more-itertools\n    - openapi-schema-validator >=0.6.0,<0.7.0\n    - openapi-spec-validator >=0.7.1,<0.8.0\n    - parse\n    - python >=3.8\n    - werkzeug\n\ntest:\n  source_files:\n    - tests\n  imports:\n    - openapi_core\n  commands:\n    - pip check\n    - pytest -vv --cov=openapi_core --cov-branch --cov-report=term-missing:skip-covered --no-cov-on-fail --cov-fail-under=91\n  requires:\n    - aiohttp\n    - django\n    - djangorestframework\n    - httpx\n    - falcon\n    - flask\n    - pip\n    - pytest-aiohttp\n    - pytest-cov\n    - requests\n    - responses\n    - starlette\n    - webob\n\nabout:\n  home: https://github.com/p1c2u/openapi-core\n  summary: client-side and server-side support for the OpenAPI Specification v3\n  license: BSD-3-Clause\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"0.19.0\" %}\n\n# added on https://github.com/conda-forge/openapi-core-feedstock/pull/22\n{% set skips = [\n  \"test_request_response_error\",\n  \"test_spec_invalid\",\n  \"test_spec_not_detected\",\n  \"test_webhook_request_validator_not_found\",\n  \"test_spec_not_detected\",\n  \"test_spec_not_supported\",\n  \"test_webhook_response_validator_not_found\",\n] %}\n\npackage:\n  name: openapi-core\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/o/openapi-core/openapi_core-{{ version }}.tar.gz\n  sha256: 9c0a157ca8e21a1205f95e0495557a45ad2a33bc8f0f9002406d671420b0920a\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - pip\n    - python >=3.8\n    - poetry-core >=1.0.0\n  run:\n    - isodate\n    - jsonschema >=4.18.0,<5.0.0\n    - jsonschema-path >=0.3.1,<0.4.0\n    - more-itertools\n    - openapi-schema-validator >=0.6.0,<0.7.0\n    - openapi-spec-validator >=0.7.1,<0.8.0\n    - parse\n    - python >=3.8\n    - werkzeug\n\ntest:\n  source_files:\n    - tests\n  imports:\n    - openapi_core\n  commands:\n    - pip check\n    - coverage run --source=openapi_core --branch -m pytest -vv  -k \"not ({{ skips | join(\" or \") }})\"\n    - coverage report --show-missing --skip-covered --fail-under=91\n  requires:\n    - aiohttp\n    - aioitertools\n    - coverage\n    - django\n    - djangorestframework\n    - falcon\n    - fastapi\n    - flask\n    - httpx\n    - pip\n    - pytest\n    - pytest-aiohttp\n    - requests\n    - responses\n    - starlette\n    - webob\n\nabout:\n  home: https://github.com/p1c2u/openapi-core\n  summary: client-side and server-side support for the OpenAPI Specification v3\n  license: BSD-3-Clause\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
-   "asgiref",
    "isodate",
    "jsonschema",
-   "jsonschema-spec",
+   "jsonschema-path",
    "more-itertools",
    "openapi-schema-validator",
    "openapi-spec-validator",
@@ -255,10 +262,9 @@
   "run": {
    "__set__": true,
    "elements": [
-    "asgiref",
     "isodate",
     "jsonschema",
-    "jsonschema-spec",
+    "jsonschema-path",
     "more-itertools",
     "openapi-schema-validator",
     "openapi-spec-validator",
@@ -271,14 +277,17 @@
    "__set__": true,
    "elements": [
     "aiohttp",
+    "aioitertools",
+    "coverage",
     "django",
     "djangorestframework",
     "falcon",
+    "fastapi",
     "flask",
     "httpx",
     "pip",
+    "pytest",
     "pytest-aiohttp",
-    "pytest-cov",
     "requests",
     "responses",
     "starlette",
@@ -303,10 +312,9 @@
   "run": {
    "__set__": true,
    "elements": [
-    "asgiref >=3.6.0,<4.0.0",
     "isodate",
     "jsonschema >=4.18.0,<5.0.0",
-    "jsonschema-spec >=0.2.3,<0.3.0",
+    "jsonschema-path >=0.3.1,<0.4.0",
     "more-itertools",
     "openapi-schema-validator >=0.6.0,<0.7.0",
     "openapi-spec-validator >=0.7.1,<0.8.0",
@@ -319,14 +327,17 @@
    "__set__": true,
    "elements": [
     "aiohttp",
+    "aioitertools",
+    "coverage",
     "django",
     "djangorestframework",
     "falcon",
+    "fastapi",
     "flask",
     "httpx",
     "pip",
+    "pytest",
     "pytest-aiohttp",
-    "pytest-cov",
     "requests",
     "responses",
     "starlette",
@@ -334,8 +345,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/o/openapi-core/openapi_core-0.18.2.tar.gz",
- "version": "0.18.2",
+ "url": "https://pypi.io/packages/source/o/openapi-core/openapi_core-0.19.0.tar.gz",
+ "version": "0.19.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/openapi-core.json"
  }
