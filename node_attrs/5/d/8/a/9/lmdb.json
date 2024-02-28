@@ -28,7 +28,7 @@
    "summary": "A high-performance embedded transactional key-value store database."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "lmdb"
    ]
@@ -103,7 +103,7 @@
    "summary": "A high-performance embedded transactional key-value store database."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "lmdb"
    ]
@@ -178,7 +178,7 @@
    "summary": "A high-performance embedded transactional key-value store database."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "lmdb"
    ]
@@ -253,7 +253,7 @@
    "summary": "A high-performance embedded transactional key-value store database."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "lmdb",
     "lmdb",
@@ -386,7 +386,7 @@
    "summary": "A high-performance embedded transactional key-value store database."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "lmdb"
    ]
@@ -461,7 +461,7 @@
    "summary": "A high-performance embedded transactional key-value store database."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "lmdb"
    ]
@@ -545,7 +545,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/lmdb.json"
  },
- "raw_meta_yaml": "{% set version = \"0.9.31\" %}\n\npackage:\n  name: lmdb\n  version: {{ version }}\n\nsource:\n  url: https://github.com/LMDB/lmdb/archive/refs/tags/LMDB_{{ version }}.tar.gz\n  sha256: dd70a8c67807b3b8532b3e987b0a4e998962ecc28643e1af5ec77696b081c9b0\n  patches:\n    - patches/Makefile.patch\n\nbuild:\n  number: 0\n  run_exports:\n    - {{ pin_subpackage(\"lmdb\", max_pin=\"x.x.x\") }}\n\nrequirements:\n  build:\n    - make\n    - {{ compiler('c') }}\n    - cmake  # [win]\n    - ninja  # [win]\n\ntest:\n  requires:\n    # CMake needs compiler on Windows to be able to run package detection.\n    # See: https://discourse.cmake.org/t/questions-about-find-package-cli-msvc/6194\n    - {{ compiler('cxx') }}  # [win]\n    - cmake                  # [win]\n  files:\n    - cmake_test/\n\n  commands:\n    # binaries\n    - mdb_copy -V  # [unix]\n    - mdb_dump -V  # [unix]\n    - mdb_load -V  # [unix]\n    - mdb_stat -V  # [unix]\n\n    # presence of shared lib:\n    - test -f ${PREFIX}/lib/liblmdb.so               # [unix]\n    - if not exist %LIBRARY_BIN%\\lmdb.dll exit 1     # [win]\n    - if not exist %LIBRARY_LIB%\\lmdb.lib exit 1     # [win]\n\n    # absence of static lib:\n    - test ! -f ${PREFIX}/lib/liblmdb.a              # [unix]\n\n    # headers:\n    - test -f ${PREFIX}/include/lmdb.h               # [unix]\n    - if not exist %LIBRARY_INC%\\lmdb.h exit 1       # [win]\n\n    # Test CMake installation on Windows\n    - cd cmake_test                                  # [win]\n    - cmake %CMAKE_ARGS% .                           # [win]\n\nabout:\n  home: https://www.openldap.org/software/repo.html\n  license: OLDAP-2.8\n  license_file: libraries/liblmdb/LICENSE\n  summary: A high-performance embedded transactional key-value store database.\n  # this is a mirror; the original sources come from gitlab, see\n  # https://git.openldap.org/openldap/openldap/-/tree/mdb.master\n  dev_url: https://github.com/LMDB/lmdb\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - h-vetinari\n    - jjerphan\n",
+ "raw_meta_yaml": "{% set version = \"0.9.31\" %}\n\npackage:\n  name: lmdb\n  version: {{ version }}\n\nsource:\n  url: https://github.com/LMDB/lmdb/archive/refs/tags/LMDB_{{ version }}.tar.gz\n  sha256: dd70a8c67807b3b8532b3e987b0a4e998962ecc28643e1af5ec77696b081c9b0\n  patches:\n    - patches/Makefile.patch\n\nbuild:\n  number: 1\n  run_exports:\n    - {{ pin_subpackage(\"lmdb\", max_pin=\"x.x\") }}\n\nrequirements:\n  build:\n    - make\n    - {{ compiler('c') }}\n    - cmake  # [win]\n    - ninja  # [win]\n\ntest:\n  requires:\n    # CMake needs compiler on Windows to be able to run package detection.\n    # See: https://discourse.cmake.org/t/questions-about-find-package-cli-msvc/6194\n    - {{ compiler('cxx') }}  # [win]\n    - cmake                  # [win]\n  files:\n    - cmake_test/\n\n  commands:\n    # binaries\n    - mdb_copy -V  # [unix]\n    - mdb_dump -V  # [unix]\n    - mdb_load -V  # [unix]\n    - mdb_stat -V  # [unix]\n\n    # presence of shared lib:\n    - test -f ${PREFIX}/lib/liblmdb.so               # [unix]\n    - if not exist %LIBRARY_BIN%\\lmdb.dll exit 1     # [win]\n    - if not exist %LIBRARY_LIB%\\lmdb.lib exit 1     # [win]\n\n    # absence of static lib:\n    - test ! -f ${PREFIX}/lib/liblmdb.a              # [unix]\n\n    # headers:\n    - test -f ${PREFIX}/include/lmdb.h               # [unix]\n    - if not exist %LIBRARY_INC%\\lmdb.h exit 1       # [win]\n\n    # Test CMake installation on Windows\n    - cd cmake_test                                  # [win]\n    - cmake %CMAKE_ARGS% .                           # [win]\n\nabout:\n  home: https://www.openldap.org/software/repo.html\n  license: OLDAP-2.8\n  license_file: libraries/liblmdb/LICENSE\n  summary: A high-performance embedded transactional key-value store database.\n  # this is a mirror; the original sources come from gitlab, see\n  # https://git.openldap.org/openldap/openldap/-/tree/mdb.master\n  dev_url: https://github.com/LMDB/lmdb\n\nextra:\n  recipe-maintainers:\n    - jakirkham\n    - h-vetinari\n    - jjerphan\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -628,7 +628,7 @@
    "summary": "A high-performance embedded transactional key-value store database."
   },
   "build": {
-   "number": "0",
+   "number": "1",
    "run_exports": [
     "lmdb"
    ]
