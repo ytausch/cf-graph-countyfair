@@ -27,7 +27,7 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv --install-option=\"--skip-npm\""
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -38,40 +38,38 @@
   },
   "package": {
    "name": "jupyter_bokeh",
-   "version": "3.0.7"
+   "version": "4.0.0"
   },
   "requirements": {
    "host": [
-    "jupyter-packaging >=0.7.9,<0.8",
+    "hatch-jupyter-builder >=0.8.2",
+    "hatch-nodejs-version",
+    "hatchling >=1.5.0",
     "pip",
-    "python >=3.8"
+    "python >=3.9"
    ],
    "run": [
-    "bokeh >=3,<4",
-    "ipywidgets >=8,<9",
-    "python >=3.8"
+    "bokeh 3.*",
+    "ipywidgets 8.*",
+    "python >=3.9"
    ],
    "run_constrained": [
-    "jupyterlab >=3,<4"
+    "jupyterlab 4.*"
    ]
   },
   "source": {
-   "sha256": "2da8c3ddc734d15737bf06126d9e31e84d30f18ac3da3a3f95be40a95a054c87",
-   "url": "https://pypi.io/packages/source/j/jupyter_bokeh/jupyter_bokeh-3.0.7.tar.gz"
+   "sha256": "c517fee6b373b7f62fae218d6fcef2dc768865fc474143da203ef674aa13dc2d",
+   "url": "https://pypi.io/packages/source/j/jupyter_bokeh/jupyter_bokeh-4.0.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "jupyter nbextension list",
-    "jupyter nbextension list 1>nbextensions 2>&1",
     "jupyter labextension list",
     "jupyter labextension list 1>labextensions 2>&1",
-    "grep -iE \"jupyter_bokeh/extension.*enabled\" nbextensions",
     "grep -iE \"@bokeh/jupyter_bokeh.*OK.*jupyter_bokeh\" labextensions"
    ],
    "imports": [
     "jupyter_bokeh",
-    "jupyter_bokeh.nbextension",
     "jupyter_bokeh.widgets"
    ],
    "requires": [
@@ -88,7 +86,9 @@
   "host": {
    "__set__": true,
    "elements": [
-    "jupyter-packaging",
+    "hatch-jupyter-builder",
+    "hatch-nodejs-version",
+    "hatchling",
     "pip",
     "python"
    ]
@@ -123,7 +123,7 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv --install-option=\"--skip-npm\""
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -134,40 +134,38 @@
   },
   "package": {
    "name": "jupyter_bokeh",
-   "version": "3.0.7"
+   "version": "4.0.0"
   },
   "requirements": {
    "host": [
-    "jupyter-packaging >=0.7.9,<0.8",
+    "hatch-jupyter-builder >=0.8.2",
+    "hatch-nodejs-version",
+    "hatchling >=1.5.0",
     "pip",
-    "python >=3.8"
+    "python >=3.9"
    ],
    "run": [
-    "bokeh >=3,<4",
-    "ipywidgets >=8,<9",
-    "python >=3.8"
+    "bokeh 3.*",
+    "ipywidgets 8.*",
+    "python >=3.9"
    ],
    "run_constrained": [
-    "jupyterlab >=3,<4"
+    "jupyterlab 4.*"
    ]
   },
   "source": {
-   "sha256": "2da8c3ddc734d15737bf06126d9e31e84d30f18ac3da3a3f95be40a95a054c87",
-   "url": "https://pypi.io/packages/source/j/jupyter_bokeh/jupyter_bokeh-3.0.7.tar.gz"
+   "sha256": "c517fee6b373b7f62fae218d6fcef2dc768865fc474143da203ef674aa13dc2d",
+   "url": "https://pypi.io/packages/source/j/jupyter_bokeh/jupyter_bokeh-4.0.0.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
-    "jupyter nbextension list",
-    "jupyter nbextension list 1>nbextensions 2>&1",
     "jupyter labextension list",
     "jupyter labextension list 1>labextensions 2>&1",
-    "grep -iE \"jupyter_bokeh/extension.*enabled\" nbextensions",
     "grep -iE \"@bokeh/jupyter_bokeh.*OK.*jupyter_bokeh\" labextensions"
    ],
    "imports": [
     "jupyter_bokeh",
-    "jupyter_bokeh.nbextension",
     "jupyter_bokeh.widgets"
    ],
    "requires": [
@@ -190,13 +188,15 @@
  "pr_info": {
   "__lazy_json__": "pr_info/jupyter_bokeh.json"
  },
- "raw_meta_yaml": "{% set version = \"3.0.7\" %}\n\npackage:\n  name: jupyter_bokeh\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/j/jupyter_bokeh/jupyter_bokeh-{{ version }}.tar.gz\n  sha256: 2da8c3ddc734d15737bf06126d9e31e84d30f18ac3da3a3f95be40a95a054c87\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --install-option=\"--skip-npm\"\n\nrequirements:\n  host:\n    - jupyter-packaging >=0.7.9,<0.8\n    - pip\n    - python >=3.8\n  run:\n    - bokeh >=3,<4\n    - ipywidgets >=8,<9\n    - python >=3.8\n  run_constrained:\n    - jupyterlab >=3,<4\n\ntest:\n  imports:\n    - jupyter_bokeh\n    - jupyter_bokeh.nbextension\n    - jupyter_bokeh.widgets\n  commands:\n    - pip check\n    - jupyter nbextension list\n    - jupyter nbextension list 1>nbextensions 2>&1\n    - jupyter labextension list\n    - jupyter labextension list 1>labextensions 2>&1\n    - grep -iE \"jupyter_bokeh/extension.*enabled\" nbextensions\n    - grep -iE \"@bokeh/jupyter_bokeh.*OK.*jupyter_bokeh\" labextensions\n  requires:\n    - pip\n    - jupyterlab\n    - m2-grep  # [win]\n\nabout:\n  home: https://pypi.org/project/jupyter-bokeh\n  summary: A Jupyter extension for rendering Bokeh content.\n  license: BSD-3-Clause\n  license_file: \n    - LICENSE.txt\n    - jupyter_bokeh/labextension/static/third-party-licenses.json\n  dev_url: https://github.com/bokeh/jupyter_bokeh\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n    - philippjfr\n    - mattpap\n",
+ "raw_meta_yaml": "{% set version = \"4.0.0\" %}\n\npackage:\n  name: jupyter_bokeh\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/j/jupyter_bokeh/jupyter_bokeh-{{ version }}.tar.gz\n  sha256: c517fee6b373b7f62fae218d6fcef2dc768865fc474143da203ef674aa13dc2d\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n\nrequirements:\n  host:\n    - hatch-jupyter-builder >=0.8.2\n    - hatch-nodejs-version\n    - hatchling >=1.5.0\n    - pip\n    - python >=3.9\n  run:\n    - bokeh 3.*\n    - ipywidgets 8.*\n    - python >=3.9\n  run_constrained:\n    - jupyterlab 4.*\n\ntest:\n  imports:\n    - jupyter_bokeh\n    - jupyter_bokeh.widgets\n  commands:\n    - pip check\n    - jupyter labextension list\n    - jupyter labextension list 1>labextensions 2>&1\n    - grep -iE \"@bokeh/jupyter_bokeh.*OK.*jupyter_bokeh\" labextensions\n  requires:\n    - pip\n    - jupyterlab\n    - m2-grep  # [win]\n\nabout:\n  home: https://pypi.org/project/jupyter-bokeh\n  summary: A Jupyter extension for rendering Bokeh content.\n  license: BSD-3-Clause\n  license_file:\n    - LICENSE.txt\n    - jupyter_bokeh/labextension/static/third-party-licenses.json\n  dev_url: https://github.com/bokeh/jupyter_bokeh\n\nextra:\n  recipe-maintainers:\n    - bollwyvl\n    - philippjfr\n    - mattpap\n",
  "req": {
   "__set__": true,
   "elements": [
    "bokeh",
+   "hatch-jupyter-builder",
+   "hatch-nodejs-version",
+   "hatchling",
    "ipywidgets",
-   "jupyter-packaging",
    "pip",
    "python"
   ]
@@ -209,7 +209,9 @@
   "host": {
    "__set__": true,
    "elements": [
-    "jupyter-packaging",
+    "hatch-jupyter-builder",
+    "hatch-nodejs-version",
+    "hatchling",
     "pip",
     "python"
    ]
@@ -239,17 +241,19 @@
   "host": {
    "__set__": true,
    "elements": [
-    "jupyter-packaging >=0.7.9,<0.8",
+    "hatch-jupyter-builder >=0.8.2",
+    "hatch-nodejs-version",
+    "hatchling >=1.5.0",
     "pip",
-    "python >=3.8"
+    "python >=3.9"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
-    "bokeh >=3,<4",
-    "ipywidgets >=8,<9",
-    "python >=3.8"
+    "bokeh 3.*",
+    "ipywidgets 8.*",
+    "python >=3.9"
    ]
   },
   "test": {
@@ -260,8 +264,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/j/jupyter_bokeh/jupyter_bokeh-3.0.7.tar.gz",
- "version": "3.0.7",
+ "url": "https://pypi.io/packages/source/j/jupyter_bokeh/jupyter_bokeh-4.0.0.tar.gz",
+ "version": "4.0.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/jupyter_bokeh.json"
  }
