@@ -118,7 +118,7 @@
   ],
   "package": {
    "name": "stanza-meta",
-   "version": "1.8.0"
+   "version": "1.8.1"
   },
   "requirements": {
    "host": [
@@ -129,8 +129,8 @@
    ]
   },
   "source": {
-   "sha256": "aaeeed449d3378c00979b92381f3b5b0349fd97150456f30bd0002a785503a3f",
-   "url": "https://pypi.io/packages/source/s/stanza/stanza-1.8.0.tar.gz"
+   "sha256": "08c4c23e5b00a678d2d801acad85bce06e5d08d4c1af2709715647a73c4f38b7",
+   "url": "https://pypi.io/packages/source/s/stanza/stanza-1.8.1.tar.gz"
   }
  },
  "linux_64_requirements": {
@@ -273,7 +273,7 @@
   ],
   "package": {
    "name": "stanza-meta",
-   "version": "1.8.0"
+   "version": "1.8.1"
   },
   "requirements": {
    "host": [
@@ -284,8 +284,8 @@
    ]
   },
   "source": {
-   "sha256": "aaeeed449d3378c00979b92381f3b5b0349fd97150456f30bd0002a785503a3f",
-   "url": "https://pypi.io/packages/source/s/stanza/stanza-1.8.0.tar.gz"
+   "sha256": "08c4c23e5b00a678d2d801acad85bce06e5d08d4c1af2709715647a73c4f38b7",
+   "url": "https://pypi.io/packages/source/s/stanza/stanza-1.8.1.tar.gz"
   }
  },
  "name": "stanza-meta",
@@ -304,7 +304,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/stanza.json"
  },
- "raw_meta_yaml": "{% set min_python = \"python >=3.8\" %}\n{% set version = \"1.8.0\" %}\n{% set min_python = \"python >=3.8\" %}\n\npackage:\n  name: stanza-meta\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/s/stanza/stanza-{{ version }}.tar.gz\n  sha256: aaeeed449d3378c00979b92381f3b5b0349fd97150456f30bd0002a785503a3f\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - {{ min_python }}\n  run:\n    - {{ min_python }}\n\noutputs:\n  - name: stanza\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    requirements:\n      host:\n        - pip\n        - {{ min_python }}\n      run:\n        - emoji\n        - networkx\n        - numpy\n        - protobuf >=3.15.0\n        - {{ min_python }}\n        - pytorch >=1.3.0\n        - requests\n        - six\n        - toml\n        - tqdm\n      run_constrained:\n        # actual `run` dependency in stanza-with-transformers\n        - peft >=0.6.1\n        - transformers >=3.0.0\n    test:\n      imports:\n        - stanza\n        - stanza.models\n        # check for missing `nn` members\n        - stanza.models.constituency.utils\n      commands:\n        - pip check\n      requires:\n        - pip\n          # test with oldest compatible version on conda-forge\n        - pytorch 1.6.*\n\n  - name: stanza-with-transformers\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ pin_subpackage(\"stanza\", max_pin=\"x.x.x\") }}\n        - {{ min_python }}\n        - peft\n        - transformers\n    test:\n      imports:\n        - stanza\n        - stanza.models\n        # for transformers\n        - stanza.models.common.bert_embedding\n      commands:\n        - pip check\n        - python -c \"import stanza; nl = stanza.models.constituency.utils.NONLINEARITY; print(nl); assert 'mish' in nl\"\n      requires:\n        - pip\n        # minimum with `nn.Mish`\n        - pytorch >=1.9.0\n    about:\n      summary: (with transformers) A Python NLP Library for Many Human Languages, by the Stanford NLP Group\n\nabout:\n  home: https://github.com/stanfordnlp/stanza\n  summary: A Python NLP Library for Many Human Languages, by the Stanford NLP Group\n  license: Apache-2.0\n  license_file: LICENSE\n  doc_url: https://stanfordnlp.github.io/stanza\n\nextra:\n  feedstock-name: stanza\n  recipe-maintainers:\n    - AngledLuffa\n    - FernandezMathieu\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set min_python = \"python >=3.8\" %}\n{% set min_python = \"python >=3.8\" %}\n{% set version = \"1.8.1\" %}\n{% set min_python = \"python >=3.8\" %}\n\npackage:\n  name: stanza-meta\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/s/stanza/stanza-{{ version }}.tar.gz\n  sha256: 08c4c23e5b00a678d2d801acad85bce06e5d08d4c1af2709715647a73c4f38b7\n\nbuild:\n  number: 0\n  noarch: python\n\nrequirements:\n  host:\n    - {{ min_python }}\n  run:\n    - {{ min_python }}\n\noutputs:\n  - name: stanza\n    build:\n      noarch: python\n      script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n    requirements:\n      host:\n        - pip\n        - {{ min_python }}\n      run:\n        - emoji\n        - networkx\n        - numpy\n        - protobuf >=3.15.0\n        - {{ min_python }}\n        - pytorch >=1.3.0\n        - requests\n        - six\n        - toml\n        - tqdm\n      run_constrained:\n        # actual `run` dependency in stanza-with-transformers\n        - peft >=0.6.1\n        - transformers >=3.0.0\n    test:\n      imports:\n        - stanza\n        - stanza.models\n        # check for missing `nn` members\n        - stanza.models.constituency.utils\n      commands:\n        - pip check\n      requires:\n        - pip\n          # test with oldest compatible version on conda-forge\n        - pytorch 1.6.*\n\n  - name: stanza-with-transformers\n    build:\n      noarch: python\n    requirements:\n      host:\n        - {{ min_python }}\n      run:\n        - {{ pin_subpackage(\"stanza\", max_pin=\"x.x.x\") }}\n        - {{ min_python }}\n        - peft\n        - transformers\n    test:\n      imports:\n        - stanza\n        - stanza.models\n        # for transformers\n        - stanza.models.common.bert_embedding\n      commands:\n        - pip check\n        - python -c \"import stanza; nl = stanza.models.constituency.utils.NONLINEARITY; print(nl); assert 'mish' in nl\"\n      requires:\n        - pip\n        # minimum with `nn.Mish`\n        - pytorch >=1.9.0\n    about:\n      summary: (with transformers) A Python NLP Library for Many Human Languages, by the Stanford NLP Group\n\nabout:\n  home: https://github.com/stanfordnlp/stanza\n  summary: A Python NLP Library for Many Human Languages, by the Stanford NLP Group\n  license: Apache-2.0\n  license_file: LICENSE\n  doc_url: https://stanfordnlp.github.io/stanza\n\nextra:\n  feedstock-name: stanza\n  recipe-maintainers:\n    - AngledLuffa\n    - FernandezMathieu\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -402,8 +402,8 @@
    ]
   }
  },
- "url": "https://pypi.io/packages/source/s/stanza/stanza-1.8.0.tar.gz",
- "version": "1.8.0",
+ "url": "https://pypi.io/packages/source/s/stanza/stanza-1.8.1.tar.gz",
+ "version": "1.8.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/stanza.json"
  }
