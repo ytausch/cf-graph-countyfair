@@ -30,7 +30,7 @@
    "summary": "dav1d is the fastest AV1 decoder on all platforms"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "dav1d",
@@ -183,7 +183,7 @@
    "summary": "dav1d is the fastest AV1 decoder on all platforms"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "dav1d",
@@ -336,7 +336,7 @@
    "summary": "dav1d is the fastest AV1 decoder on all platforms"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "dav1d",
@@ -489,7 +489,7 @@
    "summary": "dav1d is the fastest AV1 decoder on all platforms"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "dav1d",
@@ -1057,7 +1057,8 @@
     "meson >=0.49",
     "ninja",
     "nasm >=2.14",
-    "pkg-config"
+    "pkg-config",
+    "m2-sed"
    ]
   },
   "source": {
@@ -1075,7 +1076,7 @@
    "summary": "dav1d is the fastest AV1 decoder on all platforms"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "dav1d",
@@ -1226,7 +1227,7 @@
    "summary": "dav1d is the fastest AV1 decoder on all platforms"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "dav1d",
@@ -1389,7 +1390,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/dav1d.json"
  },
- "raw_meta_yaml": "{% set version = \"1.4.0\" %}\n# library version is different from project version\n# Check 'meson.build' upstream in every release!\n{% set so_name = \"7.0.0\" %}\n{% set so_name_major = so_name.split('.')[0] %}\n\npackage:\n  name: dav1d-split\n  version: {{ version }}\n\nsource:\n  url: https://code.videolan.org/videolan/dav1d/-/archive/{{ version }}/dav1d-{{ version }}.tar.gz\n  sha256: 0b6d484fc3d20541a21403812499530b72875dee0ec88f682cb1d73943dfc156\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - meson >=0.49\n    - ninja\n    - nasm >=2.14\n    - pkg-config\n\noutputs:\n\n  # Everything needed to build against libdav1d (excludes binary)\n  - name: dav1d-dev\n    script: install.py\n    build:\n      run_exports:\n        - {{ pin_subpackage('libdav1d' ~ so_name_major) }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n      run:\n        - {{ pin_subpackage('libdav1d' ~ so_name_major, exact=True) }}        # [unix]\n    test:\n      commands:\n      # Need these things\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}                       # [unix]\n        - test -f ${PREFIX}/lib/libdav1d.{{ so_name_major }}{{ SHLIB_EXT }}   # [osx]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name_major }}   # [linux]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name }}         # [linux]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\dav1d.lib exit 1               # [win]\n        - test -f ${PREFIX}/include/dav1d/dav1d.h                             # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\dav1d\\\\dav1d.h exit 1      # [win]\n        - test -f ${PREFIX}/lib/pkgconfig/dav1d.pc                            # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\pkgconfig\\\\dav1d.pc exit 1     # [win]\n      # Exclude these things\n        - test ! -f ${PREFIX}/lib/libdav1d.a                                  # [unix]\n        - if exist %PREFIX%\\\\Library\\\\bin\\\\dav1d.dll exit 1                   # [win]\n        - test ! -f ${PREFIX}/bin/dav1d                                       # [unix]\n        - if exist %PREFIX%\\\\Library\\\\bin\\\\dav1d exit 1                       # [win]\n\n  # Everything needed to run the dav1d binary\n  - name: dav1d\n    script: install.py\n    requirements:\n      build:\n        - {{ compiler('c') }}\n      host:\n        - {{ pin_subpackage('dav1d-dev', exact=True) }}\n      run:\n        - {{ pin_subpackage('libdav1d' ~ so_name_major) }}\n    test:\n      commands:\n      # Need these things\n        - dav1d -v\n        - test -f ${PREFIX}/lib/libdav1d.{{ so_name_major }}{{ SHLIB_EXT }}   # [osx]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name_major }}   # [linux]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name }}         # [linux]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\dav1d.dll exit 1               # [win]\n      # Exclude these things\n        - test ! -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}                     # [unix]\n        - if exist %PREFIX%\\\\Library\\\\lib\\\\dav1d.lib exit 1                   # [win]\n        - test ! -f ${PREFIX}/include/dav1d/dav1d.h                           # [unix]\n        - if exist %PREFIX%\\\\Library\\\\include\\\\dav1d\\\\dav1d.h exit 1          # [win]\n        - test ! -f ${PREFIX}/lib/pkgconfig/dav1d.pc                          # [unix]\n        - if exist %PREFIX%\\\\Library\\\\lib\\\\pkgconfig\\\\dav1d.pc exit 1         # [win]\n\n  # Only what's needed for run_exports downstream\n  - name: libdav1d{{ so_name_major }}\n    script: install.py\n    build:\n      run_exports:\n        - {{ pin_subpackage('libdav1d' ~ so_name_major) }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n      run:\n        - {{ pin_subpackage('_libdav1d_api', max_pin='x.x.x') }}              # [win]\n    test:\n      commands:\n      # Need these things\n        - test -f ${PREFIX}/lib/libdav1d.{{ so_name_major }}{{ SHLIB_EXT }}   # [osx]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name_major }}   # [linux]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name }}         # [linux]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\dav1d.dll exit 1               # [win]\n      # Exclude these things\n        - test ! -f ${PREFIX}/lib/libdav1d.{{ so_name }}{{ SHLIB_EXT }}       # [osx]\n        - test ! -f ${PREFIX}/bin/dav1d                                       # [unix]\n        - if exist %PREFIX%\\\\Library\\\\bin\\\\dav1d exit 1                       # [win]\n        - test ! -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}                     # [unix]\n        - if exist %PREFIX%\\\\Library\\\\lib\\\\dav1d.lib exit 1                   # [win]\n        - test ! -f ${PREFIX}/include/dav1d/dav1d.h                           # [unix]\n        - if exist %PREFIX%\\\\Library\\\\include\\\\dav1d\\\\dav1d.h exit 1          # [win]\n        - test ! -f ${PREFIX}/lib/pkgconfig/dav1d.pc                          # [unix]\n        - if exist %PREFIX%\\\\Library\\\\lib\\\\pkgconfig\\\\dav1d.pc exit 1         # [win]\n\n  # Clobber preventer for Windows; prevents multiple dav1d.dll files from being\n  # installed simultaneously. This lets us avoid exporting a strict pin on the\n  # libdav1d API which is not strictly correlated with the ABI.\n  - name: _libdav1d_api\n    build:\n      skip: true  # [not win]\n    about:\n      summary: >\n        An empty package that prevents multiple ABIs of libdavid being installed simultaneously on Windows.\n\nabout:\n  home: https://code.videolan.org/videolan/dav1d\n  summary: dav1d is the fastest AV1 decoder on all platforms\n  license: BSD-2-Clause\n  license_family: BSD\n  license_file: COPYING\n\nextra:\n  feedstock-name: dav1d\n  recipe-maintainers:\n    - carterbox\n    - jaimergp\n",
+ "raw_meta_yaml": "{% set version = \"1.4.0\" %}\n# library version is different from project version\n# Check 'meson.build' upstream in every release!\n{% set so_name = \"7.0.0\" %}\n{% set so_name_major = so_name.split('.')[0] %}\n\npackage:\n  name: dav1d-split\n  version: {{ version }}\n\nsource:\n  url: https://code.videolan.org/videolan/dav1d/-/archive/{{ version }}/dav1d-{{ version }}.tar.gz\n  sha256: 0b6d484fc3d20541a21403812499530b72875dee0ec88f682cb1d73943dfc156\n\nbuild:\n  number: 1\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - meson >=0.49\n    - ninja\n    - nasm >=2.14\n    - pkg-config\n    - m2-sed  # [win]\n\noutputs:\n\n  # Everything needed to build against libdav1d (excludes binary)\n  - name: dav1d-dev\n    script: install.py\n    build:\n      run_exports:\n        - {{ pin_subpackage('libdav1d' ~ so_name_major) }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n      run:\n        - {{ pin_subpackage('libdav1d' ~ so_name_major, exact=True) }}        # [unix]\n    test:\n      commands:\n      # Need these things\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}                       # [unix]\n        - test -f ${PREFIX}/lib/libdav1d.{{ so_name_major }}{{ SHLIB_EXT }}   # [osx]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name_major }}   # [linux]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name }}         # [linux]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\dav1d.lib exit 1               # [win]\n        - test -f ${PREFIX}/include/dav1d/dav1d.h                             # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\include\\\\dav1d\\\\dav1d.h exit 1      # [win]\n        - test -f ${PREFIX}/lib/pkgconfig/dav1d.pc                            # [unix]\n        - if not exist %PREFIX%\\\\Library\\\\lib\\\\pkgconfig\\\\dav1d.pc exit 1     # [win]\n      # Exclude these things\n        - test ! -f ${PREFIX}/lib/libdav1d.a                                  # [unix]\n        - if exist %PREFIX%\\\\Library\\\\bin\\\\dav1d.dll exit 1                   # [win]\n        - test ! -f ${PREFIX}/bin/dav1d                                       # [unix]\n        - if exist %PREFIX%\\\\Library\\\\bin\\\\dav1d exit 1                       # [win]\n\n  # Everything needed to run the dav1d binary\n  - name: dav1d\n    script: install.py\n    requirements:\n      build:\n        - {{ compiler('c') }}\n      host:\n        - {{ pin_subpackage('dav1d-dev', exact=True) }}\n      run:\n        - {{ pin_subpackage('libdav1d' ~ so_name_major) }}\n    test:\n      commands:\n      # Need these things\n        - dav1d -v\n        - test -f ${PREFIX}/lib/libdav1d.{{ so_name_major }}{{ SHLIB_EXT }}   # [osx]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name_major }}   # [linux]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name }}         # [linux]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\dav1d.dll exit 1               # [win]\n      # Exclude these things\n        - test ! -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}                     # [unix]\n        - if exist %PREFIX%\\\\Library\\\\lib\\\\dav1d.lib exit 1                   # [win]\n        - test ! -f ${PREFIX}/include/dav1d/dav1d.h                           # [unix]\n        - if exist %PREFIX%\\\\Library\\\\include\\\\dav1d\\\\dav1d.h exit 1          # [win]\n        - test ! -f ${PREFIX}/lib/pkgconfig/dav1d.pc                          # [unix]\n        - if exist %PREFIX%\\\\Library\\\\lib\\\\pkgconfig\\\\dav1d.pc exit 1         # [win]\n\n  # Only what's needed for run_exports downstream\n  - name: libdav1d{{ so_name_major }}\n    script: install.py\n    build:\n      run_exports:\n        - {{ pin_subpackage('libdav1d' ~ so_name_major) }}\n    requirements:\n      build:\n        - {{ compiler('c') }}\n      run:\n        - {{ pin_subpackage('_libdav1d_api', max_pin='x.x.x') }}              # [win]\n    test:\n      commands:\n      # Need these things\n        - test -f ${PREFIX}/lib/libdav1d.{{ so_name_major }}{{ SHLIB_EXT }}   # [osx]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name_major }}   # [linux]\n        - test -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}.{{ so_name }}         # [linux]\n        - if not exist %PREFIX%\\\\Library\\\\bin\\\\dav1d.dll exit 1               # [win]\n      # Exclude these things\n        - test ! -f ${PREFIX}/lib/libdav1d.{{ so_name }}{{ SHLIB_EXT }}       # [osx]\n        - test ! -f ${PREFIX}/bin/dav1d                                       # [unix]\n        - if exist %PREFIX%\\\\Library\\\\bin\\\\dav1d exit 1                       # [win]\n        - test ! -f ${PREFIX}/lib/libdav1d{{ SHLIB_EXT }}                     # [unix]\n        - if exist %PREFIX%\\\\Library\\\\lib\\\\dav1d.lib exit 1                   # [win]\n        - test ! -f ${PREFIX}/include/dav1d/dav1d.h                           # [unix]\n        - if exist %PREFIX%\\\\Library\\\\include\\\\dav1d\\\\dav1d.h exit 1          # [win]\n        - test ! -f ${PREFIX}/lib/pkgconfig/dav1d.pc                          # [unix]\n        - if exist %PREFIX%\\\\Library\\\\lib\\\\pkgconfig\\\\dav1d.pc exit 1         # [win]\n\n  # Clobber preventer for Windows; prevents multiple dav1d.dll files from being\n  # installed simultaneously. This lets us avoid exporting a strict pin on the\n  # libdav1d API which is not strictly correlated with the ABI.\n  - name: _libdav1d_api\n    build:\n      skip: true  # [not win]\n    about:\n      summary: >\n        An empty package that prevents multiple ABIs of libdavid being installed simultaneously on Windows.\n\nabout:\n  home: https://code.videolan.org/videolan/dav1d\n  summary: dav1d is the fastest AV1 decoder on all platforms\n  license: BSD-2-Clause\n  license_family: BSD\n  license_file: COPYING\n\nextra:\n  feedstock-name: dav1d\n  recipe-maintainers:\n    - carterbox\n    - jaimergp\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -1397,6 +1398,7 @@
    "c_compiler_stub",
    "dav1d-dev",
    "libdav1d7",
+   "m2-sed",
    "meson",
    "nasm",
    "ninja",
@@ -1408,6 +1410,7 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "m2-sed",
     "meson",
     "nasm",
     "ninja",
@@ -1440,6 +1443,7 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "m2-sed",
     "meson >=0.49",
     "nasm >=2.14",
     "ninja",
@@ -1478,7 +1482,7 @@
    "summary": "dav1d is the fastest AV1 decoder on all platforms"
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "dav1d",
@@ -1580,7 +1584,8 @@
     "meson >=0.49",
     "ninja",
     "nasm >=2.14",
-    "pkg-config"
+    "pkg-config",
+    "m2-sed"
    ]
   },
   "source": {
@@ -1593,6 +1598,7 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "m2-sed",
     "meson",
     "nasm",
     "ninja",
