@@ -1,12 +1,9 @@
-import logging
-from conda_forge_tick.utils import setup_logger
 from conda_forge_tick.make_graph import make_graph
-from conda_forge_tick.utils import load_graph
+from conda_forge_tick.utils import load_existing_graph, setup_logging
 
 
 def test_load_graph():
-    setup_logger(logging.getLogger("conda_forge_tick"), level="DEBUG")
+    setup_logging()
     names = []
-    gx = load_graph()
-    gx = make_graph(names, gx)
-    assert True
+    gx = load_existing_graph()
+    make_graph(names, gx)
