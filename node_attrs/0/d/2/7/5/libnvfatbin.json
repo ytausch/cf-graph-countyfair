@@ -9,6 +9,10 @@
   "github": {
    "branch_name": "main",
    "tooling_branch_name": "main"
+  },
+  "provider": {
+   "linux_aarch64": "default",
+   "linux_ppc64le": "default"
   }
  },
  "feedstock_name": "libnvfatbin",
@@ -203,6 +207,395 @@
    ]
   }
  },
+ "linux_aarch64_meta_yaml": {
+  "about": {
+   "description": "NVIDIA compiler library for fatbin interaction\n",
+   "doc_url": "https://docs.nvidia.com/cuda/index.html",
+   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+   "license_file": "LICENSE",
+   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "summary": "NVIDIA compiler library for fatbin interaction"
+  },
+  "build": {
+   "binary_relocation": false,
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "conda-forge/cuda"
+   ]
+  },
+  "outputs": [
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "files": [
+     "lib/libnvfatbin.so.*",
+     "targets/x64/lib/libnvfatbin*.so.*"
+    ],
+    "name": "libnvfatbin",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "arm-variant * sbsa",
+      "sysroot_linux-aarch64 2.17",
+      "patchelf <0.18.0"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "arm-variant * sbsa"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "build": {
+     "run_exports": [
+      "libnvfatbin"
+     ]
+    },
+    "files": [
+     "lib/libnvfatbin.so",
+     "lib/pkgconfig",
+     "targets/x64/include",
+     "targets/x64/lib/libnvfatbin.so",
+     "targets/x64/lib/stubs"
+    ],
+    "name": "libnvfatbin-dev",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "arm-variant * sbsa",
+      "sysroot_linux-aarch64 2.17"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version",
+      "libnvfatbin"
+     ],
+     "run_constrained": [
+      "arm-variant * sbsa",
+      "liblibnvfatbin-static >=12.4.99"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libnvfatbin.so",
+      "test -f $PREFIX/lib/pkgconfig/nvfatbin*.pc",
+      "test -f $PREFIX/targets/x64/include/nvFatbin.h",
+      "test -L $PREFIX/targets/x64/lib/libnvfatbin.so",
+      "test -f $PREFIX/targets/x64/lib/stubs/libnvfatbin.so"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "files": [
+     "targets/x64/lib/libnvfatbin_static.a"
+    ],
+    "name": "libnvfatbin-static",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "arm-variant * sbsa",
+      "sysroot_linux-aarch64 2.17"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "arm-variant * sbsa"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/targets/x64/lib/libnvfatbin_static.a"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "libnvfatbin",
+   "version": "12.4.99"
+  },
+  "source": {
+   "sha256": "f1285a717183635da1d9ce140b96080b7feb13a1a9b0c6e1d05a7bd8c7260ed1",
+   "url": "https://developer.download.nvidia.com/compute/cuda/redist/libnvfatbin/windows-x86_64/libnvfatbin-windows-x86_64-12.4.99-archive.zip"
+  },
+  "test": {
+   "commands": [
+    "test -L $PREFIX/lib/libnvfatbin.so.12.4.99",
+    "test -L $PREFIX/lib/libnvfatbin.so.12",
+    "test -L $PREFIX/targets/x64/lib/libnvfatbin.so.12",
+    "test -f $PREFIX/targets/x64/lib/libnvfatbin.so.12.4.99",
+    "bash test-rpath.sh"
+   ],
+   "files": [
+    "test-rpath.sh"
+   ],
+   "requires": [
+    "patchelf"
+   ]
+  }
+ },
+ "linux_aarch64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "arm-variant",
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "patchelf",
+    "sysroot_linux-aarch64"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "cuda-version"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "cuda-version",
+    "libnvfatbin"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "patchelf"
+   ]
+  }
+ },
+ "linux_ppc64le_meta_yaml": {
+  "about": {
+   "description": "NVIDIA compiler library for fatbin interaction\n",
+   "doc_url": "https://docs.nvidia.com/cuda/index.html",
+   "home": "https://developer.nvidia.com/cuda-toolkit",
+   "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+   "license_file": "LICENSE",
+   "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+   "summary": "NVIDIA compiler library for fatbin interaction"
+  },
+  "build": {
+   "binary_relocation": false,
+   "number": "0"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "conda-forge/cuda"
+   ]
+  },
+  "outputs": [
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "files": [
+     "lib/libnvfatbin.so.*",
+     "targets/x64/lib/libnvfatbin*.so.*"
+    ],
+    "name": "libnvfatbin",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "sysroot_linux-ppc64le 2.17",
+      "patchelf <0.18.0"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": null
+    }
+   },
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "build": {
+     "run_exports": [
+      "libnvfatbin"
+     ]
+    },
+    "files": [
+     "lib/libnvfatbin.so",
+     "lib/pkgconfig",
+     "targets/x64/include",
+     "targets/x64/lib/libnvfatbin.so",
+     "targets/x64/lib/stubs"
+    ],
+    "name": "libnvfatbin-dev",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "sysroot_linux-ppc64le 2.17"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version",
+      "libnvfatbin"
+     ],
+     "run_constrained": [
+      "liblibnvfatbin-static >=12.4.99"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libnvfatbin.so",
+      "test -f $PREFIX/lib/pkgconfig/nvfatbin*.pc",
+      "test -f $PREFIX/targets/x64/include/nvFatbin.h",
+      "test -L $PREFIX/targets/x64/lib/libnvfatbin.so",
+      "test -f $PREFIX/targets/x64/lib/stubs/libnvfatbin.so"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "files": [
+     "targets/x64/lib/libnvfatbin_static.a"
+    ],
+    "name": "libnvfatbin-static",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "sysroot_linux-ppc64le 2.17"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": null
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/targets/x64/lib/libnvfatbin_static.a"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "libnvfatbin",
+   "version": "12.4.99"
+  },
+  "source": {
+   "sha256": "b18404c664412eae2ff95fd40deea890078e33495ecbf95c1fbc6d1c7a7b1c76",
+   "url": "https://developer.download.nvidia.com/compute/cuda/redist/libnvfatbin/windows-x86_64/libnvfatbin-windows-x86_64-12.4.99-archive.zip"
+  },
+  "test": {
+   "commands": [
+    "test -L $PREFIX/lib/libnvfatbin.so.12.4.99",
+    "test -L $PREFIX/lib/libnvfatbin.so.12",
+    "test -L $PREFIX/targets/x64/lib/libnvfatbin.so.12",
+    "test -f $PREFIX/targets/x64/lib/libnvfatbin.so.12.4.99",
+    "bash test-rpath.sh"
+   ],
+   "files": [
+    "test-rpath.sh"
+   ],
+   "requires": [
+    "patchelf"
+   ]
+  }
+ },
+ "linux_ppc64le_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cxx_compiler_stub",
+    "patchelf",
+    "sysroot_linux-ppc64le"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "cuda-version"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "cuda-version",
+    "libnvfatbin"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "patchelf"
+   ]
+  }
+ },
  "meta_yaml": {
   "about": {
    "description": "NVIDIA compiler library for fatbin interaction\n",
@@ -219,6 +612,8 @@
   },
   "extra": {
    "recipe-maintainers": [
+    "conda-forge/cuda",
+    "conda-forge/cuda",
     "conda-forge/cuda",
     "conda-forge/cuda"
    ]
@@ -324,6 +719,244 @@
       "c_compiler_stub",
       "cxx_compiler_stub",
       "sysroot_linux-64 2.17"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": null
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/targets/x64/lib/libnvfatbin_static.a"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "files": [
+     "lib/libnvfatbin.so.*",
+     "targets/x64/lib/libnvfatbin*.so.*"
+    ],
+    "name": "libnvfatbin",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "arm-variant * sbsa",
+      "sysroot_linux-aarch64 2.17",
+      "patchelf <0.18.0"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "arm-variant * sbsa"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "build": {
+     "run_exports": [
+      "libnvfatbin"
+     ]
+    },
+    "files": [
+     "lib/libnvfatbin.so",
+     "lib/pkgconfig",
+     "targets/x64/include",
+     "targets/x64/lib/libnvfatbin.so",
+     "targets/x64/lib/stubs"
+    ],
+    "name": "libnvfatbin-dev",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "arm-variant * sbsa",
+      "sysroot_linux-aarch64 2.17"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version",
+      "libnvfatbin"
+     ],
+     "run_constrained": [
+      "arm-variant * sbsa",
+      "liblibnvfatbin-static >=12.4.99"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libnvfatbin.so",
+      "test -f $PREFIX/lib/pkgconfig/nvfatbin*.pc",
+      "test -f $PREFIX/targets/x64/include/nvFatbin.h",
+      "test -L $PREFIX/targets/x64/lib/libnvfatbin.so",
+      "test -f $PREFIX/targets/x64/lib/stubs/libnvfatbin.so"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "files": [
+     "targets/x64/lib/libnvfatbin_static.a"
+    ],
+    "name": "libnvfatbin-static",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "arm-variant * sbsa",
+      "sysroot_linux-aarch64 2.17"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": [
+      "arm-variant * sbsa"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f $PREFIX/targets/x64/lib/libnvfatbin_static.a"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "files": [
+     "lib/libnvfatbin.so.*",
+     "targets/x64/lib/libnvfatbin*.so.*"
+    ],
+    "name": "libnvfatbin",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "sysroot_linux-ppc64le 2.17",
+      "patchelf <0.18.0"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version"
+     ],
+     "run_constrained": null
+    }
+   },
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "build": {
+     "run_exports": [
+      "libnvfatbin"
+     ]
+    },
+    "files": [
+     "lib/libnvfatbin.so",
+     "lib/pkgconfig",
+     "targets/x64/include",
+     "targets/x64/lib/libnvfatbin.so",
+     "targets/x64/lib/stubs"
+    ],
+    "name": "libnvfatbin-dev",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "sysroot_linux-ppc64le 2.17"
+     ],
+     "host": [
+      "cuda-version 12.4"
+     ],
+     "run": [
+      "cuda-version",
+      "libnvfatbin"
+     ],
+     "run_constrained": [
+      "liblibnvfatbin-static >=12.4.99"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -L $PREFIX/lib/libnvfatbin.so",
+      "test -f $PREFIX/lib/pkgconfig/nvfatbin*.pc",
+      "test -f $PREFIX/targets/x64/include/nvFatbin.h",
+      "test -L $PREFIX/targets/x64/lib/libnvfatbin.so",
+      "test -f $PREFIX/targets/x64/lib/stubs/libnvfatbin.so"
+     ]
+    }
+   },
+   {
+    "about": {
+     "description": "NVIDIA compiler library for fatbin interaction\n",
+     "doc_url": "https://docs.nvidia.com/cuda/index.html",
+     "home": "https://developer.nvidia.com/cuda-toolkit",
+     "license": "LicenseRef-NVIDIA-End-User-License-Agreement",
+     "license_file": "LICENSE",
+     "license_url": "https://docs.nvidia.com/cuda/eula/index.html",
+     "summary": "NVIDIA compiler library for fatbin interaction"
+    },
+    "files": [
+     "targets/x64/lib/libnvfatbin_static.a"
+    ],
+    "name": "libnvfatbin-static",
+    "requirements": {
+     "build": [
+      "c_compiler_stub",
+      "cxx_compiler_stub",
+      "sysroot_linux-ppc64le 2.17"
      ],
      "host": [
       "cuda-version 12.4"
@@ -459,9 +1092,21 @@
     "test -L $PREFIX/targets/x64/lib/libnvfatbin.so.12",
     "test -f $PREFIX/targets/x64/lib/libnvfatbin.so.12.4.99",
     "bash test-rpath.sh",
+    "test -L $PREFIX/lib/libnvfatbin.so.12.4.99",
+    "test -L $PREFIX/lib/libnvfatbin.so.12",
+    "test -L $PREFIX/targets/x64/lib/libnvfatbin.so.12",
+    "test -f $PREFIX/targets/x64/lib/libnvfatbin.so.12.4.99",
+    "bash test-rpath.sh",
+    "test -L $PREFIX/lib/libnvfatbin.so.12.4.99",
+    "test -L $PREFIX/lib/libnvfatbin.so.12",
+    "test -L $PREFIX/targets/x64/lib/libnvfatbin.so.12",
+    "test -f $PREFIX/targets/x64/lib/libnvfatbin.so.12.4.99",
+    "bash test-rpath.sh",
     "if not exist %LIBRARY_BIN%\\nvfatbin*.dll exit 1"
    ],
    "files": [
+    "test-rpath.sh",
+    "test-rpath.sh",
     "test-rpath.sh",
     "test-rpath.sh"
    ],
@@ -480,6 +1125,8 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
+  "linux_aarch64",
+  "linux_ppc64le",
   "win_64"
  ],
  "pr_info": {
@@ -489,22 +1136,28 @@
  "req": {
   "__set__": true,
   "elements": [
+   "arm-variant",
    "c_compiler_stub",
    "cuda-version",
    "cxx_compiler_stub",
    "libnvfatbin",
    "patchelf",
-   "sysroot_linux-64"
+   "sysroot_linux-64",
+   "sysroot_linux-aarch64",
+   "sysroot_linux-ppc64le"
   ]
  },
  "requirements": {
   "build": {
    "__set__": true,
    "elements": [
+    "arm-variant",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "patchelf",
-    "sysroot_linux-64"
+    "sysroot_linux-64",
+    "sysroot_linux-aarch64",
+    "sysroot_linux-ppc64le"
    ]
   },
   "host": {
@@ -534,10 +1187,13 @@
   "build": {
    "__set__": true,
    "elements": [
+    "arm-variant * sbsa",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "patchelf <0.18.0",
-    "sysroot_linux-64 2.17"
+    "sysroot_linux-64 2.17",
+    "sysroot_linux-aarch64 2.17",
+    "sysroot_linux-ppc64le 2.17"
    ]
   },
   "host": {
