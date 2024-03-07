@@ -24,7 +24,7 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+   "script": "PYTHON -m pip install . -vv --no-deps"
   },
   "extra": {
    "recipe-maintainers": [
@@ -33,33 +33,34 @@
   },
   "package": {
    "name": "ecape-parcel",
-   "version": "1.2.0.1"
+   "version": "1.2.0.2"
   },
   "requirements": {
    "host": [
     "python >=3.8",
-    "hatchling",
     "pip"
    ],
    "run": [
     "python >=3.8",
     "ecape",
-    "metpy"
+    "metpy",
+    "numpy",
+    "pint"
    ]
   },
   "source": {
-   "sha256": "dab35709cc04774b4b2e80421907e52650505a5ee514c1954661ebdf73493f10",
-   "url": "https://pypi.io/packages/source/e/ecape-parcel/ecape_parcel-1.2.0.1.tar.gz"
+   "patches": [
+    "001_setup.patch"
+   ],
+   "sha256": "352af49acdc0fff2105989a769a9a4a48e6b6287b0914afbb4b9d8c3d924e8a8",
+   "url": "https://pypi.io/packages/source/e/ecape-parcel/ecape_parcel-1.2.0.2.tar.gz"
   },
   "test": {
    "commands": [
-    "pip check"
+    "sh run_tests.sh"
    ],
-   "imports": [
-    "ecape_parcel"
-   ],
-   "requires": [
-    "pip"
+   "files": [
+    "run_tests.sh"
    ]
   }
  },
@@ -71,7 +72,6 @@
   "host": {
    "__set__": true,
    "elements": [
-    "hatchling",
     "pip",
     "python"
    ]
@@ -81,14 +81,14 @@
    "elements": [
     "ecape",
     "metpy",
+    "numpy",
+    "pint",
     "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": [
-    "pip"
-   ]
+   "elements": []
   }
  },
  "meta_yaml": {
@@ -102,7 +102,7 @@
   "build": {
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
+   "script": "PYTHON -m pip install . -vv --no-deps"
   },
   "extra": {
    "recipe-maintainers": [
@@ -111,33 +111,34 @@
   },
   "package": {
    "name": "ecape-parcel",
-   "version": "1.2.0.1"
+   "version": "1.2.0.2"
   },
   "requirements": {
    "host": [
     "python >=3.8",
-    "hatchling",
     "pip"
    ],
    "run": [
     "python >=3.8",
     "ecape",
-    "metpy"
+    "metpy",
+    "numpy",
+    "pint"
    ]
   },
   "source": {
-   "sha256": "dab35709cc04774b4b2e80421907e52650505a5ee514c1954661ebdf73493f10",
-   "url": "https://pypi.io/packages/source/e/ecape-parcel/ecape_parcel-1.2.0.1.tar.gz"
+   "patches": [
+    "001_setup.patch"
+   ],
+   "sha256": "352af49acdc0fff2105989a769a9a4a48e6b6287b0914afbb4b9d8c3d924e8a8",
+   "url": "https://pypi.io/packages/source/e/ecape-parcel/ecape_parcel-1.2.0.2.tar.gz"
   },
   "test": {
    "commands": [
-    "pip check"
+    "sh run_tests.sh"
    ],
-   "imports": [
-    "ecape_parcel"
-   ],
-   "requires": [
-    "pip"
+   "files": [
+    "run_tests.sh"
    ]
   }
  },
@@ -155,13 +156,14 @@
  "pr_info": {
   "__lazy_json__": "pr_info/ecape-parcel.json"
  },
- "raw_meta_yaml": "{% set name = \"ecape-parcel\" %}\n{% set version = \"1.2.0.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ecape_parcel-{{ version }}.tar.gz\n  sha256: dab35709cc04774b4b2e80421907e52650505a5ee514c1954661ebdf73493f10\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.8\n    - hatchling\n    - pip\n  run:\n    - python >=3.8\n    - ecape\n    - metpy\n\ntest:\n  imports:\n    - ecape_parcel\n  commands:\n    - pip check\n  requires:\n    - pip\n\nabout:\n  summary: A simple Python package that computes entrainment CAPE parcels.\n  dev_url: https://github.com/a-urq/ecape-parcel-py\n  home: https://github.com/a-urq/ecape-parcel-py\n  license: MIT\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - akrherz\n",
+ "raw_meta_yaml": "{% set name = \"ecape-parcel\" %}\n{% set version = \"1.2.0.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/ecape_parcel-{{ version }}.tar.gz\n  sha256: 352af49acdc0fff2105989a769a9a4a48e6b6287b0914afbb4b9d8c3d924e8a8\n  patches:\n    - 001_setup.patch\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.8\n    - pip\n  run:\n    - python >=3.8\n    - ecape\n    - metpy\n    - numpy\n    - pint\n\ntest:\n  files:\n    - run_tests.sh\n  commands:\n    - sh run_tests.sh\n\nabout:\n  summary: A simple Python package that computes entrainment CAPE parcels.\n  dev_url: https://github.com/a-urq/ecape-parcel-py\n  home: https://github.com/a-urq/ecape-parcel-py\n  license: MIT\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - akrherz\n",
  "req": {
   "__set__": true,
   "elements": [
    "ecape",
-   "hatchling",
    "metpy",
+   "numpy",
+   "pint",
    "pip",
    "python"
   ]
@@ -174,7 +176,6 @@
   "host": {
    "__set__": true,
    "elements": [
-    "hatchling",
     "pip",
     "python"
    ]
@@ -184,14 +185,14 @@
    "elements": [
     "ecape",
     "metpy",
+    "numpy",
+    "pint",
     "python"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": [
-    "pip"
-   ]
+   "elements": []
   }
  },
  "strong_exports": false,
@@ -203,7 +204,6 @@
   "host": {
    "__set__": true,
    "elements": [
-    "hatchling",
     "pip",
     "python >=3.8"
    ]
@@ -213,18 +213,18 @@
    "elements": [
     "ecape",
     "metpy",
+    "numpy",
+    "pint",
     "python >=3.8"
    ]
   },
   "test": {
    "__set__": true,
-   "elements": [
-    "pip"
-   ]
+   "elements": []
   }
  },
- "url": "https://pypi.io/packages/source/e/ecape-parcel/ecape_parcel-1.2.0.1.tar.gz",
- "version": "1.2.0.1",
+ "url": "https://pypi.io/packages/source/e/ecape-parcel/ecape_parcel-1.2.0.2.tar.gz",
+ "version": "1.2.0.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/ecape-parcel.json"
  }
