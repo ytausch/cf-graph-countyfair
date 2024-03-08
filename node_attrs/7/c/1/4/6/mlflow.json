@@ -30,7 +30,7 @@
    "summary": "MLflow is an open source platform for the machine learning lifecycle."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "mlflow",
@@ -74,10 +74,242 @@
     "dbczumar",
     "jaroslawk",
     "xhochy",
+    "janjagusch",
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
     "janjagusch"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "gunicorn <22",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=2.11",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "test ! -f $SP_DIR/pylint_plugins",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python"
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "gunicorn <22",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
    {
     "build": {
      "entry_points": [
@@ -1054,7 +1286,7 @@
    "summary": "MLflow is an open source platform for the machine learning lifecycle."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "mlflow",
@@ -1098,10 +1330,244 @@
     "dbczumar",
     "jaroslawk",
     "xhochy",
+    "janjagusch",
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
     "janjagusch"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "gunicorn <22",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=2.11",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "test ! -f $SP_DIR/pylint_plugins",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "gunicorn <22",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
    {
     "build": {
      "entry_points": [
@@ -2086,7 +2552,7 @@
    "summary": "MLflow is an open source platform for the machine learning lifecycle."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "mlflow",
@@ -2130,10 +2596,244 @@
     "dbczumar",
     "jaroslawk",
     "xhochy",
+    "janjagusch",
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
     "janjagusch"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "gunicorn <22",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=2.11",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "test ! -f $SP_DIR/pylint_plugins",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "gunicorn <22",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
    {
     "build": {
      "entry_points": [
@@ -3118,11 +3818,71 @@
    "summary": "MLflow is an open source platform for the machine learning lifecycle."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "mlflow",
    "recipe-maintainers": [
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
+    "janjagusch",
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
+    "janjagusch",
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
+    "janjagusch",
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
+    "janjagusch",
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
+    "janjagusch",
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
+    "janjagusch",
     "daniellok-db",
     "B-Step62",
     "serena-ruan",
@@ -4398,8 +5158,7 @@
    },
    {
     "build": {
-     "noarch": "python",
-     "skip": true
+     "noarch": "python"
     },
     "name": "mlflow-skinny-gateway",
     "requirements": {
@@ -4428,8 +5187,7 @@
    },
    {
     "build": {
-     "noarch": "python",
-     "skip": true
+     "noarch": "python"
     },
     "name": "mlflow-gateway",
     "requirements": {
@@ -7831,6 +8589,1351 @@
      ]
     },
     "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "gunicorn <22",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=2.11",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "test ! -f $SP_DIR/pylint_plugins",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "gunicorn <22",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "gunicorn <22",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=2.11",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "test ! -f $SP_DIR/pylint_plugins",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "gunicorn <22",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "gunicorn <22",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=2.11",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "test ! -f $SP_DIR/pylint_plugins",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "gunicorn <22",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "gunicorn <22",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=2.11",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "test ! -f $SP_DIR/pylint_plugins",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "gunicorn <22",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "gunicorn <22",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=2.11",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "test ! -f $SP_DIR/pylint_plugins",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "gunicorn <22",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.bat",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check",
+      "set"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "waitress <4",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=3.0",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.bat",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "pip check",
+      "set"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.bat",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "waitress <3",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.bat",
     "test": {
      "commands": [
       "mlflow --help"
@@ -8760,7 +10863,7 @@
    "summary": "MLflow is an open source platform for the machine learning lifecycle."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "mlflow",
@@ -8804,10 +10907,244 @@
     "dbczumar",
     "jaroslawk",
     "xhochy",
+    "janjagusch",
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
     "janjagusch"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "gunicorn <22",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=2.11",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "test ! -f $SP_DIR/pylint_plugins",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "gunicorn <22",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
    {
     "build": {
      "entry_points": [
@@ -9792,7 +12129,7 @@
    "summary": "MLflow is an open source platform for the machine learning lifecycle."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "mlflow",
@@ -9836,10 +12173,244 @@
     "dbczumar",
     "jaroslawk",
     "xhochy",
+    "janjagusch",
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
     "janjagusch"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "gunicorn <22",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=2.11",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "test ! -f $SP_DIR/pylint_plugins",
+      "pip check"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "gunicorn <22",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.sh",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
    {
     "build": {
      "entry_points": [
@@ -10836,7 +13407,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/mlflow.json"
  },
- "raw_meta_yaml": "{% set name = \"mlflow\" %}\n{% set version = \"2.11.1\" %}\n\npackage:\n  name: mlflow-split\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: a2ec29ee862f19955208fb8e05e51e5e9d2edc7175e37cf136d943b981a824e9\n\nbuild:\n  number: 0\n\noutputs:\n  - name: mlflow-skinny\n    script: build-mlflow.sh  # [unix]\n    script: build-mlflow.bat  # [win]\n    version: {{ version }}\n    build:\n      entry_points:\n        - mlflow=mlflow.cli:cli\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - pip\n        - python\n        - setuptools\n      run:\n        - click >=7.0,<9\n        - cloudpickle <4\n        - entrypoints <1\n        - gitpython >=2.1.0,<4\n        - packaging <24\n        - protobuf >=3.12.0,<5\n        - python\n        - pytz <2025\n        - pyyaml >=5.1,<7\n        - requests >=2.17.3,<3\n        - sqlparse >=0.4.0,<1\n        - importlib-metadata <8,>=3.7.0,!=4.7.0\n      run_constrained:\n        # mlflow[gateway] requirements as it is auto-imported if all dependencies are met\n        # See https://github.com/mlflow/mlflow/blob/045ab98cb4c08e71f0d740a0d5a033d6c69dcf8c/mlflow/__init__.py#L244-L249\n        - pydantic >=1.0,<3\n        - fastapi <1\n        - uvicorn-standard <1\n        - watchfiles <1\n        - aiohttp <4\n        - boto3 >=1.28.56,<2\n    test:\n      imports:\n        - mlflow\n        - mlflow.entities\n        - mlflow.projects\n        - mlflow.protos\n        - mlflow.rfunc\n        - mlflow.store\n        - mlflow.tracking\n        - mlflow.utils\n      commands:\n        - mlflow --help\n        - pip check\n        - set  # [win]\n      requires:\n        - pip\n  - name: mlflow\n    script: build-mlflow.sh  # [unix]\n    script: build-mlflow.bat  # [win]\n    version: {{ version }}\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - pip\n        - python\n        - setuptools\n        - {{ pin_subpackage('mlflow-ui', exact=True) }}\n      run:\n        - {{ pin_subpackage('mlflow-ui', exact=True) }}\n        - alembic <2,!=1.10\n        - docker-py >=4.0.0,<8\n        - flask <4\n        - gunicorn <22  # [not win]\n        - numpy <2\n        - pandas <3\n        - prometheus_flask_exporter <1\n        - querystring_parser <2\n        - scipy <2\n        - sqlalchemy >=1.4.0,<3\n        - waitress <4  # [win]\n        - scikit-learn <2\n        - pyarrow <16,>=4.0.0\n        - markdown <4,>=3.3\n        - jinja2 <4,>=3.0  # [win]\n        - jinja2 <4,>=2.11  # [not win]\n        - matplotlib-base <4\n        - graphene<4\n    test:\n      imports:\n        - mlflow\n        - mlflow.entities\n        - mlflow.models\n        - mlflow.projects\n        - mlflow.protos\n        - mlflow.pyfunc\n        - mlflow.pytorch\n        - mlflow.rfunc\n        - mlflow.sagemaker\n        - mlflow.server\n        - mlflow.server.prometheus_exporter\n        - mlflow.store\n        - mlflow.tracking\n        - mlflow.utils\n      commands:\n        - mlflow --help\n        - mlflow recipes --help\n        # This should not be packaged\n        - test ! -f $SP_DIR/pylint_plugins  # [unix]\n        - pip check\n        - set  # [win]\n      requires:\n        - pip\n\n  - name: mlflow-ui-dbg\n    version: {{ version }}\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - python\n        - pip\n        # Prevent solver errors with pandas\n        - setuptools\n        - {{ pin_subpackage('mlflow', exact=True) }}\n      run:\n        - python\n        - {{ pin_subpackage('mlflow', exact=True) }}\n    script: build-mlflow.bat  # [win]\n    script: build-mlflow.sh  # [unix]\n    test:\n      commands:\n        - exit 0\n\n  - name: mlflow-skinny-gateway\n    build:\n      noarch: python\n      # Skip this package for cross-builds. We will only need a single upload anyways\n      skip: true  # [not linux64]\n    requirements:\n      host:\n        - python\n        - pip\n        # Prevent solver errors with pandas\n        - setuptools\n        - {{ pin_subpackage('mlflow-skinny', exact=True) }}\n      run:\n        - python\n        - {{ pin_subpackage('mlflow-skinny', exact=True) }}\n        - pydantic >=1.0,<3\n        - fastapi <1\n        - uvicorn-standard <1\n        - watchfiles <1\n        - aiohttp <4\n        - boto3 >=1.28.56,<2\n    test:\n      imports:\n        - mlflow.gateway\n\n  - name: mlflow-gateway\n    build:\n      noarch: python\n      # Skip this package for cross-builds. We will only need a single upload anyways\n      skip: true  # [not linux64]\n    requirements:\n      host:\n        - python\n        - pip\n        # Prevent solver errors with pandas\n        - setuptools\n        - {{ pin_subpackage('mlflow', exact=True) }}\n        - {{ pin_subpackage('mlflow-skinny-gateway', exact=True) }}\n      run:\n        - python\n        - {{ pin_subpackage('mlflow', exact=True) }}\n        - {{ pin_subpackage('mlflow-skinny-gateway', exact=True) }}\n    test:\n      imports:\n        - mlflow.gateway\n\n\n  - name: mlflow-ui\n    version: {{ version }}\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - python\n        - pip\n        - setuptools\n        - {{ pin_subpackage('mlflow-skinny', exact=True) }}\n      run:\n        - python\n        - {{ pin_subpackage('mlflow-skinny', exact=True) }}\n        - flask <4\n        - gunicorn <22  # [not win]\n        - waitress <3  # [win]\n        - querystring_parser <2\n    script: build-mlflow.bat  # [win]\n    script: build-mlflow.sh  # [unix]\n    test:\n      commands:\n        - mlflow --help\n\n\nabout:\n  home: https://mlflow.org/\n  license: Apache-2.0\n  license_family: APACHE\n  license_file: LICENSE\n  summary: MLflow is an open source platform for the machine learning lifecycle.\n  doc_url: https://mlflow.org\n  dev_url: https://github.com/mlflow/mlflow\n\nextra:\n  feedstock-name: mlflow\n  recipe-maintainers:\n    - daniellok-db\n    - B-Step62\n    - serena-ruan\n    - BenWilson2\n    - WeichenXu123\n    - harupy\n    - dbczumar\n    - jaroslawk\n    - xhochy\n    - janjagusch\n",
+ "raw_meta_yaml": "{% set name = \"mlflow\" %}\n{% set version = \"2.11.1\" %}\n\npackage:\n  name: mlflow-split\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: a2ec29ee862f19955208fb8e05e51e5e9d2edc7175e37cf136d943b981a824e9\n\nbuild:\n  number: 1\n\noutputs:\n  - name: mlflow-skinny\n    script: build-mlflow.sh  # [unix]\n    script: build-mlflow.bat  # [win]\n    version: {{ version }}\n    build:\n      entry_points:\n        - mlflow=mlflow.cli:cli\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - pip\n        - python\n        - setuptools\n      run:\n        - click >=7.0,<9\n        - cloudpickle <4\n        - entrypoints <1\n        - gitpython >=2.1.0,<4\n        - packaging <24\n        - protobuf >=3.12.0,<5\n        - python\n        - pytz <2025\n        - pyyaml >=5.1,<7\n        - requests >=2.17.3,<3\n        - sqlparse >=0.4.0,<1\n        - importlib-metadata <8,>=3.7.0,!=4.7.0\n      run_constrained:\n        # mlflow[gateway] requirements as it is auto-imported if all dependencies are met\n        # See https://github.com/mlflow/mlflow/blob/045ab98cb4c08e71f0d740a0d5a033d6c69dcf8c/mlflow/__init__.py#L244-L249\n        - pydantic >=1.0,<3\n        - fastapi <1\n        - uvicorn-standard <1\n        - watchfiles <1\n        - aiohttp <4\n        - boto3 >=1.28.56,<2\n    test:\n      imports:\n        - mlflow\n        - mlflow.entities\n        - mlflow.projects\n        - mlflow.protos\n        - mlflow.rfunc\n        - mlflow.store\n        - mlflow.tracking\n        - mlflow.utils\n      commands:\n        - mlflow --help\n        - pip check\n        - set  # [win]\n      requires:\n        - pip\n  - name: mlflow\n    script: build-mlflow.sh  # [unix]\n    script: build-mlflow.bat  # [win]\n    version: {{ version }}\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - pip\n        - python\n        - setuptools\n        - {{ pin_subpackage('mlflow-ui', exact=True) }}\n      run:\n        - {{ pin_subpackage('mlflow-ui', exact=True) }}\n        - alembic <2,!=1.10\n        - docker-py >=4.0.0,<8\n        - flask <4\n        - gunicorn <22  # [not win]\n        - numpy <2\n        - pandas <3\n        - prometheus_flask_exporter <1\n        - querystring_parser <2\n        - scipy <2\n        - sqlalchemy >=1.4.0,<3\n        - waitress <4  # [win]\n        - scikit-learn <2\n        - pyarrow <16,>=4.0.0\n        - markdown <4,>=3.3\n        - jinja2 <4,>=3.0  # [win]\n        - jinja2 <4,>=2.11  # [not win]\n        - matplotlib-base <4\n        - graphene<4\n    test:\n      imports:\n        - mlflow\n        - mlflow.entities\n        - mlflow.models\n        - mlflow.projects\n        - mlflow.protos\n        - mlflow.pyfunc\n        - mlflow.pytorch\n        - mlflow.rfunc\n        - mlflow.sagemaker\n        - mlflow.server\n        - mlflow.server.prometheus_exporter\n        - mlflow.store\n        - mlflow.tracking\n        - mlflow.utils\n      commands:\n        - mlflow --help\n        - mlflow recipes --help\n        # This should not be packaged\n        - test ! -f $SP_DIR/pylint_plugins  # [unix]\n        - pip check\n        - set  # [win]\n      requires:\n        - pip\n\n  - name: mlflow-ui-dbg\n    version: {{ version }}\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - python\n        - pip\n        # Prevent solver errors with pandas\n        - setuptools\n        - {{ pin_subpackage('mlflow', exact=True) }}\n      run:\n        - python\n        - {{ pin_subpackage('mlflow', exact=True) }}\n    script: build-mlflow.bat  # [win]\n    script: build-mlflow.sh  # [unix]\n    test:\n      commands:\n        - exit 0\n\n  - name: mlflow-skinny-gateway\n    build:\n      noarch: python\n      # Skip this package for cross-builds. We will only need a single upload anyways\n      skip: true  # [not linux64]\n    requirements:\n      host:\n        - python\n        - pip\n        # Prevent solver errors with pandas\n        - setuptools\n        - {{ pin_subpackage('mlflow-skinny', exact=True) }}\n      run:\n        - python\n        - {{ pin_subpackage('mlflow-skinny', exact=True) }}\n        - pydantic >=1.0,<3\n        - fastapi <1\n        - uvicorn-standard <1\n        - watchfiles <1\n        - aiohttp <4\n        - boto3 >=1.28.56,<2\n    test:\n      imports:\n        - mlflow.gateway\n\n  - name: mlflow-gateway\n    build:\n      noarch: python\n      # Skip this package for cross-builds. We will only need a single upload anyways\n      skip: true  # [not linux64]\n    requirements:\n      host:\n        - python\n        - pip\n        # Prevent solver errors with pandas\n        - setuptools\n        - {{ pin_subpackage('mlflow', exact=True) }}\n        - {{ pin_subpackage('mlflow-skinny-gateway', exact=True) }}\n      run:\n        - python\n        - {{ pin_subpackage('mlflow', exact=True) }}\n        - {{ pin_subpackage('mlflow-skinny-gateway', exact=True) }}\n    test:\n      imports:\n        - mlflow.gateway\n\n\n  - name: mlflow-ui\n    version: {{ version }}\n    requirements:\n      build:\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - python\n        - pip\n        - setuptools\n        - {{ pin_subpackage('mlflow-skinny', exact=True) }}\n      run:\n        - python\n        - {{ pin_subpackage('mlflow-skinny', exact=True) }}\n        - flask <4\n        - gunicorn <22  # [not win]\n        - waitress <3  # [win]\n        - querystring_parser <2\n    script: build-mlflow.bat  # [win]\n    script: build-mlflow.sh  # [unix]\n    test:\n      commands:\n        - mlflow --help\n\n\nabout:\n  home: https://mlflow.org/\n  license: Apache-2.0\n  license_family: APACHE\n  license_file: LICENSE\n  summary: MLflow is an open source platform for the machine learning lifecycle.\n  doc_url: https://mlflow.org\n  dev_url: https://github.com/mlflow/mlflow\n\nextra:\n  feedstock-name: mlflow\n  recipe-maintainers:\n    - daniellok-db\n    - B-Step62\n    - serena-ruan\n    - BenWilson2\n    - WeichenXu123\n    - harupy\n    - dbczumar\n    - jaroslawk\n    - xhochy\n    - janjagusch\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -11038,7 +13609,7 @@
    "summary": "MLflow is an open source platform for the machine learning lifecycle."
   },
   "build": {
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "feedstock-name": "mlflow",
@@ -11082,10 +13653,245 @@
     "dbczumar",
     "jaroslawk",
     "xhochy",
+    "janjagusch",
+    "daniellok-db",
+    "B-Step62",
+    "serena-ruan",
+    "BenWilson2",
+    "WeichenXu123",
+    "harupy",
+    "dbczumar",
+    "jaroslawk",
+    "xhochy",
     "janjagusch"
    ]
   },
   "outputs": [
+   {
+    "build": {
+     "entry_points": [
+      "mlflow=mlflow.cli:cli"
+     ]
+    },
+    "name": "mlflow-skinny",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools"
+     ],
+     "run": [
+      "click >=7.0,<9",
+      "cloudpickle <4",
+      "entrypoints <1",
+      "gitpython >=2.1.0,<4",
+      "packaging <24",
+      "protobuf >=3.12.0,<5",
+      "python",
+      "pytz <2025",
+      "pyyaml >=5.1,<7",
+      "requests >=2.17.3,<3",
+      "sqlparse >=0.4.0,<1",
+      "importlib-metadata <8,>=3.7.0,!=4.7.0"
+     ],
+     "run_constrained": [
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "script": "build-mlflow.bat",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "pip check",
+      "set"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.rfunc",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow",
+    "requirements": {
+     "build": [],
+     "host": [
+      "pip",
+      "python",
+      "setuptools",
+      "mlflow-ui"
+     ],
+     "run": [
+      "mlflow-ui",
+      "alembic <2,!=1.10",
+      "docker-py >=4.0.0,<8",
+      "flask <4",
+      "numpy <2",
+      "pandas <3",
+      "prometheus_flask_exporter <1",
+      "querystring_parser <2",
+      "scipy <2",
+      "sqlalchemy >=1.4.0,<3",
+      "waitress <4",
+      "scikit-learn <2",
+      "pyarrow <16,>=4.0.0",
+      "markdown <4,>=3.3",
+      "jinja2 <4,>=3.0",
+      "matplotlib-base <4",
+      "graphene<4"
+     ]
+    },
+    "script": "build-mlflow.bat",
+    "test": {
+     "commands": [
+      "mlflow --help",
+      "mlflow recipes --help",
+      "pip check",
+      "set"
+     ],
+     "imports": [
+      "mlflow",
+      "mlflow.entities",
+      "mlflow.models",
+      "mlflow.projects",
+      "mlflow.protos",
+      "mlflow.pyfunc",
+      "mlflow.pytorch",
+      "mlflow.rfunc",
+      "mlflow.sagemaker",
+      "mlflow.server",
+      "mlflow.server.prometheus_exporter",
+      "mlflow.store",
+      "mlflow.tracking",
+      "mlflow.utils"
+     ],
+     "requires": [
+      "pip"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "name": "mlflow-ui-dbg",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow"
+     ],
+     "run": [
+      "python",
+      "mlflow"
+     ]
+    },
+    "script": "build-mlflow.bat",
+    "test": {
+     "commands": [
+      "exit 0"
+     ]
+    },
+    "version": "2.11.1"
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-skinny-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "pydantic >=1.0,<3",
+      "fastapi <1",
+      "uvicorn-standard <1",
+      "watchfiles <1",
+      "aiohttp <4",
+      "boto3 >=1.28.56,<2"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "skip": true
+    },
+    "name": "mlflow-gateway",
+    "requirements": {
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ],
+     "run": [
+      "python",
+      "mlflow",
+      "mlflow-skinny-gateway"
+     ]
+    },
+    "test": {
+     "imports": [
+      "mlflow.gateway"
+     ]
+    }
+   },
+   {
+    "name": "mlflow-ui",
+    "requirements": {
+     "build": [],
+     "host": [
+      "python",
+      "pip",
+      "setuptools",
+      "mlflow-skinny"
+     ],
+     "run": [
+      "python",
+      "mlflow-skinny",
+      "flask <4",
+      "waitress <3",
+      "querystring_parser <2"
+     ]
+    },
+    "script": "build-mlflow.bat",
+    "test": {
+     "commands": [
+      "mlflow --help"
+     ]
+    },
+    "version": "2.11.1"
+   },
    {
     "build": {
      "entry_points": [
