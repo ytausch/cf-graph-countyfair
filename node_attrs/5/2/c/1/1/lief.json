@@ -36,6 +36,7 @@
   "extra": {
    "recipe-maintainers": [
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv"
@@ -62,12 +63,15 @@
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
       "liblief",
@@ -76,6 +80,9 @@
     },
     "script": "install-py-lief.sh",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -102,10 +109,30 @@
      ],
      "host": [
       "nlohmann_json"
-     ]
+     ],
+     "run": []
     },
     "script": "install-liblief.sh",
     "test": {
+     "commands": [
+      "set -x",
+      "pushd tests",
+      "PATH=\".:${PATH}\"",
+      "findstr() { grep \"${@}\"; }",
+      "call() { true; }",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-self || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-macho macOS-libpython2.7.a-getbuildinfo.o > output.txt || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -114,14 +141,13 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    }
   ],
   "package": {
    "name": "lief",
-   "version": "0.12.3"
+   "version": "0.14.1"
   },
   "requirements": {
    "build": [
@@ -129,7 +155,6 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "pkg-config",
-    "patch",
     "cmake",
     "ninja"
    ],
@@ -140,13 +165,12 @@
   "source": [
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    }
   ]
  },
@@ -159,7 +183,6 @@
     "cmake",
     "cxx_compiler_stub",
     "ninja",
-    "patch",
     "pkg-config"
    ]
   },
@@ -169,9 +192,12 @@
     "liblief",
     "nlohmann_json",
     "pip",
-    "pybind11",
+    "pydantic",
+    "pydantic-core",
     "python",
-    "setuptools"
+    "scikit-build-core",
+    "setuptools",
+    "tomli"
    ]
   },
   "run": {
@@ -208,6 +234,7 @@
   "extra": {
    "recipe-maintainers": [
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv"
@@ -234,12 +261,15 @@
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
       "liblief",
@@ -248,6 +278,9 @@
     },
     "script": "install-py-lief.sh",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -274,10 +307,30 @@
      ],
      "host": [
       "nlohmann_json"
-     ]
+     ],
+     "run": []
     },
     "script": "install-liblief.sh",
     "test": {
+     "commands": [
+      "set -x",
+      "pushd tests",
+      "PATH=\".:${PATH}\"",
+      "findstr() { grep \"${@}\"; }",
+      "call() { true; }",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-self || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-macho macOS-libpython2.7.a-getbuildinfo.o > output.txt || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -286,14 +339,13 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    }
   ],
   "package": {
    "name": "lief",
-   "version": "0.12.3"
+   "version": "0.14.1"
   },
   "requirements": {
    "build": [
@@ -301,7 +353,6 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "pkg-config",
-    "patch",
     "cmake",
     "ninja"
    ],
@@ -312,13 +363,12 @@
   "source": [
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    }
   ]
  },
@@ -331,7 +381,6 @@
     "cmake",
     "cxx_compiler_stub",
     "ninja",
-    "patch",
     "pkg-config"
    ]
   },
@@ -341,9 +390,12 @@
     "liblief",
     "nlohmann_json",
     "pip",
-    "pybind11",
+    "pydantic",
+    "pydantic-core",
     "python",
-    "setuptools"
+    "scikit-build-core",
+    "setuptools",
+    "tomli"
    ]
   },
   "run": {
@@ -380,6 +432,7 @@
   "extra": {
    "recipe-maintainers": [
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv"
@@ -406,12 +459,15 @@
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
       "liblief",
@@ -420,6 +476,9 @@
     },
     "script": "install-py-lief.sh",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -446,10 +505,30 @@
      ],
      "host": [
       "nlohmann_json"
-     ]
+     ],
+     "run": []
     },
     "script": "install-liblief.sh",
     "test": {
+     "commands": [
+      "set -x",
+      "pushd tests",
+      "PATH=\".:${PATH}\"",
+      "findstr() { grep \"${@}\"; }",
+      "call() { true; }",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-self || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-macho macOS-libpython2.7.a-getbuildinfo.o > output.txt || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -458,14 +537,13 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    }
   ],
   "package": {
    "name": "lief",
-   "version": "0.12.3"
+   "version": "0.14.1"
   },
   "requirements": {
    "build": [
@@ -473,7 +551,6 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "pkg-config",
-    "patch",
     "cmake",
     "ninja"
    ],
@@ -484,13 +561,12 @@
   "source": [
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    }
   ]
  },
@@ -503,7 +579,6 @@
     "cmake",
     "cxx_compiler_stub",
     "ninja",
-    "patch",
     "pkg-config"
    ]
   },
@@ -513,9 +588,12 @@
     "liblief",
     "nlohmann_json",
     "pip",
-    "pybind11",
+    "pydantic",
+    "pydantic-core",
     "python",
-    "setuptools"
+    "scikit-build-core",
+    "setuptools",
+    "tomli"
    ]
   },
   "run": {
@@ -552,26 +630,32 @@
   "extra": {
    "recipe-maintainers": [
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv",
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv",
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv",
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv",
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv",
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv"
@@ -598,12 +682,15 @@
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
       "liblief",
@@ -612,6 +699,9 @@
     },
     "script": "install-py-lief.sh",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -638,10 +728,30 @@
      ],
      "host": [
       "nlohmann_json"
-     ]
+     ],
+     "run": []
     },
     "script": "install-liblief.sh",
     "test": {
+     "commands": [
+      "set -x",
+      "pushd tests",
+      "PATH=\".:${PATH}\"",
+      "findstr() { grep \"${@}\"; }",
+      "call() { true; }",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-self || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-macho macOS-libpython2.7.a-getbuildinfo.o > output.txt || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -650,8 +760,7 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    },
    {
@@ -674,12 +783,15 @@
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
       "liblief",
@@ -688,6 +800,9 @@
     },
     "script": "install-py-lief.sh",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -714,10 +829,30 @@
      ],
      "host": [
       "nlohmann_json"
-     ]
+     ],
+     "run": []
     },
     "script": "install-liblief.sh",
     "test": {
+     "commands": [
+      "set -x",
+      "pushd tests",
+      "PATH=\".:${PATH}\"",
+      "findstr() { grep \"${@}\"; }",
+      "call() { true; }",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-self || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-macho macOS-libpython2.7.a-getbuildinfo.o > output.txt || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -726,8 +861,7 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    },
    {
@@ -750,12 +884,15 @@
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
       "liblief",
@@ -764,6 +901,9 @@
     },
     "script": "install-py-lief.sh",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -790,10 +930,30 @@
      ],
      "host": [
       "nlohmann_json"
-     ]
+     ],
+     "run": []
     },
     "script": "install-liblief.sh",
     "test": {
+     "commands": [
+      "set -x",
+      "pushd tests",
+      "PATH=\".:${PATH}\"",
+      "findstr() { grep \"${@}\"; }",
+      "call() { true; }",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-self || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-macho macOS-libpython2.7.a-getbuildinfo.o > output.txt || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -802,8 +962,7 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    },
    {
@@ -826,20 +985,27 @@
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
+      "__osx >=10.13",
       "liblief",
       "python"
      ]
     },
     "script": "install-py-lief.sh",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -866,10 +1032,32 @@
      ],
      "host": [
       "nlohmann_json"
+     ],
+     "run": [
+      "__osx >=10.13"
      ]
     },
     "script": "install-liblief.sh",
     "test": {
+     "commands": [
+      "set -x",
+      "pushd tests",
+      "PATH=\".:${PATH}\"",
+      "findstr() { grep \"${@}\"; }",
+      "call() { true; }",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-self || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-macho macOS-libpython2.7.a-getbuildinfo.o > output.txt || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -878,8 +1066,7 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    },
    {
@@ -902,12 +1089,15 @@
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
       "liblief",
@@ -916,6 +1106,9 @@
     },
     "script": "install-py-lief.sh",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -942,10 +1135,30 @@
      ],
      "host": [
       "nlohmann_json"
-     ]
+     ],
+     "run": []
     },
     "script": "install-liblief.sh",
     "test": {
+     "commands": [
+      "set -x",
+      "pushd tests",
+      "PATH=\".:${PATH}\"",
+      "findstr() { grep \"${@}\"; }",
+      "call() { true; }",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-self || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-macho macOS-libpython2.7.a-getbuildinfo.o > output.txt || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -954,8 +1167,7 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    },
    {
@@ -973,18 +1185,19 @@
       "ccache",
       "c_compiler_stub",
       "cxx_compiler_stub",
-      "m2-patch",
-      "m2-gcc-libs",
       "cmake",
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
       "liblief",
@@ -993,6 +1206,9 @@
     },
     "script": "install-py-lief.bat",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -1018,10 +1234,25 @@
      ],
      "host": [
       "nlohmann_json"
-     ]
+     ],
+     "run": []
     },
     "script": "install-liblief.bat",
     "test": {
+     "commands": [
+      "echo on",
+      "pushd tests",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -1030,14 +1261,13 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    }
   ],
   "package": {
    "name": "lief",
-   "version": "0.12.3"
+   "version": "0.14.1"
   },
   "requirements": {
    "build": [
@@ -1045,42 +1275,35 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "pkg-config",
-    "patch",
     "cmake",
     "ninja",
     "ccache",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "pkg-config",
-    "patch",
     "cmake",
     "ninja",
     "ccache",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "pkg-config",
-    "patch",
     "cmake",
     "ninja",
     "ccache",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "pkg-config",
-    "patch",
     "cmake",
     "ninja",
     "ccache",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "pkg-config",
-    "patch",
     "cmake",
     "ninja",
     "ccache",
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "m2-patch",
-    "m2-gcc-libs",
     "cmake",
     "ninja"
    ],
@@ -1096,63 +1319,57 @@
   "source": [
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    },
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    },
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    },
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    },
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    },
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    }
   ]
  },
@@ -1174,6 +1391,7 @@
   "extra": {
    "recipe-maintainers": [
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv"
@@ -1200,20 +1418,27 @@
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
+      "__osx >=10.13",
       "liblief",
       "python"
      ]
     },
     "script": "install-py-lief.sh",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -1240,10 +1465,32 @@
      ],
      "host": [
       "nlohmann_json"
+     ],
+     "run": [
+      "__osx >=10.13"
      ]
     },
     "script": "install-liblief.sh",
     "test": {
+     "commands": [
+      "set -x",
+      "pushd tests",
+      "PATH=\".:${PATH}\"",
+      "findstr() { grep \"${@}\"; }",
+      "call() { true; }",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-self || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-macho macOS-libpython2.7.a-getbuildinfo.o > output.txt || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -1252,14 +1499,13 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    }
   ],
   "package": {
    "name": "lief",
-   "version": "0.12.3"
+   "version": "0.14.1"
   },
   "requirements": {
    "build": [
@@ -1267,7 +1513,6 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "pkg-config",
-    "patch",
     "cmake",
     "ninja"
    ],
@@ -1278,13 +1523,12 @@
   "source": [
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    }
   ]
  },
@@ -1297,7 +1541,6 @@
     "cmake",
     "cxx_compiler_stub",
     "ninja",
-    "patch",
     "pkg-config"
    ]
   },
@@ -1307,14 +1550,18 @@
     "liblief",
     "nlohmann_json",
     "pip",
-    "pybind11",
+    "pydantic",
+    "pydantic-core",
     "python",
-    "setuptools"
+    "scikit-build-core",
+    "setuptools",
+    "tomli"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
+    "__osx",
     "liblief",
     "python"
    ]
@@ -1346,6 +1593,7 @@
   "extra": {
    "recipe-maintainers": [
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv"
@@ -1372,12 +1620,15 @@
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
       "liblief",
@@ -1386,6 +1637,9 @@
     },
     "script": "install-py-lief.sh",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -1412,10 +1666,30 @@
      ],
      "host": [
       "nlohmann_json"
-     ]
+     ],
+     "run": []
     },
     "script": "install-liblief.sh",
     "test": {
+     "commands": [
+      "set -x",
+      "pushd tests",
+      "PATH=\".:${PATH}\"",
+      "findstr() { grep \"${@}\"; }",
+      "call() { true; }",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-self || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "test-lief-macho macOS-libpython2.7.a-getbuildinfo.o > output.txt || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -1424,14 +1698,13 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    }
   ],
   "package": {
    "name": "lief",
-   "version": "0.12.3"
+   "version": "0.14.1"
   },
   "requirements": {
    "build": [
@@ -1439,7 +1712,6 @@
     "c_compiler_stub",
     "cxx_compiler_stub",
     "pkg-config",
-    "patch",
     "cmake",
     "ninja"
    ],
@@ -1450,13 +1722,12 @@
   "source": [
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    }
   ]
  },
@@ -1469,7 +1740,6 @@
     "cmake",
     "cxx_compiler_stub",
     "ninja",
-    "patch",
     "pkg-config"
    ]
   },
@@ -1479,9 +1749,12 @@
     "liblief",
     "nlohmann_json",
     "pip",
-    "pybind11",
+    "pydantic",
+    "pydantic-core",
     "python",
-    "setuptools"
+    "scikit-build-core",
+    "setuptools",
+    "tomli"
    ]
   },
   "run": {
@@ -1520,25 +1793,26 @@
  "pr_info": {
   "__lazy_json__": "pr_info/lief.json"
  },
- "raw_meta_yaml": "{% set version = \"0.12.3\" %}\n\npackage:\n  name: lief\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/lief-project/LIEF/archive/{{ version }}.tar.gz\n    sha256: 762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf\n    patches:\n      - 0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch\n      - 0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch\n      - 0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch\n      - 0004-Add-boost-throw_exception-implementation.patch\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - ccache\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - pkg-config            # [not win]\n    - patch  # [not win]\n    - m2-patch  # [win]\n    - m2-gcc-libs  # [win]\n    - cmake\n    - ninja\n  host:\n    - nlohmann_json\n\noutputs:\n  - name: py-lief\n    script: install-py-lief.sh  # [unix]\n    script: install-py-lief.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('py-lief', max_pin='x.x') }}\n      ignore_run_exports:\n        - python\n    requirements:\n      build:\n        - ccache\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - pkg-config            # [not win]\n        # When making a debug build on Windows, we need to patch CMake downloaded pybind11. Sorry.\n        - m2-patch  # [win]\n        - m2-gcc-libs  # [win]\n        - cmake\n        - ninja\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n      host:\n        - {{ pin_subpackage('liblief', exact=True) }}\n        - python\n        - setuptools\n        - pip\n        - pybind11\n        - nlohmann_json\n      run:\n        - {{ pin_subpackage('liblief', exact=True) }}\n        - python\n    test:\n      requires:\n        - {{ compiler('cxx') }}\n      imports:\n        - lief\n\n  - name: liblief\n    script: install-liblief.sh  # [unix]\n    script: install-liblief.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('liblief', max_pin='x.x') }}\n    requirements:\n      build:\n        - ccache\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - pkg-config            # [not win]\n        - cmake\n        - ninja\n      host:\n        - nlohmann_json\n    test:\n      files:\n        - tests\n      script: run_test_liblief.sh\n      requires:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n\nabout:\n  home: https://lief.quarkslab.com/\n  license: Apache-2.0\n  license_file: LICENSE\n  license_family: Apache\n  summary: A cross platform library to parse, modify and abstract ELF, PE and MachO formats.\n  description: |\n    It turns out that many projects need to parse executable formats and they usually re-implement\n    their own parser. Moreover these parsers are usually bound to one language.\n    LIEF attempts to fill this void.\n  doc_url: https://lief.quarkslab.com/doc/stable/index.html\n  doc_source_url: https://github.com/lief-project/LIEF/tree/master/doc\n\nextra:\n  recipe-maintainers:\n    - isuruf\n    - msarahan\n    - xhochy\n    - wolfv\n",
+ "raw_meta_yaml": "{% set version = \"0.14.1\" %}\n\npackage:\n  name: lief\n  version: {{ version }}\n\nsource:\n  - url: https://github.com/lief-project/LIEF/archive/{{ version }}.tar.gz\n    sha256: 92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d\n    patches:\n      - 0001-Inject-proper-extension-module-suffix-via-env-var.patch\n      # Upstream does not support dynamic linking to libLIEF from the Python\n      # extension module. To make this work, we need to export symbols from\n      # libLIEF which the module uses.\n      # Since it offers few (any?) real advantages, we may want to drop dynamic\n      # linking in the future and link libLIEF statically for py-lief, too.\n      - 0002-Dynamically-link-Python-library-to-libLIEF.patch\n      - 0003-Export-symbols-used-by-Python-library-from-libLIEF.patch\n\nbuild:\n  number: 0\n\nrequirements:\n  build:\n    - python                                 # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n    - ccache\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - pkg-config            # [not win]\n    - cmake\n    - ninja\n  host:\n    - nlohmann_json\n\noutputs:\n  - name: py-lief\n    script: install-py-lief.sh  # [unix]\n    script: install-py-lief.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('py-lief', max_pin='x.x') }}\n      ignore_run_exports:\n        - python\n    requirements:\n      build:\n        - ccache\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - pkg-config            # [not win]\n        - cmake\n        - ninja\n        - python                                 # [build_platform != target_platform]\n        - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n        - pydantic >=2.4.2                       # [build_platform != target_platform]\n        - pydantic-core >=2.10.1                 # [build_platform != target_platform]\n        - scikit-build-core >=0.6.0              # [build_platform != target_platform]\n        - setuptools >=68.2.2                    # [build_platform != target_platform]\n        - tomli >=2.0.1                          # [build_platform != target_platform]\n      host:\n        - nlohmann_json\n        # Dynamically linked to libLIEF for now; see comment in patch section.\n        - {{ pin_subpackage('liblief', exact=True) }}\n        - python\n        - pip\n        # Upstream pins build dependencies exactly; we are a bit more lenient\n        # here to avoid potential solvability issues.\n        - pydantic >=2.4.2\n        - pydantic-core >=2.10.1\n        - scikit-build-core >=0.6.0\n        - setuptools >=68.2.2\n        - tomli >=2.0.1\n      run:\n        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.13\") }}  # [osx and x86_64]\n        - {{ pin_subpackage('liblief', exact=True) }}\n        - python\n    test:\n      requires:\n        - {{ compiler('cxx') }}\n      imports:\n        - lief\n      commands:\n        # Test general functionality by introspecting inter-subpackage linkage.\n        - python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\"\n\n  - name: liblief\n    script: install-liblief.sh  # [unix]\n    script: install-liblief.bat  # [win]\n    build:\n      run_exports:\n        - {{ pin_subpackage('liblief', max_pin='x.x') }}\n    requirements:\n      build:\n        - ccache\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - pkg-config            # [not win]\n        - cmake\n        - ninja\n      host:\n        - nlohmann_json\n      run:\n        - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default(\"10.13\") }}  # [osx and x86_64]\n    test:\n      files:\n        - tests\n      commands:\n        - set -x   # [not win]\n        - echo on  # [win]\n        - pushd tests\n        # Aid uniform tests below: Put current dir bluntly on PATH; alias \"findstr\"->\"grep\", \"call;\"->\"true\".\n        - PATH=\".:${PATH}\"            # [not win]\n        - findstr() { grep \"${@}\"; }  # [not win]\n        - call() { true; }            # [not win]\n\n        - pushd self\n        - cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1\n        - ninja || exit 1\n        # FIXME: Actual test disabled on Windows for now; LIEF::Parser::parse does not finish on Windows.\n        - test-lief-self || exit 1  # [not win]\n        - popd\n\n        - pushd macho\n        - cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1\n        - ninja || exit 1\n        # This MachO object has no DynamicSymbolCommand, testing for bug fixed in PR:\n        # https://github.com/lief-project/LIEF/pull/262\n        # FIXME: Actual test disabled on Windows for now; LIEF::MachO::Parser::parse does not finish on Windows.\n        - test-lief-macho macOS-libpython2.7.a-getbuildinfo.o > output.txt || exit 1  # [not win]\n        - findstr has_dynamic_symbol_command output.txt && exit 1 || call;\n        - popd\n\n        - popd\n      requires:\n        - {{ compiler('c') }}\n        - {{ compiler('cxx') }}\n        - cmake\n        - ninja\n\nabout:\n  home: https://lief.quarkslab.com/\n  license: Apache-2.0\n  license_file: LICENSE\n  license_family: Apache\n  summary: A cross platform library to parse, modify and abstract ELF, PE and MachO formats.\n  description: |\n    It turns out that many projects need to parse executable formats and they usually re-implement\n    their own parser. Moreover these parsers are usually bound to one language.\n    LIEF attempts to fill this void.\n  doc_url: https://lief.quarkslab.com/doc/stable/index.html\n  doc_source_url: https://github.com/lief-project/LIEF/tree/master/doc\n\nextra:\n  recipe-maintainers:\n    - isuruf\n    - mbargull\n    - msarahan\n    - xhochy\n    - wolfv\n",
  "req": {
   "__set__": true,
   "elements": [
+   "__osx",
    "c_compiler_stub",
    "ccache",
    "cmake",
    "cxx_compiler_stub",
    "liblief",
-   "m2-gcc-libs",
-   "m2-patch",
    "ninja",
    "nlohmann_json",
-   "patch",
    "pip",
    "pkg-config",
-   "pybind11",
+   "pydantic",
+   "pydantic-core",
    "python",
-   "setuptools"
+   "scikit-build-core",
+   "setuptools",
+   "tomli"
   ]
  },
  "requirements": {
@@ -1549,10 +1823,7 @@
     "ccache",
     "cmake",
     "cxx_compiler_stub",
-    "m2-gcc-libs",
-    "m2-patch",
     "ninja",
-    "patch",
     "pkg-config"
    ]
   },
@@ -1564,14 +1835,18 @@
     "liblief",
     "nlohmann_json",
     "pip",
-    "pybind11",
+    "pydantic",
+    "pydantic-core",
     "python",
-    "setuptools"
+    "scikit-build-core",
+    "setuptools",
+    "tomli"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
+    "__osx",
     "c_compiler_stub",
     "cxx_compiler_stub",
     "liblief",
@@ -1597,10 +1872,7 @@
     "ccache",
     "cmake",
     "cxx_compiler_stub",
-    "m2-gcc-libs",
-    "m2-patch",
     "ninja",
-    "patch",
     "pkg-config"
    ]
   },
@@ -1610,14 +1882,18 @@
     "liblief",
     "nlohmann_json",
     "pip",
-    "pybind11",
+    "pydantic >=2.4.2",
+    "pydantic-core >=2.10.1",
     "python",
-    "setuptools"
+    "scikit-build-core >=0.6.0",
+    "setuptools >=68.2.2",
+    "tomli >=2.0.1"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
+    "__osx >=10.13",
     "liblief",
     "python"
    ]
@@ -1632,8 +1908,8 @@
    ]
   }
  },
- "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz",
- "version": "0.12.3",
+ "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz",
+ "version": "0.14.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/lief.json"
  },
@@ -1654,6 +1930,7 @@
   "extra": {
    "recipe-maintainers": [
     "isuruf",
+    "mbargull",
     "msarahan",
     "xhochy",
     "wolfv"
@@ -1675,18 +1952,19 @@
       "ccache",
       "c_compiler_stub",
       "cxx_compiler_stub",
-      "m2-patch",
-      "m2-gcc-libs",
       "cmake",
       "ninja"
      ],
      "host": [
+      "nlohmann_json",
       "liblief",
       "python",
-      "setuptools",
       "pip",
-      "pybind11",
-      "nlohmann_json"
+      "pydantic >=2.4.2",
+      "pydantic-core >=2.10.1",
+      "scikit-build-core >=0.6.0",
+      "setuptools >=68.2.2",
+      "tomli >=2.0.1"
      ],
      "run": [
       "liblief",
@@ -1695,6 +1973,9 @@
     },
     "script": "install-py-lief.bat",
     "test": {
+     "commands": [
+      "python -c \"import ctypes.util, lief; missing = {name for name in {s.name for s in lief.parse(lief._lief.__file__).imported_functions} - {s.name for s in lief.parse(ctypes.util.find_library('LIEF')).exported_functions} if '4LIEF' in name}; assert not missing, missing\""
+     ],
      "imports": [
       "lief"
      ],
@@ -1720,10 +2001,25 @@
      ],
      "host": [
       "nlohmann_json"
-     ]
+     ],
+     "run": []
     },
     "script": "install-liblief.bat",
     "test": {
+     "commands": [
+      "echo on",
+      "pushd tests",
+      "pushd self",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "popd",
+      "pushd macho",
+      "cmake -G \"Ninja\" -DCMAKE_BUILD_TYPE=Debug . || exit 1",
+      "ninja || exit 1",
+      "findstr has_dynamic_symbol_command output.txt && exit 1 || call;",
+      "popd",
+      "popd"
+     ],
      "files": [
       "tests"
      ],
@@ -1732,22 +2028,19 @@
       "cxx_compiler_stub",
       "cmake",
       "ninja"
-     ],
-     "script": "run_test_liblief.sh"
+     ]
     }
    }
   ],
   "package": {
    "name": "lief",
-   "version": "0.12.3"
+   "version": "0.14.1"
   },
   "requirements": {
    "build": [
     "ccache",
     "c_compiler_stub",
     "cxx_compiler_stub",
-    "m2-patch",
-    "m2-gcc-libs",
     "cmake",
     "ninja"
    ],
@@ -1758,13 +2051,12 @@
   "source": [
    {
     "patches": [
-     "0001-python-Only-pass-NODEFAULTLIB-MSVCRT-when-not-BUILD_.patch",
-     "0002-Call-the-C-DLL-libLIEF.dll-so-it-does-not-clash-with.patch",
-     "0003-Add-LIEFOptions-for-BUILD_STATIC_LIBS-and-BUILD_SHAR.patch",
-     "0004-Add-boost-throw_exception-implementation.patch"
+     "0001-Inject-proper-extension-module-suffix-via-env-var.patch",
+     "0002-Dynamically-link-Python-library-to-libLIEF.patch",
+     "0003-Export-symbols-used-by-Python-library-from-libLIEF.patch"
     ],
-    "sha256": "762925ad2eed642a6e7ef2cc899bcd3e93a40a2ce1dd2391d9b9ecadfe6438cf",
-    "url": "https://github.com/lief-project/LIEF/archive/0.12.3.tar.gz"
+    "sha256": "92916dcb3178353d863aef4f409186889983c56e025b774741d5316a72ec3a7d",
+    "url": "https://github.com/lief-project/LIEF/archive/0.14.1.tar.gz"
    }
   ]
  },
@@ -1776,8 +2068,6 @@
     "ccache",
     "cmake",
     "cxx_compiler_stub",
-    "m2-gcc-libs",
-    "m2-patch",
     "ninja"
    ]
   },
@@ -1787,9 +2077,12 @@
     "liblief",
     "nlohmann_json",
     "pip",
-    "pybind11",
+    "pydantic",
+    "pydantic-core",
     "python",
-    "setuptools"
+    "scikit-build-core",
+    "setuptools",
+    "tomli"
    ]
   },
   "run": {
