@@ -25,8 +25,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -34,44 +33,93 @@
     "thewchan"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "python -m pip install . --no-deps --no-build-isolation -vv"
+    },
+    "name": "sqlglot",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest -vvv --capture=tee-sys tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   },
+   {
+    "build": {
+     "nochar": "python",
+     "script": "echo Nothing to do."
+    },
+    "name": "sqlglot-rs",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7",
+      "sqlglot",
+      "sqlglotrs"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "rm tests/test_optimizer.py",
+      "rm tests/test_executor.py",
+      "pytest -vvv --capture=tee-sys -k tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   }
+  ],
   "package": {
    "name": "sqlglot",
    "version": "22.3.1"
   },
-  "requirements": {
-   "host": [
-    "pip",
-    "python >=3.7",
-    "setuptools_scm"
-   ],
-   "run": [
-    "python >=3.7"
-   ]
-  },
   "source": {
    "sha256": "ee2985b40601c7b553f17c2c13685f9f831bdfe3edba78fb7b385fc55c5a8a30",
    "url": "https://pypi.io/packages/source/s/sqlglot/sqlglot-22.3.1.tar.gz"
-  },
-  "test": {
-   "commands": [
-    "pip check",
-    "pytest -vvv --capture=tee-sys tests"
-   ],
-   "imports": [
-    "sqlglot"
-   ],
-   "requires": [
-    "openjdk",
-    "pip",
-    "pandas",
-    "pyspark",
-    "pytest",
-    "python-dateutil",
-    "python-duckdb >=0.6"
-   ],
-   "source_files": [
-    "tests"
-   ]
   }
  },
  "linux_64_requirements": {
@@ -90,7 +138,9 @@
   "run": {
    "__set__": true,
    "elements": [
-    "python"
+    "python",
+    "sqlglot",
+    "sqlglotrs"
    ]
   },
   "test": {
@@ -101,8 +151,7 @@
     "pip",
     "pyspark",
     "pytest",
-    "python-dateutil",
-    "python-duckdb"
+    "python-dateutil"
    ]
   }
  },
@@ -115,8 +164,274 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
-   "script": "PYTHON -m pip install . -vv"
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "tobymao",
+    "thewchan",
+    "tobymao",
+    "thewchan",
+    "tobymao",
+    "thewchan"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "python -m pip install . --no-deps --no-build-isolation -vv"
+    },
+    "name": "sqlglot",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest -vvv --capture=tee-sys tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   },
+   {
+    "build": {
+     "nochar": "python",
+     "script": "echo Nothing to do."
+    },
+    "name": "sqlglot-rs",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7",
+      "sqlglot",
+      "sqlglotrs"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "rm tests/test_optimizer.py",
+      "rm tests/test_executor.py",
+      "pytest -vvv --capture=tee-sys -k tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script": "python -m pip install . --no-deps --no-build-isolation -vv"
+    },
+    "name": "sqlglot",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest -vvv --capture=tee-sys tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   },
+   {
+    "build": {
+     "nochar": "python",
+     "script": "echo Nothing to do."
+    },
+    "name": "sqlglot-rs",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7",
+      "sqlglot",
+      "sqlglotrs"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "rm tests/test_optimizer.py",
+      "rm tests/test_executor.py",
+      "pytest -vvv --capture=tee-sys -k tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   },
+   {
+    "build": {
+     "noarch": "python",
+     "script": "python -m pip install . --no-deps --no-build-isolation -vv"
+    },
+    "name": "sqlglot",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest -vvv --capture=tee-sys tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   },
+   {
+    "build": {
+     "nochar": "python",
+     "script": "echo Nothing to do."
+    },
+    "name": "sqlglot-rs",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7",
+      "sqlglot",
+      "sqlglotrs"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "rm tests/test_optimizer.py",
+      "rm tests/test_executor.py",
+      "pytest -vvv --capture=tee-sys -k tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "sqlglot",
+   "version": "22.3.1"
+  },
+  "source": {
+   "sha256": "ee2985b40601c7b553f17c2c13685f9f831bdfe3edba78fb7b385fc55c5a8a30",
+   "url": "https://pypi.io/packages/source/s/sqlglot/sqlglot-22.3.1.tar.gz"
+  }
+ },
+ "name": "sqlglot",
+ "osx_64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/tobymao/sqlglot",
+   "license": "MIT",
+   "license_file": "LICENSE",
+   "summary": "An easily customizable SQL parser and transpiler"
+  },
+  "build": {
+   "noarch": "python",
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
@@ -124,67 +439,153 @@
     "thewchan"
    ]
   },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "python -m pip install . --no-deps --no-build-isolation -vv"
+    },
+    "name": "sqlglot",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest -vvv --capture=tee-sys tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   },
+   {
+    "build": {
+     "nochar": "python",
+     "script": "echo Nothing to do."
+    },
+    "name": "sqlglot-rs",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7",
+      "sqlglot",
+      "sqlglotrs"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "rm tests/test_optimizer.py",
+      "rm tests/test_executor.py",
+      "pytest -vvv --capture=tee-sys -k tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   }
+  ],
   "package": {
    "name": "sqlglot",
    "version": "22.3.1"
   },
-  "requirements": {
-   "host": [
-    "pip",
-    "python >=3.7",
-    "setuptools_scm"
-   ],
-   "run": [
-    "python >=3.7"
-   ]
-  },
   "source": {
    "sha256": "ee2985b40601c7b553f17c2c13685f9f831bdfe3edba78fb7b385fc55c5a8a30",
    "url": "https://pypi.io/packages/source/s/sqlglot/sqlglot-22.3.1.tar.gz"
+  }
+ },
+ "osx_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": []
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "pip",
+    "python",
+    "setuptools_scm"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "python",
+    "sqlglot",
+    "sqlglotrs"
+   ]
   },
   "test": {
-   "commands": [
-    "pip check",
-    "pytest -vvv --capture=tee-sys tests"
-   ],
-   "imports": [
-    "sqlglot"
-   ],
-   "requires": [
+   "__set__": true,
+   "elements": [
     "openjdk",
-    "pip",
     "pandas",
+    "pip",
     "pyspark",
     "pytest",
-    "python-dateutil",
-    "python-duckdb >=0.6"
-   ],
-   "source_files": [
-    "tests"
+    "python-dateutil"
    ]
   }
  },
- "name": "sqlglot",
  "outputs_names": {
   "__set__": true,
   "elements": [
-   "sqlglot"
+   "sqlglot",
+   "sqlglot-rs"
   ]
  },
  "parsing_error": false,
  "platforms": [
-  "linux_64"
+  "linux_64",
+  "osx_64",
+  "win_64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/sqlglot.json"
  },
- "raw_meta_yaml": "{% set name = \"sqlglot\" %}\n{% set version = \"22.3.1\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sqlglot-{{ version }}.tar.gz\n  sha256: ee2985b40601c7b553f17c2c13685f9f831bdfe3edba78fb7b385fc55c5a8a30\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n\nrequirements:\n  host:\n    - pip\n    - python >=3.7\n    - setuptools_scm\n  run:\n    - python >=3.7\n\ntest:\n  source_files:\n    - tests\n  imports:\n    - sqlglot\n  commands:\n    - pip check\n    - pytest -vvv --capture=tee-sys tests\n  requires:\n    - openjdk\n    - pip\n    - pandas\n    - pyspark\n    - pytest\n    - python-dateutil\n    - python-duckdb >=0.6\n\nabout:\n  home: https://github.com/tobymao/sqlglot\n  summary: An easily customizable SQL parser and transpiler\n  license: MIT\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - tobymao\n    - thewchan\n",
+ "raw_meta_yaml": "{% set name = \"sqlglot\" %}\n{% set version = \"22.3.1\" %}\n\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/sqlglot-{{ version }}.tar.gz\n  sha256: ee2985b40601c7b553f17c2c13685f9f831bdfe3edba78fb7b385fc55c5a8a30\n\nbuild:\n  number: 1\n  noarch: python\n\noutputs:\n  - name: {{ name }}\n    build:\n      script: python -m pip install . --no-deps --no-build-isolation -vv\n      noarch: python\n\n    requirements:\n      host:\n        - pip\n        - python >=3.7\n        - setuptools_scm\n      run:\n        - python >=3.7\n\n    test:\n      source_files:\n        - tests\n      imports:\n        - sqlglot\n      commands:\n        - pip check\n        - pytest -vvv --capture=tee-sys tests\n      requires:\n        - pip\n        - openjdk\n        - pandas\n        - pyspark\n        - pytest\n        - python-dateutil\n\n  - name: {{ name }}-rs\n    build:\n      script: echo Nothing to do.\n      nochar: python\n\n    requirements:\n      host:\n        - pip\n        - python >=3.7\n        - setuptools_scm\n      run:\n        - python >=3.7\n        - {{ pin_subpackage('sqlglot', exact=True) }}\n        - sqlglotrs\n\n    test:\n      source_files:\n        - tests\n      imports:\n        - sqlglot\n      commands:\n        - pip check\n        - rm tests/test_optimizer.py\n        - rm tests/test_executor.py\n        - pytest -vvv --capture=tee-sys -k tests\n      requires:\n        - pip\n        - openjdk\n        - pandas\n        - pyspark\n        - pytest\n        - python-dateutil\n\nabout:\n  home: https://github.com/tobymao/sqlglot\n  summary: An easily customizable SQL parser and transpiler\n  license: MIT\n  license_file: LICENSE\n\nextra:\n  recipe-maintainers:\n    - tobymao\n    - thewchan\n",
  "req": {
   "__set__": true,
   "elements": [
    "pip",
    "python",
-   "setuptools_scm"
+   "setuptools_scm",
+   "sqlglot",
+   "sqlglotrs"
   ]
  },
  "requirements": {
@@ -203,7 +604,9 @@
   "run": {
    "__set__": true,
    "elements": [
-    "python"
+    "python",
+    "sqlglot",
+    "sqlglotrs"
    ]
   },
   "test": {
@@ -214,8 +617,7 @@
     "pip",
     "pyspark",
     "pytest",
-    "python-dateutil",
-    "python-duckdb"
+    "python-dateutil"
    ]
   }
  },
@@ -236,7 +638,9 @@
   "run": {
    "__set__": true,
    "elements": [
-    "python >=3.7"
+    "python >=3.7",
+    "sqlglot",
+    "sqlglotrs"
    ]
   },
   "test": {
@@ -247,8 +651,7 @@
     "pip",
     "pyspark",
     "pytest",
-    "python-dateutil",
-    "python-duckdb >=0.6"
+    "python-dateutil"
    ]
   }
  },
@@ -256,5 +659,144 @@
  "version": "22.3.1",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/sqlglot.json"
+ },
+ "win_64_meta_yaml": {
+  "about": {
+   "home": "https://github.com/tobymao/sqlglot",
+   "license": "MIT",
+   "license_file": "LICENSE",
+   "summary": "An easily customizable SQL parser and transpiler"
+  },
+  "build": {
+   "noarch": "python",
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "tobymao",
+    "thewchan"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "noarch": "python",
+     "script": "python -m pip install . --no-deps --no-build-isolation -vv"
+    },
+    "name": "sqlglot",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "pytest -vvv --capture=tee-sys tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   },
+   {
+    "build": {
+     "nochar": "python",
+     "script": "echo Nothing to do."
+    },
+    "name": "sqlglot-rs",
+    "requirements": {
+     "host": [
+      "pip",
+      "python >=3.7",
+      "setuptools_scm"
+     ],
+     "run": [
+      "python >=3.7",
+      "sqlglot",
+      "sqlglotrs"
+     ]
+    },
+    "test": {
+     "commands": [
+      "pip check",
+      "rm tests/test_optimizer.py",
+      "rm tests/test_executor.py",
+      "pytest -vvv --capture=tee-sys -k tests"
+     ],
+     "imports": [
+      "sqlglot"
+     ],
+     "requires": [
+      "pip",
+      "openjdk",
+      "pandas",
+      "pyspark",
+      "pytest",
+      "python-dateutil"
+     ],
+     "source_files": [
+      "tests"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "sqlglot",
+   "version": "22.3.1"
+  },
+  "source": {
+   "sha256": "ee2985b40601c7b553f17c2c13685f9f831bdfe3edba78fb7b385fc55c5a8a30",
+   "url": "https://pypi.io/packages/source/s/sqlglot/sqlglot-22.3.1.tar.gz"
+  }
+ },
+ "win_64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": []
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "pip",
+    "python",
+    "setuptools_scm"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "python",
+    "sqlglot",
+    "sqlglotrs"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "openjdk",
+    "pandas",
+    "pip",
+    "pyspark",
+    "pytest",
+    "python-dateutil"
+   ]
+  }
  }
 }
