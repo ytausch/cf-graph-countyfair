@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  },
   "conda_build": {
    "pkg_format": "2"
   },
@@ -9,7 +12,8 @@
   "github": {
    "branch_name": "main",
    "tooling_branch_name": "main"
-  }
+  },
+  "test": "native_and_emulated"
  },
  "feedstock_name": "luarocks",
  "hash_type": "sha256",
@@ -26,12 +30,13 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
     "jerowe",
-    "izahn"
+    "izahn",
+    "anjos"
    ]
   },
   "package": {
@@ -41,7 +46,8 @@
   "requirements": {
    "build": [
     "c_compiler_stub",
-    "make"
+    "make",
+    "gnuconfig"
    ],
    "host": [
     "lua",
@@ -68,6 +74,7 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
@@ -103,14 +110,19 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
     "jerowe",
     "izahn",
+    "anjos",
     "jerowe",
-    "izahn"
+    "izahn",
+    "anjos",
+    "jerowe",
+    "izahn",
+    "anjos"
    ]
   },
   "package": {
@@ -121,16 +133,25 @@
    "build": [
     "c_compiler_stub",
     "make",
+    "gnuconfig",
     "c_compiler_stub",
-    "make"
+    "make",
+    "gnuconfig",
+    "c_compiler_stub",
+    "make",
+    "gnuconfig"
    ],
    "host": [
+    "lua",
+    "unzip",
     "lua",
     "unzip",
     "lua",
     "unzip"
    ],
    "run": [
+    "lua",
+    "unzip",
     "lua",
     "unzip",
     "lua",
@@ -144,6 +165,7 @@
   },
   "test": {
    "commands": [
+    "luarocks config",
     "luarocks config",
     "luarocks config"
    ]
@@ -163,12 +185,13 @@
   },
   "build": {
    "detect_binary_files_with_prefix": true,
-   "number": "0"
+   "number": "1"
   },
   "extra": {
    "recipe-maintainers": [
     "jerowe",
-    "izahn"
+    "izahn",
+    "anjos"
    ]
   },
   "package": {
@@ -178,7 +201,8 @@
   "requirements": {
    "build": [
     "c_compiler_stub",
-    "make"
+    "make",
+    "gnuconfig"
    ],
    "host": [
     "lua",
@@ -205,6 +229,87 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "gnuconfig",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "lua",
+    "unzip"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "lua",
+    "unzip"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": []
+  }
+ },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "LuaRocks is the package manager for Lua modules.\nIt allows you to create and install Lua modules as self-contained\npackages called rocks. You can download and install LuaRocks on Unix and\nWindows.\n",
+   "dev_url": "https://github.com/luarocks/luarocks/",
+   "doc_url": "https://github.com/luarocks/luarocks/wiki/Documentation",
+   "home": "https://luarocks.org/",
+   "license": "MIT",
+   "license_family": "MIT",
+   "license_file": "COPYING",
+   "summary": "LuaRocks is the package manager for Lua modulesLuaRocks is the package manager for Lua module"
+  },
+  "build": {
+   "detect_binary_files_with_prefix": true,
+   "number": "1"
+  },
+  "extra": {
+   "recipe-maintainers": [
+    "jerowe",
+    "izahn",
+    "anjos"
+   ]
+  },
+  "package": {
+   "name": "luarocks",
+   "version": "3.9.2"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "make",
+    "gnuconfig"
+   ],
+   "host": [
+    "lua",
+    "unzip"
+   ],
+   "run": [
+    "lua",
+    "unzip"
+   ]
+  },
+  "source": {
+   "fn": "luarocks-3.9.2.tar.gz",
+   "sha256": "bca6e4ecc02c203e070acdb5f586045d45c078896f6236eb46aa33ccd9b94edb",
+   "url": "http://luarocks.github.io/luarocks/releases/luarocks-3.9.2.tar.gz"
+  },
+  "test": {
+   "commands": [
+    "luarocks config"
+   ]
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
@@ -236,16 +341,18 @@
  "parsing_error": false,
  "platforms": [
   "linux_64",
-  "osx_64"
+  "osx_64",
+  "osx_arm64"
  ],
  "pr_info": {
   "__lazy_json__": "pr_info/luarocks.json"
  },
- "raw_meta_yaml": "{% set name = \"luarocks\" %}\n{% set version = \"3.9.2\" %}\n{% set sha256 = \"bca6e4ecc02c203e070acdb5f586045d45c078896f6236eb46aa33ccd9b94edb\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: http://luarocks.github.io/luarocks/releases/luarocks-{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\nbuild:\n  number: 0\n  skip: true  # [win]\n  detect_binary_files_with_prefix: true\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - make\n  host:\n    - lua\n    - unzip\n  run:\n    - lua\n    - unzip\n\ntest:\n  commands:\n    - luarocks config\n\nabout:\n  home: https://luarocks.org/\n  license: MIT\n  license_family: MIT\n  license_file: COPYING\n  summary: LuaRocks is the package manager for Lua modulesLuaRocks is the package manager for Lua module\n\n  description: |\n    LuaRocks is the package manager for Lua modules.\n    It allows you to create and install Lua modules as self-contained\n    packages called rocks. You can download and install LuaRocks on Unix and\n    Windows.\n  doc_url: https://github.com/luarocks/luarocks/wiki/Documentation\n  dev_url: https://github.com/luarocks/luarocks/\n\nextra:\n  recipe-maintainers:\n    - jerowe\n    - izahn\n",
+ "raw_meta_yaml": "{% set name = \"luarocks\" %}\n{% set version = \"3.9.2\" %}\n{% set sha256 = \"bca6e4ecc02c203e070acdb5f586045d45c078896f6236eb46aa33ccd9b94edb\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  fn: {{ name }}-{{ version }}.tar.gz\n  url: http://luarocks.github.io/luarocks/releases/luarocks-{{ version }}.tar.gz\n  sha256: {{ sha256 }}\n\nbuild:\n  number: 1\n  skip: true  # [win]\n  detect_binary_files_with_prefix: true\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - make\n    - lua        # [build_platform != target_platform]\n    - gnuconfig  # [unix]\n  host:\n    - lua\n    - unzip\n  run:\n    - lua\n    - unzip\n\ntest:\n  commands:\n    - luarocks config\n\nabout:\n  home: https://luarocks.org/\n  license: MIT\n  license_family: MIT\n  license_file: COPYING\n  summary: LuaRocks is the package manager for Lua modulesLuaRocks is the package manager for Lua module\n\n  description: |\n    LuaRocks is the package manager for Lua modules.\n    It allows you to create and install Lua modules as self-contained\n    packages called rocks. You can download and install LuaRocks on Unix and\n    Windows.\n  doc_url: https://github.com/luarocks/luarocks/wiki/Documentation\n  dev_url: https://github.com/luarocks/luarocks/\n\nextra:\n  recipe-maintainers:\n    - jerowe\n    - izahn\n    - anjos\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
+   "gnuconfig",
    "lua",
    "make",
    "unzip"
@@ -256,6 +363,7 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
@@ -286,6 +394,7 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "gnuconfig",
     "make"
    ]
   },
