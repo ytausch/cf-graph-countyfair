@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "bot": {
+   "inspection": "hint-all"
+  },
   "build_platform": {
    "linux_aarch64": "linux_64",
    "linux_ppc64le": "linux_64",
@@ -37,7 +40,7 @@
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -47,7 +50,7 @@
   },
   "package": {
    "name": "shortuuid",
-   "version": "1.0.12"
+   "version": "1.0.13"
   },
   "requirements": {
    "host": [
@@ -60,19 +63,21 @@
    ]
   },
   "source": {
-   "sha256": "c39f1b348b3c1e9b115a954b33b76c8c522d2d177a9d20acdbb20d24fac3ccfd",
-   "url": "https://pypi.io/packages/source/s/shortuuid/shortuuid-1.0.12.tar.gz"
+   "sha256": "3bb9cf07f606260584b1df46399c0b87dd84773e7b25912b7e391e30797c5e72",
+   "url": "https://pypi.io/packages/source/s/shortuuid/shortuuid-1.0.13.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
     "shortuuid --help",
-    "python -m unittest shortuuid.test_shortuuid"
+    "coverage run --branch --source=shortuuid -m unittest shortuuid.test_shortuuid",
+    "coverage report --show-missing --skip-covered --fail-under=90"
    ],
    "imports": [
     "shortuuid"
    ],
    "requires": [
+    "coverage",
     "pep8",
     "pip"
    ]
@@ -100,6 +105,7 @@
   "test": {
    "__set__": true,
    "elements": [
+    "coverage",
     "pep8",
     "pip"
    ]
@@ -119,7 +125,7 @@
    ],
    "noarch": "python",
    "number": "0",
-   "script": "PYTHON -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv"
+   "script": "PYTHON -m pip install . -vv --no-deps --no-build-isolation"
   },
   "extra": {
    "recipe-maintainers": [
@@ -129,7 +135,7 @@
   },
   "package": {
    "name": "shortuuid",
-   "version": "1.0.12"
+   "version": "1.0.13"
   },
   "requirements": {
    "host": [
@@ -142,19 +148,21 @@
    ]
   },
   "source": {
-   "sha256": "c39f1b348b3c1e9b115a954b33b76c8c522d2d177a9d20acdbb20d24fac3ccfd",
-   "url": "https://pypi.io/packages/source/s/shortuuid/shortuuid-1.0.12.tar.gz"
+   "sha256": "3bb9cf07f606260584b1df46399c0b87dd84773e7b25912b7e391e30797c5e72",
+   "url": "https://pypi.io/packages/source/s/shortuuid/shortuuid-1.0.13.tar.gz"
   },
   "test": {
    "commands": [
     "pip check",
     "shortuuid --help",
-    "python -m unittest shortuuid.test_shortuuid"
+    "coverage run --branch --source=shortuuid -m unittest shortuuid.test_shortuuid",
+    "coverage report --show-missing --skip-covered --fail-under=90"
    ],
    "imports": [
     "shortuuid"
    ],
    "requires": [
+    "coverage",
     "pep8",
     "pip"
    ]
@@ -174,7 +182,7 @@
  "pr_info": {
   "__lazy_json__": "pr_info/shortuuid.json"
  },
- "raw_meta_yaml": "{% set version = \"1.0.12\" %}\n\npackage:\n  name: shortuuid\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/s/shortuuid/shortuuid-{{ version }}.tar.gz\n  sha256: c39f1b348b3c1e9b115a954b33b76c8c522d2d177a9d20acdbb20d24fac3ccfd\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . --no-deps --ignore-installed --no-cache-dir -vvv\n  number: 0\n  entry_points:\n    - shortuuid = shortuuid.cli:cli\n\nrequirements:\n  host:\n    - pip\n    - poetry-core\n    - python >=3.6\n  run:\n    - python >=3.6\n\ntest:\n  requires:\n    - pep8\n    - pip\n  imports:\n    - shortuuid\n  commands:\n    - pip check\n    - shortuuid --help\n    - python -m unittest shortuuid.test_shortuuid\n\nabout:\n  home: https://github.com/skorokithakis/shortuuid\n  license: BSD-3-Clause\n  license_file: COPYING\n  summary: A generator library for concise, unambiguous and URL-safe UUIDs\n  description: |\n    A library that generates short, pretty, unambiguous unique IDs by using an\n    extensive, case-sensitive alphabet and omitting similar-looking letters and\n    numbers.\n\nextra:\n  recipe-maintainers:\n    - astamminger\n    - bollwyvl\n",
+ "raw_meta_yaml": "{% set version = \"1.0.13\" %}\n\npackage:\n  name: shortuuid\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/s/shortuuid/shortuuid-{{ version }}.tar.gz\n  sha256: 3bb9cf07f606260584b1df46399c0b87dd84773e7b25912b7e391e30797c5e72\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation\n  number: 0\n  entry_points:\n    - shortuuid = shortuuid.cli:cli\n\nrequirements:\n  host:\n    - pip\n    - poetry-core\n    - python >=3.6\n  run:\n    - python >=3.6\n\ntest:\n  requires:\n    - coverage\n    - pep8\n    - pip\n  imports:\n    - shortuuid\n  commands:\n    - pip check\n    - shortuuid --help\n    - coverage run --branch --source=shortuuid -m unittest shortuuid.test_shortuuid\n    - coverage report --show-missing --skip-covered --fail-under=90\n\nabout:\n  home: https://github.com/skorokithakis/shortuuid\n  license: BSD-3-Clause\n  license_file: COPYING\n  summary: A generator library for concise, unambiguous and URL-safe UUIDs\n  description: |\n    A library that generates short, pretty, unambiguous unique IDs by using an\n    extensive, case-sensitive alphabet and omitting similar-looking letters and\n    numbers.\n\nextra:\n  recipe-maintainers:\n    - astamminger\n    - bollwyvl\n",
  "req": {
   "__set__": true,
   "elements": [
@@ -205,6 +213,7 @@
   "test": {
    "__set__": true,
    "elements": [
+    "coverage",
     "pep8",
     "pip"
    ]
@@ -233,13 +242,14 @@
   "test": {
    "__set__": true,
    "elements": [
+    "coverage",
     "pep8",
     "pip"
    ]
   }
  },
- "url": "https://pypi.io/packages/source/s/shortuuid/shortuuid-1.0.12.tar.gz",
- "version": "1.0.12",
+ "url": "https://pypi.io/packages/source/s/shortuuid/shortuuid-1.0.13.tar.gz",
+ "version": "1.0.13",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/shortuuid.json"
  }
