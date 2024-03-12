@@ -15,7 +15,7 @@
  "hash_type": "sha256",
  "linux_64_meta_yaml": {
   "about": {
-   "home": "https://github.com/RadeonOpenCompute/ROCR-Runtime",
+   "home": "https://github.com/ROCm/ROCR-Runtime",
    "license": "NCSA",
    "license_family": "MIT",
    "license_file": "LICENSE.txt",
@@ -31,30 +31,32 @@
   },
   "package": {
    "name": "rocr-runtime",
-   "version": "2.7.0"
+   "version": "6.0.2"
   },
   "requirements": {
    "build": [
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "sysroot_linux-64 2.17",
     "cmake",
-    "make"
+    "make",
+    "vim"
    ],
    "host": [
     "elfutils",
-    "roct-thunk-interface 2.7.0"
-   ],
-   "run": [
-    "elfutils",
-    "roct-thunk-interface 2.7.0"
+    "roct-thunk-interface 6.0.2",
+    "rocm-device-libs 6.0.2",
+    "clangdev 17.*",
+    "llvmdev  17.*",
+    "lld      17.*"
    ]
   },
   "source": {
    "patches": [
-    "no_override_shared_linker_flags.diff"
+    "fix_xxd_issue.diff"
    ],
-   "sha256": "726b6556d4072caa35e751e067f4e5dd283583ed0aff49d72af14e0449bfe318",
-   "url": "https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/roc-2.7.0.tar.gz"
+   "sha256": "e7ff4d7ac35a2dd8aad1cb40b96511a77a9c23fe4d1607902328e53728e05c28",
+   "url": "https://github.com/ROCm/ROCR-Runtime/archive/refs/tags/rocm-6.0.2.tar.gz"
   },
   "test": {
    "commands": [
@@ -70,22 +72,25 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "make",
+    "sysroot_linux-64",
+    "vim"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "clangdev",
     "elfutils",
+    "lld",
+    "llvmdev",
+    "rocm-device-libs",
     "roct-thunk-interface"
    ]
   },
   "run": {
    "__set__": true,
-   "elements": [
-    "elfutils",
-    "roct-thunk-interface"
-   ]
+   "elements": []
   },
   "test": {
    "__set__": true,
@@ -94,7 +99,7 @@
  },
  "meta_yaml": {
   "about": {
-   "home": "https://github.com/RadeonOpenCompute/ROCR-Runtime",
+   "home": "https://github.com/ROCm/ROCR-Runtime",
    "license": "NCSA",
    "license_family": "MIT",
    "license_file": "LICENSE.txt",
@@ -110,30 +115,32 @@
   },
   "package": {
    "name": "rocr-runtime",
-   "version": "2.7.0"
+   "version": "6.0.2"
   },
   "requirements": {
    "build": [
     "c_compiler_stub",
     "cxx_compiler_stub",
+    "sysroot_linux-64 2.17",
     "cmake",
-    "make"
+    "make",
+    "vim"
    ],
    "host": [
     "elfutils",
-    "roct-thunk-interface 2.7.0"
-   ],
-   "run": [
-    "elfutils",
-    "roct-thunk-interface 2.7.0"
+    "roct-thunk-interface 6.0.2",
+    "rocm-device-libs 6.0.2",
+    "clangdev 17.*",
+    "llvmdev  17.*",
+    "lld      17.*"
    ]
   },
   "source": {
    "patches": [
-    "no_override_shared_linker_flags.diff"
+    "fix_xxd_issue.diff"
    ],
-   "sha256": "726b6556d4072caa35e751e067f4e5dd283583ed0aff49d72af14e0449bfe318",
-   "url": "https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/roc-2.7.0.tar.gz"
+   "sha256": "e7ff4d7ac35a2dd8aad1cb40b96511a77a9c23fe4d1607902328e53728e05c28",
+   "url": "https://github.com/ROCm/ROCR-Runtime/archive/refs/tags/rocm-6.0.2.tar.gz"
   },
   "test": {
    "commands": [
@@ -156,16 +163,22 @@
  "pr_info": {
   "__lazy_json__": "pr_info/rocr-runtime.json"
  },
- "raw_meta_yaml": "{% set name = \"rocr-runtime\" %}\n{% set version = \"2.7.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/roc-{{ version }}.tar.gz\n  sha256: 726b6556d4072caa35e751e067f4e5dd283583ed0aff49d72af14e0449bfe318\n  patches:\n    - no_override_shared_linker_flags.diff\n\nbuild:\n  number: 0\n  skip: True  # [not linux]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - cmake\n    - make\n  host:\n    - elfutils\n    - roct-thunk-interface {{ version }}\n  run:\n    - {{ pin_compatible(\"elfutils\") }}\n    - roct-thunk-interface {{ version }}\n\ntest:\n  commands:\n    - test -f $PREFIX/include/hsa/hsa.h\n    - test -f $PREFIX/lib/libhsa-runtime64.so\n\nabout:\n  home: https://github.com/RadeonOpenCompute/ROCR-Runtime\n  license: NCSA\n  license_family: MIT\n  license_file: LICENSE.txt\n  summary: 'ROCm Platform Runtime: ROCr a HPC market enhanced HSA based runtime'\n\nextra:\n  recipe-maintainers:\n    - isuruf\n",
+ "raw_meta_yaml": "{% set name = \"rocr-runtime\" %}\n{% set version = \"6.0.2\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/ROCm/ROCR-Runtime/archive/refs/tags/rocm-{{ version }}.tar.gz\n  sha256: e7ff4d7ac35a2dd8aad1cb40b96511a77a9c23fe4d1607902328e53728e05c28\n  patches:\n    - fix_xxd_issue.diff\n\nbuild:\n  number: 0\n  skip: True  # [not linux]\n\nrequirements:\n  build:\n    - {{ compiler('c') }}\n    - {{ compiler('cxx') }}\n    - sysroot_linux-64 2.17   # [linux64]\n    - cmake\n    - make\n    # For xxd\n    - vim\n  host:\n    - elfutils\n    - roct-thunk-interface {{ version }}\n    - rocm-device-libs {{ version }}\n    - clangdev 17.*\n    - llvmdev  17.*\n    - lld      17.*\n\ntest:\n  commands:\n    - test -f $PREFIX/include/hsa/hsa.h\n    - test -f $PREFIX/lib/libhsa-runtime64.so\n\nabout:\n  home: https://github.com/ROCm/ROCR-Runtime\n  license: NCSA\n  license_family: MIT\n  license_file: LICENSE.txt\n  summary: 'ROCm Platform Runtime: ROCr a HPC market enhanced HSA based runtime'\n\nextra:\n  recipe-maintainers:\n    - isuruf\n",
  "req": {
   "__set__": true,
   "elements": [
    "c_compiler_stub",
+   "clangdev",
    "cmake",
    "cxx_compiler_stub",
    "elfutils",
+   "lld",
+   "llvmdev",
    "make",
-   "roct-thunk-interface"
+   "rocm-device-libs",
+   "roct-thunk-interface",
+   "sysroot_linux-64",
+   "vim"
   ]
  },
  "requirements": {
@@ -175,15 +188,21 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "make",
+    "sysroot_linux-64",
+    "vim"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
     "c_compiler_stub",
+    "clangdev",
     "cxx_compiler_stub",
     "elfutils",
+    "lld",
+    "llvmdev",
+    "rocm-device-libs",
     "roct-thunk-interface"
    ]
   },
@@ -191,9 +210,7 @@
    "__set__": true,
    "elements": [
     "c_compiler_stub",
-    "cxx_compiler_stub",
-    "elfutils",
-    "roct-thunk-interface"
+    "cxx_compiler_stub"
    ]
   },
   "test": {
@@ -209,30 +226,33 @@
     "c_compiler_stub",
     "cmake",
     "cxx_compiler_stub",
-    "make"
+    "make",
+    "sysroot_linux-64 2.17",
+    "vim"
    ]
   },
   "host": {
    "__set__": true,
    "elements": [
+    "clangdev 17.*",
     "elfutils",
-    "roct-thunk-interface 2.7.0"
+    "lld      17.*",
+    "llvmdev  17.*",
+    "rocm-device-libs 6.0.2",
+    "roct-thunk-interface 6.0.2"
    ]
   },
   "run": {
    "__set__": true,
-   "elements": [
-    "elfutils",
-    "roct-thunk-interface 2.7.0"
-   ]
+   "elements": []
   },
   "test": {
    "__set__": true,
    "elements": []
   }
  },
- "url": "https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/roc-2.7.0.tar.gz",
- "version": "2.7.0",
+ "url": "https://github.com/ROCm/ROCR-Runtime/archive/refs/tags/rocm-6.0.2.tar.gz",
+ "version": "6.0.2",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/rocr-runtime.json"
  }
