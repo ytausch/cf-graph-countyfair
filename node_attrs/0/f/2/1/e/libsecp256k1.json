@@ -2,6 +2,9 @@
  "archived": false,
  "branch": "main",
  "conda-forge.yml": {
+  "build_platform": {
+   "osx_arm64": "osx_64"
+  },
   "conda_build": {
    "error_overlinking": true
   },
@@ -13,7 +16,8 @@
   "provider": {
    "linux_aarch64": "default",
    "linux_ppc64le": "default"
-  }
+  },
+  "test": "native_and_emulated"
  },
  "feedstock_name": "libsecp256k1",
  "hash_type": "sha256",
@@ -507,6 +511,7 @@
     "COPYING",
     "COPYING",
     "COPYING",
+    "COPYING",
     "COPYING"
    ],
    "summary": "Optimized C library for ECDSA signatures and secret/public key operations on curve secp256k1."
@@ -517,6 +522,7 @@
   "extra": {
    "feedstock-name": "libsecp256k1",
    "recipe-maintainers": [
+    "MementoRC",
     "MementoRC",
     "MementoRC",
     "MementoRC",
@@ -792,6 +798,95 @@
       "test ! -f ${PREFIX}/lib/libsecp256k1{SHLIB_EXT}",
       "test -f ${PREFIX}/lib/libsecp256k1.so.2",
       "test -f ${PREFIX}/lib/libsecp256k1.so.2.1.1"
+     ],
+     "files": [
+      "load_shared_library.py"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libsecp256k1-2"
+     ]
+    },
+    "files": [
+     "include/secp256k1*",
+     "lib/libsecp256k1.dylib",
+     "lib/pkgconfig/libsecp256k1.pc",
+     "lib/cmake/libsecp256k1"
+    ],
+    "name": "libsecp256k1",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libsecp256k1-2"
+     ],
+     "run": [
+      "libsecp256k1-2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/secp256k1.h",
+      "test -f ${PREFIX}/include/secp256k1_preallocated.h",
+      "test -f ${PREFIX}/include/secp256k1_ecdh.h",
+      "test -f ${PREFIX}/include/secp256k1_recovery.h",
+      "test -f ${PREFIX}/include/secp256k1_extrakeys.h",
+      "test -f ${PREFIX}/include/secp256k1_schnorrsig.h",
+      "test -f ${PREFIX}/include/secp256k1_ellswift.h",
+      "test -f ${PREFIX}/lib/libsecp256k1${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/libsecp256k1.pc",
+      "pkg-config --exists libsecp256k1",
+      "python verify_pkg_config.py ${PREFIX}/lib/pkgconfig/libsecp256k1.pc prefix=${PREFIX}",
+      "python verify_pkg_config.py ${PREFIX}/lib/pkgconfig/libsecp256k1.pc \"libdir=\\${exec_prefix}/lib\"",
+      "python verify_pkg_config.py ${PREFIX}/lib/pkgconfig/libsecp256k1.pc \"includedir=\\${prefix}/include\"",
+      "test -f ${PREFIX}/lib/cmake/libsecp256k1/libsecp256k1-config.cmake",
+      "cd shared_standalone_tests",
+      "cmake -DSECP256K1_BUILD_EXHAUSTIVE_TESTS=ON -DBUILD_SHARED_LIBS=ON ${CMAKE_ARGS} -S src -B build",
+      "cd build && cmake --build .  && cmake --build . --target check && cmake --build . --target clean",
+      "cd ..",
+      "rm -rf shared_standalone_tests"
+     ],
+     "downstreams": [
+      "libsecp256k1-py-bindings",
+      "coincurve"
+     ],
+     "files": [
+      "shared_standalone_tests/",
+      "verify_pkg_config.py"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cmake >=3.26",
+      "make",
+      "pkg-config",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libsecp256k1-2"
+     ]
+    },
+    "files": [
+     "lib/libsecp256k1.2.dylib"
+    ],
+    "name": "libsecp256k1-2",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/include/secp256k1.h",
+      "test ! -f ${PREFIX}/lib/libsecp256k1{SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libsecp256k1.2.dylib"
      ],
      "files": [
       "load_shared_library.py"
@@ -1002,6 +1097,9 @@
     "make",
     "c_compiler_stub",
     "cmake >=3.26",
+    "make",
+    "c_compiler_stub",
+    "cmake >=3.26",
     "make"
    ]
   },
@@ -1169,6 +1267,164 @@
    ]
   }
  },
+ "osx_arm64_meta_yaml": {
+  "about": {
+   "description": "This library is intended to be the highest quality publicly available\nlibrary for cryptography on the secp256k1 curve. However, the primary\nfocus of its development has been for usage in the Bitcoin system and\nusage unlike Bitcoin's may be less well tested, verified, or suffer\nfrom a less well thought out interface. Correct usage requires some\ncare and consideration that the library is fit for your application's purpose.\n",
+   "home": "https://github.com/bitcoin-core/secp256k1",
+   "license": "MIT",
+   "license_file": [
+    "COPYING"
+   ],
+   "summary": "Optimized C library for ECDSA signatures and secret/public key operations on curve secp256k1."
+  },
+  "build": {
+   "number": "4"
+  },
+  "extra": {
+   "feedstock-name": "libsecp256k1",
+   "recipe-maintainers": [
+    "MementoRC"
+   ]
+  },
+  "outputs": [
+   {
+    "build": {
+     "run_exports": [
+      "libsecp256k1-2"
+     ]
+    },
+    "files": [
+     "include/secp256k1*",
+     "lib/libsecp256k1.dylib",
+     "lib/pkgconfig/libsecp256k1.pc",
+     "lib/cmake/libsecp256k1"
+    ],
+    "name": "libsecp256k1",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ],
+     "host": [
+      "libsecp256k1-2"
+     ],
+     "run": [
+      "libsecp256k1-2"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test -f ${PREFIX}/include/secp256k1.h",
+      "test -f ${PREFIX}/include/secp256k1_preallocated.h",
+      "test -f ${PREFIX}/include/secp256k1_ecdh.h",
+      "test -f ${PREFIX}/include/secp256k1_recovery.h",
+      "test -f ${PREFIX}/include/secp256k1_extrakeys.h",
+      "test -f ${PREFIX}/include/secp256k1_schnorrsig.h",
+      "test -f ${PREFIX}/include/secp256k1_ellswift.h",
+      "test -f ${PREFIX}/lib/libsecp256k1${SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/pkgconfig/libsecp256k1.pc",
+      "pkg-config --exists libsecp256k1",
+      "python verify_pkg_config.py ${PREFIX}/lib/pkgconfig/libsecp256k1.pc prefix=${PREFIX}",
+      "python verify_pkg_config.py ${PREFIX}/lib/pkgconfig/libsecp256k1.pc \"libdir=\\${exec_prefix}/lib\"",
+      "python verify_pkg_config.py ${PREFIX}/lib/pkgconfig/libsecp256k1.pc \"includedir=\\${prefix}/include\"",
+      "test -f ${PREFIX}/lib/cmake/libsecp256k1/libsecp256k1-config.cmake",
+      "cd shared_standalone_tests",
+      "cmake -DSECP256K1_BUILD_EXHAUSTIVE_TESTS=ON -DBUILD_SHARED_LIBS=ON ${CMAKE_ARGS} -S src -B build",
+      "cd build && cmake --build .  && cmake --build . --target check && cmake --build . --target clean",
+      "cd ..",
+      "rm -rf shared_standalone_tests"
+     ],
+     "downstreams": [
+      "libsecp256k1-py-bindings",
+      "coincurve"
+     ],
+     "files": [
+      "shared_standalone_tests/",
+      "verify_pkg_config.py"
+     ],
+     "requires": [
+      "c_compiler_stub",
+      "cmake >=3.26",
+      "make",
+      "pkg-config",
+      "python"
+     ]
+    }
+   },
+   {
+    "build": {
+     "run_exports": [
+      "libsecp256k1-2"
+     ]
+    },
+    "files": [
+     "lib/libsecp256k1.2.dylib"
+    ],
+    "name": "libsecp256k1-2",
+    "requirements": {
+     "build": [
+      "c_compiler_stub"
+     ]
+    },
+    "test": {
+     "commands": [
+      "test ! -f ${PREFIX}/include/secp256k1.h",
+      "test ! -f ${PREFIX}/lib/libsecp256k1{SHLIB_EXT}",
+      "test -f ${PREFIX}/lib/libsecp256k1.2.dylib"
+     ],
+     "files": [
+      "load_shared_library.py"
+     ]
+    }
+   }
+  ],
+  "package": {
+   "name": "libsecp256k1-split",
+   "version": "0.4.1"
+  },
+  "requirements": {
+   "build": [
+    "c_compiler_stub",
+    "cmake >=3.26",
+    "make"
+   ]
+  },
+  "source": {
+   "sha256": "31b1a03c7365dbce7aff4be9526243da966c58a8b88b6255556d51b3016492c5",
+   "url": "https://github.com/bitcoin-core/secp256k1/archive/refs/tags/v0.4.1.tar.gz"
+  }
+ },
+ "osx_arm64_requirements": {
+  "build": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "make"
+   ]
+  },
+  "host": {
+   "__set__": true,
+   "elements": [
+    "libsecp256k1-2"
+   ]
+  },
+  "run": {
+   "__set__": true,
+   "elements": [
+    "libsecp256k1-2"
+   ]
+  },
+  "test": {
+   "__set__": true,
+   "elements": [
+    "c_compiler_stub",
+    "cmake",
+    "make",
+    "pkg-config",
+    "python"
+   ]
+  }
+ },
  "outputs_names": {
   "__set__": true,
   "elements": [
@@ -1182,6 +1438,7 @@
   "linux_aarch64",
   "linux_ppc64le",
   "osx_64",
+  "osx_arm64",
   "win_64"
  ],
  "pr_info": {

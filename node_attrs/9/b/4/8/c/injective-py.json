@@ -25,7 +25,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vvv"
   },
   "extra": {
@@ -39,35 +39,28 @@
   },
   "requirements": {
    "host": [
+    "aiohttp",
     "python >=3.9.0",
-    "coincurve",
     "pip",
     "poetry"
    ],
    "run": [
-    "aiocron",
-    "aiohttp",
     "bech32",
     "bip32",
-    "coincurve",
     "ecdsa",
     "eip712",
     "grpcio",
-    "grpcio-tools",
-    "hdwallets",
     "mnemonic",
-    "protobuf",
     "python >=3.9.0",
     "requests",
     "safe-pysha3",
-    "urllib3 >=1.26.18,<2",
-    "websockets",
     "web3 >=6"
    ]
   },
   "source": {
    "patches": [
-    "fix-protobuf-test-fail.patch"
+    "fix-protobuf-test-fail.patch",
+    "clean-lib-dependencies.patch"
    ],
    "sha256": "c7cbb5601f1508f6fd0a95c2cc0d7f32c09ed5490cbbb59a68ba84cdd59f17f6",
    "url": "https://github.com/InjectiveLabs/sdk-python/archive/refs/tags/v1.4.1.tar.gz"
@@ -100,7 +93,7 @@
   "host": {
    "__set__": true,
    "elements": [
-    "coincurve",
+    "aiohttp",
     "pip",
     "poetry",
     "python"
@@ -109,24 +102,16 @@
   "run": {
    "__set__": true,
    "elements": [
-    "aiocron",
-    "aiohttp",
     "bech32",
     "bip32",
-    "coincurve",
     "ecdsa",
     "eip712",
     "grpcio",
-    "grpcio-tools",
-    "hdwallets",
     "mnemonic",
-    "protobuf",
     "python",
     "requests",
     "safe-pysha3",
-    "urllib3",
-    "web3",
-    "websockets"
+    "web3"
    ]
   },
   "test": {
@@ -152,7 +137,7 @@
   },
   "build": {
    "noarch": "python",
-   "number": "0",
+   "number": "1",
    "script": "PYTHON -m pip install . -vvv"
   },
   "extra": {
@@ -166,35 +151,28 @@
   },
   "requirements": {
    "host": [
+    "aiohttp",
     "python >=3.9.0",
-    "coincurve",
     "pip",
     "poetry"
    ],
    "run": [
-    "aiocron",
-    "aiohttp",
     "bech32",
     "bip32",
-    "coincurve",
     "ecdsa",
     "eip712",
     "grpcio",
-    "grpcio-tools",
-    "hdwallets",
     "mnemonic",
-    "protobuf",
     "python >=3.9.0",
     "requests",
     "safe-pysha3",
-    "urllib3 >=1.26.18,<2",
-    "websockets",
     "web3 >=6"
    ]
   },
   "source": {
    "patches": [
-    "fix-protobuf-test-fail.patch"
+    "fix-protobuf-test-fail.patch",
+    "clean-lib-dependencies.patch"
    ],
    "sha256": "c7cbb5601f1508f6fd0a95c2cc0d7f32c09ed5490cbbb59a68ba84cdd59f17f6",
    "url": "https://github.com/InjectiveLabs/sdk-python/archive/refs/tags/v1.4.1.tar.gz"
@@ -233,30 +211,23 @@
  "pr_info": {
   "__lazy_json__": "pr_info/injective-py.json"
  },
- "raw_meta_yaml": "{% set name = \"injective-py\" %}\n{% set version = \"1.4.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/InjectiveLabs/sdk-python/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: c7cbb5601f1508f6fd0a95c2cc0d7f32c09ed5490cbbb59a68ba84cdd59f17f6\n  patches:\n    - fix-protobuf-test-fail.patch\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vvv\n  number: 0\n\nrequirements:\n  host:\n    - python >=3.9.0\n    - coincurve\n    - pip\n    - poetry\n  run:\n    - aiocron\n    - aiohttp\n    - bech32\n    - bip32\n    - coincurve\n    - ecdsa\n    - eip712\n    - grpcio\n    - grpcio-tools\n    - hdwallets\n    - mnemonic\n    - protobuf\n    - python >=3.9.0\n    - requests\n    - safe-pysha3\n    - urllib3 >=1.26.18,<2\n    - websockets\n    - web3 >=6\n\ntest:\n  imports:\n    - pyinjective\n  source_files:\n    - tests\n  requires:\n    - pip\n    - pytest\n    - pytest-asyncio\n    - pytest-grpc\n    - requests-mock\n  commands:\n    - pip check\n    - pytest -v\n\nabout:\n  home: https://github.com/InjectiveLabs/sdk-python\n  summary: 'Injective Python SDK, with Exchange API client'\n  license: Apache-2.0\n  license_file:\n    - LICENSE.md\n    - NOTICE.md\n\nextra:\n  recipe-maintainers:\n    - MementoRC\n",
+ "raw_meta_yaml": "{% set name = \"injective-py\" %}\n{% set version = \"1.4.1\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://github.com/InjectiveLabs/sdk-python/archive/refs/tags/v{{ version }}.tar.gz\n  sha256: c7cbb5601f1508f6fd0a95c2cc0d7f32c09ed5490cbbb59a68ba84cdd59f17f6\n  patches:\n    - fix-protobuf-test-fail.patch\n    - clean-lib-dependencies.patch\n\nbuild:\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vvv\n  number: 1\n\nrequirements:\n  host:\n    - aiohttp\n    - python >=3.9.0\n    - pip\n    - poetry\n  run:\n    - bech32\n    - bip32\n    - ecdsa\n    - eip712\n    - grpcio\n    - mnemonic\n    - python >=3.9.0\n    - requests\n    - safe-pysha3\n    - web3 >=6\n\ntest:\n  imports:\n    - pyinjective\n  source_files:\n    - tests\n  requires:\n    - pip\n    - pytest\n    - pytest-asyncio\n    - pytest-grpc\n    - requests-mock\n  commands:\n    - pip check\n    - pytest -v\n\nabout:\n  home: https://github.com/InjectiveLabs/sdk-python\n  summary: 'Injective Python SDK, with Exchange API client'\n  license: Apache-2.0\n  license_file:\n    - LICENSE.md\n    - NOTICE.md\n\nextra:\n  recipe-maintainers:\n    - MementoRC\n",
  "req": {
   "__set__": true,
   "elements": [
-   "aiocron",
    "aiohttp",
    "bech32",
    "bip32",
-   "coincurve",
    "ecdsa",
    "eip712",
    "grpcio",
-   "grpcio-tools",
-   "hdwallets",
    "mnemonic",
    "pip",
    "poetry",
-   "protobuf",
    "python",
    "requests",
    "safe-pysha3",
-   "urllib3",
-   "web3",
-   "websockets"
+   "web3"
   ]
  },
  "requirements": {
@@ -267,7 +238,7 @@
   "host": {
    "__set__": true,
    "elements": [
-    "coincurve",
+    "aiohttp",
     "pip",
     "poetry",
     "python"
@@ -276,24 +247,16 @@
   "run": {
    "__set__": true,
    "elements": [
-    "aiocron",
-    "aiohttp",
     "bech32",
     "bip32",
-    "coincurve",
     "ecdsa",
     "eip712",
     "grpcio",
-    "grpcio-tools",
-    "hdwallets",
     "mnemonic",
-    "protobuf",
     "python",
     "requests",
     "safe-pysha3",
-    "urllib3",
-    "web3",
-    "websockets"
+    "web3"
    ]
   },
   "test": {
@@ -316,7 +279,7 @@
   "host": {
    "__set__": true,
    "elements": [
-    "coincurve",
+    "aiohttp",
     "pip",
     "poetry",
     "python >=3.9.0"
@@ -325,24 +288,16 @@
   "run": {
    "__set__": true,
    "elements": [
-    "aiocron",
-    "aiohttp",
     "bech32",
     "bip32",
-    "coincurve",
     "ecdsa",
     "eip712",
     "grpcio",
-    "grpcio-tools",
-    "hdwallets",
     "mnemonic",
-    "protobuf",
     "python >=3.9.0",
     "requests",
     "safe-pysha3",
-    "urllib3 >=1.26.18,<2",
-    "web3 >=6",
-    "websockets"
+    "web3 >=6"
    ]
   },
   "test": {
