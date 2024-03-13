@@ -30,7 +30,7 @@
   },
   "build": {
    "entry_points": [
-    "openneuro-py = openneuro.openneuro:cli"
+    "openneuro-py = openneuro._cli:app"
    ],
    "noarch": "python",
    "number": "0",
@@ -44,36 +44,37 @@
   },
   "package": {
    "name": "openneuro-py",
-   "version": "2023.1.0"
+   "version": "2024.2.0"
   },
   "requirements": {
    "build": [],
    "host": [
-    "python  >=3.8",
+    "python  >=3.10",
     "pip",
-    "setuptools >=65",
-    "setuptools_scm"
+    "hatchling",
+    "hatch-vcs"
    ],
    "run": [
-    "python >=3.8",
+    "python >=3.10",
     "aiofiles",
     "httpx >=0.15",
     "sgqlc",
     "requests",
     "tqdm",
-    "click",
-    "setuptools",
-    "platformdirs"
+    "platformdirs",
+    "typer"
    ]
   },
   "source": {
-   "sha256": "9125357b162e080a9997f7bff58a6eb96c8f07125f92106de894a681cdcecb45",
-   "url": "https://pypi.io/packages/source/o/openneuro-py/openneuro-py-2023.1.0.tar.gz"
+   "sha256": "fd36ff1dd30ffc222f180552e9d9c6d2c82b631cd111b6d0be0273500ee03e31",
+   "url": "https://pypi.io/packages/source/o/openneuro-py/openneuro_py-2024.2.0.tar.gz"
   },
   "test": {
    "commands": [
     "openneuro-py --version",
-    "openneuro-py download --dataset=ds000248 --include=CHANGES --verify_size=0"
+    "openneuro-py --help",
+    "openneuro-py download --help",
+    "openneuro-py download --dataset=ds000248 --include=CHANGES --no-verify-size"
    ],
    "imports": [
     "openneuro"
@@ -88,24 +89,23 @@
   "host": {
    "__set__": true,
    "elements": [
+    "hatch-vcs",
+    "hatchling",
     "pip",
-    "python",
-    "setuptools",
-    "setuptools_scm"
+    "python"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "aiofiles",
-    "click",
     "httpx",
     "platformdirs",
     "python",
     "requests",
-    "setuptools",
     "sgqlc",
-    "tqdm"
+    "tqdm",
+    "typer"
    ]
   },
   "test": {
@@ -123,7 +123,7 @@
   },
   "build": {
    "entry_points": [
-    "openneuro-py = openneuro.openneuro:cli"
+    "openneuro-py = openneuro._cli:app"
    ],
    "noarch": "python",
    "number": "0",
@@ -137,36 +137,37 @@
   },
   "package": {
    "name": "openneuro-py",
-   "version": "2023.1.0"
+   "version": "2024.2.0"
   },
   "requirements": {
    "build": [],
    "host": [
-    "python  >=3.8",
+    "python  >=3.10",
     "pip",
-    "setuptools >=65",
-    "setuptools_scm"
+    "hatchling",
+    "hatch-vcs"
    ],
    "run": [
-    "python >=3.8",
+    "python >=3.10",
     "aiofiles",
     "httpx >=0.15",
     "sgqlc",
     "requests",
     "tqdm",
-    "click",
-    "setuptools",
-    "platformdirs"
+    "platformdirs",
+    "typer"
    ]
   },
   "source": {
-   "sha256": "9125357b162e080a9997f7bff58a6eb96c8f07125f92106de894a681cdcecb45",
-   "url": "https://pypi.io/packages/source/o/openneuro-py/openneuro-py-2023.1.0.tar.gz"
+   "sha256": "fd36ff1dd30ffc222f180552e9d9c6d2c82b631cd111b6d0be0273500ee03e31",
+   "url": "https://pypi.io/packages/source/o/openneuro-py/openneuro_py-2024.2.0.tar.gz"
   },
   "test": {
    "commands": [
     "openneuro-py --version",
-    "openneuro-py download --dataset=ds000248 --include=CHANGES --verify_size=0"
+    "openneuro-py --help",
+    "openneuro-py download --help",
+    "openneuro-py download --dataset=ds000248 --include=CHANGES --no-verify-size"
    ],
    "imports": [
     "openneuro"
@@ -187,21 +188,21 @@
  "pr_info": {
   "__lazy_json__": "pr_info/openneuro-py.json"
  },
- "raw_meta_yaml": "{% set name = \"openneuro-py\" %}\n{% set version = \"2023.1.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz\n  sha256: 9125357b162e080a9997f7bff58a6eb96c8f07125f92106de894a681cdcecb45\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  entry_points:\n    - openneuro-py = openneuro.openneuro:cli\n\nrequirements:\n  build:\n    - python >=3.8                           # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n  host:\n    - python  >=3.8\n    - pip\n    - setuptools >=65\n    - setuptools_scm\n  run:\n    - python >=3.8\n    - aiofiles\n    - httpx >=0.15\n    - sgqlc\n    - requests\n    - tqdm\n    - click\n    - setuptools\n    - platformdirs\n\ntest:\n  imports:\n    - openneuro\n  commands:\n     # Test the entry point.\n    - openneuro-py --version\n    - openneuro-py download --dataset=ds000248 --include=CHANGES --verify_size=0\n\nabout:\n  home: https://github.com/hoechenberger/openneuro-py\n  license: GPL-3.0-only\n  license_family: GPL\n  license_file: LICENSE\n  summary: A Python client for OpenNeuro.\n\nextra:\n  recipe-maintainers:\n    - larsoner\n    - hoechenberger\n",
+ "raw_meta_yaml": "{% set name = \"openneuro-py\" %}\n{% set version = \"2024.2.0\" %}\n\npackage:\n  name: {{ name|lower }}\n  version: {{ version }}\n\nsource:\n  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name.replace('-', '_') }}-{{ version }}.tar.gz\n  sha256: fd36ff1dd30ffc222f180552e9d9c6d2c82b631cd111b6d0be0273500ee03e31\n\nbuild:\n  number: 0\n  noarch: python\n  script: {{ PYTHON }} -m pip install . -vv\n  entry_points:\n    - openneuro-py = openneuro._cli:app\n\nrequirements:\n  build:\n    - python >=3.10                          # [build_platform != target_platform]\n    - cross-python_{{ target_platform }}     # [build_platform != target_platform]\n  host:\n    - python  >=3.10\n    - pip\n    - hatchling\n    - hatch-vcs\n  run:\n    - python >=3.10\n    - aiofiles\n    - httpx >=0.15\n    - sgqlc\n    - requests\n    - tqdm\n    - platformdirs\n    - typer\n\ntest:\n  imports:\n    - openneuro\n  commands:\n     # Test the entry point.\n    - openneuro-py --version\n    - openneuro-py --help\n    - openneuro-py download --help\n    - openneuro-py download --dataset=ds000248 --include=CHANGES --no-verify-size\n\nabout:\n  home: https://github.com/hoechenberger/openneuro-py\n  license: GPL-3.0-only\n  license_family: GPL\n  license_file: LICENSE\n  summary: A Python client for OpenNeuro.\n\nextra:\n  recipe-maintainers:\n    - larsoner\n    - hoechenberger\n",
  "req": {
   "__set__": true,
   "elements": [
    "aiofiles",
-   "click",
+   "hatch-vcs",
+   "hatchling",
    "httpx",
    "pip",
    "platformdirs",
    "python",
    "requests",
-   "setuptools",
-   "setuptools_scm",
    "sgqlc",
-   "tqdm"
+   "tqdm",
+   "typer"
   ]
  },
  "requirements": {
@@ -212,24 +213,23 @@
   "host": {
    "__set__": true,
    "elements": [
+    "hatch-vcs",
+    "hatchling",
     "pip",
-    "python",
-    "setuptools",
-    "setuptools_scm"
+    "python"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "aiofiles",
-    "click",
     "httpx",
     "platformdirs",
     "python",
     "requests",
-    "setuptools",
     "sgqlc",
-    "tqdm"
+    "tqdm",
+    "typer"
    ]
   },
   "test": {
@@ -246,24 +246,23 @@
   "host": {
    "__set__": true,
    "elements": [
+    "hatch-vcs",
+    "hatchling",
     "pip",
-    "python  >=3.8",
-    "setuptools >=65",
-    "setuptools_scm"
+    "python  >=3.10"
    ]
   },
   "run": {
    "__set__": true,
    "elements": [
     "aiofiles",
-    "click",
     "httpx >=0.15",
     "platformdirs",
-    "python >=3.8",
+    "python >=3.10",
     "requests",
-    "setuptools",
     "sgqlc",
-    "tqdm"
+    "tqdm",
+    "typer"
    ]
   },
   "test": {
@@ -271,8 +270,8 @@
    "elements": []
   }
  },
- "url": "https://pypi.io/packages/source/o/openneuro-py/openneuro-py-2023.1.0.tar.gz",
- "version": "2023.1.0",
+ "url": "https://pypi.io/packages/source/o/openneuro-py/openneuro_py-2024.2.0.tar.gz",
+ "version": "2024.2.0",
  "version_pr_info": {
   "__lazy_json__": "version_pr_info/openneuro-py.json"
  }
